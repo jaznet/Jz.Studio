@@ -1,0 +1,24 @@
+
+<div class="logon-container">
+  <!--<img src="../assets/logos/JazLogo-Master-5b.svg" height="12" style="align-self:end; margin-right:-12px" />-->
+  <div class="logon-title" style="font-size:24px;justify-content:center;margin-bottom:8px">Login</div>
+
+  <form [formGroup]="loginForm">
+
+    <div class="form-group">
+      <label for="username" style="align-self: baseline" class="form-group-label">Username:</label>
+      <input type="text" id="username" formControlName="username" class="form-group-input">
+    </div>
+
+    <div class="form-group">
+      <label for="password" style="align-self: baseline" class="form-group-label">Password:</label>
+      <input type="password" id="password" formControlName="password" class="form-group-input">
+    </div>
+
+    <div class="centered" style="margin-top:18px">
+      <jz-button class="jz-button login" [text]="'Logon'" type="submit" routerLink="/home"
+                 [colorTxt]="'black'" [colorBkg]="'var(--plt-clr-1)'" [fontSize]="'16px'"></jz-button>
+    </div>
+  </form>
+
+</div>
