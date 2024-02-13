@@ -1,0 +1,97 @@
+
+.jz-button {
+  width: 100%;
+  color: var(--plt-txt-1);
+}
+
+jz-button {
+  width: 100%;
+  color: var(--plt-txt-1);
+}
+
+.jz-button-text {
+  align-items: center;
+  font-size: 13px;
+  font-weight:bold;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.jz-button-base-layer {
+  width: 100%;
+  height: 100%;
+  border-radius:11px;
+}
+
+.jz-button-bevel {
+  width: 100%;
+  border-radius: 7px;
+}
+
+.jz-button-content {
+  width: 100%;
+}
+
+.left-border {
+  width: fit-content;
+  border-radius: 10px 0 0 10px;
+}
+
+.right-border {
+  width: fit-content;
+  border-radius: 0 10px 10px 0;
+}
+
+.left-border-middle {
+  width: fit-content;
+  background-image: linear-gradient(to right, #ffffff30, #ffffff00);
+}
+
+.right-border-middle {
+  width: fit-content;
+  background-image: linear-gradient(to right, #ffffff00, #00000030 );
+}
+
+.top-left-corner {
+  border-radius: 10px 0 0 0;
+  background-image: radial-gradient(circle at bottom right, #ffffff00,#ffffff40);
+}
+
+.top-border-middle {
+  background-image: linear-gradient(to bottom, #ffffff30, #00000000 );
+}
+
+.bottom-border-middle {
+  background-image: linear-gradient(to bottom, #00000000, #00000030 );
+}
+
+.top-right-corner {
+  border-radius: 0 10px 0 0;
+  overflow: hidden;
+  /* background-image: conic-gradient(circle at bottom left, #ffffff20,#00000040);*/
+  position: relative;
+}
+
+  .top-right-corner .gradient {
+    position: absolute;
+    align-self: end;
+    height: 1px;
+  }
+
+.bottom-right-corner {
+  border-radius: 0 0 10px 0;
+  background-image: radial-gradient(circle at top left, #ffffff05,#00000040);
+}
+
+.bottom-left-corner {
+  border-radius: 0 0 0 10px;
+  /* background-image: conic-gradient(from -135deg, #00000040 0%,#ffffff20 50%, #00000040 100%);*/
+}
+
+  .bottom-left-corner .gradient {
+    position: absolute;
+    align-self: start;
+    height: 1px;
+  }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppWelcomeComponent } from './app-welcome/app-welcome.component';
-import { UiControlsModule } from '../library/ui-controls/ui-controls.module';
-import { AppRouterModule } from '../app/app-router/app-router.module';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LogonModule } from '../app/app-logon/logon/logon.module';
+import { ReactiveFormsModule } from '@angular/forms';import { AppRoutingModule } from '../app/app-routing.module';
+import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
+
 
 @NgModule({
   declarations: [
@@ -14,10 +13,10 @@ import { LogonModule } from '../app/app-logon/logon/logon.module';
   imports: [
     CommonModule, 
     RouterModule,
-    AppRouterModule,
+    AppRoutingModule,
     ReactiveFormsModule,
-    UiControlsModule,
-    LogonModule
+    JzUiControlsModule
+  //  LogonModule
   ],
   exports: [
     AppWelcomeComponent,
