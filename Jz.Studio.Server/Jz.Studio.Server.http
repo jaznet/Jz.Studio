@@ -1,0 +1,6 @@
+@Jz.Studio.Server_HostAddress = http://localhost:5189
+
+GET {{Jz.Studio.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
