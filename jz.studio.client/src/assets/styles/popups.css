@@ -1,0 +1,33 @@
+
+.dx-popup-title.dx-toolbar {
+  padding: 0 20px;
+}
+
+.dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+
+}
+
+.dx-toolbar-label .dx-toolbar-item-content > div {
+  font-size: 16px;
+  color: red;
+  font-weight: 600;
+}
+
+.loading-popup {
+}
+
+  .loading-popup div {
+      color:black;
+    background-color: #DDD5D0;
+    /*#DFBBB1*/
+    /*#ACBBB1*/
+    /*#63a77b*/
+  }
+
+.dx-popup-content {
+    padding:4px;
+}
+
+.custom-popover-title {
+  color: red; /* Change 'red' to your desired color */
+}

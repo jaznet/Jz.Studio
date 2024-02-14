@@ -1,0 +1,13 @@
+.jz-button {
+  background-color: var(--jz-plt-clr-1);
+}
+
+.dx-radiobutton-icon-checked .dx-radiobutton-icon-dot {
+  background-color: white;
+  border-width: 2px;
+}
+
+.dx-radiobutton-icon  {
+    width:12px;
+    height:12px;
+}

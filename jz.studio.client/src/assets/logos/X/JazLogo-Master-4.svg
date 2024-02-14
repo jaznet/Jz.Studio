@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 27.6.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1440 792" style="enable-background:new 0 0 1440 792;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFF0;stroke:#80ADA0;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:#FFFFF0;stroke:#80ADA0;stroke-miterlimit:10;}
+	.st2{fill:#FFFFF0;stroke:#80ADA0;stroke-width:1;stroke-miterlimit:10.0008;}
+	.st3{fill:none;stroke:#0C3A64;stroke-width:2;stroke-miterlimit:10;}
+	.st4{fill:#DEB841;stroke:#336699;stroke-miterlimit:10;}
+	.st5{fill:#DEB841;stroke:#336699;stroke-width:1;stroke-miterlimit:10.0008;}
+	.st6{fill:#DEB841;stroke:#336699;stroke-width:2;stroke-miterlimit:10;}
+</style>
+<g>
+	<g id="jazsvg_4_">
+		<circle class="st0" cx="557" cy="504.7" r="72"/>
+	</g>
+	<g id="jazsvg_5_">
+		<circle class="st0" cx="881" cy="504.7" r="72"/>
+	</g>
+	<circle class="st1" cx="719" cy="72.7" r="72"/>
+	<line class="st1" x1="647" y1="72.7" x2="791" y2="72.7"/>
+	
+		<rect x="728" y="58.7" transform="matrix(0.9367 -0.3502 0.3502 0.9367 -50.4441 298.4415)" class="st2" width="144" height="460.1"/>
+	
+		<rect x="407.2" y="216.3" transform="matrix(0.3502 -0.9367 0.9367 0.3502 144.0821 784.2407)" class="st2" width="460.1" height="144"/>
+</g>
+<g id="jazsvg_3_">
+	<circle class="st3" cx="720" cy="506" r="72"/>
+</g>
+<g>
+	<ellipse class="st4" cx="1355" cy="503.9" rx="72" ry="72.1"/>
+	<ellipse class="st4" cx="1027" cy="504" rx="72" ry="72"/>
+	<ellipse class="st4" cx="874" cy="72.1" rx="72" ry="72"/>
+	<ellipse class="st4" cx="1190" cy="72" rx="72" ry="72"/>
+	<rect x="873" class="st4" width="326.2" height="144"/>
+	<rect x="1025.9" y="431.9" class="st4" width="326.2" height="144"/>
+	
+		<rect x="878.1" y="216.6" transform="matrix(0.3502 -0.9367 0.9367 0.3502 449.7141 1225.5498)" class="st5" width="460.1" height="144"/>
+</g>
+<g>
+	<g>
+		<g id="jazsvg_10_">
+			<circle class="st6" cx="564" cy="72" r="72"/>
+		</g>
+		<line class="st6" x1="636" y1="72" x2="492" y2="72"/>
+		<line class="st6" x1="564" y1="144" x2="564" y2="0"/>
+	</g>
+	<rect x="83" y="432" class="st6" width="319.1" height="144"/>
+	<g>
+		<g id="jazsvg_8_">
+			<circle class="st6" cx="402" cy="504" r="72"/>
+		</g>
+		<line class="st6" x1="474" y1="504" x2="330" y2="504"/>
+		<line class="st6" x1="402" y1="576" x2="402" y2="432"/>
+	</g>
+	<g>
+		<g id="jazsvg_11_">
+			<circle class="st6" cx="83" cy="504" r="72"/>
+		</g>
+		<line class="st6" x1="155" y1="504" x2="11" y2="504"/>
+		<line class="st6" x1="83" y1="576" x2="83" y2="432"/>
+	</g>
+	
+		<rect x="253" y="216.6" transform="matrix(0.3502 -0.9367 0.9367 0.3502 43.5703 639.9426)" class="st5" width="460.1" height="144"/>
+</g>
+</svg>

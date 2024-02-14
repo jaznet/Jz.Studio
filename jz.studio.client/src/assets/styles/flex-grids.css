@@ -1,0 +1,54 @@
+
+.grid {
+  height: 100%;
+  width: 100%;
+  flex-flow: column;
+}
+
+.grid-rows {
+  height: 100%;
+  width: 100%;
+  flex-flow: column;
+}
+
+  .grid-rows.fit {
+    height: fit-content;
+    width: fit-content;
+    margin: auto;
+  }
+
+.grid-row-fixed {
+  flex-flow: row;
+  flex: 0 0 auto;
+}
+
+.grid-row-fill {
+  flex-flow: row;
+  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
+}
+
+.grid-cols {
+  height: 100%;
+  width: 100%;
+  flex-flow: row;
+}
+
+  .grid-cols.fit {
+    width: fit-content;
+  }
+
+.grid-col-fixed {
+  flex-flow: column;
+  flex: 0 0 auto;
+  height: auto;
+  width: auto;
+}
+
+.grid-col-fill {
+  flex-flow: column;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+}
