@@ -1,0 +1,11 @@
+.logon-title {
+  color: #333; /* Text color */
+  text-shadow: 1px 1px 0 #fff, /* Top-left shadow */
+  2px 2px 0 #bbb; /* Bottom-right shadow */
+  font-size: 24px; /* Font size */
+  font-weight: bold; /* Font weight */
+}
+
+.current-date {
+    color:var(--plt-txt-1);
+}
