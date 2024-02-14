@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
+import { AppWelcomeModule } from './parts/app-welcome/app-welcome.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.mod
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    JzUiControlsModule
+    JzUiControlsModule,
+    AppWelcomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
