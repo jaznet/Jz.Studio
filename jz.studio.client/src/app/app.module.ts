@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    JzUiControlsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
