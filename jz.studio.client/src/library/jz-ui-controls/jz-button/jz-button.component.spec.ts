@@ -8,10 +8,10 @@ describe('JzButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JzButtonComponent ]
+      declarations: [JzButtonComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(JzButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
