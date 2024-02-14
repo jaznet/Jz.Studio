@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: 'museo';
+  src: url('assets/fonts/Museo300-Regular-webfont.ttf');
+}
+
+@font-face {
+  font-family: 'varela';
+  src: url('assets/fonts/Varela_Round/VarelaRound-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'roboto';
+  src: url('assets/fonts/Roboto/Roboto-Regular.ttf');
+}
+
+div {
+    display:flex;
+}

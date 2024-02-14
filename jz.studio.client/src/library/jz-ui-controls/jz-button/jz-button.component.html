@@ -1,11 +1,10 @@
-<p>jz-button works!</p>
 
 <div routerLink="/home"
      (click)="onClicked()"
      class="jz-button-base-layer"
      [ngStyle]="{'height': height_px, 'width': width_px}">
 
-  <div class="jz-button-bevel" [ngStyle]="{'color':color, 'backgroundColor':background}">
+  <div class="jz-button-bevel fit-to-parent" [ngStyle]="{'color':color, 'backgroundColor':background}">
 
     <div class="grid-rows left-border">
 
@@ -76,7 +75,7 @@
     </div>
 
     <!-- CENTER -->
-    <div #btn class="jz-button grid-col-fill" id="'btn1">
+    <div #btn class="jz-button grid-cols" id="'btn1">
       <div [ngStyle]="{'height': border_px}"
            class=" grid-col-fixed top-border-middle">
       </div>
@@ -152,5 +151,3 @@
   </div>
 
 </div>
-
-

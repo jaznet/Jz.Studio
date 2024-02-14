@@ -36,6 +36,7 @@
             ],
             "styles": [
               "src/styles.css",
+              "src/assets/styles/app.css",
               "src/assets/styles/layouts.css",
               "src/assets/styles/flex-grids.css"
             ],
