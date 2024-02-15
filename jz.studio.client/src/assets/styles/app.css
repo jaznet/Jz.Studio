@@ -1,5 +1,5 @@
 .app-body {
-    background-color:black;
+    background-color:var(--plt-clr-1);
 }
 
 /*
