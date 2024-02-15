@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PaletteMgrService } from './parts/app-services/palette-mgr.service';
+import { PaletteMgrService } from './app-services/palette-mgr.service';
 
 interface WeatherForecast {
   date: string;

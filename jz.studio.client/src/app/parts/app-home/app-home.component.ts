@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { AppServices } from '../app-services/app-service.service';
+import { AppServices } from '../../app-services/app-service.service';
 
 @Component({
   selector: 'app-home',
