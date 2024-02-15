@@ -11,6 +11,7 @@ export class AppHeaderComponent {
   @HostBinding('class') classes = 'app-header';
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
+  isVisible = 'collapse';
   isLogoVisible: boolean = false;
   isMainMenuVisible: boolean = false;
 

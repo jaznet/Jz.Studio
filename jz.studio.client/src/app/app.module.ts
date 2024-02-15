@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
-import { AppWelcomeModule } from './parts/app-welcome/app-welcome.module';
+import { AppWelcomeModule } from './app-welcome/app-welcome.module';
 import { AppPartsModule } from './app-parts/app-parts.module';
 import { RouterModule } from '@angular/router';
 
