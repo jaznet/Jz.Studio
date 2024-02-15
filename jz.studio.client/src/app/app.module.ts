@@ -8,7 +8,7 @@ import { AppWelcomeModule } from './parts/app-welcome/app-welcome.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

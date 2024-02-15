@@ -75,13 +75,13 @@
     </div>
 
     <!-- CENTER -->
-    <div #btn class="jz-button grid-cols" id="'btn1">
+    <div #btn class="jz-button grid-rows" id="'btn1">
       <div [ngStyle]="{'height': border_px}"
-           class=" grid-col-fixed top-border-middle">
+           class=" grid-row-fixed top-border-middle">
       </div>
-      <div class="grid-col-fill jz-button-text" [style.font-size]="fontSize">{{text}}</div>
+      <div class="grid-row-fill jz-button-text" [style.font-size]="fontSize">{{text}}</div>
       <div [ngStyle]="{'height': border_px}"
-           class=" grid-col-fixed bottom-border-middle">
+           class=" grid-row-fixed bottom-border-middle">
       </div>
     </div>
 

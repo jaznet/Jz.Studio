@@ -1,4 +1,4 @@
-app-body {
+.app-body {
     background-color:black;
 }
 
@@ -20,4 +20,8 @@ app-body {
 
 div {
   display: flex;
+}
+
+body {
+  background-color: antiquewhite;
 }
