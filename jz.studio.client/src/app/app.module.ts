@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
 import { AppWelcomeModule } from './parts/app-welcome/app-welcome.module';
+import { AppPartsModule } from './app-parts/app-parts.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { AppWelcomeModule } from './parts/app-welcome/app-welcome.module';
     HttpClientModule,
     AppRoutingModule,
     JzUiControlsModule,
+    AppPartsModule,
     AppWelcomeModule
   ],
   providers: [],
