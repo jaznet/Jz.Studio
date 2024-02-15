@@ -10,6 +10,7 @@ export class AppHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent view-router-container';
   constructor(private appService:AppServices) {
     console.log('AppHomeComponent');
+    appService.toggleHeaderEvent.emit('show');
     appService.toggleMenuEvent.emit('show');
   }
 }

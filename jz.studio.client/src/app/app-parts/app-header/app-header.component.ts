@@ -20,6 +20,12 @@ export class AppHeaderComponent {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
+    this.app.toggleHeaderEvent.subscribe((menu: any) => {
+      this.isVisible = menu === 'show' ? 'visible' : 'collapse';
+      this.isLogoVisible = menu === 'show' ? true : false;
+      this.isMainMenuVisible = menu === 'show' ? true : false;
+    })
+
     this.app.toggleMenuEvent.subscribe((menu: any) => {
       this.isLogoVisible = menu === 'show' ? true : false;
       this.isMainMenuVisible = menu === 'show' ? true : false;
