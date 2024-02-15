@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JzUiControlsModule } from '../../library/jz-ui-controls/jz-ui-controls.module';
+import { LogonModule } from '../app-parts/app-logon/logon/logon.module';
 
 
 @NgModule({
@@ -16,8 +17,8 @@ import { JzUiControlsModule } from '../../library/jz-ui-controls/jz-ui-controls.
     RouterModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    JzUiControlsModule
-  //  LogonModule
+    JzUiControlsModule,
+    LogonModule
   ],
   exports: [
     AppWelcomeComponent,
