@@ -20,15 +20,14 @@ export class AppHeaderComponent {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    this.app.toggleHeaderEvent.subscribe((menu: any) => {
-      this.isVisible = menu === 'show' ? 'visible' : 'collapse';
-      this.isLogoVisible = menu === 'show' ? 'visible' : 'collapse';
-      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
-    })
+
+    this.isVisible = 'visible';
+    this.isLogoVisible = 'visible';
+    this.isMainMenuVisible = 'visible';
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
       this.isLogoVisible = menu === 'show' ? 'visible' : 'collapse';
-      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
+      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'visible';
     })
   }
 }
