@@ -12,8 +12,8 @@ export class AppHeaderComponent {
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
   isVisible = 'collapse';
-  isLogoVisible: boolean = false;
-  isMainMenuVisible: boolean = false;
+  isLogoVisible= 'collapse';
+  isMainMenuVisible = 'visible';
 
   constructor(private app: AppServices) { }
 
@@ -22,13 +22,13 @@ export class AppHeaderComponent {
   ngAfterViewInit(): void {
     this.app.toggleHeaderEvent.subscribe((menu: any) => {
       this.isVisible = menu === 'show' ? 'visible' : 'collapse';
-      this.isLogoVisible = menu === 'show' ? true : false;
-      this.isMainMenuVisible = menu === 'show' ? true : false;
+      this.isLogoVisible = menu === 'show' ? 'visible' : 'collapse';
+      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     })
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
-      this.isLogoVisible = menu === 'show' ? true : false;
-      this.isMainMenuVisible = menu === 'show' ? true : false;
+      this.isLogoVisible = menu === 'show' ? 'visible' : 'collapse';
+      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     })
   }
 }

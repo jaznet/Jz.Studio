@@ -1,0 +1,7 @@
+.menu-container {
+    background-color:var(--plt-clr-1);
+    border:1px solid black;
+    padding:4px;
+    padding-right:0;
+    z-index:10;
+}

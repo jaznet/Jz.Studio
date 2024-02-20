@@ -4,6 +4,7 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RouterModule } from '@angular/router';
 import { PaletteMenuComponent } from './palette-menu/palette-menu.component';
 import { JzUiControlsModule } from '../../../library/jz-ui-controls/jz-ui-controls.module';
+import { JzMenuModule } from '../../../library/jz-ui-controls/jz-menu/jz-menu.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { JzUiControlsModule } from '../../../library/jz-ui-controls/jz-ui-contro
   imports: [
     CommonModule,
     JzUiControlsModule,
-  /*  JzMenuModule,*/
+    JzMenuModule,
     RouterModule,
    /* AppRouterModule*/
   ],

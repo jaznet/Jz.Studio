@@ -1,0 +1,10 @@
+ <!--<div #menuPanel class="menu-panel {{orientation}}">-->
+<!--<ng-container #itemContainer *ngTemplateOutlet="currentTemplate"></ng-container>-->
+<!--</div>-->
+<!--<menu-tab-panel #tabpanel class="menu-panel {{orientation}}" [orientation]="'{{orientation}}'">
+  <ng-content></ng-content>
+</menu-tab-panel>-->
+
+<div #menuPanel class='menu-tab-panel {{orientation}}'>
+  <ng-content></ng-content>
+</div>

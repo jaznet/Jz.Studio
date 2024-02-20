@@ -1,5 +1,5 @@
 
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'jz-button',
@@ -8,6 +8,7 @@ import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementR
 })
 export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'fit-to-content';
+  @Input() menuType: string = 'menu';
   @Input() text: string = 'Enter';
   @Input() height: number = 33;
   @Input() width: number = 100;
@@ -23,7 +24,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private element: ElementRef) {
+    private element: ElementRef,
+  private renderer: Renderer2) {
   }
 
   ngOnInit(): void { }
@@ -38,6 +40,19 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
+  }
+
+  selection(select: string) {
+    switch (select) {
+      case 'select': {
+        this.renderer.addClass(this.element.nativeElement.firstChild, 'selected');
+        break;
+      }
+      case 'deselect': {
+        this.renderer.removeClass(this.element.nativeElement.firstChild, 'selected');
+        break;
+      }
+    }
   }
 
   onClicked() {

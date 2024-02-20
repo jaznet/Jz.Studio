@@ -1,0 +1,21 @@
+
+<div #menuContainer class="grid-cols" style="z-index:10;position:relative"
+     [ngStyle]="{
+     'flex-flow':flex,
+      'border-top':borderTop,
+      'border-bottom':borderBottom,
+      'border-left':borderLeft,
+      'border-right':borderRight,
+
+      'padding-top':paddingTop,
+      'padding-bottom':paddingBottom,
+      'padding-left':paddingLeft,
+      'padding-right':paddingRight,
+
+      'margin-bottom':marginBottom,
+
+      'border-style':borderStyle,
+      'border-color':borderColor
+     }">
+  <ng-content></ng-content>
+</div>

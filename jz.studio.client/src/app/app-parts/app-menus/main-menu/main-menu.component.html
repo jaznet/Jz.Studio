@@ -1,6 +1,28 @@
+<div #menuContainer class="main-menu-container" style="margin-left:8px">
 
-<jz-menu [menu_name]="'main'" [orientation]="orientation">
+  <jz-menu-container class="menu-horizontal menu-view"
+                     [menuType]="'menu-view'"
+                     [menuName]="'menu-main'"
+                     [tabs]="tabs">
 
+    <!--<jz-tab [state]="'selected'" [menuItem]="'home'" [menuName]="menuName"-->
+    <jz-tab [menuItem]="'home'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/home'" [btnTxt]="'Home'"></jz-tab>
 
+    <jz-tab [menuItem]="'dataviz'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/dataviz'" [btnTxt]="'Dataviz'"></jz-tab>
 
-</jz-menu>
+    <jz-tab [menuItem]="'backoffice'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-tab>
+
+    <jz-tab [menuItem]="'sandbox'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/sandbox'" [btnTxt]="'Sandbox'"></jz-tab>
+
+    <jz-tab [menuItem]="'architecture'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-tab>
+
+    <jz-tab [menuItem]="'admin'" [menuName]="menuName" [menuType]="'menu-view'"
+            [route]="'/admin'" [btnTxt]="'Admin'"></jz-tab>
+
+  </jz-menu-container>
+</div>
