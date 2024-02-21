@@ -25,7 +25,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   constructor(
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
-  private renderer: Renderer2) {
+    private renderer: Renderer2) {
   }
 
   ngOnInit(): void { }
@@ -56,7 +56,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   onClicked() {
-    console.log(this.element);
+    console.log(this.element.nativeElement);
   }
 
 }

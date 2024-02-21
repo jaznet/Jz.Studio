@@ -26,8 +26,7 @@ export class AppHeaderComponent {
     this.isMainMenuVisible = 'visible';
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
-      this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
-     
+      this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse'; 
     })
   }
 
