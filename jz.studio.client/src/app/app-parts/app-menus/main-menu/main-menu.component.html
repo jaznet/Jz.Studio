@@ -1,4 +1,6 @@
-<div #menuContainer class="main-menu-container" style="margin-left:8px">
+
+<div #menuContainer class="main-menu-container" style="margin-left:8px"
+     [ngStyle]="{'visibility':isMainMenuVisible}">
 
   <jz-menu-container class="menu-horizontal menu-view"
                      [menuType]="'menu-view'"

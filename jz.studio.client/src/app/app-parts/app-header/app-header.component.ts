@@ -13,7 +13,7 @@ export class AppHeaderComponent {
 
   isVisible = 'collapse';
   isLogoVisible= 'collapse';
-  isMainMenuVisible = 'visible';
+  isMainMenuVisible = 'collapse';
 
   constructor(private app: AppServices) { }
 
@@ -26,8 +26,8 @@ export class AppHeaderComponent {
     this.isMainMenuVisible = 'visible';
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
-      this.isLogoVisible = menu === 'show' ? 'visible' : 'collapse';
-      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'visible';
+      this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
+      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     })
   }
 }
