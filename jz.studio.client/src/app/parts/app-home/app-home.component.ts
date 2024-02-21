@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { AppServices } from '../../app-services/app-service.service';
+import { AppStateService } from '../../app-services/app-state.service';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +8,7 @@ import { AppServices } from '../../app-services/app-service.service';
 })
 export class AppHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent view-router-container';
-  constructor(private appService:AppServices) {
+  constructor(private appService: AppStateService) {
     console.log('AppHomeComponent');
     //appService.toggleHeaderEvent.emit('show');
     appService.showMenu();

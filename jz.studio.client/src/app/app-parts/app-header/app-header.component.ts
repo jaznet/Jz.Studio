@@ -1,6 +1,6 @@
 
-import { Component, ElementRef, Host, HostBinding, ViewChild } from '@angular/core';
-import { AppServices } from '../../app-services/app-service.service';
+import { ChangeDetectorRef, Component, ElementRef, Host, HostBinding, ViewChild } from '@angular/core';
+import { AppStateService } from '../../app-services/app-state.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class AppHeaderComponent {
   isLogoVisible= 'collapse';
   isMainMenuVisible = 'collapse';
 
-  constructor(private app: AppServices) { }
+  constructor(private app: AppStateService, private changeDetector: ChangeDetectorRef,) { }
 
   ngOnInit(): void { }
 
@@ -29,5 +29,9 @@ export class AppHeaderComponent {
       this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
       this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     })
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

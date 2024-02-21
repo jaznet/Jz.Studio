@@ -3,7 +3,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class AppServices {
+export class AppStateService {
 
   @Output() toggleHeaderEvent = new EventEmitter<string>();
   @Output() toggleMenuEvent = new EventEmitter<string>();
