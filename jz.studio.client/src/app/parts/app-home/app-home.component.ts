@@ -11,7 +11,7 @@ export class AppHomeComponent {
   constructor(private appService:AppServices) {
     console.log('AppHomeComponent');
     //appService.toggleHeaderEvent.emit('show');
-    appService.toggleMenuEvent.emit('show');
-    console.log('');
+    appService.showMenu();
+    console.log('show');
   }
 }

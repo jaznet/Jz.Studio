@@ -10,7 +10,7 @@ export class MenuBaseComponent implements OnInit {
 
   orientation: Orientation = Orientation.horizontal;
   menuName: string = 'base';
-  isMenuVisible: string = 'collapsed';
+ // isMenuVisible: string = 'collapsed';
 
   constructor() { }
 
