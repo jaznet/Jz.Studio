@@ -9,14 +9,15 @@ import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.co
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent extends MenuItemBaseComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent  implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() orientation: Orientation = Orientation.vertical;
   @Input() menu_name: string = 'menu name';
   @Input() tab_name: string = 'tab name';
   @Input() isDefault: boolean = false;
   @Input() menuType: string = 'notset';
-  @Input() route = "";
+  @Input() route:string = "";
   @Input() btnTxt = "Tab Button";
+  @Input() menuName: string = 'not set';
 
   borderRadius!: string;
   border: string = '1px solid #ffffff';
@@ -42,10 +43,13 @@ export class JzMenuTabComponent extends MenuItemBaseComponent implements OnInit,
     private menuEvents: JzMenuService,
     private menuService: JzMenuService
   ) {
-    super();
+  
   }
+    ngOnInit(): void {
+       
+    }
 
-  override ngAfterViewInit(): void {
+   ngAfterViewInit(): void {
 
     switch (this.orientation) {
       case Orientation.horizontal:

@@ -7,12 +7,12 @@ import { MenuItemBaseComponent } from './j3-menu-item-base/j3-menu-item-base.com
   providedIn: 'root'
 })
 export class JzMenuService {
-  @Output() menuItemSelectedEvent = new EventEmitter<MenuItemBaseComponent>();
-  @Output() menuItemDeselectedEvent = new EventEmitter<MenuItemBaseComponent>();
+  @Output() menuItemSelectedEvent = new EventEmitter<JzMenuTabComponent>();
+  @Output() menuItemDeselectedEvent = new EventEmitter<JzMenuTabComponent>();
 
   constructor() { }
 
-  menuItemSelected(selected: MenuItemBaseComponent) {
+  menuItemSelected(selected: JzMenuTabComponent) {
     this.menuItemSelectedEvent.emit(selected);
   }
 
@@ -20,7 +20,7 @@ export class JzMenuService {
     this.menuItemSelectedEvent.emit(tab);
   }
 
-  deselectTab(deselected: MenuItemBaseComponent) {
+  deselectTab(deselected: JzMenuTabComponent) {
     this.menuItemSelectedEvent.emit(deselected);
   }
 }
