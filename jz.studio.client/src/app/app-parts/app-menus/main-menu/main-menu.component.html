@@ -8,23 +8,31 @@
                      [tabs]="tabs">
 
     <!--<jz-tab [state]="'selected'" [menuItem]="'home'" [menuName]="menuName"-->
-    <jz-tab [menuItem]="'home'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/home'" [btnTxt]="'Home'"></jz-tab>
+    <jz-menu-tab [route]="'/home'"
+                 [btnTxt]="'Home'"
+                 [menuItem]="'home'"
+                 [menuName]="menuName"
+                 [menuType]="'menu-view'">
+    </jz-menu-tab>
 
-    <jz-tab [menuItem]="'dataviz'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/dataviz'" [btnTxt]="'Dataviz'"></jz-tab>
+    <jz-menu-tab [route]="'/dataviz'"
+                 [btnTxt]="'Dataviz'"
+                 [menuItem]="'dataviz'"
+                 [menuName]="menuName"
+                 [menuType]="'menu-view'">
+    </jz-menu-tab>
 
-    <jz-tab [menuItem]="'backoffice'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-tab>
+    <jz-menu-tab [menuItem]="'backoffice'" [menuName]="menuName" [menuType]="'menu-view'"
+                 [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-menu-tab>
 
-    <jz-tab [menuItem]="'sandbox'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/sandbox'" [btnTxt]="'Sandbox'"></jz-tab>
+    <jz-menu-tab [menuItem]="'sandbox'" [menuName]="menuName" [menuType]="'menu-view'"
+                 [route]="'/sandbox'" [btnTxt]="'Sandbox'"></jz-menu-tab>
 
-    <jz-tab [menuItem]="'architecture'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-tab>
+    <jz-menu-tab [menuItem]="'architecture'" [menuName]="menuName" [menuType]="'menu-view'"
+                 [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-menu-tab>
 
-    <jz-tab [menuItem]="'admin'" [menuName]="menuName" [menuType]="'menu-view'"
-            [route]="'/admin'" [btnTxt]="'Admin'"></jz-tab>
+    <jz-menu-tab [menuItem]="'admin'" [menuName]="menuName" [menuType]="'menu-view'"
+                 [route]="'/admin'" [btnTxt]="'Admin'"></jz-menu-tab>
 
   </jz-menu-container>
 </div>

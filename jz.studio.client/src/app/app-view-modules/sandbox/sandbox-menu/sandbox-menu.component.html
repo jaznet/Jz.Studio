@@ -1,0 +1,50 @@
+
+<jz-menu  [ngStyle]="{'flex-flow':'column'}" style="flex-flow:column;display:flex">
+
+  <jz-menu-tab [tab_name]="'home'" [menu_name]="menu_name" [isDefault]="true">
+    <jz-button class="jz-button"
+               [text]="'Home'"
+               routerLink="/sandbox/home">
+    </jz-button>
+  </jz-menu-tab>
+
+  <jz-menu-tab [tab_name]="'chorousa'" [menu_name]="menu_name">
+    <jz-button class="jz-button"
+               [text]="'ChoroDash'"
+               routerLink="/sandbox/chorodash">
+    </jz-button>
+  </jz-menu-tab>
+
+  <jz-menu-tab [tab_name]="'technical'" [menu_name]="menu_name">
+    <jz-button class="jz-button"
+               [text]="'Technical'"
+               routerLink="/sandbox/technical">
+    </jz-button>
+  </jz-menu-tab>
+
+  <jz-menu-tab [tab_name]="'jz_docking'" [menu_name]="menu_name">
+    <jz-button class="jz-button"
+               [text]="'Docking 1'"
+               routerLink="/sandbox/docking">
+    </jz-button>
+  </jz-menu-tab>
+
+  <jz-menu-tab [tab_name]="'docking'" [menu_name]="menu_name">
+    <jz-button class="jz-button"
+               [text]="'Docking'"
+               routerLink="/sandbox/docker">
+    </jz-button>
+  </jz-menu-tab>
+
+  <jz-menu-tab [tab_name]="'jz_flex'" [menu_name]="menu_name">
+    <jz-button class="jz-button"
+               [text]="'JZ Flex'"
+               routerLink="/sandbox/jzflex">
+    </jz-button>
+  </jz-menu-tab>
+
+
+
+  <!--<ejs-multiselect></ejs-multiselect>-->
+
+</jz-menu>
