@@ -12,8 +12,9 @@ import { AppStateService } from '../../../app-services/app-state.service';
 export class MainMenuComponent extends MenuBaseComponent implements AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @Input() tabs: boolean = true;
+  @Input() override menuName: string = '';
   override orientation: Orientation = Orientation.horizontal;
-  menu_name: string = 'main;'
+  //menu_name: string = 'main;'
   isMainMenuVisible ='collapse';
 
   constructor(private app:AppStateService) {
