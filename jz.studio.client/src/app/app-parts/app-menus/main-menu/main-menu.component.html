@@ -25,8 +25,12 @@
     <jz-menu-tab [menuItem]="'backoffice'" [menuName]="menuName" [menuType]="'menu-view'"
                  [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-menu-tab>
 
-    <jz-menu-tab [menuItem]="'sandbox'" [menuName]="menuName" [menuType]="'menu-view'"
-                 [route]="'/sandbox'" [btnTxt]="'Sandbox'"></jz-menu-tab>
+    <jz-menu-tab [route]="'/sandbox'"
+                 [btnTxt]="'Sandbox'"
+                 [menuItem]="'sandbox'"
+                 [menuName]="menuName"
+                 [menuType]="'menu-view'">
+    </jz-menu-tab>
 
     <jz-menu-tab [menuItem]="'architecture'" [menuName]="menuName" [menuType]="'menu-view'"
                  [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-menu-tab>
