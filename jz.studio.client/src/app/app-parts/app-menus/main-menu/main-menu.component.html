@@ -3,39 +3,36 @@
      [ngStyle]="{'visibility':isMainMenuVisible}">
 
   <jz-menu-container class="menu-horizontal menu-view"
-                     [menuType]="'menu-view'"
+                    
                      [menuName]="'menu-main'"
                      [tabs]="tabs">
 
     <!--<jz-tab [state]="'selected'" [menuItem]="'home'" [menuName]="menuName"-->
     <jz-menu-tab [route]="'/home'"
                  [btnTxt]="'Home'"
-               
                  [menuName]="menuName"
-                 [menuType]="'menu-view'">
+                 >
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/dataviz'"
                  [btnTxt]="'Dataviz'"
-                
                  [menuName]="menuName"
-                 [menuType]="'menu-view'">
+                 >
     </jz-menu-tab>
 
-    <jz-menu-tab [menuName]="menuName" [menuType]="'menu-view'"
+    <jz-menu-tab [menuName]="menuName" 
                  [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-menu-tab>
 
     <jz-menu-tab [route]="'/sandbox'"
                  [btnTxt]="'Sandbox'"
-               
-                 [menuName]="menuName"
-                 [menuType]="'menu-view'">
+                 [menuName]="menuName">
+
     </jz-menu-tab>
 
-    <jz-menu-tab  [menuName]="menuName" [menuType]="'menu-view'"
+    <jz-menu-tab [menuName]="menuName" 
                  [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-menu-tab>
 
-    <jz-menu-tab [menuName]="menuName" [menuType]="'menu-view'"
+    <jz-menu-tab [menuName]="menuName" 
                  [route]="'/admin'" [btnTxt]="'Admin'"></jz-menu-tab>
 
   </jz-menu-container>

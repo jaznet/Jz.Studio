@@ -1,5 +1,6 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jz-button',
@@ -26,7 +27,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   constructor(
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    private router: Router) {
   }
 
   ngOnInit(): void { }
@@ -58,6 +60,9 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
 
   onClicked() {
     console.log(this.element.nativeElement);
+    if (this.route) {
+      this.router.navigate([this.route]);
+    }
   }
 
 }
