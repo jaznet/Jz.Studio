@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Orientation } from '../orientation';
 
 @Component({
   selector: 'jz-menu-base',
@@ -8,7 +7,7 @@ import { Orientation } from '../orientation';
 })
 export class MenuBaseComponent implements OnInit {
 
-  orientation: Orientation = Orientation.horizontal;
+  direction: string = 'horizontal';
   menuName: string = 'base';
  // isMenuVisible: string = 'collapsed';
 

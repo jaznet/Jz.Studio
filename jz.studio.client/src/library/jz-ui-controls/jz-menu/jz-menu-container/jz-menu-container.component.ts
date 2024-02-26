@@ -5,7 +5,6 @@ import { JzMenuService } from '../jz-menu.service';
 import { AppEventsService } from '../../../../app/app-services/app-events.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.component';
-import { Orientation } from '../orientation';
 
 @Component({
   selector: 'jz-menu-container',
@@ -24,7 +23,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   @Input() menuName: string | any;
   @Input() initialTemplate: TemplateRef<any> | any;
-  @Input() orientation: Orientation = Orientation.horizontal;
+  @Input() direction: string = 'horizontal';
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
 
@@ -42,13 +41,35 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.menuEvents = menuEvents;
+  
   }
 
   ngOnInit() {
+  
     //this.renderer.setStyle(this.ele, 'visibility', 'collapse');
   }
 
   ngAfterViewInit(): void {
+  
+    console.log("zmenu:", this.menuName, '-', this.direction);
+    switch (this.direction) {
+      case 'horizontal':
+        //  console.log('eRef:',this.elementRef);
+        //this.flex = 'row';
+        //this.borderBottom = '0 solid transparent';
+        //this.paddingBottom = '0';
+        //this.marginBottom = '-6px';
+        break;
+      case 'vertical':
+        //this.flex = 'column';
+        //this.paddingRight = '0';
+        //this.borderRight = '0 solid transparent';
+        break;
+      default:
+        // this.flex = 'row';
+        break;
+    }
+
     this.appEvents.viewSelectedEvent.subscribe((view:any) => {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
@@ -64,28 +85,10 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     this.currentTemplate = this.initialTemplate;
     this.changeDetector.detectChanges();
 
-    console.log("menu:", this.menuName,'-',this.orientation);
-    switch (this.orientation) {
-      case Orientation.horizontal:
-      //  console.log('eRef:',this.elementRef);
-        //this.flex = 'row';
-        //this.borderBottom = '0 solid transparent';
-        //this.paddingBottom = '0';
-        //this.marginBottom = '-6px';
-        break;
-      case Orientation.vertical:
-        //this.flex = 'column';
-        //this.paddingRight = '0';
-        //this.borderRight = '0 solid transparent';
-        break;
-      default:
-       // this.flex = 'row';
-        break;
-    }
+   
 
 
-    if (this.tabPanel != undefined) {
-    }
+
   }
 
   onMenuItemSelected(selectedItem: MenuItemBaseComponent) {

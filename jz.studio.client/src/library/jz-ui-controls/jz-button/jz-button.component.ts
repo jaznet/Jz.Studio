@@ -59,7 +59,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   onClicked() {
-    console.log(this.element.nativeElement);
+   // console.log(this.element.nativeElement);
     if (this.route) {
       this.router.navigate([this.route]);
     }

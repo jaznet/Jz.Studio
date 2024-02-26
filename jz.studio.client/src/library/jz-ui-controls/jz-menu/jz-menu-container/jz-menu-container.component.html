@@ -1,13 +1,8 @@
- <!--<div #menuPanel class="menu-panel {{orientation}}">-->
-<!--<ng-container #itemContainer *ngTemplateOutlet="currentTemplate"></ng-container>-->
-<!--</div>-->
-<!--<menu-tab-panel #tabpanel class="menu-panel {{orientation}}" [orientation]="'{{orientation}}'">
-  <ng-content></ng-content>
-</menu-tab-panel>-->
+
 
 <div #menuPanel
-     class='menu-tab-panel {{orientation}}'
-     [orientation]="'Orientation.vertical'"
-     [ngStyle]="{'flex-flow': 'column'}">
+     class='menu-tab-panel'
+   
+     [ngStyle]="{'flex-flow': 'row'}">
   <ng-content></ng-content>
 </div>

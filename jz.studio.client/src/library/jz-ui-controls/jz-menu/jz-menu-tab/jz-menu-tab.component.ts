@@ -1,7 +1,6 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
-import { Orientation } from '../orientation';
 import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.component';
 
 @Component({
@@ -10,7 +9,7 @@ import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.co
   styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent  implements OnInit, AfterViewInit, AfterViewChecked {
-  @Input() orientation: Orientation = Orientation.vertical;
+  @Input() orientation: string = 'vertical';
   @Input() menu_name: string = 'menu name';
   @Input() tab_name: string = 'tab name';
   @Input() isDefault: boolean = false;
@@ -52,7 +51,7 @@ export class JzMenuTabComponent  implements OnInit, AfterViewInit, AfterViewChec
    ngAfterViewInit(): void {
 
     switch (this.orientation) {
-      case Orientation.horizontal:
+      case 'horizontal':
         this.borderRadius = '8px 8px 0 0 ';
         this.borderBottom = '';  
 
@@ -79,7 +78,7 @@ export class JzMenuTabComponent  implements OnInit, AfterViewInit, AfterViewChec
           this.paddingLeft = '1px';
         }
         break;
-      case Orientation.vertical:
+      case 'vertical':
         this.borderRadius = '8px 0 0 8px';
         this.borderRight = '';
         this.paddingRight = '12px';

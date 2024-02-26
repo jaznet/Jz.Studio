@@ -1,5 +1,5 @@
+
 import { AfterViewInit, Component, HostBinding, Input } from '@angular/core';
-import { Orientation } from '../../../../library/jz-ui-controls/jz-menu/orientation';
 import { MenuBaseComponent } from '../../../../library/jz-ui-controls/jz-menu/jz-menu-base/jz-menu-base.component';
 
 @Component({
@@ -11,8 +11,7 @@ export class SandboxMenuComponent extends MenuBaseComponent implements AfterView
   /* @HostBinding('class') classes = 'fit-to-content';*/
   @Input() override menuName: string = '';
 
-
-  override orientation: Orientation = Orientation.vertical;
+  override direction: string = 'vertical';
  // menu_name: string = 'sandbox'
 
   ngAfterViewInit(): void {

@@ -1,7 +1,6 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, Host, HostBinding, Input, OnInit, QueryList, Renderer2, ViewChild } from '@angular/core';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { JzMenuService } from '../jz-menu.service';
-import { Orientation } from '../orientation';
 
 @Component({
   selector: 'jz-menu',
@@ -11,7 +10,7 @@ import { Orientation } from '../orientation';
 export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('style.width') width: string = 'fit-content';
   @HostBinding('style.height') height: string = '100%';
-  @Input() orientation: Orientation = Orientation.vertical;
+  @Input() orientation: string = 'vertical';
   @Input() menu_name: string = '';
   @ViewChild('menuContainer', { static: false }) menuContainer!: ElementRef;
   @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
@@ -45,13 +44,13 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
   ngAfterViewInit(): void {
     console.log("menu:", this.menu_name);
     switch (this.orientation) {
-      case Orientation.horizontal:
+      case 'horizontal':
         this.flex = 'row';
         this.borderBottom = '0 solid transparent';
         this.paddingBottom = '0';
         this.marginBottom = '-6px';
         break;
-      case Orientation.vertical:
+      case 'vertical':
         this.flex = 'column'; 
         this.paddingRight = '0';
         this.borderRight = '0 solid transparent';
@@ -110,7 +109,7 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
 
   updateOrientation(tab: JzMenuTabComponent) {
     switch (this.orientation) {
-      case Orientation.horizontal:
+      case 'horizontal':
         tab.paddingTop = '8px';
         tab.paddingRight = '8px';
         tab.paddingBottom = '8px';
@@ -123,7 +122,7 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
         tab.marginLeft = '12px';
         tab.marginRight = '12px';
         break;
-      case Orientation.vertical:
+      case 'vertical':
         tab.paddingTop = '8px';
         tab.paddingRight = '0';
         tab.paddingBottom = '8px';
