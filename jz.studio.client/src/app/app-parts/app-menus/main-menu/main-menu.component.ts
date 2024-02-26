@@ -13,7 +13,6 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   @HostBinding('class') classes = 'fit-to-parent';
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
-  override orientation: Orientation = Orientation.horizontal;
   //menu_name: string = 'main;'
   isMainMenuVisible ='collapse';
 

@@ -43,7 +43,7 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
   }
 
   ngAfterViewInit(): void {
-
+    console.log("menu:", this.menu_name);
     switch (this.orientation) {
       case Orientation.horizontal:
         this.flex = 'row';

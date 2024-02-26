@@ -11,6 +11,7 @@ export class SandboxMenuComponent extends MenuBaseComponent implements AfterView
   /* @HostBinding('class') classes = 'fit-to-content';*/
   @Input() override menuName: string = '';
 
+
   override orientation: Orientation = Orientation.vertical;
  // menu_name: string = 'sandbox'
 

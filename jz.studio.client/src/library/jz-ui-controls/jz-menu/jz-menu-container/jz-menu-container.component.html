@@ -5,6 +5,9 @@
   <ng-content></ng-content>
 </menu-tab-panel>-->
 
-<div #menuPanel class='menu-tab-panel {{orientation}}'>
+<div #menuPanel
+     class='menu-tab-panel {{orientation}}'
+     [orientation]="'Orientation.vertical'"
+     [ngStyle]="{'flex-flow': 'column'}">
   <ng-content></ng-content>
 </div>
