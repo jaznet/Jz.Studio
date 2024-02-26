@@ -42,13 +42,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   {
     this.renderer = rendererFactory.createRenderer(null, null);
     this.menuEvents = menuEvents;
-  
   }
 
-  ngOnInit() {
-  
-    //this.renderer.setStyle(this.ele, 'visibility', 'collapse');
-  }
+  ngOnInit() {  }
 
   ngAfterViewInit(): void {
   
@@ -56,17 +52,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
-        //  console.log('eRef:',this.elementRef);
-        //this.flex = 'row';
-        //this.borderBottom = '0 solid transparent';
-        //this.paddingBottom = '0';
-        //this.marginBottom = '-6px';
         break;
       case 'vertical':
         this.flexflow = 'column';
-        //this.flex = 'column';
-        //this.paddingRight = '0';
-        //this.borderRight = '0 solid transparent';
         console.log(this.elementRef.nativeElement);
         break;
       default:
@@ -92,7 +80,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   onMenuItemSelected(selectedItem: MenuItemBaseComponent) {
 
-    if (selectedItem.menuName !== this.menuName) return;
+    if (selectedItem.menuItemName !== this.menuName) return;
     console.log('menu item',this.jztabs);
     this.jztabs.forEach((menuitem: JzTabComponent) => {
       menuitem._tab.nativeElement.classList.remove('selected');

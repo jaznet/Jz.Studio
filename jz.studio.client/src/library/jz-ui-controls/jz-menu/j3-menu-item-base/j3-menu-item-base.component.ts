@@ -9,7 +9,7 @@ import { JzMenuService } from '../jz-menu.service';
 })
 export class MenuItemBaseComponent implements OnInit, AfterViewInit {
 
-  @Input() menuName: string = 'not set';
+  @Input() menuItemName: string = 'not set';
   @Input() menuItem: string = 'not set';
   @Input() state: string = 'not set';
 
@@ -21,7 +21,7 @@ export class MenuItemBaseComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    console.log(this.menuName, this.menuItem);
+    console.log(this.menuItemName, this.menuItem);
   }
 
   menuItemSelected(): void {

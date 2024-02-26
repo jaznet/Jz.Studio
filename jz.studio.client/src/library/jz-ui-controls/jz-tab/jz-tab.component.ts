@@ -20,7 +20,7 @@ export class JzTabComponent extends MenuItemBaseComponent implements OnInit, Aft
   @Input() btnTxt = "Tab Button";
   @Input() initialTemplate: TemplateRef<any> | any;
   @Input() orientation: string = '';
-  @Input() override menuName: string = '';
+  @Input() override menuItemName: string = '';
   @Input() override state: string = '';
   @Input() tabBorder!: HTMLDivElement;
   @Input() menuType: string='notset';
