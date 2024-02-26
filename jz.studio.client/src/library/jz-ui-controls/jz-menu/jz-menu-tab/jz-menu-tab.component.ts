@@ -8,13 +8,14 @@ import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.co
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent  implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @Input() route: string = "";
   @Input() orientation: string = 'vertical';
   @Input() menu_name: string = 'menu name';
   @Input() tab_name: string = 'tab name';
   @Input() isDefault: boolean = false;
   @Input() menuType: string = 'notset';
-  @Input() route:string = "";
+ 
   @Input() btnTxt = "Tab Button";
   @Input() menuName: string = 'not set';
 
