@@ -35,7 +35,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   constructor(
     private appEvents: AppEventsService,
-    private elementRef:ElementRef,
+     elementRef:ElementRef,
     private rendererFactory: RendererFactory2,
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
@@ -67,7 +67,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     console.log("menu:", this.menuName,'-',this.orientation);
     switch (this.orientation) {
       case Orientation.horizontal:
-        console.log('eRef:',this.elementRef);
+      //  console.log('eRef:',this.elementRef);
         //this.flex = 'row';
         //this.borderBottom = '0 solid transparent';
         //this.paddingBottom = '0';
