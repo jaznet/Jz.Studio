@@ -1,6 +1,8 @@
-
 <!--<jz-menu-container [ngStyle]="{'flex-flow':'column'}" style="flex-flow:column;display:flex">-->
-<jz-menu-container >
+<jz-menu-container class="menu-vertical menu-view"
+                   [menuName]="'sandbox'"
+                   [orientation]="'vertical'"
+                   [tabs]="tabs">
 
   <jz-menu-tab [route]="'/home'"
                [btnTxt]="'Home'"
@@ -12,7 +14,8 @@
                [menuName]="'sandbox'">
   </jz-menu-tab>
 
-  <jz-menu-tab [tab_name]="'home'"  [menuName]="'sandbox'"> [isDefault]="true">
+  <jz-menu-tab [tab_name]="'home'" [menuName]="'sandbox'">
+    [isDefault]="true">
     <jz-button class="jz-button"
                [text]="'Home'"
                routerLink="/sandbox/home">
