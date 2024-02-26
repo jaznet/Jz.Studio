@@ -27,6 +27,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
 
+  flexflow: string = 'row';
   private renderer: Renderer2;
   currentTemplate: TemplateRef<any> | any;
   menuEvents: JzMenuService | any;
@@ -34,7 +35,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   constructor(
     private appEvents: AppEventsService,
-     elementRef:ElementRef,
+    private elementRef:ElementRef,
     private rendererFactory: RendererFactory2,
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
@@ -54,6 +55,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     console.log("zmenu:", this.menuName, '-', this.direction);
     switch (this.direction) {
       case 'horizontal':
+        this.flexflow = 'row';
         //  console.log('eRef:',this.elementRef);
         //this.flex = 'row';
         //this.borderBottom = '0 solid transparent';
@@ -61,9 +63,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
         //this.marginBottom = '-6px';
         break;
       case 'vertical':
+        this.flexflow = 'column';
         //this.flex = 'column';
         //this.paddingRight = '0';
         //this.borderRight = '0 solid transparent';
+        console.log(this.elementRef.nativeElement);
         break;
       default:
         // this.flex = 'row';
@@ -84,11 +88,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
     this.currentTemplate = this.initialTemplate;
     this.changeDetector.detectChanges();
-
-   
-
-
-
   }
 
   onMenuItemSelected(selectedItem: MenuItemBaseComponent) {
