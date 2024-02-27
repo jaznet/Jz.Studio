@@ -85,7 +85,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
       //menuitem._tab.nativeElement.classList.remove('selected');
       //menuitem._btn.selection('deselect');
-
+      console.log('tab:', menuitem.tab_name);
       if (menuitem.menuItem === selectedItem.menuItem) {
         menuitem._btn.selection('select');
         /*if (this.tabs) menuitem._tab.nativeElement.classList.add('selected');*/
