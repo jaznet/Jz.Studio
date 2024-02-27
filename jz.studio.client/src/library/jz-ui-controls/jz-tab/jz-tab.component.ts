@@ -20,7 +20,7 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   @Input() btnTxt = "Tab Button";
   @Input() initialTemplate: TemplateRef<any> | any;
   @Input() orientation: string = '';
-  @Input() override menuItemName: string = '';
+  @Input() override menuName: string = '';
   @Input() override state: string = '';
   @Input() tabBorder!: HTMLDivElement;
   @Input() menuType: string='notset';
@@ -41,8 +41,6 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   orient = 'v';
   override menuItem = 'login';
   
-
-    
   override ngOnInit(): void { }
 
   override ngAfterViewInit(): void {

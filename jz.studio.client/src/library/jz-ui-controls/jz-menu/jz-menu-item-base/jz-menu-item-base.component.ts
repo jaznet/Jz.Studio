@@ -9,7 +9,7 @@ import { JzMenuService } from '../jz-menu.service';
 })
 export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
-  @Input() menuItemName: string = 'not set';
+  @Input() menuName: string = 'not set';
   @Input() menuItem: string = 'not set';
   @Input() state: string = 'not set';
   @Input() direction: string = 'not set';
