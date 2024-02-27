@@ -23,7 +23,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
     private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
     private appEvents: AppEventsService,
-    private menuEvents: JzMenuService,
+    protected menuEvents: JzMenuService,
     private renderer:Renderer2
   ) { }
 

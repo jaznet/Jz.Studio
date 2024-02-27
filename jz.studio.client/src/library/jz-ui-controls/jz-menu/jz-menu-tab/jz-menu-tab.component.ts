@@ -39,6 +39,6 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   marginLeft: string = '0';
 
   onTabClicked() {
-   // this.menuEvents.tabSelected(this);
+    this.menuEvents.tabSelected(this);
   }
 }

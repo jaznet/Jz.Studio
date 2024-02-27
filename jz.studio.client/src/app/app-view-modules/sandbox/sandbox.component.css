@@ -5,5 +5,5 @@
 }*/
 
 .view-router-container {
-    background-color:darkgoldenrod;
+  background-color: var(--plt-clr-2);
 }
