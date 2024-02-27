@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuItemBaseComponent } from './j3-menu-item-base.component';
+import { MenuItemBaseComponent } from './jz-menu-item-base.component';
 
 describe('MenuItemBaseComponent', () => {
   let component: MenuItemBaseComponent;

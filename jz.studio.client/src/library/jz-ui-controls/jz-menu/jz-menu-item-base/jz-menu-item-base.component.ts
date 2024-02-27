@@ -4,10 +4,10 @@ import { JzMenuService } from '../jz-menu.service';
 
 @Component({
   selector: 'j3-menu-item-base',
-  templateUrl: './j3-menu-item-base.component.html',
-  styleUrls: ['./j3-menu-item-base.component.css']
+  templateUrl: './jz-menu-item-base.component.html',
+  styleUrls: ['./jz-menu-item-base.component.css']
 })
-export class MenuItemBaseComponent implements OnInit, AfterViewInit {
+export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
   @Input() menuItemName: string = 'not set';
   @Input() menuItem: string = 'not set';
@@ -49,11 +49,11 @@ export class MenuItemBaseComponent implements OnInit, AfterViewInit {
     //  this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
 
-    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: MenuItemBaseComponent) => {
+    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
   //    this.onMenuItemSelected(selectedItem);
     });
 
-    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: MenuItemBaseComponent) => {
+    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
  //     this.onMenuItemSelected(selectedItem);
     });
 

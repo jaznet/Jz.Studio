@@ -3,7 +3,7 @@ import { Renderer2 } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { AfterViewInit, Component, HostBinding, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { JzButtonComponent } from '../jz-button/jz-button.component';
-import { MenuItemBaseComponent } from '../jz-menu/j3-menu-item-base/j3-menu-item-base.component';
+import { JzMenuItemBaseComponent } from '../jz-menu/jz-menu-item-base/jz-menu-item-base.component';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { JzMenuService } from '../jz-menu/jz-menu.service';
 
@@ -12,7 +12,7 @@ import { JzMenuService } from '../jz-menu/jz-menu.service';
   templateUrl: './jz-tab.component.html',
   styleUrls: ['./jz-tab.component.css']
 })
-export class JzTabComponent extends MenuItemBaseComponent implements OnInit, AfterViewInit {
+export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
   /*@HostBinding('class') classes = 'tab';*/
   @Input() route = "";
@@ -75,7 +75,6 @@ export class JzTabComponent extends MenuItemBaseComponent implements OnInit, Aft
      // this.button.classList.add('selected');
     //  console.log(this.state);
     }
-
   }
 
   tabSelected() {

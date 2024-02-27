@@ -1,20 +1,23 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
-import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.component';
+import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
 
 @Component({
   selector: 'jz-menu-tab',
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent extends MenuItemBaseComponent  implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() menuType: string = 'notset';
  
   @Input() btnTxt = "Tab Button";
   @Input() menuName: string = 'not set';
+
+  _tab: any;
+  _btn: any;
 
   borderRadius!: string;
   border: string = '1px solid #ffffff';

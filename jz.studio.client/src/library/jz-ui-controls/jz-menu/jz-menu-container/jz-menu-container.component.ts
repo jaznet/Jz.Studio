@@ -1,10 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { JzTabComponent } from '../../jz-tab/jz-tab.component';
 import { JzMenuService } from '../jz-menu.service';
 import { AppEventsService } from '../../../../app/app-services/app-events.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
-import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.component';
+import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
+import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 
 @Component({
   selector: 'jz-menu-container',
@@ -17,9 +17,10 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
   @ViewChild('tabpanel', { static: false }) tabPanel: MenuTabPanelComponent | any;
   @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
-  @ContentChildren(JzTabComponent) jztabs!: QueryList<JzTabComponent>;
-  @ContentChildren(JzTabComponent, { descendants: true }) childComponents!: QueryList<JzTabComponent>;
-  @ContentChildren(JzTabComponent, { descendants: true, read: ElementRef }) childElementRefs!: QueryList<ElementRef>;
+
+  @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
+  @ContentChildren(JzMenuTabComponent, { descendants: true }) childComponents!: QueryList<JzMenuTabComponent>;
+  @ContentChildren(JzMenuTabComponent, { descendants: true, read: ElementRef }) childElementRefs!: QueryList<ElementRef>;
 
   @Input() menuName: string | any;
   @Input() initialTemplate: TemplateRef<any> | any;
@@ -66,11 +67,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
 
-    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: MenuItemBaseComponent) => {
+    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 
-    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: MenuItemBaseComponent) => {
+    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 
@@ -78,11 +79,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     this.changeDetector.detectChanges();
   }
 
-  onMenuItemSelected(selectedItem: MenuItemBaseComponent) {
+  onMenuItemSelected(selectedItem: JzMenuItemBaseComponent) {
     console.log('menu item name', selectedItem.menuItemName, this.menuName);
     if (selectedItem.menuItemName !== this.menuName) return;
     console.log('menu item',this.jztabs);
-    this.jztabs.forEach((menuitem: JzTabComponent) => {
+    this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
       menuitem._tab.nativeElement.classList.remove('selected');
       menuitem._btn.selection('deselect');
 
