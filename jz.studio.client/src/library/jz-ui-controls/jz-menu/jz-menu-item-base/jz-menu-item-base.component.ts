@@ -45,17 +45,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
         break;
     }
 
-    this.appEvents.viewSelectedEvent.subscribe((view: any) => {
-    //  this.renderer.addClass(this.menuPanelRef.nativeElement, view);
-    });
 
-    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
-  //    this.onMenuItemSelected(selectedItem);
-    });
-
-    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
- //     this.onMenuItemSelected(selectedItem);
-    });
 
   //  this.currentTemplate = this.initialTemplate;
     this.changeDetector.detectChanges();
