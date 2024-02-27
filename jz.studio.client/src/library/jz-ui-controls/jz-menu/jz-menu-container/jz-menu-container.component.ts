@@ -56,7 +56,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
         break;
       case 'vertical':
         this.flexflow = 'column';
-        console.log(this.elementRef.nativeElement);
         break;
       default:
         // this.flex = 'row';
