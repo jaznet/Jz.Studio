@@ -16,7 +16,7 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   @Input() btnTxt = "Tab Button";
   @Input() menuName: string = 'not set';
 
-  _tab: any;
+ /* _tab: any;*/
   _btn: any;
 
   borderRadius!: string;
