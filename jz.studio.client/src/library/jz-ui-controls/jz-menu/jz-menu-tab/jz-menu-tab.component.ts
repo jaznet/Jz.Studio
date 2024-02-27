@@ -8,12 +8,9 @@ import { MenuItemBaseComponent } from '../j3-menu-item-base/j3-menu-item-base.co
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent extends MenuItemBaseComponent  implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() route: string = "";
-  @Input() orientation: string = 'vertical';
-  @Input() menu_name: string = 'menu name';
   @Input() tab_name: string = 'tab name';
-  @Input() isDefault: boolean = false;
   @Input() menuType: string = 'notset';
  
   @Input() btnTxt = "Tab Button";
@@ -38,87 +35,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
   marginBottom: string = '0';
   marginLeft: string = '0';
 
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    private menuEvents: JzMenuService,
-    private menuService: JzMenuService
-  ) {
-  
-  }
-    ngOnInit(): void {
-       
-    }
-
-   ngAfterViewInit(): void {
-
-    switch (this.orientation) {
-      case 'horizontal':
-        this.borderRadius = '8px 8px 0 0 ';
-        this.borderBottom = '';  
-
-        if (this.isDefault) {
-          this.paddingTop = '8px';
-          this.paddingRight = '2px';
-          this.paddingBottom = '2px';
-          this.paddingLeft = '2px';
-
-          this.marginBottom = '5px';
-          this.marginLeft = '8px';
-          this.marginRight = '8px';
-          this.borderTop = '1px solid var(--plt-clr-3)';
-          this.borderRight = '1px solid  var(--plt-clr-3)';
-          this.borderBottom = '1px solid  var(--plt-clr-2)';
-          this.borderLeft = '1px solid  var(--plt-clr-3)';
-          this.backgroundColor = 'var(--plt-clr-2)';
-          this.isDefault = false;
-        }
-        else {
-          this.paddingTop = '8px';
-          this.paddingRight = '1px';
-          this.paddingBottom = '12px';
-          this.paddingLeft = '1px';
-        }
-        break;
-      case 'vertical':
-        this.borderRadius = '8px 0 0 8px';
-        this.borderRight = '';
-        this.paddingRight = '12px';
-        this.marginRight = '-1px';
-      
-        if (this.isDefault) {
-          this.paddingTop = '8px';
-          this.paddingRight = '1px';
-          this.paddingBottom = '8px';
-          this.paddingLeft = '8px';
-
-          this.marginTop = '8px';
-          this.marginBottom = '8px';
-          this.borderTop = '1px solid var(--plt-clr-3)';
-          this.borderRight = '1px solid  var(--plt-clr-2)';
-          this.borderBottom = '1px solid  var(--plt-clr-3)';
-          this.borderLeft = '1px solid  var(--plt-clr-3)';
-          this.backgroundColor = 'var(--plt-clr-2)';
-          this.isDefault = false;
-        }
-        else {
-          this.paddingTop = '0';
-          this.paddingRight = '8px';
-          this.paddingBottom = '0';
-          this.paddingLeft = '8px';
-        }
-        break;
-      default:
-        this.borderRadius = '8px 0 0 8px';    
-        break;
-    }
-
-  }
-
-  ngAfterViewChecked(): void {
-    this.changeDetector.detectChanges();
-  }
-
   onTabClicked() {
-    this.menuEvents.tabSelected(this);
+   // this.menuEvents.tabSelected(this);
   }
 }

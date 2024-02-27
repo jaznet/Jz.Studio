@@ -79,7 +79,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   }
 
   onMenuItemSelected(selectedItem: MenuItemBaseComponent) {
-
+    console.log('menu item name', selectedItem.menuItemName, this.menuName);
     if (selectedItem.menuItemName !== this.menuName) return;
     console.log('menu item',this.jztabs);
     this.jztabs.forEach((menuitem: JzTabComponent) => {

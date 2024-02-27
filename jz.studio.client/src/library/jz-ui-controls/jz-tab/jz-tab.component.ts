@@ -30,10 +30,10 @@ export class JzTabComponent extends MenuItemBaseComponent implements OnInit, Aft
   @ViewChild('tabButton', { static: false }) tabButtonRef: ElementRef | any;
 
   currentTemplate: TemplateRef<any> | any;
-  _elementRef;
+ // _elementRef;
   _type: string = 'set not';
-  _jzTab: JzTabComponent;
-  _orientation: string;
+ // _jzTab: JzTabComponent;
+ // _orientation: string;
   tabRoute = 'home';
   _tab!: any;
   _btn!: JzButtonComponent;
@@ -41,17 +41,7 @@ export class JzTabComponent extends MenuItemBaseComponent implements OnInit, Aft
   orient = 'v';
   override menuItem = 'login';
   
-  constructor(
-    menuService: JzMenuService,
-    appService: AppEventsService,
-    elementRef: ElementRef,
-    renderer: Renderer2
-  ) {
-    super();
-    this._elementRef = elementRef;
-    this._jzTab = this._elementRef.nativeElement;
-    this._orientation = this.orientation;
-  }
+
     
   override ngOnInit(): void { }
 

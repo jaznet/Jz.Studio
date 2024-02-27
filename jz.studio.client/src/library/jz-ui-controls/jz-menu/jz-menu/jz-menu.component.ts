@@ -73,11 +73,11 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
 
   updateTabs(selectedTab: JzMenuTabComponent) {
   
-    console.log('%cselectedTab:', 'color:yellow', selectedTab.menu_name, selectedTab.tab_name);
+    console.log('%cselectedTab:', 'color:yellow', selectedTab.menuName, selectedTab.tab_name);
     
     this.jztabs.forEach((tab: JzMenuTabComponent) => {
      // console.log(' tab:', tab.menu_name, tab.tab_name,tab.isDefault);
-      let log1 = tab.menu_name + tab.tab_name;
+      let log1 = tab.menuName + tab.tab_name;
 
       if (tab.isDefault) {
         tab.backgroundColor = 'var(--plt-clr-2)';
@@ -85,7 +85,7 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
         this.updateOrientation(tab);
       }
 
-      if (selectedTab.menu_name.includes(this.menu_name)) {
+      if (selectedTab.menuName.includes(this.menu_name)) {
           if (selectedTab.tab_name === tab.tab_name) {
           selectedTab.backgroundColor = "var(--plt-clr-2)";
           this.updateOrientation(tab);
