@@ -1,0 +1,7 @@
+
+.app-footer {
+  border-radius: 0 0 8px 8px;
+  color: var(--plt-txt-1);
+  background-color: var(--plt-clr-1);
+  padding: 6px;
+}

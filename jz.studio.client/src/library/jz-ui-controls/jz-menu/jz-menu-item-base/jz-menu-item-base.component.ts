@@ -31,7 +31,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
 
-    console.log("zmenu:", this.menuItemName, '-', this.direction);
+   // console.log("zmenu:", this.menuItemName, '-', this.direction);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';

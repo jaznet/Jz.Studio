@@ -3,14 +3,24 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppMenusModule } from './app-menus/app-menus.module';
+import { AppFooterComponent } from './app-footer/app-footer.component';
+import { AppContentComponent } from './app-content/app-content.component';
 
 @NgModule({
-  declarations: [AppHeaderComponent],
+  declarations: [
+    AppHeaderComponent,
+    AppFooterComponent,
+    AppContentComponent
+  ],
   imports: [
     CommonModule,
     RouterModule,
     AppMenusModule
   ],
-  exports: [AppHeaderComponent]
+  exports: [
+    AppHeaderComponent,
+    AppFooterComponent,
+    AppContentComponent
+  ]
 })
 export class AppPartsModule { }
