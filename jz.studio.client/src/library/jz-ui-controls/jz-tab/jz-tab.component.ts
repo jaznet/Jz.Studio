@@ -35,7 +35,7 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
  // _jzTab: JzTabComponent;
  // _orientation: string;
   tabRoute = 'home';
-  _tab!: any;
+ /* _tab!: any;*/
   _btn!: JzButtonComponent;
   button!: HTMLDivElement
   orient = 'v';
@@ -49,15 +49,15 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
    // console.log(this.menuType);
    // console.log('JZTAB: ' + this.btnTxt + ' :  ' + this.orientation);
    // this._btn = this.btn;
-    this._tab = this.tabBorderRef;
+ //   this._tab = this.tabBorderRef;
     this._btn = this.tabButtonRef;
 
     switch (this.orientation) {
       case 'horizontal':
-        this._tab.nativeElement.classList.add('horizontal');
+   //     this._tab.nativeElement.classList.add('horizontal');
         break;
       case 'vertical':
-        this._tab.nativeElement.classList.add('vertical');
+    //    this._tab.nativeElement.classList.add('vertical');
         break;
     }
 
