@@ -1,8 +1,8 @@
 
 .menu-tab {
-  border: 1px solid white;
+  border: 1px solid transparent;
 }
 
-.menu-tab.selected {
-  border: 1px solid yellow;
-}
+  .menu-tab.selected {
+    border: 1px solid white;
+  }
