@@ -19,7 +19,6 @@ export class ChoroStateComponent {
   @ViewChild('US_state', { static: true }) state_Ref!: ElementRef;
   @Output() choroStateEvent = new EventEmitter<any>();
   
-
   svg!: any;
   outerGroup: any;
   state: any;

@@ -20,7 +20,7 @@ const routes: Routes = [
       },
       {
         path: 'chorousa',
-        loadChildren: () => import('../sandbox/sandbox.module').then(m => m.SandboxModule)
+        loadChildren: () => import('../../../library/jz-choropleths/jz-choropleths.module').then(m => m.JzChoroplethsModule)
       },
      
     ]
