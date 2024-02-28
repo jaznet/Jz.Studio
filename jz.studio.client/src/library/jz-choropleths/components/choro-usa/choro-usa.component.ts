@@ -1,15 +1,15 @@
+
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { TopoService } from '../../services/topo.service';
-import * as d3Select from 'd3-selection';
 import * as d3 from 'd3';
+import * as d3Select from 'd3-selection';
 import { first, Subscription } from 'rxjs';
-import * as topojson from 'topojson';
 import { ChoroUtilsService } from '../../services/choro-utils.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { Feature, Point, GeoJsonProperties } from 'geojson';
-import { CountyPaintingStrategy } from '../../../jz-chorodash/paint-factory/interfaces/county-painting-strategy';
-import { PAINTING_STRATEGY_TOKEN } from '../../../jz-chorodash/jz-chorodash.module';
+import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
+import { PAINTING_STRATEGY_TOKEN } from '../../jz-choropleths.module';
+import * as topojson from 'topojson';
 
 @Component({
   selector: 'choro-usa',
@@ -26,7 +26,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   width: any;
   height: any;
 
-  private svg: any;
+  private svg: any; 
   private usa: any;
   private stateLayer: any;
   /*public countyLayer!: { attr: (arg0: string, arg1: string) => { (): any; new(): any; selectAll: { (arg0: string): { (): any; new(): any; data: { (arg0: Feature<Point, GeoJsonProperties>[]): { (): any; new(): any; enter: { (): { (): any; new(): any; append: { (arg0: string): { (): any; new(): any; style: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: (d: any) => string): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => any): { (): any; new(): any; attr: { (arg0: string, arg1: string): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => any): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => string): { (): any; new(): any; on: { (arg0: string, arg1: (m: any, d: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any, fips: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any) => void): { (): any; new(): any; append: { (arg0: string): { (): any; new(): any; text: { (arg0: (d: any) => string): { (): any; new(): any; attr: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: string): void; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; };*/

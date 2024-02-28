@@ -1,16 +1,13 @@
 
 import { Component, ElementRef, EventEmitter, HostBinding, Inject, Output, ViewChild } from '@angular/core';
 import { first, Subscription } from 'rxjs';
-import * as d3Select from 'd3-selection';
-import { GeoGeometryObjects, ExtendedFeature, ExtendedFeatureCollection, ExtendedGeometryCollection } from 'd3';
-import { GeoJsonProperties } from 'geojson';
 import * as d3 from 'd3';
-import * as topojson from 'topojson';
+import * as d3Select from 'd3-selection';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { CountyPaintingStrategy } from '../../../jz-chorodash/paint-factory/interfaces/county-painting-strategy';
-import { PAINTING_STRATEGY_TOKEN } from '../../../jz-chorodash/jz-chorodash.module';
+import { PAINTING_STRATEGY_TOKEN } from '../../jz-choropleths.module';
+import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
 
 @Component({
   selector: 'choro-state',

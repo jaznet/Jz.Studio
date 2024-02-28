@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import getBounds from 'svg-path-bounds';
 

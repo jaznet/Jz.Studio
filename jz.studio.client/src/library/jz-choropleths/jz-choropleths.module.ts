@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChoroUsaComponent } from './components/choro-usa/choro-usa.component';
 import { ChoroStateComponent } from './components/choro-state/choro-state.component';
+import { CountyPaintingStrategy } from './interface/county-painting-strategy';
 
-
+export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
 
 @NgModule({
   declarations: [

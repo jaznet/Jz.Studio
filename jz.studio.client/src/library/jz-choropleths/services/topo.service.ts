@@ -9,7 +9,7 @@ import { Topology, Objects } from 'topojson-specification';
 import { MyTopoJSON } from '../models/MyTopoJSON';
 
 
-@Injectable({
+@Injectable({  
   providedIn: 'root'
 })
 export class TopoService {
