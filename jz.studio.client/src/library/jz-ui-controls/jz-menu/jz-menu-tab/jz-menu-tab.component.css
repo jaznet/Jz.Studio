@@ -1,5 +1,8 @@
 
 .menu-tab {
- 
-border:1px solid white;
+  border: 1px solid white;
+}
+
+.menu-tab.selected {
+  border: 1px solid yellow;
 }
