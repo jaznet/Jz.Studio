@@ -17,10 +17,10 @@ const routes: Routes = [
         path: 'home',
         component: SandboxHomeComponent
       },
-      //{
-      //  path: 'chorousa',
-      //  component: Choro
-      //},
+      {
+        path: 'chorousa',
+        component: Choro
+      },
      
     ]
   }

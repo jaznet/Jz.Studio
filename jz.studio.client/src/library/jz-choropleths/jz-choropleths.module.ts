@@ -6,12 +6,16 @@ import { ChoroStateComponent } from './components/choro-state/choro-state.compon
 
 
 @NgModule({
-  declarations: [ChoroUsaComponent, ChoroStateComponent],
+  declarations: [
+    ChoroUsaComponent,
+    ChoroStateComponent
+  ],
   imports: [
     CommonModule
   ],
   exports: [
-    ChoroUsaComponent, ChoroStateComponent
+    ChoroUsaComponent,
+    ChoroStateComponent
   ]
 })
 export class JzChoroplethsModule { }
