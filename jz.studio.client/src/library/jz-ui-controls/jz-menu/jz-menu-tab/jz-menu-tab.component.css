@@ -4,5 +4,6 @@
 }
 
   .menu-tab.selected {
-    border: 1px solid var(--plt-clr-2);
+    background-color: var(--plt-clr-2);
+    border: 1px solid var(--plt-clr-3);
   }
