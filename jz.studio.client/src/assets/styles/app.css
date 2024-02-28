@@ -28,3 +28,9 @@ body {
 
 .view-router-container {
 }
+
+.app-view-home {
+    border: 1px solid white;
+    border-radius:9px;
+    color:white;
+}
