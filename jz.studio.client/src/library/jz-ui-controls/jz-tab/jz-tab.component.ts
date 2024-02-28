@@ -39,7 +39,6 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   _btn!: JzButtonComponent;
   button!: HTMLDivElement
   orient = 'v';
-  override menuItem = 'login';
   
   override ngOnInit(): void { }
 

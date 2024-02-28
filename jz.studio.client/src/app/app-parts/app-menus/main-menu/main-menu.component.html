@@ -10,31 +10,40 @@
 
     <!--<jz-tab [state]="'selected'" [menuItem]="'home'" [menuName]="menuName"-->
     <jz-menu-tab [route]="'/home'"
+                 [tabId]="'home'"
                  [btnTxt]="'Home'"
-                 [menuName]="'menu-main'"
-                 >
+                 [menuName]="'menu-main'" >
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/dataviz'"
+                 [tabId]="'dataviz'"
                  [btnTxt]="'Dataviz'"
-                 [menuName]="'menu-main'"
-                 >
+                 [menuName]="'menu-main'">
     </jz-menu-tab>
 
-    <jz-menu-tab [menuName]="menuName" 
-                 [route]="'/backoffice'" [btnTxt]="'Backoffice'"></jz-menu-tab>
+    <jz-menu-tab [route]="'/backoffice'"
+                 [tabId]="'backoffice'"
+                 [btnTxt]="'Backoffice'"
+                 [menuName]="'menu-main'">
+    </jz-menu-tab>
 
     <jz-menu-tab [route]="'/sandbox'"
+                 [tabId]="'sandbox'"
                  [btnTxt]="'Sandbox'"
                  [menuName]="'menu-main'">
+    </jz-menu-tab>
 
+    <jz-menu-tab [route]="'/architecture'"
+                 [tabId]="'architecture'"
+                 [btnTxt]="'Architecture'"
+                 [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [menuName]="'menu-main'" 
-                 [route]="'/architecture'" [btnTxt]="'Architecture'"></jz-menu-tab>
-
-    <jz-menu-tab [menuName]="'menu-main'" 
-                 [route]="'/admin'" [btnTxt]="'Admin'"></jz-menu-tab>
+                 [route]="'/admin'"
+                 [tabId]="'admin'"
+                 [btnTxt]="'Admin'">
+    </jz-menu-tab>
 
   </jz-menu-container>
 </div>
