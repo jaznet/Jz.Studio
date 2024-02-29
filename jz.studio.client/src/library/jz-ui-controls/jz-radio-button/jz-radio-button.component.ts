@@ -10,7 +10,7 @@ import { PaletteMgrService } from '../../../app/app-services/palette-mgr.service
 })
 export class JzRadioButtonComponent {
   @HostBinding('class') classes = 'palette-menu-container';
-  @Input() palette: string = 'onyx';
+  @Input() palette: string = '#172626';
   @ViewChild('circle', { static: false }) circle: ElementRef | undefined;
 
   constructor(
@@ -21,8 +21,8 @@ export class JzRadioButtonComponent {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    const fill = 'url(#pal-' + this.palette + ')';
-    this.renderer.setAttribute(this.circle?.nativeElement, 'fill', fill);
+    //const fill = this.palette;
+    //this.renderer.setAttribute(this.circle?.nativeElement, 'fill', fill);
   }
 
   setPalette() {

@@ -1,6 +1,13 @@
 
 <div>
-  <svg width="13.5" height="13.5">
-    <circle #circle class="st0" cx="45" cy="45" r="45" (click)="setPalette()" fill="white" />
+  <svg width="16" height="16">
+    <defs>
+      <radialGradient id="shine"
+                      cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+        <stop offset="0%" style="stop-color:rgb(255,255,255); stop-opacity:1" />
+        <stop offset="100%" style="stop-color:rgb(0,0,255); stop-opacity:1" />
+      </radialGradient>
+    </defs>
+    <circle #circle class="st0" cx="8" cy="8" r="8" (click)="setPalette()" fill="url(#shine)" />
   </svg>
 </div>
