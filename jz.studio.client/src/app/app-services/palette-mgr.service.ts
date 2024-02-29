@@ -10,7 +10,7 @@ export class PaletteMgrService {
   constructor() { }
 
   InitializePalette() {
-    this.ChangePalette('gold');
+    this.ChangePalette('gunmetal');
   }
 
   ChangePalette(palette: string) {
@@ -19,14 +19,14 @@ export class PaletteMgrService {
 
       case 'gunmetal':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#406B6B');
-        document.documentElement.style.setProperty('--plt-clr-2', '#172626');
-        document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
+        document.documentElement.style.setProperty('--plt-clr-1', '#172626 ');
+        document.documentElement.style.setProperty('--plt-clr-2', '#406B6B');
+        document.documentElement.style.setProperty('--plt-clr-3', '#789191');
         document.documentElement.style.setProperty('--plt-clr-4', '#c4c287');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
         document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 
-        document.documentElement.style.setProperty('--plt-txt-1', 'black');
+        document.documentElement.style.setProperty('--plt-txt-1', '#F5F5DC');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
         document.documentElement.style.setProperty('--plt-txt-4', 'black');

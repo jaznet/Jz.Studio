@@ -6,7 +6,7 @@
   border: 1px solid var(--plt-clr-2);
   border-radius: 8px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  background-color: var(--plt-clr-3);
+  background-color: var(--plt-clr-2);
 }
 
 .logon-title {
