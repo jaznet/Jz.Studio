@@ -16,7 +16,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
   @Input() flexflow: string = 'not set';
   @Input() isDefault: boolean = false;
 
-  isSelected: boolean = false;
+  @Input() isSelected: boolean = false;
   menuItemType!: string;
 
   constructor(

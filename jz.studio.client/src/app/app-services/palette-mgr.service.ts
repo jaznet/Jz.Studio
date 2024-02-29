@@ -17,13 +17,14 @@ export class PaletteMgrService {
     this.paletteChangedEvent.emit(palette);
     switch (palette) {
 
-      case 'gold':
+      case 'gunmetal':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#406B6B');
         document.documentElement.style.setProperty('--plt-clr-2', '#172626');
         document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
         document.documentElement.style.setProperty('--plt-clr-4', '#c4c287');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
+        document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 
         document.documentElement.style.setProperty('--plt-txt-1', 'black');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
@@ -31,21 +32,20 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');
 
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
-
         document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
         document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
 
         break;
 
-      case 'gold-2':
+      case 'gold':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#172626');
         document.documentElement.style.setProperty('--plt-clr-2', '#406B6B');
         document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
         document.documentElement.style.setProperty('--plt-clr-4', '#c4c287');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
+        document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 
         document.documentElement.style.setProperty('--plt-txt-1', 'black');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
