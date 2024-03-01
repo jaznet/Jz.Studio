@@ -3,9 +3,15 @@
   <svg width="16" height="16">
     <defs>
       <radialGradient id="shine"
-                      cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-        <stop offset="0%" style="stop-color:rgb(255,255,255); stop-opacity:1" />
-        <stop offset="100%" style="stop-color:rgb(0,0,255); stop-opacity:1" />
+                      cx="50%" cy="50%" r="50%" fx="50%" fy="50%"
+                       gradientTransform="matrix(-0.7344 -0.6788 -1.405 1.5408 140.4936 7.046)"
+                      >
+        <stop style="stop-color: #ffffff00" offset="0"/>
+        <stop style="stop-color: #ffffff20" offset="6.962559e-02" />
+        <stop style="stop-color: #ffffff40" offset="0.217" />
+        <stop style="stop-color: #ffffff60" offset="0.5109" />
+        <stop style="stop-color: #ffffff80" offset="0.9205" />
+        <stop style="stop-color: #ffffffA0" offset="1" />
       </radialGradient>
     </defs>
     <circle #circle class="st0" cx="8" cy="8" r="8" (click)="setPalette()" fill="url(#shine)" />
