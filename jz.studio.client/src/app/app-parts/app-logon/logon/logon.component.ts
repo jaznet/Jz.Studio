@@ -22,7 +22,6 @@ export class LogonComponent implements OnInit {
   }
 
   login() {
-
     if (this.loginForm.valid) {
       var username = this.loginForm.value.username;
       var password = this.loginForm.value.password;

@@ -8,8 +8,10 @@
 }
 
 .logo-container {
+  justify-content: center;
+  align-items: center; 
   width: 126px;
- /* border-right: 1px solid white;*/
+  /* border-right: 1px solid white;*/
 }
 
 .menu-container {

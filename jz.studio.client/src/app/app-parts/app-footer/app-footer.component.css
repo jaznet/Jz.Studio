@@ -4,4 +4,5 @@
   color: var(--plt-txt-1);
   background-color: var(--plt-clr-1);
   padding: 6px;
+  font-size:10px;
 }
