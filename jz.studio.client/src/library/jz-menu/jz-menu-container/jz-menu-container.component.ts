@@ -1,10 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { JzMenuService } from '../jz-menu.service';
-import { AppEventsService } from '../../../../app/app-services/app-events.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
+import { AppEventsService } from '../../../app/app-services/app-events.service';
 
 @Component({
   selector: 'jz-menu-container',
