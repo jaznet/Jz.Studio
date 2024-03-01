@@ -2,7 +2,6 @@
 .jz-button {
   width: 100%;
   color: var(--plt-txt-1);
-
 }
 
 jz-button {
@@ -14,7 +13,7 @@ jz-button {
   display: flex;
   align-items: center;
   font-size: 13px;
-  font-weight: bold;
+  /*font-weight: bold;*/
   width: 100%;
   height: 100%;
   justify-content: center;

@@ -14,6 +14,8 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
 
+  isHorizontal: boolean = true;
+
   borderRadius!: string;
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';
@@ -32,6 +34,14 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   marginRight: string = '0';
   marginBottom: string = '0';
   marginLeft: string = '0';
+
+  getClasses() {
+    return {
+      'selecteed': this.isSelected,
+      'horizontal': this.isHorizontal,
+      'vertical': !this.isHorizontal
+    }
+  }
 
   onTabClicked() {
     this.menuEvents.tabSelected(this);

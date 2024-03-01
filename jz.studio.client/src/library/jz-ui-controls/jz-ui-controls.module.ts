@@ -19,7 +19,7 @@ import { DayOfWeekComponent } from './day-of-week/day-of-week.component';
     JzButtonComponent,
     JzRadioButtonComponent,
     JzTabComponent,
-      DayOfWeekComponent
+    DayOfWeekComponent
   ]
 })
 export class JzUiControlsModule { }

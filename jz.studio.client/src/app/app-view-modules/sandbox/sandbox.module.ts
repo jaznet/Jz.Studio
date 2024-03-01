@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
 import { SandboxRouterModule } from './sandbox-router.module';
 import { JzUiControlsModule } from '../../../library/jz-ui-controls/jz-ui-controls.module';
-import { JzMenuModule } from '../../../library/jz-ui-controls/jz-menu/jz-menu.module';
+import { JzMenuModule } from '../../../library/jz-menu/jz-menu.module';
 
 @NgModule({
   declarations: [

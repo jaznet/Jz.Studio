@@ -4,8 +4,8 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { RouterModule } from '@angular/router';
 import { PaletteMenuComponent } from './palette-menu/palette-menu.component';
 import { JzUiControlsModule } from '../../../library/jz-ui-controls/jz-ui-controls.module';
-import { JzMenuModule } from '../../../library/jz-ui-controls/jz-menu/jz-menu.module';
 import { AppRoutingModule } from '../../app-routing.module';
+import { JzMenuModule } from '../../../library/jz-menu/jz-menu.module';
 
 @NgModule({
   declarations: [

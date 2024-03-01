@@ -12,37 +12,43 @@
     <jz-menu-tab [route]="'/home'"
                  [tabId]="'home'"
                  [btnTxt]="'Home'"
+                 [direction]="direction"
                  [menuName]="'menu-main'" >
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/dataviz'"
                  [tabId]="'dataviz'"
                  [btnTxt]="'Dataviz'"
+                 [direction]="direction"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/backoffice'"
                  [tabId]="'backoffice'"
                  [btnTxt]="'Backoffice'"
+                 [direction]="direction"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/sandbox'"
                  [tabId]="'sandbox'"
                  [btnTxt]="'Sandbox'"
+                 [direction]="direction"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/architecture'"
                  [tabId]="'architecture'"
                  [btnTxt]="'Architecture'"
+                 [direction]="direction"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [menuName]="'menu-main'" 
                  [route]="'/admin'"
                  [tabId]="'admin'"
-                 [btnTxt]="'Admin'">
+                 [btnTxt]="'Admin'"
+                 [direction]="direction">
     </jz-menu-tab>
 
   </jz-menu-container>

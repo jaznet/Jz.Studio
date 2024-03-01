@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
-import { AppEventsService } from '../../../../app/app-services/app-events.service';
+import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { JzMenuService } from '../jz-menu.service';
 
 @Component({
@@ -17,6 +17,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
   @Input() isDefault: boolean = false;
 
   @Input() isSelected: boolean = false;
+
   menuItemType!: string;
 
   constructor(

@@ -1,6 +1,6 @@
 
 import { AfterViewInit, Component, HostBinding, Input } from '@angular/core';
-import { MenuBaseComponent } from '../../../../library/jz-ui-controls/jz-menu/jz-menu-base/jz-menu-base.component';
+import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-menu-base.component';
 import { AppStateService } from '../../../app-services/app-state.service';
 
 @Component({
