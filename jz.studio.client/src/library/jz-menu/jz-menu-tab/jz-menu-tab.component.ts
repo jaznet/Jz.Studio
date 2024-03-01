@@ -35,13 +35,13 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   marginBottom: string = '0';
   marginLeft: string = '0';
 
-  getClasses() {
-    return {
-      'selecteed': this.isSelected,
-      'horizontal': this.isHorizontal,
-      'vertical': !this.isHorizontal
-    }
-  }
+  //getClasses() {
+  //  return {
+  //    'selecteed': this.isSelected,
+  //    'horizontal': this.isHorizontal,
+  //    'vertical': !this.isHorizontal
+  //  }
+  //}
 
   onTabClicked() {
     this.menuEvents.tabSelected(this);
