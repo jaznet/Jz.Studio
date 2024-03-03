@@ -17,7 +17,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
   @Input() isDefault: boolean = false;
 
   @Input() isSelected: boolean = false;
-  isHorizontal: boolean = true;
+  @Input() isHorizontal: boolean = true;
 
   menuItemType!: string;
 
