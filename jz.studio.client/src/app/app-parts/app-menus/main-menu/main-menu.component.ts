@@ -20,6 +20,7 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   }
    
   ngAfterViewInit(): void {
+    console.log('direction:', this.direction);
     this.app.toggleMenuEvent.subscribe((menu: any) => {
      // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
       this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';

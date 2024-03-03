@@ -14,8 +14,6 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
 
-  isHorizontal: boolean = true;
-
   borderRadius!: string;
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';
