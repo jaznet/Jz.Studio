@@ -49,7 +49,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
   
-    console.log("zmenu:", this.menuName, '-', this.direction);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -58,7 +57,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
         this.flexflow = 'column';
         break;
       default:
-        // this.flex = 'row';
+        this.flexflow = 'row';
         break;
     }
 
@@ -83,6 +82,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     if (selectedItem.menuName !== this.menuName) return;
  //   console.log('menu item',this.jztabs);
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+     // selectedItem.isSelected = false;
       //menuitem._tab.nativeElement.classList.remove('selected');
       //menuitem._btn.selection('deselect');
       console.log('tab:', menuitem.btnTxt);
