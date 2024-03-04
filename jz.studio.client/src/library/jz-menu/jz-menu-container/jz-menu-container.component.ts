@@ -29,19 +29,19 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() tabs: boolean = true;
 
   flexflow: string = 'row';
-  private renderer: Renderer2;
+ 
   currentTemplate: TemplateRef<any> | any;
   menuEvents: JzMenuService | any;
   menuContainer: HTMLDivElement | any;
 
   constructor(
     private appEvents: AppEventsService,
-    private elementRef:ElementRef,
-    private rendererFactory: RendererFactory2,
+    private elementRef: ElementRef,
+    private renderer: Renderer2,
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
   {
-    this.renderer = rendererFactory.createRenderer(null, null);
+   
     this.menuEvents = menuEvents;
   }
 
@@ -78,24 +78,14 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   }
 
   onMenuItemSelected(selectedItem: JzMenuItemBaseComponent) {
-    console.log('menuitemname', selectedItem.menuName, this.menuName);
+   // console.log('menuitemname', selectedItem.menuName, this.menuName);
     if (selectedItem.menuName !== this.menuName) return;
- //   console.log('menu item',this.jztabs);
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-     // selectedItem.isSelected = false;
-      //menuitem._tab.nativeElement.classList.remove('selected');
-      //menuitem._btn.selection('deselect');
-      console.log('tab:', menuitem.btnTxt);
+      menuitem.isSelected = false;
       if (menuitem.tabId === selectedItem.tabId) {
-      //  console.log('id:', selectedItem.tabId);
-        selectedItem.isSelected = true;
-        /*menuitem._btn.selection('select');*/
-        /*if (this.tabs) menuitem._tab.nativeElement.classList.add('selected');*/
-      
+        menuitem.isSelected = true;
       }
     });
-
-    console.groupEnd();
   }
 
   public SelectItem(tab: string) {
