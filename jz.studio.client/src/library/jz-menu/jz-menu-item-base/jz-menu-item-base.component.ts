@@ -19,8 +19,6 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
   @Input() isSelected: boolean = false;
   @Input() isHorizontal: boolean = true;
 
-  menuItemType!: string;
-
   constructor(
     private elementRef: ElementRef,
     private changeDetector: ChangeDetectorRef,
@@ -29,11 +27,13 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
     private renderer:Renderer2
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  //  console.log('direction:', this.direction);
+  }
 
   ngAfterViewInit(): void {
 
-    console.log("zmenu:",  '-', this.direction);
+    console.log("jzmenu:",this.menuName,  '-', this.direction);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -41,14 +41,14 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
         break;
       case 'vertical':
         this.flexflow = 'column'; 
-        this.isHorizontal = false;
-      
+        this.isHorizontal = false; 
         break;
       default:
-        // this.flex = 'row';
+        this.flexflow = 'row';
+        this.isHorizontal = true;
         break;
     }
-    console.log('isHorizontal', this.isHorizontal);
+  //  console.log('isHorizontal', this.isHorizontal);
 
 
   //  this.currentTemplate = this.initialTemplate;

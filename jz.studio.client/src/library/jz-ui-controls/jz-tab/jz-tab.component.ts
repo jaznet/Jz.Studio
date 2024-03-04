@@ -3,9 +3,7 @@ import { Renderer2 } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { AfterViewInit, Component, HostBinding, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { JzButtonComponent } from '../jz-button/jz-button.component';
-import { JzMenuItemBaseComponent } from '../jz-menu/jz-menu-item-base/jz-menu-item-base.component';
-import { AppEventsService } from '../../../app/app-services/app-events.service';
-import { JzMenuService } from '../jz-menu/jz-menu.service';
+import { JzMenuItemBaseComponent } from '../../jz-menu/jz-menu-item-base/jz-menu-item-base.component';
 
 @Component({
   selector: 'jz-tab',
@@ -14,9 +12,7 @@ import { JzMenuService } from '../jz-menu/jz-menu.service';
 })
 export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
-  /*@HostBinding('class') classes = 'tab';*/
   @Input() route = "";
-//  @Input() btn: J3ButtonComponent | undefined;
   @Input() btnTxt = "Tab Button";
   @Input() initialTemplate: TemplateRef<any> | any;
   @Input() orientation: string = '';
@@ -30,12 +26,8 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   @ViewChild('tabButton', { static: false }) tabButtonRef: ElementRef | any;
 
   currentTemplate: TemplateRef<any> | any;
- // _elementRef;
   _type: string = 'set not';
- // _jzTab: JzTabComponent;
- // _orientation: string;
   tabRoute = 'home';
- /* _tab!: any;*/
   _btn!: JzButtonComponent;
   button!: HTMLDivElement
   orient = 'v';
@@ -43,10 +35,7 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   override ngOnInit(): void { }
 
   override ngAfterViewInit(): void {
-   // console.log(this.menuType);
-   // console.log('JZTAB: ' + this.btnTxt + ' :  ' + this.orientation);
-   // this._btn = this.btn;
- //   this._tab = this.tabBorderRef;
+  
     this._btn = this.tabButtonRef;
 
     switch (this.orientation) {
@@ -58,24 +47,9 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
         break;
     }
 
-    //this._elementRef.nativeElement.classList.add('jztab');
-    //if (this.orientation === 'vertical') {
-    //  this._elementRef.nativeElement.classList.add('vertical');
-    //} else if (this.orientation === 'horizontal') {
-    //  this._elementRef.nativeElement.classList.add('vertical');
-    //}
-  
-   
-  //  this.button = this.tabButtonRef.background;
-
-    if (this.state === 'selected') {
-     // this.button.classList.add('selected');
-    //  console.log(this.state);
-    }
   }
 
   tabSelected() {
-  //  menuService.menuItemSelected(this);
     console.log('tab ',this.route);
   }
 
