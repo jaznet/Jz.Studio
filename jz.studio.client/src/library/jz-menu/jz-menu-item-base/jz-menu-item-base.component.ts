@@ -1,3 +1,4 @@
+
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { JzMenuService } from '../jz-menu.service';
@@ -14,8 +15,8 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
   @Input() state: string = 'not set';
   @Input() direction: string = 'not set';
   @Input() flexflow: string = 'not set';
-  @Input() isDefault: boolean = false;
 
+  @Input() isDefault: boolean = false;
   @Input() isSelected: boolean = false;
   @Input() isHorizontal: boolean = true;
 
@@ -27,9 +28,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
     private renderer:Renderer2
   ) { }
 
-  ngOnInit(): void {
-  //  console.log('direction:', this.direction);
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     

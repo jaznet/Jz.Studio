@@ -40,8 +40,8 @@ export class PaletteMgrService {
 
       case 'gold':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#172626');
-        document.documentElement.style.setProperty('--plt-clr-2', '#406B6B');
+        document.documentElement.style.setProperty('--plt-clr-1', '#406B6B');
+        document.documentElement.style.setProperty('--plt-clr-2', '#172626');
         document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
         document.documentElement.style.setProperty('--plt-clr-4', '#c4c287');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');

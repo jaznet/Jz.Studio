@@ -41,7 +41,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
   {
-   
     this.menuEvents = menuEvents;
   }
 
