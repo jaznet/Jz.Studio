@@ -2,10 +2,9 @@
 <jz-menu-container class="menu-vertical menu-view"
                    [menuName]="'sandbox'"
                    [direction]="'vertical'"
-                   [isHorizontal]="false"
-                   >
+                   [isHorizontal]="false" >
 
-  <jz-menu-tab [route]="'/home'"
+  <jz-menu-tab [route]="'sandbox/home'"
                [tabId]="'home'"
                [btnTxt]="'Home'"
                [menuName]="'sandbox'"
@@ -13,61 +12,18 @@
                [isSelected]=true>
   </jz-menu-tab>
 
-  <jz-menu-tab [route]="'/dataviz'"
+  <jz-menu-tab [route]="'sandbox/dataviz'"
                [tabId]="'dataviz'"
                [btnTxt]="'Dataviz'"
-               [direction]="direction"
-               [menuName]="'sandbox'">
+               [menuName]="'sandbox'"
+               [direction]="direction">
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/chorousa'"
                [tabId]="'chorousa'"
                [btnTxt]="'ChoroPleth'"
-               [direction]="direction"
-               [menuName]="'sandbox'">
+               [menuName]="'sandbox'"
+               [direction]="direction">
   </jz-menu-tab>
-
-  <!--<jz-menu-tab [tab_name]="'home'" [menuName]="'sandbox'">
-    [isDefault]="true">
-    <jz-button class="jz-button"
-               [text]="'Home'"
-               routerLink="/sandbox/home">
-    </jz-button>
-  </jz-menu-tab>
-
-  <jz-menu-tab [tab_name]="'chorousa'" [menuName]="'sandbox'">
-    <jz-button class="jz-button"
-               [text]="'ChoroDash'"
-               routerLink="/sandbox/chorodash">
-    </jz-button>
-  </jz-menu-tab>
-
-  <jz-menu-tab [tab_name]="'technical'" [menuName]="'sandbox'">
-    <jz-button class="jz-button"
-               [text]="'Technical'"
-               routerLink="/sandbox/technical">
-    </jz-button>
-  </jz-menu-tab>
-
-  <jz-menu-tab [tab_name]="'jz_docking'" [menuName]="'sandbox'">
-    <jz-button class="jz-button"
-               [text]="'Docking 1'"
-               routerLink="/sandbox/docking">
-    </jz-button>
-  </jz-menu-tab>
-
-  <jz-menu-tab [tab_name]="'docking'" [menuName]="'sandbox'">
-    <jz-button class="jz-button"
-               [text]="'Docking'"
-               routerLink="/sandbox/docker">
-    </jz-button>
-  </jz-menu-tab>
-
-  <jz-menu-tab [tab_name]="'jz_flex'" [menuName]="'sandbox'">
-    <jz-button class="jz-button"
-               [text]="'JZ Flex'"
-               routerLink="/sandbox/jzflex">
-    </jz-button>
-  </jz-menu-tab>-->
 
 </jz-menu-container>
