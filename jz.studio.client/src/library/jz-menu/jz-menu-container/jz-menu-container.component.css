@@ -1,3 +1,18 @@
+
+.menu-tab-panel.horizontal {
+  margin-bottom: -1px;
+  z-index: 10;
+  position: relative;
+}
+
+
+
+.menu-tab-panel.vertical {
+  margin-right: -1px;
+  z-index: 10;
+  position: relative;
+}
+
 .menu-panel-title {
   color: var(--jz-palette-text-1);
   font-size: 12px;
@@ -38,15 +53,7 @@
     flex-flow: column;
   }
 
-.menu-tab-panel.horizontal {
-}
 
-  .menu-tab-panel.horizontal > .tab-border {
-  }
-
-.menu-tab-panel.vertical {
-    flex-flow:column;
-}
 
   .menu-tab-panel.vertical > .tab-border {
   }

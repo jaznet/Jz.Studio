@@ -7,3 +7,13 @@
     background-color: var(--plt-clr-2);
     border: 1px solid var(--plt-clr-x);
   }
+
+    .menu-tab.selected.horizontal {
+      border-radius: 9px 9px 0 0;
+      border-bottom-color: var(--plt-clr-2); 
+    }
+
+    .menu-tab.selected.vertical {
+      border-radius: 9px 0 0 9px;
+      border-right-color: var(--plt-clr-2);
+    }

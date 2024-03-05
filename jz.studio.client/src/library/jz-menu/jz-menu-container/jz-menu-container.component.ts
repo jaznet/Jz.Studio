@@ -27,6 +27,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() direction: string = 'horizontal';
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
+  @Input() isHorizontal: boolean = true;
 
   flexflow: string = 'row';
  

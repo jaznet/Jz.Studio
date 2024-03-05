@@ -34,7 +34,7 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   
   override ngOnInit(): void { }
 
-  override ngAfterViewInit(): void {
+   ngAfterViewInit(): void {
   
     this._btn = this.tabButtonRef;
 

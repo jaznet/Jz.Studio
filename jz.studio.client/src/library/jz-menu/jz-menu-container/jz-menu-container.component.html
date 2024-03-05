@@ -1,6 +1,8 @@
 
 <div #menuPanel
      class='menu-tab-panel'
-     [ngStyle]="{'flex-flow': flexflow}">
+     [ngStyle]="{'flex-flow': flexflow}"
+     [ngClass]="{'horizontal': isHorizontal, 'vertical': !isHorizontal}">
+  >
   <ng-content></ng-content>
 </div>

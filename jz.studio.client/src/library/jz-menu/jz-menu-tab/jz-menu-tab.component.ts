@@ -33,6 +33,26 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   marginBottom: string = '0';
   marginLeft: string = '0';
 
+  ngAfterViewInit(): void {
+
+    switch (this.direction) {
+      case 'horizontal':
+        this.flexflow = 'row';
+        this.isHorizontal = true;
+        break;
+      case 'vertical':
+        this.flexflow = 'column';
+        this.isHorizontal = false;
+        break;
+      default:
+        this.flexflow = 'row';
+        this.isHorizontal = true;
+        break;
+    }
+
+   
+  }
+
   //getClasses() {
   //  return {
   //    'selecteed': this.isSelected,

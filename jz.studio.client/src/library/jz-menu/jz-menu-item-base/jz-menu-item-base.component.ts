@@ -1,5 +1,5 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { JzMenuService } from '../jz-menu.service';
 
@@ -8,7 +8,7 @@ import { JzMenuService } from '../jz-menu.service';
   templateUrl: './jz-menu-item-base.component.html',
   styleUrls: ['./jz-menu-item-base.component.css']
 })
-export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
+export class JzMenuItemBaseComponent implements OnInit, AfterViewChecked {
 
   @Input() menuName: string = 'not set';
   @Input() tabId: string = 'not set';
@@ -30,28 +30,7 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
-  ngAfterViewInit(): void {
-    
-    switch (this.direction) {
-      case 'horizontal':
-        this.flexflow = 'row';
-        this.isHorizontal = true;
-        break;
-      case 'vertical':
-        this.flexflow = 'column'; 
-        this.isHorizontal = false; 
-        break;
-      default:
-        this.flexflow = 'row';
-        this.isHorizontal = true;
-        break;
-    }
-  //  console.log('isHorizontal', this.isHorizontal);
 
-
-  //  this.currentTemplate = this.initialTemplate;
-    this.changeDetector.detectChanges();
-  }
 
   ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
