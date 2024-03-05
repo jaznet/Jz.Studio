@@ -30,6 +30,7 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
   paddingBottom: string = '4px';
   paddingLeft: string = '4px';
   paddingRight: string = '4px';
+
   marginBottom: string = '4px';
   
   constructor(

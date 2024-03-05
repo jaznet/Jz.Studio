@@ -25,7 +25,7 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
 
   paddingTop: string = '8px';
   paddingRight: string = '8px';
-  paddingBottom: string = '4px';
+  paddingBottom: string = '8px';
   paddingLeft: string = '8px';
   
   marginTop: string = '0';
