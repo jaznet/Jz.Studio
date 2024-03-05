@@ -78,13 +78,16 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   }
 
   onMenuItemSelected(selectedItem: JzMenuItemBaseComponent) {
+    console.log('menu:',selectedItem.menuName);
     if (selectedItem.menuName !== this.menuName) return;
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
       menuitem.isSelected = false;
       if (menuitem.tabId === selectedItem.tabId) {
         menuitem.isSelected = true;
       }
-    });
+      console.log('tab:', menuitem.btnTxt);
+    }
+    );
   }
 
   public SelectItem(tab: string) {
