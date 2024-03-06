@@ -22,7 +22,10 @@ const routes: Routes = [
         path: 'chorousa',
         loadChildren: () => import('../../library/jz-choropleths/jz-choropleths.module').then(m => m.JzChoroplethsModule)
       },
-     
+      {
+        path: 'docking',
+        loadChildren: () => import('../../library/jz-docking/jz-docking.module').then(m => m.JzDockingModule)
+      },
     ]
   }
 ];
