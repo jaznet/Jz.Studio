@@ -45,6 +45,8 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+    this.topoService.getTopology();
+
     this.topoService.dataReady$.pipe(
       first((value: boolean) => value === true)  // Wait until the value becomes true
     ).subscribe(() => {
