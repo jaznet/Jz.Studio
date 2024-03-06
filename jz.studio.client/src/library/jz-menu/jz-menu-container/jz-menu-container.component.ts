@@ -85,7 +85,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
       if (menuitem.tabId === selectedItem.tabId) {
         menuitem.isSelected = true;
       }
-      console.log('tab:', menuitem.btnTxt);
+     // console.log('tab:', menuitem.btnTxt);
     }
     );
   }

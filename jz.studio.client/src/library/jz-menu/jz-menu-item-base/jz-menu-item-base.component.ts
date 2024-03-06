@@ -30,8 +30,6 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void { }
 
-
-
   ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
   }

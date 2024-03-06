@@ -3,159 +3,29 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 1258 650" style="enable-background:new 0 0 1258 650;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#A8A5C6;stroke:#9F9F9F;stroke-width:1;stroke-miterlimit:9.9996;}
-	.st1{fill:none;stroke:#9F9F9F;stroke-miterlimit:10.0036;}
-	.st2{fill:#A8A5C6;stroke:#9F9F9F;stroke-miterlimit:10;}
-	.st3{fill:#4A668C;}
-	.st4{fill:#A9A5C6;}
-	.st5{fill:none;}
-	.st6{fill:#FFFEF1;}
+	.st0{fill:#A9A5C6;}
+	.st1{fill:#4A668C;}
+	.st2{fill:none;}
 </style>
-<g>
-	<rect x="493.6" y="235.8" transform="matrix(0.5 -0.866 0.866 0.5 99.6138 824.1588)" class="st0" width="540" height="180"/>
-	<g>
-		<line class="st1" x1="899.7" y1="-0.1" x2="899.7" y2="179.9"/>
-		<line class="st1" x1="809.7" y1="89.9" x2="989.7" y2="89.9"/>
-		<circle class="st2" cx="899.7" cy="89.9" r="90"/>
-		<circle class="st2" cx="899.7" cy="89.9" r="9"/>
-	</g>
-	<g>
-		<line class="st1" x1="630.7" y1="467.9" x2="630.7" y2="647.9"/>
-		<line class="st1" x1="540.7" y1="557.9" x2="720.7" y2="557.9"/>
-		<circle class="st2" cx="630.7" cy="557.9" r="90"/>
-		<circle class="st2" cx="630.7" cy="557.9" r="9"/>
-	</g>
-	<rect x="90.7" y="467.9" class="st2" width="540" height="180"/>
-	<g>
-		<line class="st1" x1="90.7" y1="467.9" x2="90.7" y2="647.9"/>
-		<line class="st1" x1="0.7" y1="557.9" x2="180.7" y2="557.9"/>
-		<circle class="st2" cx="90.7" cy="557.9" r="90"/>
-		<circle class="st2" cx="90.7" cy="557.9" r="9"/>
-	</g>
-</g>
-<g>
-	<g>
-		<g>
-			<line class="st1" x1="358" y1="0.6" x2="358" y2="180.6"/>
-			<line class="st1" x1="268" y1="90.6" x2="448" y2="90.6"/>
-			<circle class="st2" cx="358" cy="90.6" r="90"/>
-			<circle class="st2" cx="358" cy="90.6" r="9"/>
-		</g>
-		<g>
-			<line class="st1" x1="898" y1="0.7" x2="898" y2="180.7"/>
-			<line class="st1" x1="808" y1="90.7" x2="988" y2="90.7"/>
-			<circle class="st2" cx="898" cy="90.7" r="90"/>
-			<circle class="st2" cx="898" cy="90.7" r="9"/>
-		</g>
-		<rect x="358" y="-0.1" class="st2" width="540" height="180"/>
-	</g>
-	<g>
-		<g>
-			<line class="st1" x1="628" y1="469.4" x2="628" y2="649.4"/>
-			<line class="st1" x1="538" y1="559.4" x2="718" y2="559.4"/>
-			<circle class="st2" cx="628" cy="559.4" r="90"/>
-			<circle class="st2" cx="628" cy="559.4" r="9"/>
-		</g>
-		<g>
-			<line class="st1" x1="1168" y1="469.5" x2="1168" y2="649.5"/>
-			<line class="st1" x1="1078" y1="559.5" x2="1258" y2="559.5"/>
-			<circle class="st2" cx="1168" cy="559.5" r="90"/>
-			<circle class="st2" cx="1168" cy="559.5" r="9"/>
-		</g>
-		<rect x="628" y="468.7" class="st2" width="540" height="180"/>
-	</g>
-	<rect x="507.7" y="213.4" transform="matrix(0.5 -0.866 0.866 0.5 126.1121 825.1627)" class="st0" width="540" height="180"/>
-</g>
-<g>
-	<line class="st3" x1="839.7" y1="359.6" x2="840.7" y2="362.6"/>
-	<g>
-		<line class="st3" x1="627.7" y1="1.8" x2="627.7" y2="181.8"/>
-		<line class="st3" x1="537.7" y1="91.8" x2="717.7" y2="91.8"/>
-		<circle class="st3" cx="627.7" cy="91.8" r="90"/>
-		<circle class="st3" cx="627.7" cy="91.8" r="9"/>
-	</g>
-	<rect x="221.7" y="236.6" transform="matrix(0.5 -0.866 0.866 0.5 -37.0074 589.0644)" class="st3" width="540" height="180"/>
-	<g>
-		<line class="st3" x1="897.7" y1="469.8" x2="897.7" y2="649.8"/>
-		<line class="st3" x1="807.7" y1="559.8" x2="987.7" y2="559.8"/>
-		<circle class="st3" cx="897.7" cy="559.8" r="90"/>
-		<circle class="st3" cx="897.7" cy="559.8" r="9"/>
-	</g>
-	<g>
-		<line class="st3" x1="357.7" y1="469.8" x2="357.7" y2="649.8"/>
-		<line class="st3" x1="267.7" y1="559.8" x2="447.7" y2="559.8"/>
-		<circle class="st3" cx="357.7" cy="559.8" r="90"/>
-		<circle class="st3" cx="357.7" cy="559.8" r="9"/>
-	</g>
-	<rect x="673.2" y="56.7" transform="matrix(0.866 -0.5 0.5 0.866 -61.1041 425.37)" class="st3" width="180" height="540"/>
-</g>
-<polygon class="st4" points="658.3,326 762.2,506 866.1,326 762.2,146 "/>
-<line class="st5" x1="1002.8" y1="-354.3" x2="1003.8" y2="-351.3"/>
-<g>
-	<line class="st5" x1="790.8" y1="-712.1" x2="790.8" y2="-532.1"/>
-	<line class="st5" x1="700.8" y1="-622.1" x2="880.8" y2="-622.1"/>
-	<circle class="st6" cx="790.8" cy="-622.1" r="90"/>
-	<circle class="st6" cx="790.8" cy="-622.1" r="9"/>
-</g>
-<rect x="384.8" y="-477.3" transform="matrix(0.5 -0.866 0.866 0.5 662.8171 373.4169)" class="st6" width="540" height="180"/>
-<g>
-	<line class="st5" x1="1060.8" y1="-244.1" x2="1060.8" y2="-64.1"/>
-	<line class="st5" x1="970.8" y1="-154.1" x2="1150.8" y2="-154.1"/>
-	<circle class="st6" cx="1060.8" cy="-154.1" r="90"/>
-	<circle class="st6" cx="1060.8" cy="-154.1" r="9"/>
-</g>
-<g>
-	<line class="st5" x1="520.8" y1="-244.1" x2="520.8" y2="-64.1"/>
-	<line class="st5" x1="430.8" y1="-154.1" x2="610.8" y2="-154.1"/>
-	<circle class="st6" cx="520.8" cy="-154.1" r="90"/>
-	<circle class="st6" cx="520.8" cy="-154.1" r="9"/>
-</g>
-<rect x="836.3" y="-657.2" transform="matrix(0.866 -0.5 0.5 0.866 317.7014 411.2883)" class="st6" width="180" height="540"/>
-<g>
-	<line class="st5" x1="-359.3" y1="-802.1" x2="-359.3" y2="-622.1"/>
-	<line class="st5" x1="-449.3" y1="-712.1" x2="-269.3" y2="-712.1"/>
-	<circle class="st6" cx="-359.3" cy="-712.1" r="90"/>
-	<circle class="st6" cx="-359.3" cy="-712.1" r="9"/>
-</g>
-<rect x="-629.1" y="-544.2" transform="matrix(0.866 -0.5 0.5 0.866 64.8779 -306.2735)" class="st6" width="180" height="540"/>
-<rect x="-809.1" y="213.4" transform="matrix(0.5 -0.866 0.866 0.5 -532.2765 -315.1557)" class="st6" width="540" height="180"/>
-<g>
-	<line class="st3" x1="627.7" y1="469.8" x2="627.7" y2="649.8"/>
-	<line class="st3" x1="537.7" y1="559.8" x2="717.7" y2="559.8"/>
-	<circle class="st3" cx="627.7" cy="559.8" r="90"/>
-	<circle class="st3" cx="627.7" cy="559.8" r="9"/>
-</g>
-<g>
-	<g>
-		<line class="st1" x1="1432.1" y1="-432.6" x2="1432.1" y2="-252.6"/>
-		<line class="st1" x1="1342.1" y1="-342.6" x2="1522.1" y2="-342.6"/>
-		<circle class="st2" cx="1432.1" cy="-342.6" r="90"/>
-		<circle class="st2" cx="1432.1" cy="-342.6" r="9"/>
-	</g>
-	<g>
-		<line class="st1" x1="1972.1" y1="-432.5" x2="1972.1" y2="-252.5"/>
-		<line class="st1" x1="1882.1" y1="-342.5" x2="2062.1" y2="-342.5"/>
-		
-			<ellipse transform="matrix(0.1602 -0.9871 0.9871 0.1602 1994.2821 1658.9976)" class="st2" cx="1972.1" cy="-342.5" rx="90" ry="90"/>
-		<circle class="st2" cx="1972.1" cy="-342.5" r="9"/>
-	</g>
-	<rect x="1432.1" y="-433.3" class="st2" width="540" height="180"/>
-</g>
-<g>
-	<g>
-		<line class="st1" x1="1702.1" y1="36.2" x2="1702.1" y2="216.2"/>
-		<line class="st1" x1="1612.1" y1="126.2" x2="1792.1" y2="126.2"/>
-		<circle class="st2" cx="1702.1" cy="126.2" r="90"/>
-		<circle class="st2" cx="1702.1" cy="126.2" r="9"/>
-	</g>
-	<g>
-		<line class="st1" x1="2242.1" y1="36.3" x2="2242.1" y2="216.3"/>
-		<line class="st1" x1="2152.1" y1="126.3" x2="2332.1" y2="126.3"/>
-		<circle class="st2" cx="2242.1" cy="126.3" r="90"/>
-		<circle class="st2" cx="2242.1" cy="126.3" r="9"/>
-	</g>
-	<rect x="1702.1" y="35.5" class="st2" width="540" height="180"/>
-</g>
-<rect x="1581.8" y="-219.8" transform="matrix(0.5 -0.866 0.866 0.5 1038.3107 1538.7806)" class="st0" width="540" height="180"/>
-<polygon class="st4" points="662,317.3 765.9,497.3 869.8,317.3 765.9,137.3 "/>
+<rect x="629.5" y="437" class="st0" width="362.7" height="90"/>
+<rect x="266.8" y="437" class="st0" width="362.7" height="90"/>
+<rect x="446.8" y="122" class="st0" width="362.7" height="90"/>
+<circle class="st1" cx="809.5" cy="482" r="45"/>
+<line class="st2" x1="839.2" y1="461.6" x2="840.2" y2="464.6"/>
+<circle class="st1" cx="629.5" cy="167" r="45"/>
+<circle class="st1" cx="449.5" cy="482" r="45"/>
+<line class="st2" x1="449.5" y1="482" x2="629.5" y2="167"/>
+<line class="st2" x1="809.5" y1="482" x2="629.5" y2="167"/>
+<rect x="673.5" y="143" transform="matrix(0.8678 -0.497 0.497 0.8678 -65.5254 399.8013)" class="st1" width="90" height="360"/>
+<line class="st2" x1="629.5" y1="122" x2="629.5" y2="212"/>
+<line class="st2" x1="584.5" y1="167" x2="674.5" y2="167"/>
+<circle class="st1" cx="629.5" cy="167" r="2"/>
+<rect x="358.8" y="279.2" transform="matrix(0.497 -0.8678 0.8678 0.497 -9.5695 631.8252)" class="st1" width="362.7" height="90"/>
+<rect x="538.6" y="280.2" transform="matrix(0.497 -0.8678 0.8678 0.497 79.9682 788.3029)" class="st0" width="362.7" height="90"/>
+<circle class="st0" cx="809.5" cy="167" r="45"/>
+<circle class="st0" cx="629.5" cy="482" r="45"/>
+<circle class="st0" cx="269.5" cy="482" r="45"/>
+<circle class="st0" cx="449.5" cy="167" r="45"/>
+<circle class="st0" cx="989.5" cy="482" r="45"/>
+<circle class="st1" cx="629.5" cy="482" r="45"/>
 </svg>

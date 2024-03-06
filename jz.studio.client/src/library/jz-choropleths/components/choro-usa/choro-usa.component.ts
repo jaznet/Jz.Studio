@@ -53,7 +53,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.countyDataService.getCountyDataObservable().subscribe(data => {
       if (data) {
-      //  this.paintCounties(data);
+       // this.paintCounties(data);
       }
     });
   }
