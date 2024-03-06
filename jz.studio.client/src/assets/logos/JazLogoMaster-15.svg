@@ -3,31 +3,36 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 788 425" style="enable-background:new 0 0 788 425;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#4B678D;}
-	.st1{fill:#FFFFFF;}
-	.st2{fill:none;}
-	.st3{fill:#C9AD55;}
-	.st4{fill:none;stroke:#010101;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;}
+	.st1{fill:none;}
+	.st2{fill:#416B6B;}
+	.st3{fill:#6FA288;}
 </style>
-<rect x="394.2" y="281.9" class="st0" width="320" height="140"/>
-<circle class="st0" cx="74.2" cy="351.9" r="70"/>
-<polygon class="st1" points="394.1,72.3 233.6,349.3 554.6,349.3 "/>
-<rect x="74.2" y="281.9" class="st0" width="320" height="140"/>
-<rect x="233.1" y="1.9" class="st0" width="320" height="140"/>
-<line class="st2" x1="394.2" y1="72.8" x2="234.2" y2="348.9"/>
-<line class="st2" x1="394.2" y1="72.8" x2="554.2" y2="348.9"/>
-<line class="st2" x1="234.2" y1="348.9" x2="554.2" y2="348.9"/>
-<circle class="st0" cx="394.2" cy="351.9" r="70"/>
-<circle class="st0" cx="554.6" cy="70.9" r="70"/>
-<circle class="st0" cx="233.2" cy="71.3" r="70"/>
-<circle class="st0" cx="714.2" cy="351.9" r="70"/>
+<polygon class="st0" points="394.1,72.3 233.6,349.3 554.6,349.3 "/>
+<line class="st1" x1="394.2" y1="72.8" x2="234.2" y2="348.9"/>
+<line class="st1" x1="394.2" y1="72.8" x2="554.2" y2="348.9"/>
+<line class="st1" x1="234.2" y1="348.9" x2="554.2" y2="348.9"/>
 <g>
-	<rect x="155.3" y="142.4" transform="matrix(0.5 -0.866 0.866 0.5 -26.3146 379.2258)" class="st3" width="320" height="140"/>
-	<circle class="st3" cx="234.8" cy="351.9" r="70"/>
-	<circle class="st3" cx="555.2" cy="350.8" r="70"/>
-	<circle class="st3" cx="395.2" cy="72.8" r="70"/>
-	<rect x="315.8" y="142.4" transform="matrix(0.5 0.866 -0.866 0.5 421.834 -305.8338)" class="st3" width="320" height="140"/>
+	<rect x="395.2" y="277.3" class="st2" width="320" height="140"/>
+	<rect x="234.1" class="st2" width="320" height="140"/>
+	<circle class="st2" cx="562" cy="70" r="70"/>
+	<g>
+		<circle class="st2" cx="234.2" cy="70" r="70"/>
+	</g>
+	<circle class="st2" cx="715.2" cy="347.3" r="70"/>
+	<rect x="319.9" y="140.8" transform="matrix(0.5 -0.866 0.866 0.5 57.3542 521.0283)" class="st2" width="320" height="140"/>
+	<circle class="st2" cx="400" cy="347.9" r="70"/>
 </g>
-<rect x="314.9" y="140.8" transform="matrix(0.5 -0.866 0.866 0.5 54.8542 516.6981)" class="st0" width="320" height="140"/>
-<circle class="st4" cx="394.2" cy="353" r="70"/>
+<circle class="st2" cx="562" cy="68.6" r="70"/>
+<rect x="81.2" y="278.3" class="st2" width="320" height="140"/>
+<circle class="st2" cx="401.2" cy="348.1" r="70"/>
+<circle class="st2" cx="81.2" cy="347.3" r="70"/>
+<g>
+	<rect x="159.1" y="139.6" transform="matrix(0.5 -0.866 0.866 0.5 -21.9308 381.1525)" class="st3" width="320" height="140"/>
+	<circle class="st3" cx="238.7" cy="349.1" r="70"/>
+	<circle class="st3" cx="559" cy="348" r="70"/>
+	<circle class="st3" cx="399" cy="70" r="70"/>
+	<rect x="319.6" y="139.6" transform="matrix(0.5 0.866 -0.866 0.5 421.3107 -310.5937)" class="st3" width="320" height="140"/>
+</g>
+<rect x="325" y="133.1" transform="matrix(0.5 -0.866 0.866 0.5 66.6476 521.5641)" class="st2" width="320" height="140"/>
 </svg>

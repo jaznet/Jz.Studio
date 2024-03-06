@@ -41,7 +41,6 @@ export class TopoService {
         console.log('topo', topology);
       
         this.setDataReady(true);
-
       })
       .catch((error:string): void => {
         console.error("An error occurred while loading the JSON data:", error);
