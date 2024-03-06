@@ -4,6 +4,12 @@
    border:1px solid white;
 }*/
 
+.app-view-home {
+  border: 1px solid var(--plt-clr-x);
+  border-radius: 9px;
+  color: var(--plt-txt-2);
+}
+
 .view-router-container {
   border-radius: 9px;
   background-color: var(--plt-clr-2);
