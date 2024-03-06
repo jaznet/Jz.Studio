@@ -1,6 +1,6 @@
 
 import { Component, HostBinding } from '@angular/core';
-import { DayOfWeekComponent } from '../../../../library/jz-ui-controls/day-of-week/day-of-week.component';
+//import { DayOfWeekComponent } from '../../../../library/jz-ui-controls/day-of-week/day-of-week.component';
 
 @Component({
   selector: 'app-sandbox-home',
