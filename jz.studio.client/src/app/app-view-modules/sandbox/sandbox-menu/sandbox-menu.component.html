@@ -2,7 +2,7 @@
 <jz-menu-container class="menu-vertical menu-view"
                    [menuName]="'sandbox'"
                    [direction]="'vertical'"
-                   [isHorizontal]="false" >
+                   [isHorizontal]="false">
 
   <jz-menu-tab [route]="'sandbox/home'"
                [tabId]="'home'"
@@ -12,6 +12,13 @@
                [isSelected]=true>
   </jz-menu-tab>
 
+  <jz-menu-tab [route]="'sandbox/chorousa'"
+               [tabId]="'chorousa'"
+               [btnTxt]="'Chorodash'"
+               [menuName]="'sandbox'"
+               [direction]="direction">
+  </jz-menu-tab>
+
   <jz-menu-tab [route]="'sandbox/dataviz'"
                [tabId]="'dataviz'"
                [btnTxt]="'Dataviz'"
@@ -19,11 +26,5 @@
                [direction]="direction">
   </jz-menu-tab>
 
-  <jz-menu-tab [route]="'sandbox/chorousa'"
-               [tabId]="'chorousa'"
-               [btnTxt]="'ChoroPleth'"
-               [menuName]="'sandbox'"
-               [direction]="direction">
-  </jz-menu-tab>
 
 </jz-menu-container>

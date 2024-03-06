@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'choro-dash',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './choro-dash.component.css'
 })
 export class ChoroDashComponent {
-
+  @HostBinding('class') classes = 'fit-to-parent';
 }
