@@ -128,7 +128,7 @@ export class Dialog {
         }
     }
 
-  resize(width: number, height: number ) {
+  resize(width: number | undefined, height: number | undefined ) {
         this.resizable.resize(width, height);
     }
 

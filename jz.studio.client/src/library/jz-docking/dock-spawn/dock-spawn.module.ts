@@ -12,6 +12,8 @@ import { FillDockContainer } from './src/FillDockContainer';
 import { Dialog } from './src/Dialog';
 import { SplitterDockContainer } from './src/SplitterDockContainer';
 import { TabPage } from './src/TabPage';
+import { DockGraphSerializer } from './src/DockGraphSerializer';
+import { DockGraphDeserializer } from './src/DockGraphDeserializer';
 
 
 
@@ -27,7 +29,9 @@ import { TabPage } from './src/TabPage';
     DockConfig,
     FillDockContainer,
     Dialog,
-    TabPage
+    TabPage,
+    DockGraphSerializer,
+    DockGraphDeserializer
   ]
   ,
   imports: [

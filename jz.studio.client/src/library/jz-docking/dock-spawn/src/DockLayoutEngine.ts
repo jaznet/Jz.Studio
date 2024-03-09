@@ -153,7 +153,7 @@ export class DockLayoutEngine {
         this.dockManager.notifyOnUnDock(node);
     }
 
-    reorderTabs(node: DockNode, handle: TabHandle, state: string, index: number) {
+    reorderTabs(node: DockNode|undefined|null, handle: TabHandle, state: string, index: number) {
         let N = node.children.length;
         let nodeIndexToDelete = state === 'left' ? index : index + 1;
         if (state == 'right' && nodeIndexToDelete >= node.children.length)

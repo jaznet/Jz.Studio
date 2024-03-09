@@ -3,6 +3,8 @@
 import {  IDockContainerWithSize, ILayoutEventListener, IState } from "../dock-spawn.module";
 import { Dialog } from "./Dialog";
 import { DockConfig } from "./DockConfig";
+import { DockGraphDeserializer } from "./DockGraphDeserializer";
+import { DockGraphSerializer } from "./DockGraphSerializer";
 import { DockLayoutEngine } from "./DockLayoutEngine";
 import { DockManagerContext } from "./DockManagerContext";
 import { DockModel } from "./DockModel";
@@ -45,8 +47,8 @@ export class DockManager {
     public getElementCallback!: (state: IState) => Promise<{ element: HTMLElement, title: string }>;
 
     private _config: DockConfig;
-    private _activePanel!: PanelContainer;
-    private _lastPanelNotADialog!: PanelContainer|null;
+    private _activePanel!: PanelContainer|null;
+    private _lastPanelNotADialog!: PanelContainer|undefined|null;
 
     private _activeDocument!: PanelContainer|null;
 
@@ -313,7 +315,9 @@ export class DockManager {
                 bestMatch = topNode;
 
                 // Keep looking future down
-                [].push.apply(stack, topNode!.children);
+            /*  [].push.apply(stack, topNode!.children);*/
+              let array: DockNode[] | undefined;
+              array!.push.apply(stack, topNode!.children);
             }
         }
         return bestMatch;
@@ -428,7 +432,8 @@ export class DockManager {
         }
 
         let ratios: number[] | null = null;
-        let oldSplitter: SplitterDockContainer;
+      /* let oldSplitter: SplitterDockContainer;*/
+      let oldSplitter: SplitterDockContainer | undefined;
         if (referenceNode.parent && referenceNode.parent.container) {
             oldSplitter = referenceNode.parent.container as SplitterDockContainer;
             if (oldSplitter.getRatios)
@@ -476,7 +481,7 @@ export class DockManager {
         let node = this._findNodeFromContainer(container);
         this.layoutEngine!.undock(node);
 
-        let panelContainer = (<PanelContainer>node.container);
+        let panelContainer = (<PanelContainer>node!.container);
         panelContainer.elementPanel.style.display = 'block';
 
         // Create a new dialog window for the undocked panel
@@ -517,7 +522,7 @@ export class DockManager {
      * Opens a Element in a Dialog
      * It is assumed that only leaf nodes (panels) can be undocked
      */
-    openInDialog(container: PanelContainer, event, dragOffset: Point, disableResize?: boolean) {
+    openInDialog(container: PanelContainer, event:any, dragOffset: Point, disableResize?: boolean) {
         // Create a new dialog window for the undocked panel
         let dialog = new Dialog(container, this, null, disableResize);
 
@@ -571,7 +576,8 @@ export class DockManager {
                 }
             }
 
-            [].push.apply(stack, topNode.children);
+          let array: DockNode[] | undefined;
+          array!.push.apply(stack, topNode!.children);
         }
 
         return null;
@@ -593,7 +599,8 @@ export class DockManager {
                 }
             }
 
-            [].push.apply(stack, topNode.children);
+          let array: DockNode[] | undefined;
+          array!.push.apply(stack, topNode!.children);
         }
 
         return null;
@@ -609,7 +616,8 @@ export class DockManager {
 
             if (topNode!.container === container)
                 return topNode;
-            [].push.apply(stack, topNode.children);
+          let array: DockNode[] | undefined;
+          array!.push.apply(stack, topNode!.children);
         }
 
         return null;
@@ -624,7 +632,8 @@ export class DockManager {
 
             if (topNode!.container.containerElement === containerElement)
                 return topNode;
-            [].push.apply(stack, topNode.children);
+          let array: DockNode[] | undefined;
+          array!.push.apply(stack, topNode!.children);
         }
 
         return null;
@@ -760,22 +769,22 @@ export class DockManager {
 
     saveState() {
         let serializer = new DockGraphSerializer();
-        return serializer.serialize(this.context.model);
+        return serializer.serialize(this.context!.model);
     }
 
     async loadState(json: string) {
         let deserializer = new DockGraphDeserializer(this);
-        this.context.model = await deserializer.deserialize(json);
-        this.setModel(this.context.model);
+        this.context!.model = await deserializer.deserialize(json);
+        this.setModel(this.context!.model);
     }
 
     getPanels() {
         let panels: PanelContainer[] = [];
         //all visible nodes
-        this._allPanels(this.context.model.rootNode, panels);
+        this._allPanels(this.context!.model.rootNode, panels);
 
         //all visible or not dialogs
-        this.context.model.dialogs.forEach((dialog) => {
+        this.context!.model.dialogs.forEach((dialog) => {
             //TODO: check visible
             panels.push(dialog.panel);
         });
@@ -804,7 +813,7 @@ export class DockManager {
     updatePanels(ids: string[]) {
         let panels: PanelContainer[] = [];
         //all visible nodes
-        this._allPanels(this.context.model.rootNode, panels);
+        this._allPanels(this.context!.model.rootNode, panels);
         //only remove
         panels.forEach((panel) => {
             if (!Utils.arrayContains(ids, panel.elementContent.id)) {
@@ -812,7 +821,7 @@ export class DockManager {
             }
         });
 
-        this.context.model.dialogs.forEach((dialog) => {
+        this.context!.model.dialogs.forEach((dialog) => {
             if (Utils.arrayContains(ids, dialog.panel.elementContent.id)) {
                 dialog.show();
             }
@@ -826,10 +835,10 @@ export class DockManager {
     getVisiblePanels(): PanelContainer[] {
         let panels: PanelContainer[] = [];
         //all visible nodes
-        this._allPanels(this.context.model.rootNode, panels);
+        this._allPanels(this.context!.model.rootNode, panels);
 
         //all visible
-        this.context.model.dialogs.forEach((dialog) => {
+        this.context!.model.dialogs.forEach((dialog) => {
             if (!dialog.isHidden) {
                 panels.push(dialog.panel);
             }
@@ -847,7 +856,7 @@ export class DockManager {
         }
     }
 
-    get activeDocument(): PanelContainer {
+    get activeDocument(): PanelContainer|null {
         return this._activeDocument;
     }
 
