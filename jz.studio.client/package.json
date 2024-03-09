@@ -25,6 +25,8 @@
     "@types/svg-path-bounds": "^1.0.2",
     "@types/topojson": "^3.2.6",
     "d3": "^7.8.5",
+    "devextreme": "^23.2.4",
+    "devextreme-angular": "^23.2.4",
     "jest-editor-support": "*",
     "run-script-os": "*",
     "rxjs": "~7.8.0",

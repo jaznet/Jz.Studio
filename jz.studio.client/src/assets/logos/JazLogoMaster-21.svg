@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 28.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1258 650" style="enable-background:new 0 0 1258 650;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#406B6B;}
+	.st2{fill:#4A668C;}
+	.st3{fill:#6FA288;}
+	.st4{fill:none;stroke:#000000;stroke-miterlimit:10;}
+</style>
+<polygon class="st0" points="64.2,557 -96.3,834 224.7,834 "/>
+<g>
+	<circle class="st1" cx="763.4" cy="199.9" r="70"/>
+	<circle class="st1" cx="278" cy="479" r="70"/>
+	<circle class="st1" cx="600.5" cy="480" r="70"/>
+	<rect x="280.1" y="409.2" class="st1" width="320" height="140"/>
+	<rect x="523" y="268.9" transform="matrix(0.5 -0.866 0.866 0.5 48.004 760.9454)" class="st1" width="320" height="140"/>
+</g>
+<rect x="601.5" y="410" class="st1" width="320" height="140"/>
+<rect x="440.4" y="130" class="st1" width="320" height="140"/>
+<circle class="st1" cx="600.6" cy="479.1" r="70"/>
+<circle class="st2" cx="764" cy="200" r="70"/>
+<circle class="st1" cx="921.5" cy="480" r="70"/>
+<rect x="523" y="271" transform="matrix(0.5 -0.866 0.866 0.5 46.1639 761.9815)" class="st2" width="320" height="140"/>
+<circle class="st1" cx="440.5" cy="200" r="70"/>
+<g>
+	<rect x="361.5" y="269.5" transform="matrix(0.5 -0.866 0.866 0.5 -33.2881 621.3499)" class="st3" width="320" height="140"/>
+	<circle class="st3" cx="441.1" cy="479" r="70"/>
+	<circle class="st3" cx="761.4" cy="477.9" r="70"/>
+	<circle class="st3" cx="601.4" cy="199.9" r="70"/>
+	<rect x="612" y="179.5" transform="matrix(0.866 -0.5 0.5 0.866 -78.377 386.4945)" class="st3" width="140" height="320"/>
+</g>
+<rect x="523" y="270.6" transform="matrix(0.5 -0.866 0.866 0.5 46.56 761.7755)" class="st2" width="320" height="140"/>
+<circle class="st1" cx="763.4" cy="200" r="70"/>
+<rect x="523.4" y="270.5" transform="matrix(0.5 -0.866 0.866 0.5 46.8366 762.0823)" class="st1" width="320" height="140"/>
+<g>
+	<line class="st4" x1="-60" y1="257" x2="-220" y2="533.1"/>
+	<line class="st4" x1="-60" y1="257" x2="100" y2="533.1"/>
+	<line class="st4" x1="-220" y1="533.1" x2="100" y2="533.1"/>
+</g>
+<line class="st4" x1="954" y1="53.2" x2="312" y2="54.1"/>
+</svg>

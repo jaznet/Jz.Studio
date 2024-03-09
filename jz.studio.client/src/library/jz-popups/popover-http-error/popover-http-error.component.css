@@ -1,0 +1,22 @@
+
+.popover-content-container {
+ /* background-color: red;*/
+ flex-flow:column;
+}
+
+.popover-content-item {
+    justify-content:center;
+    text-align:center;
+}
+
+
+
+.custom-popover-title {
+  color: red; /* Change 'red' to your desired color */
+}
+
+.dx-toolbar-label .dx-toolbar-item-content > div {
+  font-size: 16px;
+  color: orange;
+  font-weight: 600;
+}

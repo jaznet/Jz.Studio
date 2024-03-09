@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { DockManager } from "../DockSpawn/lib/js/DockManager";
-import { PanelContainer } from "../DockSpawn/lib/js/PanelContainer";
-import { PanelType } from "../DockSpawn/lib/js/enums/PanelType";
+//import { DockManager } from "../DockSpawn/src/DockManager";
+//import { PanelContainer } from "../DockSpawn/src/PanelContainer";
+//import { PanelType } from "../DockSpawn/src/enums/PanelType";
 
 @Component({
   selector: 'app-jz-docking',

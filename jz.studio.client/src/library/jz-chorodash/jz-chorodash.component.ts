@@ -2,13 +2,13 @@
 import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { PAINTING_STRATEGY_TOKEN } from './jz-chorodash.module';
 import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
-import { PopoverHttpErrorComponent } from '../ui-controls/jz-popups/popover-http-error/popover-http-error.component';
-import { PopoverLoadingComponent } from '../ui-controls/jz-popups/popover-loading/popover-loading.component';
 import { ChoroStateComponent } from '../jz-choropleths/components/choro-state/choro-state.component';
 import { ChoroUsaComponent } from '../jz-choropleths/components/choro-usa/choro-usa.component';
 import { UserSelectionService } from './paint-factory/services/user-selection.service';
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
 import { TopoService } from '../jz-choropleths/services/topo.service';
+import { PopoverHttpErrorComponent } from '../jz-popups/popover-http-error/popover-http-error.component';
+import { PopoverLoadingComponent } from '../jz-popups/popover-loading/popover-loading.component';
 
 @Component({
   selector: 'app-jz-chorodash',

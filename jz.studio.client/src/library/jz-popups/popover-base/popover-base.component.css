@@ -1,0 +1,39 @@
+
+.dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+}
+
+
+.dx-toolbar-label .dx-toolbar-item-content > div {
+  font-size: 16px;
+  color: black;
+  font-weight: 600;
+}
+
+.loading-popup {
+}
+
+  .loading-popup div {
+    background-color: #63a77b;
+    /*#DFBBB1*/
+    /*#ACBBB1*/
+    /*#63a77b*/
+  }
+
+.dx-popup-content {
+  padding: 8px;
+}
+
+.loading-popup {
+}
+
+  .loading-popup div {
+    background-color: lightskyblue;
+  }
+
+.dx-toolbar-label .dx-toolbar-item-content > div {
+    color:red;
+}
+
+.custom-popover-title {
+  color: red; /* Change 'red' to your desired color */
+}

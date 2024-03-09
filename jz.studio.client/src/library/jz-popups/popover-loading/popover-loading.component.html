@@ -1,0 +1,24 @@
+
+<dx-popover #popover_loading
+            [visible]="isPopupVisible"
+            position="center"
+            [showTitle]="true"
+            title="Loading ...."
+            width="300"
+            height="200"
+            [wrapperAttr]="{id: 'loadingpopup', class:'loading-popup'}">
+
+  <div class="grid-rows">
+    <div class="grid-row-fixed centered" style="flex-flow:column;align-self:center">
+      <div class="title" style="margin-top:4px">{{data}}</div>
+      <div class="msg" style="align-self:center; font-weight:600">{{url}}</div>
+    </div>
+    <div class="grid-row-fill">
+      <div class="overlay-container" style="width:100px">
+        <jz-spinner class="overlay-layer"></jz-spinner>
+        <elapsed-time class="overlay-layer" style="margin-top:-3px;margin-left:-1px"></elapsed-time>
+      </div>
+    </div>
+
+  </div>
+</dx-popover>

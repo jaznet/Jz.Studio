@@ -1,0 +1,25 @@
+<dx-popover #popover_httperror
+            position="center"
+            width="300"
+            height="200"
+            id="dxpopover"
+            panelid="companyList1"
+            [showTitle]="true"
+            [showCloseButton]="true"
+            title="HttpErrorResponse"
+            [visible]="isPopupVisible"
+            [wrapperAttr]="{id: 'httperrorpopup', class:'httperror-popup custom-popover-title-wrapper'}">
+  <div class="popover-content-container">
+    <div class="popover-content-item">ok: {{ok}}</div>
+    <div class="popover-content-item">{{statusText}}</div>
+    <div class="popover-content-item" style="margin-bottom:4px;font-weight:600;align-self:center">{{url}}</div>
+    <div class="popover-content-item">MESSAGE</div>
+    <div class="popover-content-item">{{message}}</div>
+
+    <!--<div class="popover-content-item">{{statusText}}</div>
+    <div class="popover-content-item">{{baseUrl}}</div>
+
+    <div class="popover-content-item">{{type}}</div>
+    <div class="popover-content-item">{{target}}</div>-->
+  </div>
+</dx-popover>

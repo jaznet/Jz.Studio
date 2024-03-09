@@ -1,0 +1,36 @@
+
+.dx-popup-title.dx-toolbar .dx-toolbar-items-container {
+}
+
+
+.dx-toolbar-label .dx-toolbar-item-content > div {
+  font-size: 16px;
+  color: black;
+  font-weight: 600;
+}
+
+.loading-popup {
+}
+
+  .loading-popup div {
+    background-color: #B9C0BD;
+    /*#DFBBB1*/
+    /*#ACBBB1*/
+    /*#63a77b*/
+  }
+
+.dx-popup-content {
+  padding: 8px;
+}
+
+.loading-popup {
+}
+
+  .loading-popup div  {
+    background-color: deepskyblue;
+  }
+
+  .title {
+      font-weight:600;
+      font-size:16px;
+  }
