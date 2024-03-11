@@ -30,7 +30,8 @@ export class JzChorodashComponent implements OnInit {
     private topoService: TopoService,
     private strategySelect: UserSelectionService,
     private paintStrategyFactoryService: PaintStrategyFactoryService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.topoService.getTopology();

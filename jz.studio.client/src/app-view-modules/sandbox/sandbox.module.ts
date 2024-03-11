@@ -18,12 +18,13 @@ import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
   imports: [
     CommonModule,
     RouterModule,
-    SandboxRouterModule,
+   
     JzUiControlsModule,
     //UtilitiesModule,
     JzMenuModule,
     //JzPopupsModule,
-    //GraphicsModule
+    //GraphicsModule,
+    SandboxRouterModule,
   ],
   exports: [
     SandboxComponent,
