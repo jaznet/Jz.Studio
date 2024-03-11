@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
+import { DockManager } from '../dock-spawn/src/DockManager';
 //import { DockManager } from "../DockSpawn/src/DockManager";
 //import { PanelContainer } from "../DockSpawn/src/PanelContainer";
 //import { PanelType } from "../DockSpawn/src/enums/PanelType";
@@ -8,6 +9,10 @@ import { Component } from '@angular/core';
   templateUrl: './jz-docking.component.html',
   styleUrl: './jz-docking.component.css'
 })
-export class JzDockingComponent {
+export class JzDockingComponent implements AfterViewInit {
+    ngAfterViewInit(): void {
+      let dockManager = new DockManager(document.getElementById('jz_dock_manager'));
+      dockManager.initialize();
+    }
 
 }

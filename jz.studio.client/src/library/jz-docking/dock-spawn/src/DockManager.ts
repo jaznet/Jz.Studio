@@ -27,7 +27,7 @@ import { IDockContainer } from "./interfaces/IDockContainer";
  */
 export class DockManager {
 
-    public element: HTMLElement;
+    public element: HTMLElement|null;
     public context: DockManagerContext|undefined;
   public dockWheel: DockWheel | undefined;
   public layoutEngine: DockLayoutEngine | undefined;
@@ -52,7 +52,7 @@ export class DockManager {
 
     private _activeDocument!: PanelContainer|null;
 
-    constructor(element: HTMLElement, config?: DockConfig) {
+    constructor(element: HTMLElement|null, config?: DockConfig) {
         if (element === undefined)
             throw new Error('Invalid Dock Manager element provided');
 
@@ -70,7 +70,7 @@ export class DockManager {
     }
 
     initialize() {
-        this.backgroundContext = this.element.children[0] as HTMLElement;
+        this.backgroundContext = this.element!.children[0] as HTMLElement;
         this.context = new DockManagerContext(this);
         let documentNode = new DockNode(this.context.documentManagerView);
         this.context.model.rootNode = documentNode;
@@ -78,7 +78,7 @@ export class DockManager {
         this.context.model.dialogs = [];
         this.setRootNode(this.context.model.rootNode);
         // Resize the layout
-        this.resize(this.element.clientWidth, this.element.clientHeight);
+        this.resize(this.element!.clientWidth, this.element!.clientHeight);
         this.dockWheel = new DockWheel(this);
         this.layoutEngine = new DockLayoutEngine(this);
         this._undockEnabled = true;
@@ -93,7 +93,7 @@ export class DockManager {
         }
 
         this.onKeyPressBound = this.onKeyPress.bind(this);
-        this.element.addEventListener('keydown', this.onKeyPressBound);
+        this.element!.addEventListener('keydown', this.onKeyPressBound);
     }
 
     onKeyPress(e: KeyboardEvent) {
@@ -110,7 +110,7 @@ export class DockManager {
         if (this._config.moveOnlyWithinDockConatiner)
             return this.checkXBoundsWithinDockContainer(container, currentMousePosition, previousMousePosition, resizeWest, resizeEast);
 
-        let rect = this.element.getBoundingClientRect();
+      let rect = this!.element!.getBoundingClientRect();
         let dx = Math.floor(currentMousePosition.x - previousMousePosition.x);
         let leftBounds = container.offsetLeft + container.offsetWidth + dx + rect.left < 40; // || (container.offsetLeft + container.offsetWidth + dx - 40 ) < 0;
         let rightBounds = container.offsetLeft + dx + rect.left > (window.innerWidth - 40);
@@ -133,7 +133,7 @@ export class DockManager {
 
     checkXBoundsWithinDockContainer(container: HTMLElement, currentMousePosition: Point, previousMousePosition: Point, resizeWest: boolean, resizeEast: boolean) {
         let dx = currentMousePosition.x - previousMousePosition.x;
-        let bbOuter = this.element.getBoundingClientRect();
+      let bbOuter = this.element!.getBoundingClientRect();
         let bbInner = container.getBoundingClientRect();
         let leftBounds = dx < 0 && bbInner.left + dx < bbOuter.left && !resizeEast;
         let rightBounds = dx > 0 && bbInner.right + dx > bbOuter.right && !resizeWest;
@@ -154,7 +154,7 @@ export class DockManager {
         if (this._config.moveOnlyWithinDockConatiner)
             return this.checkYBoundsWithinDockContainer(container, currentMousePosition, previousMousePosition, resizeNorth, resizeSouth);
 
-        let rect = this.element.getBoundingClientRect();
+      let rect = this.element!.getBoundingClientRect();
         let dy = Math.floor(currentMousePosition.y - previousMousePosition.y);
         let topBounds = container.offsetTop + dy + rect.top < 0;
         let bottomBounds = container.offsetTop + dy + rect.top > (window.innerHeight - 16);
@@ -173,7 +173,7 @@ export class DockManager {
 
     checkYBoundsWithinDockContainer(container: HTMLElement, currentMousePosition: Point, previousMousePosition: Point, resizeNorth: boolean, resizeSouth: boolean) {
         let dy = currentMousePosition.y - previousMousePosition.y;
-        let bbOuter = this.element.getBoundingClientRect();
+      let bbOuter = this.element!.getBoundingClientRect();
         let bbInner = container.getBoundingClientRect();
         let topBounds = dy < 0 && bbInner.top + dy < bbOuter.top && !resizeSouth;
         let bottomBounds = dy > 0 && bbInner.bottom + dy > bbOuter.bottom && !resizeNorth;
@@ -198,18 +198,18 @@ export class DockManager {
     }
 
     invalidate() {
-        this.resize(this.element.clientWidth, this.element.clientHeight);
+      this.resize(this.element!.clientWidth, this.element!.clientHeight);
     }
 
     resize(width: number, height: number) {
-        this.element.style.width = width + 'px';
-        this.element.style.height = height + 'px';
+      this.element!.style.width = width + 'px';
+      this.element!.style.height = height + 'px';
         this.context!.model.rootNode.container.resize(width, height);
 
         let offsetX = 0, offsetY = 0;
         for (let dialog of this.context!.model.dialogs) {
-            if (dialog.position.x > this.element.clientWidth || dialog.position.y > this.element.clientHeight) {
-                if (offsetX > this.element.clientWidth || offsetY > this.element.clientHeight)
+          if (dialog.position.x > this.element!.clientWidth || dialog.position.y > this.element!.clientHeight) {
+            if (offsetX > this.element!.clientWidth || offsetY > this.element!.clientHeight)
                     offsetX = 0, offsetY = 0;
                 dialog.setPosition(100 + offsetX, 100 + offsetY);
                 offsetX += 100;
@@ -253,10 +253,10 @@ export class DockManager {
         // Attach the new node to the dock manager's base element and set as root node
         node.detachFromParent();
         this.context!.model.rootNode = node;
-        this.element.appendChild(node.container.containerElement);
+      this.element!.appendChild(node.container.containerElement);
     }
 
-    _onDialogDragStarted(sender: Dialog, e) {
+    _onDialogDragStarted(sender: Dialog, e:any) {
         this.dockWheel!.activeNode = this._findNodeOnPoint(e.clientX, e.clientY);
         this.dockWheel!.activeDialog = sender;
         if (sender.noDocking == null || sender.noDocking !== true)
@@ -273,7 +273,7 @@ export class DockManager {
         this.touchMoveHandler = new EventHandler(window, 'touchmove', this._onMouseMoved.bind(this));
     }
 
-    _onDialogDragEnded(sender: Dialog, e) {
+    _onDialogDragEnded(sender: Dialog, e:any) {
         if (this.mouseMoveHandler) {
             this.mouseMoveHandler.cancel();
             delete this.mouseMoveHandler;
@@ -289,7 +289,7 @@ export class DockManager {
         sender.saveState(sender.elementDialog.offsetLeft, sender.elementDialog.offsetTop);
     }
 
-    private _onMouseMoved(e) {
+    private _onMouseMoved(e:any) {
         if (e.changedTouches != null) { // TouchMove Event
             e = e.changedTouches[0];
         }
@@ -468,7 +468,7 @@ export class DockManager {
         return newNode;
     }
 
-    _requestTabReorder(container: IDockContainer, e) {
+    _requestTabReorder(container: IDockContainer, e:any) {
         let node = this._findNodeFromContainer(container);
         this.layoutEngine!.reorderTabs(node, e.handle, e.state, e.index);
     }
