@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ChoroUsaComponent } from './components/choro-usa/choro-usa.component';
 import { ChoroStateComponent } from './components/choro-state/choro-state.component';
 import { CountyPaintingStrategy } from './interface/county-painting-strategy';
-import { JzChoroplethsRouterModule } from './jz-choropleths-router.module'
 import { PaintStrategyFactoryService } from '../jz-chorodash/paint-factory/paint-strategy-factory.service';
 
 export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
@@ -11,12 +10,11 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
 @NgModule({
   declarations: [
     ChoroUsaComponent,
-    ChoroStateComponent,
-    
+    ChoroStateComponent,  
   ],
   imports: [
     CommonModule,
-    JzChoroplethsRouterModule
+  /*  JzChoroplethsRouterModule*/
   ],
   providers: [
     PaintStrategyFactoryService,
@@ -28,8 +26,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
   ], 
   exports: [
     ChoroUsaComponent,
-    ChoroStateComponent,
-    
+    ChoroStateComponent, 
   ]
 })
 export class JzChoroplethsModule { }

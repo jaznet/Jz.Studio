@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzChorodashComponent } from './jz-chorodash.component';
+import { JzChoroDashComponent } from './jz-choro-dash.component';
 
-describe('JzChorodashComponent', () => {
-  let component: JzChorodashComponent;
-  let fixture: ComponentFixture<JzChorodashComponent>;
+describe('JzChoroDashComponent', () => {
+  let component: JzChoroDashComponent;
+  let fixture: ComponentFixture<JzChoroDashComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JzChorodashComponent]
+      declarations: [JzChoroDashComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(JzChorodashComponent);
+    fixture = TestBed.createComponent(JzChoroDashComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

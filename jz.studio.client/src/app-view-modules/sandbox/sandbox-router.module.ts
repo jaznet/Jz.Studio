@@ -17,8 +17,8 @@ const routes: Routes = [
         component: SandboxHomeComponent
       },
       {
-        path: 'chorousa',
-        loadChildren: () => import('../../library/jz-choropleths/jz-choropleths.module').then(m => m.JzChoroplethsModule)
+        path: 'chorodash',
+        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
       //{
       //  path: 'docking',
