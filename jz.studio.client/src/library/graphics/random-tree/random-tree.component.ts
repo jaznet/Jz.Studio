@@ -22,15 +22,14 @@ export class RandomTreeComponent implements OnInit {
   constructor() {
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-     const svg: any = this.svgContainerRef.nativeElement;
+    const svg: any = this.svgContainerRef.nativeElement;
     this.svgCxntainer = this.svgContainerRef.nativeElement;
-   // this.svgContainer = this.svgContainerRef.nativeElement;
     this.svgWidth = svg.clientWidth - 70;
-    this.svgHeight = this.svgCxntainer.clientHeight-100;
-        this.createTree();
+    this.svgHeight = this.svgCxntainer.clientHeight - 50;
+    this.createTree();
   }
 
   createTree() {
@@ -73,6 +72,7 @@ export class RandomTreeComponent implements OnInit {
       .attr("stroke", "#406B6B")
       .attr("stroke-width", ".5")
       .attr("font-size", "9px")
+      .attr('y', '2')
       .style("font-weight", "100")
       .selectAll<SVGTextElement, SVGGElement>('g');
 
@@ -100,7 +100,7 @@ export class RandomTreeComponent implements OnInit {
       treeLayout(root);
       links.push({ source: nodes[i], target: nodes[nodes.length - 1] });
 
-     // console.log('child', nodes.length, '[', i, ']', child.depth, parent.depth);
+      // console.log('child', nodes.length, '[', i, ']', child.depth, parent.depth);
       this.dxlistitems.push('child: (' + nodes.length + ') ' + ' [' + i + ']' + parent.depth + child.depth);
       nodes.forEach((n: any, index: any) => {
         let parentdepth = 'x';
@@ -142,9 +142,7 @@ export class RandomTreeComponent implements OnInit {
         .attr('depth', (d: any) => {
           return d.depth;
         })
-        .attr('depth', (d: any) => {
-          return d.depth;
-        })
+
         .attr('cx', (d: any) => {
           //if (d.parent) {
           //  return d.parent.px;
@@ -177,19 +175,19 @@ export class RandomTreeComponent implements OnInit {
         .attr('alignment-baseline', 'middle')
         .attr('font-size', '10px')
         .attr('stroke', '#9EC3C3')
-        .attr('stroke-width','0.5')
+        .attr('stroke-width', '0.5')
         .attr('fill', 'none')
         .attr('font-weight', '100')
         .attr('x', (d: any) => {
           return d.x;
         })
         .attr('y', (d: any) => {
-          return d.y;
+          return d.y + .5;
         })
         .text(function (d: any) {
           return d.name;
         })
-      
+
         ;
 
     }, duration);
