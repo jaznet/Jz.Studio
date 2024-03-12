@@ -23,7 +23,7 @@
 }
 
 .grid-row-fill {
-    display:flex;
+  display: flex;
   flex-flow: row;
   flex: 1 1 auto;
   height: 100%;
@@ -31,7 +31,7 @@
 }
 
 .grid-cols {
-  display:flex;
+  display: flex;
   height: 100%;
   width: 100%;
   flex-flow: row;

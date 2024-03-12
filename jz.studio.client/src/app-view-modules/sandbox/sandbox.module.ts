@@ -8,7 +8,7 @@ import { SandboxComponent } from './sandbox.component';
 import { SandboxRouterModule } from './sandbox-router.module';
 import { JzUiControlsModule } from '../../library/jz-ui-controls/jz-ui-controls.module';
 import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
-import { RandomTreeModule } from '../../library/graphics/random-tree/random-tree.module';
+import { GraphicsModule } from '../../library/graphics/graphics.module';
 
 @NgModule({
   declarations: [
@@ -24,9 +24,9 @@ import { RandomTreeModule } from '../../library/graphics/random-tree/random-tree
     //UtilitiesModule,
     JzMenuModule,
     //JzPopupsModule,
-    //GraphicsModule,
+    GraphicsModule,
     SandboxRouterModule,
-    RandomTreeModule
+    
    
   ],
   exports: [
