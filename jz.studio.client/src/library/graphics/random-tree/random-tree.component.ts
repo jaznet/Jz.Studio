@@ -63,22 +63,22 @@ export class RandomTreeComponent implements OnInit {
 
     let nodeGroup = svg.append("g")
       .attr('class', 'nodesGroup')
-      .attr('fill', 'white')
+      .attr('fill', 'black')
       .attr("stroke", "black")
       // .attr("stroke-width", 1)
       .selectAll<SVGCircleElement, SVGGElement>(".node");
 
     let textGroup = svg.append("g")
       .attr('class', 'textGroup')
-      .attr("stroke", "black")
-      .attr("stroke-width", "1")
-      .attr("font-size", "9x")
+      .attr("stroke", "#406B6B")
+      .attr("stroke-width", ".5")
+      .attr("font-size", "9px")
       .style("font-weight", "100")
       .selectAll<SVGTextElement, SVGGElement>('g');
 
     const interval = d3.interval(() => {
 
-      if (nodes.length >= 32) return interval.stop();
+      if (nodes.length >= 64) return interval.stop();
 
       // Add a new child node to a random parent.
       const i = Math.floor(Math.random() * nodes.length);
@@ -115,6 +115,7 @@ export class RandomTreeComponent implements OnInit {
       linkEnter.selectAll('.linkPath').remove();
       linkEnter.append('g')
         .attr('class', 'linkPath')
+        .style('stroke', 'black')
         .insert('path', '.node')
 
         .attr('class', 'link')
@@ -136,7 +137,7 @@ export class RandomTreeComponent implements OnInit {
       nodeEnter.selectAll('circle').remove();
       nodeEnter.append('circle')
         .attr("class", "node")
-        .attr("r", 7)
+        .attr("r", 8)
         .attr('name', nodes.length)
         .attr('depth', (d: any) => {
           return d.depth;
@@ -174,7 +175,11 @@ export class RandomTreeComponent implements OnInit {
       textEnter.append('text')
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
-        .attr('font-size', '8px')
+        .attr('font-size', '10px')
+        .attr('stroke', '#9EC3C3')
+        .attr('stroke-width','0.5')
+        .attr('fill', 'none')
+        .attr('font-weight', '100')
         .attr('x', (d: any) => {
           return d.x;
         })
@@ -184,7 +189,7 @@ export class RandomTreeComponent implements OnInit {
         .text(function (d: any) {
           return d.name;
         })
-        .attr('fill', 'white')
+      
         ;
 
     }, duration);
