@@ -8,8 +8,8 @@ import { ChoroUtilsService } from '../../services/choro-utils.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from '../../services/county-data.service';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
-import { PAINTING_STRATEGY_TOKEN } from '../../jz-choropleths.module';
 import * as topojson from 'topojson';
+import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
 
 @Component({
   selector: 'choro-usa',

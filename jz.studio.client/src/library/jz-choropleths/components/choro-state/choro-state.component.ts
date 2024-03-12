@@ -6,8 +6,8 @@ import * as d3Select from 'd3-selection';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { PAINTING_STRATEGY_TOKEN } from '../../jz-choropleths.module';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
+import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
 
 @Component({
   selector: 'choro-state',
