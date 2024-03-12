@@ -49,7 +49,7 @@ export class RandomTreeComponent implements OnInit {
     //const links: Array<{ source: d3Node.Node; target: d3Node.Node}> = [];
     const nodes: any = [root];
     const links: Array<{ source: any; target: any; }> = [];
-    const duration = 500;
+    const duration = 100;
     this.dxlistitems.push('root : (' + nodes.length + ') ' + links.length + root.depth);
 
     treeLayout(root);
@@ -140,26 +140,16 @@ export class RandomTreeComponent implements OnInit {
         .attr("r", 8)
         .attr('name', nodes.length)
         .attr('depth', (d: any) => {
+          console.log(d);
           return d.depth;
         })
 
         .attr('cx', (d: any) => {
-          //if (d.parent) {
-          //  return d.parent.px;
-          //} else {
-          //  d.px = d.x;
-          //  return d.x;
-          //}
           return d.x;
         })
 
         .attr('cy', (d: any) => {
-          //if (d.parent) {
-          //  return d.parent.py;
-          //} else {
-          //  d.py = d.y;
-          //  return d.y;
-          //}
+        
           return d.y;
         })
         ;
