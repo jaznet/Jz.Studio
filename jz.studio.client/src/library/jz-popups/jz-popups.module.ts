@@ -4,7 +4,7 @@ import { DxPopoverModule } from 'devextreme-angular';
 import { PopoverBaseComponent } from './popover-base/popover-base.component';
 import { PopoverHttpErrorComponent } from '../jz-popups/popover-http-error/popover-http-error.component'
 import { PopoverLoadingComponent } from '../jz-popups/popover-loading/popover-loading.component'
-import { UiControlsModule } from '../ui-controls.module';
+import { JzUiControlsModule } from '../jz-ui-controls/jz-ui-controls.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import { UiControlsModule } from '../ui-controls.module';
   imports: [
     CommonModule,
     DxPopoverModule,
-    UiControlsModule
+    JzUiControlsModule
   ],
   exports: [
     PopoverBaseComponent,
