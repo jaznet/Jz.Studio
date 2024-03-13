@@ -139,17 +139,32 @@ export class RandomTreeComponent implements OnInit {
         .attr("class", "node")
         .attr("r", 8)
         .attr('name', nodes.length)
+        .attr('fill','black')
         .attr('depth', (d: any) => {
-          console.log(d);
+         // console.log(d);
           return d.depth;
         })
-
         .attr('cx', (d: any) => {
           return d.x;
         })
-
         .attr('cy', (d: any) => {
-        
+          return d.y;
+        })
+        ;
+
+      nodeEnter.append('circle')
+        .attr("class", "node")
+        .attr("r", 8)
+        .attr('name', nodes.length)
+        .attr('fill', '#ffffff30')
+        .attr('depth', (d: any) => {
+          // console.log(d);
+          return d.depth;
+        })
+        .attr('cx', (d: any) => {
+          return d.x;
+        })
+        .attr('cy', (d: any) => {
           return d.y;
         })
         ;
