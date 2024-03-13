@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'jz-choro-dash-panel',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './jz-choro-dash-panel.component.css'
 })
 export class JzChoroDashPanelComponent {
-
+  @HostBinding('class') classes = 'grid-row-fill';
 }

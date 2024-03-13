@@ -41,15 +41,11 @@ export class RandomTreeComponent implements OnInit {
       .attr('viewBox', viewport);
     const treeLayout = d3Hierarchy.tree().size([this.svgWidth - 10, this.svgHeight - 20]);
     const treeNode = d3Hierarchy.hierarchy.prototype.constructor;
-    // const root: d3Node.Node = new treeNode();
     const root: any = new treeNode();
     root.name = '0';
-    const treeRoot = d3Hierarchy.hierarchy(root);
-    //const nodes: d3Node.Node[] = [root];
-    //const links: Array<{ source: d3Node.Node; target: d3Node.Node}> = [];
     const nodes: any = [root];
     const links: Array<{ source: any; target: any; }> = [];
-    const duration = 100;
+    const duration = 1000;
     this.dxlistitems.push('root : (' + nodes.length + ') ' + links.length + root.depth);
 
     treeLayout(root);
@@ -78,7 +74,7 @@ export class RandomTreeComponent implements OnInit {
 
     const interval = d3.interval(() => {
 
-      if (nodes.length >= 64) return interval.stop();
+      if (nodes.length >= 48) return interval.stop();
 
       // Add a new child node to a random parent.
       const i = Math.floor(Math.random() * nodes.length);
@@ -152,22 +148,22 @@ export class RandomTreeComponent implements OnInit {
         })
         ;
 
-      nodeEnter.append('circle')
-        .attr("class", "node")
-        .attr("r", 8)
-        .attr('name', nodes.length)
-        .attr('fill', '#ffffff30')
-        .attr('depth', (d: any) => {
-          // console.log(d);
-          return d.depth;
-        })
-        .attr('cx', (d: any) => {
-          return d.x;
-        })
-        .attr('cy', (d: any) => {
-          return d.y;
-        })
-        ;
+      //nodeEnter.append('circle')
+      //  .attr("class", "node")
+      //  .attr("r", 8)
+      //  .attr('name', nodes.length)
+      //  .attr('fill', '#ffffff30')
+      //  .attr('depth', (d: any) => {
+      //    // console.log(d);
+      //    return d.depth;
+      //  })
+      //  .attr('cx', (d: any) => {
+      //    return d.x;
+      //  })
+      //  .attr('cy', (d: any) => {
+      //    return d.y;
+      //  })
+      //  ;
 
       textGroup = textGroup.data(nodes);
       textGroup.exit().remove();
@@ -179,9 +175,9 @@ export class RandomTreeComponent implements OnInit {
         .attr('text-anchor', 'middle')
         .attr('alignment-baseline', 'middle')
         .attr('font-size', '10px')
-        .attr('stroke', '#9EC3C3')
+        .attr('stroke', 'none')
         .attr('stroke-width', '0.5')
-        .attr('fill', 'none')
+        .attr('fill', '#9EC3C3')
         .attr('font-weight', '100')
         .attr('x', (d: any) => {
           return d.x;
