@@ -19,15 +19,11 @@ import { GraphicsModule } from '../../library/graphics/graphics.module';
   imports: [
     CommonModule,
     RouterModule,
-   
     JzUiControlsModule,
-    //UtilitiesModule,
     JzMenuModule,
     //JzPopupsModule,
     GraphicsModule,
     SandboxRouterModule,
-    
-   
   ],
   exports: [
     SandboxComponent,

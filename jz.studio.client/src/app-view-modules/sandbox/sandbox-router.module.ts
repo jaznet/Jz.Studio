@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
 import { SandboxHomeComponent } from './sandbox-home/sandbox-home.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -16,10 +17,15 @@ const routes: Routes = [
         path: 'home',
         component: SandboxHomeComponent
       },
+      //{
+      //  path: 'choro-dash-loader',
+      //  loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash-loader/jz-choro-dash-loader.module').then(m => m.JzChoroDashLoaderModule)
+      //},
       {
-        path: 'chorodashloader',
-        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash-loader/jz-choro-dash-loader.module').then(m => m.JzChoroDashLoaderModule)
+        path: 'choro-dash-loader',
+        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
+     
       //{
       //  path: 'docking',
       //  /*loadChildren: () => import('../../library/jz-docking/jz-docking/jz-docking.module').then(m => m.JzDockingModule)*/

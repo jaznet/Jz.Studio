@@ -7,7 +7,6 @@ import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-fact
 import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
 import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { JzPopupsModule } from '../jz-popups/jz-popups.module';
-import { JzChoroDashLoaderComponent } from './jz-choro-dash-loader/jz-choro-dash-loader.component';
 
 export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
 
@@ -15,7 +14,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
   declarations: [
     JzChoroDashComponent,
     JzChoroDashPanelComponent,
-    JzChoroDashLoaderComponent
+    
   ],
   imports: [
     CommonModule,
@@ -34,7 +33,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
   exports: [
     JzChoroDashComponent,
     JzChoroDashPanelComponent,
-    JzChoroDashLoaderComponent
+    
   ],
 })
 export class JzChoroDashModule { }

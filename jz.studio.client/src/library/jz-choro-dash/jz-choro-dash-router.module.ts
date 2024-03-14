@@ -1,21 +1,18 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { JzChoroDashLoaderComponent } from './jz-choro-dash-loader/jz-choro-dash-loader.component';
+import { JzChoroDashComponent } from './jz-choro-dash/jz-choro-dash.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: JzChoroDashLoaderComponent,
+    component: JzChoroDashComponent,
     children: [
       {
         path: '',
-        component: JzChoroDashLoaderComponent
+        component: JzChoroDashComponent
       },
-      {
-        path: 'chorodash',
-        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash-loader/jz-choro-dash-loader.module').then(m => m.JzChoroDashLoaderModule)
-      },
+     
     ]
   }
 ];
