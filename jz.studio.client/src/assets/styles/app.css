@@ -2,22 +2,6 @@
     background-color:var(--plt-clr-1);
 }
 
-/*
-@font-face {
-  font-family: 'museo';
-  src: url('assets/fonts/Museo300-Regular-webfont.ttf');
-}
-
-@font-face {
-  font-family: 'varela';
-  src: url('assets/fonts/Varela_Round/VarelaRound-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'roboto';
-  src: url('assets/fonts/Roboto/Roboto-Regular.ttf');
-}*/
-
 div {
   display: flex;
 }
@@ -25,8 +9,6 @@ div {
 body {
   background-color: antiquewhite;
 }
-
-
 
 .app-view-home {
     border: 1px solid white;
