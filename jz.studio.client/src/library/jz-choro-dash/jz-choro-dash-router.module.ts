@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { JzChoroDashComponent } from './jz-choro-dash/jz-choro-dash.component';
+import { JzChoroDashComponent } from './jz-choro-dash.component';
 
 const routes: Routes = [
   {
