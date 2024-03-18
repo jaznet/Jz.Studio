@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './pop-up-loading.component.css'
 })
 export class PopUpLoadingComponent {
-
+  isPopupVisible: boolean = true;
 }

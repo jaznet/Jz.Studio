@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DxPopoverModule } from 'devextreme-angular';
+import { DxPopoverModule, DxPopupModule } from 'devextreme-angular';
 import { PopoverBaseComponent } from './popover-base/popover-base.component';
 import { PopoverHttpErrorComponent } from '../jz-popups/popover-http-error/popover-http-error.component'
 import { PopoverLoadingComponent } from '../jz-popups/popover-loading/popover-loading.component'
@@ -17,12 +17,14 @@ import { PopUpLoadingComponent } from './pop-up-loading/pop-up-loading.component
   imports: [
     CommonModule,
     DxPopoverModule,
+    DxPopupModule,
     JzUiControlsModule
   ],
   exports: [
     PopoverBaseComponent,
     PopoverLoadingComponent,
-    PopoverHttpErrorComponent
+    PopoverHttpErrorComponent,
+    PopUpLoadingComponent
   ]
 })
 export class JzPopupsModule { }
