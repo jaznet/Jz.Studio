@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, HostBinding, Input, ViewChild } from '@angular/core';
 import { DxPopupComponent } from 'devextreme-angular';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
@@ -8,6 +8,7 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
   styleUrls: ['./popover-base.component.css']
 })
 export class PopoverBaseComponent {
+  @HostBinding('class') classes = 'pop';
   @Input() target: string = 'jaz';
  /* @ViewChild('httperrorpopover', { static: false }) httperrorpopover: DxPopoverComponent | any;*/
   

@@ -49,8 +49,12 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
         this.isHorizontal = true;
         break;
     }
+  }
 
-   
+  onTabClicked() {
+    console.log(this.route);
+    if (this.route === '')
+    this.menuEvents.tabSelected(this);
   }
 
   //getClasses() {
@@ -61,7 +65,4 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   //  }
   //}
 
-  onTabClicked() {
-    this.menuEvents.tabSelected(this);
-  }
 }

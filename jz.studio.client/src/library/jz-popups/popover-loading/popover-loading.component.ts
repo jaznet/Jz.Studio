@@ -11,7 +11,7 @@ import { PopoverBaseComponent } from '../popover-base/popover-base.component';
   styleUrls: ['./popover-loading.component.css']
 })
 export class PopoverLoadingComponent extends PopoverBaseComponent {
-  @HostBinding('class') classes = 'loading';
+ 
   @ViewChild('popover_loading', { static: false }) dxpopup: DxPopupComponent | any;
   constructor(private changeDetector: ChangeDetectorRef) {
     super();
