@@ -10,8 +10,6 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 export class PopoverBaseComponent {
   @HostBinding('class') classes = 'pop';
   @Input() target: string = 'jaz';
- /* @ViewChild('httperrorpopover', { static: false }) httperrorpopover: DxPopoverComponent | any;*/
-  
 
   isPopupVisible = false;
   status = 0;

@@ -5,8 +5,6 @@ import { PopoverBaseComponent } from '../popover-base/popover-base.component';
 
 @Component({
   selector: 'popover-loading',
-/*  standalone: true,*/
-  /*imports: [],*/
   templateUrl: './popover-loading.component.html',
   styleUrls: ['./popover-loading.component.css']
 })
