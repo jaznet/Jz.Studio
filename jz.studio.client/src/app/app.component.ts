@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PaletteMgrService } from './app-services/palette-mgr.service';
+import { NavigationStart, Router } from '@angular/router';
+import { NavigationListenerService } from './app-services/navigation-listener.service';
 
 interface WeatherForecast {
   date: string;
@@ -17,12 +19,16 @@ interface WeatherForecast {
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient, private palette: PaletteMgrService) {
+  constructor(
+    private router: Router,
+    private navigationListenerService: NavigationListenerService,
+    private http: HttpClient,
+    private palette: PaletteMgrService) {
     palette.InitializePalette();
   }
 
   ngOnInit() {
-   //this.getForecasts();
+   
   }
 
   getForecasts() {
