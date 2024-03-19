@@ -11,6 +11,8 @@ export class PopOverLoadingComponent  {
   @ViewChild('popover_loading', { static: false }) dxpopup: DxPopupComponent | any;
 
   isPopupVisible = false;
+  data: any;
+  url = 'myUrl;'
 
   constructor(private changeDetector: ChangeDetectorRef) {
   
