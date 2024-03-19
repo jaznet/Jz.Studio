@@ -9,6 +9,7 @@ import { SandboxRouterModule } from './sandbox-router.module';
 import { JzUiControlsModule } from '../../library/jz-ui-controls/jz-ui-controls.module';
 import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 import { GraphicsModule } from '../../library/graphics/graphics.module';
+import { JzPopupsModule } from '../../library/jz-popups/jz-popups.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { GraphicsModule } from '../../library/graphics/graphics.module';
     RouterModule,
     JzUiControlsModule,
     JzMenuModule,
-    //JzPopupsModule,
+    JzPopupsModule,
     GraphicsModule,
     SandboxRouterModule,
   ],

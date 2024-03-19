@@ -34,15 +34,15 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.popupsService.popUpEvent.subscribe((event: any) => {
-      this.popup.isPopupVisible = true;
-      console.log(this.popup);
-    })
+    //this.popupsService.popUpEvent.subscribe((event: any) => {
+    //  this.popup.isPopupVisible = true;
+    //  console.log(this.popup);
+    //})
 
-    this.popupsService.popoverEvent.subscribe((event: any) => {
-      this.popover.isPopupVisible = true;
-      console.log(this.popover);
-    })
+    //this.popupsService.popoverEvent.subscribe((event: any) => {
+    //  this.popover.isPopupVisible = true;
+    //  console.log(this.popover);
+    //})
   }
 
   getForecasts() {

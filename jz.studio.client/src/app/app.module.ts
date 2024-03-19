@@ -19,7 +19,7 @@ import { JzPopupsModule } from '../library/jz-popups/jz-popups.module';
     BrowserModule,
     HttpClientModule,
     RouterModule,
-    JzPopupsModule,
+   /* JzPopupsModule,*/
     AppRoutingModule,
     JzUiControlsModule,
     AppPartsModule,
