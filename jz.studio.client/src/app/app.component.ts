@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaletteMgrService } from './app-services/palette-mgr.service';
 import { NavigationStart, Router } from '@angular/router';
 import { NavigationListenerService } from './app-services/navigation-listener.service';
+import { JzPopupsService } from '../library/jz-popups/jz-popups.service';
+import { PopUpLoadingComponent } from '../library/jz-popups/pop-up-loading/pop-up-loading.component';
 
 interface WeatherForecast {
   date: string;
@@ -17,18 +19,23 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  @ViewChild('popUpLoadingComponent', { static: true }) popup!: PopUpLoadingComponent;
   public forecasts: WeatherForecast[] = [];
 
   constructor(
     private router: Router,
     private navigationListenerService: NavigationListenerService,
+    private popupsService:JzPopupsService,
     private http: HttpClient,
     private palette: PaletteMgrService) {
     palette.InitializePalette();
   }
 
   ngOnInit() {
-   
+    this.popupsService.popEvent.subscribe((event: any) => {
+      this.popup.isPopupVisible = true;
+      console.log(this.popup);
+    })
   }
 
   getForecasts() {

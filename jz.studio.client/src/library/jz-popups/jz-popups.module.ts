@@ -6,13 +6,15 @@ import { PopoverHttpErrorComponent } from '../jz-popups/popover-http-error/popov
 import { PopoverLoadingComponent } from '../jz-popups/popover-loading/popover-loading.component'
 import { JzUiControlsModule } from '../jz-ui-controls/jz-ui-controls.module';
 import { PopUpLoadingComponent } from './pop-up-loading/pop-up-loading.component';
+import { JzPopupsService } from './jz-popups.service';
 
 @NgModule({
   declarations: [
     PopoverLoadingComponent,
     PopoverHttpErrorComponent,
     PopoverBaseComponent,
-    PopUpLoadingComponent
+    PopUpLoadingComponent,
+  
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { PopUpLoadingComponent } from './pop-up-loading/pop-up-loading.component
     PopoverBaseComponent,
     PopoverLoadingComponent,
     PopoverHttpErrorComponent,
-    PopUpLoadingComponent
+    PopUpLoadingComponent,
+   
   ]
 })
 export class JzPopupsModule { }

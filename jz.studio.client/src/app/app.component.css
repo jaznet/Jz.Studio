@@ -1,3 +1,7 @@
 body {
     background-color:antiquewhite;
 }
+
+.dx-popup-normal {
+  background-color: var(--plt-clr-3);
+}
