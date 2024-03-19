@@ -14,6 +14,6 @@ export class JzPopupsService {
   }
 
   showPopoverLoading() {
-    this.popoverEvent.emit();
+  //  this.popoverEvent.emit();
   }
 }
