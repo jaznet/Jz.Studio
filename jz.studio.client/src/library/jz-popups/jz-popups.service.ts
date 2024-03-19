@@ -4,10 +4,16 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
   providedIn: 'root'
 })
 export class JzPopupsService {
-  @Output() popEvent = new EventEmitter();
+  @Output() popUpEvent = new EventEmitter();
+  @Output() popoverEvent = new EventEmitter();
+
   constructor() { }
 
   showPopupLoading() {
-    this.popEvent.emit();
+    this.popUpEvent.emit();
+  }
+
+  showPopoverLoading() {
+    this.popoverEvent.emit();
   }
 }

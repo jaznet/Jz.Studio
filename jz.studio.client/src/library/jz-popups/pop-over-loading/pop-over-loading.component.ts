@@ -4,11 +4,11 @@ import { DxPopupComponent } from 'devextreme-angular/ui/popup';
 import { PopoverBaseComponent } from '../popover-base/popover-base.component';
 
 @Component({
-  selector: 'popover-loading',
-  templateUrl: './popover-loading.component.html',
-  styleUrls: ['./popover-loading.component.css']
+  selector: 'pop-over-loading',
+  templateUrl: './pop-over-loading.component.html',
+  styleUrls: ['./pop-over-loading.component.css']
 })
-export class PopoverLoadingComponent extends PopoverBaseComponent {
+export class PopOverLoadingComponent extends PopoverBaseComponent {
  
   @ViewChild('popover_loading', { static: false }) dxpopup: DxPopupComponent | any;
   constructor(private changeDetector: ChangeDetectorRef) {
