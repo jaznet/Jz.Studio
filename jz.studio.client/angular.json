@@ -39,7 +39,8 @@
               "src/assets/styles/app.css",
               "src/assets/styles/layouts.css",
               "src/assets/styles/flex-grids.css",
-              "src/assets/styles/popups.css"
+             
+              "src/assets/styles/dxdark.css"
             ],
             "scripts": []
           },
