@@ -4,7 +4,12 @@
 </div>
 
 <div #viewRouter id="viewRouter" class="app-view-home grid-col-fill view-router-container ">
+  <button (click)="showPopover($event)">Show Popover</button>
   <router-outlet></router-outlet>
 </div>
 
-<pop-over-loading></pop-over-loading>
+
+<!--<app-dynamic-popover #popover></app-dynamic-popover>-->
+
+
+<pop-over-loading #popOverLoadingComponent></pop-over-loading>

@@ -1,0 +1,6 @@
+<!-- dynamic-popover.component.html -->
+<div class="popover" *ngIf="isVisible" [ngStyle]="{'top': position.top + 'px', 'left': position.left + 'px'}">
+  <h3>{{ title }}</h3>
+  <div>{{ content }}</div>
+  <button (click)="close()">Close</button>
+</div>
