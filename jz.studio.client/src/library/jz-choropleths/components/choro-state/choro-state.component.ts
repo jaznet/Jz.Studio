@@ -71,7 +71,7 @@ export class ChoroStateComponent {
     this.svg = d3Select.select(this.state_Ref!.nativeElement).append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .style('border', '1px solid black');
+      ;
 
     // Outer group for rotation
     this.outerGroup = this.svg.append('g').attr('id', 'outer-group');

@@ -89,7 +89,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.svg = d3Select.select(this.USA_Ref!.nativeElement).append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .style('border', '1px solid black');
+      ;
     this.usa = this.svg.append('g').attr('id', 'usa');
     this.usa.append('g').attr('id', 'county-layer');
     this.usa.append('g').attr('id', 'state-layer');
