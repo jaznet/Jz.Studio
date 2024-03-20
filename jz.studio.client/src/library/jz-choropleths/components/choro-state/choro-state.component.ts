@@ -55,8 +55,8 @@ export class ChoroStateComponent {
   }
 
   ngAfterViewInit(): void {
-    this.width = this.state_Ref?.nativeElement.clientWidth;
-    this.height = this.state_Ref?.nativeElement.clientHeight
+    this.width = this.state_Ref?.nativeElement.clientWidth-2;
+    this.height = this.state_Ref?.nativeElement.clientHeight - 2;
   }
 
   createStateChoropleth() {

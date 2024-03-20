@@ -67,8 +67,8 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.width = this.USA_Ref?.nativeElement.clientWidth;
-    this.height = this.USA_Ref?.nativeElement.clientHeight
+    this.width = this.USA_Ref?.nativeElement.clientWidth - 2;
+    this.height = this.USA_Ref?.nativeElement.clientHeight - 2;
   }
 
   createChoropleth() {
