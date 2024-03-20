@@ -13,7 +13,7 @@ export class SandboxHomeComponent implements AfterViewInit {
 
   constructor(private popupsService: JzPopupsService) { }
     ngAfterViewInit(): void {
-      this.popupsService.showPopupLoading();
-      this.popupsService.showPopoverLoading();
+     /* this.popupsService.showPopupLoading();*/
+     /* this.popupsService.showPopoverLoading();*/
     }
 }

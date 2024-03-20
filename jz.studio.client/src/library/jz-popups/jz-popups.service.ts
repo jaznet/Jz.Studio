@@ -10,10 +10,10 @@ export class JzPopupsService {
   constructor() { }
 
   showPopupLoading() {
-    this.popUpEvent.emit();
+    /*this.popUpEvent.emit();*/
   }
 
   showPopoverLoading() {
-  //  this.popoverEvent.emit();
+    this.popoverEvent.emit();
   }
 }

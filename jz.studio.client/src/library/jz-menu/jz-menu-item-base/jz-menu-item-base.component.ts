@@ -2,6 +2,7 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { JzMenuService } from '../jz-menu.service';
+import { JzPopupsService } from '../../jz-popups/jz-popups.service';
 
 @Component({
   selector: 'j3-menu-item-base',
@@ -25,7 +26,8 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewChecked {
     private changeDetector: ChangeDetectorRef,
     private appEvents: AppEventsService,
     protected menuEvents: JzMenuService,
-    private renderer:Renderer2
+    private renderer: Renderer2,
+    protected popups: JzPopupsService
   ) { }
 
   ngOnInit(): void { }

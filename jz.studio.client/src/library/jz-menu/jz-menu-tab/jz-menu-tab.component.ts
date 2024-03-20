@@ -8,7 +8,7 @@ import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() menuType: string = 'notset';
@@ -52,9 +52,11 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent  implements OnIn
   }
 
   onTabClicked() {
-    console.log(this.route);
-    if (this.route === '')
-    this.menuEvents.tabSelected(this);
+    console.log('TAB',this.route);
+    if (this.route === 'sandbox/choro-dash-loader') {
+      this.menuEvents.tabSelected(this);
+      this.popups.showPopoverLoading();
+    }
   }
 
   //getClasses() {

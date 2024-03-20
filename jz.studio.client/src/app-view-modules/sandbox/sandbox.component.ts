@@ -12,28 +12,13 @@ export class SandboxComponent implements AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';
   @ViewChild('popOverLoadingComponent') popover!: PopOverLoadingComponent
 
-  contructor() {
-   
-  }
+  contructor() { }
 
   ngAfterViewInit(): void {
-  
-   // this.popover.isPopupVisible = true;
-  
+    console.log(this.popover.target);
   }
 
   showPopover(event: MouseEvent) {
     this.popover.isPopupVisible = true;
-    //const buttonElement = event.target as HTMLElement;
-    //const position = {
-    //  top: buttonElement.offsetTop + buttonElement.offsetHeight,
-    //  left: buttonElement.offsetLeft
-    //};
-
-    //this.popover.open({
-    //  title: 'Dynamic Title',
-    //  content: 'This is dynamically set content!',
-    //  position
-    //});
   }
 }
