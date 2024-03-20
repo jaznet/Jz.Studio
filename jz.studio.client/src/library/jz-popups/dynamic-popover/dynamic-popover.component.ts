@@ -2,7 +2,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-dynamic-popover',
+  selector: 'dynamic-popover',
   templateUrl: './dynamic-popover.component.html',
   styleUrls: ['./dynamic-popover.component.css']
 })
