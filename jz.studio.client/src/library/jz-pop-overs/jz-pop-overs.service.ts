@@ -3,7 +3,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class JzPopupsService {
+export class JzPopOversService {
   @Output() popoverEvent = new EventEmitter();
 
   constructor() { }

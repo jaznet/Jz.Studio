@@ -3,9 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaletteMgrService } from './app-services/palette-mgr.service';
 import { NavigationStart, Router } from '@angular/router';
 import { NavigationListenerService } from './app-services/navigation-listener.service';
-import { JzPopupsService } from '../library/jz-popups/jz-popups.service';
-import { PopUpLoadingComponent } from '../library/jz-popups/pop-up-loading/pop-up-loading.component';
-import { PopOverLoadingComponent } from '../library/jz-popups/pop-over-loading/pop-over-loading.component';
+import { PopOverLoadingComponent } from '../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { JzPopOversService } from '../library/jz-pop-overs/jz-pop-overs.service';
 
 interface WeatherForecast {
   date: string;
@@ -20,14 +19,13 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  @ViewChild('popUpLoadingComponent', { static: true }) popup!: PopUpLoadingComponent;
   @ViewChild('popOverLoadingComponent', { static: true }) popover!: PopOverLoadingComponent;
   public forecasts: WeatherForecast[] = [];
 
   constructor(
     private router: Router,
     private navigationListenerService: NavigationListenerService,
-    private popupsService:JzPopupsService,
+    private popoversService:JzPopOversService,
     private http: HttpClient,
     private palette: PaletteMgrService) {
     palette.InitializePalette();

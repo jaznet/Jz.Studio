@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, HostBinding, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { PopOverLoadingComponent } from '../../library/jz-popups/pop-over-loading/pop-over-loading.component';
-import { DynamicPopoverComponent } from '../../library/jz-popups/dynamic-popover/dynamic-popover.component';
-import { JzPopupsService } from '../../library/jz-popups/jz-popups.service';
+import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { JzPopOversService } from '../../library/jz-pop-overs/jz-pop-overs.service';
 
 @Component({
   selector: 'app-sandbox',
@@ -12,7 +11,7 @@ export class SandboxComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';
   @ViewChild('popover') popover!: PopOverLoadingComponent
 
-  constructor(private popoverservice:JzPopupsService) { }
+  constructor(private popoverservice:JzPopOversService) { }
 
   ngOnInit(): void {
     this.popoverservice.popoverEvent.subscribe((event: any) => {

@@ -9,7 +9,6 @@ import { AppWelcomeModule } from './app-welcome/app-welcome.module';
 import { AppPartsModule } from './app-parts/app-parts.module';
 import { RouterModule } from '@angular/router';
 import { SandboxModule } from '../app-view-modules/sandbox/sandbox.module';
-import { JzPopupsModule } from '../library/jz-popups/jz-popups.module';
 
 @NgModule({
   declarations: [
