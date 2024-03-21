@@ -10,6 +10,7 @@ export class DynamicPopoverComponent {
   @Input() title: string = '';
   @Input() content: string = '';
   isVisible: boolean = false;
+  isPopupVisible = false;
   position = { top: 0, left: 0 };
 
   constructor() { }

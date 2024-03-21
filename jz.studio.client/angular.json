@@ -40,7 +40,7 @@
               "src/assets/styles/layouts.css",
               "src/assets/styles/flex-grids.css",
              
-              "src/assets/styles/dxdark.css"
+              "src/assets/styles/dx.dark.css"
             ],
             "scripts": []
           },

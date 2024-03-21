@@ -9,13 +9,13 @@ export class JzChoroDashComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
   constructor(private element: ElementRef) {
-    console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.ClientHeight);
+    console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
   }
     ngAfterViewInit(): void {
-      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.ClientHeight);
+      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
     }
 
     ngOnInit(): void {
-      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.ClientHeight);
+      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
     }
 }

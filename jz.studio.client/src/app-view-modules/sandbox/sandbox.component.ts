@@ -10,7 +10,7 @@ import { JzPopupsService } from '../../library/jz-popups/jz-popups.service';
 })
 export class SandboxComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';
-  @ViewChild('popOverLoadingComponent') popover!: PopOverLoadingComponent
+  @ViewChild('popover') popover!: DynamicPopoverComponent
 
   constructor(private popoverservice:JzPopupsService) { }
 
@@ -22,7 +22,7 @@ export class SandboxComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.popover.target);
+    console.log(this.popover);
   }
 
   showPopover(event: MouseEvent) {
