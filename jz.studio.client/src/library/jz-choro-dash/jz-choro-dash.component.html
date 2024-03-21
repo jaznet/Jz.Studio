@@ -1,17 +1,22 @@
 
 <div class="grid-rows">
+
   <dx-radio-group [items]="categories"
                   layout="horizontal"
                   (onValueChanged)="onValueChanged($event)">
   </dx-radio-group>
+
   <div class="grid-row-fixed">USA Population</div>
 
   <jz-choro-dash-panel class="grid-row-fill">
-    <choro-usa></choro-usa>
+    <choro-usa #choro_usa></choro-usa>
   </jz-choro-dash-panel>
 
   <jz-choro-dash-panel class="grid-row-fill">
-    <choro-state></choro-state>
+    <choro-state #choro_state></choro-state>
   </jz-choro-dash-panel>
 
 </div>
+
+<pop-over-loading #popover_loading></pop-over-loading>
+<popover-http-error #popover_httperror></popover-http-error>

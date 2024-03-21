@@ -48,7 +48,7 @@ export class JzChoroDashComponent implements OnInit {
 
   onValueChanged(event: any) {
     // Get the new value from the event argument
-    console.log('%cEvent', 'color:yellow', event);
+    console.log('%cEvent', 'color:yellow', event.value);
 
     const CurrentLevel = this.strategySelect.getSelection();
     this.strategySelect.setSelection(event.value);
