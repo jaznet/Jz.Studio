@@ -10,12 +10,13 @@ import { JzPopupsService } from '../../library/jz-popups/jz-popups.service';
 })
 export class SandboxComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';
-  @ViewChild('popover') popover!: DynamicPopoverComponent
+  @ViewChild('popover') popover!: PopOverLoadingComponent
 
   constructor(private popoverservice:JzPopupsService) { }
 
   ngOnInit(): void {
     this.popoverservice.popoverEvent.subscribe((event: any) => {
+      console.log(this.popover.isPopupVisible);
       this.popover.isPopupVisible = true;
       console.log(event);
     })
