@@ -1,21 +1,68 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, OnInit } from '@angular/core';
+
+import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
+import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
+import { ChoroStateComponent } from '../jz-choropleths/components/choro-state/choro-state.component';
+import { ChoroUsaComponent } from '../jz-choropleths/components/choro-usa/choro-usa.component';
+import { UserSelectionService } from './paint-factory/services/user-selection.service';
+import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
+import { TopoService } from '../jz-choropleths/services/topo.service';
+import { PopoverHttpErrorComponent } from '../jz-pop-overs/popover-http-error/popover-http-error.component';
+import { PopOverLoadingComponent } from '../jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
 
 @Component({
   selector: 'jz-choro-dash',
   templateUrl: './jz-choro-dash.component.html',
   styleUrl: './jz-choro-dash.component.css'
 })
-export class JzChoroDashComponent implements OnInit, AfterViewInit {
-  @HostBinding('class') classes = 'fit-to-parent';
+export class JzChoroDashComponent implements OnInit {
+  @HostBinding('class') classes = 'fit-to-parent grid-rows view-router-container';
+  @ViewChild('choro_usa', { static: true }) ChoroUSA!: ChoroUsaComponent;
+  @ViewChild('choro_state', { static: true }) ChoroState!: ChoroStateComponent;
+  @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
+  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
-  constructor(private element: ElementRef) {
-    console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
+  categories: string[] = ['election', 'population'];
+  data: any;
+
+  constructor(
+    @Inject(PAINTING_STRATEGY_TOKEN) private paintStrategy: CountyPaintingStrategy,
+    private topoService: TopoService,
+    private strategySelect: UserSelectionService,
+    private paintStrategyFactoryService: PaintStrategyFactoryService,
+  ) { }
+
+  ngOnInit(): void {
+    this.topoService.getTopology();
+
+    this.ChoroUSA.choroUSAEvent.subscribe(data => {
+      console.log('USA', data);
+      this.ChoroUSA.countyLayer.selectAll('path').style('fill', (d: any) => this.paintStrategy.getColor(d));
+    })
+
+    this.ChoroState.choroStateEvent.subscribe(data => {
+      console.log('State', data);
+      this.ChoroState.counties.selectAll('path').style('fill', (d: any) => this.paintStrategy.getColor(d));
+    })
   }
-    ngAfterViewInit(): void {
-      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
-    }
 
-    ngOnInit(): void {
-      console.log(this.element.nativeElement.clientWidth, this.element.nativeElement.clientHeight);
-    }
+  onValueChanged(event: any) {
+    // Get the new value from the event argument
+    console.log('%cEvent', 'color:yellow', event);
+
+    const CurrentLevel = this.strategySelect.getSelection();
+    this.strategySelect.setSelection(event.value);
+    this.paintStrategy = this.paintStrategyFactoryService.createStrategy();
+    // Handle the value change here
+    this.data = this.paintStrategy.getData(this.popover_loading, this.popover_httperror, (fetchedData) => {
+      console.log('fetched', fetchedData);
+      this.paint(fetchedData);
+    });
+  }
+
+  paint(fetchedData: any) {
+    this.ChoroUSA.countyLayer.selectAll('path').style('fill', (d: any) => this.paintStrategy.getColor(d));
+    this.ChoroState.counties.selectAll('path').style('fill', (d: any) => this.paintStrategy.getColor(d));
+    console.log('fetched', fetchedData);
+  }
 }

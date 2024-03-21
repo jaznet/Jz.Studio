@@ -8,6 +8,7 @@ import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painti
 import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { JzChoroDashComponent } from './jz-choro-dash.component';
 import { JzPopOversModule } from '../jz-pop-overs/jz-pop-overs.module';
+import { DxRadioGroupModule } from 'devextreme-angular';
 
 export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
 
@@ -21,7 +22,8 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
     CommonModule,
     JzChoroDashRouterModule,
     JzPopOversModule,
-    JzChoroplethsModule
+    JzChoroplethsModule,
+    DxRadioGroupModule
   ],
   providers: [
     PaintStrategyFactoryService,
