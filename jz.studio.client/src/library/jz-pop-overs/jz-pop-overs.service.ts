@@ -8,7 +8,7 @@ export class JzPopOversService {
 
   constructor() { }
 
-  showPopoverLoading() {
+  showPopoverLoading(title:string) {
     this.popoverLoadingEvent.emit('show');
   }
 

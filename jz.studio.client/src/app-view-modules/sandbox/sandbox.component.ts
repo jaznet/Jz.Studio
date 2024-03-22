@@ -16,6 +16,7 @@ export class SandboxComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.popoverservice.popoverLoadingEvent.subscribe((event: any) => {
       console.log(this.popover.isPopupVisible);
+      this.popover.title = 'event';
       this.popover.isPopupVisible = true;
       console.log(event);
     })

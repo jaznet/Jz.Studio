@@ -1,7 +1,6 @@
 
 import { ChangeDetectorRef, Component, HostBinding, ViewChild } from '@angular/core';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
-import { DxPopupComponent } from 'devextreme-angular/ui/popup';
 
 @Component({
   selector: 'pop-over-loading',
@@ -15,6 +14,7 @@ export class PopOverLoadingComponent  {
   data: any;
   url = 'myUrl;'
   target = 'viewRouter';
+  title = 'not set';
 
   constructor(private changeDetector: ChangeDetectorRef) {
   
