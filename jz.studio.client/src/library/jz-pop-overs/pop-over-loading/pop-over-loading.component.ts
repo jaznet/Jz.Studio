@@ -16,11 +16,8 @@ export class PopOverLoadingComponent  {
   target = 'viewRouter';
   title = 'not set';
 
-  constructor(private changeDetector: ChangeDetectorRef) {
-  
-  }
+  constructor(private changeDetector: ChangeDetectorRef) { }
 
-   ngAfterViewInit(): void {
-   // this.dxpopup.target = this.target;
-  }
+  ngAfterViewInit(): void { }
+
 }
