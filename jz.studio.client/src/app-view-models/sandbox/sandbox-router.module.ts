@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
 import { SandboxHomeComponent } from './sandbox-home/sandbox-home.component';
+import { DockingViewComponent } from './docking-view/docking-view.component';
 
 const routes: Routes = [
   {
@@ -26,11 +27,11 @@ const routes: Routes = [
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
      
-      //{
-      //  path: 'docking',
-      //  /*loadChildren: () => import('../../library/jz-docking/jz-docking/jz-docking.module').then(m => m.JzDockingModule)*/
-      //   component: JzDockingComponent
-      //},
+      {
+        path: 'docking',
+        component: DockingViewComponent
+      
+      },
     ]
   }
 ];
