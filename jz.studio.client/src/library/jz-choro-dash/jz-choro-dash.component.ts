@@ -36,12 +36,13 @@ export class JzChoroDashComponent implements OnInit {
 
   ngOnInit(): void {
 
-    //this.popovers.hidePopoverLoading({
-    //    action: 'hide',
-    //    title: '',
-    //    url: '',
-    //    route: ''
-    //});
+    this.popovers.togglePopOverLoading({
+      action: 'hide',
+      route: '',
+      title: '',
+      view: '',
+      url: ''
+    });
 
     this.topoService.getTopology();
 

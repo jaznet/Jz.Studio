@@ -9,14 +9,12 @@ export class JzPopOversService {
 
   constructor() { }
 
-  showPopoverLoading(params: PopOverLoadingParams) {
-    /* this.popoverLoadingEvent.emit('show');*/
-    params.action = 'show';
+  togglePopOverLoading(params: PopOverLoadingParams) {
     this.popoverLoadingEvent.emit(params);
   }
 
-  hidePopoverLoading(params: PopOverLoadingParams) {
-    params.action = 'hide'
-    this.popoverLoadingEvent.emit(params);
-  }
+  //hidePopOverLoading(params: PopOverLoadingParams) {
+  //  params.action = 'hide'
+  //  this.popoverLoadingEvent.emit(params);
+  //}
 }

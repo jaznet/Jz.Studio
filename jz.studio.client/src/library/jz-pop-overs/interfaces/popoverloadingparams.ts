@@ -4,4 +4,5 @@ export interface PopOverLoadingParams {
   title: string;
   url: string;
   route: string;
+  view: string;
 }
