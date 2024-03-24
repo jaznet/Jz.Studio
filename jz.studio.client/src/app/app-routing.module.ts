@@ -14,7 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'sandbox',
-    loadChildren: () => import('../app-view-modules/sandbox/sandbox.module').then(m => m.SandboxModule)
+    loadChildren: () => import('../app-view-models/sandbox/sandbox.module').then(m => m.SandboxModule)
   },
 ]
 

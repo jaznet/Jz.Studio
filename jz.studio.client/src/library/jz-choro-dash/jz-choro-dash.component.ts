@@ -35,12 +35,14 @@ export class JzChoroDashComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.popovers.hidePopoverLoading({
-        action: 'hide',
-        title: '',
-        url: '',
-        route: ''
-    });
+
+    //this.popovers.hidePopoverLoading({
+    //    action: 'hide',
+    //    title: '',
+    //    url: '',
+    //    route: ''
+    //});
+
     this.topoService.getTopology();
 
     this.ChoroUSA.choroUSAEvent.subscribe(data => {
