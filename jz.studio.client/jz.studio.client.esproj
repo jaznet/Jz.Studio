@@ -10,6 +10,6 @@
   <ItemGroup>
     <Folder Include="src\assets\css\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
-    <Folder Include="src\library\jz-popups\" />
+    <Folder Include="src\library\jz-pop-overs\interfaces\" />
   </ItemGroup>
 </Project>

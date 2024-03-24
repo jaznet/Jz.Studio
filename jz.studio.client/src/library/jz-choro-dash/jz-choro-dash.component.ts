@@ -9,6 +9,7 @@ import { TopoService } from '../jz-choropleths/services/topo.service';
 import { PopoverHttpErrorComponent } from '../jz-pop-overs/popover-http-error/popover-http-error.component';
 import { PopOverLoadingComponent } from '../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
+import { JzPopOversService } from '../jz-pop-overs/jz-pop-overs.service';
 
 @Component({
   selector: 'jz-choro-dash',
@@ -30,9 +31,16 @@ export class JzChoroDashComponent implements OnInit {
     private topoService: TopoService,
     private strategySelect: UserSelectionService,
     private paintStrategyFactoryService: PaintStrategyFactoryService,
+    private popovers: JzPopOversService
   ) { }
 
   ngOnInit(): void {
+    this.popovers.hidePopoverLoading({
+        action: 'hide',
+        title: '',
+        url: '',
+        route: ''
+    });
     this.topoService.getTopology();
 
     this.ChoroUSA.choroUSAEvent.subscribe(data => {

@@ -12,6 +12,7 @@ export class PopOverLoadingComponent  {
 
   isPopupVisible = false;
   data: any;
+  route: any;
   url = 'myUrl;'
   target = 'viewRouter';
   title = 'not set';

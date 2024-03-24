@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, HostBinding, OnInit, ViewChild, ViewChildren } from '@angular/core';
 import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { JzPopOversService } from '../../library/jz-pop-overs/jz-pop-overs.service';
+import { PopOverLoadingParams } from '../../library/jz-pop-overs/interfaces/popoverloadingparams';
 
 @Component({
   selector: 'app-sandbox',
@@ -14,11 +15,15 @@ export class SandboxComponent implements OnInit, AfterViewInit {
   constructor(private popoverservice:JzPopOversService) { }
 
   ngOnInit(): void {
-    this.popoverservice.popoverLoadingEvent.subscribe((event: any) => {
-      console.log(this.popover.isPopupVisible);
-      this.popover.title = 'event';
-      this.popover.isPopupVisible = true;
-      console.log(event);
+    this.popoverservice.popoverLoadingEvent.subscribe((params: PopOverLoadingParams) => {
+      if (params.action === 'hide')
+        this.popover.isPopupVisible = false;
+      else {
+        this.popover.title = 'Loading';
+        this.popover.url = params.route;
+        this.popover.isPopupVisible = true;
+        console.log(params);
+      }
     })
   }
 

@@ -39,6 +39,7 @@ export class ChoroDataService {
           popover_httperror.url = error.url;
           popover_httperror.statusText = error.statusText;
           popover_httperror.isPopupVisible = true;
+        
           console.error('Error fetching data:', error);
           // Handle the error appropriately
           return throwError(error);
