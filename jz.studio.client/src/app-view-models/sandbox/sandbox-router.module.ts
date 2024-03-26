@@ -22,11 +22,11 @@ const routes: Routes = [
         path: 'choro-dash-loader',
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
-      //{
-      //  path: 'docking',
-      //  component: DockingViewComponent
+      {
+        path: 'docking',
+        component: DockingViewComponent
      
-      //},
+      },
     ]
   }
 ];
