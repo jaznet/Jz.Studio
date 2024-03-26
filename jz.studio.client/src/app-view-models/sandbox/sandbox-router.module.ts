@@ -18,20 +18,15 @@ const routes: Routes = [
         path: 'home',
         component: SandboxHomeComponent
       },
-      //{
-      //  path: 'choro-dash-loader',
-      //  loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash-loader/jz-choro-dash-loader.module').then(m => m.JzChoroDashLoaderModule)
-      //},
       {
         path: 'choro-dash-loader',
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
+      //{
+      //  path: 'docking',
+      //  component: DockingViewComponent
      
-      {
-        path: 'docking',
-        component: DockingViewComponent
-      
-      },
+      //},
     ]
   }
 ];

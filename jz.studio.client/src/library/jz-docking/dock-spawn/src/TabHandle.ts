@@ -1,40 +1,43 @@
-import { TabPage } from "./TabPage.js";
-import { PanelContainer } from "./PanelContainer.js";
-import { UndockInitiator } from "./UndockInitiator.js";
-import { EventHandler } from "./EventHandler.js";
-import { Utils } from "./Utils.js";
-import { PanelType } from "./enums/PanelType.js";
-import { DockNode } from "./DockNode.js";
-import { Localizer } from "./i18n/Localizer.js";
+import { TabPage } from "./TabPage";
+import { PanelContainer } from "./PanelContainer";
+import { UndockInitiator } from "./UndockInitiator";
+import { EventHandler } from "./EventHandler";
+import { Utils } from "./Utils";
+import { PanelType } from "./enums/PanelType";
+import { DockNode } from "./DockNode";
+import { Localizer } from "./i18n/Localizer";
+
+import { Point } from "../src/Point";
+import { Dialog } from "../src/Dialog"
 
 /**
  * A tab handle represents the tab button on the tab strip
  */
 export class TabHandle {
     parent: TabPage;
-    elementBase: HTMLDivElement;
+    elementBase?: HTMLDivElement;
     elementText: HTMLDivElement;
-    elementCloseButton: HTMLDivElement;
+    elementCloseButton?: HTMLDivElement;
     undockInitiator: UndockInitiator;
     mouseDownHandler: EventHandler;
     touchDownHandler: EventHandler;
     closeButtonHandler: EventHandler;
     closeButtonTouchHandler: EventHandler;
     auxClickHandler: EventHandler;
-    contextMenuHandler: EventHandler;
-    mouseMoveHandler: EventHandler;
-    touchMoveHandler: EventHandler;
-    mouseUpHandler: EventHandler;
-    touchUpHandler: EventHandler;
+    contextMenuHandler!: EventHandler;
+    mouseMoveHandler?: EventHandler;
+    touchMoveHandler?: EventHandler;
+    mouseUpHandler?: EventHandler;
+    touchUpHandler?: EventHandler;
     stargDragPosition: any;
-    dragged: boolean;
+    dragged!: boolean;
     eventListeners: any[];
     undockListener: { onDockEnabled: (e: any) => void; onHideCloseButton: (e: any) => void; };
 
-    prev: number;
-    current: number;
-    direction: number;
-    _ctxMenu: HTMLDivElement;
+    prev!: number;
+    current!: number;
+    direction!: number;
+    _ctxMenu?: HTMLDivElement;
     _windowsContextMenuCloseBound: any;
 
     constructor(parent: TabPage) {
@@ -83,11 +86,11 @@ export class TabHandle {
         //this.zIndexCounter = parent.host.dockManager.zIndexTabHandle;
     }
 
-    addListener(listener) {
+    addListener(listener:any) {
         this.eventListeners.push(listener);
     }
 
-    removeListener(listener) {
+  removeListener(listener: any) {
         this.eventListeners.splice(this.eventListeners.indexOf(listener), 1);
     }
 
@@ -134,24 +137,30 @@ export class TabHandle {
         };
     }
 
-    oncontextMenuClicked(e: MouseEvent) {
-        e.preventDefault();
-
-        if (!this._ctxMenu && TabHandle.createContextMenuContentCallback) {
-            this._ctxMenu = document.createElement('div');
-            this._ctxMenu.className = 'dockspab-tab-handle-context-menu';
-
-            TabHandle.createContextMenuContentCallback(this, this._ctxMenu, this.parent.container.dockManager.context.model.documentManagerNode.children);
-
-            this._ctxMenu.style.left = e.pageX + "px";
-            this._ctxMenu.style.top = e.pageY + "px";
-            document.body.appendChild(this._ctxMenu);
-            this._windowsContextMenuCloseBound = this.windowsContextMenuClose.bind(this)
-            window.addEventListener('mouseup', this._windowsContextMenuCloseBound);
-        } else {
-            this.closeContextMenu();
-        }
+  oncontextMenuClicked(e: Event): void {
+    // First, check if the event is a MouseEvent before proceeding
+    if (!(e instanceof MouseEvent)) {
+      return;
     }
+
+    e.preventDefault();
+
+    if (!this._ctxMenu && TabHandle.createContextMenuContentCallback) {
+      this._ctxMenu = document.createElement('div');
+      this._ctxMenu.className = 'dockspab-tab-handle-context-menu';
+
+      TabHandle.createContextMenuContentCallback(this, this._ctxMenu, this.parent.container.dockManager.context!.model.documentManagerNode!.children);
+
+      this._ctxMenu.style.left = e.pageX + "px";
+      this._ctxMenu.style.top = e.pageY + "px";
+      document.body.appendChild(this._ctxMenu);
+      this._windowsContextMenuCloseBound = this.windowsContextMenuClose.bind(this);
+      window.addEventListener('mouseup', this._windowsContextMenuCloseBound);
+    } else {
+      this.closeContextMenu();
+    }
+  }
+
 
     closeContextMenu() {
         if (this._ctxMenu) {
@@ -171,7 +180,7 @@ export class TabHandle {
         this.closeContextMenu();
     }
 
-    onMouseDown(e) {
+  onMouseDown(e: any) {
         e.preventDefault();
 
         this.parent.onSelected();
@@ -199,7 +208,7 @@ export class TabHandle {
         this.touchUpHandler = new EventHandler(window, 'touchend', this.onMouseUp.bind(this));
     }
 
-    onMouseUp(e) {
+  onMouseUp(e: any) {
         if (this.elementBase) {
             this.elementBase.classList.remove('dockspan-tab-handle-dragged');
         }
@@ -218,15 +227,15 @@ export class TabHandle {
         delete this.touchUpHandler;
     }
 
-    moveTabEvent(that, state) {
-        that.eventListeners.forEach((listener) => {
+    moveTabEvent(that:any, state:any) {
+        that.eventListeners.forEach((listener:any) => {
             if (listener.onMoveTab) {
                 listener.onMoveTab({ self: that, state: state });
             }
         });
     }
 
-    onMouseMove(e) {
+    onMouseMove(e:any) {
         e.preventDefault();
 
         if (Math.abs(this.stargDragPosition - e.clientX) < 10)
@@ -246,8 +255,8 @@ export class TabHandle {
         }
     }
 
-    hideCloseButton(state) {
-        this.elementCloseButton.style.display = state ? 'none' : 'block';
+    hideCloseButton(state:any) {
+        this.elementCloseButton!.style.display = state ? 'none' : 'block';
     }
 
     updateTitle() {
@@ -295,18 +304,20 @@ export class TabHandle {
         }
     }
 
-    _performUndock(e, dragOffset) {
-        if (this.parent.container.containerType === 'panel') {
-            this.undockInitiator.enabled = false;
-            let panel = this.parent.container as PanelContainer;
-            return panel.performUndockToDialog(e, dragOffset);
-        }
-        else
-            return null;
+  _performUndock(e: MouseEvent, dragOffset: Point): Dialog {
+    if (this.parent.container.containerType === 'panel') {
+      this.undockInitiator.enabled = false;
+      let panel = this.parent.container as PanelContainer;
+      // Ensure performUndockToDialog always returns a Dialog instance
+      return panel.performUndockToDialog(e, dragOffset);
     }
+    // Handle the case where undocking is not possible
+    throw new Error("Undocking not possible");
+  }
 
-    onCloseButtonClicked(e) {
-        if (this.elementCloseButton.style.display !== 'none') {
+
+    onCloseButtonClicked(e:any) {
+        if (this.elementCloseButton!.style.display !== 'none') {
             if (e.button !== 2) {
                 // If the page contains a panel element, undock it and destroy it
                 if (this.parent.container.containerType === 'panel') {
@@ -319,10 +330,10 @@ export class TabHandle {
 
     setSelected(isSelected: boolean) {
         if (isSelected)
-            this.elementBase.classList.add('dockspan-tab-handle-selected');
+            this.elementBase!.classList.add('dockspan-tab-handle-selected');
         else {
-            this.elementBase.classList.remove('dockspan-tab-handle-selected');
-            this.elementBase.classList.remove('dockspan-tab-handle-active');
+            this.elementBase!.classList.remove('dockspan-tab-handle-selected');
+            this.elementBase!.classList.remove('dockspan-tab-handle-active');
         }
     }
 

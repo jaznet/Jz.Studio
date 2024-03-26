@@ -1,6 +1,6 @@
-import { SplitterBar } from "./SplitterBar.js";
-import { Utils } from "./Utils.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
+import { SplitterBar } from "./SplitterBar";
+import { Utils } from "./Utils";
+import { IDockContainer } from "./interfaces/IDockContainer";
 
 /**
  * A splitter panel manages the child containers inside it with splitter bars.
@@ -25,7 +25,7 @@ export class SplitterPanel {
             throw new Error('Splitter panel should contain atleast 2 panels');
 
         this.spiltterBars = [];
-        let afterElement: HTMLElement = null;
+        let afterElement: HTMLElement|null = null;
         for (let i = 0; i < this.childContainers.length - 1; i++) {
             let previousContainer = this.childContainers[i];
             let nextContainer = this.childContainers[i + 1];
@@ -77,10 +77,10 @@ export class SplitterPanel {
 
     destroy() {
         this.removeFromDOM();
-        this.panelElement.parentNode.removeChild(this.panelElement);
+        this.panelElement.parentNode!.removeChild(this.panelElement);
     }
 
-    _insertContainerIntoPanel(container: IDockContainer, afterElement: HTMLElement) {
+    _insertContainerIntoPanel(container: IDockContainer, afterElement: HTMLElement|null) {
         if (!container) {
             console.error('container is undefined');
             return;
@@ -117,7 +117,7 @@ export class SplitterPanel {
             let child = this.childContainers[i];
             let size;
             if (child !== container) {
-                size = this.stackedVertical ? child.containerElement.parentElement.clientHeight : child.containerElement.parentElement.clientWidth;
+                size = this.stackedVertical ? child.containerElement.parentElement!.clientHeight : child.containerElement.parentElement!.clientWidth;
                 size *= otherPanelScaleMultipler;
             }
             else
@@ -188,7 +188,7 @@ export class SplitterPanel {
             let size = this.stackedVertical ?
                 container.height :
                 container.width;
-            totalChildPanelSize += size;
+            totalChildPanelSize += size!;
         });
 
         const barRect = this.spiltterBars[0].barElement.getBoundingClientRect();

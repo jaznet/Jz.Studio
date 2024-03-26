@@ -18,7 +18,7 @@ import { IDockContainer } from "./interfaces/IDockContainer.js";
 export class DockGraphDeserializer {
 
     dockManager: DockManager;
-    documentManagerNode: DockNode;
+    documentManagerNode!: DockNode;
 
     constructor(dockManager: DockManager) {
         this.dockManager = dockManager;
@@ -73,10 +73,10 @@ export class DockGraphDeserializer {
 
         if (containerType === 'panel') {
             container = await PanelContainer.loadFromState(containerState, this.dockManager);
-            if (!container.prepareForDocking)
+            if (!container!.prepareForDocking)
                 return null;
-            container.prepareForDocking();
-            Utils.removeNode(container.elementPanel);
+            container!.prepareForDocking();
+            Utils.removeNode(container!.elementPanel);
         }
         else if (containerType === 'horizontal')
             container = new HorizontalDockContainer(this.dockManager, childContainers);
@@ -97,38 +97,39 @@ export class DockGraphDeserializer {
             throw new Error('Cannot create dock container of unknown type: ' + containerType);
 
         // Restore the state of the container
-        container.loadState(containerState);
+        container!.loadState(containerState);
 
         // container.performLayout(childContainers);
         return container;
     }
 
-    async _buildDialogs(dialogsInfo: IPanelInfo[]) {
-        let dialogs: Dialog[] = [];
-        for (let dialogInfo of dialogsInfo) {
-            let containerType = dialogInfo.containerType;
-            let containerState = dialogInfo.state;
-            let container;
-            if (containerType === 'panel') {
-                container = await PanelContainer.loadFromState(containerState, this.dockManager);
-                if (container.prepareForDocking) {
-                    Utils.removeNode(container.elementPanel);
-                    container.isDialog = true;
-                    let dialog = new Dialog(container, this.dockManager);
-                    if (dialogInfo.position.x > document.body.clientWidth ||
-                        dialogInfo.position.y > document.body.clientHeight - 70) {
-                        dialogInfo.position.x = 20;
-                        dialogInfo.position.y = 70;
-                    }
-                    dialog.setPosition(dialogInfo.position.x, dialogInfo.position.y);
-                    dialog.isHidden = dialogInfo.isHidden;
-                    if (dialog.isHidden)
-                        dialog.hide();
-                    dialogs.push(dialog);
-                }
-            }
-
+  async _buildDialogs(dialogsInfo: IPanelInfo[]) {
+    let dialogs: Dialog[] = [];
+    for (let dialogInfo of dialogsInfo) {
+      let containerType = dialogInfo.containerType;
+      let containerState = dialogInfo.state;
+      let container;
+      if (containerType === 'panel') {
+        container = await PanelContainer.loadFromState(containerState, this.dockManager);
+        // Directly call prepareForDocking without checking its existence.
+        container!.prepareForDocking();
+        Utils.removeNode(container!.elementPanel);
+        container!.isDialog = true;
+        let dialog = new Dialog(container!, this.dockManager);
+        // Adjust position if necessary
+        if (dialogInfo.position.x > document.body.clientWidth || dialogInfo.position.y > document.body.clientHeight - 70) {
+          dialogInfo.position.x = 20;
+          dialogInfo.position.y = 70;
         }
-        return dialogs;
+        dialog.setPosition(dialogInfo.position.x, dialogInfo.position.y);
+        dialog.isHidden = dialogInfo.isHidden;
+        if (dialog.isHidden) {
+          dialog.hide();
+        }
+        dialogs.push(dialog);
+      }
     }
+    return dialogs;
+  }
+
 }

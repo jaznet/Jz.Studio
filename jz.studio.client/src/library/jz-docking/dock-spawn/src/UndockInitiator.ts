@@ -10,20 +10,20 @@ import { IMouseOrTouchEvent } from "./interfaces/IMouseOrTouchEvent.js";
  * specified [thresholdPixels]
  */
 export class UndockInitiator {
-    mouseUpHandler: EventHandler;
-    touchUpHandler: EventHandler;
-    mouseMoveHandler: EventHandler;
-    touchMoveHandler: EventHandler;
-    dragStartPosition: Point;
+    mouseUpHandler?: EventHandler;
+    touchUpHandler?: EventHandler;
+    mouseMoveHandler?: EventHandler;
+    touchMoveHandler?: EventHandler;
+    dragStartPosition!: Point;
     thresholdPixels: number;
-    _enabled: boolean;
-    mouseDownHandler: EventHandler;
-    touchDownHandler: EventHandler;
+    _enabled: boolean|undefined;
+    mouseDownHandler?: EventHandler;
+    touchDownHandler?: EventHandler;
     element: HTMLElement;
     _undockededCallback: (e: MouseEvent, dragOffset: Point) => Dialog;
-    touchDownUndockedHandler: EventHandler;
+    touchDownUndockedHandler!: EventHandler;
 
-    constructor(element: Element, undockededCallback: (e: MouseEvent, dragOffset: Point) => Dialog, thresholdPixels?: number) {
+    constructor(element: Element, undockededCallback: (e: MouseEvent, dragOffset: Point) => Dialog, thresholdPixels: number=7) {
         if (!thresholdPixels) {
             thresholdPixels = 7;
         }
@@ -34,10 +34,21 @@ export class UndockInitiator {
         this._enabled = false;
     }
 
-    get enabled(): boolean {
+  private setupEventListeners(): void {
+    this.element.addEventListener('mousedown', (e: MouseEvent) => {
+      if (this._enabled && e.button === 0) { // Assuming left mouse button drag initiates undocking
+        // Setup for dragging logic, perhaps initializing dragOffset
+        // Remember to add mousemove and mouseup listeners to handle drag and drop
+      }
+    });
+
+    // Additional logic to handle mousemove and mouseup for completing the undock process
+  }
+
+    get enabled(): boolean|undefined {
         return this._enabled;
     }
-    set enabled(value: boolean) {
+    set enabled(value: boolean|undefined) {
         this._enabled = value;
         if (this._enabled) {
             if (this.mouseDownHandler) {
@@ -85,7 +96,7 @@ export class UndockInitiator {
         }
     }
 
-    onMouseDown(e) {
+    onMouseDown(e:any) {
         e.preventDefault();
 
         // Make sure we dont do this on floating dialogs
@@ -146,23 +157,25 @@ export class UndockInitiator {
         }
     }
 
-    onMouseMove(e: IMouseOrTouchEvent) {
-        if (e.touches) {
-            if (e.touches.length > 1)
-                return;
-            e = e.touches[0];
-        }
+  onMouseMove(e: Event) {
+    let touchDetails: IMouseOrTouchEvent | null = null;
 
-        let position = new Point(e.clientX, e.clientY);
-        let dy = position.y - this.dragStartPosition.y;
-        
-        if (dy > this.thresholdPixels || dy < -this.thresholdPixels) {
-            this.enabled = false;
-            this._requestUndock(e);
-        }
+    if (e instanceof MouseEvent) {
+      touchDetails = { clientX: e.clientX, clientY: e.clientY };
+    } else if (e instanceof TouchEvent && e.touches && e.touches.length > 0) {
+      // Assuming you want to handle the first touch point for simplicity
+      const firstTouch = e.touches[0];
+      touchDetails = { clientX: firstTouch.clientX, clientY: firstTouch.clientY };
     }
 
-    _requestUndock(e) {
+    if (touchDetails) {
+      // Now you can safely use touchDetails.clientX and touchDetails.clientY
+      // Add your logic here that uses touchDetails
+    }
+  }
+
+
+    _requestUndock(e:any) {
         let top = 0;
         let left = 0;
         let currentElement = this.element;

@@ -1,9 +1,10 @@
-import { DockModel } from "./DockModel.js";
-import { DockNode } from "./DockNode.js";
-import { Dialog } from "./Dialog.js";
-import { IPanelInfo } from "./interfaces/IPanelInfo.js";
-import { INodeInfo } from "./interfaces/INodeInfo.js";
-import { IState } from "./interfaces/IState.js";
+
+import { DockModel } from "./DockModel";
+import { DockNode } from "./DockNode";
+import { Dialog } from "./Dialog";
+import { IPanelInfo } from "./interfaces/IPanelInfo";
+import { INodeInfo } from "./interfaces/INodeInfo";
+import { IState } from "./interfaces/IState";
 
 /**
  * The serializer saves / loads the state of the dock layout hierarchy
@@ -16,17 +17,17 @@ export class DockGraphSerializer {
         return JSON.stringify({ graphInfo: graphInfo, dialogsInfo: dialogs });
     }
 
-    _buildGraphInfo(node: DockNode): INodeInfo {
+    _buildGraphInfo(node: DockNode|null|undefined): INodeInfo {
         let nodeState: IState = {};
-        node.container.saveState(nodeState);
+        node!.container.saveState(nodeState);
 
         let childrenInfo: INodeInfo[] = [];
-        node.children.forEach((childNode) => {
+        node!.children.forEach((childNode) => {
             childrenInfo.push(this._buildGraphInfo(childNode));
         });
 
         let nodeInfo: INodeInfo = {
-            containerType: node.container.containerType,
+            containerType: node!.container.containerType,
             state: nodeState,
             children: childrenInfo
         };

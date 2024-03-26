@@ -20,8 +20,8 @@ export class Utils {
         element.classList.remove('disable-selection');
     }
 
-    static isPointInsideNode(px: number, py: number, node: DockNode|undefined): boolean {
-        let element = node.container.containerElement;
+    static isPointInsideNode(px: number, py: number, node: DockNode|undefined|null): boolean {
+        let element = node!.container.containerElement;
         let rect = element.getBoundingClientRect();
 
         return (

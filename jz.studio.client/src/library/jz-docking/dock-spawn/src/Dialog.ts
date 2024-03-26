@@ -1,31 +1,31 @@
-import { DockManager } from "./DockManager.js";
-import { Point } from "./Point.js";
-import { PanelContainer } from "./PanelContainer.js";
-import { DraggableContainer } from "./DraggableContainer.js";
-import { ResizableContainer } from "./ResizableContainer.js";
-import { EventHandler } from "./EventHandler.js";
-import { Utils } from "./Utils.js";
-import { Localizer } from "./i18n/Localizer.js";
-import { DockNode } from "./DockNode.js";
+import { DockManager } from "./DockManager";
+import { Point } from "./Point";
+import { PanelContainer } from "./PanelContainer";
+import { DraggableContainer } from "./DraggableContainer";
+import { ResizableContainer } from "./ResizableContainer";
+import { EventHandler } from "./EventHandler";
+import { Utils } from "./Utils";
+import { Localizer } from "./i18n/Localizer";
+import { DockNode } from "./DockNode";
 
 export class Dialog {
-    elementDialog: HTMLDivElement & { floatingDialog: Dialog };
-    draggable: DraggableContainer;
+    elementDialog!: HTMLDivElement & { floatingDialog: Dialog };
+    draggable!: DraggableContainer;
     panel: PanelContainer;
     dockManager: DockManager;
     eventListener: DockManager;
     position: Point;
-    resizable: ResizableContainer;
-    disableResize: boolean;
+    resizable!: ResizableContainer;
+  disableResize: boolean | null | undefined;
     mouseDownHandler: any;
     onKeyPressBound: any;
-    noDocking: boolean;
-    isHidden: boolean;
-    keyPressHandler: EventHandler;
-    focusHandler: EventHandler;
-    grayoutParent: PanelContainer;
-    contextmenuHandler: EventHandler;
-    _ctxMenu: HTMLDivElement;
+    noDocking!: boolean;
+    isHidden!: boolean;
+    keyPressHandler?: EventHandler;
+  focusHandler?: EventHandler;
+  grayoutParent: PanelContainer | null | undefined;
+    contextmenuHandler?: EventHandler;
+    _ctxMenu?: HTMLDivElement|null;
     _windowsContextMenuCloseBound: any;
 
     constructor(panel: PanelContainer, dockManager: DockManager, grayoutParent?: PanelContainer|null, disableResize?: boolean) {
@@ -35,7 +35,7 @@ export class Dialog {
         this.grayoutParent = grayoutParent;
         this.disableResize = disableResize;
         this._initialize();
-        this.dockManager.context.model.dialogs.push(this);
+        this.dockManager.context!.model.dialogs.push(this);
         this.position = dockManager.defaultDialogPosition;
         this.dockManager.notifyOnCreateDialog(this);
         panel.isDialog = true;
@@ -63,8 +63,14 @@ export class Dialog {
 
         this.focusHandler = new EventHandler(this.elementDialog, 'focus', this.onFocus.bind(this), true);
         this.mouseDownHandler = new EventHandler(this.elementDialog, 'pointerdown', this.onMouseDown.bind(this), true);
-        this.keyPressHandler = new EventHandler(this.elementDialog, 'keypress', this.dockManager.onKeyPressBound, true);
-        this.contextmenuHandler = new EventHandler(this.panel.elementTitle, 'contextmenu', this.oncontextMenuClicked.bind(this));
+      this.keyPressHandler = new EventHandler(this.elementDialog, 'keypress', this.dockManager.onKeyPressBound, true);
+
+      this.contextmenuHandler = new EventHandler(
+        this.panel.elementTitle,
+        'contextmenu',
+        (evt: Event) => this.oncontextMenuClicked(evt as MouseEvent)
+      );
+
 
         this.resize(this.panel.elementPanel.clientWidth, this.panel.elementPanel.clientHeight);
         this.isHidden = false;
@@ -93,13 +99,19 @@ export class Dialog {
             this.dockManager.activePanel = this.panel;
     }
 
-    onMouseDown(e: PointerEvent) {
-        if (e.button != 2)
-            this.bringToFront();
-    }
+  onMouseDown(e: Event) {
+    const pointerEvent = e as PointerEvent; // Type assertion
+    if (pointerEvent.button != 2)
+      this.bringToFront();
+  }
+
 
     destroy() {
-        this.panel.lastDialogSize = { width: this.resizable.width, height: this.resizable.height };
+      this.panel.lastDialogSize = {
+        width: this.resizable.width != null ? this.resizable.width : undefined,
+        height: this.resizable.height != null ? this.resizable.height : undefined
+      };
+
 
         if (this.focusHandler) {
             this.focusHandler.cancel();
@@ -120,7 +132,7 @@ export class Dialog {
         Utils.removeNode(this.elementDialog);
         this.draggable.removeDecorator();
         Utils.removeNode(this.panel.elementPanel);
-        Utils.arrayRemove(this.dockManager.context.model.dialogs, this);
+        Utils.arrayRemove(this.dockManager.context!.model.dialogs, this);
         delete this.panel.floatingDialog;
 
         if (this.grayoutParent) {
@@ -129,7 +141,7 @@ export class Dialog {
     }
 
   resize(width: number | undefined, height: number | undefined ) {
-        this.resizable.resize(width, height);
+        this.resizable.resize(width!, height!);
     }
 
     setTitle(title: string) {
@@ -167,7 +179,7 @@ export class Dialog {
     }
 
     remove() {
-        this.elementDialog.parentNode.removeChild(this.elementDialog);
+        this.elementDialog.parentNode!.removeChild(this.elementDialog);
     }
 
     show() {
@@ -213,7 +225,7 @@ export class Dialog {
             this._ctxMenu = document.createElement('div');
             this._ctxMenu.className = 'dockspab-tab-handle-context-menu';
 
-            let res = Dialog.createContextMenuContentCallback(this, this._ctxMenu, this.dockManager.context.model.documentManagerNode.children);
+            let res = Dialog.createContextMenuContentCallback(this, this._ctxMenu, this.dockManager.context!.model.documentManagerNode!.children);
             if (res !== false) {
                 this._ctxMenu.style.left = e.pageX + "px";
                 this._ctxMenu.style.top = e.pageY + "px";

@@ -1,3 +1,4 @@
+
 import { PanelType } from "../enums/PanelType";
 
 export interface IState {

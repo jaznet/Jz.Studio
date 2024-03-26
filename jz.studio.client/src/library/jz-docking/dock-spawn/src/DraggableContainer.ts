@@ -1,12 +1,12 @@
-import { Dialog } from "./Dialog.js";
-import { DockManager } from "./DockManager.js";
-import { EventHandler } from "./EventHandler.js";
-import { Point } from "./Point.js";
-import { Utils } from "./Utils.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { ContainerType } from "./ContainerType.js";
-import { IState } from "./interfaces/IState.js";
-import { PanelContainer } from "./PanelContainer.js";
+import { Dialog } from "./Dialog";
+import { DockManager } from "./DockManager";
+import { EventHandler } from "./EventHandler";
+import { Point } from "./Point";
+import { Utils } from "./Utils";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { ContainerType } from "./ContainerType";
+import { IState } from "./interfaces/IState";
+import { PanelContainer } from "./PanelContainer";
 
 export class DraggableContainer implements IDockContainer {
 
@@ -16,12 +16,12 @@ export class DraggableContainer implements IDockContainer {
     dockManager: DockManager;
     topLevelElement: HTMLElement;
     containerType: ContainerType;
-    mouseDownHandler: EventHandler;
-    touchDownHandler: EventHandler;
+    mouseDownHandler?: EventHandler;
+    touchDownHandler?: EventHandler;
     minimumAllowedChildNodes: number;
-    previousMousePosition: { x: any; y: any; };
-    mouseMoveHandler: EventHandler;
-    mouseUpHandler: EventHandler;
+    previousMousePosition!: { x: any; y: any; };
+    mouseMoveHandler?: EventHandler;
+    mouseUpHandler?: EventHandler;
     private iframeEventHandlers: EventHandler[];
 
     constructor(dialog: Dialog, delegate: PanelContainer, topLevelElement: HTMLElement, dragHandle: HTMLElement) {
@@ -31,8 +31,9 @@ export class DraggableContainer implements IDockContainer {
         this.dockManager = delegate.dockManager;
         this.topLevelElement = topLevelElement;
         this.containerType = delegate.containerType;
-        this.mouseDownHandler = new EventHandler(dragHandle, 'mousedown', this.onMouseDown.bind(this));
-        this.touchDownHandler = new EventHandler(dragHandle, 'touchstart', this.onMouseDown.bind(this));
+      this.mouseDownHandler = new EventHandler(dragHandle, 'mousedown', this.onMouseDown.bind(this) as EventListener);
+      this.touchDownHandler = new EventHandler(dragHandle, 'touchstart', this.onMouseDown.bind(this) as EventListener);
+
         this.topLevelElement.style.left = topLevelElement.offsetLeft + 'px';
         this.topLevelElement.style.top = topLevelElement.offsetTop + 'px';
         this.minimumAllowedChildNodes = delegate.minimumAllowedChildNodes;
@@ -55,11 +56,11 @@ export class DraggableContainer implements IDockContainer {
     setActiveChild(/*child*/) {
     }
 
-    get width(): number {
+    get width(): number|null|undefined {
         return this.delegate.width;
     }
 
-    get height(): number {
+  get height(): number | null | undefined {
         return this.delegate.height;
     }
 
@@ -107,23 +108,32 @@ export class DraggableContainer implements IDockContainer {
             delete this.mouseUpHandler;
         }
 
-        this.mouseMoveHandler = new EventHandler(window, 'pointermove', this.onMouseMove.bind(this));
-        this.mouseUpHandler = new EventHandler(window, 'pointerup', this.onMouseUp.bind(this));
+      this.mouseMoveHandler = new EventHandler(window, 'pointermove', this.onMouseMove.bind(this) as EventListener);
+      this.mouseUpHandler = new EventHandler(window, 'pointerup', this.onMouseUp.bind(this) as EventListener);
 
-        if (this.dockManager.iframes) {
-            for (let f of this.dockManager.iframes) {
-                let mmi = this.onMouseMovedIframe.bind(this);
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointermove', (e) => mmi(e, f)));
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointerup', this.onMouseUp.bind(this)));
-            }
+
+      if (this.dockManager.iframes) {
+        for (let f of this.dockManager.iframes) {
+          if (f.contentWindow) {
+            let mmi = this.onMouseMovedIframe.bind(this);
+            this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointermove', (event: Event) => {
+              const pointerEvent = event as PointerEvent;
+              mmi(pointerEvent, f);
+            }));
+
+
+            this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointerup', this.onMouseUp.bind(this)));
+          }
         }
+      }
+
     }
 
-    onMouseUp(event) {
+    onMouseUp(event:any) {
         this._stopDragging(event);
-        this.mouseMoveHandler.cancel();
+        this.mouseMoveHandler!.cancel();
         delete this.mouseMoveHandler;
-        this.mouseUpHandler.cancel();
+        this.mouseUpHandler!.cancel();
         delete this.mouseUpHandler;
         for (let e of this.iframeEventHandlers) {
             e.cancel();
@@ -139,7 +149,7 @@ export class DraggableContainer implements IDockContainer {
         Utils.disableGlobalTextSelection(this.dockManager.config.dialogRootElement);
     }
 
-    _stopDragging(event) {
+    _stopDragging(event:any) {
         this.containerElement.classList.remove("draggable-dragging-active");
         this.delegate.elementContentContainer.classList.remove("draggable-dragging-active");
         if (this.dialog.eventListener)

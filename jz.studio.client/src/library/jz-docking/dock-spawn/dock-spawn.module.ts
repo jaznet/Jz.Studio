@@ -1,45 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DockManagerContext } from './src/DockManagerContext';
 import { DockManager } from './src/DockManager';
-import { DockWheel } from './src/DockWheel';
-import { DockLayoutEngine } from './src/DockLayoutEngine';
-import { EventHandler } from './src/EventHandler';
-import { PanelContainer } from './src/PanelContainer';
-import { Point } from './src/Point';
-import { DockConfig } from './src/DockConfig';
-import { FillDockContainer } from './src/FillDockContainer';
-import { Dialog } from './src/Dialog';
-import { SplitterDockContainer } from './src/SplitterDockContainer';
-import { TabPage } from './src/TabPage';
-import { DockGraphSerializer } from './src/DockGraphSerializer';
-import { DockGraphDeserializer } from './src/DockGraphDeserializer';
 
 
 
 @NgModule({
   declarations: [
-    DockManager,
-    DockWheel,
-    DockManagerContext,
-    DockLayoutEngine,
-    EventHandler,
-    PanelContainer,
-    Point,
-    DockConfig,
-    FillDockContainer,
-    Dialog,
-    TabPage,
-    DockGraphSerializer,
-    DockGraphDeserializer
+    //DockManager,
+    //DockWheel,
+    //DockManagerContext,
+    //DockLayoutEngine,
+    //EventHandler,
+    //PanelContainer,
+    //Point,
+    //DockConfig,
+    //FillDockContainer,
+    //Dialog,
+    //TabPage,
+    //DockGraphSerializer,
+    //DockGraphDeserializer
   ]
   ,
   imports: [
     CommonModule
   ],
   exports: [
-    DockManager,
-    DockManagerContext]
+   // DockManager,
+    //DockManagerContext
+  ]
 })
 export class DockSpawnModule { }
 

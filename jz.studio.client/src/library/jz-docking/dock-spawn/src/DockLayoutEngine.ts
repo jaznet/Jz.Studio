@@ -1,12 +1,12 @@
-import { DockManager } from "./DockManager.js";
-import { DockNode } from "./DockNode.js";
-import { Utils } from "./Utils.js";
-import { HorizontalDockContainer } from "./HorizontalDockContainer.js";
-import { VerticalDockContainer } from "./VerticalDockContainer.js";
-import { FillDockContainer } from "./FillDockContainer.js";
-import { IRectangle } from "./interfaces/IRectangle.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { TabHandle } from "./TabHandle.js";
+import { DockManager } from "./DockManager";
+import { DockNode } from "./DockNode";
+import { Utils } from "./Utils";
+import { HorizontalDockContainer } from "./HorizontalDockContainer";
+import { VerticalDockContainer } from "./VerticalDockContainer";
+import { FillDockContainer } from "./FillDockContainer";
+import { IRectangle } from "./interfaces/IRectangle";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { TabHandle } from "./TabHandle";
 
 export class DockLayoutEngine {
 
@@ -42,15 +42,19 @@ export class DockLayoutEngine {
     }
 
     undock(node: DockNode|undefined|null) {
-        let parentNode = node.parent;
+        let parentNode = node!.parent;
         if (!parentNode)
             throw new Error('Cannot undock.  panel is not a leaf node');
 
         // Get the position of the node relative to it's siblings
-        let siblingIndex = parentNode.children.indexOf(node);
+      let siblingIndex = -1;
+      if (node !== null && node !== undefined) {
+        siblingIndex = parentNode.children.indexOf(node);
+      }
+
 
         // Detach the node from the dock manager's tree hierarchy
-        node.detachFromParent();
+        node!.detachFromParent();
 
         // Fix the node's parent hierarchy
         if (parentNode.children.length < parentNode.container.minimumAllowedChildNodes) {
@@ -104,15 +108,15 @@ export class DockLayoutEngine {
         if (parentNode.children.length > 0) {
             if ((<FillDockContainer>parentNode.container).tabHost != null) {
                 let activeTab = (<FillDockContainer>parentNode.container).tabHost.getActiveTab();
-                activetabClosed = activeTab.container == node.container;
+                activetabClosed = activeTab!.container == node!.container;
             }
         }
 
         // Get the position of the node relative to it's siblings
-        let siblingIndex = parentNode.children.indexOf(node);
+        let siblingIndex = parentNode.children.indexOf(node!);
 
         // Detach the node from the dock manager's tree hierarchy
-        node.detachFromParent();
+        node!.detachFromParent();
 
         if (parentNode.children.length < parentNode.container.minimumAllowedChildNodes) {
             // If the child count falls below the minimum threshold, destroy the parent and merge
@@ -154,20 +158,21 @@ export class DockLayoutEngine {
     }
 
     reorderTabs(node: DockNode|undefined|null, handle: TabHandle, state: string, index: number) {
-        let N = node.children.length;
+        let N = node!.children.length;
         let nodeIndexToDelete = state === 'left' ? index : index + 1;
-        if (state == 'right' && nodeIndexToDelete >= node.children.length)
+        if (state == 'right' && nodeIndexToDelete >= node!.children.length)
             return;
         if (state == 'left' && nodeIndexToDelete == 0)
             return;
 
-        let indexes = Array.apply(null, { length: N }).map(Number.call, Number);
+      let indexes = Array.from({ length: N }, (_, index) => index);
+
         let indexValue = indexes.splice(nodeIndexToDelete, 1)[0]; //remove element
         indexes.splice(state === 'left' ? index - 1 : index, 0, indexValue); //insert
 
-        node.children = Utils.orderByIndexes(node.children, indexes); //apply
-        (<FillDockContainer>node.container).tabHost.performTabsLayout(indexes);
-        this.dockManager.notifyOnTabsReorder(node);
+        node!.children = Utils.orderByIndexes(node!.children, indexes); //apply
+        (<FillDockContainer>node!.container).tabHost.performTabsLayout(indexes);
+        this.dockManager.notifyOnTabsReorder(node!);
     }
 
     _performDock(referenceNode: DockNode, newNode: DockNode, direction: string, insertBeforeReference: boolean) {
@@ -184,10 +189,10 @@ export class DockLayoutEngine {
         }
 
         // Check if reference node is root node
-        let model = this.dockManager.context.model,
+        let model = this.dockManager.context!.model,
             compositeContainer: IDockContainer,
             compositeNode: DockNode,
-            referenceParent: DockNode;
+            referenceParent: DockNode|undefined;
 
         if (referenceNode === model.rootNode) {
             if (insertBeforeReference) {
@@ -205,14 +210,14 @@ export class DockLayoutEngine {
 
             // Attach the root node to the dock manager's DOM
             this.dockManager.setRootNode(compositeNode);
-            this.dockManager.rebuildLayout(this.dockManager.context.model.rootNode);
+            this.dockManager.rebuildLayout(this.dockManager.context!.model.rootNode);
             compositeNode.container.setActiveChild(newNode.container);
             this.dockManager.invalidate();
             this.dockManager.notifyOnDock(newNode);
             return;
         }
 
-        if (referenceNode.parent.container.containerType !== direction) {
+        if (referenceNode.parent!.container.containerType !== direction) {
             referenceParent = referenceNode.parent;
 
             // Get the dimensions of the reference node, for resizing later on
@@ -220,14 +225,14 @@ export class DockLayoutEngine {
             let referenceNodeHeight = referenceNode.container.containerElement.clientHeight;
 
             // Get the dimensions of the reference node, for resizing later on
-            let referenceNodeParentWidth = referenceParent.container.containerElement.clientWidth;
-            let referenceNodeParentHeight = referenceParent.container.containerElement.clientHeight;
+            let referenceNodeParentWidth = referenceParent!.container.containerElement.clientWidth;
+            let referenceNodeParentHeight = referenceParent!.container.containerElement.clientHeight;
 
             // Replace the reference node with a new composite node with the reference and new node as it's children
             compositeContainer = this._createDockContainer(direction, newNode, referenceNode);
             compositeNode = new DockNode(compositeContainer);
 
-            referenceParent.addChildAfter(referenceNode, compositeNode);
+            referenceParent!.addChildAfter(referenceNode, compositeNode);
             referenceNode.detachFromParent();
             Utils.removeNode(referenceNode.container.containerElement);
 
@@ -240,22 +245,22 @@ export class DockLayoutEngine {
                 compositeNode.addChild(newNode);
             }
 
-            referenceParent.performLayout(false);
+            referenceParent!.performLayout(false);
             compositeNode.performLayout(true);
 
             compositeNode.container.setActiveChild(newNode.container);
             compositeNode.container.resize(referenceNodeWidth, referenceNodeHeight);
-            referenceParent.container.resize(referenceNodeParentWidth, referenceNodeParentHeight);
+            referenceParent!.container.resize(referenceNodeParentWidth, referenceNodeParentHeight);
         }
         else {
             // Add as a sibling, since the parent of the reference node is of the right composite type
             referenceParent = referenceNode.parent;
             if (insertBeforeReference)
-                referenceParent.addChildBefore(referenceNode, newNode);
+                referenceParent!.addChildBefore(referenceNode, newNode);
             else
-                referenceParent.addChildAfter(referenceNode, newNode);
-            referenceParent.performLayout(false);
-            referenceParent.container.setActiveChild(newNode.container);
+                referenceParent!.addChildAfter(referenceNode, newNode);
+            referenceParent!.performLayout(false);
+            referenceParent!.container.setActiveChild(newNode.container);
         }
 
         // force resize the panel
@@ -289,7 +294,7 @@ export class DockLayoutEngine {
      * The state is not modified in this function.  It is used for showing a preview of where
      * the panel would be docked when hovered over a dock wheel button
      */
-    getDockBounds(referenceNode: DockNode, containerToDock: IDockContainer, direction: string, insertBeforeReference: boolean): IRectangle {
+    getDockBounds(referenceNode: DockNode|null|undefined, containerToDock: IDockContainer, direction: string, insertBeforeReference: boolean): IRectangle {
         let compositeNode; // The node that contains the splitter / fill node
         let childCount;
         let childPosition;
@@ -298,23 +303,23 @@ export class DockLayoutEngine {
         if (direction === 'fill') {
             // Since this is a fill operation, the highlight bounds is the same as the reference node
             // TODO: Create a tab handle highlight to show that it's going to be docked in a tab
-            let targetElement = referenceNode.container.containerElement;
-            let outerRect = this.dockManager.element.getBoundingClientRect();
+            let targetElement = referenceNode!.container.containerElement;
+            let outerRect = this.dockManager.element!.getBoundingClientRect();
             let targetElementRect = targetElement.getBoundingClientRect();
             return { x: targetElementRect.left - outerRect.left, y: targetElementRect.top - outerRect.top, width: targetElement.clientWidth, height: targetElement.clientHeight };
         }
 
-        if (referenceNode.parent && referenceNode.parent.container.containerType === 'fill')
+        if (referenceNode!.parent && referenceNode!.parent.container.containerType === 'fill')
             // Ignore the fill container's child and move one level up
-            referenceNode = referenceNode.parent;
+            referenceNode = referenceNode!.parent;
 
         // Flag to indicate of the renference node was replaced with a new composite node with 2 children
         let hierarchyModified = false;
-        if (referenceNode.parent && referenceNode.parent.container.containerType === direction) {
+        if (referenceNode!.parent && referenceNode!.parent.container.containerType === direction) {
             // The parent already is of the desired composite type.  Will be inserted as sibling to the reference node
-            compositeNode = referenceNode.parent;
+            compositeNode = referenceNode!.parent;
             childCount = compositeNode.children.length;
-            childPosition = compositeNode.children.indexOf(referenceNode) + (insertBeforeReference ? 0 : 1);
+            childPosition = compositeNode.children.indexOf(referenceNode!) + (insertBeforeReference ? 0 : 1);
         } else {
             // The reference node will be replaced with a new composite node of the desired type with 2 children
             compositeNode = referenceNode;
@@ -325,47 +330,88 @@ export class DockLayoutEngine {
 
         let splitBarSize = 5;  // TODO: Get from DOM
         let targetPanelSize = 0;
-        let targetPanelStart = 0;
+      let targetPanelStart = 0;
+
         if (direction === 'vertical' || direction === 'horizontal') {
             // Existing size of the composite container (without the splitter bars).
             // This will also be the final size of the composite (splitter / fill)
             // container after the new panel has been docked
-            let compositeSize = this._getVaringDimension(compositeNode.container, direction) - (childCount - 1) * splitBarSize;
+          let compositeSize = 0;
+          if (compositeNode && compositeNode.container) {
+            const dimension = this._getVaringDimension(compositeNode.container, direction);
+            if (dimension !== null && dimension !== undefined) {
+              // Now TypeScript knows dimension is neither null nor undefined.
+              compositeSize = dimension - (childCount - 1) * splitBarSize;
+            } else {
+              // Handle the case where dimension is null or undefined.
+            }
+          } else {
+            // Handle the case where compositeNode or compositeNode.container is null or undefined.
+          }
+
+
 
             // size of the newly added panel
             let newPanelOriginalSize = this._getVaringDimension(containerToDock, direction);
-            let scaleMultiplier = compositeSize / (compositeSize + newPanelOriginalSize);
+            let scaleMultiplier = compositeSize / (compositeSize + newPanelOriginalSize!);
 
             // Size of the panel after it has been docked and scaled
-            targetPanelSize = newPanelOriginalSize * scaleMultiplier;
+            targetPanelSize = newPanelOriginalSize! * scaleMultiplier;
             if (hierarchyModified)
                 targetPanelStart = insertBeforeReference ? 0 : compositeSize * scaleMultiplier;
             else {
-                for (let i = 0; i < childPosition; i++)
-                    targetPanelStart += this._getVaringDimension(compositeNode.children[i].container, direction);
+              if (compositeNode && compositeNode.children) {
+                let compositeSize = 0;
+                const dimension = this._getVaringDimension(compositeNode.container, direction);
+                if (dimension !== null && dimension !== undefined) {
+                  compositeSize = dimension - (childCount - 1) * splitBarSize;
+                }
+
+                let newPanelOriginalSize = this._getVaringDimension(containerToDock, direction);
+                let scaleMultiplier = newPanelOriginalSize !== null && newPanelOriginalSize !== undefined ? compositeSize / (compositeSize + newPanelOriginalSize) : 0;
+
+                targetPanelSize = newPanelOriginalSize !== null && newPanelOriginalSize !== undefined ? newPanelOriginalSize * scaleMultiplier : 0;
+                targetPanelStart = 0;
+
+                if (!hierarchyModified) {
+                  for (let i = 0; i < childPosition; i++) {
+                    const varingDimension = this._getVaringDimension(compositeNode.children[i].container, direction);
+                    if (varingDimension !== null && varingDimension !== undefined) {
+                      targetPanelStart += varingDimension;
+                    }
+                  }
+                  targetPanelStart *= scaleMultiplier;
+                } else {
+                  targetPanelStart = insertBeforeReference ? 0 : compositeSize * scaleMultiplier;
+                }
+              } else {
+                // Handle the case where compositeNode or compositeNode.children is null or undefined
+                console.error("Composite node or its children are undefined.");
+              }
+
                 targetPanelStart *= scaleMultiplier;
             }
         }
 
         bounds = {};
-        let outerRect = this.dockManager.element.getBoundingClientRect();
-        let rect = compositeNode.container.containerElement.getBoundingClientRect();
+        let outerRect = this.dockManager.element!.getBoundingClientRect();
+        let rect = compositeNode!.container.containerElement.getBoundingClientRect();
         if (direction === 'vertical') {
             bounds.x = rect.left - outerRect.left;
             bounds.y = rect.top - outerRect.top + targetPanelStart;
-            bounds.width = compositeNode.container.width;
+            bounds.width = compositeNode!.container.width;
             bounds.height = targetPanelSize;
         } else if (direction === 'horizontal') {
             bounds.x = rect.left - outerRect.left + targetPanelStart;
             bounds.y = rect.top - outerRect.top;
             bounds.width = targetPanelSize;
-            bounds.height = compositeNode.container.height;
+            bounds.height = compositeNode!.container.height;
         }
 
         return bounds;
     }
 
-    _getVaringDimension(container: IDockContainer, direction: string): number {
+    _getVaringDimension(container: IDockContainer, direction: string): number|null|undefined {
         if (direction === 'vertical')
             return container.height;
         if (direction === 'horizontal')

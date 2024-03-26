@@ -1,5 +1,4 @@
 
-
 import {  IDockContainerWithSize, ILayoutEventListener, IState } from "../dock-spawn.module";
 import { Dialog } from "./Dialog";
 import { DockConfig } from "./DockConfig";
@@ -42,12 +41,12 @@ export class DockManager {
     public zIndexTabHandle!: number;
     public zIndexDialogCounter!: number;
     public onKeyPressBound: any;
-    public iframes!: HTMLIFrameElement[];
+  public iframes!: HTMLIFrameElement[] | null;
     public _undockEnabled!: boolean;
-    public getElementCallback!: (state: IState) => Promise<{ element: HTMLElement, title: string }>;
+    public getElementCallback?: (state: IState) => Promise<{ element: HTMLElement, title: string }>;
 
-    private _config: DockConfig;
-    private _activePanel!: PanelContainer|null;
+  private _config: DockConfig;
+  private _activePanel!: PanelContainer | null | undefined;
     private _lastPanelNotADialog!: PanelContainer|undefined|null;
 
     private _activeDocument!: PanelContainer|null;
@@ -190,11 +189,11 @@ export class DockManager {
         return dy;
     }
 
-    rebuildLayout(node: DockNode) {
-        node.children.forEach((child) => {
+    rebuildLayout(node: DockNode|null|undefined) {
+        node!.children.forEach((child) => {
             this.rebuildLayout(child);
         });
-        node.performLayout(false);
+        node!.performLayout(false);
     }
 
     invalidate() {
@@ -204,7 +203,7 @@ export class DockManager {
     resize(width: number, height: number) {
       this.element!.style.width = width + 'px';
       this.element!.style.height = height + 'px';
-        this.context!.model.rootNode.container.resize(width, height);
+        this.context!.model.rootNode!.container.resize(width, height);
 
         let offsetX = 0, offsetY = 0;
         for (let dialog of this.context!.model.dialogs) {
@@ -231,19 +230,19 @@ export class DockManager {
         // this.invalidate();
     }
 
-    loadResize(node: DockNode) {
-        node.children.reverse().forEach((child) => {
+    loadResize(node: DockNode|null|undefined) {
+        node!.children.reverse().forEach((child) => {
             this.loadResize(child);
-            node.container.setActiveChild(child.container);
+            node!.container.setActiveChild(child.container);
         });
-        node.children.reverse();
-        let container = node.container as IDockContainerWithSize;
-        node.container.resize(container.state.width, container.state.height);
+        node!.children.reverse();
+        let container = node!.container as IDockContainerWithSize;
+        node!.container.resize(container.state.width, container.state.height);
         // node.performLayout();
     }
 
 
-    setRootNode(node: DockNode) {
+    setRootNode(node: DockNode|null|undefined) {
         // if (this.context.model.rootNode)
         // {
         //     // detach it from the dock manager's base element
@@ -251,9 +250,9 @@ export class DockManager {
         // }
 
         // Attach the new node to the dock manager's base element and set as root node
-        node.detachFromParent();
+        node!.detachFromParent();
         this.context!.model.rootNode = node;
-      this.element!.appendChild(node.container.containerElement);
+      this.element!.appendChild(node!.container.containerElement);
     }
 
     _onDialogDragStarted(sender: Dialog, e:any) {
@@ -414,7 +413,7 @@ export class DockManager {
 
     private _checkShowBackgroundContext() {
         if (this.backgroundContext != null) {
-            if (this.context!.model.documentManagerNode.children.length > 0) {
+            if (this.context!.model.documentManagerNode!.children.length > 0) {
                 this.backgroundContext.style.display = "none";
             } else {
                 this.backgroundContext.style.display = "block";
@@ -625,7 +624,7 @@ export class DockManager {
 
     findNodeFromContainerElement(containerElement: HTMLElement) {
         let stack: DockNode[] = [];
-        stack.push(this.context!.model.rootNode);
+        if (this.context?.model.rootNode) stack.push(this.context!.model.rootNode);
 
         while (stack.length > 0) {
             let topNode = stack.pop();
@@ -751,7 +750,7 @@ export class DockManager {
         });
     }
 
-    notifyOnActivePanelChange(panel: PanelContainer|null, oldActive: PanelContainer|null) {
+    notifyOnActivePanelChange(panel: PanelContainer|null|undefined, oldActive: PanelContainer|null|undefined) {
         this.layoutEventListeners.forEach((listener) => {
             if (listener.onActivePanelChange) {
                 listener.onActivePanelChange(this, panel, oldActive);
@@ -847,12 +846,12 @@ export class DockManager {
         return panels;
     }
 
-    _allPanels(node: DockNode, panels: PanelContainer[]) {
-        node.children.forEach((child) => {
+    _allPanels(node: DockNode|null|undefined, panels: PanelContainer[]) {
+        node!.children.forEach((child) => {
             this._allPanels(child, panels);
         });
-        if (node.container.containerType === 'panel') {
-            panels.push(node.container as PanelContainer);
+        if (node!.container.containerType === 'panel') {
+            panels.push(node!.container as PanelContainer);
         }
     }
 
@@ -860,10 +859,10 @@ export class DockManager {
         return this._activeDocument;
     }
 
-    get activePanel(): PanelContainer|null {
+    get activePanel(): PanelContainer|null|undefined {
         return this._activePanel;
     }
-    set activePanel(value: PanelContainer|null) {
+    set activePanel(value: PanelContainer|null|undefined) {
         if (value !== this._activePanel) {
             if (value && !value.isDialog) //todo store compliete list of panels, remove the closed ones and switch back focus
                 this._lastPanelNotADialog = value;

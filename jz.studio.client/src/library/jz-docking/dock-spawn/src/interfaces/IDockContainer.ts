@@ -1,27 +1,27 @@
-import { ContainerType } from "../ContainerType.js";
-import { DockManager } from "../DockManager.js";
-import { IState } from "./IState.js";
-import { TabPage } from '../TabPage.js';
+import { ContainerType } from "../ContainerType";
+import { DockManager } from "../DockManager";
+import { IState } from "./IState";
+import { TabPage } from '../TabPage';
+import { ISize } from "./ISize";
 
 export interface IDockContainer {
-    readonly dockManager: DockManager;
-    resize(_width: number|undefined, _height: number|undefined): void;
-    performLayout(children: IDockContainer[], relayoutEvenIfEqual : boolean): void;
-    destroy(): void;
-    setActiveChild(child: IDockContainer): void;
-    saveState(state: IState): void;
-    loadState(state: IState): void;
-    readonly containerElement: HTMLElement;
-    containerType: ContainerType;
-    readonly width: number;
-    readonly height: number;
-    name: string;
-    tabPage?: TabPage;
+  readonly dockManager: DockManager;
+  resize(_width: number | null | undefined, _height: number | null | undefined): void;
+  performLayout(children: IDockContainer[], relayoutEvenIfEqual: boolean): void;
+  destroy(): void;
+  setActiveChild(child: IDockContainer): void;
+  saveState(state: IState): void;
+  loadState(state: IState): void;
+  readonly containerElement: HTMLElement;
+  containerType: ContainerType;
 
-    /** 
-     * Indicates the minimum allowed child nodes a composite dock panel can have
-     * If it's children fall below this value, the composite panel is destroyed
-     * and it's children are moved one level up 
-     */
-    readonly minimumAllowedChildNodes: number;
+  // Allow width and height to be number, null, or undefined
+  readonly width: number | null | undefined;
+  readonly height: number | null | undefined;
+
+  name: string;
+  tabPage?: TabPage | null;
+
+  readonly minimumAllowedChildNodes: number;
 }
+

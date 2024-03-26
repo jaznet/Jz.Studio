@@ -1,17 +1,18 @@
-import { TabHost } from "./TabHost.js";
-import { TabPage } from "./TabPage.js";
-import { Utils } from "./Utils.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { PanelContainer } from "./PanelContainer.js";
+
+import { TabHost } from "./TabHost";
+import { TabPage } from "./TabPage";
+import { Utils } from "./Utils";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { PanelContainer } from "./PanelContainer";
 
 /**
  * Specialized tab page that doesn't display the panel's frame when docked in a tab page
  */
 export class DocumentTabPage extends TabPage {
 
-    container: IDockContainer;
-    panel: PanelContainer;
-    containerElement: HTMLElement;
+    override container!: IDockContainer;
+    override panel!: PanelContainer;
+    override containerElement!: HTMLElement;
 
     constructor(host: TabHost, container: IDockContainer) {
         super(host, container);
@@ -29,7 +30,7 @@ export class DocumentTabPage extends TabPage {
         }
     }
 
-    destroy() {
+    override destroy() {
         super.destroy();
 
         // Restore the panel content element back into the panel frame

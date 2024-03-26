@@ -1,63 +1,63 @@
-import { DockManager } from "./DockManager.js";
-import { Utils } from "./Utils.js";
-import { UndockInitiator } from "./UndockInitiator.js";
-import { ContainerType } from "./ContainerType.js";
-import { EventHandler } from "./EventHandler.js";
-import { ISize } from "./interfaces/ISize.js";
-import { IDockContainerWithSize } from "./interfaces/IDockContainerWithSize.js";
-import { IState } from "./interfaces/IState.js";
-import { Point } from "./Point.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { PanelType } from "./enums/PanelType.js";
-import { Dialog } from "./Dialog.js";
-import { TabPage } from './TabPage.js';
-import { Localizer } from "./i18n/Localizer.js";
-import { moveElementToNewBrowserWindow } from "./BrowserDialogHelper.js";
+import { DockManager } from "./DockManager";
+import { Utils } from "./Utils";
+import { UndockInitiator } from "./UndockInitiator";
+import { ContainerType } from "./ContainerType";
+import { EventHandler } from "./EventHandler";
+import { ISize } from "./interfaces/ISize";
+import { IDockContainerWithSize } from "./interfaces/IDockContainerWithSize";
+import { IState } from "./interfaces/IState";
+import { Point } from "./Point";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { PanelType } from "./enums/PanelType";
+import { Dialog } from "./Dialog";
+import { TabPage } from './TabPage';
+import { Localizer } from "./i18n/Localizer";
+import { moveElementToNewBrowserWindow } from "./BrowserDialogHelper";
 
 /**
  * This dock container wraps the specified element on a panel frame with a title bar and close button
  */
-export class PanelContainer implements IDockContainerWithSize {
+export class PanelContainer implements IDockContainer { 
 
-    public closePanelContainerCallback: (panelContainer: PanelContainer) => Promise<boolean>;
+    public closePanelContainerCallback!: (panelContainer: PanelContainer) => Promise<boolean>;
 
-    onTitleChanged: (panelContainer: PanelContainer, title: string) => void;
-    elementPanel: HTMLDivElement;
-    elementTitle: HTMLDivElement;
-    elementTitleText: HTMLDivElement;
-    elementContentHost: HTMLDivElement;
-    name: string;
-    state: ISize;
+    onTitleChanged?: (panelContainer: PanelContainer, title: string) => void;
+    elementPanel!: HTMLDivElement;
+    elementTitle!: HTMLDivElement;
+    elementTitleText!: HTMLDivElement;
+    elementContentHost!: HTMLDivElement;
+    name!: string;
+    state!: ISize;
     elementContent: HTMLElement & { resizeHandler?: any, _dockSpawnPanelContainer: PanelContainer };
-    private _resolvedElementContent: HTMLElement;
+    private _resolvedElementContent!: HTMLElement;
     elementContentContainer: HTMLElement;
-    elementContentWrapper: HTMLElement;
+    elementContentWrapper!: HTMLElement;
     dockManager: DockManager;
     title: string;
     containerType: ContainerType;
-    icon: string;
-    hasChanges: boolean;
+    icon: string|null;
+    hasChanges!: boolean;
     minimumAllowedChildNodes: number;
     isDialog: boolean;
     eventListeners: any[];
-    undockInitiator: UndockInitiator;
-    elementButtonClose: HTMLDivElement;
-    closeButtonClickedHandler: EventHandler;
-    closeButtonTouchedHandler: EventHandler;
-    mouseDownHandler: EventHandler;
-    touchDownHandler: EventHandler;
-    panelType: PanelType;
+    undockInitiator!: UndockInitiator;
+    elementButtonClose!: HTMLDivElement;
+    closeButtonClickedHandler?: EventHandler;
+    closeButtonTouchedHandler?: EventHandler;
+    mouseDownHandler?: EventHandler;
+    touchDownHandler?: EventHandler;
+    panelType: PanelType|undefined;
     tabPage?: TabPage;
     undockedToNewBrowserWindow = false;
 
-    lastDialogSize: ISize;
+    lastDialogSize!: ISize|null;
 
     _floatingDialog?: Dialog;
-    _canUndock: boolean;
-    _cachedWidth: number;
-    _cachedHeight: number;
-    _hideCloseButton: boolean;
-    _grayOut: HTMLDivElement;
+    _canUndock: boolean|undefined;
+  _cachedWidth!: number | null | undefined;
+  _cachedHeight!: number | null | undefined;
+    _hideCloseButton: boolean|null|undefined;
+    _grayOut!: HTMLDivElement|null;
 
     constructor(elementContent: HTMLElement, dockManager: DockManager, title?: string, panelType?: PanelType, hideCloseButton?: boolean) {
         if (!title)
@@ -80,7 +80,7 @@ export class PanelContainer implements IDockContainerWithSize {
         this.elementContentContainer.addEventListener('pointerdown', (e) => {
             try {
                 if (this.isDialog) {
-                    this._floatingDialog.bringToFront();
+                    this._floatingDialog!.bringToFront();
                 } else {
                     if (this.tabPage)
                         this.tabPage.setSelected(true, true);
@@ -105,7 +105,7 @@ export class PanelContainer implements IDockContainerWithSize {
         this._initialize();
     }
 
-    canUndock(state: boolean) {
+    canUndock(state: boolean|undefined) {
         this._canUndock = state;
         this.undockInitiator.enabled = state;
         this.eventListeners.forEach((listener) => {
@@ -115,15 +115,15 @@ export class PanelContainer implements IDockContainerWithSize {
         });
     }
 
-    addListener(listener) {
+    addListener(listener:any) {
         this.eventListeners.push(listener);
     }
 
-    removeListener(listener) {
+  removeListener(listener: any) {
         this.eventListeners.splice(this.eventListeners.indexOf(listener), 1);
     }
 
-    get floatingDialog(): Dialog {
+    get floatingDialog(): Dialog|undefined {
         return this._floatingDialog;
     }
     set floatingDialog(value: Dialog) {
@@ -133,10 +133,11 @@ export class PanelContainer implements IDockContainerWithSize {
     }
 
     static async loadFromState(state: IState, dockManager: DockManager) {
-        let elementContent: HTMLElement;
-        let title: string;
+        let elementContent: HTMLElement|null=null;
+        let title: string='';
         if (!dockManager.getElementCallback) {
-            let elementName = state.element;
+          let elementName = state.element;
+            if (elementName)
             elementContent = document.getElementById(elementName);
         } else {
             let res = await dockManager.getElementCallback(state);
@@ -152,14 +153,15 @@ export class PanelContainer implements IDockContainerWithSize {
         return ret;
     }
 
-    saveState(state: IState) {
-        state.element = this.elementContent.id;
-        state.width = this.width;
-        state.height = this.height;
-        state.canUndock = this._canUndock;
-        state.hideCloseButton = this._hideCloseButton;
-        state.panelType = this.panelType;
-    }
+  saveState(state: IState) {
+    state.element = this.elementContent.id;
+    // Use the nullish coalescing operator (??) to fallback to undefined if width or height are null
+    state.width = this.width ?? undefined;
+    state.height = this.height ?? undefined;
+    state.canUndock = this._canUndock;
+    state.hideCloseButton = this._hideCloseButton?? undefined;
+    state.panelType = this.panelType;
+  }
 
     loadState(state: IState) {
         this.width = state.width;
@@ -246,8 +248,8 @@ export class PanelContainer implements IDockContainerWithSize {
         this.elementContentHost.appendChild(this.elementContentWrapper);
 
         // Extract the title from the content element's attribute
-        let contentTitle = this.elementContent.dataset.panelCaption;
-        let contentIcon = this.elementContent.dataset.panelIcon;
+        let contentTitle = this.elementContent.dataset['panelCaption'];
+        let contentIcon = this.elementContent.dataset['panelIcon'];
         if (contentTitle) this.title = contentTitle;
         if (contentIcon) this.icon = contentIcon;
         this._updateTitle();
@@ -268,7 +270,7 @@ export class PanelContainer implements IDockContainerWithSize {
         this.dockManager.activePanel = this;
     }
 
-    hideCloseButton(state: boolean) {
+    hideCloseButton(state: boolean|null|undefined) {
         this._hideCloseButton = state;
         this.elementButtonClose.style.display = state ? 'none' : 'block';
         this.eventListeners.forEach((listener) => {
@@ -302,7 +304,7 @@ export class PanelContainer implements IDockContainerWithSize {
     /**
      * Undocks the panel and and converts it to a dialog box
      */
-    performUndockToDialog(e, dragOffset: Point) {
+    performUndockToDialog(e:any, dragOffset: Point) {
         this.isDialog = true;
         this.undockInitiator.enabled = false;
         this.elementContentWrapper.style.display = "block";
@@ -338,20 +340,20 @@ export class PanelContainer implements IDockContainerWithSize {
             this.dockManager.config.dialogRootElement.appendChild(this.elementContentContainer);
     }
 
-    get width(): number {
-        return this._cachedWidth;
+  get width(): number | null | undefined {
+    return this._cachedWidth;
+  }
+  set width(value: number | null | undefined) {
+    if (value !== this._cachedWidth) {
+      this._cachedWidth = value;
+      this.elementPanel.style.width = value + 'px';
     }
-    set width(value: number) {
-        if (value !== this._cachedWidth) {
-            this._cachedWidth = value;
-            this.elementPanel.style.width = value + 'px';
-        }
-    }
+  }
 
-    get height(): number {
+    get height(): number|null|undefined {
         return this._cachedHeight;
     }
-    set height(value: number) {
+    set height(value: number|null|undefined) {
         if (value !== this._cachedHeight) {
             this._cachedHeight = value;
             this.elementPanel.style.height = value + 'px';
@@ -479,7 +481,7 @@ export class PanelContainer implements IDockContainerWithSize {
 
     undockToBrowserDialog() {
         moveElementToNewBrowserWindow(this.resolvedElementContent, {
-            title: this.elementTitleText.textContent,
+            title: this.elementTitleText.textContent||'Default Title',
             closeCallback: () => {
                 this.undockedToNewBrowserWindow = true;
                 this.closeInternal(false);

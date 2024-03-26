@@ -1,8 +1,8 @@
-import { EventHandler } from "./EventHandler.js";
+import { EventHandler } from "./EventHandler";
 
 export class ResizeHandle {
 
-    element: HTMLElement;
+  element: HTMLElement | undefined;
     handleSize: number;
     cornerSize: number;
     east: boolean;
@@ -10,8 +10,8 @@ export class ResizeHandle {
     north: boolean;
     south: boolean;
     corner: boolean;
-    mouseDownHandler: EventHandler;
-    touchDownHandler: EventHandler;
+    mouseDownHandler!: EventHandler;
+    touchDownHandler!: EventHandler;
 
     constructor() {
         this.element = undefined;
@@ -26,33 +26,33 @@ export class ResizeHandle {
 
     adjustSize(clientWidth: number, clientHeight: number) {
         if (this.corner) {
-            if (this.west) this.element.style.left = '0px';
-            if (this.east) this.element.style.left = (clientWidth - this.cornerSize) + 'px';
-            if (this.north) this.element.style.top = '0px';
-            if (this.south) this.element.style.top = (clientHeight - this.cornerSize) + 'px';
+            if (this.west) this.element!.style.left = '0px';
+            if (this.east) this.element!.style.left = (clientWidth - this.cornerSize) + 'px';
+            if (this.north) this.element!.style.top = '0px';
+            if (this.south) this.element!.style.top = (clientHeight - this.cornerSize) + 'px';
         }
         else {
             if (this.west) {
-                this.element.style.left = '0px';
-                this.element.style.top = this.cornerSize + 'px';
+                this.element!.style.left = '0px';
+                this.element!.style.top = this.cornerSize + 'px';
             }
             if (this.east) {
-                this.element.style.left = (clientWidth - this.handleSize) + 'px';
-                this.element.style.top = this.cornerSize + 'px';
+                this.element!.style.left = (clientWidth - this.handleSize) + 'px';
+                this.element!.style.top = this.cornerSize + 'px';
             }
             if (this.north) {
-                this.element.style.left = this.cornerSize + 'px';
-                this.element.style.top = '0px';
+                this.element!.style.left = this.cornerSize + 'px';
+                this.element!.style.top = '0px';
             }
             if (this.south) {
-                this.element.style.left = this.cornerSize + 'px';
-                this.element.style.top = (clientHeight - this.handleSize) + 'px';
+                this.element!.style.left = this.cornerSize + 'px';
+                this.element!.style.top = (clientHeight - this.handleSize) + 'px';
             }
 
             if (this.west || this.east) {
-                this.element.style.height = (clientHeight - this.cornerSize * 2) + 'px';
+                this.element!.style.height = (clientHeight - this.cornerSize * 2) + 'px';
             } else {
-                this.element.style.width = (clientWidth - this.cornerSize * 2) + 'px';
+                this.element!.style.width = (clientWidth - this.cornerSize * 2) + 'px';
             }
         }
     }

@@ -1,7 +1,7 @@
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { EventHandler } from "./EventHandler.js";
-import { Utils } from "./Utils.js";
-import { IMouseOrTouchEvent } from "./interfaces/IMouseOrTouchEvent.js";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { EventHandler } from "./EventHandler";
+import { Utils } from "./Utils";
+import { IMouseOrTouchEvent } from "./interfaces/IMouseOrTouchEvent";
 
 export class SplitterBar {
     previousContainer: IDockContainer;
@@ -12,9 +12,9 @@ export class SplitterBar {
     minPanelSize: number;
     readyToProcessNextDrag: boolean;
     dockSpawnResizedEvent: CustomEvent<{}>;
-    previousMouseEvent: { x: number, y: number };
-    pointerMovedHandler: EventHandler;
-    pointerUpHandler: EventHandler;
+    previousMouseEvent!: { x: number, y: number };
+    pointerMovedHandler?: EventHandler;
+    pointerUpHandler?: EventHandler;
 
     private iframeEventHandlers: EventHandler[];
 
@@ -33,15 +33,21 @@ export class SplitterBar {
         this.iframeEventHandlers = [];
     }
 
-    onPointerDown(e: PointerEvent) {
-        this.barElement.setPointerCapture(e.pointerId);
-        this._startDragging(e);
-    }
+  onPointerDown(e: Event) {
+    // Assert the event type inside the handler
+    const pointerEvent = e as PointerEvent;
+    this.barElement.setPointerCapture(pointerEvent.pointerId);
+    this._startDragging(pointerEvent);
+  }
 
-    onPointerUp(e: PointerEvent) {
-        this.barElement.releasePointerCapture(e.pointerId);
-        this._stopDragging();
-    }
+
+  onPointerUp(e: Event) {
+    // Perform a type assertion to treat the event as a PointerEvent
+    const pointerEvent = e as PointerEvent;
+    this.barElement.releasePointerCapture(pointerEvent.pointerId);
+    this._stopDragging();
+  }
+
 
     onPointerMovedIframe(e: IMouseOrTouchEvent, iframe: HTMLIFrameElement) {
         if (e.changedTouches != null) {
@@ -51,12 +57,14 @@ export class SplitterBar {
         this.handleMoveEvent({ x: parseInt("" + e.clientX + posIf.x), y: parseInt("" + e.clientY + posIf.y) });
     }
 
-    onPointerMoved(e: IMouseOrTouchEvent) {
-        if (e.changedTouches != null) {
-            e = e.changedTouches[0];
-        }
-        this.handleMoveEvent({ x: parseInt("" + e.clientX), y: parseInt("" + e.clientY) });
+  onPointerMoved(e: Event) {
+    let mouseOrTouchEvent = e as unknown as IMouseOrTouchEvent;
+    if (mouseOrTouchEvent.changedTouches != null) {
+      mouseOrTouchEvent = mouseOrTouchEvent.changedTouches[0];
     }
+    this.handleMoveEvent({ x: parseInt("" + mouseOrTouchEvent.clientX), y: parseInt("" + mouseOrTouchEvent.clientY) });
+  }
+
 
     handleMoveEvent(pos: { x: number, y: number }) {
         if (!this.readyToProcessNextDrag)
@@ -128,13 +136,28 @@ export class SplitterBar {
         this.pointerMovedHandler = new EventHandler(window, 'pointermove', this.onPointerMoved.bind(this));
         this.pointerUpHandler = new EventHandler(window, 'pointerup', this.onPointerUp.bind(this));
 
-        if (this.previousContainer.dockManager.iframes) {
-            for (let f of this.previousContainer.dockManager.iframes) {
-                let mmi = this.onPointerMovedIframe.bind(this);
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointermove', (e) => mmi(e, f)));
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointerup', this.onPointerUp.bind(this)));
-            }
+      if (this.previousContainer.dockManager.iframes) {
+        for (let f of this.previousContainer.dockManager.iframes) {
+          // Check if contentWindow is not null
+          if (f.contentWindow) {
+            let mmi = this.onPointerMovedIframe.bind(this);
+
+            this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointermove', (e) => {
+              if (e instanceof PointerEvent) {
+                // Assuming IMouseOrTouchEvent is compatible with PointerEvent
+                const mouseOrTouchEvent = e as unknown as IMouseOrTouchEvent;
+                mmi(mouseOrTouchEvent, f);
+              }
+            }));
+
+            this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'pointerup', this.onPointerUp.bind(this)));
+          } else {
+            // Handle the case where contentWindow is null, such as logging an error or a warning
+            console.error("Iframe contentWindow is null:", f);
+          }
         }
+      }
+
 
         this.previousMouseEvent = { x: e.clientX, y: e.clientY };
     }

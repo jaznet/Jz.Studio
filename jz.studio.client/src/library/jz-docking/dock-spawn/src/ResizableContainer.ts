@@ -1,13 +1,13 @@
-import { Dialog } from "./Dialog.js";
-import { ResizeHandle } from "./ResizeHandle.js";
-import { EventHandler } from "./EventHandler.js";
-import { DockManager } from "./DockManager.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
-import { ContainerType } from "./ContainerType.js";
-import { Point } from "./Point.js";
-import { Utils } from "./Utils.js";
-import { IThickness } from "./interfaces/IThickness.js";
-import { IState } from "./interfaces/IState.js";
+import { Dialog } from "./Dialog";
+import { ResizeHandle } from "./ResizeHandle";
+import { EventHandler } from "./EventHandler";
+import { DockManager } from "./DockManager";
+import { IDockContainer } from "./interfaces/IDockContainer";
+import { ContainerType } from "./ContainerType";
+import { Point } from "./Point";
+import { Utils } from "./Utils";
+import { IThickness } from "./interfaces/IThickness";
+import { IState } from "./interfaces/IState";
 
 /**
  * Decorates a dock container with resizer handles around its base element
@@ -24,12 +24,12 @@ export class ResizableContainer implements IDockContainer {
     minimumAllowedChildNodes: number;
     readyToProcessNextResize: boolean;
     dockSpawnResizedEvent: CustomEvent<{}>;
-    resizeHandles: ResizeHandle[];
-    previousMousePosition: Point;
+    resizeHandles!: ResizeHandle[];
+    previousMousePosition!: Point;
     private iframeEventHandlers: EventHandler[];
-    private disableResize: boolean;
+    private disableResize: boolean|null;
 
-    constructor(dialog: Dialog, delegate: IDockContainer, topLevelElement: HTMLElement, disableResize: boolean = false) {
+    constructor(dialog: Dialog, delegate: IDockContainer, topLevelElement: HTMLElement, disableResize: boolean|null|undefined = false) {
         this.dialog = dialog;
         this.disableResize = disableResize;
         this.delegate = delegate;
@@ -102,11 +102,11 @@ export class ResizableContainer implements IDockContainer {
         this.delegate.loadState(state);
     }
 
-    get width(): number {
+    get width(): number|null|undefined {
         return this.delegate.width;
     }
 
-    get height(): number {
+  get height(): number | null | undefined {
         return this.delegate.height;
     }
 
@@ -130,7 +130,7 @@ export class ResizableContainer implements IDockContainer {
         });
     }
 
-    performLayout(children) {
+    performLayout(children:any) {
         this.delegate.performLayout(children, false);
     }
 
@@ -142,13 +142,13 @@ export class ResizableContainer implements IDockContainer {
     removeDecorator() {
     }
 
-    onMouseMovedIframe(handle, e: MouseEvent, iframe: HTMLIFrameElement) {
+  onMouseMovedIframe(handle: any, e: MouseEvent, iframe: HTMLIFrameElement) {
         let posIf = iframe.getBoundingClientRect();
         this.onMouseMoved(handle, e, { x: posIf.x, y: posIf.y });
     }
 
     onMouseMoved(handle: ResizeHandle, event: TouchEvent | MouseEvent, iframeOffset?: { x: number, y: number }) {
-        let touchOrMouseData: { clientX: number, clientY: number } = null;
+        let touchOrMouseData: { clientX: number, clientY: number } |null= null;
         if ((<TouchEvent>event).changedTouches) {
             if ((<TouchEvent>event).changedTouches.length > 1)
                 return;
@@ -161,8 +161,8 @@ export class ResizableContainer implements IDockContainer {
             return;
         this.readyToProcessNextResize = false;
 
-        if (this.dialog.panel)
-            this.dockManager.suspendLayout(this.dialog.panel);
+      if (this.dialog.panel)
+        this.dockManager.suspendLayout(this.dialog.panel as IDockContainer);
         let currentMousePosition = new Point(touchOrMouseData.clientX, touchOrMouseData.clientY);
         if (iframeOffset)
             currentMousePosition = new Point(touchOrMouseData.clientX + iframeOffset.x, touchOrMouseData.clientY + iframeOffset.y);
@@ -172,13 +172,13 @@ export class ResizableContainer implements IDockContainer {
         this.previousMousePosition = currentMousePosition;
         this.readyToProcessNextResize = true;
         if (this.dialog.panel)
-            this.dockManager.resumeLayout(this.dialog.panel);
+            this.dockManager.resumeLayout(this.dialog.panel as IDockContainer);
 
         this.dockManager.notifyOnContainerResized(this);
     }
 
-    onMouseDown(handle, event: TouchEvent | MouseEvent) {
-        let touchOrMouseData: { clientX: number, clientY: number } = null;
+  onMouseDown(handle: any, event: TouchEvent | MouseEvent) {
+        let touchOrMouseData: { clientX: number, clientY: number }|null = null;
         if ((<TouchEvent>event).touches) {
             if ((<TouchEvent>event).touches.length > 1)
                 return;
@@ -215,20 +215,57 @@ export class ResizableContainer implements IDockContainer {
         handle.mouseUpHandler = new EventHandler(window, 'mouseup', (e) => { this.onMouseUp(handle); });
         handle.touchUpHandler = new EventHandler(window, 'touchend', (e) => { this.onMouseUp(handle); });
 
-        if (this.dockManager.iframes) {
-            for (let f of this.dockManager.iframes) {
-                let mmi = this.onMouseMovedIframe.bind(this);
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'mousemove', (e) => mmi(handle, e, f)));
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'mouseup', (e) => this.onMouseUp(handle)));
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'touchmove', (e) => mmi(handle, e, f)));
-                this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'touchend', (e) => this.onMouseUp(handle)));
+    if (this.dockManager.iframes) {
+      for (let f of this.dockManager.iframes) {
+        // Ensure f.contentWindow is not null before proceeding
+        if (f.contentWindow) {
+          let mmi = this.onMouseMovedIframe.bind(this);
+          console.log('fix iframe', mmi);
+          this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'mousemove', (e: Event) => {
+            if (e instanceof MouseEvent) {
+              mmi(handle, e, f);
             }
+          }));
+
+          this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'mouseup', (e) => this.onMouseUp(handle)));
+
+          this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'touchmove', (event: Event) => {
+            // Ensure the event is a TouchEvent
+            if (event instanceof TouchEvent) {
+              // Prevent the default touch action to avoid scrolling while touching
+              event.preventDefault();
+
+              // Example: Extract the first touch point if available
+              const touch = event.touches[0] || event.changedTouches[0];
+              if (touch) {
+                // If your mmi function needs MouseEvent properties, you can extract and synthesize
+                // the required data from the touch object
+                const syntheticMouseEvent = new MouseEvent("click", {
+                  bubbles: true,
+                  cancelable: true,
+                  view: window,
+                  clientX: touch.clientX,
+                  clientY: touch.clientY
+                });
+
+                // Call mmi with the synthesized mouse event data. Adjust this according to your function's needs.
+                // This example assumes mmi can be adapted to accept a plain object with MouseEvent-like properties.
+                mmi(handle, syntheticMouseEvent, f);
+              }
+            }
+          }));
+
+
+          this.iframeEventHandlers.push(new EventHandler(f.contentWindow, 'touchend', (e) => this.onMouseUp(handle)));
         }
+      }
+    }
+
 
         Utils.disableGlobalTextSelection(this.dockManager.config.dialogRootElement);
     }
 
-    onMouseUp(handle) {
+    onMouseUp(handle:any) {
         handle.mouseMoveHandler.cancel();
         handle.touchMoveHandler.cancel();
         handle.mouseUpHandler.cancel();
@@ -245,7 +282,7 @@ export class ResizableContainer implements IDockContainer {
         Utils.enableGlobalTextSelection(this.dockManager.config.dialogRootElement);
     }
 
-    _performDrag(handle, dx: number, dy: number) {
+    _performDrag(handle:any, dx: number, dy: number) {
         let bounds: IThickness = {};
         bounds.left = Utils.getPixels(this.topLevelElement.style.left);
         bounds.top = Utils.getPixels(this.topLevelElement.style.top);
@@ -275,15 +312,15 @@ export class ResizableContainer implements IDockContainer {
     }
 
     _resizeContainer(leftDelta: number, topDelta: number, widthDelta: number, heightDelta: number, bounds: IThickness) {
-        bounds.left += leftDelta;
-        bounds.top += topDelta;
-        bounds.width += widthDelta;
-        bounds.height += heightDelta;
+        bounds.left! += leftDelta;
+        bounds.top! += topDelta;
+        bounds.width! += widthDelta;
+        bounds.height! += heightDelta;
 
         let minWidth = 50;  // TODO: Move to external configuration
         let minHeight = 50;  // TODO: Move to external configuration
-        bounds.width = Math.max(bounds.width, minWidth);
-        bounds.height = Math.max(bounds.height, minHeight);
+        bounds.width = Math.max(bounds.width!, minWidth);
+        bounds.height = Math.max(bounds.height!, minHeight);
 
         this.topLevelElement.style.left = bounds.left + 'px';
         this.topLevelElement.style.top = bounds.top + 'px';

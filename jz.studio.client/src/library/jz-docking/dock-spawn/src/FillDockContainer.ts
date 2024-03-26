@@ -1,25 +1,26 @@
-import { DockManager } from "./DockManager.js";
-import { Utils } from "./Utils.js";
-import { ContainerType } from "./ContainerType.js";
-import { TabHost } from "./TabHost.js";
-import { TabHostDirection } from "./enums/TabHostDirection.js";
-import { ISize } from "./interfaces/ISize.js";
-import { IDockContainerWithSize } from "./interfaces/IDockContainerWithSize.js";
-import { IState } from "./interfaces/IState.js";
-import { IDockContainer } from "./interfaces/IDockContainer.js";
+
+import { DockManager } from "./DockManager";
+import { Utils } from "./Utils";
+import { ContainerType } from "./ContainerType";
+import { TabHost } from "./TabHost";
+import { TabHostDirection } from "./enums/TabHostDirection";
+import { ISize } from "./interfaces/ISize";
+import { IDockContainerWithSize } from "./interfaces/IDockContainerWithSize";
+import { IState } from "./interfaces/IState";
+import { IDockContainer } from "./interfaces/IDockContainer";
 
 export class FillDockContainer implements IDockContainerWithSize {
 
     dockManager: DockManager;
     tabOrientation: TabHostDirection;
     name: string;
-    element: HTMLDivElement;
+    element?: HTMLDivElement;
     containerElement: HTMLDivElement;
     containerType: ContainerType;
     minimumAllowedChildNodes: number;
     tabHost: TabHost;
     tabHostListener: { onChange: (e: any) => void; };
-    state: ISize;
+    state!: ISize;
 
     constructor(dockManager: DockManager, tabStripDirection?: TabHostDirection) {
         if (tabStripDirection === undefined) {
@@ -51,8 +52,8 @@ export class FillDockContainer implements IDockContainerWithSize {
     }
 
     resize(width: number, height: number) {
-        this.element.style.width = width + 'px';
-        this.element.style.height = height + 'px';
+        this.element!.style.width = width + 'px';
+        this.element!.style.height = height + 'px';
         this.tabHost.resize(width, height);
     }
 
@@ -60,11 +61,14 @@ export class FillDockContainer implements IDockContainerWithSize {
         this.tabHost.performLayout(children);
     }
 
-    destroy() {
-        this.tabHost.pages.forEach(x => x.destroy());
-        if (Utils.removeNode(this.element))
-            delete this.element;
+  destroy() {
+    this.tabHost.pages.forEach(x => x.destroy());
+    if (this.element && Utils.removeNode(this.element)) {
+      // After successfully removing the node, you can set it to undefined or null as needed
+      this.element = undefined; // Or null, depending on your requirements
     }
+  }
+
 
     saveState(state: IState): void {
         state.width = this.width;
@@ -81,18 +85,18 @@ export class FillDockContainer implements IDockContainerWithSize {
     get width(): number {
         // if(this.element.clientWidth === 0 && this.stateWidth !== 0)
         //     return this.stateWidth;
-        return this.element.clientWidth;
+        return this.element!.clientWidth;
     }
     set width(value: number) {
-        this.element.style.width = value + 'px'
+        this.element!.style.width = value + 'px'
     }
 
     get height(): number {
         // if(this.element.clientHeight === 0 && this.stateHeight !== 0)
         //     return this.stateHeight;
-        return this.element.clientHeight;
+        return this.element!.clientHeight;
     }
     set height(value: number) {
-        this.element.style.height = value + 'px'
+        this.element!.style.height = value + 'px'
     }
 }

@@ -7,16 +7,16 @@ import { IDockContainerWithSize } from "./interfaces/IDockContainerWithSize.js";
 import { IState } from "./interfaces/IState.js";
 
 export abstract class SplitterDockContainer implements IDockContainerWithSize {
-    name: string;
-    dockManager: DockManager;
-    minimumAllowedChildNodes: number;
-    splitterPanel: SplitterPanel;
-    stackedVertical: boolean;
-    containerElement: HTMLDivElement;
-    _cachedWidth: number;
-    _cachedHeight: number;
-    state: ISize;
-    containerType: ContainerType;
+    name!: string;
+    dockManager!: DockManager;
+    minimumAllowedChildNodes!: number;
+    splitterPanel!: SplitterPanel;
+    stackedVertical!: boolean;
+    containerElement!: HTMLDivElement;
+    _cachedWidth!: number;
+    _cachedHeight!: number;
+    state!: ISize;
+    containerType!: ContainerType;
 
     constructor(name: string, dockManager: DockManager, childContainers: IDockContainer[], stackedVertical: boolean) {
         // for prototype inheritance purposes only

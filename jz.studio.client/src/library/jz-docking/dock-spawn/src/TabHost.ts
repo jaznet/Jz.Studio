@@ -23,8 +23,8 @@ export class TabHost {
     tabHandleListener: { onMoveTab: (e: any) => void; };
     eventListeners: any[];
     pages: TabPage[];
-    activeTab: TabPage;
-    _resizeRequested: boolean;
+    activeTab?: TabPage;
+    _resizeRequested!: boolean;
     mouseDownHandler: EventHandler;
     focusHandler: EventHandler;
 
@@ -98,7 +98,7 @@ export class TabHost {
             this.dockManager.activePanel = this.activeTab.panel;
     }
 
-    onMoveTab(e) {
+  onMoveTab(e: any) {
         let index = Array.prototype.slice.call(this.tabListElement.childNodes).indexOf(e.self.elementBase);
         this.change(this, /*handle*/e.self, e.state, index);
     }
@@ -126,15 +126,15 @@ export class TabHost {
         return this.activeTab;
     }
 
-    addListener(listener) {
+  addListener(listener: any) {
         this.eventListeners.push(listener);
     }
 
-    removeListener(listener) {
+  removeListener(listener: any) {
         this.eventListeners.splice(this.eventListeners.indexOf(listener), 1);
     }
 
-    change(host: TabHost, handle: TabHandle, state, index) {
+  change(host: TabHost, handle: TabHandle, state: any, index: any) {
         this.eventListeners.forEach((listener) => {
             if (listener.onChange) {
                 listener.onChange({ host: host, handle: handle, state: state, index: index });
@@ -190,10 +190,10 @@ export class TabHost {
         if (scaleMultiplier > 1.2) return; //with a reserve
         this.pages.forEach((page, index) => {
             let handle = page.handle;
-            let newSize = scaleMultiplier * handle.elementBase.clientWidth;
+            let newSize = scaleMultiplier * handle.elementBase!.clientWidth;
             if (index === this.pages.length - 1)
                 newSize = newSize - 5;
-            handle.elementBase.style.width = newSize + 'px';
+            handle.elementBase!.style.width = newSize + 'px';
         });
     }
 

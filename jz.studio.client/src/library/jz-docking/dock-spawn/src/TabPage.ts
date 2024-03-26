@@ -5,13 +5,13 @@ import { TabHost } from "./TabHost.js";
 import { Utils } from "./Utils.js";
 
 export class TabPage {
-    selected: boolean;
-    host: TabHost;
-    container: IDockContainer;
+    selected!: boolean;
+    host!: TabHost;
+    container!: IDockContainer;
     panel?: PanelContainer;
-    handle: TabHandle;
-    containerElement: HTMLElement;
-    _initContent: boolean;
+    handle!: TabHandle;
+    containerElement!: HTMLElement;
+    _initContent!: boolean;
 
     constructor(host: TabHost, container: IDockContainer) {
         if (arguments.length === 0) {
@@ -78,7 +78,7 @@ export class TabPage {
         this._initContent = true;
         if (this.selected) {
             this.containerElement.style.display = 'block';
-            this.panel.setVisible(true);
+            this.panel!.setVisible(true);
             // force a resize again
             let width = this.host.contentElement.clientWidth;
             let height = this.host.contentElement.clientHeight;
@@ -88,7 +88,7 @@ export class TabPage {
         }
         else {
             this.containerElement.style.display = 'none';
-            this.panel.setVisible(false);
+            this.panel!.setVisible(false);
         }
     }
 
