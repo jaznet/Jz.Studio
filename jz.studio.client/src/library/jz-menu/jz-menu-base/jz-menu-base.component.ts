@@ -9,6 +9,7 @@ export class MenuBaseComponent implements OnInit {
 
   direction: string = 'horizontal';
   menuName: string = 'base';
+  level: string = 'base-level';
  // isMenuVisible: string = 'collapsed';
 
   constructor() { }
