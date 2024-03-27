@@ -356,7 +356,7 @@ export class DockManager {
     dockRight(referenceNode: DockNode, container: PanelContainer, ratio: number) {
         return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockRight.bind(this.layoutEngine), true, ratio);
     }
-
+     
     /** Dock the [container] above the [referenceNode] node */
     dockUp(referenceNode: DockNode, container: PanelContainer, ratio: number) {
         return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockUp.bind(this.layoutEngine), false, ratio);
@@ -421,7 +421,7 @@ export class DockManager {
         }
     }
 
-    private _requestDockContainer(referenceNode: DockNode, container: IDockContainer, layoutDockFunction: (referenceNode: DockNode, newNode: DockNode) => void, dockedToPrevious: boolean, ratio?: number) {
+    private _requestDockContainer(referenceNode: DockNode|undefined, container: IDockContainer, layoutDockFunction: (referenceNode: DockNode, newNode: DockNode) => void, dockedToPrevious: boolean, ratio?: number) {
         // Get the active dialog that was dragged on to the dock wheel
         let newNode = new DockNode(container);
         if (container.containerType === 'panel') {
@@ -433,13 +433,13 @@ export class DockManager {
         let ratios: number[] | null = null;
       /* let oldSplitter: SplitterDockContainer;*/
       let oldSplitter: SplitterDockContainer | undefined;
-        if (referenceNode.parent && referenceNode.parent.container) {
-            oldSplitter = referenceNode.parent.container as SplitterDockContainer;
+        if (referenceNode!.parent && referenceNode!.parent.container) {
+            oldSplitter = referenceNode!.parent.container as SplitterDockContainer;
             if (oldSplitter.getRatios)
                 ratios = oldSplitter.getRatios();
         }
 
-        layoutDockFunction(referenceNode, newNode);
+        layoutDockFunction(referenceNode!, newNode);
 
         if (ratio && newNode.parent && (newNode.parent.container.containerType === 'vertical' || newNode.parent.container.containerType === 'horizontal')) {
             let splitter = newNode.parent.container as SplitterDockContainer;

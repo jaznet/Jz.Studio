@@ -32,7 +32,7 @@ export class PanelContainer implements IDockContainer {
     private _resolvedElementContent!: HTMLElement;
     elementContentContainer: HTMLElement;
     elementContentWrapper!: HTMLElement;
-    dockManager: DockManager;
+    dockManager!: DockManager;
     title: string;
     containerType: ContainerType;
     icon: string|null;
@@ -59,7 +59,7 @@ export class PanelContainer implements IDockContainer {
     _hideCloseButton: boolean|null|undefined;
     _grayOut!: HTMLDivElement|null;
 
-    constructor(elementContent: HTMLElement, dockManager: DockManager, title?: string, panelType?: PanelType, hideCloseButton?: boolean) {
+    constructor(elementContent: HTMLElement, dockManager: DockManager|null, title?: string, panelType?: PanelType, hideCloseButton?: boolean) {
         if (!title)
             title = Localizer.getString('DefaultPanelName');
         if (!panelType)
@@ -85,21 +85,21 @@ export class PanelContainer implements IDockContainer {
                     if (this.tabPage)
                         this.tabPage.setSelected(true, true);
                 }
-                this.dockManager.activePanel = this;
+                this.dockManager!.activePanel = this;
             }
             catch { }
         }, { passive: true });
         this.elementContentContainer.appendChild(elementContent);
-        dockManager.config.dialogRootElement.appendChild(this.elementContentContainer);
+        dockManager!.config.dialogRootElement.appendChild(this.elementContentContainer);
 
-        this.dockManager = dockManager;
+        if (dockManager) this.dockManager = dockManager;
         this.title = title;
         this.containerType = ContainerType.panel;
         this.icon = null;
         this.minimumAllowedChildNodes = 0;
         this._floatingDialog = undefined;
         this.isDialog = false;
-        this._canUndock = dockManager._undockEnabled;
+        this._canUndock = dockManager!._undockEnabled;
         this.eventListeners = [];
         this._hideCloseButton = hideCloseButton;
         this._initialize();
