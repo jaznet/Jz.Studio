@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'fit-to-content';
+
+  @Input() route: string = '';
   @Input() menuType: string = 'menu';
   @Input() text: string = 'Enter';
   @Input() height: number = 33;
@@ -16,7 +18,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorTxt: string = 'var(--plt-clr-5)';
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
-  @Input() route: string = '';
+ 
 
   height_px: string = '0px';
   width_px: string = '0px';
