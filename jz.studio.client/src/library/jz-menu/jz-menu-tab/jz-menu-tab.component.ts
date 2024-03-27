@@ -53,9 +53,10 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
 
   onTabClicked() {
     console.log('TAB', this.route);
-    if (this.route === 'sandbox/choro-dash-loader') {
+  
 
-      this.menuEvents.tabSelected(this);
+    this.menuEvents.tabSelected(this);
+    if (this.route === 'sandbox/choro-dash-loader') {
       this.popups.togglePopOverLoading({
         action: 'show',
         route: this.route,

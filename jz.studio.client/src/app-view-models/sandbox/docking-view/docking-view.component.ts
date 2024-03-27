@@ -20,30 +20,21 @@ export class DockingViewComponent implements OnInit, AfterViewInit {
     let dockManager = new DockManager(document.getElementById('my_dock_manager'));
     dockManager.initialize();
     console.log(dockManager);
-    function createElementContainer(id: string, dockManager: DockManager, title?: string, panelType?: PanelType) {
-      const element = document.getElementById(id);
-      if (element) {
-        return new PanelContainer(element, dockManager, title, panelType);
-      } else {
-        console.error(`Element with ID '${id}' was not found.`);
-        // Handle the error appropriately, possibly by returning null or throwing an error
-        return;
-      }
-    }
+   
     // Convert existing elements on the page into "Panels".
     // They can then be docked on to the dock manager
     // Panels get a titlebar and a close button, and can also be
     // converted to a floating dialog box which can be dragged / resized
-    const solution = createElementContainer("solution_window", dockManager);
-    const properties = createElementContainer("properties_window", dockManager);
-    const toolbox = createElementContainer("toolbox_window", dockManager);
-    const outline = createElementContainer("outline_window", dockManager);
-    const state = createElementContainer("state_window", dockManager);
-    const output = createElementContainer("output_window", dockManager);
-    const editor1 = createElementContainer("editor1_window", dockManager, undefined, PanelType.document);
-    const editor2 = createElementContainer("editor2_window", dockManager, undefined, PanelType.document);
+    const solution = this.createElementContainer("solution_window", dockManager);
+    const properties = this.createElementContainer("properties_window", dockManager);
+    const toolbox = this.createElementContainer("toolbox_window", dockManager);
+    const outline = this.createElementContainer("outline_window", dockManager);
+    const state = this.createElementContainer("state_window", dockManager);
+    const output = this.createElementContainer("output_window", dockManager);
+    const editor1 = this.createElementContainer("editor1_window", dockManager, undefined, PanelType.document);
+    const editor2 = this.createElementContainer("editor2_window", dockManager, undefined, PanelType.document);
     editor2!.hideCloseButton(true);
-    let infovis = createElementContainer("infovis",dockManager); // invisible Dialog has no size, so size it manually
+    let infovis = this.createElementContainer("infovis",dockManager); // invisible Dialog has no size, so size it manually
     infovis!.width = 600;
     infovis!.height = 400;
 
@@ -66,4 +57,15 @@ export class DockingViewComponent implements OnInit, AfterViewInit {
     if (outlineNode&&solution) dockManager.dockFill(outlineNode, solution);
     if (outlineNode&&properties) dockManager.dockDown(outlineNode, properties, 0.6);
   }
+
+    createElementContainer(id: string, dockManager: DockManager, title?: string, panelType?: PanelType) {
+  const element = document.getElementById(id);
+  if (element) {
+    return new PanelContainer(element, dockManager, title, panelType);
+  } else {
+    console.error(`Element with ID '${id}' was not found.`);
+    // Handle the error appropriately, possibly by returning null or throwing an error
+    return;
+  }
+}
 }
