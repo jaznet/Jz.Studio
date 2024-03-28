@@ -16,7 +16,6 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
   declarations: [
     JzChoroDashComponent,
     JzChoroDashPanelComponent,
-    
   ],
   imports: [
     CommonModule,

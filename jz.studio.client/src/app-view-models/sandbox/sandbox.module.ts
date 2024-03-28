@@ -13,6 +13,7 @@ import { JzPopOversModule } from '../../library/jz-pop-overs/jz-pop-overs.module
 import { DockingViewComponent } from './docking-view/docking-view.component';
 import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
+import { JzDatavizModule } from '../../library/jz-dataviz/jz-dataviz.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
     JzPopOversModule,
     GraphicsModule,
     SandboxRouterModule,
-    DashboardLayoutModule
+    DashboardLayoutModule,
+    JzDatavizModule
   ],
   exports: [
     SandboxComponent,
