@@ -14,6 +14,7 @@ import { SandboxHomeComponent } from './components/sandbox-home/sandbox-home.com
 import { SandboxMenuComponent } from './components/sandbox-menu/sandbox-menu.component';
 import { DockingViewComponent } from './views/docking-view/docking-view.component';
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
+import { GraphicsViewComponent } from './views/graphics-view/graphics-view.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.co
     SandboxHomeComponent,
     SandboxMenuComponent,
     DockingViewComponent,
-    DashboardViewComponent
+    DashboardViewComponent,
+    GraphicsViewComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.co
     SandboxHomeComponent,
     SandboxMenuComponent,
     DockingViewComponent,
-    DashboardViewComponent
+    DashboardViewComponent,
+    GraphicsViewComponent
   ]
 })
 export class SandboxModule { }

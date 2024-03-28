@@ -5,6 +5,7 @@ import { SandboxComponent } from './sandbox.component';
 import { DockingViewComponent } from './views/docking-view/docking-view.component';
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
 import { SandboxHomeComponent } from './components/sandbox-home/sandbox-home.component';
+import { GraphicsViewComponent } from './views/graphics-view/graphics-view.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardViewComponent
-
+      },
+       {
+        path: 'graphics',
+         component: GraphicsViewComponent
       },
     ]
   }

@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, HostBinding, OnInit } from '@angular/core';
-import { DockManager } from '../../../library/jz-docking/dock-spawn/src/DockManager';
-import { PanelContainer } from '../../../library/jz-docking/dock-spawn/src/PanelContainer';
-import { PanelType } from '../../../library/jz-docking/dock-spawn/src/enums/PanelType';
-
+import { DockManager } from '../../../../library/jz-docking/dock-spawn/src/DockManager';
+import { PanelType } from '../../../../library/jz-docking/dock-spawn/src/enums/PanelType';
+import { PanelContainer } from '../../../../library/jz-docking/dock-spawn/src/PanelContainer';
 @Component({
   selector: 'app-docking-view',
   templateUrl: './docking-view.component.html',
