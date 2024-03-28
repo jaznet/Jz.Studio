@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
 import { SandboxHomeComponent } from './sandbox-home/sandbox-home.component';
 import { DockingViewComponent } from './docking-view/docking-view.component';
+import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
         path: 'docking',
         component: DockingViewComponent
      
+      },
+      {
+        path: 'dashboard',
+        component: DashboardViewComponent
+
       },
     ]
   }
