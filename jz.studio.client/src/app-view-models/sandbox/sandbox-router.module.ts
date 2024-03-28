@@ -2,9 +2,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
-import { SandboxHomeComponent } from './views/sandbox-home/sandbox-home.component';
 import { DockingViewComponent } from './views/docking-view/docking-view.component';
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
+import { SandboxHomeComponent } from './components/sandbox-home/sandbox-home.component';
 
 const routes: Routes = [
   {

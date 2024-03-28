@@ -1,6 +1,6 @@
 
 import { AfterViewInit, Component, HostBinding } from '@angular/core';
-import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
+import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs.service';
 //import { DayOfWeekComponent } from '../../../../library/jz-ui-controls/day-of-week/day-of-week.component';
 
 @Component({
