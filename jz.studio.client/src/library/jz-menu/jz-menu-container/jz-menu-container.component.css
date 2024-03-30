@@ -1,11 +1,13 @@
 
+.sub-view .menu-tab {
+    padding: 0 0 0 0;
+}
+
 .menu-tab-panel.horizontal {
   margin-bottom: -1px;
   z-index: 10;
   position: relative;
 }
-
-
 
 .menu-tab-panel.vertical {
   margin-right: -1px;

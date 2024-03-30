@@ -35,6 +35,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@syncfusion/ej2-angular-base/styles/material.css",
+              "node_modules/@syncfusion/ej2-base/styles/material.css",
+              "node_modules/@syncfusion/ej2-angular-layouts/styles/material.css",
+
               "src/styles.css",
               "src/assets/styles/app.css",
               "src/assets/styles/layouts.css",

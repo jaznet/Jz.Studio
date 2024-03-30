@@ -8,6 +8,8 @@
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist\jz.studio.client\</PublishAssetsDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app-view-models\dataviz\components\" />
+    <Folder Include="src\app-view-models\dataviz\views\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />

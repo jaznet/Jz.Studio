@@ -19,7 +19,8 @@ export class JzMenuItemBaseComponent implements OnInit, AfterViewChecked {
 
   @Input() isDefault: boolean = false;
   @Input() isSelected: boolean = false;
-  @Input() isHorizontal: boolean = true;
+  @Input() isHorizontal: boolean = true
+  @Input() isSubView: boolean = false;
 
   constructor(
     private elementRef: ElementRef,

@@ -28,7 +28,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
-  @Input() level: string = 'base-level';
+  @Input() isSubMenu: boolean = false;
 
   flexflow: string = 'row';
  
@@ -62,7 +62,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
         break;
     }
 
-    console.log(this.level);
+    console.log(this.isSubMenu);
 
     this.appEvents.viewSelectedEvent.subscribe((view:any) => {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
