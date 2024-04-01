@@ -111,10 +111,10 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
   updateOrientation(tab: JzMenuTabComponent) {
     switch (this.orientation) {
       case 'horizontal':
-        tab.paddingTop = '8px';
-        tab.paddingRight = '8px';
-        tab.paddingBottom = '8px';
-        tab.paddingLeft = '8px';
+        //tab.paddingTop = '8px';
+        //tab.paddingRight = '8px';
+        //tab.paddingBottom = '8px';
+        //tab.paddingLeft = '8px';
         tab.borderTop = '1px solid var(--plt-clr-3)';
         tab.borderRight = '1px solid var(--plt-clr-3)';
         tab.borderBottom = '1px solid var(--plt-clr-2)';
@@ -124,10 +124,10 @@ export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked 
         tab.marginRight = '12px';
         break;
       case 'vertical':
-        tab.paddingTop = '8px';
-        tab.paddingRight = '0';
-        tab.paddingBottom = '8px';
-        tab.paddingLeft = '8px';
+        //tab.paddingTop = '8px';
+        //tab.paddingRight = '0';
+        //tab.paddingBottom = '8px';
+        //tab.paddingLeft = '8px';
         tab.borderTop = '1px solid var(--plt-clr-3)';
         tab.borderRight = '1px solid var(--plt-clr-2)';
         tab.borderBottom = '1px solid var(--plt-clr-3)';

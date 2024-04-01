@@ -3,26 +3,45 @@
   border: 1px solid transparent;
 }
 
+  .menu-tab.horizontal {
+    padding:  8px 0;
+    margin-left:2px;
+    margin-right:2px;
+  }
+
+    .menu-tab.horizontal.selected {
+      margin-left: 8px;
+      margin-right: 8px;
+      padding: 8px;
+      border-radius: 9px 9px 0 0;
+      border-bottom-color: var(--plt-clr-2);
+    }
+
+  .menu-tab.vertical {
+    padding: 0 8px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+
+    .menu-tab.vertical.selected {
+      margin-top: 8px;
+      margin-bottom: 8px;
+      padding: 8px;
+      border-radius: 9px 0 0 9px;
+      border-right-color: var(--plt-clr-2);
+    }
+
   .menu-tab.selected {
     background-color: var(--plt-clr-2);
     border: 1px solid var(--plt-clr-x);
   }
 
-    .menu-tab.selected.horizontal {
-      border-radius: 9px 9px 0 0;
-      border-bottom-color: var(--plt-clr-2); 
-    }
 
-    .menu-tab.selected.vertical {
-     
-      border-radius: 9px 0 0 9px;
-      border-right-color: var(--plt-clr-2);
-    }
 
-.subview  .jz-button-bevel {
+
+
+.subview .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
   background-color: salmon;
 }
-
-

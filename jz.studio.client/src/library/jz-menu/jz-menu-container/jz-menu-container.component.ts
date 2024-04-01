@@ -93,11 +93,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public SelectItem(tab: string) {
-    this.tabPanel.forEach((menuitem: { item: string; }) => {
-      if (tab === menuitem.item) {
-        console.log(tab);
-      }
-    });
-  }
+  //public SelectItem(tab: string) {
+  //  this.tabPanel.forEach((menuitem: { item: string; }) => {
+  //    if (tab === menuitem.item) {
+  //      console.log(tab);
+  //    }
+  //  });
+  //}
 }

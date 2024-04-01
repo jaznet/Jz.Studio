@@ -14,6 +14,8 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
 
+  //isSelected: boolean = false;
+
   borderRadius!: string;
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';
@@ -25,10 +27,10 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
   borderBottom: string = '1px solid transparent';
   borderLeft: string = '1px solid transparent';
 
-  paddingTop: string = '8px';
-  paddingRight: string = '8px';
-  paddingBottom: string = '8px';
-  paddingLeft: string = '8px';
+  //paddingTop: string = '0';
+  //paddingRight: string = '8px';
+  //paddingBottom: string = '0';
+  //paddingLeft: string = '8px';
   
   marginTop: string = '0';
   marginRight: string = '0';
