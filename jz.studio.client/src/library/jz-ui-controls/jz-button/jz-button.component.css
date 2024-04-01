@@ -108,3 +108,7 @@ jz-button {
     align-self: start;
     height: 1px;
   }
+
+.selected  .jz-button-text {
+  color: greenyellow;
+}

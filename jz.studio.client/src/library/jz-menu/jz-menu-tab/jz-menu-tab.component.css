@@ -18,8 +18,13 @@
       border-radius: 9px 0 0 9px;
       border-right-color: var(--plt-clr-2);
     }
+
 .subview  .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
   background-color: salmon;
+}
+
+.selected .jz-button-text {
+    color:white;
 }
