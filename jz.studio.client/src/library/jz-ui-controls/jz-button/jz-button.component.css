@@ -4,7 +4,22 @@ jz-button {
   /*color: var(--plt-txt-1);*/
 }
 
-.jz-button-bevel {
+.jz-button-text {
+  color: var(--plt-txt-2);
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  /*font-weight: bold;*/
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  cursor: pointer;
+}
+  .jz-button-text .selected {
+      color:yellow;
+  }
+
+  .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
   background-color: darkslategray;
@@ -23,17 +38,7 @@ jz-button {
   background-color:red;
 }
 
-.jz-button-text {
-  color: #abc9ba;
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  /*font-weight: bold;*/
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  cursor: pointer;
-}
+
 
 
 
@@ -105,6 +110,4 @@ jz-button {
     height: 1px;
   }
 
-.selected  {
-  color: antiquewhite;
-}
+

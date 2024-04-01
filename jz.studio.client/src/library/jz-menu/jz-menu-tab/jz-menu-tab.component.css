@@ -14,7 +14,7 @@
     }
 
     .menu-tab.selected.vertical {
-      padding: 8px;
+     
       border-radius: 9px 0 0 9px;
       border-right-color: var(--plt-clr-2);
     }
@@ -25,6 +25,4 @@
   background-color: salmon;
 }
 
-.selected {
-  color: white;
-}
+
