@@ -25,6 +25,6 @@
   background-color: salmon;
 }
 
-.selected .jz-button-text {
-    color:white;
+.selected {
+  color: white;
 }

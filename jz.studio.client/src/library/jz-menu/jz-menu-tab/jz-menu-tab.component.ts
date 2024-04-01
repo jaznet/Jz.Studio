@@ -18,6 +18,8 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';
 
+  textColor: string='var';
+
   borderTop: string ='1px solid transparent';
   borderRight: string = '1px solid transparent';
   borderBottom: string = '1px solid transparent';

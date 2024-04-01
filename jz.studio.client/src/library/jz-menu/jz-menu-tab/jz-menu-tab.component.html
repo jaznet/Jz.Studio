@@ -24,9 +24,9 @@
   <!--'border-top':borderTop, 'border-right':borderRight, 'border-bottom':borderBottom, 'border-left':borderLeft}">-->
   <jz-button routerLink="/sandbox"
              class="jz-button"
-              [ngClass]="{}"
+              [ngClass]="{'selected': isSelected}"
              [text]="btnTxt"
              [route]="route"
-             [colorTxt]="'skyblue'">
+             [colorTxt]="textColor">
   </jz-button>
 </div>

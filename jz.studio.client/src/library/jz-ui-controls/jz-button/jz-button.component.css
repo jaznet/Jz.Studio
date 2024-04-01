@@ -1,12 +1,7 @@
 
-.jz-button {
-  width: 100%;
-  color: var(--plt-txt-1);
-}
-
 jz-button {
   width: 100%;
-  color: var(--plt-txt-1);
+  /*color: var(--plt-txt-1);*/
 }
 
 .jz-button-bevel {
@@ -29,6 +24,7 @@ jz-button {
 }
 
 .jz-button-text {
+  color: #abc9ba;
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -109,6 +105,6 @@ jz-button {
     height: 1px;
   }
 
-.selected  .jz-button-text {
-  color: greenyellow;
+.selected  {
+  color: antiquewhite;
 }
