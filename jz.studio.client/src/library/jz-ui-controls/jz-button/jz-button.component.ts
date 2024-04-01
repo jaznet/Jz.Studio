@@ -19,7 +19,6 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
  
-
   height_px: string = '0px';
   width_px: string = '0px';
   border_px: string = '0px';
