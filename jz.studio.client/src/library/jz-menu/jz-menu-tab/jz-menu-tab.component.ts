@@ -2,13 +2,22 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
 import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
+import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 
 @Component({
   selector: 'jz-menu-tab',
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @Input() direction: string = 'not set';
+  @Input() flexflow: string = 'not set';
+  @Input() isHorizontal: boolean = true;
+  @Input() tabId: string = 'not set';
+  @Input() menuName: string = 'not set';
+  @Input() isSelected: boolean = false;
+  @Input() isDefault: boolean = false;
+
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() menuType: string = 'notset';
@@ -37,8 +46,14 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
   marginBottom: string = '0';
   marginLeft: string = '0';
 
-  ngAfterViewInit(): void {
+  constructor(
+    private menuEvents: JzMenuService,
+    private popups: JzPopOversService,
+    private changeDetector: ChangeDetectorRef,)
+  {
 
+  }
+  ngOnInit(): void {
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -53,7 +68,12 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
         this.isHorizontal = true;
         break;
     }
+    this.changeDetector.detectChanges();
   }
+
+  ngAfterViewInit(): void { }
+
+  ngAfterViewChecked(): void {  }
 
   onTabClicked() {
     console.log('TAB', this.route);
@@ -69,13 +89,5 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
       });
     }
   }
-
-  //getClasses() {
-  //  return {
-  //    'selecteed': this.isSelected,  
-  //    'horizontal': this.isHorizontal,
-  //    'vertical': !this.isHorizontal
-  //  }
-  //}
 
 }

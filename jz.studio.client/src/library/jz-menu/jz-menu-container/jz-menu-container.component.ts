@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { JzMenuService } from '../jz-menu.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
@@ -11,7 +11,7 @@ import { AppEventsService } from '../../../app/app-services/app-events.service';
   templateUrl: './jz-menu-container.component.html',
   styleUrls: ['./jz-menu-container.component.css']
 })
-export class JzMenuContainerComponent implements OnInit, AfterViewInit {
+export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterContentChecked {
 
   @HostBinding('class') classes = 'menu-container';
   @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
@@ -45,6 +45,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   {
     this.menuEvents = menuEvents;
   }
+    ngAfterContentChecked(): void {
+    
+    }
 
   ngOnInit() {  }
 
@@ -89,7 +92,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     console.log('menu:',selectedItem.menuName);
     if (selectedItem.menuName !== this.menuName) return;
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-      menuitem.isSelected = false;
+    //  menuitem.isSelected = false;
       if (menuitem.tabId === selectedItem.tabId) {
         menuitem.isSelected = true;
       }

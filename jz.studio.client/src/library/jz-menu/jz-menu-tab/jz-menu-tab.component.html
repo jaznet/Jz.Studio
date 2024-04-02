@@ -1,8 +1,7 @@
 
 <div class="menu-tab" 
      (click)="onTabClicked()"
-     [ngStyle]="{
-      'border-radius':borderRadius,    }"
+     [ngStyle]="{  'border-radius':borderRadius,    }"
 
     [ngClass]="{
      'selected': isSelected,
@@ -13,7 +12,7 @@
   <!--'border-top':borderTop, 'border-right':borderRight, 'border-bottom':borderBottom, 'border-left':borderLeft}">-->
   <jz-button routerLink="/sandbox"
              class="jz-button"
-              [ngClass]="{'selected': isSelected}"
+             [ngClass]="{'selected': isSelected}"
              [text]="btnTxt"
              [route]="route"
              [colorTxt]="textColor">

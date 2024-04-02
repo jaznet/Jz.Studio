@@ -42,11 +42,10 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.border_px = .175 * this.height + 'px';
     this.color = this.colorTxt;
     this.background = this.colorBkg;
-  }
-
-  ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
   }
+
+  ngAfterViewChecked(): void { }
 
   onClicked() {
    // this.selection('select');
