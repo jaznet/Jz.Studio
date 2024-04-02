@@ -1,7 +1,6 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
-import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 
 @Component({

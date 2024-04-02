@@ -3,21 +3,20 @@ import { Renderer2 } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { AfterViewInit, Component, HostBinding, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { JzButtonComponent } from '../jz-button/jz-button.component';
-import { JzMenuItemBaseComponent } from '../../jz-menu/jz-menu-item-base/jz-menu-item-base.component';
 
 @Component({
   selector: 'jz-tab',
   templateUrl: './jz-tab.component.html',
   styleUrls: ['./jz-tab.component.css']
 })
-export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, AfterViewInit {
+export class JzTabComponent   implements OnInit, AfterViewInit {
 
   @Input() route = "";
   @Input() btnTxt = "Tab Button";
   @Input() initialTemplate: TemplateRef<any> | any;
   @Input() orientation: string = '';
-  @Input() override menuName: string = '';
-  @Input() override state: string = '';
+  @Input()  menuName: string = '';
+  @Input()  state: string = '';
   @Input() tabBorder!: HTMLDivElement;
   @Input() menuType: string='notset';
 
@@ -32,7 +31,7 @@ export class JzTabComponent extends JzMenuItemBaseComponent implements OnInit, A
   button!: HTMLDivElement
   orient = 'v';
   
-  override ngOnInit(): void { }
+   ngOnInit(): void { }
 
    ngAfterViewInit(): void {
   

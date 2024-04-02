@@ -2,7 +2,6 @@ import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, Conte
 import { Subscription } from 'rxjs';
 import { JzMenuService } from '../jz-menu.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
-import { JzMenuItemBaseComponent } from '../jz-menu-item-base/jz-menu-item-base.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
 
@@ -63,11 +62,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
 
-    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
+    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 
-    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
+    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 }
@@ -85,7 +84,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
     this.changeDetector.detectChanges();
   }
 
-  onMenuItemSelected(selectedItem: JzMenuItemBaseComponent) {
+  onMenuItemSelected(selectedItem: JzMenuTabComponent) {
     console.log('menu:',selectedItem.menuName);
     if (selectedItem.menuName !== this.menuName) return;
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {

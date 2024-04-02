@@ -1,8 +1,6 @@
 
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { JzMenuTabComponent } from './jz-menu-tab/jz-menu-tab.component';
-import { JzMenuItemBaseComponent } from './jz-menu-item-base/jz-menu-item-base.component';
-
 @Injectable({
   providedIn: 'root'
 })
