@@ -45,9 +45,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
   {
     this.menuEvents = menuEvents;
   }
-    ngAfterContentChecked(): void {
-    
-    }
+    ngAfterContentChecked(): void {  }
 
   ngOnInit() {  }
 
@@ -92,12 +90,13 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
     console.log('menu:',selectedItem.menuName);
     if (selectedItem.menuName !== this.menuName) return;
     this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-    //  menuitem.isSelected = false;
+      menuitem.isSelected = false;
       if (menuitem.tabId === selectedItem.tabId) {
         menuitem.isSelected = true;
       }
      // console.log('tab:', menuitem.btnTxt);
     }
+
     );
   }
 
