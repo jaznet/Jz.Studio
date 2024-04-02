@@ -1,11 +1,19 @@
 
+div {
+  color: var(--plt-txt-2)
+}
+
+.selected div {
+  color: white;
+}
+
 jz-button {
   width: 100%;
   /*color: var(--plt-txt-1);*/
 }
 
 .jz-button-text {
-  color: var(--plt-txt-2);
+  /*color: var(--plt-txt-2);*/
   display: flex;
   align-items: center;
   font-size: 13px;

@@ -13,7 +13,7 @@ export class JzMenuTabComponent extends JzMenuItemBaseComponent implements OnIni
   @Input() tab_name: string = 'tab name';
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
-
+  @Input() isSubMenu: boolean = true;
   //isSelected: boolean = false;
 
   borderRadius!: string;
