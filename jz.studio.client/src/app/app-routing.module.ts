@@ -17,6 +17,14 @@ const routes: Routes = [
     path: 'sandbox',
     loadChildren: () => import('../app-view-models/sandbox/sandbox.module').then(m => m.SandboxModule)
   },
+  {
+    path: 'architecture',
+    component: AppHomeComponent
+  },
+  {
+    path: 'admin',
+    component: AppHomeComponent
+  },
 ]
 
 @NgModule({

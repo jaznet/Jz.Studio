@@ -47,10 +47,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
   }
     ngAfterContentChecked(): void {  }
 
-  ngOnInit() {  }
-
-  ngAfterViewInit(): void {
-  
+  ngOnInit() {
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -62,15 +59,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
         this.flexflow = 'row';
         break;
     }
-
-    console.log(this.isSubMenu);
-    if (this.isSubMenu) {
-      this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-        menuitem.isSubMenu = true;
-      });
-    }
-
-    this.appEvents.viewSelectedEvent.subscribe((view:any) => {
+    this.appEvents.viewSelectedEvent.subscribe((view: any) => {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
 
@@ -81,8 +70,18 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
     this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuItemBaseComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
+}
 
-    this.currentTemplate = this.initialTemplate;
+  ngAfterViewInit(): void {
+  
+    console.log(this.isSubMenu);
+    if (this.isSubMenu) {
+      this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+        menuitem.isSubMenu = true;
+      });
+    }
+
+  //  this.currentTemplate = this.initialTemplate;
     this.changeDetector.detectChanges();
   }
 
