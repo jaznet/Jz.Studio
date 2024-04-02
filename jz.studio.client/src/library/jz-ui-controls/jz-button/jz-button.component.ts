@@ -18,6 +18,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorTxt: string = 'var(--plt-clr-5)';
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
+  @Input() isSubMenu: boolean = false;
  
   height_px: string = '0px';
   width_px: string = '0px';

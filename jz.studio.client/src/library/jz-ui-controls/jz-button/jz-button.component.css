@@ -9,7 +9,6 @@ div {
 
 jz-button {
   width: 100%;
-  /*color: var(--plt-txt-1);*/
 }
 
 .jz-button-text {
@@ -23,17 +22,18 @@ jz-button {
   justify-content: center;
   cursor: pointer;
 }
+
   .jz-button-text .selected {
-      color:yellow;
+    color: yellow;
   }
 
-  .jz-button-bevel {
+.jz-button-bevel {
   width: 100%;
   border-radius: 7px;
-  background-color: darkslategray;
+  background-color: var(--plt-clr-2);
 }
 
-.subview  .jz-button-bevel {
+.subview .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
   background-color: salmon;
@@ -43,14 +43,8 @@ jz-button {
   width: 100%;
   height: 100%;
   border-radius: 11px;
-  background-color:red;
+  background-color: red;
 }
-
-
-
-
-
-
 
 .jz-button-content {
   width: 100%;
@@ -117,5 +111,3 @@ jz-button {
     align-self: start;
     height: 1px;
   }
-
-

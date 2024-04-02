@@ -1,7 +1,7 @@
 
 <div routerLink="/sandbox"
      (click)="onClicked()"
-     [ngClass]="{}"
+     [ngClass]="{'sub-menu':isSubMenu}"
      [ngStyle]="{'height': height_px, 'width': width_px}">
 
   <div class="jz-button-bevel fit-to-parent"> <!--[ngStyle]="{'color':color}"-->

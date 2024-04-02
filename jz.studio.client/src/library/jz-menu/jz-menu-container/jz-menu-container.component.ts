@@ -63,6 +63,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     }
 
     console.log(this.isSubMenu);
+    if (this.isSubMenu) {
+      this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+        menuitem.isSubMenu = true;
+      });
+    }
 
     this.appEvents.viewSelectedEvent.subscribe((view:any) => {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
