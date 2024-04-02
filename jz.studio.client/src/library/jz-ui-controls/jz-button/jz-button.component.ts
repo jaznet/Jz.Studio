@@ -19,6 +19,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
   @Input() isSubMenu: boolean = false;
+  @Input() isSelected: boolean = false;
  
   height_px: string = '0px';
   width_px: string = '0px';
@@ -47,6 +48,14 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.changeDetector.detectChanges();
   }
 
+  onClicked() {
+   // this.selection('select');
+    // console.log(this.element.nativeElement);
+    if (this.route) {
+      this.router.navigate([this.route]);
+    }
+  }
+
   selection(select: string) {
     switch (select) {
       case 'select': {
@@ -60,11 +69,6 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     }
   }
 
-  onClicked() {
-   // console.log(this.element.nativeElement);
-    if (this.route) {
-      this.router.navigate([this.route]);
-    }
-  }
+
 
 }
