@@ -10,7 +10,7 @@ import { AppEventsService } from '../../../app/app-services/app-events.service';
   templateUrl: './jz-menu-container.component.html',
   styleUrls: ['./jz-menu-container.component.css']
 })
-export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterContentChecked {
+export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   @HostBinding('class') classes = 'menu-container';
   @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
@@ -42,11 +42,12 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
   {
+    console.log('Menu Container constructor', this.isSubMenu);
     this.menuEvents = menuEvents;
   }
-    ngAfterContentChecked(): void {  }
 
   ngOnInit() {
+    console.log('Menu Container ngOnInit', this.isSubMenu);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -73,7 +74,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
 }
 
   ngAfterViewInit(): void {
-  
+    console.log('Menu Container ngAfterViewInit', this.isSubMenu);
     console.log(this.isSubMenu);
     if (this.isSubMenu) {
       this.jztabs.forEach((menuitem: JzMenuTabComponent) => {

@@ -9,7 +9,7 @@ import { JzButtonComponent } from '../../jz-ui-controls/jz-button/jz-button.comp
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
-export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @ViewChild('tabbutton') tabButton!:JzButtonComponent
 
   @Input() direction: string = 'not set';
@@ -52,10 +52,12 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
     private menuEvents: JzMenuService,
     private popups: JzPopOversService,
     private changeDetector: ChangeDetectorRef,)
-  { }
+  {
+   // console.log('  Menu Tab constructor', this.isSubMenu, this.isSelected);
+  }
 
   ngOnInit(): void {
-    console.log(this.tabButton, this.isSelected, this.isSubMenu);
+    console.log('  Menu Tab ngOnInit', this.isSubMenu, this.isSelected, this.btnTxt);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -74,11 +76,12 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
   ngAfterViewInit(): void {
-   
-    if (this.isSubMenu) this.tabButton.isSubMenu = true;
+  //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
+    console.log(this.tabButton, this.isSubMenu, this.isSelected, this.btnTxt,this.menuName);
+    if (this.isSubMenu) {
+      this.tabButton.isSubMenu = true;
+    }
   }
-
-  ngAfterViewChecked(): void {  }
 
   onTabClicked() {
     console.log('TAB', this.route);
