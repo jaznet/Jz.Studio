@@ -1,5 +1,5 @@
 import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
-import { Subscription } from 'rxjs';
+
 import { JzMenuService } from '../jz-menu.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
@@ -58,6 +58,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
         this.flexflow = 'row';
         break;
     }
+
     this.appEvents.viewSelectedEvent.subscribe((view: any) => {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
@@ -78,9 +79,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
       this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
         menuitem.isSubMenu = true;
       });
+
     }
 
-  //  this.currentTemplate = this.initialTemplate;
     this.changeDetector.detectChanges();
   }
 
@@ -92,17 +93,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit, AfterCon
       if (menuitem.tabId === selectedItem.tabId) {
         menuitem.isSelected = true;
       }
-     // console.log('tab:', menuitem.btnTxt);
     }
 
     );
   }
 
-  //public SelectItem(tab: string) {
-  //  this.tabPanel.forEach((menuitem: { item: string; }) => {
-  //    if (tab === menuitem.item) {
-  //      console.log(tab);
-  //    }
-  //  });
-  //}
 }

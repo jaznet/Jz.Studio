@@ -1,6 +1,10 @@
 
-.sub-view .menu-tab {
-    padding: 0 0 0 0;
+.sub-menu {
+    background-color:#ffffff10;
+}
+
+.sub-menu .menu-tab {
+    background-color:orange;
 }
 
 .menu-tab-panel.horizontal {

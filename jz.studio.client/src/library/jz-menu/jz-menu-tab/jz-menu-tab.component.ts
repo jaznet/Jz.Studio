@@ -1,7 +1,8 @@
 
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
+import { JzButtonComponent } from '../../jz-ui-controls/jz-button/jz-button.component';
 
 @Component({
   selector: 'jz-menu-tab',
@@ -9,12 +10,14 @@ import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
   styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  @ViewChild('tabbutton') tabButton!:JzButtonComponent
+
   @Input() direction: string = 'not set';
   @Input() flexflow: string = 'not set';
   @Input() isHorizontal: boolean = true;
   @Input() tabId: string = 'not set';
   @Input() menuName: string = 'not set';
-  @Input() isSelected: boolean = false;
+
   @Input() isDefault: boolean = false;
 
   @Input() route: string = "";
@@ -22,13 +25,13 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
   @Input() isSubMenu: boolean = false;
-  //isSelected: boolean = false;
+  @Input() isSelected: boolean = false;
 
   borderRadius!: string;
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';
 
-  textColor: string='var';
+  textColor: string='yellow';
 
   borderTop: string ='1px solid transparent';
   borderRight: string = '1px solid transparent';
@@ -49,10 +52,10 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
     private menuEvents: JzMenuService,
     private popups: JzPopOversService,
     private changeDetector: ChangeDetectorRef,)
-  {
+  { }
 
-  }
   ngOnInit(): void {
+    console.log(this.tabButton, this.isSelected, this.isSubMenu);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -70,7 +73,10 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.changeDetector.detectChanges();
   }
 
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {
+   
+    if (this.isSubMenu) this.tabButton.isSubMenu = true;
+  }
 
   ngAfterViewChecked(): void {  }
 

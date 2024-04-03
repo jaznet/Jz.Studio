@@ -33,6 +33,8 @@ jz-button {
   background-color: var(--plt-clr-2);
 }
 
+.selected {background-color:yellow;}
+
 .selected .jz-button-bevel {
   background-color: var(--plt-clr-3);
 }

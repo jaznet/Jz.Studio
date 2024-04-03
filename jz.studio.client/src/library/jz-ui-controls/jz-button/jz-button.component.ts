@@ -67,7 +67,4 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
       }
     }
   }
-
-
-
 }

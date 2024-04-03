@@ -9,10 +9,10 @@
      'vertical': !isHorizontal,
      'sub-menu':isSubMenu}">
 
-  <!--'border-top':borderTop, 'border-right':borderRight, 'border-bottom':borderBottom, 'border-left':borderLeft}">-->
-  <jz-button routerLink="/sandbox"
+ 
+  <jz-button #tabbutton
+             routerLink="/sandbox"
              class="jz-button"
-             [ngClass]="{'selected': isSelected}"
              [text]="btnTxt"
              [route]="route"
              [colorTxt]="textColor">
