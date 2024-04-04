@@ -27,7 +27,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
-  @Input() isSubMenu: boolean = false;
+/*  @Input() isSubMenu: boolean = false;*/
 
   flexflow: string = 'row';
  
@@ -74,9 +74,9 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 }
 
   ngAfterViewInit(): void {
-    console.log('Menu Container ngAfterViewInit', this.isSubMenu, this.jztabs.length);
+    console.log('Menu Container ngAfterViewInit', this.menuService.isSubMenu, this.jztabs.length);
   
-    if (this.isSubMenu) {
+    if (this.menuService.isSubMenu) {
       this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
         
       //  menuitem.isSubMenu = true;
@@ -84,8 +84,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
       });
       this.changeDetector.detectChanges();
     }
-
-   
   }
 
   onMenuItemSelected(selectedItem: JzMenuTabComponent) {
