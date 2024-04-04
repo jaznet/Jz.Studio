@@ -42,12 +42,12 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     menuEvents: JzMenuService,
     private changeDetector: ChangeDetectorRef)
   {
-    console.log('Menu Container constructor', this.isSubMenu);
+    //console.log('Menu Container constructor', this.isSubMenu);
     this.menuEvents = menuEvents;
   }
 
   ngOnInit() {
-    console.log('Menu Container ngOnInit', this.isSubMenu);
+   // console.log('Menu Container ngOnInit', this.isSubMenu);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -79,13 +79,13 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     if (this.isSubMenu) {
       this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
         
-        menuitem.isSubMenu = true;
+      //  menuitem.isSubMenu = true;
         console.log(menuitem.tabId,menuitem.isSubMenu);
       });
-
+      this.changeDetector.detectChanges();
     }
 
-    this.changeDetector.detectChanges();
+   
   }
 
   onMenuItemSelected(selectedItem: JzMenuTabComponent) {
