@@ -1,11 +1,11 @@
 
 <div routerLink="/sandbox"
      (click)="onClicked()"
+     class="jz-button"
      [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }"
      [ngStyle]="{'height': height_px, 'width': width_px}">
 
-  <div [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }"
- [ngStyle]="{'height': height_px, 'width': width_px}">
+
 
     <div class="jz-button-bevel fit-to-parent"
          [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }">
@@ -158,6 +158,5 @@
       </div>
     </div>
 
-  </div>
 
 </div>

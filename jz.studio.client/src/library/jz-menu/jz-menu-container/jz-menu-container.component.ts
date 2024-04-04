@@ -18,11 +18,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
 
   @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
-  @ContentChildren(JzMenuTabComponent, { descendants: true }) childComponents!: QueryList<JzMenuTabComponent>;
-  @ContentChildren(JzMenuTabComponent, { descendants: true, read: ElementRef }) childElementRefs!: QueryList<ElementRef>;
+  //@ContentChildren(JzMenuTabComponent, { descendants: true }) childComponents!: QueryList<JzMenuTabComponent>;
+  //@ContentChildren(JzMenuTabComponent, { descendants: true, read: ElementRef }) childElementRefs!: QueryList<ElementRef>;
 
   @Input() menuName: string | any;
-  @Input() initialTemplate: TemplateRef<any> | any;
+ /* @Input() initialTemplate: TemplateRef<any> | any;*/
   @Input() direction: string = 'horizontal';
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
@@ -74,11 +74,13 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 }
 
   ngAfterViewInit(): void {
-    console.log('Menu Container ngAfterViewInit', this.isSubMenu);
-    console.log(this.isSubMenu);
+    console.log('Menu Container ngAfterViewInit', this.isSubMenu, this.jztabs.length);
+  
     if (this.isSubMenu) {
       this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+        
         menuitem.isSubMenu = true;
+        console.log(menuitem.tabId,menuitem.isSubMenu);
       });
 
     }

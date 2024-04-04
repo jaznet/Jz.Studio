@@ -31,14 +31,14 @@
       border-right-color: var(--plt-clr-2);
     }
 
+  .menu-tab.sub-menu {
+   
+  }
+
   .menu-tab.selected {
     background-color: var(--plt-clr-2);
     border: 1px solid var(--plt-clr-x);
   }
-
-
-
-
 
 .subview .jz-button-bevel {
   width: 100%;
