@@ -32,18 +32,18 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   flexflow: string = 'row';
  
   currentTemplate: TemplateRef<any> | any;
-  menuEvents: JzMenuService | any;
+  menuService: JzMenuService | any;
   menuContainer: HTMLDivElement | any;
 
   constructor(
     private appEvents: AppEventsService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
-    menuEvents: JzMenuService,
+    menuService: JzMenuService,
     private changeDetector: ChangeDetectorRef)
   {
     //console.log('Menu Container constructor', this.isSubMenu);
-    this.menuEvents = menuEvents;
+    this.menuService = menuService;
   }
 
   ngOnInit() {
@@ -64,11 +64,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
       this.renderer.addClass(this.menuPanelRef.nativeElement, view);
     });
 
-    this.menuEvents.menuItemSelectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
+    this.menuService.menuItemSelectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 
-    this.menuEvents.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
+    this.menuService.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
 }
