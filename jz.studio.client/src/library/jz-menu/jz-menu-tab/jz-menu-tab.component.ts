@@ -24,7 +24,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() tab_name: string = 'tab name';
   @Input() menuType: string = 'notset';
   @Input() btnTxt = "Tab Button";
-  @Input() isSubMenu: boolean = false;
+ /* @Input() isSubMenu: boolean = false;*/
   @Input() isSelected: boolean = false;
 
   borderRadius!: string;
@@ -48,8 +48,13 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   marginBottom: string = '0';
   marginLeft: string = '0';
 
+  // Reference the service property
+  get isSubMenu(): boolean {
+    return this.menuService.isSubMenu;
+  }
+
   constructor(
-    private menuEvents: JzMenuService,
+    private menuService: JzMenuService,
     private popups: JzPopOversService,
     private changeDetector: ChangeDetectorRef,)
   {
@@ -57,7 +62,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('  Menu Tab ngOnInit', this.isSubMenu, this.isSelected, this.btnTxt);
+    console.log('  Menu Tab ngOnInit', this.menuService.isSubMenu, this.isSelected, this.btnTxt);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -65,7 +70,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
         break;
       case 'vertical':
         this.flexflow = 'column';
-        this.isHorizontal = false;
+        this.isHorizontal = false; 
         break;
       default:
         this.flexflow = 'row';
@@ -77,16 +82,16 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
   //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
-    console.log(this.tabButton, this.isSubMenu, this.isSelected, this.btnTxt,this.menuName);
-    if (this.isSubMenu) {
-      this.tabButton.isSubMenu = true;
-    }
+    console.log(this.tabButton, this.menuService.isSubMenu, this.isSelected, this.btnTxt,this.menuName);
+    //if (this.menuService.isSubMenu) {
+    //  this.tabButton.isSubMenu = true;
+    //}
   }
 
   onTabClicked() {
     console.log('TAB', this.route);
   
-    this.menuEvents.tabSelected(this);
+    this.menuService.tabSelected(this);
     if (this.route === 'sandbox/choro-dash-loader') {
       this.popups.togglePopOverLoading({
         action: 'show',

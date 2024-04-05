@@ -11,6 +11,10 @@ jz-button {
   width: 100%;
 }
 
+.jz-button-bevel.sub-menu {
+  background-color: var(--plt-clr-3);
+}
+
 .jz-button-text {
   /*color: var(--plt-txt-2);*/
   display: flex;
@@ -39,7 +43,13 @@ jz-button {
   background-color: var(--plt-clr-3);
 }
 
-.subview .jz-button-bevel {
+.subview.jz-button {
+  width: 100%;
+  border-radius: 7px;
+  background-color: var(--plt-clr-3);
+}
+
+.subview.jz-button-bevel {
   width: 100%;
   border-radius: 7px;
   background-color: var(--plt-clr-3);

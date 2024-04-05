@@ -27,7 +27,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
-/*  @Input() isSubMenu: boolean = false;*/
 
   flexflow: string = 'row';
  
@@ -47,7 +46,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-   // console.log('Menu Container ngOnInit', this.isSubMenu);
+    console.log('Menu Container ngOnInit', this.menuType);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -74,16 +73,20 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 }
 
   ngAfterViewInit(): void {
-    console.log('Menu Container ngAfterViewInit', this.menuService.isSubMenu, this.jztabs.length);
-  
-    if (this.menuService.isSubMenu) {
-      this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-        
-      //  menuitem.isSubMenu = true;
-        console.log(menuitem.tabId,menuitem.isSubMenu);
-      });
-      this.changeDetector.detectChanges();
+    console.log('Menu Container ngAfterViewInit', this.menuType, this.menuService.isSubMenu, this.jztabs.length);
+
+    if (this.menuType === 'submenu') {
+      this.menuService.isSubMenu = true;
     }
+  
+    //if (this.menuService.isSubMenu) {
+    //  this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+        
+    //  //  menuitem.isSubMenu = true;
+    //    console.log(menuitem.tabId,this.menuService.isSubMenu); 
+    //  });
+    //  this.changeDetector.detectChanges();
+    //}
   }
 
   onMenuItemSelected(selectedItem: JzMenuTabComponent) {

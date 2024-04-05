@@ -1,6 +1,7 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { JzMenuService } from '../../jz-menu/jz-menu.service';
 
 @Component({
   selector: 'jz-button',
@@ -18,7 +19,6 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorTxt: string = 'var(--plt-clr-5)';
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
-  @Input() isSubMenu: boolean = false;
   @Input() isSelected: boolean = false;
  
   height_px: string = '0px';
@@ -27,7 +27,12 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   color!: string;
   background!: string;
 
+  get isSubMenu(): boolean {
+    return this.menuService.isSubMenu;
+  }
+
   constructor(
+    private menuService: JzMenuService,
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
     private renderer: Renderer2,
