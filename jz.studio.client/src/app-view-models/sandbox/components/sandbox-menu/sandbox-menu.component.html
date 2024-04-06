@@ -1,52 +1,63 @@
 
 <jz-menu-container class="menu-vertical sub-menu"
-                   [menuName]="'sandbox1'"
+                   [menuName]="'sandbox'"
                    [direction]="'vertical'"
                    [isHorizontal]="false"
                    [menuType]="'submenu'">
-                   <!--[isSubMenu]=true-->
+                 
 
   <jz-menu-tab [route]="'sandbox/home'"
                [tabId]="'home'"
                [btnTxt]="'Home'"
                [menuName]="menuName"
                [direction]="direction"
-               [isSelected]=true>
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/choro-dash-loader'"
                [tabId]="'chorodash'"
                [btnTxt]="'Chorodash'"
                [menuName]="'sandbox'"
-               [direction]="direction">
+               [direction]="direction"
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/dataviz'"
                [tabId]="'dataviz'"
                [btnTxt]="'Dataviz'"
                [menuName]="'sandbox'"
-               [direction]="direction">
+               [direction]="direction"
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/docking'"
                [tabId]="'docking'"
                [btnTxt]="'Docking'"
                [menuName]="'sandbox'"
-               [direction]="direction">
+               [direction]="direction"
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/dashboard'"
                [tabId]="'dashboard'"
                [btnTxt]="'Dashboard'"
                [menuName]="'sandbox'"
-               [direction]="direction">
+               [direction]="direction"
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'sandbox/graphics'"
                [tabId]="'graphics'"
                [btnTxt]="'Graphics'"
                [menuName]="'sandbox'"
-               [direction]="direction">
+               [direction]="direction"
+               [parentValue]="parentGetter"
+               >
   </jz-menu-tab>
 
 

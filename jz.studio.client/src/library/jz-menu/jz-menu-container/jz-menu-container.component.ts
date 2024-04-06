@@ -27,6 +27,11 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() menuType: string | any;
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
+  @Input() isSubMenu: boolean = false;
+
+  get parentGetter() {
+    return this.isSubMenu;
+  }
 
   flexflow: string = 'row';
  

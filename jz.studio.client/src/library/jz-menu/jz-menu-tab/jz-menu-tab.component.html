@@ -1,15 +1,14 @@
 
-<div class="menu-tab" 
+<div class="menu-tab"
      (click)="onTabClicked()"
      [ngStyle]="{  'border-radius':borderRadius,    }"
-
-    [ngClass]="{
+     [ngClass]="{
      'selected': isSelected,
      'horizontal': isHorizontal,
      'vertical': !isHorizontal,
      'sub-menu': isSubMenu
      }">
- 
+
   <jz-button #tabbutton
              routerLink="/sandbox"
              class="jz-button"

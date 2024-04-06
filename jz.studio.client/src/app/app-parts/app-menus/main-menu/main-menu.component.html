@@ -12,6 +12,7 @@
                  [tabId]="'home'"
                  [btnTxt]="'Home'"
                  [direction]="direction"
+                 [parentValue]="parentGetter"
                  [menuName]="'menu-main'" >
     </jz-menu-tab>
 
@@ -19,6 +20,7 @@
                  [tabId]="'dataviz'"
                  [btnTxt]="'Dataviz'"
                  [direction]="direction"
+                 [parentValue]="parentGetter"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -26,6 +28,7 @@
                  [tabId]="'backoffice'"
                  [btnTxt]="'Backoffice'"
                  [direction]="direction"
+                 [parentValue]="parentGetter"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -33,6 +36,7 @@
                  [tabId]="'sandbox'"
                  [btnTxt]="'Sandbox'"
                  [direction]="direction"
+                 [parentValue]="parentGetter"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -40,6 +44,7 @@
                  [tabId]="'architecture'"
                  [btnTxt]="'Architecture'"
                  [direction]="direction"
+                 [parentValue]="parentGetter"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -47,7 +52,8 @@
                  [route]="'/admin'"
                  [tabId]="'admin'"
                  [btnTxt]="'Admin'"
-                 [direction]="direction">
+                 [direction]="direction"
+                 [parentValue]="parentGetter">
     </jz-menu-tab>
 
   </jz-menu-container>

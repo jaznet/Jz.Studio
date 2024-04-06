@@ -26,6 +26,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() btnTxt = "Tab Button";
  /* @Input() isSubMenu: boolean = false;*/
   @Input() isSelected: boolean = false;
+  @Input() parentValue!: string;
 
   borderRadius!: string;
   border: string = '1px solid #ffffff';
@@ -49,9 +50,9 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   marginLeft: string = '0';
 
   // Reference the service property
-  get isSubMenu(): boolean {
-    return this.menuService.isSubMenu;
-  }
+  //get isSubMenu(): boolean {
+  //  return this.menuService.isSubMenu;
+  //}
 
   constructor(
     private menuService: JzMenuService,
@@ -62,7 +63,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('  Menu Tab ngOnInit', this.menuService.isSubMenu, this.isSelected, this.btnTxt);
+    console.log('  Menu Tab ngOnInit', this.parentValue, this.isSelected, this.btnTxt);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -82,7 +83,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
   //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
-    console.log(this.tabButton, this.menuService.isSubMenu, this.isSelected, this.btnTxt,this.menuName);
+    console.log(this.tabButton, this.parentValue, this.isSelected, this.btnTxt,this.menuName);
     //if (this.menuService.isSubMenu) {
     //  this.tabButton.isSubMenu = true;
     //}
