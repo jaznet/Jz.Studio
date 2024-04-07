@@ -12,7 +12,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @HostBinding('class') classes = 'fit-to-content';
 
   @Input() route: string = '';
-  @Input() menuType: string = 'menu';
+  
   @Input() text: string = 'Enter';
   @Input() height: number = 33;
   @Input() width: number = 100;
