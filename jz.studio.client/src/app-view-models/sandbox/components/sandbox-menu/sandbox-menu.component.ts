@@ -8,9 +8,11 @@ import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-m
   styleUrls: ['./sandbox-menu.component.css']
 })
 export class SandboxMenuComponent extends MenuBaseComponent implements AfterViewInit {
+
   @Input() override menuName: string = '';
 
   override direction: string = 'vertical';
 
-  ngAfterViewInit(): void {  }
+  ngAfterViewInit(): void {
+  console.log(this.parentValue)}
 }

@@ -6,16 +6,20 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./jz-menu-base.component.css']
 })
 export class MenuBaseComponent implements OnInit {
+  @Input() parentValue!: string;
 
   direction: string = 'horizontal';
   menuName: string = 'base';
   level: string = 'base-level';
- // isMenuVisible: string = 'collapsed';
+  isSubMenu: boolean = false;
+  // isMenuVisible: string = 'collapsed';
+
+  get parentGetter() {
+    return 'some value';
+  }
 
   constructor() { }
 
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {  }
 
 }

@@ -28,7 +28,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   background!: string;
 
   get isSubMenu(): boolean {
-    return this.menuService.isSubMenu;
+    return false;
+   // return this.menuService.isSubMenu;
   }
 
   constructor(

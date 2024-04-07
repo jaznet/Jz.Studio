@@ -14,8 +14,8 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   @HostBinding('class') classes = 'menu-container';
   @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
-  @ViewChild('tabpanel', { static: false }) tabPanel: MenuTabPanelComponent | any;
-  @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
+ // @ViewChild('tabpanel', { static: false }) tabPanel: MenuTabPanelComponent | any;
+ // @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
 
   @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
   //@ContentChildren(JzMenuTabComponent, { descendants: true }) childComponents!: QueryList<JzMenuTabComponent>;
@@ -28,6 +28,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
   @Input() isSubMenu: boolean = false;
+  @Input() parentValue!: string;
 
   get parentGetter() {
     return this.isSubMenu;
@@ -78,7 +79,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 }
 
   ngAfterViewInit(): void {
-    console.log('Menu Container ngAfterViewInit', this.menuType, this.menuService.isSubMenu, this.jztabs.length);
+    console.log('Menu Container ngAfterViewInit', this.parentValue, this.menuType, this.menuService.isSubMenu, this.jztabs.length);
 
     if (this.menuType === 'submenu') {
       this.menuService.isSubMenu = true;
