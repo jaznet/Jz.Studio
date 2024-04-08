@@ -9,13 +9,14 @@ jz-button {
   width: 100%;
 }
 
-.jz-button-bevel.sub-menu {
-  background-color: var(--plt-clr-3);
-  color:black;
+jz-button.sub-menu {
+ background-color:red;
 }
 
+
+
 .jz-button-text {
-  /*color: var(--plt-txt-2);*/
+  color:silver;
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -24,6 +25,15 @@ jz-button {
   height: 100%;
   justify-content: center;
   cursor: pointer;
+}
+
+.jz-button.sub-menu .jz-button-text {
+  color: black;
+}
+
+.jz-button.sub-menu .jz-button-bevel {
+ 
+  background-color: var(--plt-clr-3);
 }
 
   .jz-button-text .selected {
