@@ -8,8 +8,6 @@ export class JzMenuService {
   @Output() menuItemSelectedEvent = new EventEmitter<JzMenuTabComponent>();
   @Output() menuItemDeselectedEvent = new EventEmitter<JzMenuTabComponent>();
 
-
-
   constructor() { }
 
   menuItemSelected(selected: JzMenuTabComponent) {

@@ -86,15 +86,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     }
 
     this.changeDetector.detectChanges();
-  
-    //if (this.menuService.isSubMenu) {
-    //  this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-        
-    //  //  menuitem.isSubMenu = true;
-    //    console.log(menuitem.tabId,this.menuService.isSubMenu); 
-    //  });
-    //  this.changeDetector.detectChanges();
-    //}
   }
 
   onMenuItemSelected(selectedItem: JzMenuTabComponent) {
