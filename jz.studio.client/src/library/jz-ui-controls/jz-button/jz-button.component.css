@@ -1,7 +1,5 @@
 
-div {
-  color: var(--plt-txt-2)
-}
+
 
 .selected div {
   color: white;
@@ -13,6 +11,7 @@ jz-button {
 
 .jz-button-bevel.sub-menu {
   background-color: var(--plt-clr-3);
+  color:black;
 }
 
 .jz-button-text {
