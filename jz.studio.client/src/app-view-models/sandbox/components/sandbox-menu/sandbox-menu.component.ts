@@ -7,12 +7,12 @@ import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-m
   templateUrl: './sandbox-menu.component.html',
   styleUrls: ['./sandbox-menu.component.css']
 })
-export class SandboxMenuComponent extends MenuBaseComponent implements AfterViewInit {
+export class SandboxMenuComponent extends MenuBaseComponent  {
 
   @Input() override menuName: string = '';
 
+  override menuType: string = 'sub-menu';
   override direction: string = 'vertical';
 
-  ngAfterViewInit(): void {
-    console.log(this.isSubMenu)}
+ 
 }

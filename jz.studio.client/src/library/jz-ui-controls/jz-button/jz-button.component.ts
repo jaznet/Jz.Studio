@@ -20,7 +20,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() colorBkg: string = 'var(--plt-clr-1)';
   @Input() fontSize: string = '14px';
   @Input() isSelected: boolean = false;
-  @Input() parentValue!: string;
+  @Input() menuType!: string;
 
   isSubMenu: boolean = false;
   height_px: string = '0px';
@@ -30,7 +30,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   background!: string;
 
   get parentGetter() {
-    return this.isSubMenu;
+    return this.menuType;
    // return this.menuService.isSubMenu;
   }
 
@@ -51,7 +51,10 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.color = this.colorTxt;
     this.background = this.colorBkg;
     this.changeDetector.detectChanges();
-    console.log('button parent tab',this.parentValue);
+    console.log('button parent tab', this.menuType);
+    if (this.menuType === 'sub-menu') {
+      this.isSubMenu = true;
+    }
   }
 
   ngAfterViewChecked(): void { }

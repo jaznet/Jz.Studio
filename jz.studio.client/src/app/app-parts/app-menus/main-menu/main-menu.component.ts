@@ -12,13 +12,14 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   @HostBinding('class') classes = 'fit-to-parent';
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
-  isMainMenuVisible ='collapse';
+  isMainMenuVisible = 'collapse';
+  override menuType: string = 'main-menu';
 
   constructor(private app: AppStateService) {
     super();
   }
    
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     console.log('direction:', this.direction);
     this.app.toggleMenuEvent.subscribe((menu: any) => {
      // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';

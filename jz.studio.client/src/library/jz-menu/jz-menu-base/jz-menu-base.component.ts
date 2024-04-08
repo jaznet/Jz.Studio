@@ -1,12 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'jz-menu-base',
   templateUrl: './jz-menu-base.component.html',
   styleUrls: ['./jz-menu-base.component.css']
 })
-export class MenuBaseComponent implements OnInit {
-  @Input() parentValue!: string;
+export class MenuBaseComponent implements OnInit, AfterViewInit {
+  @Input() menuType: string = 'not set in the base';
+ // @Input() parentValue!: string;
 
   direction: string = 'horizontal';
   menuName: string = 'base';
@@ -15,11 +16,15 @@ export class MenuBaseComponent implements OnInit {
   // isMenuVisible: string = 'collapsed';
 
   get parentGetter() {
-    return 'some value';
+    return this.menuType;
   }
 
   constructor() { }
+  
 
   ngOnInit(): void {  }
 
+  ngAfterViewInit(): void {
+    console.log(this.menuType);
+  }
 }
