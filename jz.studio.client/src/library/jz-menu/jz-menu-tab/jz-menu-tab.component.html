@@ -6,7 +6,7 @@
      'selected': isSelected,
      'horizontal': isHorizontal,
      'vertical': !isHorizontal,
-   'sub-menu': isSubMenu
+     'sub-menu': isSubMenu
      }">
 
   <jz-button #tabbutton
@@ -14,6 +14,8 @@
              class="jz-button"
              [text]="btnTxt"
              [route]="route"
-             [colorTxt]="textColor">
+             [colorTxt]="textColor"
+            [parentValue]="parentGetter"
+             >
   </jz-button>
 </div>

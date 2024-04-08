@@ -23,9 +23,13 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() btnTxt = "Tab Button";
-   isSubMenu: boolean = true;
+  isSubMenu: boolean = false;
   @Input() isSelected: boolean = false;
   @Input() parentValue!: string;
+
+  get parentGetter() {
+    return this.parentValue;
+  }
 
   borderRadius!: string;
   border: string = '1px solid #ffffff';
@@ -52,6 +56,8 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   //get isSubMenu(): boolean {
   //  return this.menuService.isSubMenu;
   //}
+
+
 
   constructor(
     private menuService: JzMenuService,

@@ -18,7 +18,7 @@ export class JzTabComponent   implements OnInit, AfterViewInit {
   @Input()  menuName: string = '';
   @Input()  state: string = '';
   @Input() tabBorder!: HTMLDivElement;
-  @Input() menuType: string='notset';
+//  @Input() menuType: string='notset';
 
   @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
   @ViewChild('tabBorder', { static: false }) tabBorderRef: ElementRef | any;

@@ -14,5 +14,5 @@ export class SandboxMenuComponent extends MenuBaseComponent implements AfterView
   override direction: string = 'vertical';
 
   ngAfterViewInit(): void {
-  console.log(this.parentValue)}
+    console.log(this.isSubMenu)}
 }
