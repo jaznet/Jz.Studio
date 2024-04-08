@@ -1,10 +1,4 @@
 
-
-
-.selected div {
-  color: white;
-}
-
 jz-button {
   width: 100%;
 }
@@ -12,8 +6,6 @@ jz-button {
 jz-button.sub-menu {
  background-color:red;
 }
-
-
 
 .jz-button-text {
   color:silver;
@@ -32,13 +24,24 @@ jz-button.sub-menu {
 }
 
 .jz-button.sub-menu .jz-button-bevel {
- 
   background-color: var(--plt-clr-3);
+}
+
+.jz-button.sub-menu.selected .jz-button-bevel {
+  background-color: var(--plt-clr-4);
 }
 
   .jz-button-text .selected {
     color: yellow;
   }
+
+.jz-button.subview {
+  width: 100%;
+  border-radius: 7px;
+  background-color: darkorange;
+}
+
+  /*BUTTON BEVEL*/
 
 .jz-button-bevel {
   width: 100%;
@@ -46,17 +49,13 @@ jz-button.sub-menu {
   background-color: var(--plt-clr-2);
 }
 
-.selected {background-color:yellow;}
+  .jz-button-bevel.selected {
+    background-color: var(--plt-clr-4);
+  }
 
-.selected .jz-button-bevel {
-  background-color: var(--plt-clr-3);
-}
-
-.subview.jz-button {
-  width: 100%;
-  border-radius: 7px;
-  background-color: var(--plt-clr-3);
-}
+  .jz-button-bevel.selected .jz-button-text {
+   color:black;
+  }
 
 .subview.jz-button-bevel {
   width: 100%;
@@ -74,6 +73,8 @@ jz-button.sub-menu {
 .jz-button-content {
   width: 100%;
 }
+
+/*BORDERS*/
 
 .left-border {
   width: fit-content;

@@ -22,7 +22,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-1', '#172626 ');
         document.documentElement.style.setProperty('--plt-clr-2', '#2f4f4f');
         document.documentElement.style.setProperty('--plt-clr-3', '#507577');
-        document.documentElement.style.setProperty('--plt-clr-4', '#c4c287');
+        document.documentElement.style.setProperty('--plt-clr-4', '#0A999E');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
         document.documentElement.style.setProperty('--plt-clr-x', '#6FA288');
 
