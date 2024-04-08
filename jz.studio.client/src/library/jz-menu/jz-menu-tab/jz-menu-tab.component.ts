@@ -32,6 +32,10 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
     return this.menuType;
   }
 
+  get isSelectedGetter() {
+    return this.isSelected;
+  }
+
   borderRadius!: string;
   border: string = '1px solid #ffffff';
   backgroundColor: string = 'transparent';

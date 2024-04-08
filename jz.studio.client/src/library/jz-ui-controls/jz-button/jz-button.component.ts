@@ -34,6 +34,10 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
    // return this.menuService.isSubMenu;
   }
 
+  get isSelectedGetter() {
+    return this.isSelected;
+  }
+
   constructor(
     private menuService: JzMenuService,
     private changeDetector: ChangeDetectorRef,
