@@ -55,9 +55,9 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.color = this.colorTxt;
     this.background = this.colorBkg;
     this.changeDetector.detectChanges();
-    console.log('button parent tab', this.menuType);
-    console.log('button selected', this.isSelected);
-    console.log('button selected', this.isSelectedGetter);
+    //console.log('button parent tab', this.menuType);
+    //console.log('button selected', this.isSelected);
+    //console.log('button selected', this.isSelectedGetter);
 
     if (this.menuType === 'sub-menu') {
       this.isSubMenu = true;

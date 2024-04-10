@@ -71,7 +71,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log('  Menu Tab ngOnInit', this.menuType, this.isSelected, this.btnTxt);
+  //  console.log('  Menu Tab ngOnInit', this.menuType, this.isSelected, this.btnTxt);
     switch (this.direction) {
       case 'horizontal':
         this.flexflow = 'row';
@@ -91,7 +91,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
   //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
-    console.log(this.tabButton, this.menuType, this.isSelected, this.btnTxt,this.menuName);
+ //   console.log(this.tabButton, this.menuType, this.isSelected, this.btnTxt,this.menuName);
     //if (this.menuService.isSubMenu) {
     //  this.tabButton.isSubMenu = true;
     //}

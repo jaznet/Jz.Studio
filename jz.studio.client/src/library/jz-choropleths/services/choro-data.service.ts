@@ -99,6 +99,7 @@ export class ChoroDataService {
           popover_loading.isPopupVisible = false;
         }), 
         catchError((error: HttpErrorResponse) => {
+          popover_loading.isPopupVisible = false;
           popover_httperror.ok = error.ok;
           popover_httperror.message = error.message;
           popover_httperror.url = error.url;
