@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, HostBinding, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
 @Component({
@@ -7,7 +7,7 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
   templateUrl: './pop-over-loading.component.html',
   styleUrls: ['./pop-over-loading.component.css']
 })
-export class PopOverLoadingComponent  {
+export class PopOverLoadingComponent implements OnInit,AfterViewInit  {
   @ViewChild('popover_loading', { static: false }) dxpopup: DxPopoverComponent | any;
 
   isPopupVisible = false;
@@ -17,8 +17,17 @@ export class PopOverLoadingComponent  {
   target = 'viewRouter';
   title = 'not set';
 
-  constructor(private changeDetector: ChangeDetectorRef) { }
+  constructor(private changeDetector: ChangeDetectorRef) {
 
-  ngAfterViewInit(): void { }
+    console.log(this.target);
+}
+
+  ngOnInit(): void {
+    console.log(this.target);
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.target);
+  }
 
 }

@@ -20,7 +20,7 @@ jz-button.sub-menu {
 }
 
 .jz-button.sub-menu .jz-button-text {
-  color: black;
+  color: var(--plt-txt-2);
 }
 
 .jz-button.sub-menu .jz-button-bevel {
