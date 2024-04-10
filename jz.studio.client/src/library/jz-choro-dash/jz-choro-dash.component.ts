@@ -6,10 +6,10 @@ import { ChoroUsaComponent } from '../jz-choropleths/components/choro-usa/choro-
 import { UserSelectionService } from './paint-factory/services/user-selection.service';
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
 import { TopoService } from '../jz-choropleths/services/topo.service';
-import { PopoverHttpErrorComponent } from '../jz-pop-overs/popover-http-error/popover-http-error.component';
 import { PopOverLoadingComponent } from '../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
 import { JzPopOversService } from '../jz-pop-overs/jz-pop-overs.service';
+import { PopoverHttpErrorComponent } from '../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 
 @Component({
   selector: 'jz-choro-dash',

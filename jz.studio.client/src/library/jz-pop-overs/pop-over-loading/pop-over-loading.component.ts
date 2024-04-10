@@ -1,7 +1,7 @@
 
 import { AfterViewInit, ChangeDetectorRef, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
-import { PopoverBaseComponent } from '../popover-base/popover-base.component';
+import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
 
 @Component({
   selector: 'pop-over-loading',

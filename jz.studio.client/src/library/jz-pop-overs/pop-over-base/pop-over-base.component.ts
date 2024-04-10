@@ -4,8 +4,8 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
 @Component({
   selector: 'app-jz-popover-base',
-  templateUrl: './popover-base.component.html',
-  styleUrls: ['./popover-base.component.css']
+  templateUrl: './pop-over-base.component.html',
+  styleUrls: ['./pop-over-base.component.css']
 })
 export class PopoverBaseComponent {
   @HostBinding('class') classes = 'pop';

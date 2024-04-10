@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzPopoverBaseComponent } from './popover-base.component';
+import { JzPopoverBaseComponent } from './pop-over-base.component';
 
 describe('JzPopoverBaseComponent', () => {
   let component: JzPopoverBaseComponent;
