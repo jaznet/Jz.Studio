@@ -21,9 +21,7 @@ public partial class JazDbContext : DbContext
 
     public virtual DbSet<CountyStat> CountyStats { get; set; }
 
-    public virtual DbSet<Election2020> Election2020s { get; set; }
-
-    public virtual DbSet<ElectionUsa2020> ElectionUsa2020s { get; set; }
+    public virtual DbSet<ElectionDatum> ElectionData { get; set; }
 
     public virtual DbSet<Email> Emails { get; set; }
 
@@ -205,59 +203,70 @@ public partial class JazDbContext : DbContext
                 .HasColumnName("timestamp");
         });
 
-        modelBuilder.Entity<Election2020>(entity =>
+        modelBuilder.Entity<ElectionDatum>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("Election2020");
+            entity.HasNoKey();
 
-            entity.Property(e => e.CountyFips)
+            entity.Property(e => e.Candidate)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("county_fips");
-            entity.Property(e => e.CountyName)
-                .HasMaxLength(27)
-                .IsUnicode(false)
-                .HasColumnName("county_name");
-            entity.Property(e => e.Diff).HasColumnName("diff");
-            entity.Property(e => e.PerDem).HasColumnName("per_dem");
-            entity.Property(e => e.PerGop).HasColumnName("per_gop");
-            entity.Property(e => e.PerPointDiff).HasColumnName("per_point_diff");
-            entity.Property(e => e.StateName)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("state_name");
-            entity.Property(e => e.TotalVotes).HasColumnName("total_votes");
-            entity.Property(e => e.VotesDem).HasColumnName("votes_dem");
-            entity.Property(e => e.VotesGop).HasColumnName("votes_gop");
-        });
-
-        modelBuilder.Entity<ElectionUsa2020>(entity =>
-        {
-            entity
-                .HasNoKey()
-                .ToTable("ElectionUSA2020");
-
-            entity.Property(e => e.County)
-                .HasMaxLength(29)
-                .IsUnicode(false)
-                .HasColumnName("county");
-            entity.Property(e => e.Dem2008).HasColumnName("dem_2008");
-            entity.Property(e => e.Dem2012).HasColumnName("dem_2012");
-            entity.Property(e => e.Dem2016).HasColumnName("dem_2016");
-            entity.Property(e => e.FipsCode)
+                .HasColumnName("\"candidate\"");
+            entity.Property(e => e.Candidatevotes)
                 .HasMaxLength(50)
                 .IsUnicode(false)
-                .HasColumnName("fips_code");
-            entity.Property(e => e.Gop2008).HasColumnName("gop_2008");
-            entity.Property(e => e.Gop2012).HasColumnName("gop_2012");
-            entity.Property(e => e.Gop2016).HasColumnName("gop_2016");
-            entity.Property(e => e.Oth2008).HasColumnName("oth_2008");
-            entity.Property(e => e.Oth2012).HasColumnName("oth_2012");
-            entity.Property(e => e.Oth2016).HasColumnName("oth_2016");
-            entity.Property(e => e.Total2008).HasColumnName("total_2008");
-            entity.Property(e => e.Total2012).HasColumnName("total_2012");
-            entity.Property(e => e.Total2016).HasColumnName("total_2016");
+                .HasColumnName("\"candidatevotes\"");
+            entity.Property(e => e.Notes)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"notes\"");
+            entity.Property(e => e.Office)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"office\"");
+            entity.Property(e => e.PartyDetailed)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"party_detailed\"");
+            entity.Property(e => e.PartySimplified)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"party_simplified\"");
+            entity.Property(e => e.State)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state\"");
+            entity.Property(e => e.StateCen)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_cen\"");
+            entity.Property(e => e.StateFips)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_fips\"");
+            entity.Property(e => e.StateIc)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_ic\"");
+            entity.Property(e => e.StatePo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_po\"");
+            entity.Property(e => e.Totalvotes)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"totalvotes\"");
+            entity.Property(e => e.Version)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"version\"");
+            entity.Property(e => e.Writein)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"writein\"");
+            entity.Property(e => e.Year)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"year\"");
         });
 
         modelBuilder.Entity<Email>(entity =>
