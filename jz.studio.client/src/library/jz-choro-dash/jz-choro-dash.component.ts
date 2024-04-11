@@ -33,8 +33,7 @@ export class JzChoroDashComponent implements OnInit {
     private paintStrategyFactoryService: PaintStrategyFactoryService,
     private popovers: JzPopOversService
   ) {
-    console.log(this.popover_loading);
-    console.log(this.popover_httperror);
+   
   }
 
   ngOnInit(): void {
