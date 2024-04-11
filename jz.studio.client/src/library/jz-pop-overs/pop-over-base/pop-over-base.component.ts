@@ -21,6 +21,6 @@ export class PopoverBaseComponent {
   data = "dbTable";
 
   ngAfterViewInit(): void {
-    this.target = this.target;
+    console.log(this.target);
   }
 }

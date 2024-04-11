@@ -1,7 +1,6 @@
 
 import { AfterViewInit, ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
-import { DxPopupComponent } from 'devextreme-angular/ui/popup';
 import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
 
 @Component({
@@ -10,13 +9,14 @@ import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
   styleUrls: ['./pop-over-http-error.component.css']
 })
 export class PopoverHttpErrorComponent extends PopoverBaseComponent {
-  @ViewChild('popover_httperror', { static: false }) dxpopup: DxPopupComponent | any;
+  @ViewChild('popover_httperror', { static: false }) dxpopover: DxPopoverComponent | any;
  
   constructor(private changeDetector: ChangeDetectorRef) {
-      super();
+    super();
+    console.log(this.target);
   }
 
-  override ngAfterViewInit(): void {
-    this.dxpopup.target = this.target;
-  }
+  //override ngAfterViewInit(): void {
+  //  this.dxpopover.target = this.target;
+  //}
 }

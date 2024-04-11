@@ -9,7 +9,7 @@ import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
   styleUrls: ['./pop-over-loading.component.css']
 })
 export class PopOverLoadingComponent extends PopoverBaseComponent implements OnInit, AfterViewInit  {
-  @ViewChild('popover_loading', { static: false }) dxpopup: DxPopoverComponent | any;
+  @ViewChild('popover_loading', { static: false }) dxpopover: DxPopoverComponent | any;
 
   //isPopupVisible = false;
   //data: any;
@@ -28,8 +28,8 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
     //console.log(this.target);
   }
 
-  override ngAfterViewInit(): void {
-    console.log(this.target);
-  }
+  //override ngAfterViewInit(): void {
+  //  console.log(this.target);
+  //}
 
 }

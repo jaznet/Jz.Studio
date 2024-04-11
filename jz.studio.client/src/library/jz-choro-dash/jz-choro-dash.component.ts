@@ -32,9 +32,14 @@ export class JzChoroDashComponent implements OnInit {
     private strategySelect: UserSelectionService,
     private paintStrategyFactoryService: PaintStrategyFactoryService,
     private popovers: JzPopOversService
-  ) { }
+  ) {
+    console.log(this.popover_loading);
+    console.log(this.popover_httperror);
+  }
 
   ngOnInit(): void {
+    console.log(this.popover_loading);
+    console.log(this.popover_httperror);
 
     this.popovers.togglePopOverLoading({
       action: 'hide',
