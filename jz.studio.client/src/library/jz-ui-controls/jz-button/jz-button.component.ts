@@ -16,8 +16,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() text: string = 'Enter';
   @Input() height: number = 33;
   @Input() width: number = 100;
-  @Input() colorTxt: string = 'var(--plt-clr-5)';
-  @Input() colorBkg: string = 'var(--plt-clr-1)';
+  @Input() colorTxt: string = 'var(--plt-txt-5)';
+  @Input() colorBkg: string = 'var(--plt-clr-5)';
   @Input() fontSize: string = '14px';
   @Input() isSelected: boolean = false;
   @Input() menuType!: string;

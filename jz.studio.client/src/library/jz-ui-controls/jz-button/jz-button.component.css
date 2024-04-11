@@ -1,5 +1,5 @@
 
-jz-button {
+.jz-button {
   width: 100%;
 }
 
@@ -20,7 +20,7 @@ jz-button.sub-menu {
 }
 
 .jz-button.sub-menu .jz-button-text {
-  color: var(--plt-txt-2);
+  color: var(--plt-txt-4);
 }
 
 .jz-button.sub-menu .jz-button-bevel {
