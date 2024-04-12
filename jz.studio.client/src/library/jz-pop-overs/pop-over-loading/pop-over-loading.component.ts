@@ -15,7 +15,6 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
   title = 'not set';
 
   constructor(private changeDetector: ChangeDetectorRef) {
-
     super();
     console.log(this.target);
   }

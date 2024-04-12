@@ -1,5 +1,4 @@
 ﻿
-//using Jz.Studio.Server.Data.JazDb;
 using Jz.Studio.Server.Data.JazDb;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,13 +14,22 @@ namespace Jz.Studio.Server.Controllers {
             _context = context;
         }
 
-        //[HttpGet("election")]
-        //public async Task<ActionResult<IEnumerable<ElectionDatum>>> GetElectionResults() {
-        //    if (_context == null) {
-        //        return NotFound();
-        //    }
-        //    Console.WriteLine("GetElectionResults");
-        //    return await _context.ElectionDatum.ToListAsync();
-        //}
+        [HttpGet("election-api")]
+        public async Task<ActionResult<IEnumerable<ElectionDatum>>> GetElectionResults() {
+            if (_context == null) {
+                return NotFound();
+            } 
+            Console.WriteLine("GetElectionResults");
+            return await _context.ElectionData.ToListAsync();
+        }
+
+        [HttpGet("population-api")]
+        public async Task<ActionResult<IEnumerable<Population>>> GetPopulationResults() {
+            if (_context == null) {
+                return NotFound();
+            }
+            Console.WriteLine("GetPopulation");
+            return await _context.Populations.ToListAsync();
+        }
     }
 }

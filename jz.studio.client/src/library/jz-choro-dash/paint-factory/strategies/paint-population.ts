@@ -21,7 +21,7 @@ export class PaintPopulationStrategy implements CountyPaintingStrategy {
         callback(responseData);
       },
       (error: HttpErrorResponse) => {
-        popover_httperror.ok = error.ok;
+         popover_httperror.ok = error.ok;
         popover_httperror.message = error.message;
         popover_httperror.url = error.url;
         popover_httperror.statusText = error.statusText;
