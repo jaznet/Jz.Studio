@@ -8,7 +8,7 @@ import { catchError, Observable, of, tap, throwError } from 'rxjs';
 })
 export class ChoroDataService {
 
-  private apiBaseUrl = 'https://localhost:5114/api/jazdb'; // Adjust with your actual API URL
+  private apiBaseUrl = 'https://localhost:7105/api/jazdb'; // Adjust with your actual API URL
 
   electionDataDictionary: { [fips: string]: any } = {}; 
   populationDataDictionary: { [fips: string]: any } = {};

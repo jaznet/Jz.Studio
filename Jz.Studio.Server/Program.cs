@@ -12,11 +12,21 @@ namespace Jz.Studio.Server {
             CultureInfo.CurrentCulture = new CultureInfo("en-US");
             CultureInfo.CurrentUICulture = new CultureInfo("en-US");
 
-
-             
-
-
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder => builder.WithOrigins(
+                        "https://localhost:4200",  // Angular client
+                        "https://localhost:7105"   // Swagger UI and API
+                                                   // Add other origins as needed
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
 
             // Add services to the container.
 
@@ -45,6 +55,8 @@ namespace Jz.Studio.Server {
 
             app.UseAuthorization();
 
+            // Configure the HTTP request pipeline.
+            app.UseCors("AllowSpecificOrigin"); // Apply the CORS policy
 
             app.MapControllers();
 
