@@ -101,7 +101,7 @@ export class ChoroDataService {
 
   processElectionData(responseData: any[]): void {
     this.electionDataDictionary = responseData.reduce((acc, curr) => {
-    //  console.log('Current item FIPS:', curr.countyFips); // Log the FIPS code of the current item
+   
       if (curr.countyFips) {
         acc[curr.countyFips] = curr;
       } else {
@@ -111,8 +111,4 @@ export class ChoroDataService {
     }, {});
   //  console.log('Processed election data dictionary:', this.electionDataDictionary);
   }
-
- 
- 
-  
 }

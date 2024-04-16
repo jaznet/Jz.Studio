@@ -1,0 +1,7 @@
+﻿$$"""
+export interface Population {
+    {{each prop in Types.Jz.Studio.Server.Data.JazDb.Population.Properties}}
+        {{prop.Name | FirstCharToLower}}: {{prop.Type | TypeScriptType}};
+    {{end}}
+}
+"""$$
