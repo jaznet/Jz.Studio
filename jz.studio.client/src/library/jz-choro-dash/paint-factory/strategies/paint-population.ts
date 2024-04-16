@@ -40,11 +40,11 @@ export class PaintPopulationStrategy implements CountyPaintingStrategy {
 
          let c = this.choroDataService.populationDataDictionary[String(countyFips.id)];
          if (c != undefined) {
-           if (c.popestimate > 100000) {
-             return '#890620';
-           } else {
-             return '#d8d78f';
-           }
+           //if (c.popestimate > 100000) {
+           //  return '#890620';
+           //} else {
+           //  return '#d8d78f';
+           //}
          }
     }
 

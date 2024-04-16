@@ -1,44 +1,36 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { Election } from '../../../models/Election';
-import { Population} from '../../../models/Population';
+import { Population } from '../../../models/Population';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChoroDataService {
-
   private apiBaseUrl = 'https://localhost:7105/api/jazdb'; // Adjust with your actual API URL
 
+  electionDataDictionary: { [countyFips: string]: Election } = {};
+  populationDataDictionary: { [fips: string]: Population } = {};
   isElectionDataFetched = false;
   isPopulationDataFetched = false;
 
   constructor(private http: HttpClient) { }
 
-  getElectionData(popover_loading: any, popover_httperror: any): Observable<{ [countyFips: string]: Election }> {
+  getElectionData(popover_loading: any, popover_httperror: any): Observable<Election[]> {
     if (this.isElectionDataFetched) {
-      return of(this.electionDataDictionary);
+      return of(Object.values(this.electionDataDictionary));
     } else {
       popover_loading.isPopupVisible = true;
       popover_loading.url = `${this.apiBaseUrl}/election-api`;
       popover_loading.data = 'Election';
 
       return this.http.get<Election[]>(`${this.apiBaseUrl}/election-api`).pipe(
-        map((responseData: Election[]) => {
-          const electionDictionary = responseData.reduce((acc, current) => {
-            if (current.countyFips) {
-              acc[current.countyFips] = current;
-            } else {
-              console.warn('Undefined countyFips found', current);
-            }
-            return acc;
-          }, {} as { [countyFips: string]: Election });
-
+        map(responseData => {
+          this.buildElectionDictionary(responseData);
           this.isElectionDataFetched = true;
           popover_loading.isPopupVisible = false;
-          return electionDictionary;
+          return responseData;
         }),
         catchError((error: HttpErrorResponse) => {
           popover_httperror.ok = error.ok;
@@ -53,68 +45,54 @@ export class ChoroDataService {
     }
   }
 
-  populationDataDictionary: { [fips: string]: any } = {};
-  getPopulationData(popover_loading: any, popover_httperror: any): Observable<any> {
-    if (this.isPopulationDataFetched) {
-      // If the data is already fetched, return it as an Observable
-      return of(this.populationDataDictionary);
-    } else {
-      // If the data is not yet fetched, fetch it from the server
-      popover_loading.isPopupVisible = true;
-      popover_loading.url = 'https://localhost:5114/api/jazdb/population';
-      popover_loading.data = 'Population';
-
-      return this.http.get<any>(`${this.apiBaseUrl}/population-api`).pipe(
-        tap((responseData) => {
-          this.processPopulationData(responseData);
-          this.isPopulationDataFetched = true;
-          popover_loading.isPopupVisible = false;
-        }),
-        catchError((error: HttpErrorResponse) => {
-          popover_httperror.ok = error.ok;
-          popover_httperror.message = error.message;
-          popover_httperror.url = error.url;
-          popover_httperror.statusText = error.statusText;
-          popover_loading.isPopupVisible = false;
-          popover_httperror.isPopupVisible = true;
-        
-          console.error('Error fetching data:', error);
-          // Handle the error appropriately
-          return throwError(error);
-        })
-      );
-    }
-  }
-
-  processPopulationData(responseData: any[]): void {
-    this.populationDataDictionary = responseData.reduce((acc, curr) => {
-      /*  console.log('Current item FIPS:', curr.fips); // Log the FIPS code of the current item*/
-      if (curr.fips) {
-        acc[curr.fips] = curr;
+  buildElectionDictionary(elections: Election[]): void {
+    this.electionDataDictionary = elections.reduce<{ [key: string]: Election }> ((acc, election) => {
+      if (election.countyFips) {
+        acc[election.countyFips] = election;
       } else {
-        console.warn('Undefined FIPS code found', curr); // Log warning if FIPS code is undefined
+        console.warn('Undefined countyFips found in election data:', election);
       }
       return acc;
     }, {});
-    //  console.log('Processed election data dictionary:', this.electionDataDictionary);
   }
 
-  GetPopulationData() {
-    const results = this.http.get<any>(`${this.apiBaseUrl}/population`);
-    return results;
+  getPopulationData(popover_loading: any, popover_httperror: any): Observable<Population[]> {
+    if (this.isPopulationDataFetched) {
+      return of(Object.values(this.populationDataDictionary));
+    } else {
+      popover_loading.isPopupVisible = true;
+      popover_loading.url = `${this.apiBaseUrl}/population-api`;
+      popover_loading.data = 'Population';
+
+      return this.http.get<Population[]>(`${this.apiBaseUrl}/population-api`).pipe(
+        map(responseData => {
+          this.buildPopulationDictionary(responseData);
+          this.isPopulationDataFetched = true;
+          popover_loading.isPopupVisible = false;
+          return responseData;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          popover_httperror.ok = error.ok;
+          popover_httperror.message = error.message;
+          popover_httperror.url = error.url;
+          popover_httperror.statusText = error.statusText;
+          popover_httperror.isPopupVisible = true;
+          console.error('Error fetching data:', error);
+          return throwError(error);
+        })
+      );
+    }
   }
 
-  electionDataDictionary: { [fips: string]: Election } = {};
-  processElectionData(responseData: Element[]): void {
-    //this.electionDataDictionary = responseData.reduce((acc, curr) => {
-   
-    //  if (curr.) {
-    //   // acc[curr.countyFips] = curr;
-    //  } else {
-    //    console.warn('Undefined FIPS code found', curr); // Log warning if FIPS code is undefined
-    //  }
-    //  return acc;
-    //}, {});
-  //  console.log('Processed election data dictionary:', this.electionDataDictionary);
+  buildPopulationDictionary(populations: Population[]): void {
+    this.populationDataDictionary = populations.reduce<{ [key: string]: Population }>((acc, population) => {
+      if (population.fips) {
+        acc[population.fips] = population;
+      } else {
+        console.warn('Undefined FIPS code found in population data:', population);
+      }
+      return acc;
+    }, {});
   }
+
 }
