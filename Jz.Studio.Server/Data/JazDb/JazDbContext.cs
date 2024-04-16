@@ -21,6 +21,8 @@ public partial class JazDbContext : DbContext
 
     public virtual DbSet<CountyStat> CountyStats { get; set; }
 
+    public virtual DbSet<Election> Elections { get; set; }
+
     public virtual DbSet<ElectionDatum> ElectionData { get; set; }
 
     public virtual DbSet<Email> Emails { get; set; }
@@ -201,6 +203,90 @@ public partial class JazDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("timestamp");
+        });
+
+        modelBuilder.Entity<Election>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToTable("Election");
+
+            entity.Property(e => e.Candidate)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"candidate\"");
+            entity.Property(e => e.Candidatevotes)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"candidatevotes\"");
+            entity.Property(e => e.CountyFips)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"county_fips\"");
+            entity.Property(e => e.CountyName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"county_name\"");
+            entity.Property(e => e.Mode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"mode\"");
+            entity.Property(e => e.Notes)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"notes\"");
+            entity.Property(e => e.Office)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"office\"");
+            entity.Property(e => e.Party)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"party\"");
+            entity.Property(e => e.PartyDetailed)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"party_detailed\"");
+            entity.Property(e => e.PartySimplified)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"party_simplified\"");
+            entity.Property(e => e.State)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state\"");
+            entity.Property(e => e.StateCen)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_cen\"");
+            entity.Property(e => e.StateFips)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_fips\"");
+            entity.Property(e => e.StateIc)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_ic\"");
+            entity.Property(e => e.StatePo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"state_po\"");
+            entity.Property(e => e.Totalvotes)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"totalvotes\"");
+            entity.Property(e => e.Version)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"version\"");
+            entity.Property(e => e.Writein)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"writein\"");
+            entity.Property(e => e.Year)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("\"year\"");
         });
 
         modelBuilder.Entity<ElectionDatum>(entity =>

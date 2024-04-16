@@ -15,12 +15,12 @@ namespace Jz.Studio.Server.Controllers {
         }
 
         [HttpGet("election-api")]
-        public async Task<ActionResult<IEnumerable<ElectionDatum>>> GetElectionResults() {
+        public async Task<ActionResult<IEnumerable<Election>>> GetElectionResults() {
             if (_context == null) {
                 return NotFound();
             } 
             Console.WriteLine("GetElectionResults");
-            return await _context.ElectionData.ToListAsync();
+            return await _context.Elections.ToListAsync();
         }
 
         [HttpGet("population-api")]
