@@ -38,19 +38,16 @@ export class PaintElectionStrategy implements CountyPaintingStrategy {
     // Logic to determine color based on election data
     let c = this.choroDataService.electionDataDictionary[String(countyFips.id)];
     if (c != undefined) {
-      if (c.votesDem > c.votesGop) {
-        return '#00AEF3';
-      } else {
-        return '#FF6161';
-      }
+      //if (c. > c.votesGop) {
+      //  return '#00AEF3';
+      //} else {
+      //  return '#FF6161';
+      //}
     }
-    return 'yellow';
+    return '#507577';
   }
 
   paintCounties(data:any) {
     this.countyDataService.sendCountyData(data);
   }
-
-
-
 }

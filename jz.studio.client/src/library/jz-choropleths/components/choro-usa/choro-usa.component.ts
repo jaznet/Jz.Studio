@@ -255,7 +255,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
       .style('fill', 'black')
       .style('stroke', 'black')
       .style('font-size', '15px')
-      .style('stroke-width', '1px');
+      .style('stroke-width', '.5px');
   }
 
   adjustGroupSizeAndPosition() {
