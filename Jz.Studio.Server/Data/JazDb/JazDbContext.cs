@@ -31,6 +31,8 @@ public partial class JazDbContext : DbContext
 
     public virtual DbSet<Population> Populations { get; set; }
 
+    public virtual DbSet<StateFipsMapping> StateFipsMappings { get; set; }
+
     public virtual DbSet<StockPriceHistory> StockPriceHistories { get; set; }
 
     public virtual DbSet<StockSymbol> StockSymbols { get; set; }
@@ -517,6 +519,22 @@ public partial class JazDbContext : DbContext
             entity.Property(e => e.Under5Fem).HasColumnName("UNDER5_FEM");
             entity.Property(e => e.Under5Male).HasColumnName("UNDER5_MALE");
             entity.Property(e => e.Under5Tot).HasColumnName("UNDER5_TOT");
+        });
+
+        modelBuilder.Entity<StateFipsMapping>(entity =>
+        {
+            entity.HasKey(e => e.StatePo).HasName("PK__StateFip__C3BA03BB7F99DFEC");
+
+            entity.ToTable("StateFipsMapping");
+
+            entity.Property(e => e.StatePo)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("StatePO");
+            entity.Property(e => e.StateFips)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("StateFIPS");
         });
 
         modelBuilder.Entity<StockPriceHistory>(entity =>
