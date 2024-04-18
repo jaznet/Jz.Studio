@@ -11,7 +11,7 @@ export class AppHeaderComponent {
   @HostBinding('class') classes = 'app-header';
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
-  isVisible = 'collapse';
+  visibility = 'collapse';
   isLogoVisible= 'collapse';
   isMainMenuVisible = 'collapse';
 
@@ -21,7 +21,7 @@ export class AppHeaderComponent {
 
   ngAfterViewInit(): void {
 
-    this.isVisible = 'visible';
+    this.visibility = 'visible';
     this.isLogoVisible = 'visible';
     this.isMainMenuVisible = 'visible';
 

@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
     console.log(this.footer);
 
     this.appService.toggleHeaderEvent.subscribe((e) => {
-      this.header.isVisible = 'collapsed';
+      this.header.visibility = 'collapsed';
       console.log(e);
     })
 
