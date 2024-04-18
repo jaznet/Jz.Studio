@@ -5,6 +5,10 @@ import { NavigationStart, Router } from '@angular/router';
 import { NavigationListenerService } from './app-services/navigation-listener.service';
 import { PopOverLoadingComponent } from '../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { JzPopOversService } from '../library/jz-pop-overs/jz-pop-overs.service';
+import { AppHeaderComponent } from './app-parts/app-header/app-header.component';
+import { AppContentComponent } from './app-parts/app-content/app-content.component';
+import { AppFooterComponent } from './app-parts/app-footer/app-footer.component';
+import { AppStateService } from './app-services/app-state.service';
 
 interface WeatherForecast {
   date: string;
@@ -19,19 +23,33 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  @ViewChild('header', { static: true }) header!: AppHeaderComponent;
+  @ViewChild('content', { static: true }) content!: AppContentComponent;
+  @ViewChild('footer', { static: true }) footer!: AppFooterComponent;
   @ViewChild('popOverLoadingComponent', { static: true }) popover!: PopOverLoadingComponent;
   public forecasts: WeatherForecast[] = [];
 
   constructor(
     private router: Router,
+    private appService: AppStateService,
     private navigationListenerService: NavigationListenerService,
     private popoversService:JzPopOversService,
     private http: HttpClient,
-    private palette: PaletteMgrService) {
+    private palette: PaletteMgrService)
+  {
     palette.InitializePalette();
   }
 
   ngOnInit() {
+    console.log(this.header);
+    console.log(this.content);
+    console.log(this.footer);
+
+    this.appService.toggleHeaderEvent.subscribe((e) => {
+      this.header.isVisible = 'collapsed';
+      console.log(e);
+    })
+
     //this.popupsService.popUpEvent.subscribe((event: any) => {
     //  this.popup.isPopupVisible = true;
     //  console.log(this.popup);

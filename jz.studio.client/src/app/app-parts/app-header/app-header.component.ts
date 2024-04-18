@@ -25,9 +25,7 @@ export class AppHeaderComponent {
     this.isLogoVisible = 'visible';
     this.isMainMenuVisible = 'visible';
 
-    this.app.toggleMenuEvent.subscribe((menu: any) => {
-      this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse'; 
-    })
+   
   }
 
   ngAfterViewChecked(): void {

@@ -1,11 +1,11 @@
 
 <div class='grid-rows app-root-content'>
-  <app-header class="grid-row-fixed"></app-header>
-  <app-content class="grid-row-fill">
+  <app-header #header class="grid-row-fixed"></app-header>
+  <app-content #content class="grid-row-fill">
     <router-outlet></router-outlet>
   </app-content>
   <!--<app-content class="view-container app-component fit-to-parent grid-rows"></app-content>-->
-  <app-footer class="grid-row-fixed"></app-footer>
+  <app-footer #footer class="grid-row-fixed"></app-footer>
 </div>
 
 <!--<pop-up-loading #popUpLoadingComponent></pop-up-loading>-->
