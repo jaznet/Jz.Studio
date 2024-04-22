@@ -3,23 +3,31 @@
      class="main-menu-container" style="margin-left:8px"
      [ngStyle]="{'visibility':isMainMenuVisible}">
 
-  <jz-menu-container class="menu-horizontal menu-view"        
+  <jz-menu-container class="menu-horizontal menu-view"
                      [menuName]="'menu-main'"
                      [direction]="'horizontal'"
                      [tabs]="tabs"
-                      [menuType]="'main-menu'">
+                     [menuType]="'main-menu'">
 
     <jz-menu-tab [route]="'/home'"
                  [tabId]="'home'"
                  [btnTxt]="'Home'"
                  [direction]="direction"
                  [menuType]="parentGetter"
-                 [menuName]="'menu-main'" >
+                 [menuName]="'menu-main'">
     </jz-menu-tab>
 
     <jz-menu-tab [route]="'/dataviz'"
                  [tabId]="'dataviz'"
                  [btnTxt]="'Dataviz'"
+                 [direction]="direction"
+                 [menuType]="parentGetter"
+                 [menuName]="'menu-main'">
+    </jz-menu-tab>
+
+    <jz-menu-tab [route]="'/gfx'"
+                 [tabId]="'gfx'"
+                 [btnTxt]="'Graphics'"
                  [direction]="direction"
                  [menuType]="parentGetter"
                  [menuName]="'menu-main'">
@@ -49,7 +57,7 @@
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
-    <jz-menu-tab [menuName]="'menu-main'" 
+    <jz-menu-tab [menuName]="'menu-main'"
                  [route]="'/admin'"
                  [tabId]="'admin'"
                  [btnTxt]="'Admin'"

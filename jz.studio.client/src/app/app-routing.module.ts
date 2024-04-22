@@ -14,6 +14,10 @@ const routes: Routes = [
     component: AppHomeComponent
   },
   {
+    path: 'gfx',
+    loadChildren: () => import('../app-view-models/graphics/graphics.module').then(m => m.GraphicsModule)
+  },
+  {
     path: 'sandbox',
     loadChildren: () => import('../app-view-models/sandbox/sandbox.module').then(m => m.SandboxModule)
   },
