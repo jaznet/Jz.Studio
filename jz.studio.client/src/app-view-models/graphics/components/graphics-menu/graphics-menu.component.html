@@ -1,2 +1,17 @@
 
 <div style="color:greenyellow">JAZ</div>
+
+<jz-menu-container class="menu-vertical sub-menu"
+                   [menuName]="'sandbox'"
+                   [direction]="'vertical'"
+                   [isHorizontal]="false"
+                   [menuType]="'sub-menu'">
+  <jz-menu-tab [route]="'sandbox/home'"
+               [tabId]="'home'"
+               [btnTxt]="'Home'"
+               [menuName]="'sandbox'"
+               [direction]="direction"
+               [menuType]="parentGetter"
+               [isSelected]="true">
+  </jz-menu-tab>
+</jz-menu-container>
