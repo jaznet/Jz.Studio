@@ -8,13 +8,18 @@ import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 
 @NgModule({
   declarations: [
-    GraphicsHomeComponent
+    GraphicsHomeComponent,
+    GraphicsMenuComponent
   ],
   imports: [
     CommonModule,
     GraphicsRouterModule,
   
     JzMenuModule
+  ],
+  exports: [
+    GraphicsHomeComponent,
+    GraphicsMenuComponent
   ]
 })
 export class GraphicsModule { }

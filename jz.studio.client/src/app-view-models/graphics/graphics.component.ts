@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
+
 
 @Component({
   selector: 'app-graphics',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './graphics.component.css'
 })
 export class GraphicsComponent {
-
+  @HostBinding('class') classes = 'fit-to-parent ';
 }

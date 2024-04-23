@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-menu-base.component';
 
 @Component({
@@ -7,5 +7,8 @@ import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-m
   styleUrl: './graphics-menu.component.css'
 })
 export class GraphicsMenuComponent extends MenuBaseComponent {
+  @Input() override menuName: string = '';
 
+  override menuType: string = 'sub-menu';
+  override direction: string = 'vertical';
 }
