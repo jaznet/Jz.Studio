@@ -1,17 +1,27 @@
 
-<div style="color:greenyellow">JAZ</div>
 
 <jz-menu-container class="menu-vertical sub-menu"
-                   [menuName]="'sandbox'"
+                   [menuName]="'graphics'"
                    [direction]="'vertical'"
                    [isHorizontal]="false"
                    [menuType]="'sub-menu'">
-  <jz-menu-tab [route]="'sandbox/home'"
+
+  <jz-menu-tab [route]="'gfx/home'"
                [tabId]="'home'"
                [btnTxt]="'Home'"
-               [menuName]="'sandbox'"
+               [menuName]="'graphics'"
                [direction]="direction"
                [menuType]="parentGetter"
                [isSelected]="true">
   </jz-menu-tab>
+
+  <jz-menu-tab [route]="'gfx/tree'"
+               [tabId]="'tree'"
+               [btnTxt]="'Tree'"
+               [menuName]="'graphics'"
+               [direction]="direction"
+               [menuType]="parentGetter"
+               [isSelected]="true">
+  </jz-menu-tab>
+
 </jz-menu-container>

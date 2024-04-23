@@ -1,14 +1,16 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RandomTreeComponent } from './random-tree/random-tree.component';
 
 
-
 @NgModule({
-  declarations: [RandomTreeComponent],
+  declarations: [
+    RandomTreeComponent],
   imports: [
     CommonModule
   ],
-  exports: [RandomTreeComponent],
+  exports: [
+    RandomTreeComponent],
 })
-export class GraphicsModule { }
+export class JzGraphicsModule { }

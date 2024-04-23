@@ -6,6 +6,7 @@ import { GraphicsMenuComponent } from './components/graphics-menu/graphics-menu.
 import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 import { RouterModule } from '@angular/router';
 import { GraphicsComponent } from './graphics.component';
+import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { GraphicsComponent } from './graphics.component';
     CommonModule,
     GraphicsRouterModule,
     RouterModule,
-    JzMenuModule
+    JzMenuModule,
+    JzGraphicsModule
+
   ],
   exports: [
     GraphicsComponent,

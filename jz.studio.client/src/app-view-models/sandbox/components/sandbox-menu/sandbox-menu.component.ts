@@ -14,5 +14,4 @@ export class SandboxMenuComponent extends MenuBaseComponent  {
   override menuType: string = 'sub-menu';
   override direction: string = 'vertical';
 
- 
 }
