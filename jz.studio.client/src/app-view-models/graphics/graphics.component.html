@@ -1,4 +1,15 @@
 
+
+
 <div style="color:antiquewhite">Graphics</div>
-<router-outlet></router-outlet>
+
+<div style="background-color:var(--plt-clr-1);height:100%;">
+  <graphics-menu style="background-color:var(--plt-clr-1);height:fit-content;margin-top:32px"></graphics-menu>
+</div>
+
+<div #viewRouter id="viewRouter" class="app-view-home grid-col-fill view-router-container ">
+  <router-outlet></router-outlet>
+</div>
+
+
 <div style="color:antiquewhite">Graphics</div>
