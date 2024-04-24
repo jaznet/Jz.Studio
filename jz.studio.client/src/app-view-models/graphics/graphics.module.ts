@@ -7,13 +7,15 @@ import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 import { RouterModule } from '@angular/router';
 import { GraphicsComponent } from './graphics.component';
 import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
+import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
 
 
 @NgModule({
   declarations: [
     GraphicsComponent,
     GraphicsHomeComponent,
-    GraphicsMenuComponent
+    GraphicsMenuComponent,
+    RaindomTreeViewComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
   exports: [
     GraphicsComponent,
     GraphicsHomeComponent,
-    GraphicsMenuComponent
+    GraphicsMenuComponent,
+    RaindomTreeViewComponent
   ]
 })
 export class GraphicsModule { }

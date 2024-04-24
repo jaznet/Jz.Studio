@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'raindom-tree-view',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './raindom-tree-view.component.css'
 })
 export class RaindomTreeViewComponent implements OnInit {
+  @HostBinding('class') classes = 'fit-to-parent ';
+
   constructor() { }
     ngOnInit(): void {
         

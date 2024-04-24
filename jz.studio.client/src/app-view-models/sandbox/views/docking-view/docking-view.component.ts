@@ -8,7 +8,6 @@ import { PanelContainer } from '../../../../library/jz-docking/dock-spawn/src/Pa
   styleUrl: './docking-view.component.css'
 })
 export class DockingViewComponent implements OnInit, AfterViewInit {
-
   @HostBinding('class') classes = 'fit-to-parent ';
 
   ngOnInit(): void {

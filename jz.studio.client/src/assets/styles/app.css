@@ -11,7 +11,7 @@ body {
 }
 
 .app-view-home {
-    border: 1px solid white;
+   
     border-radius:9px;
     color:var(--plt-clr-x);
 }
