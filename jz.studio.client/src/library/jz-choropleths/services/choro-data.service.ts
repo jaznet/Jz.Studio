@@ -26,7 +26,7 @@ export class ChoroDataService {
       popover_loading.data = 'Election';
 
       return this.http.get<FederalElection[]>(`${this.apiBaseUrl}/election-api`).pipe(
-        map(responseData => {
+        map((responseData: FederalElection[]) => {
           this.buildElectionDictionary(responseData);
           this.isElectionDataFetched = true;
           popover_loading.isPopupVisible = false;

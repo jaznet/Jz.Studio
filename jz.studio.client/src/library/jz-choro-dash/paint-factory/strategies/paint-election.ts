@@ -43,7 +43,7 @@ export class PaintElectionStrategy implements CountyPaintingStrategy {
     if (c != undefined) {
       //if (c. > c.votesGop) {
         return '#00AEF3';
-      //} else {
+      //} else {j
       //  return '#FF6161';
       //}
     }
