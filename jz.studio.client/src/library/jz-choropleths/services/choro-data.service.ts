@@ -17,6 +17,7 @@ export class ChoroDataService {
 
   constructor(private http: HttpClient) { }
 
+  //getElectionData(popover_loading: any, popover_httperror: any): Observable<FederalElection[]> {
   getElectionData(popover_loading: any, popover_httperror: any): Observable<FederalElection[]> {
     if (this.isElectionDataFetched) {
       return of(Object.values(this.electionDataDictionary));
