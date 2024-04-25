@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Election } from '../../../models/Election';
 import { Population } from '../../../models/Population';
+import { FederalElection } from '../models/FederalElection';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,14 @@ import { Population } from '../../../models/Population';
 export class ChoroDataService {
   private apiBaseUrl = 'https://localhost:7105/api/jazdb'; // Adjust with your actual API URL
 
-  electionDataDictionary: { [countyFips: string]: Election } = {};
+  
   populationDataDictionary: { [fips: string]: Population } = {};
   isElectionDataFetched = false;
   isPopulationDataFetched = false;
 
   constructor(private http: HttpClient) { }
 
-  getElectionData(popover_loading: any, popover_httperror: any): Observable<Election[]> {
+  getElectionData(popover_loading: any, popover_httperror: any): Observable<FederalElection[]> {
     if (this.isElectionDataFetched) {
       return of(Object.values(this.electionDataDictionary));
     } else {
@@ -45,10 +45,12 @@ export class ChoroDataService {
     }
   }
 
-  buildElectionDictionary(elections: Election[]): void {
-    this.electionDataDictionary = elections.reduce<{ [key: string]: Election }> ((acc, election) => {
-      if (election.countyFips) {
-        acc[election.countyFips] = election;
+  electionDataDictionary: { [countyFips: string]: FederalElection } = {};
+  buildElectionDictionary(elections: FederalElection[]): void {
+    this.electionDataDictionary = elections.reduce<{ [key: string]: FederalElection }>((acc, election) => {
+      let fips = election.stateFips + election.countyFips!;
+      if (fips) {
+        acc[fips] = election;
       } else {
         console.warn('Undefined countyFips found in election data:', election);
       }

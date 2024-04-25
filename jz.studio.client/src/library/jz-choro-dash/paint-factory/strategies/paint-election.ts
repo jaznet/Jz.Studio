@@ -36,12 +36,13 @@ export class PaintElectionStrategy implements CountyPaintingStrategy {
 
   getColor(countyFips: any): string {
     // Logic to determine color based on election data
-    console.log("Dictionary keys:", Object.keys(this.choroDataService.electionDataDictionary));
-    console.log("Access key:", String(countyFips.id));
+    //console.log("Dictionary keys:", Object.keys(this.choroDataService.electionDataDictionary));
+    //console.log("Access key:", String(countyFips.id));
+    console.log(this.choroDataService.electionDataDictionary);
     let c = this.choroDataService.electionDataDictionary[String(countyFips.id)];
     if (c != undefined) {
       //if (c. > c.votesGop) {
-      //  return '#00AEF3';
+        return '#00AEF3';
       //} else {
       //  return '#FF6161';
       //}
