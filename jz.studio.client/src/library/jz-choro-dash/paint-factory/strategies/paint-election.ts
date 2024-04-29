@@ -17,7 +17,7 @@ export class PaintElectionStrategy implements CountyPaintingStrategy {
 
   getData(popover_loading: any, popover_httperror: any, callback: (data: any) => void): void {
     // Use the choroDataService to fetch data and handle painting
-    this.choroDataService.getElectionData(popover_loading, popover_httperror).subscribe(
+    this.choroDataService.getElectionData().subscribe(
       (responseData: any) => {
         popover_loading.isPopupVisible = false;
         callback(responseData);

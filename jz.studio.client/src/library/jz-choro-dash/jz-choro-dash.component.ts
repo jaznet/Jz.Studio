@@ -10,6 +10,7 @@ import { PopOverLoadingComponent } from '../jz-pop-overs/pop-over-loading/pop-ov
 import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
 import { JzPopOversService } from '../jz-pop-overs/jz-pop-overs.service';
 import { PopoverHttpErrorComponent } from '../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
+import { ChoroDataService } from '../jz-choropleths/services/choro-data.service';
 
 @Component({
   selector: 'jz-choro-dash',
@@ -31,14 +32,18 @@ export class JzChoroDashComponent implements OnInit {
     private topoService: TopoService,
     private strategySelect: UserSelectionService,
     private paintStrategyFactoryService: PaintStrategyFactoryService,
-    private popovers: JzPopOversService
+    private popovers: JzPopOversService,
+    private dataService: ChoroDataService
   ) {
-   
+    
   }
 
   ngOnInit(): void {
     console.log(this.popover_loading);
     console.log(this.popover_httperror);
+
+    this.dataService.popover_loading = this.popover_loading;
+    this.dataService.popover_httperror = this.popover_httperror;
 
     this.popovers.togglePopOverLoading({
       action: 'hide',

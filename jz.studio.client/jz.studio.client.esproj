@@ -14,7 +14,6 @@
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\app-view-models\graphics\views\" />
     <Folder Include="src\assets\css\" />
-    <Folder Include="src\library\graphics\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\models\" />

@@ -1,0 +1,25 @@
+<p>dataviz-menu works!</p>
+<jz-menu-container class="menu-vertical sub-menu"
+                   [menuName]="'dataviz'"
+                   [direction]="'vertical'"
+                   [isHorizontal]="false"
+                   [menuType]="'sub-menu'">
+
+  <jz-menu-tab [route]="'sandbox/home'"
+               [tabId]="'home'"
+               [btnTxt]="'Home'"
+               [menuName]="'dataviz'"
+               [direction]="direction"
+               [menuType]="parentGetter"
+               [isSelected]="true">
+  </jz-menu-tab>
+
+  <jz-menu-tab [route]="'sandbox/choro-dash-loader'"
+               [tabId]="'chorodash'"
+               [btnTxt]="'Chorodash'"
+               [menuName]="'dataviz'"
+               [direction]="direction"
+               [menuType]="parentGetter">
+  </jz-menu-tab>
+
+  </jz-menu-container>

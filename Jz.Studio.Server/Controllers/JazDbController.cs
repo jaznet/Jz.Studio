@@ -14,14 +14,7 @@ namespace Jz.Studio.Server.Controllers {
             _context = context;
         }
 
-        [HttpGet("election-api")]
-        public async Task<ActionResult<IEnumerable<FederalElection>>> GetElectionResults() {
-            if (_context == null) {
-                return NotFound();
-            } 
-            Console.WriteLine("GetElectionResults");
-            return await _context.FederalElections.ToListAsync();
-        }
+        
 
         [HttpGet("population-api")]
         public async Task<ActionResult<IEnumerable<Population>>> GetPopulationResults() {

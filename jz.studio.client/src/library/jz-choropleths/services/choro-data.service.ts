@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
@@ -9,36 +10,37 @@ import { FederalElection } from '../models/FederalElection';
 })
 export class ChoroDataService {
   private apiBaseUrl = 'https://localhost:7105/api/jazdb'; // Adjust with your actual API URL
-
-  
+  popover_loading: any;
+  popover_httperror: any;
   populationDataDictionary: { [fips: string]: Population } = {};
   isElectionDataFetched = false;
   isPopulationDataFetched = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   //getElectionData(popover_loading: any, popover_httperror: any): Observable<FederalElection[]> {
-  getElectionData(popover_loading: any, popover_httperror: any): Observable<FederalElection[]> {
+  getElectionData(): Observable<FederalElection[]> {
     if (this.isElectionDataFetched) {
       return of(Object.values(this.electionDataDictionary));
     } else {
-      popover_loading.isPopupVisible = true;
-      popover_loading.url = `${this.apiBaseUrl}/election-api`;
-      popover_loading.data = 'Election';
+      this.popover_loading.isPopupVisible = true;
+      this.popover_loading.url = `${this.apiBaseUrl}/election-api`;
+      this.popover_loading.data = 'Election';
 
       return this.http.get<FederalElection[]>(`${this.apiBaseUrl}/election-api`).pipe(
         map((responseData: FederalElection[]) => {
           this.buildElectionDictionary(responseData);
           this.isElectionDataFetched = true;
-          popover_loading.isPopupVisible = false;
+          this.popover_loading.isPopupVisible = false;
           return responseData;
         }),
         catchError((error: HttpErrorResponse) => {
-          popover_httperror.ok = error.ok;
-          popover_httperror.message = error.message;
-          popover_httperror.url = error.url;
-          popover_httperror.statusText = error.statusText;
-          popover_httperror.isPopupVisible = true;
+          this.popover_httperror.ok = error.ok;
+          this.popover_httperror.message = error.message;
+          this.popover_httperror.url = error.url;
+          this.popover_httperror.statusText = error.statusText;
+          this.popover_httperror.isPopupVisible = true;
           console.error('Error fetching data:', error);
           return throwError(error);
         })
@@ -49,7 +51,7 @@ export class ChoroDataService {
   electionDataDictionary: { [countyFips: string]: FederalElection } = {};
   buildElectionDictionary(elections: FederalElection[]): void {
     this.electionDataDictionary = elections.reduce<{ [key: string]: FederalElection }>((acc, election) => {
-      let fips = election.stateFips + election.countyFips!;
+      let fips = election.countyFips!;
       if (fips) {
         acc[fips] = election;
       } else {
