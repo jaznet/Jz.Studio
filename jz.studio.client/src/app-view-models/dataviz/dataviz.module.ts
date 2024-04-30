@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatavizComponent } from './dataviz.component';
@@ -7,6 +8,7 @@ import { TechChartViewComponent } from './views/tech-chart-view/tech-chart-view.
 import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 import { JzPopOversModule } from '../../library/jz-pop-overs/jz-pop-overs.module';
 import { RouterModule } from '@angular/router';
+import { DatavizRouterModule } from './dataviz-router.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     JzMenuModule,
     JzPopOversModule,
-    RouterModule
+    RouterModule,
+    DatavizRouterModule
   ],
   exports: [
     DatavizComponent,

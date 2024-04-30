@@ -18,7 +18,9 @@ const routes: Routes = [
         path: 'home',
         component: DatavizHomeComponent
       },
-      }]
+    ]
+  }
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
