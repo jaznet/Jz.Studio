@@ -16,8 +16,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   @Input() text: string = 'Enter';
   @Input() height: number = 33;
   @Input() width: number = 100;
-  @Input() colorTxt: string = 'var(--plt-txt-5)';
-  @Input() colorBkg: string = 'var(--plt-clr-5)';
+  //@Input() colorTxt: string = 'var(--plt-txt-5)';
+  @Input() btnBackground: any;
   @Input() fontSize: string = '14px';
   @Input() isSelected: boolean = false;
   @Input() menuType!: string;
@@ -27,7 +27,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   width_px: string = '0px';
   border_px: string = '0px';
   color!: string;
-  background!: string;
+  background: string = 'orange';
 
   get parentGetter() {
     return this.menuType;
@@ -39,7 +39,6 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   }
 
   constructor(
-    private menuService: JzMenuService,
     private changeDetector: ChangeDetectorRef,
     private element: ElementRef,
     private renderer: Renderer2,
@@ -52,8 +51,8 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
     this.height_px = this.height + 'px';
     this.width_px = this.width + 'px';
     this.border_px = .175 * this.height + 'px';
-    this.color = this.colorTxt;
-    this.background = this.colorBkg;
+ //   this.color = this.colorTxt;
+    this.background = this.btnBackground;
     this.changeDetector.detectChanges();
     //console.log('button parent tab', this.menuType);
     //console.log('button selected', this.isSelected);

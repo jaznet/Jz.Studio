@@ -5,10 +5,9 @@
      [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }"
      [ngStyle]="{'height': height_px, 'width': width_px}">
 
-  <!--<div>{{ menuType }}</div>-->
-
   <div class="jz-button-bevel fit-to-parent"
-       [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }">
+       [ngClass]="{'sub-menu':isSubMenu,'selected':isSelected }"
+       [ngStyle]="{'background-color':background}">
     <!--[ngStyle]="{'color':color}"-->
 
     <div class="grid-rows left-border">
@@ -21,8 +20,7 @@
       <div [ngStyle]="{'width': border_px}"
            class=" grid-row-fill left-border-middle">
       </div>
-
-      <!--Bottom-Left Corner-->
+            <!--Bottom-Left Corner-->
       <div [ngStyle]="{'height': border_px, 'width': border_px}"
            class=" grid-row-fixed bottom-left-corner">
         <div style="position:relative">
