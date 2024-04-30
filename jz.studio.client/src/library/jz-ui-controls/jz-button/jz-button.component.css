@@ -8,7 +8,7 @@ jz-button.sub-menu {
 }
 
 .jz-button-text {
-  color:silver;
+ /* color:silver;*/
   display: flex;
   align-items: center;
   font-size: 13px;
