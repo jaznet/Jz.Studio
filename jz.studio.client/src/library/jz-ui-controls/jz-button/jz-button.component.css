@@ -46,7 +46,7 @@ jz-button.sub-menu {
 .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
-  background-color: var(--plt-clr-1);
+ 
 }
 
   .jz-button-bevel.selected {

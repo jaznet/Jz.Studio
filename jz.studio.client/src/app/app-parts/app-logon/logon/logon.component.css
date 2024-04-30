@@ -13,6 +13,7 @@
 }
 
 .logon-title {
+    color:var(--plt-txt-1);
     font-weight:600;
 }
 

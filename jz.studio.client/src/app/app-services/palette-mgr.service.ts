@@ -23,11 +23,11 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-2', '#2f4f4f');
         document.documentElement.style.setProperty('--plt-clr-3', '#507577');
         document.documentElement.style.setProperty('--plt-clr-4', '#899b9f');
-        document.documentElement.style.setProperty('--plt-clr-5', '#6FA288');
+        document.documentElement.style.setProperty('--plt-clr-5', '#D5BFB0');
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 
-        document.documentElement.style.setProperty('--plt-txt-1', '#6ea288');
+        document.documentElement.style.setProperty('--plt-txt-1', '#D5BFB0');
         document.documentElement.style.setProperty('--plt-txt-2', '#F2F7F7');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
         document.documentElement.style.setProperty('--plt-txt-4', '#3BBFC4');
