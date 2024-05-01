@@ -19,7 +19,7 @@
     }
 
     .jz-button-bevel.main-menu.selected .jz-button-text {
-      color: var(--plt-txt-5);
+      color: black;
     }
 
   .jz-button-bevel.sub-menu {
@@ -35,7 +35,7 @@
     }
 
     .jz-button-bevel.sub-menu.selected .jz-button-text {
-      color: var(--plt-txt-4);
+      color: black;
     }
 
 /*  .jz-button-bevel.selected {

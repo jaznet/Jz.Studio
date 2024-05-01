@@ -15,6 +15,7 @@ export class JzButton3dComponent implements OnInit, AfterViewInit, AfterViewChec
   @Input() background: string = 'orange';
   @Input() menuType!: string;
   @Input() isSelected: boolean = false;
+  @Input() btnTextColor: string = 'black';
 
   height_px: string = '0px';
   width_px: string = '0px';

@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+  .jz-button.login {
+      color:black
+  }
+
   .jz-button.main-menu {
   /*  background-color: orange;*/
   }

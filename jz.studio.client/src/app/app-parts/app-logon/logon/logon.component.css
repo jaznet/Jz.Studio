@@ -9,11 +9,11 @@
   border: 1px solid var(--plt-clr-2);
   border-radius: 8px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-  background-color: var(--plt-clr-3);
+  background-color: var(--plt-clr-4);
 }
 
 .logon-title {
-    color:var(--plt-txt-1);
+    color:black;
     font-weight:600;
 }
 
@@ -25,8 +25,8 @@
 .form-group-label {
   font-family: museo;
   font-weight: 600;
-  font-size: 14px;
-  padding-left: 2px;
+  font-size: 16px;
+  padding-left: 4px;
   margin-bottom: 2px;
 }
 
@@ -36,7 +36,7 @@
   border: 1px solid var(--plt-clr-1);
   background-color: var(--plt-clr-5);
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 16px;
   padding-left: 6px;
 }
 
