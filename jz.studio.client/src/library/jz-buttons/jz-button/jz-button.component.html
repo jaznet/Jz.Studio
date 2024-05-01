@@ -5,6 +5,12 @@
      [ngStyle]="{'height': height_px, 'width': width_px}"
      [ngClass]="{ 'sub-menu': isSubMenu, 'main-menu':!isSubMenu }">
 
-  <jz-button3d class="jz-button-3d" [text]="text" [background]="btnBackground" [menuType]="menuType"></jz-button3d>
+  <jz-button3d class="jz-button-3d"
+               [text]="text"
+               [background]="btnBackground"
+               [menuType]="menuType"
+               [isSelected]=isSelected
+               >
+  </jz-button3d>
 
 </div>

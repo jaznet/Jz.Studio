@@ -14,6 +14,14 @@
     color: var(--plt-txt-1);
   }
 
+    .jz-button-bevel.main-menu.selected {
+      background-color: var(--plt-clr-4);
+    }
+
+    .jz-button-bevel.main-menu.selected .jz-button-text {
+      color: var(--plt-txt-5);
+    }
+
   .jz-button-bevel.sub-menu {
     background-color: var(--plt-clr-2);
   }
@@ -22,9 +30,17 @@
     color: var(--plt-txt-2);
   }
 
-  .jz-button-bevel.selected {
+    .jz-button-bevel.sub-menu.selected {
+      background-color: var(--plt-clr-4);
+    }
+
+    .jz-button-bevel.sub-menu.selected .jz-button-text {
+      color: var(--plt-txt-4);
+    }
+
+/*  .jz-button-bevel.selected {
     background-color: var(--plt-clr-4);
-  }
+  }*/
 
     .jz-button-bevel.selected .jz-button-text {
       color: yellow;
