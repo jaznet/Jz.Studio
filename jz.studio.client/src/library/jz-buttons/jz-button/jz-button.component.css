@@ -3,9 +3,13 @@
   width: 100%;
 }
 
-jz-button.sub-menu {
- background-color:red;
-}
+  .jz-button.main-menu {
+  /*  background-color: orange;*/
+  }
+
+  .jz-button.sub-menu {
+ /*   background-color: red;*/
+  }
 
 .jz-button-text {
  /* color:silver;*/

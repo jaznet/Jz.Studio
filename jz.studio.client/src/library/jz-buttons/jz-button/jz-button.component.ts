@@ -29,6 +29,7 @@ export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecke
   border_px: string = '0px';
   color!: string;
   background: string = 'orange';
+  txtColor: string='blue';
 
   get parentGetter() {
     return this.menuType;

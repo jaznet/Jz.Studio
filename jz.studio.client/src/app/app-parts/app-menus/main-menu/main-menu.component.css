@@ -1,3 +1,11 @@
 .menu-container {
 
 }
+
+.menu-container.main-menu {
+    border:1px solid var(--plt-clr-2);
+}
+
+  .menu-container.sub-menu {
+    border: 1px solid var(--plt-clr-3);
+  }

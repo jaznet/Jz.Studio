@@ -13,6 +13,7 @@ export class JzButton3dComponent implements OnInit, AfterViewInit, AfterViewChec
   @Input() width: number = 100;
   @Input() text: string = 'Enter3D';
   @Input() background: string = 'orange';
+  @Input() menuType!: string;
 
   height_px: string = '0px';
   width_px: string = '0px';
@@ -29,6 +30,11 @@ export class JzButton3dComponent implements OnInit, AfterViewInit, AfterViewChec
     this.height_px = this.height + 'px';
     this.width_px = this.width + 'px';
     this.border_px = .175 * this.height + 'px';
+    console.log(this.menuType);
+    if (this.menuType === 'sub-menu')
+      this.isSubMenu = true;
+    else
+      this.isSubMenu = false;
     //   this.color = this.colorTxt;
     //this.background = this.btnBackground;
     //this.changeDetector.detectChanges();

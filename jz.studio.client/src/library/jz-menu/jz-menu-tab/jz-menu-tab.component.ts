@@ -90,6 +90,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+
   //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
  //   console.log(this.tabButton, this.menuType, this.isSelected, this.btnTxt,this.menuName);
     //if (this.menuService.isSubMenu) {

@@ -2,9 +2,25 @@
 .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
-  background-color:black;
-      color:white;
+  background-color: black;
+  color: white;
 }
+
+  .jz-button-bevel.main-menu {
+      background-color:var(--plt-clr-1);
+  }
+
+  .jz-button-bevel.main-menu .jz-button-text {
+    color: var(--plt-txt-1);
+  }
+
+  .jz-button-bevel.sub-menu {
+    background-color: var(--plt-clr-2);
+  }
+
+  .jz-button-bevel.sub-menu .jz-button-text {
+    color: var(--plt-txt-2);
+  }
 
   .jz-button-bevel.selected {
     background-color: var(--plt-clr-4);
