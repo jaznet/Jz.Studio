@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzTabComponent } from './jz-tab.component';
+import { JzButton3dComponent } from './jz-button3d.component';
 
-describe('JzTabComponent', () => {
-  let component: JzTabComponent;
-  let fixture: ComponentFixture<JzTabComponent>;
+describe('JzButton3dComponent', () => {
+  let component: JzButton3dComponent;
+  let fixture: ComponentFixture<JzButton3dComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JzTabComponent ]
+      declarations: [JzButton3dComponent]
     })
     .compileComponents();
-
-    fixture = TestBed.createComponent(JzTabComponent);
+    
+    fixture = TestBed.createComponent(JzButton3dComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

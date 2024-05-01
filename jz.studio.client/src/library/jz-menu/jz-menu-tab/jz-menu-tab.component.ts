@@ -2,7 +2,7 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
-import { JzButtonComponent } from '../../jz-ui-controls/jz-button/jz-button.component';
+import { JzButtonComponent } from '../../jz-buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'jz-menu-tab',
