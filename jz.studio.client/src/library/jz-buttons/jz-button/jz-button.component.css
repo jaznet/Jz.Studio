@@ -46,16 +46,15 @@ jz-button.sub-menu {
 .jz-button-bevel {
   width: 100%;
   border-radius: 7px;
- 
 }
 
   .jz-button-bevel.selected {
     background-color: var(--plt-clr-4);
   }
 
-  .jz-button-bevel.selected .jz-button-text {
-   color:black;
-  }
+    .jz-button-bevel.selected .jz-button-text {
+      color: yellow;
+    }
 
 .subview.jz-button-bevel {
   width: 100%;

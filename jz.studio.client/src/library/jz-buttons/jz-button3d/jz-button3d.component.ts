@@ -12,13 +12,13 @@ export class JzButton3dComponent implements OnInit, AfterViewInit, AfterViewChec
   @Input() height: number = 33;
   @Input() width: number = 100;
   @Input() text: string = 'Enter3D';
+  @Input() background: string = 'orange';
 
   height_px: string = '0px';
   width_px: string = '0px';
   border_px: string = '0px';
   isSelected: boolean = false;
   isSubMenu: boolean = false;
-  background: string = 'orange';
 
   constructor() { }
 

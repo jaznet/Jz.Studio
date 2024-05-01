@@ -1,6 +1,21 @@
 
+.jz-button-bevel {
+  width: 100%;
+  border-radius: 7px;
+  background-color:black;
+      color:white;
+}
+
+  .jz-button-bevel.selected {
+    background-color: var(--plt-clr-4);
+  }
+
+    .jz-button-bevel.selected .jz-button-text {
+      color: yellow;
+    }
+
 .jz-button-text {
-  /* color:silver;*/
+   color:yellow;
   display: flex;
   align-items: center;
   font-size: 13px;
