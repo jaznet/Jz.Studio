@@ -1,0 +1,26 @@
+
+<script>
+  function loadMathJax() {
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js';
+    script.onload = function () {
+      console.log('MathJax loaded');
+      debugger;
+    };
+    document.head.appendChild(script);
+  }
+
+  loadMathJax();
+</script>
+
+<div style="width:850px;height:300px;border:1px solid white;margin:auto">
+  <div #plotSvgContainer id="plotSvgContainer" class="fit-to-content"></div>
+</div>
+
+
+
+
+<!--<jz-mathjax [equation]="'$$\\pi x$$'"></jz-mathjax>-->
+<!--<jz-mathjax [equation]="'$$\\iint x$$'"></jz-mathjax>-->
