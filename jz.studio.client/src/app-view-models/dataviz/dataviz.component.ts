@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-dataviz',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './dataviz.component.css'
 })
 export class DatavizComponent {
+  @HostBinding('class') classes = 'fit-to-parent';
   constructor() { }
 }

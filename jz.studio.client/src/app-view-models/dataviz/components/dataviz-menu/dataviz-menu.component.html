@@ -5,21 +5,21 @@
                    [isHorizontal]="false"
                    [menuType]="'sub-menu'">
 
-  <jz-menu-tab [route]="'sandbox/home'"
+  <jz-menu-tab [route]="'dataviz/home'"
                [tabId]="'home'"
                [btnTxt]="'Home'"
                [menuName]="'dataviz'"
-               [direction]="direction"
+               [direction]="'vertical'"
                [menuType]="parentGetter"
                [isSelected]="true">
   </jz-menu-tab>
 
-  <jz-menu-tab [route]="'sandbox/choro-dash-loader'"
-               [tabId]="'chorodash'"
-               [btnTxt]="'Chorodash'"
+  <jz-menu-tab [route]="'dataviz/technical'"
+               [tabId]="'technical'"
+               [btnTxt]="'Technical'"
                [menuName]="'dataviz'"
-               [direction]="direction"
+               [direction]="'vertical'"
                [menuType]="parentGetter">
   </jz-menu-tab>
 
-  </jz-menu-container>
+</jz-menu-container>
