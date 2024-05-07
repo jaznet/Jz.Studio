@@ -18,7 +18,7 @@ const routes: Routes = [
     loadChildren: () => import('../app-view-models/dataviz/dataviz.module').then(m => m.DatavizModule)
   },
   {
-    path: 'gfx',
+    path: 'graphics',
     loadChildren: () => import('../app-view-models/graphics/graphics.module').then(m => m.GraphicsModule)
   },
   {
