@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GraphicsComponent } from './graphics.component';
 import { GraphicsHomeComponent } from './components/graphics-home/graphics-home.component';
 import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
+import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'tree',
         component: RaindomTreeViewComponent
+      },
+      {
+        path: 'sinewave',
+        component: SinewaveViewComponent
       },
       //{
       //  path: 'dataviz',

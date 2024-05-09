@@ -1,5 +1,4 @@
 
-
 <jz-menu-container class="menu-vertical sub-menu"
                    [menuName]="'graphics'"
                    [direction]="'vertical'"
@@ -16,12 +15,21 @@
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'graphics/tree'"
-               [tabId]="'tree'"
+               [tabId]="'sinewave'"
                [btnTxt]="'Tree'"
                [menuName]="'graphics'"
                [direction]="direction"
                [menuType]="'sub-menu'"
                [isSelected]="true">
+  </jz-menu-tab>
+
+  <jz-menu-tab [route]="'graphics/sinewave'"
+               [tabId]="'tree'"
+               [btnTxt]="'Sinewave'"
+               [menuName]="'graphics'"
+               [direction]="direction"
+               [menuType]="'sub-menu'"
+               >
   </jz-menu-tab>
 
 </jz-menu-container>

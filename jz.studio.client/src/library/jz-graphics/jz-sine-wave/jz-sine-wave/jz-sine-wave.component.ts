@@ -2,11 +2,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, HostBinding } from '@angular/core';
 import * as d3 from 'd3';
 
-
-
-
-
-
 @Component({
   selector: 'jz-sine-wave',
   templateUrl: './jz-sine-wave.component.html',

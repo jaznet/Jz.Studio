@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { GraphicsComponent } from './graphics.component';
 import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
 import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
+import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree
     GraphicsComponent,
     GraphicsHomeComponent,
     GraphicsMenuComponent,
-    RaindomTreeViewComponent
+    RaindomTreeViewComponent,
+    SinewaveViewComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree
     GraphicsComponent,
     GraphicsHomeComponent,
     GraphicsMenuComponent,
-    RaindomTreeViewComponent
+    RaindomTreeViewComponent,
+    SinewaveViewComponent
   ]
 })
 export class GraphicsModule { }
