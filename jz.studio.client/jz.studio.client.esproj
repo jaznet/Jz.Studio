@@ -17,5 +17,6 @@
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\models\" />
+    <Folder Include="src\utilities\" />
   </ItemGroup>
 </Project>

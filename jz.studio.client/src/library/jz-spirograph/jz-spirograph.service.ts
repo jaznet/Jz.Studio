@@ -6,7 +6,7 @@ import { Spiro } from './spiro';
 @Injectable({
   providedIn: 'root'
 })
-export class SpirographService {
+export class JzSpirographService {
 
   test: string = 'jaz';
 

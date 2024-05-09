@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterContentInit, HostBinding, AfterViewInit } from '@angular/core';
 import { Spiro } from './spiro';
 /*import $ from 'jquery';*/
-import { SpirographService } from './spirograph.service';
+import { SpirographService } from './jz-spirograph.service';
 import { DxDropDownBoxModule } from 'devextreme-angular';
 import array_store from 'devextreme/data/array_store';
 
