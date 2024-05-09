@@ -71,6 +71,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.tab_name, this.isSelected, this.tabId);
   //  console.log('  Menu Tab ngOnInit', this.menuType, this.isSelected, this.btnTxt);
     switch (this.direction) {
       case 'horizontal':

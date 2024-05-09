@@ -24,8 +24,6 @@ export class AppHeaderComponent {
     this.visibility = 'visible';
     this.isLogoVisible = 'visible';
     this.isMainMenuVisible = 'visible';
-
-   
   }
 
   ngAfterViewChecked(): void {

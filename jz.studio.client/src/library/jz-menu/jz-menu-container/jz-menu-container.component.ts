@@ -97,7 +97,6 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
         menuitem.isSelected = true;
       }
     }
-
     );
   }
 
