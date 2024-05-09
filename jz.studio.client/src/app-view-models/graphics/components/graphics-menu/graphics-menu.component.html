@@ -15,7 +15,7 @@
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'graphics/tree'"
-               [tabId]="'sinewave'"
+               [tabId]="'tree'"
                [btnTxt]="'Tree'"
                [menuName]="'graphics'"
                [direction]="direction"
@@ -23,12 +23,19 @@
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'graphics/sinewave'"
-               [tabId]="'tree'"
+               [tabId]="'sinewave'"
                [btnTxt]="'Sinewave'"
                [menuName]="'graphics'"
                [direction]="direction"
-               [menuType]="'sub-menu'"
-               >
+               [menuType]="'sub-menu'">
+  </jz-menu-tab>
+
+  <jz-menu-tab [route]="'graphics/spirograph'"
+               [tabId]="'spirographs'"
+               [btnTxt]="'Spirographs'"
+               [menuName]="'graphics'"
+               [direction]="direction"
+               [menuType]="'sub-menu'">
   </jz-menu-tab>
 
 </jz-menu-container>

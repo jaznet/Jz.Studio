@@ -10,7 +10,6 @@
   <ItemGroup>
     <Folder Include="src\app-view-models\dataviz\components\" />
     <Folder Include="src\app-view-models\dataviz\views\" />
-    <Folder Include="src\app-view-models\graphics\graphics-router\" />
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\app-view-models\graphics\views\" />
     <Folder Include="src\assets\css\" />

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import ArrayStore from 'devextreme/data/array_store';
-import { KeyedCollection } from '../../../library/keyedcollection/keyed-collection';
 import { Spiro } from './spiro';
 
 @Injectable({

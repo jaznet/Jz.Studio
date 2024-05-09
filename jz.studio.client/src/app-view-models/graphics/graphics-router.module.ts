@@ -5,6 +5,7 @@ import { GraphicsComponent } from './graphics.component';
 import { GraphicsHomeComponent } from './components/graphics-home/graphics-home.component';
 import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
 import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
+import { SpirographViewComponent } from './views/spirograph-view/spirograph-view.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'sinewave',
         component: SinewaveViewComponent
+      },
+      {
+        path: 'spirograph',
+        component: SpirographViewComponent
       },
       //{
       //  path: 'dataviz',
