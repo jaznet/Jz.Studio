@@ -4,13 +4,14 @@ import { Spiro } from './spiro';
 import { JzSpirographService } from './jz-spirograph.service';
 import { DxDropDownBoxModule } from 'devextreme-angular';
 import array_store from 'devextreme/data/array_store';
+/*import { DxDataGridComponent} from 'devextreme-angular/ui/data-grid';*/
 
 @Component({
   selector: 'jz-spirograph',
   templateUrl: './jz-spirograph.component.html',
   styleUrls: ['./jz-spirograph.component.css']
 })
-export class JzSpirographComponent implements OnInit, AfterViewInit, AfterContentInit {
+export class  JzSpirographComponent  implements OnInit, AfterViewInit, AfterContentInit {
 
   @HostBinding('class') classes = 'fit-to-parent';
 
@@ -198,19 +199,19 @@ export class JzSpirographComponent implements OnInit, AfterViewInit, AfterConten
   }
 
   loadPresets(preset: string) {
-    console.groupCollapsed('%cloadPresets() maya code', 'color:#69B578', this.service.presetDict.Item(preset));
+    console.groupCollapsed('%cloadPresets() maya code', 'color:#69B578', this.service.presetDict.getItem(preset));
 
-    let values: Spiro = this.service.presetDict.Item(preset);
+    let values: Spiro|null|undefined = this.service.presetDict.getItem(preset);
 
-    let stator = values.st;
+    let stator = values!.st;
     this.stator!.value = stator;
     this.rotorVals[0] = { radius: 0, type: 'x' };
 
-    this.parseRotorValues(1, values.r1);
-    this.parseRotorValues(2, values.r2);
-    this.parseRotorValues(3, values.r3);
-    this.parseRotorValues(4, values.r4);
-    this.parseRotorValues(5, values.r5);
+    this.parseRotorValues(1, values!.r1);
+    this.parseRotorValues(2, values!.r2);
+    this.parseRotorValues(3, values!.r3);
+    this.parseRotorValues(4, values!.r4);
+    this.parseRotorValues(5, values!.r5);
 
     console.log(' rotorVals', this.rotorVals);
 
@@ -229,9 +230,9 @@ export class JzSpirographComponent implements OnInit, AfterViewInit, AfterConten
       }
     }
 
-    this.penr!.value = values.pen;
-    this.penw!.value = values.wd;
-    this.penc!.value = values.cl;
+    this.penr!.value = values!.pen;
+    this.penw!.value = values!.wd;
+    this.penc!.value = values!.cl;
     console.groupEnd();
   }
 

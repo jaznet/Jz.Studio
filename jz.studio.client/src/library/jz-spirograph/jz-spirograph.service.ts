@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, importProvidersFrom } from '@angular/core';
 import ArrayStore from 'devextreme/data/array_store';
 import { Spiro } from './spiro';
+/*import { KeyedCollection } from '../../../src/utilities/keyed-collection';*/
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,26 @@ export class JzSpirographService {
 
   test: string = 'jaz';
 
-  presetDict: KeyedCollection<Spiro> = new KeyedCollection<Spiro>();
+  presetDict: any;
 
+
+  listDataSource;
+
+  constructor() {
+    let that = this;
+    console.log('service constructor', this.presetDict, this.presets.length);
+    this.presets.forEach(function (value: Spiro) {
+      that.presetDict.add(value.name, value);
+      //console.log('foreach', value);
+    });
+
+    this.listDataSource = new ArrayStore({
+      data: this.presets, 
+      key:  "name"
+    })
+    //console.log('dictionary', this.presetDict);
+    //console.log('dictionary', this.presetDict.Item('maya code'));
+  }
   presets: Array<Spiro> =
     [
       {
@@ -280,21 +299,4 @@ export class JzSpirographService {
       }
 
     ];
-  listDataSource;
-
-  constructor() {
-    let that = this;
-    console.log('service constructor', this.presetDict, this.presets.length);
-    this.presets.forEach(function (value: Spiro) {
-      that.presetDict.Add(value.name, value);
-      //console.log('foreach', value);
-    });
-
-    this.listDataSource = new ArrayStore({
-      data: this.presets, 
-      key:  "name"
-    })
-    //console.log('dictionary', this.presetDict);
-    //console.log('dictionary', this.presetDict.Item('maya code'));
-  }
 }

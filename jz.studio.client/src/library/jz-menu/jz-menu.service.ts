@@ -9,9 +9,7 @@ export class JzMenuService {
   @Output() menuItemDeselectedEvent = new EventEmitter<JzMenuTabComponent>();
 
   constructor() { }
-
-
-
+   
   menuItemSelected(selected: JzMenuTabComponent) {
     this.menuItemSelectedEvent.emit(selected);
   }

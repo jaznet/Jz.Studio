@@ -1,35 +1,36 @@
 class KeyedCollection<T> {
-  private items: { [key: string]: T } = {};
+  private items: Map<string, T> = new Map<string, T>();
 
   public containsKey(key: string): boolean {
-    return this.items.hasOwnProperty(key);
+    return this.items.has(key);
   }
 
   public count(): number {
-    return Object.keys(this.items).length;
+    return this.items.size;
   }
 
   public add(key: string, value: T) {
-    this.items[key] = value;
+    this.items.set(key, value);
   }
 
   public remove(key: string): boolean {
-    if (this.items.hasOwnProperty(key)) {
-      delete this.items[key];
-      return true;
-    }
-    return false;
+    return this.items.delete(key);
   }
 
-  public getItem(key: string): T | null {
-    return this.items[key] || null;
+  public getItem(key: string): T | undefined {
+    return this.items.get(key);
   }
 
-  public keys(): string[] {
-    return Object.keys(this.items);
+  public keys(): IterableIterator<string> {
+    return this.items.keys();
   }
 
-  public values(): T[] {
-    return Object.values(this.items);
+  public values(): IterableIterator<T> {
+    return this.items.values();
+  }
+
+  public entries(): IterableIterator<[string, T]> {
+    return this.items.entries();
   }
 }
+
