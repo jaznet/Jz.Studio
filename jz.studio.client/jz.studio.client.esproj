@@ -15,7 +15,22 @@
     <Folder Include="src\assets\css\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
-    <Folder Include="src\library\jz-spirograph\jz-spirograph\" />
+    <Folder Include=".backup\jz-spirograph\jz-spirograph\" />
     <Folder Include="src\models\" />
+    <Folder Include="src\utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".backup\jz-spirograph\jz-spirograph.component.css" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.component.html" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.component.spec.ts" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.component.ts" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.module.ts" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.service.spec.ts" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.service.ts" />
+    <None Include=".backup\jz-spirograph\spiro.spec.ts" />
+    <None Include=".backup\jz-spirograph\spiro.ts" />
+    <None Include=".backup\utilities\keyed-collection.spec.ts" />
+    <None Include=".backup\utilities\keyed-collection.ts" />
+    <None Include=".backup\utilities\utilities.module.ts" />
   </ItemGroup>
 </Project>
