@@ -26,7 +26,7 @@ import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.mo
     RouterModule,
     JzMenuModule,
     JzGraphicsModule,
-    JzSpirographModule
+   
   ],
   exports: [
     GraphicsComponent,
