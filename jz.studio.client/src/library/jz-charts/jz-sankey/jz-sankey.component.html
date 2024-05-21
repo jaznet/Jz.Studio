@@ -1,0 +1,33 @@
+
+<dx-sankey id="sankey"
+           [dataSource]="data"
+           sourceField="source"
+           targetField="target"
+           weightField="weight"
+           [palette]="nodeColors"
+           paletteExtensionMode="alternate"
+           (onDrawn)="isDrawn($event)"
+           [alignment]="['center','bottom','bottom','top','top','center']"
+           >
+
+  <dxo-size [height]="height" [width]="width"> </dxo-size>
+  <dxo-link colorMode="gradient"></dxo-link>
+  <dxo-node [width]="8" [padding]="4"> </dxo-node>
+  <dxo-margin [top]="10"
+              [bottom]="10"
+              [left]="24"
+              [right]="24">
+  </dxo-margin>
+
+  <dxo-title>
+    <dxo-font color="yellow"></dxo-font>
+  </dxo-title>
+
+  <dxo-label>
+    <dxo-font color="#909090" size="11"></dxo-font>
+  </dxo-label>
+
+</dx-sankey>
+
+
+
