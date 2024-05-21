@@ -10,6 +10,7 @@ import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
 import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
 import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
 import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.module';
+import { JzSineWaveModule } from '../../library/jz-sine-wave/jz-sine-wave.module';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.mo
     RouterModule,
     JzMenuModule,
     JzGraphicsModule,
-   
+    JzSineWaveModule,
+   JzSpirographModule
   ],
   exports: [
     GraphicsComponent,

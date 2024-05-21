@@ -44,6 +44,10 @@ export class JzSineWaveComponent implements AfterViewInit {
   plotCreated: boolean = false;
   //#endregion
 
+  constructor() {
+
+  }
+
   ngAfterViewInit(): void {
     console.log('%cplot', 'color:orange', this.initialX, this.initialY);
     this.createPlot();

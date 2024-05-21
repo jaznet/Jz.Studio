@@ -15,6 +15,7 @@
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include=".backup\jz-spirograph\jz-spirograph\" />
+    <Folder Include="src\library\jz-sine-wave\jz-sine-wave\" />
     <Folder Include="src\models\" />
     <Folder Include="src\utilities\" />
   </ItemGroup>
