@@ -1,0 +1,353 @@
+{
+  "links": [
+    {
+      "source": "Nuclear",
+      "target": "Thermal Generation",
+      "weight": 840
+    },
+
+    {
+      "source": "Thermal Generation",
+      "target": "Losses",
+      "weight": 787
+    },
+    {
+      "source": "Thermal Generation",
+      "target": "Electricity Grid",
+      "weight": 526
+    },
+    {
+      "source": "Thermal Generation",
+      "target": "District Heating",
+      "weight": 80
+    },
+    {
+      "source": "Wind",
+      "target": "Electricity Generation",
+      "weight": 289
+    },
+    {
+      "source": "Wave",
+      "target": "Electricity Generation",
+      "weight": 19
+    },
+
+    {
+      "source": "Tidal",
+      "target": "Electricity Generation",
+      "weight": 9
+    },
+    {
+      "source": "Hydro",
+      "target": "Electricity Generation",
+      "weight": 7
+    },
+    {
+      "source": "Sun",
+      "target": "Solar",
+      "weight": 79
+    },
+    {
+      "source": "Solar",
+      "target": "Solar Thermal",
+      "weight": 19
+    },
+    {
+      "source": "Solar",
+      "target": "Solar PV",
+      "weight": 60
+    },
+    {
+      "source": "Solar PV",
+      "target": "Electricity Grid",
+      "weight": 60
+    },
+    {
+      "source": "Geothermal",
+      "target": "Electricity Generation",
+      "weight": 7
+    },
+
+    {
+      "source": "Electricity Generation",
+      "target": "Electricity Grid",
+      "weight": 19
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Heating & Cooling: Commercial",
+      "weight": 114
+    },
+    {
+      "source": "Geothermal",
+      "target": "Pumped Heat",
+      "weight": 333
+    },
+    {
+      "source": "Pumped Heat",
+      "target": "Electricity Generation",
+      "weight": 70
+    },
+    {
+      "source": "Pumped Heat",
+      "target": "Heating & Cooling: Commercial",
+      "weight": 70
+    },
+    {
+      "source": "District Heating",
+      "target": "Heating & Cooling: Commercial",
+      "weight": 22
+    },
+    {
+      "source": "Pumped Heat",
+      "target": "Heating & Cooling: Residential",
+      "weight": 193
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Heating & Cooling: Residential",
+      "weight": 41
+    },
+    {
+      "source": "Solar Thermal",
+      "target": "Heating & Cooling: Residential",
+      "weight": 21
+    },
+
+
+    {
+      "source": "Gas",
+      "target": "H2 Conversion",
+      "weight": 21
+    },
+    {
+      "source": "H2 Conversion",
+      "target": "H2",
+      "weight": 20
+    },
+    {
+      "source": "H2 Conversion",
+      "target": "Losses",
+      "weight": 6
+    },
+
+    {
+      "source": "H2",
+      "target": "Road Transport",
+      "weight": 21
+    },
+
+    {
+      "source": "Oil Imports",
+      "target": "Oil",
+      "weight": 504
+    },
+    {
+      "source": "Oil Reserves",
+      "target": "Oil",
+      "weight": 108
+    },
+
+
+    {
+      "source": "Oil",
+      "target": "Liquid",
+      "weight": 612
+    },
+
+
+    {
+      "source": "Gas Reserves",
+      "target": "Ngas",
+      "weight": 82
+    },
+    {
+      "source": "Gas Imports",
+      "target": "Ngas",
+      "weight": 41
+    },
+    {
+      "source": "Coal Reserves",
+      "target": "Coal",
+      "weight": 64
+    },
+    {
+      "source": "Coal Imports",
+      "target": "Coal",
+      "weight": 12
+    },
+
+    {
+      "source": "Ngas",
+      "target": "Gas",
+      "weight": 123
+    },
+    {
+      "source": "Coal",
+      "target": "Solid",
+      "weight": 76
+    },
+    {
+      "source": "Other Waste",
+      "target": "Solid",
+      "weight": 57
+    },
+
+    {
+      "source": "Agricultural Waste",
+      "target": "Bio-Conversion",
+      "weight": 125
+    },
+    {
+      "source": "UK Land-based Bioenergy",
+      "target": "Bio-Conversion",
+      "weight": 182
+    },
+
+    {
+      "source": "Other Waste",
+      "target": "Bio-Conversion",
+      "weight": 79
+    },
+    {
+      "source": "Marine Algae",
+      "target": "Bio-Conversion",
+      "weight": 4
+    },
+    {
+      "source": "Bio-Conversion",
+      "target": "Solid",
+      "weight": 280
+    },
+    {
+      "source": "Bio-Conversion",
+      "target": "Losses",
+      "weight": 27
+    },
+    {
+      "source": "Biofuel Imports",
+      "target": "Liquid",
+      "weight": 35
+    },
+    {
+      "source": "Solid",
+      "target": "Thermal Generation",
+      "weight": 400
+    },
+    {
+      "source": "Gas",
+      "target": "Thermal Generation",
+      "weight": 152
+    },
+    {
+      "source": "Gas",
+      "target": "Losses",
+      "weight": 1
+    },
+    {
+      "source": "Biomass Imports",
+      "target": "Bio-Conversion",
+      "weight": 35
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Industry",
+      "weight": 342
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Lighting & Appliances: Homes",
+      "weight": 93
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Lighting & Appliances: Commercial",
+      "weight": 90
+    },
+    {
+      "source": "Electricity Grid",
+      "target": "Road Transport",
+      "weight": 38
+    },
+
+    {
+      "source": "Electricity Grid",
+      "target": "Rail Transport",
+      "weight": 8
+    },
+
+    {
+      "source": "Electricity Grid",
+      "target": "Agriculture",
+      "weight": 4
+    },
+    {
+      "source": "Liquid",
+      "target": "International Aviation",
+      "weight": 206
+    },
+    {
+      "source": "Liquid",
+      "target": "Road Transport",
+      "weight": 137
+    },
+
+    {
+      "source": "Liquid",
+      "target": "Domestic Aviation",
+      "weight": 14
+    },
+    {
+      "source": "Liquid",
+      "target": "Rail Transport",
+      "weight": 4
+    },
+    {
+      "source": "Liquid",
+      "target": "International Shipping",
+      "weight": 128
+    },
+
+
+    {
+      "source": "Liquid",
+      "target": "Industry",
+      "weight": 121
+    },
+
+    {
+      "source": "Liquid",
+      "target": "National Navigation",
+      "weight": 33
+    },
+
+
+    {
+      "source": "Liquid",
+      "target": "Agriculture",
+      "weight": 4
+    },
+    {
+      "source": "Gas",
+      "target": "Industry",
+      "weight": 342
+    },
+
+    {
+      "source": "Gas",
+      "target": "Agriculture",
+      "weight": 2
+    },
+    {
+      "source": "Solid",
+      "target": "Industry",
+      "weight": 46
+    },
+    {
+      "source": "Solid",
+      "target": "Agriculture",
+      "weight": 1
+    }
+
+  ]
+}

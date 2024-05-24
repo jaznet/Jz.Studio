@@ -33,7 +33,7 @@ export class SankeyService {
           dataItem = { source: x.source, target: x.target, weight: x.weight, color:'yellow' };
           that.Data.push(dataItem);
         });
-        //console.log('%c  Sankey Data', 'color:yellow', this.Data);
+        console.log('%c  Sankey Data', 'color:yellow', this.Data);
       })
       .catch((error) => {
         console.log('CATCH', error);

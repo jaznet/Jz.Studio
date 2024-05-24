@@ -1,0 +1,25 @@
+{
+  "links": [
+
+
+   
+    {
+      "source": "District Heating",
+      "target": "Industry",
+      "weight": 11
+    },
+
+
+
+
+  
+
+
+
+    {
+      "source": "District Heating",
+      "target": "Heating & Cooling: Homes",
+      "weight": 46
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, AfterViewInit, ViewChild, Element
 import { DxSankeyComponent } from 'devextreme-angular/ui/sankey';
 import { SankeyService, DataItem } from './jz-sankey.service';
 
+
 @Component({
   selector: 'jz-sankey',
   templateUrl: './jz-sankey.component.html',
