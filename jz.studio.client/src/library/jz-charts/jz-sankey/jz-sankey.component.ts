@@ -60,10 +60,10 @@ export class SankeyComponent implements OnInit, AfterContentInit, AfterViewInit 
         //}
        
       });
-      this.sankey?.instance.render();
+       this.sankey?.instance.render();
     }
   }
-
+   
   doit: any;
   onResize(event: { target: { innerWidth: any; }; }) {
     //event.target.innerWidth; // window width
