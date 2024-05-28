@@ -45,7 +45,9 @@ export class SankeyComponent implements OnInit, AfterContentInit, AfterViewInit 
     this.changeDetector.detectChanges();
   }
 
-  isDrawn(event:any) {
+  drawn = 0;
+  isDrawn(event: any) {
+    console.log('draw', this.drawn);
     this.sankeyLinks = this.sankey!.instance.getAllLinks();
     this.sankeyNodes = this.sankey!.instance.getAllNodes();
     if (this.sankeyNodes.length > 0) {                
