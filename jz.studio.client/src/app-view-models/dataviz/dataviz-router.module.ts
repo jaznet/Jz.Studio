@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'sankey',
-        component: SankeyViewComponent
+        loadChildren: () => import('../../library/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
       },
     ]
   }

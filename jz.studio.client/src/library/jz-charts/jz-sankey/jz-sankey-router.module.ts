@@ -1,16 +1,16 @@
-
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { JzDatavizComponent } from './jz-dataviz.component';
+import { SankeyComponent } from './jz-sankey.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: JzDatavizComponent,
+    component: SankeyComponent,
     children: [
       {
         path: '',
-        component: JzDatavizComponent
+        component: SankeyComponent
       },
 
     ]
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class JzDatavizRouterModule { }
+export class JzSankeyRouterModule { }
