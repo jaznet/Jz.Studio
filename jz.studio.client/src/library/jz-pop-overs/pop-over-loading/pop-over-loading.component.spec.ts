@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopoverLoadingComponent } from './popover-loading.component';
+import { PopOverLoadingComponent } from './pop-over-loading.component';
 
 describe('PopoverLoadingComponent', () => {
-  let component: PopoverLoadingComponent;
-  let fixture: ComponentFixture<PopoverLoadingComponent>;
+  let component: PopOverLoadingComponent;
+  let fixture: ComponentFixture<PopOverLoadingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PopoverLoadingComponent]
+      imports: [PopOverLoadingComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PopoverLoadingComponent);
+    fixture = TestBed.createComponent(PopOverLoadingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

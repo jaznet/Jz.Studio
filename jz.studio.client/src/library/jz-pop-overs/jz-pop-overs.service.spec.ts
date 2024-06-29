@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JzPopupsService } from './jz-popups.service';
+import { JzPopOversService } from '../jz-pop-overs/jz-pop-overs.service';
 
 describe('JzPopupsService', () => {
-  let service: JzPopupsService;
+  let service: JzPopOversService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(JzPopupsService);
+    service = TestBed.inject(JzPopOversService);
   });
 
   it('should be created', () => {

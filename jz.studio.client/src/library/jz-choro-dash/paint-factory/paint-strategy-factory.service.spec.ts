@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { PaintStrategyFactoryService } from './paint-strategy-factory.service';
 
 describe('PaintStrategyFactoryService', () => {

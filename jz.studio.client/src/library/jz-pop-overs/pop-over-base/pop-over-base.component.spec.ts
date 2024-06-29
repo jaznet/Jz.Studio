@@ -1,18 +1,18 @@
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PopoverBaseComponent } from './pop-over-base.component';
 
-import { JzPopoverBaseComponent } from './pop-over-base.component';
-
-describe('JzPopoverBaseComponent', () => {
-  let component: JzPopoverBaseComponent;
-  let fixture: ComponentFixture<JzPopoverBaseComponent>;
+describe('PopoverBaseComponent', () => {
+  let component: PopoverBaseComponent;
+  let fixture: ComponentFixture<PopoverBaseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JzPopoverBaseComponent ]
+      declarations: [ PopoverBaseComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzPopoverBaseComponent);
+    fixture = TestBed.createComponent(PopoverBaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

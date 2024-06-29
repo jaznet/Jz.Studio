@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DatavizModule } from '../../dataviz.module';
 import { SankeyViewComponent } from './sankey-view.component';
 import { JzSankeyModule } from '../../../../library/jz-charts/jz-sankey/jz-sankey.module';
-
 
 
 @NgModule({

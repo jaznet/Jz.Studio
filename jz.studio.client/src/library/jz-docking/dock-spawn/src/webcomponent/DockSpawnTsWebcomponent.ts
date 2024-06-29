@@ -6,11 +6,11 @@ import { DockNode } from "../DockNode.js";
 export class DockSpawnTsWebcomponent extends HTMLElement {
     public static cssRootDirectory = "../../lib/css/";
 
-    public dockManager: DockManager;
+    public dockManager!: DockManager;
     private slotId: number = 0;
     private windowResizedBound;
     private slotElementMap: WeakMap<HTMLSlotElement, HTMLElement>;
-    private observer: MutationObserver;
+    private observer!: MutationObserver;
     private initialized = false;
     private elementContainerMap: Map<HTMLElement, PanelContainer> = new Map();
 
@@ -45,7 +45,7 @@ export class DockSpawnTsWebcomponent extends HTMLElement {
         this.dockManager.config.dialogRootElement = dockSpawnDiv;
     }
 
-    public getElementInSlot(slot: HTMLSlotElement): HTMLElement {
+    public getElementInSlot(slot: HTMLSlotElement): HTMLElement|undefined {
         return this.slotElementMap.get(slot);
     }
 
@@ -64,7 +64,7 @@ export class DockSpawnTsWebcomponent extends HTMLElement {
 
             this.dockManager.resize(this.clientWidth, this.clientHeight);
 
-            for (let element of this.children) {
+            for (let element of Array.from (this.children)) {
                 this.handleAddedChildNode(element as HTMLElement)
             }
 
@@ -103,12 +103,12 @@ export class DockSpawnTsWebcomponent extends HTMLElement {
             dockRatio = <number><any>dockRatioAttribute;
         let dockType = element.getAttribute('dock-spawn-dock-type');
 
-        let dockRelativeTo = this.dockManager.context.model.documentManagerNode;
+        let dockRelativeTo:DockNode|null|undefined = this.dockManager.context!.model.documentManagerNode;
         let dockToAttribute = element.getAttribute('dock-spawn-dock-to');
         if (dockToAttribute) {
             //@ts-ignore
             let dockToElement = this.getRootNode().getElementById(dockToAttribute) as HTMLElement;
-            dockRelativeTo = this.dockManager.findNodeFromContainerElement(this.elementContainerMap.get(dockToElement).containerElement);
+            dockRelativeTo = this.dockManager.findNodeFromContainerElement(this.elementContainerMap.get(dockToElement)!.containerElement);
         }
 
         if (dockType == 'left')
@@ -155,7 +155,7 @@ export class DockSpawnTsWebcomponent extends HTMLElement {
         this.dockManager.resize(this.clientWidth, this.clientHeight);
     }
 
-    getDockNodeForElement(elementOrContainer: HTMLElement | PanelContainer): DockNode {
+    getDockNodeForElement(elementOrContainer: HTMLElement | PanelContainer |undefined): DockNode|null|undefined {
         let element = elementOrContainer as HTMLElement;
         if ((<any>element).containerElement)
             element = (<any>elementOrContainer).containerElement as HTMLElement;
@@ -164,27 +164,27 @@ export class DockSpawnTsWebcomponent extends HTMLElement {
 
     dockFill(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, title?: string, hideCloseButton?: boolean) {
         let container = new PanelContainer(element as HTMLElement, this.dockManager, title, panelType, hideCloseButton);
-        this.dockManager.dockFill(dockNode != null ? dockNode : this.dockManager.context.model.documentManagerNode, container);
+        this.dockManager.dockFill(dockNode != null ? dockNode : this.dockManager.context!.model.documentManagerNode, container);
     }
 
-    dockLeft(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio?: number, title?: string, hideCloseButton?: boolean) {
+    dockLeft(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio? : number|undefined, title?: string, hideCloseButton?: boolean) {
         let container = new PanelContainer(element as HTMLElement, this.dockManager, title, panelType, hideCloseButton);
-        this.dockManager.dockLeft(dockNode != null ? dockNode : this.dockManager.context.model.documentManagerNode, container, ratio);
+        this.dockManager.dockLeft(dockNode != null ? dockNode : this.dockManager.context!.model.documentManagerNode, container, ratio);
     }
 
-    dockRight(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio?: number, title?: string, hideCloseButton?: boolean) {
+  dockRight(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio?: number | undefined, title?: string, hideCloseButton?: boolean) {
         let container = new PanelContainer(element as HTMLElement, this.dockManager, title, panelType, hideCloseButton);
-        this.dockManager.dockRight(dockNode != null ? dockNode : this.dockManager.context.model.documentManagerNode, container, ratio);
+        this.dockManager.dockRight(dockNode != null ? dockNode : this.dockManager.context!.model.documentManagerNode, container, ratio);
     }
 
     dockUp(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio?: number, title?: string, hideCloseButton?: boolean) {
         let container = new PanelContainer(element as HTMLElement, this.dockManager, title, panelType, hideCloseButton);
-        this.dockManager.dockUp(dockNode != null ? dockNode : this.dockManager.context.model.documentManagerNode, container, ratio);
+        this.dockManager.dockUp(dockNode != null ? dockNode : this.dockManager.context!.model.documentManagerNode, container, ratio);
     }
 
     dockDown(element: HTMLElement, panelType?: PanelType, dockNode?: DockNode, ratio?: number, title?: string, hideCloseButton?: boolean) {
         let container = new PanelContainer(element as HTMLElement, this.dockManager, title, panelType, hideCloseButton);
-        this.dockManager.dockDown(dockNode != null ? dockNode : this.dockManager.context.model.documentManagerNode, container, ratio);
+        this.dockManager.dockDown(dockNode != null ? dockNode : this.dockManager.context!.model.documentManagerNode, container, ratio);
     }
 
     floatDialog(element: HTMLElement, x: number, y: number, width: number, height: number, panelType?: PanelType, title?: string, hideCloseButton?: boolean) {

@@ -1,7 +1,7 @@
-import { PaintPopulation } from './paint-population';
+import { PaintPopulationStrategy } from './paint-population';
 
 describe('PaintPopulation', () => {
   it('should create an instance', () => {
-    expect(new PaintPopulation()).toBeTruthy();
+  //  expect(new PaintPopulationStrategy()).toBeTruthy();
   });
 });

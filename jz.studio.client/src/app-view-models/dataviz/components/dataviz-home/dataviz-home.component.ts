@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-dataviz-home',
+  selector: 'dataviz-home',
   templateUrl: './dataviz-home.component.html',
   styleUrl: './dataviz-home.component.css'
 })

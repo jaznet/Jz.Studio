@@ -9,7 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app-view-models\dataviz\components\" />
-    <Folder Include="src\app-view-models\dataviz\views\" />
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />

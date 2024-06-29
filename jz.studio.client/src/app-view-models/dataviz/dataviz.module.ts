@@ -10,13 +10,14 @@ import { JzPopOversModule } from '../../library/jz-pop-overs/jz-pop-overs.module
 import { RouterModule } from '@angular/router';
 import { DatavizRouterModule } from './dataviz-router.module';
 import { SankeyViewModule } from './views/sankey-view/sankey-view.module';
+import { TechChartViewModule } from './views/tech-chart-view/tech-chart-view.module';
 
 @NgModule({
   declarations: [
     DatavizComponent,
     DatavizHomeComponent,
     DatavizMenuComponent,
-    TechChartViewComponent,
+  //  TechChartViewComponent, 
   ],
   imports: [
     CommonModule,
@@ -24,7 +25,8 @@ import { SankeyViewModule } from './views/sankey-view/sankey-view.module';
     JzPopOversModule,
     RouterModule,
     DatavizRouterModule,
-    SankeyViewModule
+    SankeyViewModule,
+    TechChartViewModule
   ],
   exports: [
     DatavizComponent,

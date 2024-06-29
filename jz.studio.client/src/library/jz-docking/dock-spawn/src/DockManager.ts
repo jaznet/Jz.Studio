@@ -350,31 +350,31 @@ export class DockManager {
   }
 
   /** Dock the [container] to the left of the [referenceNode] node */
-  dockLeft(referenceNode: DockNode, container: PanelContainer, ratio: number) {
+  dockLeft(referenceNode: DockNode|null|undefined, container: PanelContainer, ratio: number|undefined) {
     return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockLeft.bind(this.layoutEngine), false, ratio);
   }
 
   /** Dock the [container] to the right of the [referenceNode] node */
-  dockRight(referenceNode: DockNode, container: PanelContainer, ratio: number) {
+  dockRight(referenceNode: DockNode | null | undefined, container: PanelContainer, ratio: number | undefined) {
     return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockRight.bind(this.layoutEngine), true, ratio);
   }
 
   /** Dock the [container] above the [referenceNode] node */
-  dockUp(referenceNode: DockNode, container: PanelContainer, ratio: number) {
+  dockUp(referenceNode: DockNode | null | undefined, container: PanelContainer, ratio: number | undefined) {
     return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockUp.bind(this.layoutEngine), false, ratio);
   }
 
   /** Dock the [container] below the [referenceNode] node */
-  dockDown(referenceNode: DockNode, container: PanelContainer, ratio: number) {
+  dockDown(referenceNode: DockNode | null | undefined, container: PanelContainer, ratio: number | undefined) {
     return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockDown.bind(this.layoutEngine), true, ratio);
   }
 
   /** Dock the [container] as a tab inside the [referenceNode] node */
-  dockFill(referenceNode: DockNode, container: PanelContainer) {
+  dockFill(referenceNode: DockNode | null | undefined, container: PanelContainer) {
     return this._requestDockContainer(referenceNode, container, this.layoutEngine!.dockFill.bind(this.layoutEngine), false);
   }
 
-  floatDialog(container: PanelContainer, x: number, y: number, grayoutParent?: PanelContainer, disableResize?: boolean): Dialog {
+  floatDialog(container: PanelContainer, x: number, y: number, grayoutParent?: PanelContainer|null|undefined, disableResize?: boolean): Dialog {
     let retdiag = undefined;
 
     //check the dialog do not already exist
@@ -423,7 +423,7 @@ export class DockManager {
     }
   }
 
-  private _requestDockContainer(referenceNode: DockNode | undefined, container: IDockContainer, layoutDockFunction: (referenceNode: DockNode, newNode: DockNode) => void, dockedToPrevious: boolean, ratio?: number) {
+  private _requestDockContainer(referenceNode: DockNode |null | undefined, container: IDockContainer, layoutDockFunction: (referenceNode: DockNode, newNode: DockNode) => void, dockedToPrevious: boolean, ratio?: number) {
     // Get the active dialog that was dragged on to the dock wheel
     let newNode = new DockNode(container);
     if (container.containerType === 'panel') {

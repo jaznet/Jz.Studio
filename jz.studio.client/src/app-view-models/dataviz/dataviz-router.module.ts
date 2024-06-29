@@ -21,7 +21,8 @@ const routes: Routes = [
       },
       {
         path: 'technical',
-        component: TechChartViewComponent
+        loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)
+      
       },
       {
         path: 'sankey',

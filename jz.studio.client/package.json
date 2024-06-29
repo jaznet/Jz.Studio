@@ -32,6 +32,7 @@
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "svg-path-bounds": "^1.0.2",
+    "techan": "^0.7.0",
     "topojson": "^3.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
@@ -42,6 +43,9 @@
     "@angular/compiler-cli": "^17.0.0",
     "@types/d3": "^7.4.3",
     "@types/jasmine": "~5.1.0",
+    "@types/jest": "^29.5.12",
+    "@types/mocha": "^10.0.7",
+    "jasmine": "^5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
