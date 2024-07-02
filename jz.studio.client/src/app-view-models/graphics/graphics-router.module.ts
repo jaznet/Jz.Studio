@@ -22,6 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'tree',
+       /* loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)*/
         component: RaindomTreeViewComponent
       },
       {
