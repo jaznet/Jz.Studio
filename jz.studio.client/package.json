@@ -29,6 +29,7 @@
     "devextreme": "^23.2.4",
     "devextreme-angular": "^23.2.4",
     "jest-editor-support": "*",
+    "mathjax": "^3.2.2",
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "svg-path-bounds": "^1.0.2",

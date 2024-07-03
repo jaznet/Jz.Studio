@@ -8,10 +8,8 @@ import * as d3 from 'd3';
   styleUrls: ['./jz-sine-wave.component.css']
 })
 export class JzSineWaveComponent implements AfterViewInit {
-
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('plotSvgContainer', { static: false }) plotSvgContainer!: ElementRef;
-
 
   //#region properties
   readonly x = 0;
@@ -222,7 +220,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       { val: 2 * Math.PI, label: "$$2\\pi$$" }
 
     ].forEach((ray) => {
-      const cosX = this.radius * Math.cos(ray.val);
+       const cosX = this.radius * Math.cos(ray.val);
       const sinY = this.radius * -Math.sin(ray.val);
 
       const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
