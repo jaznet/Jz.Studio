@@ -22,7 +22,7 @@
     <None Include=".backup\jz-spirograph\jz-spirograph.component.css" />
     <None Include=".backup\jz-spirograph\jz-spirograph.component.html" />
     <None Include=".backup\jz-spirograph\jz-spirograph.component.spec.ts" />
-    <None Include=".backup\jz-spirograph\jz-spirograph.component.ts" />
+    <None Include=".backup\jz-spirograph\jz-spirograph.component.ts" /> 
     <None Include=".backup\jz-spirograph\jz-spirograph.module.ts" />
     <None Include=".backup\jz-spirograph\jz-spirograph.service.spec.ts" />
     <None Include=".backup\jz-spirograph\jz-spirograph.service.ts" />

@@ -52,7 +52,7 @@
 
             ],
             "scripts": [
-              "node_modules/techan/dist/techan.min.js"
+              //"node_modules/techan/dist/techan.min.js"
             ]
           },
           "configurations": {
