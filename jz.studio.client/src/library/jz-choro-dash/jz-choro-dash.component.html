@@ -8,19 +8,21 @@
 
   <div class="grid-row-fixed">USA Population</div>
 
-  <div class="grid-cols">
-    <div class="grid-col-fill">
+  <div class="grid-rows">
+    <div class="grid-row-fill">
       <jz-choro-dash-panel class="grid-row-fill">
         <choro-usa #choro_usa></choro-usa>
       </jz-choro-dash-panel>
 
-      <jz-choro-dash-panel class="grid-row-fill">
+      <jz-choro-dash-panel style="width:45%">
         <choro-state #choro_state></choro-state>
       </jz-choro-dash-panel>
 
     </div>
     <div class="grid-col-fixed" style="width:150px">table</div>
   </div>
+
+</div>
 
   <pop-over-loading #popover_loading></pop-over-loading>
   <popover-http-error #popover_httperror></popover-http-error>

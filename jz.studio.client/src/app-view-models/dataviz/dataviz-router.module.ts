@@ -20,9 +20,12 @@ const routes: Routes = [
         component: DatavizHomeComponent
       },
       {
+        path: 'choro-dash-loader',
+        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
+      },
+      {
         path: 'technical',
         loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)
-      
       },
       {
         path: 'sankey',
