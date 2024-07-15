@@ -3,9 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DatavizComponent } from './dataviz.component';
 import { DatavizHomeComponent } from './components/dataviz-home/dataviz-home.component';
-import { TechChartViewComponent } from './views/tech-chart-view/tech-chart-view.component';
-import { SankeyViewComponent } from './views/sankey-view/sankey-view.component';
-import { DatavizDefaultViewComponent } from './components/dataviz-default-view/dataviz-default-view.component';
 
 const routes: Routes = [
   {
@@ -15,11 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DatavizDefaultViewComponent
+        component: DatavizHomeComponent
       },
       {
         path: 'home',
-        component: DatavizComponent
+        component: DatavizHomeComponent
       },
       {
         path: 'choro-dash-loader',

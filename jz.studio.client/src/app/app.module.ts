@@ -9,6 +9,8 @@ import { AppWelcomeModule } from './app-welcome/app-welcome.module';
 import { AppPartsModule } from './app-parts/app-parts.module';
 import { RouterModule } from '@angular/router';
 import { SandboxModule } from '../app-view-models/sandbox/sandbox.module';
+import { DatavizModule } from '../app-view-models/dataviz/dataviz.module';
+import { GraphicsModule } from '../app-view-models/graphics/graphics.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { SandboxModule } from '../app-view-models/sandbox/sandbox.module';
     JzUiControlsModule,
     AppPartsModule,
     AppWelcomeModule,
-    SandboxModule
+    SandboxModule,
+    GraphicsModule,
+    DatavizModule
   ],
   providers: [],
   bootstrap: [AppComponent]
