@@ -9,6 +9,7 @@ import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-p
 import { JzChoroDashComponent } from './jz-choro-dash.component';
 import { JzPopOversModule } from '../jz-pop-overs/jz-pop-overs.module';
 import { DxRadioGroupModule } from 'devextreme-angular';
+import { RouterModule } from '@angular/router';
 
 export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
 
@@ -19,6 +20,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
   ],
   imports: [
     CommonModule,
+    RouterModule,
     JzChoroDashRouterModule,
     JzPopOversModule,
     JzChoroplethsModule,
