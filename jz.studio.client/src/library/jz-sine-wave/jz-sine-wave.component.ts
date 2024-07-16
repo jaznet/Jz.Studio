@@ -13,7 +13,7 @@ export class JzSineWaveComponent implements AfterViewInit {
 
   //#region properties
   readonly x = 0;
-  height = 225; width = 600; margin = 12;
+  height = 400; width = 600; margin = 12;
   graphHeight = 0; graphWidth = 0;
   radius = 60;
 
