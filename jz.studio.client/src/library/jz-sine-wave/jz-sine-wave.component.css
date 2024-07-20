@@ -1,3 +1,12 @@
+
 .plot-Container {
-    border:1px solid black;
+  border: 1px solid black;
+}
+
+.sine-wave-container {
+  color: yellow;
+}
+
+.unit-circle {
+    stroke:dodgerblue
 }

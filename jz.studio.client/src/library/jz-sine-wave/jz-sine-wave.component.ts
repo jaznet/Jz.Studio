@@ -152,6 +152,8 @@ export class JzSineWaveComponent implements AfterViewInit {
       .attr('cx', 0)
       .attr('cy', 0)
       .attr('r', this.radius)
+      .attr('stroke', 'white')
+      .attr('fill','transparent')
       .attr('class', 'unit-circle');
 
     this.hypotenuse = this.g_UnitCircleContainer
@@ -410,6 +412,8 @@ export class JzSineWaveComponent implements AfterViewInit {
       .datum(sineData)
       .attr('class', 'sine-curve')
       .attr('transform', translate)
+      .attr('stroke', 'white')
+      .attr('fill','transparent')
       .attr('d', sine);
   }
 
