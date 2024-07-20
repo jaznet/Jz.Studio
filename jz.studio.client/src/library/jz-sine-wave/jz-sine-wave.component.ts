@@ -42,12 +42,13 @@ export class JzSineWaveComponent implements AfterViewInit {
   plotCreated: boolean = false;
   //#endregion
 
-  constructor() {
-
-  }
+  constructor() { }
 
   ngAfterViewInit(): void {
     console.log('%cplot', 'color:orange', this.initialX, this.initialY);
+
+    this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth;
+    this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight;
     this.createPlot();
 
     // Access MathJax here
@@ -247,8 +248,6 @@ export class JzSineWaveComponent implements AfterViewInit {
       //  // Handle startup error
       //  console.error('MathJax startup error:', error);
       //});
-
-
 
       this.g_UnitCircleContainer
         .append('line')

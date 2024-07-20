@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'sinewave-view',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './sinewave-view.component.css'
 })
 export class SinewaveViewComponent {
-
+  @HostBinding('class') classes = 'fit-to-parent';
 }

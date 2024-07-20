@@ -25,6 +25,7 @@ import { GraphicsModule } from '../app-view-models/graphics/graphics.module';
     JzUiControlsModule,
     AppPartsModule,
     AppWelcomeModule,
+
     SandboxModule,
     GraphicsModule,
     DatavizModule
