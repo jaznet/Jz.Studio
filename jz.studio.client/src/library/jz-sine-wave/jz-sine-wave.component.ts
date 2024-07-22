@@ -15,7 +15,7 @@ export class JzSineWaveComponent implements AfterViewInit {
   readonly x = 0;
   height = 400; width = 600; margin = 12;
   graphHeight = 0; graphWidth = 0;
-  radius = 60;
+  unitCircleRadius = 100;
 
   xScale!: (arg0: number) => any;
   yScale!: (arg0: number) => any;
@@ -117,7 +117,7 @@ export class JzSineWaveComponent implements AfterViewInit {
     this.initialX = this.xScale(0);
     this.initialY = this.yScale(10);
 
-    this.yAxisXCoord = (this.radius * 1.5);
+    this.yAxisXCoord = (this.unitCircleRadius * 1.5);
   }
 
   createPlotSvgElement() {
@@ -129,7 +129,7 @@ export class JzSineWaveComponent implements AfterViewInit {
   }
 
   createPlotGElement() {
-    let translate = 'translate(' + (this.initialX + this.radius) + ',' + this.initialY + ')';
+    let translate = 'translate(' + (this.initialX + this.unitCircleRadius) + ',' + this.initialY + ')';
 
     this.g_graphContainer = this.svg_ElementContainer
       .append('g')
@@ -151,8 +151,8 @@ export class JzSineWaveComponent implements AfterViewInit {
       .append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
-      .attr('r', this.radius)
-      .attr('stroke', 'white')
+      .attr('r', this.unitCircleRadius)
+      .attr('stroke', 'yellow')
       .attr('fill','transparent')
       .attr('class', 'unit-circle');
 
@@ -185,7 +185,7 @@ export class JzSineWaveComponent implements AfterViewInit {
 
     this.dot = this.g_UnitCircleContainer
       .append('circle')
-      .attr('cx', this.radius)
+      .attr('cx', this.unitCircleRadius)
       .attr('cy', 0)
       .attr('r', 4)
       .attr('class', 'circle-guide')
@@ -223,8 +223,8 @@ export class JzSineWaveComponent implements AfterViewInit {
       { val: 2 * Math.PI, label: "$$2\\pi$$" }
 
     ].forEach((ray) => {
-       const cosX = this.radius * Math.cos(ray.val);
-      const sinY = this.radius * -Math.sin(ray.val);
+       const cosX = this.unitCircleRadius * Math.cos(ray.val);
+      const sinY = this.unitCircleRadius * -Math.sin(ray.val);
 
       const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
       const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
@@ -276,14 +276,14 @@ export class JzSineWaveComponent implements AfterViewInit {
     // Y-axis-1
     this.yAxisScale = d3.scaleLinear()
       .domain([-1, 1])
-      .range([this.radius * 2, 0]);
+      .range([this.unitCircleRadius * 2, 0]);
 
     const yAxis = d3.axisRight(this.yAxisScale)
       .ticks(3)
       .tickValues([-1, 0, 1])
       .tickFormat(intTickFormat);
 
-    let translate = 'translate(' + this.yAxisXCoord + ',' + (this.radius * -1) + ')';
+    let translate = 'translate(' + this.yAxisXCoord + ',' + (this.unitCircleRadius * -1) + ')';
     console.log('translate addSine yAxis', translate);
 
     this.g_SineWaveContainer
@@ -293,7 +293,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       .call(yAxis);
 
     // Y-axis-2
-    translate = 'translate(' + (this.yAxisXCoord + this.graphWidth) + ',' + (this.radius * -1) + ')';
+    translate = 'translate(' + (this.yAxisXCoord + this.graphWidth) + ',' + (this.unitCircleRadius * -1) + ')';
     this.g_SineWaveContainer
       .append('g')
       .attr('class', 'y axis right')
@@ -331,7 +331,7 @@ export class JzSineWaveComponent implements AfterViewInit {
 
     this.axisDot = this.g_SineWaveContainer
       .append('circle')
-      .attr('cx', this.radius)
+      .attr('cx', this.unitCircleRadius)
       .attr('cy', 0)
       .attr('r', 4)
       .attr('class', 'axis-guide')
@@ -358,8 +358,8 @@ export class JzSineWaveComponent implements AfterViewInit {
     //  .attr('cx', axisDotX)
     //  .attr('cy', 0);
 
-    const dx = this.radius * Math.cos(this.time);
-    const dy = this.radius * -Math.sin(this.time); // counter-clockwise
+    const dx = this.unitCircleRadius * Math.cos(this.time);
+    const dy = this.unitCircleRadius * -Math.sin(this.time); // counter-clockwise
 
     this.dot
       .attr('cx', dx)
@@ -406,7 +406,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       .y((d:any) => { return this.yAxisScale(d.y); });
 
     // console.log('sine', sine);
-    let translate = 'translate(' + this.yAxisXCoord + ',' + (this.radius * -1) + ')';
+    let translate = 'translate(' + this.yAxisXCoord + ',' + (this.unitCircleRadius * -1) + ')';
 
     this.g_SineWaveContainer.append('path')
       .datum(sineData)
