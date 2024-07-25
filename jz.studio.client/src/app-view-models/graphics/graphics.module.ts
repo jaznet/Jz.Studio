@@ -11,6 +11,7 @@ import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree
 import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
 import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.module';
 import { JzSineWaveModule } from '../../library/jz-sine-wave/jz-sine-wave.module';
+import { JzMathJaxDirective } from '../../library/jz-math-jax/jz-math-jax.directive';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { JzSineWaveModule } from '../../library/jz-sine-wave/jz-sine-wave.module
     GraphicsHomeComponent,
     GraphicsMenuComponent,
     RaindomTreeViewComponent,
-    SinewaveViewComponent
+    SinewaveViewComponent,
+    JzMathJaxDirective
   ],
   imports: [
     CommonModule,

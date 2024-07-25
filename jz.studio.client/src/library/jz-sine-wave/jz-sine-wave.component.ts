@@ -88,6 +88,7 @@ export class JzSineWaveComponent implements AfterViewInit {
     this.addSineAxes();
     this.drawGraph();
     this.plotCreated = true;
+    this.renderMathJax();
     // Trigger MathJax rendering
     //MathJax.startup.promise.then(() => {
     //  MathJax.startup.document.clear();
@@ -99,6 +100,18 @@ export class JzSineWaveComponent implements AfterViewInit {
     //});
     
     
+  }
+
+  renderMathJax() {
+    if (window.MathJax) {
+      window.MathJax.typesetPromise()
+        .then(() => {
+          console.log('MathJax typesetting completed');
+        })
+        .catch((err: any) => {
+          console.error('MathJax typesetting error:', err);
+        });
+    }
   }
 
   setDimensions() {
@@ -223,7 +236,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       { val: 2 * Math.PI, label: "$$2\\pi$$" }
 
     ].forEach((ray) => {
-       const cosX = this.unitCircleRadius * Math.cos(ray.val);
+      const cosX = this.unitCircleRadius * Math.cos(ray.val);
       const sinY = this.unitCircleRadius * -Math.sin(ray.val);
 
       const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
@@ -241,7 +254,7 @@ export class JzSineWaveComponent implements AfterViewInit {
         .attr('y', sinY + offsetY)
         .attr('width', 50)
         .attr('height', 50)
-        .html(`<div xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax>${ray.label}</span></div>`);
+        .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
 
       //MathJax.default.startup.promise.then(() => {
       //  // MathJax rendering completed
@@ -258,7 +271,7 @@ export class JzSineWaveComponent implements AfterViewInit {
         .attr('y1', 0)
         .attr('x2', cosX)
         .attr('y2', sinY)
-        .style('stroke', '#000000');
+        .style('stroke', 'yellow');
     });
   }
 
