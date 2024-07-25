@@ -10,3 +10,42 @@
 .unit-circle {
     stroke:dodgerblue
 }
+
+/* src/styles.css or your main stylesheet */
+
+/* General style for all MathJax content */
+.mjx-math {
+  font-size: 16px;
+  color: #ffffff; /* Light text color for contrast on a dark background */
+}
+
+/* Style for the Common HTML output container */
+.mjx-chtml {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Style individual characters */
+.mjx-c {
+  font-family: 'Arial', sans-serif; /* Override default font */
+  font-weight: bold; /* Example of changing weight */
+}
+
+/* Style boxes used in MathJax layout */
+.mjx-box {
+  padding: 0 4px; /* Add some padding around elements */
+}
+
+/* Example of targeting specific types of content */
+.mjx-mn { /* Numbers */
+  color: #00ff00; /* Green */
+}
+
+.mjx-mi { /* Identifiers, like variable names */
+  color: #ff00ff; /* Magenta */
+}
+
+.mjx-mo { /* Operators, like + or - */
+  color: #ffff00; /* Yellow */
+}
+

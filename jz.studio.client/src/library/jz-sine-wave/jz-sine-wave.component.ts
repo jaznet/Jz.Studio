@@ -214,21 +214,13 @@ export class JzSineWaveComponent implements AfterViewInit {
       this.g_UnitCircleContainer
         .append('g')
         .attr('class', 'tick')
-        .attr('stroke', '#888888')
+        .attr('stroke', 'orange')
         .append('foreignObject')
         .attr('x', cosX + offsetX)
         .attr('y', sinY + offsetY)
         .attr('width', 50)
         .attr('height', 50)
         .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
-
-      //MathJax.default.startup.promise.then(() => {
-      //  // MathJax rendering completed
-      //  console.log('MathJax rendering completed');
-      //}).catch((error: any) => {
-      //  // Handle startup error
-      //  console.error('MathJax startup error:', error);
-      //});
 
       this.g_UnitCircleContainer
         .append('line')
