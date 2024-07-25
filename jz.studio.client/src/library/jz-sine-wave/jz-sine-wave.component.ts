@@ -51,55 +51,21 @@ export class JzSineWaveComponent implements AfterViewInit {
     this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight;
     this.createPlot();
 
-    // Access MathJax here
-    // Call the typesetClear function to clear any existing typesetting
-    //MathJax.typesetPromise().then(() => {
-    //  // Typesetting completed
-    //  console.log('MathJax typesetting completed');
-    //}).catch((error: any) => {
-    //  // Handle typesetting error
-    //  console.error('MathJax typesetting error:', error);
-    //});
-
-
   }
-
-// typesetMathJax(): Promise<void> {
-//  return new Promise<void>((resolve, reject) => {
-//    MathJax.typeset(undefined, () => {
-//      // Typesetting completed
-//      resolve();
-//    }, () => {
-//      // Typesetting failed
-//      reject(new Error('MathJax typesetting failed'));
-//    });
-//  });
-//}
-
 
   createPlot() {
     this.setDimensions();
     this.createPlotSvgElement();
     this.createPlotGElement();
     this.createUnitCircleContainer();
-    this.addRadianNumberLine();
     this.createUnitCircle();
+    this.addRadianNumberLine();
+ 
     this.createSineWaveContainer();
     this.addSineAxes();
     this.drawGraph();
     this.plotCreated = true;
     this.renderMathJax();
-    // Trigger MathJax rendering
-    //MathJax.startup.promise.then(() => {
-    //  MathJax.startup.document.clear();
-    //  MathJax.startup.document.updateDocument();
-    //  MathJax.startup.typesetPromise().then(() => {
-    //    // Rendering complete
-    //    console.log("MathJax rendering complete");
-    //  });
-    //});
-    
-    
   }
 
   renderMathJax() {
