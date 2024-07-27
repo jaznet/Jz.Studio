@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -6,54 +6,55 @@ import * as d3 from 'd3';
   templateUrl: './jz-sine-wave.component.html',
   styleUrls: ['./jz-sine-wave.component.css']
 })
-export class JzSineWaveComponent implements AfterViewInit {
+export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('plotSvgContainer', { static: false }) plotSvgContainer!: ElementRef;
 
-  //#region properties
-  readonly x = 0;
-  height = 400;
-  width = 600;
-  margin = 12;
-  graphHeight = 0;
-  graphWidth = 0;
-  unitCircleRadius = 100;
+  private readonly unitCircleRadius = 100;
+  private animationFrameId: number | undefined;
 
-  xScale!: d3.ScaleLinear<number, number>;
-  yScale!: d3.ScaleLinear<number, number>;
-  xAxisScale!: d3.AxisScale<number>;
-  yAxisScale!: d3.AxisScale<number>;
-  initialX!: number;
-  initialY!: number;
-  yAxisXCoord!: number;
 
-  svgElementContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
-  graphContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-  unitCircleContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-  sineWaveContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private margin = 12;
+  private width = 600;
+  private height = 400;
+  private graphHeight = 0;
+  private graphWidth = 0;
+  private time = 0;
+  private xIncrement = 0;
 
-  axisDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  unitCircleDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  verticalDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  hypotenuseLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  oppositeLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  adjacentLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  joiningLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
+  private xScale!: d3.ScaleLinear<number, number>;
+  private yScale!: d3.ScaleLinear<number, number>;
+  private xAxisScale!: d3.AxisScale<number>;
+  private yAxisScale!: d3.AxisScale<number>;
 
-  time = 0;
-  xIncrement = 0;
-  plotCreated = false;
-  //#endregion
+  private svgElementContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
+  private graphContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private unitCircleContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private sineWaveContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+
+  private axisDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
+  private unitCircleDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
+  private verticalDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
+  private hypotenuseLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
+  private oppositeLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
+  private adjacentLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
+  private joiningLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
 
   constructor() { }
 
   ngAfterViewInit(): void {
-    this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth;
+    this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth-(this.margin+2);
     this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight;
-    this.createPlot();
+    this.initializePlot();
   }
 
-  createPlot() {
+  ngOnDestroy(): void {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+  }
+
+  private initializePlot(): void {
     this.setDimensions();
     this.createSvgElement();
     this.createGraphContainer();
@@ -61,37 +62,28 @@ export class JzSineWaveComponent implements AfterViewInit {
     this.addRadianNumberLine();
     this.createSineWaveContainer();
     this.addSineAxes();
-    this.animateGraph();
-    this.plotCreated = true;
+    this.startAnimation();
     this.renderMathJax();
   }
 
-  renderMathJax() {
+  private renderMathJax(): void {
     if (window.MathJax) {
       window.MathJax.typesetPromise()
-        .then(() => {
-          console.log('MathJax typesetting completed');
-        })
-        .catch((err: any) => {
-          console.error('MathJax typesetting error:', err);
-        });
+        .then(() => console.log('MathJax typesetting completed'))
+        .catch((err: any) => console.error('MathJax typesetting error:', err));
     }
   }
 
-  setDimensions() {
+  private setDimensions(): void {
     this.height = this.width * 0.33;
     this.graphHeight = this.height;
     this.graphWidth = this.width * 0.75;
 
     this.xScale = d3.scaleLinear().domain([0, 20]).range([0, this.width]);
     this.yScale = d3.scaleLinear().domain([0, 20]).range([this.height, 0]);
-
-    this.initialX = this.xScale(0);
-    this.initialY = this.yScale(10);
-    this.yAxisXCoord = this.unitCircleRadius * 1.5;
   }
 
-  createSvgElement() {
+  private createSvgElement(): void {
     this.svgElementContainer = d3.select('#plotSvgContainer').append('svg')
       .attr('id', 'svgElement')
       .attr('class', 'svg-element')
@@ -99,8 +91,8 @@ export class JzSineWaveComponent implements AfterViewInit {
       .attr('height', this.height);
   }
 
-  createGraphContainer() {
-    const translate = `translate(${this.initialX + this.unitCircleRadius},${this.initialY})`;
+  private createGraphContainer(): void {
+    const translate = `translate(${this.xScale(0) + this.unitCircleRadius},${this.yScale(10)})`;
 
     this.graphContainer = this.svgElementContainer
       .append('g')
@@ -108,7 +100,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       .attr('transform', translate);
   }
 
-  createUnitCircle() {
+  private createUnitCircle(): void {
     this.unitCircleContainer = this.graphContainer.append('g').attr('class', 'unit-circle-container');
 
     this.unitCircleContainer.append('circle')
@@ -119,35 +111,35 @@ export class JzSineWaveComponent implements AfterViewInit {
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
-    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 0, 0, 'white');
-    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 0, 0, 'white');
-    this.adjacentLine = this.addLine(this.unitCircleContainer, 'adjacent', 0, 0, 'white');
-    this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', this.unitCircleRadius, 0, 4, '#72c4ff');
-    this.verticalDot = this.addCircle(this.unitCircleContainer, 'vertical-guide', 0, 0, 4, '#72c4ff');
-    this.joiningLine = this.addLine(this.unitCircleContainer, 'joining-line', this.yAxisXCoord, 0, 'white');
+    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'white');
+    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'white');
+    this.adjacentLine = this.addLine(this.unitCircleContainer, 'adjacent', 'white');
+    this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', 4, '#72c4ff');
+    this.verticalDot = this.addCircle(this.unitCircleContainer, 'vertical-guide', 4, '#72c4ff');
+    this.joiningLine = this.addLine(this.unitCircleContainer, 'joining-line', 'white');
   }
 
-  addLine(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, x2: number, y2: number, color: string) {
+  private addLine(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, color: string): d3.Selection<SVGLineElement, unknown, HTMLElement, any> {
     return container.append('line')
       .attr('class', className)
       .attr('x1', 0)
       .attr('y1', 0)
-      .attr('x2', x2)
-      .attr('y2', y2)
+      .attr('x2', 0)
+      .attr('y2', 0)
       .style('stroke', color);
   }
 
-  addCircle(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, cx: number, cy: number, radius: number, color: string) {
+  private addCircle(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, radius: number, color: string): d3.Selection<SVGCircleElement, unknown, HTMLElement, any> {
     return container.append('circle')
-      .attr('cx', cx)
-      .attr('cy', cy)
+      .attr('cx', this.unitCircleRadius)
+      .attr('cy', 0)
       .attr('r', radius)
       .attr('class', className)
       .attr('fill-opacity', 0.1)
       .style('stroke', color);
   }
 
-  addRadianNumberLine() {
+  private addRadianNumberLine(): void {
     const radianValues = [
       { val: Math.PI / 4, label: "$$\\frac{\\pi}{4}$$" },
       { val: Math.PI / 2, label: "$$\\frac{\\pi}{2}$$" },
@@ -188,11 +180,11 @@ export class JzSineWaveComponent implements AfterViewInit {
     });
   }
 
-  createSineWaveContainer() {
+  private createSineWaveContainer(): void {
     this.sineWaveContainer = this.graphContainer.append('g').attr('class', 'sine-wave-container');
   }
 
-  addSineAxes() {
+  private addSineAxes(): void {
     const intTickFormat: any = d3.format('d');
     const xTickValues = [0, 1.57, 3.14, 4.71, 6.28];
 
@@ -200,17 +192,17 @@ export class JzSineWaveComponent implements AfterViewInit {
 
     const yAxis = d3.axisRight(this.yAxisScale).ticks(3).tickValues([-1, 0, 1]).tickFormat(intTickFormat);
 
-    let translate = `translate(${this.yAxisXCoord},${this.unitCircleRadius * -1})`;
+    let translate = `translate(${this.unitCircleRadius * 1.5},${this.unitCircleRadius * -1})`;
     this.sineWaveContainer.append('g').attr('class', 'y axis left').attr('transform', translate).call(yAxis);
 
-    translate = `translate(${this.yAxisXCoord + this.graphWidth},${this.unitCircleRadius * -1})`;
+    translate = `translate(${this.unitCircleRadius * 1.5 + this.graphWidth},${this.unitCircleRadius * -1})`;
     this.sineWaveContainer.append('g').attr('class', 'y axis right').attr('transform', translate).call(yAxis);
 
     this.xAxisScale = d3.scaleLinear().domain([0, 6.28]).range([0, this.graphWidth]);
 
     const xAxis = d3.axisBottom(this.xAxisScale).tickValues(xTickValues).tickSizeInner(0).tickSizeOuter(0);
 
-    translate = `translate(${this.yAxisXCoord},0)`;
+    translate = `translate(${this.unitCircleRadius * 1.5},0)`;
     this.sineWaveContainer.append('g').attr('class', 'x axis bottom').attr('transform', translate).call(xAxis);
 
     this.axisDot = this.sineWaveContainer.append('circle')
@@ -222,7 +214,11 @@ export class JzSineWaveComponent implements AfterViewInit {
       .style('stroke', '#72c4ff');
   }
 
-  animateGraph() {
+  private startAnimation(): void {
+    this.animateGraph();
+  }
+
+  private animateGraph(): void {
     const increment = (Math.PI * 2) / 360;
     this.time += increment;
     this.xIncrement += increment;
@@ -243,10 +239,10 @@ export class JzSineWaveComponent implements AfterViewInit {
     this.verticalDot.attr('cy', dy);
     this.joiningLine.attr('y1', dy).attr('x2', dx).attr('y2', dy);
 
-    requestAnimationFrame(this.animateGraph.bind(this));
+    this.animationFrameId = requestAnimationFrame(this.animateGraph.bind(this));
   }
 
-  updateSineWave() {
+  private updateSineWave(): void {
     d3.select('.sine-curve').remove();
     const sineData = d3.range(0, 54).map(x => x * 10 / 84).map(x => ({ x, y: -Math.sin(x - this.time) }));
 
@@ -254,7 +250,7 @@ export class JzSineWaveComponent implements AfterViewInit {
       .x(d => this.xAxisScale(d.x)!)
       .y(d => this.yAxisScale(d.y)!);
 
-    const translate = `translate(${this.yAxisXCoord},${this.unitCircleRadius * -1})`;
+    const translate = `translate(${this.unitCircleRadius * 1.5},${this.unitCircleRadius * -1})`;
 
     this.sineWaveContainer.append('path')
       .datum(sineData)
