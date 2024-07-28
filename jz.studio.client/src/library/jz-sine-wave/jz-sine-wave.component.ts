@@ -1,6 +1,15 @@
 import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 
+interface Margin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+
+
 @Component({
   selector: 'jz-sine-wave',
   templateUrl: './jz-sine-wave.component.html',
@@ -14,9 +23,9 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   private animationFrameId: number | undefined;
 
 
-  private margin = 12;
-  private width = 600;
-  private height = 400;
+  private readonly margin: Margin = { top: 12, right: 12, bottom: 12, left: 36 };
+  private width:number = 600;
+  private height: number = 400;
   private graphHeight = 0;
   private graphWidth = 0;
   private time = 0;
@@ -43,8 +52,8 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   constructor() { }
 
   ngAfterViewInit(): void {
-    this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth-(this.margin+2);
-    this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight;
+    this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth - this.margin.left - this.margin.right;
+    this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight -this.margin.bottom - this.margin.top;
     this.initializePlot();
   }
 
@@ -61,7 +70,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     this.createUnitCircle();
     this.addRadianNumberLine();
     this.createSineWaveContainer();
-    this.addSineAxes();
+    this.addGraphAxes();
     this.startAnimation();
     this.renderMathJax();
   }
@@ -75,9 +84,9 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   }
 
   private setDimensions(): void {
-    this.height = this.width * 0.33;
+  /*  this.height = this.width * 0.33;*/
     this.graphHeight = this.height;
-    this.graphWidth = this.width * 0.75;
+    this.graphWidth = this.width;// * 0.75;
 
     this.xScale = d3.scaleLinear().domain([0, 20]).range([0, this.width]);
     this.yScale = d3.scaleLinear().domain([0, 20]).range([this.height, 0]);
@@ -104,7 +113,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     this.unitCircleContainer = this.graphContainer.append('g').attr('class', 'unit-circle-container');
 
     this.unitCircleContainer.append('circle')
-      .attr('cx', 0)
+      .attr('cx', this.margin.left)
       .attr('cy', 0)
       .attr('r', this.unitCircleRadius)
       .attr('stroke', 'yellow')
@@ -184,7 +193,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     this.sineWaveContainer = this.graphContainer.append('g').attr('class', 'sine-wave-container');
   }
 
-  private addSineAxes(): void {
+  private addGraphAxes(): void {
     const intTickFormat: any = d3.format('d');
     const xTickValues = [0, 1.57, 3.14, 4.71, 6.28];
 
