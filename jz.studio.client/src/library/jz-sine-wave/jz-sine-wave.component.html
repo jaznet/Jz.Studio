@@ -1,6 +1,6 @@
 
 <script>
-  function  loadMathJax() {
+  function loadMathJax() {
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.async = true;
@@ -15,10 +15,19 @@
   loadMathJax();
 </script>
 
-<unit-circle></unit-circle>
+<div class="grid-rows">
+  <div class="grid-row-filled" style="height: 50%">
+    <unit-circle></unit-circle>
+  </div>
 
-<div class="fit-to-parent" style="border:1px solid white">
-  <div #plotSvgContainer id="plotSvgContainer"
-       class="fit-to-content"
-       style="border:1px solid black"></div>
+  <div class="grid-row-filled" style="height: 50%; border:1px solid white">
+    
+      <div #plotSvgContainer id="plotSvgContainer"
+           class="fit-to-content"
+           style="border:1px solid black">
+
+      </div>
+   
+  </div>
+
 </div>

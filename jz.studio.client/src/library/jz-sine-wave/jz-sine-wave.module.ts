@@ -8,6 +8,6 @@ import { UnitCircleComponent } from './unit-circle/unit-circle.component';
   imports: [
     CommonModule,
   ],
-  exports: [JzSineWaveComponent]
+  exports: [JzSineWaveComponent, UnitCircleComponent]
 })
 export class JzSineWaveModule { }
