@@ -8,8 +8,6 @@ interface Margin {
   left: number;
 }
 
-
-
 @Component({
   selector: 'jz-sine-wave',
   templateUrl: './jz-sine-wave.component.html',
@@ -20,6 +18,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   @ViewChild('plotSvgContainer', { static: false }) plotSvgContainer!: ElementRef;
 
   private readonly unitCircleRadius = 100;
+  unitCircleOrigin: { cx: number, cy: number } = { cx:0, cy:0};
   private animationFrameId: number | undefined;
 
 
@@ -120,7 +119,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
-    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'white');
+    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'orangered');
     this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'white');
     this.adjacentLine = this.addLine(this.unitCircleContainer, 'adjacent', 'white');
     this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', 4, '#72c4ff');
@@ -131,7 +130,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
   private addLine(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, color: string): d3.Selection<SVGLineElement, unknown, HTMLElement, any> {
     return container.append('line')
       .attr('class', className)
-      .attr('x1', 0)
+      .attr('x1', 0+this.margin.left)
       .attr('y1', 0)
       .attr('x2', 0)
       .attr('y2', 0)
@@ -172,7 +171,7 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
         .attr('class', 'tick')
         .attr('stroke', 'orange')
         .append('foreignObject')
-        .attr('x', cosX + offsetX)
+        .attr('x', cosX + offsetX+this.margin.left)
         .attr('y', sinY + offsetY)
         .attr('width', 50)
         .attr('height', 50)
@@ -181,11 +180,11 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
       this.unitCircleContainer
         .append('line')
         .attr('class', 'spoke')
-        .attr('x1', 0)
+        .attr('x1', this.margin.left)
         .attr('y1', 0)
-        .attr('x2', cosX)
+        .attr('x2', cosX+this.margin.left)
         .attr('y2', sinY)
-        .style('stroke', 'yellow');
+        .style('stroke', 'pink');
     });
   }
 
@@ -197,15 +196,26 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     const intTickFormat: any = d3.format('d');
     const xTickValues = [0, 1.57, 3.14, 4.71, 6.28];
 
-    this.yAxisScale = d3.scaleLinear().domain([-1, 1]).range([this.unitCircleRadius * 2, 0]);
+   this.yAxisScale = d3.scaleLinear().domain([-1, 1]).range([this.unitCircleRadius * 2, 0]);
 
-    const yAxis = d3.axisRight(this.yAxisScale).ticks(3).tickValues([-1, 0, 1]).tickFormat(intTickFormat);
-
+    const yAxis = d3.axisRight(this.yAxisScale)
+      .ticks(3)
+      .tickValues([-1, 0, 1])
+       .tickFormat(intTickFormat);
     let translate = `translate(${this.unitCircleRadius * 1.5},${this.unitCircleRadius * -1})`;
-    this.sineWaveContainer.append('g').attr('class', 'y axis left').attr('transform', translate).call(yAxis);
+    this.sineWaveContainer
+      .append('g')
+      .attr('class', 'y axis left')
+      .attr('transform', translate)
+      .call(yAxis);
 
     translate = `translate(${this.unitCircleRadius * 1.5 + this.graphWidth},${this.unitCircleRadius * -1})`;
-    this.sineWaveContainer.append('g').attr('class', 'y axis right').attr('transform', translate).call(yAxis);
+    this.sineWaveContainer
+      .append('g')
+      .attr('class', 'y axis right')
+      .attr('transform', translate)
+      .style('stroke','dodgerblue')
+      .call(yAxis);
 
     this.xAxisScale = d3.scaleLinear().domain([0, 6.28]).range([0, this.graphWidth]);
 
@@ -241,12 +251,12 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     const dx = this.unitCircleRadius * Math.cos(this.time);
     const dy = this.unitCircleRadius * -Math.sin(this.time);
 
-    this.unitCircleDot.attr('cx', dx).attr('cy', dy);
-    this.hypotenuseLine.attr('x2', dx).attr('y2', dy);
-    this.oppositeLine.attr('x1', dx).attr('y1', dy).attr('x2', dx).attr('y2', 0);
-    this.adjacentLine.attr('x1', dx).attr('y1', 0);
+    this.unitCircleDot.attr('cx', dx + this.margin.left).attr('cy', dy);
+    this.hypotenuseLine.attr('x2', dx+this.margin.left).attr('y2', dy);
+    this.oppositeLine.attr('x1', dx + this.margin.left).attr('y1', dy).attr('x2', dx).attr('y2', 0);
+    this.adjacentLine.attr('x1', dx + this.margin.left).attr('y1', 0);
     this.verticalDot.attr('cy', dy);
-    this.joiningLine.attr('y1', dy).attr('x2', dx).attr('y2', dy);
+    this.joiningLine.attr('y1', dy).attr('x2', dx + this.margin.left).attr('y2', dy);
 
     this.animationFrameId = requestAnimationFrame(this.animateGraph.bind(this));
   }
