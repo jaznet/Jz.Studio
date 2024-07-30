@@ -119,18 +119,18 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
-    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'orangered');
-    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'white');
+    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'dodgerblue');
+    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'seagreen');
     this.adjacentLine = this.addLine(this.unitCircleContainer, 'adjacent', 'white');
-    this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', 4, '#72c4ff');
-    this.verticalDot = this.addCircle(this.unitCircleContainer, 'vertical-guide', 4, '#72c4ff');
-    this.joiningLine = this.addLine(this.unitCircleContainer, 'joining-line', 'white');
+    //this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', 4, '#72c4ff');
+    //this.verticalDot = this.addCircle(this.unitCircleContainer, 'vertical-guide', 4, '#72c4ff');
+    //this.joiningLine = this.addLine(this.unitCircleContainer, 'joining-line', 'white');
   }
 
   private addLine(container: d3.Selection<SVGGElement, unknown, HTMLElement, any>, className: string, color: string): d3.Selection<SVGLineElement, unknown, HTMLElement, any> {
     return container.append('line')
       .attr('class', className)
-      .attr('x1', 0+this.margin.left)
+      .attr('x1', this.margin.left)
       .attr('y1', 0)
       .attr('x2', 0)
       .attr('y2', 0)
@@ -177,14 +177,14 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
         .attr('height', 50)
         .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
 
-      this.unitCircleContainer
-        .append('line')
-        .attr('class', 'spoke')
-        .attr('x1', this.margin.left)
-        .attr('y1', 0)
-        .attr('x2', cosX+this.margin.left)
-        .attr('y2', sinY)
-        .style('stroke', 'pink');
+      //this.unitCircleContainer
+      //  .append('line')
+      //  .attr('class', 'spoke')
+      //  .attr('x1', this.margin.left)
+      //  .attr('y1', 0)
+      //  .attr('x2', cosX+this.margin.left)
+      //  .attr('y2', sinY)
+      //  .style('stroke', 'pink');
     });
   }
 
@@ -251,12 +251,21 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
     const dx = this.unitCircleRadius * Math.cos(this.time);
     const dy = this.unitCircleRadius * -Math.sin(this.time);
 
-    this.unitCircleDot.attr('cx', dx + this.margin.left).attr('cy', dy);
-    this.hypotenuseLine.attr('x2', dx+this.margin.left).attr('y2', dy);
-    this.oppositeLine.attr('x1', dx + this.margin.left).attr('y1', dy).attr('x2', dx).attr('y2', 0);
-    this.adjacentLine.attr('x1', dx + this.margin.left).attr('y1', 0);
-    this.verticalDot.attr('cy', dy);
-    this.joiningLine.attr('y1', dy).attr('x2', dx + this.margin.left).attr('y2', dy);
+  //  this.unitCircleDot.attr('cx', dx + this.margin.left).attr('cy', dy);
+    this.hypotenuseLine
+      .attr('x2', dx + this.margin.left)
+      .attr('y2', dy);
+    this.oppositeLine
+      .attr('x1', dx + this.margin.left)
+      .attr('y1', dy)
+      .attr('x2', dx + this.margin.left)
+      .attr('y2', 0);
+    this.adjacentLine
+      .attr('x1', this.margin.left)
+      .attr('y1', 0)
+      .attr('x2', dx + this.margin.left);
+  //  this.verticalDot.attr('cy', dy);
+   // this.joiningLine.attr('y1', dy).attr('x2', dx + this.margin.left).attr('y2', dy);
 
     this.animationFrameId = requestAnimationFrame(this.animateGraph.bind(this));
   }
