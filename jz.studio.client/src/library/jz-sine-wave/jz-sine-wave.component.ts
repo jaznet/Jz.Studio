@@ -119,8 +119,8 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
-    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'dodgerblue');
-    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'seagreen');
+    this.hypotenuseLine = this.addLine(this.unitCircleContainer, 'hypotenuse', 'white');
+    this.oppositeLine = this.addLine(this.unitCircleContainer, 'opposite', 'white');
     this.adjacentLine = this.addLine(this.unitCircleContainer, 'adjacent', 'white');
     //this.unitCircleDot = this.addCircle(this.unitCircleContainer, 'circle-guide', 4, '#72c4ff');
     //this.verticalDot = this.addCircle(this.unitCircleContainer, 'vertical-guide', 4, '#72c4ff');
@@ -177,14 +177,14 @@ export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
         .attr('height', 50)
         .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
 
-      //this.unitCircleContainer
-      //  .append('line')
-      //  .attr('class', 'spoke')
-      //  .attr('x1', this.margin.left)
-      //  .attr('y1', 0)
-      //  .attr('x2', cosX+this.margin.left)
-      //  .attr('y2', sinY)
-      //  .style('stroke', 'pink');
+      this.unitCircleContainer
+        .append('line')
+        .attr('class', 'spoke')
+        .attr('x1', this.margin.left)
+        .attr('y1', 0)
+        .attr('x2', cosX+this.margin.left)
+        .attr('y2', sinY)
+        .style('stroke', 'black');
     });
   }
 
