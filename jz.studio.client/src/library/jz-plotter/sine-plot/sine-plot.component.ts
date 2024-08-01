@@ -1,3 +1,4 @@
+
 import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy } from '@angular/core';
 import * as d3 from 'd3';
 
@@ -9,11 +10,11 @@ interface Margin {
 }
 
 @Component({
-  selector: 'jz-sine-wave',
-  templateUrl: './jz-sine-wave.component.html',
-  styleUrls: ['./jz-sine-wave.component.css']
+  selector: 'sine-plot',
+  templateUrl: './sine-plot.component.html',
+  styleUrls: ['./sine-plot.component.css']
 })
-export class JzSineWaveComponent implements AfterViewInit, OnDestroy {
+export class SinePlotComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('plotSvgContainer', { static: false }) plotSvgContainer!: ElementRef;
 

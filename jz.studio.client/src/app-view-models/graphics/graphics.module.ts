@@ -10,8 +10,8 @@ import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
 import { RaindomTreeViewComponent } from './views/raindom-tree-view/raindom-tree-view.component';
 import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.component';
 import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.module';
-import { JzSineWaveModule } from '../../library/jz-sine-wave/jz-sine-wave.module';
 import { JzMathJaxDirective } from '../../library/jz-math-jax/jz-math-jax.directive';
+import { JzPlotterModule } from '../../library/jz-plotter/jz-plotter.module';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { JzMathJaxDirective } from '../../library/jz-math-jax/jz-math-jax.direct
     RouterModule,
     JzMenuModule,
     JzGraphicsModule,
-    JzSineWaveModule,
+    JzPlotterModule,
    JzSpirographModule
   ],
   exports: [

@@ -10,7 +10,6 @@ import { DxDataGridModule, DxDropDownBoxModule } from 'devextreme-angular';
   declarations: [
     RandomTreeComponent,
     
-   
   ],
   imports: [
     CommonModule,
@@ -21,8 +20,7 @@ import { DxDataGridModule, DxDropDownBoxModule } from 'devextreme-angular';
   ],
   exports: [
     RandomTreeComponent,
-   
-   
+     
   ],
 })
 export class JzGraphicsModule { }
