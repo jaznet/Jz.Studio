@@ -1,5 +1,7 @@
+
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
+import { JzPlotterService } from '../jz-plotter.service';
 
 @Component({
   selector: 'unit-circle',
@@ -10,7 +12,6 @@ export class UnitCircleComponent implements AfterViewInit {
   @Input() width: number = 400;
   @Input() height: number = 400;
 
-
   private unitCircleContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private unitCircle!: any;
   private origin: { x: number; y: number } = { x: 0, y: 0 };
@@ -18,9 +19,10 @@ export class UnitCircleComponent implements AfterViewInit {
 
   /* @ViewChild('unitCircleContainer', { static: false }) unitCircleContainer!: ElementRef;*/
 
+  constructor(private plotter:JzPlotterService) { }
 
   ngAfterViewInit(): void {
-
+    console.log(this.plotter.radianValues);
     this.origin.x = this.width / 2;
     this.origin.y = this.height / 2;
     this.radius = (this.width * .5)/2;
@@ -40,5 +42,9 @@ export class UnitCircleComponent implements AfterViewInit {
       .attr('stroke', 'yellow')
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
+
+    this.plotter.radianValues.forEach((ray) => {
+
+    }
   }
 }
