@@ -44,7 +44,7 @@ export class UnitCircleComponent implements AfterViewInit {
       .attr('class', 'unit-circle');
 
     this.plotter.radianValues.forEach((ray) => {
-
-    }
+      console.log(ray);
+     })
   }
 }
