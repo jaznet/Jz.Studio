@@ -12,6 +12,8 @@ export class UnitCircleComponent implements AfterViewInit {
   @Input() width: number = 400;
   @Input() height: number = 400;
 
+  private svgElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
+  private gElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>; 
   private unitCircleContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private unitCircle!: any;
   private origin: { x: number; y: number } = { x: 0, y: 0 };
@@ -25,13 +27,21 @@ export class UnitCircleComponent implements AfterViewInit {
     console.log(this.plotter.radianValues);
     this.origin.x = this.width / 2;
     this.origin.y = this.height / 2;
-    this.radius = (this.width * .5)/2;
+    this.radius = (this.width * .5) / 2;
 
-    this.unitCircleContainer = d3.select('#unitCircleContainer').append('svg')
+    this.svgElement = d3.select('#svgElement')
       .attr('id', 'svgElement')
       .attr('class', 'svg-element')
       .attr('width', this.width)
       .attr('height', this.height);
+
+    this.gElement = d3.select('#gElement');
+
+    //this.unitCircleContainer = d3.select('#unitCircleContainer').append('svg')
+    //  .attr('id', 'svgElement')
+    //  .attr('class', 'svg-element')
+    //  .attr('width', this.width)
+    //  .attr('height', this.height);
 
     this.unitCircle = this.unitCircleContainer.append('g').attr('class', 'unit-circle-container');
 
