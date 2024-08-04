@@ -47,8 +47,8 @@ export class UnitCircleComponent implements AfterViewInit {
 
     this.unitCircleGroup = d3.select('#unitCircleGroup')
     this.unitCircleGroup.append('circle')
-      .attr('cx', this.origin.x)
-      .attr('cy', this.origin.y)
+      .attr('cx', 0)
+      .attr('cy', 0)
       .attr('r', this.radius)
       .attr('stroke', '#a7aaa4')
       .attr('fill', 'transparent')
@@ -62,13 +62,25 @@ export class UnitCircleComponent implements AfterViewInit {
       const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
 
       this.unitCircleGroup
+      .attr('transform','translate(100,100)')
         .append('line')
         .attr('class', 'spoke')
-        .attr('x1', this.origin.x)
-        .attr('y1', this.origin.y)
-        .attr('x2', cosX + this.origin.x)
-        .attr('y2', sinY + this.origin.y)
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', cosX)
+        .attr('y2', sinY)
         .style('stroke', 'black');
+
+      cosX = (this.unitCircleRadius * 1.2) * Math.cos(ray.val);
+      sinY = (this.unitCircleRadius * 1.2) * -Math.sin(ray.val);
+
+      this.unitCircleGroup
+        .append('circle')
+        .attr('class', 'spoke')
+        .attr('cx', cosX)
+        .attr('cy', sinY)  
+        .attr('r', 3)
+        .style('stroke', 'yellow');
 
       console.log(ray);
 
