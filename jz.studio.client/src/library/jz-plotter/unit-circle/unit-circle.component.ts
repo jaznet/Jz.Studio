@@ -3,6 +3,13 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular
 import * as d3 from 'd3';
 import { JzPlotterService } from '../jz-plotter.service';
 
+interface Margin {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
 @Component({
   selector: 'unit-circle',
   templateUrl: './unit-circle.component.html',
@@ -13,13 +20,14 @@ export class UnitCircleComponent implements AfterViewInit {
   @Input() height: number = 400;
 
   private svgElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
-  private gElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>; 
+  private gElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
+  private unitCircleGroup!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
   private unitCircleContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private unitCircle!: any;
+  private unitCircleRadius = 100;
   private origin: { x: number; y: number } = { x: 0, y: 0 };
   private radius: number = 0;
-
-  /* @ViewChild('unitCircleContainer', { static: false }) unitCircleContainer!: ElementRef;*/
+  private margin: Margin = { top: 12, right: 12, bottom: 12, left: 36 };
 
   constructor(private plotter:JzPlotterService) { }
 
@@ -37,24 +45,33 @@ export class UnitCircleComponent implements AfterViewInit {
 
     this.gElement = d3.select('#gElement');
 
-    //this.unitCircleContainer = d3.select('#unitCircleContainer').append('svg')
-    //  .attr('id', 'svgElement')
-    //  .attr('class', 'svg-element')
-    //  .attr('width', this.width)
-    //  .attr('height', this.height);
-
-    this.unitCircle = this.unitCircleContainer.append('g').attr('class', 'unit-circle-container');
-
-    this.unitCircle.append('circle')
+    this.unitCircleGroup = d3.select('#unitCircleGroup')
+    this.unitCircleGroup.append('circle')
       .attr('cx', this.origin.x)
       .attr('cy', this.origin.y)
       .attr('r', this.radius)
-      .attr('stroke', 'yellow')
+      .attr('stroke', '#a7aaa4')
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
     this.plotter.radianValues.forEach((ray) => {
+       let cosX = this.unitCircleRadius * Math.cos(ray.val);
+       let sinY = this.unitCircleRadius * -Math.sin(ray.val);
+
+      const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
+      const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
+
+      this.unitCircleGroup
+        .append('line')
+        .attr('class', 'spoke')
+        .attr('x1', this.origin.x)
+        .attr('y1', this.origin.y)
+        .attr('x2', cosX + this.origin.x)
+        .attr('y2', sinY + this.origin.y)
+        .style('stroke', 'black');
+
       console.log(ray);
+
      })
   }
 }
