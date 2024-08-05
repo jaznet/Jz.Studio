@@ -29,10 +29,14 @@ export class UnitCircleComponent implements AfterViewInit {
   private radius: number = 0;
   private margin: Margin = { top: 12, right: 12, bottom: 12, left: 36 };
 
-  constructor(private plotter:JzPlotterService) { }
+  constructor(
+    private elementRef: ElementRef,
+    private plotter: JzPlotterService) { }
 
   ngAfterViewInit(): void {
-    console.log(this.plotter.radianValues);
+    console.log(this.elementRef.nativeElement);
+    this.width = this.elementRef.nativeElement.clientWidth < 400 ? 400 : this.elementRef.nativeElement.clientWidth;
+    this.height = this.elementRef.nativeElement.clientHeight;
     this.origin.x = this.width / 2;
     this.origin.y = this.height / 2;
     this.radius = (this.width * .5) / 2;
