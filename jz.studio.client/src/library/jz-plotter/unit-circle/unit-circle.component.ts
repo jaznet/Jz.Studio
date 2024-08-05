@@ -54,6 +54,9 @@ export class UnitCircleComponent implements AfterViewInit {
       .attr('fill', 'transparent')
       .attr('class', 'unit-circle');
 
+    this.unitCircleGroup
+      .attr('transform', 'translate(200,200)');
+
     this.plotter.radianValues.forEach((ray) => {
        let cosX = this.unitCircleRadius * Math.cos(ray.val);
        let sinY = this.unitCircleRadius * -Math.sin(ray.val);
@@ -62,7 +65,7 @@ export class UnitCircleComponent implements AfterViewInit {
       const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
 
       this.unitCircleGroup
-      .attr('transform','translate(100,100)')
+    
         .append('line')
         .attr('class', 'spoke')
         .attr('x1', 0)
