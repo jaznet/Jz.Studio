@@ -25,7 +25,7 @@ export class UnitCircleComponent implements AfterViewInit {
   private unitCircleContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private unitCircle!: any;
   private unitCircleRadius = 100;
-  private origin: { x: number; y: number } = { x: 0, y: 0 };
+ // private origin: { x: number; y: number } = { x: 0, y: 0 };
   private radius: number = 0;
   private margin: Margin = { top: 12, right: 12, bottom: 12, left: 36 };
 
@@ -61,15 +61,19 @@ export class UnitCircleComponent implements AfterViewInit {
     this.unitCircleGroup
       .attr('transform', 'translate(200,200)');
 
+    this.drawSpokes();
+   
+  }
+
+  drawSpokes() {
     this.plotter.radianValues.forEach((ray) => {
-       let cosX = this.unitCircleRadius * Math.cos(ray.val);
-       let sinY = this.unitCircleRadius * -Math.sin(ray.val);
+      let cosX = this.unitCircleRadius * Math.cos(ray.val);
+      let sinY = this.unitCircleRadius * -Math.sin(ray.val);
 
       const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
       const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
 
       this.unitCircleGroup
-    
         .append('line')
         .attr('class', 'spoke')
         .attr('x1', 0)
@@ -85,12 +89,12 @@ export class UnitCircleComponent implements AfterViewInit {
         .append('circle')
         .attr('class', 'spoke')
         .attr('cx', cosX)
-        .attr('cy', sinY)  
-        .attr('r', 3)
-        .style('stroke', 'yellow');
+        .attr('cy', sinY)
+        .attr('r', 2)
+        .style('stroke', 'black');
 
       console.log(ray);
 
-     })
+    })
   }
 }
