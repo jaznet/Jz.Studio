@@ -22,10 +22,11 @@ export class UnitCircleComponent implements AfterViewInit {
   private svgElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
   private gElement!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
   private unitCircleGroup!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
+  private spokes!: d3.Selection<d3.BaseType, unknown, HTMLElement, any>;
+  private labels: any;
   private unitCircleContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private unitCircle!: any;
   private unitCircleRadius = 100;
- // private origin: { x: number; y: number } = { x: 0, y: 0 };
   private radius: number = 0;
   private margin: Margin = { top: 12, right: 12, bottom: 12, left: 36 };
 
@@ -37,8 +38,6 @@ export class UnitCircleComponent implements AfterViewInit {
     console.log(this.elementRef.nativeElement);
     this.width = this.elementRef.nativeElement.clientWidth < 400 ? 400 : this.elementRef.nativeElement.clientWidth;
     this.height = this.elementRef.nativeElement.clientHeight;
-    this.origin.x = this.width / 2;
-    this.origin.y = this.height / 2;
     this.radius = (this.width * .5) / 2;
 
     this.svgElement = d3.select('#svgElement')
@@ -62,10 +61,11 @@ export class UnitCircleComponent implements AfterViewInit {
       .attr('transform', 'translate(200,200)');
 
     this.drawSpokes();
-   
+    this.drawLabels();
   }
 
   drawSpokes() {
+    this.spokes = d3.select('#spokes');
     this.plotter.radianValues.forEach((ray) => {
       let cosX = this.unitCircleRadius * Math.cos(ray.val);
       let sinY = this.unitCircleRadius * -Math.sin(ray.val);
@@ -73,7 +73,7 @@ export class UnitCircleComponent implements AfterViewInit {
       const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
       const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
 
-      this.unitCircleGroup
+      this.spokes
         .append('line')
         .attr('class', 'spoke')
         .attr('x1', 0)
@@ -85,7 +85,7 @@ export class UnitCircleComponent implements AfterViewInit {
       cosX = (this.unitCircleRadius * 1.2) * Math.cos(ray.val);
       sinY = (this.unitCircleRadius * 1.2) * -Math.sin(ray.val);
 
-      this.unitCircleGroup
+      this.spokes
         .append('circle')
         .attr('class', 'spoke')
         .attr('cx', cosX)
@@ -95,6 +95,25 @@ export class UnitCircleComponent implements AfterViewInit {
 
       console.log(ray);
 
+    })
+  }
+
+  drawLabels() {
+    this.labels = d3.select('#labels');
+
+
+   
+    this.plotter.radianValues.forEach((ray) => {
+      let cosX = this.unitCircleRadius * Math.cos(ray.val);
+      let sinY = this.unitCircleRadius * -Math.sin(ray.val);
+      const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
+      const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
+      this.labels.append('foreignObject')
+        .attr('x', cosX + offsetX + this.margin.left)
+        .attr('y', sinY + offsetY)
+        .attr('width', 50)
+        .attr('height', 50)
+        .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
     })
   }
 }
