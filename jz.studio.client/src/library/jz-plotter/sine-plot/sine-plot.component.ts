@@ -73,14 +73,37 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy {
     this.addGraphAxes();
     this.startAnimation();
     this.renderMathJax();
+    this.loadCustomStyles('assets/styles/mathjax.css');
   }
 
   private renderMathJax(): void {
     if (window.MathJax) {
       window.MathJax.typesetPromise()
-        .then(() => console.log('MathJax typesetting completed'))
+        .then(() => {
+          const mjxContainers = document.querySelectorAll('mjx-container');
+          mjxContainers.forEach(container => {
+            container.classList.add('centered-math');
+          })
+          console.log('MathJax typesetting completed')
+        })
         .catch((err: any) => console.error('MathJax typesetting error:', err));
     }
+  }
+
+  private async loadCustomStyles(cssPath: string) {
+    try {
+      const response = await fetch(cssPath);
+      const cssText = await response.text();
+      this.injectStyles(cssText);
+    } catch (error) {
+      console.error('Failed to load custom styles:', error);
+    }
+  }
+
+  private injectStyles(cssText: string) {
+    const style = document.createElement('style');
+    style.innerHTML = cssText;
+    document.head.appendChild(style);
   }
 
   private setDimensions(): void {

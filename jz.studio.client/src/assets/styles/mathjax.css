@@ -1,0 +1,24 @@
+
+mjx-container {
+  color: cadetblue
+}
+
+.mjx-container {
+  color: dodgerblue;
+}
+
+.MathJax {
+  color: darkred;
+}
+
+.MJX-TEX {
+  color:pink;  
+}
+
+.centered-math {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: cadetblue; /* Example style, adjust as needed */
+}

@@ -46,3 +46,19 @@ div {
 }
 
 
+
+mjx-container {
+  color: cadetblue
+}
+
+.mjx-container {
+  color: dodgerblue;
+}
+
+.MathJax {
+  color: darkred;
+}
+
+.MJX-TEX {
+  color: #a7aaa4;
+}

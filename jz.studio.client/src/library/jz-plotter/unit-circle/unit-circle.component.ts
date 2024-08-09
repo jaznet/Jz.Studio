@@ -92,28 +92,23 @@ export class UnitCircleComponent implements AfterViewInit {
         .attr('cy', sinY)
         .attr('r', 2)
         .style('stroke', 'black');
-
-      console.log(ray);
-
     })
   }
 
   drawLabels() {
     this.labels = d3.select('#labels');
-
-
    
     this.plotter.radianValues.forEach((ray) => {
-      let cosX = this.unitCircleRadius * Math.cos(ray.val);
-      let sinY = this.unitCircleRadius * -Math.sin(ray.val);
-      const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
-      const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
+      let cosX = (this.unitCircleRadius * 1.2) * Math.cos(ray.val);
+      let sinY = (this.unitCircleRadius * 1.2) * -Math.sin(ray.val);
+      //const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
+      //const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
       this.labels.append('foreignObject')
-        .attr('x', cosX + offsetX + this.margin.left)
-        .attr('y', sinY + offsetY)
-        .attr('width', 50)
-        .attr('height', 50)
-        .html(`<div class='unit-circle-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='color:white'>${ray.label}</span></div>`);
+        .attr('x', cosX )
+        .attr('y', sinY )
+        .attr('width', 40)
+        .attr('height', 40)
+        .html(`<div class='label-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='border:solid 1px darkgrey; color:white'>${ray.label}</span></div>`);
     })
   }
 }
