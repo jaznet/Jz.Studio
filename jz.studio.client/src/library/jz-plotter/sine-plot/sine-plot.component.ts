@@ -81,9 +81,9 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy {
       window.MathJax.typesetPromise()
         .then(() => {
           const mjxContainers = document.querySelectorAll('mjx-container');
-          mjxContainers.forEach(container => {
-            container.classList.add('centered-math');
-          })
+          //mjxContainers.forEach(container => {
+          //  container.classList.add('centered-math');
+          //})
           console.log('MathJax typesetting completed')
         })
         .catch((err: any) => console.error('MathJax typesetting error:', err));

@@ -106,9 +106,9 @@ export class UnitCircleComponent implements AfterViewInit {
       this.labels.append('foreignObject')
         .attr('x', cosX )
         .attr('y', sinY )
-        .attr('width', 40)
-        .attr('height', 40)
-        .html(`<div class='label-container' xmlns="http://www.w3.org/1999/xhtml"><span jzMathjax style='border:solid 1px darkgrey; color:white'>${ray.label}</span></div>`);
+        .attr('width', 50)
+        .attr('height', 60)
+        .html(`<div class='label-container' xmlns="http://www.w3.org/1999/xhtml" jzMathjax style='border:solid 1px darkgrey; color:white'>${ray.label}</div>`);
     })
   }
 }
