@@ -47,11 +47,12 @@ div {
 
 
 
-mjx-container {
+/*mjx-container {
   color: cadetblue
 }
 
 .mjx-container {
+    margin:unset;
   color: dodgerblue;
 }
 
@@ -61,4 +62,4 @@ mjx-container {
 
 .MJX-TEX {
   color: #a7aaa4;
-}
+}*/

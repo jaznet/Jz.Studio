@@ -3,8 +3,14 @@ mjx-container {
   color: cadetblue
 }
 
+mjx-container {
+    margin:unset;
+    color: darkolivegreen;
+}
+
 .mjx-container {
-  color: dodgerblue;
+  margin: unset;
+  color: darkolivegreen;
 }
 
 .MathJax {

@@ -82,8 +82,8 @@ export class UnitCircleComponent implements AfterViewInit {
         .attr('y2', sinY)
         .style('stroke', 'black');
 
-      cosX = (this.unitCircleRadius * 1.2) * Math.cos(ray.val);
-      sinY = (this.unitCircleRadius * 1.2) * -Math.sin(ray.val);
+      cosX = (this.unitCircleRadius * 1.25) * Math.cos(ray.val);
+      sinY = (this.unitCircleRadius * 1.25) * -Math.sin(ray.val);
 
       this.spokes
         .append('circle')
@@ -99,15 +99,15 @@ export class UnitCircleComponent implements AfterViewInit {
     this.labels = d3.select('#labels');
    
     this.plotter.radianValues.forEach((ray) => {
-      let cosX = (this.unitCircleRadius * 1.2) * Math.cos(ray.val);
-      let sinY = (this.unitCircleRadius * 1.2) * -Math.sin(ray.val);
+      let cosX = (this.unitCircleRadius * 1.25) * Math.cos(ray.val);
+      let sinY = (this.unitCircleRadius * 1.25) * -Math.sin(ray.val);
       //const offsetX = (ray.val > Math.PI / 2 && ray.val < (3 * Math.PI) / 2) ? -20 : -5;
       //const offsetY = (ray.val > 0 && ray.val < Math.PI) ? -35 : 0;
       this.labels.append('foreignObject')
         .attr('x', cosX )
         .attr('y', sinY )
         .attr('width', 50)
-        .attr('height', 60)
+        .attr('height', 70)
         .html(`<div class='label-container' xmlns="http://www.w3.org/1999/xhtml" jzMathjax style='border:solid 1px darkgrey; color:white'>${ray.label}</div>`);
     })
   }
