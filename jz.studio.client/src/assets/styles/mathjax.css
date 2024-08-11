@@ -1,5 +1,9 @@
 
- foreignObject mjx-container {
+foreignObject {
+ width:
+}
+
+foreignObject mjx-container {
   margin: unset !important;
   color: darkolivegreen;
 }
