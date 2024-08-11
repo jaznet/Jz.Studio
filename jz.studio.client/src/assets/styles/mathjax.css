@@ -1,11 +1,17 @@
 
-mjx-container {
-  color: cadetblue
+ foreignObject mjx-container {
+  margin: unset !important;
+  color: darkolivegreen;
 }
 
 mjx-container {
-    margin:unset;
+    margin:unset !important;
     color: darkolivegreen;
+}
+
+.label-container {
+    width:fit-content;
+    height:fit-content;
 }
 
 .mjx-container {

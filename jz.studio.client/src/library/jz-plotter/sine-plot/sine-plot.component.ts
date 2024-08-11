@@ -1,5 +1,5 @@
 
-import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 
 interface Margin {
@@ -14,7 +14,7 @@ interface Margin {
   templateUrl: './sine-plot.component.html',
   styleUrls: ['./sine-plot.component.css']
 })
-export class SinePlotComponent implements AfterViewInit, OnDestroy {
+export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('plotSvgContainer', { static: false }) plotSvgContainer!: ElementRef;
 
@@ -51,6 +51,10 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy {
 
   constructor() { }
 
+  ngOnInit(): void {
+    this.loadCustomStyles('assets/styles/mathjax.css');
+  }
+
   ngAfterViewInit(): void {
     this.width = this.plotSvgContainer.nativeElement.parentElement.clientWidth - this.margin.left - this.margin.right;
     this.height = this.plotSvgContainer.nativeElement.parentElement.clientHeight -this.margin.bottom - this.margin.top;
@@ -73,7 +77,7 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy {
     this.addGraphAxes();
     this.startAnimation();
     this.renderMathJax();
-    this.loadCustomStyles('assets/styles/mathjax.css');
+   
   }
 
   private renderMathJax(): void {
@@ -102,6 +106,7 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy {
 
   private injectStyles(cssText: string) {
     const style = document.createElement('style');
+    style.id = 'JzMathjax'
     style.innerHTML = cssText;
     document.head.appendChild(style);
   }
