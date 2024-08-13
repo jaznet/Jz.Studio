@@ -1,1 +1,119 @@
+
+<div class="grid-rows">
+  <div class="grid-row-fixed title">Spirograph</div>
+  <div class="grid-row-fill spiro-body">
+
+    <div #sidepanel class="spiro-panel">
+      <div>Spirograph</div>
+      <div class="divSeparator"></div>
+
+      <div class="sub-title">Presets</div>
+      <select class="preset" name="presets" id="presets" (change)="presetSelected($event)" #presets></select>
+      <div>{{selectedValue}}</div>
+      <dx-drop-down-box [dataSource]="dataSource"
+                        [(value)]="selectedValue">
+        <dx-data-grid [dataSource]="dataSource"
+                      [selection]="{ mode: 'single' }"
+                      [columns]="['name']"></dx-data-grid>
+      </dx-drop-down-box>
+
+      <div class="divSeparator"></div>
+
+      <div class="sub-title">Stator</div>
+      <div class="input-row">
+        <div class="label">sr</div>
+        <input class="input-value" type="text" value="0" id="stator" #stator />
+      </div>
+      <div class="divSeparator"></div>
+
+      <div class="sub-title">Rotors</div>
+      <div class="spiro-panel-section" id="rotors" #rotors>
+
+        <div id="rotor1" #rotor1 class="input-row">
+          <div class="label">R1</div>
+          <input class="input-value" type="text" id="radius1" #radius1 value="0" />
+          <input class="radio" type="radio" id="hypo1" #hypo1 name="type1" value="hypotrochoid" />
+          <div class="letterLabel">h</div>
+          <jz-radio-button [palette]="'onyx'"></jz-radio-button>
+          <input class="radio" type="radio" id="epi1" #epi1 name="type1" value="epitrochoid" />
+          <div class="letterLabel">e</div>
+        </div>
+
+        <div id="rotor2" #rotor2 class="input-row">
+          <div class="label">r2</div>
+          <input class="input-value" type="text" id="radius2" #radius2 value="0" />
+          <input class="radio" type="radio" id="hypo2" #hypo2 name="type2" value="hypotrochoid" />
+
+          <div class="letterLabel">h</div>
+          <input class="radio" type="radio" id="epi2" #epi2 name="type2" value="epitrochoid" />
+          <div class="letterLabel">e</div>
+        </div>
+
+        <div id="rotor3" #rotor3 class="input-row">
+          <div class="label">r3</div>
+          <input class="input-value" type="text" id="radius3" #radius3 value="0" />
+          <input class="radio" type="radio" id="hypo3" #hypo3 name="type3" value="hypotrochoid" />
+          <div class="letterLabel">h</div>
+          <input class="radio" type="radio" id="epi3" #epi3 name="type3" value="epitrochoid" />
+          <div class="letterLabel">e</div>
+        </div>
+
+        <div id="rotor4" #rotor4 class="input-row">
+          <div class="label">r4</div>
+          <input class="input-value" type="text" id="radius4" #radius4 value="0" />
+          <input class="radio" type="radio" id="hypo4" #hypo4 name="type4" value="hypotrochoid" />
+          <div class="letterLabel">h</div>
+          <input class="radio" type="radio" id="epi4" #epi4 name="type4" value="epitrochoid" />
+          <div class="letterLabel">e</div>
+        </div>
+
+        <div id="rotor5" #rotor5 class="input-row">
+          <div class="label">r5</div>
+          <input class="input-value" type="text" id="radius5" #radius5 value="0" />
+          <input class="radio" type="radio" id="hypo5" #hypo5 name="type5" value="hypotrochoid" />
+          <div class="letterLabel">h</div>
+          <input class="radio" type="radio" id="epi5" #epi5 name="type5" value="epitrochoid" />
+          <div class="letterLabel">e</div>
+        </div>
+      </div>
+
+      <div class="divSeparator"></div>
+
+      <div class="sub-title">Pens</div>
+      <div class="spiro-panel-section">
+
+        <div class="input-row">
+          <div class="label">r</div>
+          <input class="input-value" #penr />
+        </div>
+
+        <div class="input-row">
+          <div class="label">w</div>
+          <input class="input-value" #penw />
+        </div>
+
+        <div class="input-row">
+          <div class="label">c</div>
+          <input class="input-value" type="color" #penc />
+        </div>
+      </div>
+      <div class="divSeparator"></div>
+
+      <div class="button-container">
+        <button class="drawButton" id="draw" #drawButton (click)="drawClick($event)">Start</button>
+      </div>
+    </div>
+
+
+
+    <div #pad class="overlay-container spiro-pad">
+      <canvas #canvasGrid class="overlay-layer canvas"></canvas>
+      <canvas #canvasCircles class="overlay-layer canvas"></canvas>
+      <canvas #canvasPen class="overlay-layer canvas"></canvas>
+    </div>
+
+  </div>
+</div>
+
+
 <p>jz-spirograph works!</p>

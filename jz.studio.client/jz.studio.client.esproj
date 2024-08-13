@@ -16,7 +16,6 @@
     <Folder Include=".backup\jz-spirograph\jz-spirograph\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
-    <Folder Include="src\utilities\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".backup\jz-spirograph\jz-spirograph.component.css" />
