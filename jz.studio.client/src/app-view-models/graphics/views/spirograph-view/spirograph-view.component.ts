@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'spirograph-view',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './spirograph-view.component.css'
 })
 export class SpirographViewComponent {
-
+  @HostBinding('class') classes = 'fit-to-parent';
 }
