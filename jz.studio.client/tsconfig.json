@@ -3,7 +3,7 @@
   "compilerOptions": {
     "typeRoots": [
       "node_modules/@types",
-      "src"
+      "./types"
     ],
     "types": [ "jest", "node" ],
     "outDir": "./dist/out-tsc",

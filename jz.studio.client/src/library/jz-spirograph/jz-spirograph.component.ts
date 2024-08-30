@@ -100,7 +100,6 @@ export class JzSpirographComponent implements OnInit, AfterViewInit, AfterConten
     this.dataSource = service.listDataSource;
   }
 
-
   ngOnInit() {
     let that = this;
     let select = this.ref_presets!.nativeElement;
@@ -383,8 +382,8 @@ export class JzSpirographComponent implements OnInit, AfterViewInit, AfterConten
         }
 
         thisPitch = this.drawPitches[i] + prevDrawPitch;
-        console.log(' ', i, 'thisPitch', thisPitch, 'prevPitch', prevPitch);
-        console.log(' ', i, 'prevSpinPitch', prevSpinPitch, 'prevDrawPitch', prevDrawPitch);
+       // console.log(' ', i, 'thisPitch', thisPitch, 'prevPitch', prevPitch);
+        //console.log(' ', i, 'prevSpinPitch', prevSpinPitch, 'prevDrawPitch', prevDrawPitch);
 
         pt = this.circlePoint(i, pt.x, pt.y, centerRad, ii * thisPitch);
 
@@ -442,7 +441,7 @@ export class JzSpirographComponent implements OnInit, AfterViewInit, AfterConten
   }
 
   drawCurve() {
-    console.log('drawCurve', this.ctxCanvasPen, this.curvePoints);
+    //console.log('drawCurve', this.ctxCanvasPen, this.curvePoints);
     if (this.drawIteration > 1) {
       this.ctxCanvasPen!.beginPath();
       this.ctxCanvasPen!.strokeStyle = this.curveColor;

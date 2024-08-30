@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { JzTechnicalAnalysisComponent } from './jz-technical-analysis/jz-technical-analysis.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    JzTechnicalAnalysisComponent
+  ],
   imports: [
     CommonModule
   ]
