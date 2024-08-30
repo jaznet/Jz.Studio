@@ -6,7 +6,7 @@ import { JzTechnicalAnalysisComponent } from './jz-technical-analysis/jz-technic
 
 @NgModule({
   declarations: [
-    JzTechnicalAnalysisComponent
+    
   ],
   imports: [
     CommonModule

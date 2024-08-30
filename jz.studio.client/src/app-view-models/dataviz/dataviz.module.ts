@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { DatavizRouterModule } from './dataviz-router.module';
 import { SankeyViewModule } from './views/sankey-view/sankey-view.module';
 import { TechChartViewModule } from './views/tech-chart-view/tech-chart-view.module';
+import { TechnicalAnalysisViewModule } from './views/technical-analysis-view/technical-analysis-view.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TechChartViewModule } from './views/tech-chart-view/tech-chart-view.mod
     RouterModule,
     DatavizRouterModule,
     SankeyViewModule,
-    TechChartViewModule
+    TechChartViewModule,
+    TechnicalAnalysisViewModule
   ],
   exports: [
     DatavizComponent,

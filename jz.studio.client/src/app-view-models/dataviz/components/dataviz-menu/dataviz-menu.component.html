@@ -22,6 +22,14 @@
                [menuType]="parentGetter">
   </jz-menu-tab>
 
+  <jz-menu-tab [route]="'dataviz/sankey'"
+               [tabId]="'sankey'"
+               [btnTxt]="'Sankey'"
+               [menuName]="'dataviz'"
+               [direction]="'vertical'"
+               [menuType]="parentGetter">
+  </jz-menu-tab>
+
   <jz-menu-tab [route]="'dataviz/technical'"
                [tabId]="'technical'"
                [btnTxt]="'Technical'"
@@ -30,12 +38,14 @@
                [menuType]="parentGetter">
   </jz-menu-tab>
 
-  <jz-menu-tab [route]="'dataviz/sankey'"
-               [tabId]="'sankey'"
-               [btnTxt]="'Sankey'"
+  <jz-menu-tab [route]="'dataviz/technical-analysis'"
+               [tabId]="'technicalanalysis'"
+               [btnTxt]="'Technical Analysis'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
                [menuType]="parentGetter">
   </jz-menu-tab>
+
+
 
 </jz-menu-container>
