@@ -27,6 +27,10 @@ const routes: Routes = [
         loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)
       },
       {
+        path: 'technical-analysis',
+        loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)
+      },
+      {
         path: 'sankey',
         loadChildren: () => import('../../library/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
       },

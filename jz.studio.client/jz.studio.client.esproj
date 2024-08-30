@@ -31,28 +31,4 @@
     <None Include=".backup\utilities\keyed-collection.ts" />
     <None Include=".backup\utilities\utilities.module.ts" />
   </ItemGroup>
-  <ItemGroup>
-    <TypeScriptConfiguration Remove="src\library\jz-charts\jz-tech-chart\techan\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\library\jz-charts\jz-tech-chart\techan\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptConfiguration Remove="src\library\jz-charts\jz-tech-chart\techan\node_modules\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\library\jz-charts\jz-tech-chart\techan\node_modules\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptConfiguration Remove="src\library\jz-charts\jz-tech-chart\techan\node_modules\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\library\jz-charts\jz-tech-chart\techan\node_modules\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptConfiguration Remove="src\assets\techan\node_modules\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\assets\techan\node_modules\**" />
-  </ItemGroup>
 </Project>
