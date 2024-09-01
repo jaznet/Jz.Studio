@@ -1,5 +1,6 @@
 
 import { Component, HostBinding } from '@angular/core';
+import { PaletteMgrService } from '../../../../app/app-services/palette-mgr.service';
 
 @Component({
   selector: 'dataviz-home',
@@ -8,4 +9,8 @@ import { Component, HostBinding } from '@angular/core';
 })
 export class DatavizHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent';
+
+  constructor(private palette: PaletteMgrService) {
+    palette.ChangePalette('gold');
+  }
 }

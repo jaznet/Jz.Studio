@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@syncfusion/ej2-angular-charts": "^26.2.11",
     "@syncfusion/ej2-angular-layouts": "^25.1.37",
     "@types/d3-selection": "^3.0.10",
     "@types/svg-path-bounds": "^1.0.2",

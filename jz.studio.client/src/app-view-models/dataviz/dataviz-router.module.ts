@@ -31,6 +31,10 @@ const routes: Routes = [
         loadChildren: () => import('../../library/jz-charts/jz-technical-analysis/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
       },
       {
+        path: 'syncfusion-chart',
+        loadChildren: () => import('../../library/jz-charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
+      },
+      {
         path: 'sankey',
         loadChildren: () => import('../../library/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
       },
