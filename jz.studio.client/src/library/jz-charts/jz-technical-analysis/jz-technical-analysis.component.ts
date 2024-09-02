@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -8,8 +8,8 @@ import * as d3 from 'd3';
 })
 export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
-  @ViewChild('svg', { static: true }) svg!: any;
- // svg!: d3.Selection<SVGSVGElement, undefined, null, undefined>;
+  @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
+ 
   constructor() { }
 
   ngOnInit(): void {
@@ -17,6 +17,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    const svg = d3.select(this.svgElementRef.nativeElement);
     //this.svg = d3.create("svg")
     //  .attr("width", 300)
     //  .attr("height", 300);
@@ -25,9 +26,11 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .domain([new Date("2023-01-01"), new Date("2024-01-01")])
       .range([0, 300]);
 
-   
+    svg.append("g")
+      .attr("transform", `translate(0,250)`)
+      .call(d3.axisBottom(x));
 
-    console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', this.svg);
+    console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', svg);
   }
 
 
