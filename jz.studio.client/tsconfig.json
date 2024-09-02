@@ -3,7 +3,7 @@
   "compilerOptions": {
     "typeRoots": [
       "node_modules/@types",
-      "./types"
+      "src/types"
     ],
     "types": [ "jest", "node" ],
     "outDir": "./dist/out-tsc",
@@ -36,6 +36,6 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/techan.d.ts"
+    "src/types/**/*.d.ts"
   ]
 }

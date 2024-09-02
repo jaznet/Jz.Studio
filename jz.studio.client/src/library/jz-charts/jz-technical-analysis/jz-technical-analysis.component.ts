@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 
+
 @Component({
   selector: 'jz-technical-analysis',
   templateUrl: './jz-technical-analysis.component.html',
@@ -31,6 +32,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .call(d3.axisBottom(x));
 
     console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', svg);
+   
   }
 
 
