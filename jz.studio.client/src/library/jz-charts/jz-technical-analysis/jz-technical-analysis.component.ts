@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 
 @Component({
@@ -8,18 +8,27 @@ import * as d3 from 'd3';
 })
 export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
-  svg!: d3.Selection<SVGSVGElement, undefined, null, undefined>;
+  @ViewChild('svg', { static: true }) svg!: any;
+ // svg!: d3.Selection<SVGSVGElement, undefined, null, undefined>;
   constructor() { }
 
-    ngOnInit(): void {
-      console.log('ngOnInit');
-    }
+  ngOnInit(): void {
+    console.log('ngOnInit');
+  }
+
   ngAfterViewInit(): void {
-    this.svg = d3.create("svg")
-      .attr("width", 300)
-      .attr("height", 300);
-    console.log('%cngAfterViewInit JzTechnicalAnalysisComponent','color:#e6e39e',this.svg);
-    }
+    //this.svg = d3.create("svg")
+    //  .attr("width", 300)
+    //  .attr("height", 300);
+    // Declare the x (horizontal position) scale.
+    const x = d3.scaleUtc()
+      .domain([new Date("2023-01-01"), new Date("2024-01-01")])
+      .range([0, 300]);
+
+   
+
+    console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', this.svg);
+  }
 
 
 }
