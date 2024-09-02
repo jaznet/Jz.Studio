@@ -11,8 +11,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
 
-  width: any;
-  height: any;
+  width = 0;
+  height= 0;
  
   constructor() { }
 
@@ -28,7 +28,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     // Declare the x (horizontal position) scale.
     const x = d3.scaleUtc()
       .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-      .range([0, 300]);
+      .range([0, this.width]);
 
     svg.append("g")
       .attr("transform", `translate(0,250)`)
