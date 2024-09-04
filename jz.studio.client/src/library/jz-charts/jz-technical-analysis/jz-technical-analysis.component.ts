@@ -34,7 +34,6 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       indicator2: { height: 100, padding: 5, top: 455, bottom: 20 },
       plotArea: { width: 760, height: 540 } // This will be recalculated in `ngAfterViewInit`
     };
-
  
   constructor() { }
 
