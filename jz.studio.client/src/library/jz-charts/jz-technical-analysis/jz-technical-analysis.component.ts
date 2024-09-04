@@ -11,8 +11,30 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
 
-  width = 0;
-  height= 0;
+  svg!: d3.Selection<any, unknown, null, undefined>;
+  svgWidth = 0;
+  svgHeight = 0;
+ // margin = 24;
+  
+  // Initialize the `chart` property with default values
+  chart: {
+    width: number;
+    height: number;
+    margins: { top: number; right: number; bottom: number; left: number; };
+    ohlc: { height: number; padding: number; top: number; bottom: number; };
+    indicator1: { height: number; padding: number; top: number; bottom: number; };
+    indicator2: { height: number; padding: number; top: number; bottom: number; };
+    plotArea: { width: number; height: number; };
+  } = {
+      width: 800, // Default width, adjust as necessary
+      height: 600, // Default height, adjust as necessary
+      margins: { top: 20, right: 20, bottom: 20, left: 20 },
+      ohlc: { height: 300, padding: 10, top: 20, bottom: 20 },
+      indicator1: { height: 100, padding: 5, top: 330, bottom: 20 },
+      indicator2: { height: 100, padding: 5, top: 455, bottom: 20 },
+      plotArea: { width: 760, height: 540 } // This will be recalculated in `ngAfterViewInit`
+    };
+
  
   constructor() { }
 
@@ -21,20 +43,34 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const svg = d3.select(this.svgElementRef.nativeElement);
-    this.width = this.svgElementRef.nativeElement.clientWidth;
-    this.height = this.svgElementRef.nativeElement.clientHeight;
+    this.svg = d3.select(this.svgElementRef.nativeElement);
+    this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
+    this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+
+    this.chart.margins = { top: 36, right: 36, bottom: 36, left: 36 };
+    this.chart.plotArea.width = this.svgWidth - this.chart.margins.left - this.chart.margins.right;
+    this.chart.plotArea.height = this.svgHeight - this.chart.margins.top - this.chart.margins.bottom;
    
     // Declare the x (horizontal position) scale.
-    const x = d3.scaleUtc()
+    // xAxis
+    const xAxis = d3.scaleUtc()
       .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-      .range([0, this.width]);
+      .range([0, this.chart.plotArea.width]);
 
-    svg.append("g")
-      .attr("transform", `translate(0,250)`)
-      .call(d3.axisBottom(x));
+    this.svg.append("g")
+      .attr("transform", `translate(
+        ${this.chart.margins.top},
+        ${this.chart.plotArea.height - this.chart.margins.top - this.chart.margins.bottom -36})`)
+      .call(d3.axisBottom(xAxis));
 
-    console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', svg);
+    // yAxis
+    const yAxis = d3.scaleLinear().range([this.chart.plotArea.height, 0]);
+
+    this.svg.append("g")
+      .attr("transform", `translate(24,0)`)
+      .call(d3.axisLeft(yAxis));
+
+     console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', this.svg);
     
   }
 }
