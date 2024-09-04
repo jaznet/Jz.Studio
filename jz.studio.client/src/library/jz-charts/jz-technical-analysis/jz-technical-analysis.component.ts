@@ -42,6 +42,14 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.createtChartLayoutISettings();
+    this.createSections();
+    this.createAxes();
+
+     console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', this.svg);
+  }
+
+  createtChartLayoutISettings() {
     this.svg = d3.select(this.svgElementRef.nativeElement);
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
@@ -49,7 +57,13 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.chart.margins = { top: 36, right: 36, bottom: 36, left: 36 };
     this.chart.plotArea.width = this.svgWidth - this.chart.margins.left - this.chart.margins.right;
     this.chart.plotArea.height = this.svgHeight - this.chart.margins.top - this.chart.margins.bottom;
-   
+  }
+
+  createSections() {
+
+  }
+
+  createAxes() {
     // Declare the x (horizontal position) scale.
     // xAxis
     const xAxis = d3.scaleUtc()
@@ -59,7 +73,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.svg.append("g")
       .attr("transform", `translate(
         ${this.chart.margins.top},
-        ${this.chart.plotArea.height - this.chart.margins.top - this.chart.margins.bottom -36})`)
+        ${this.chart.plotArea.height - this.chart.margins.top - this.chart.margins.bottom - 36})`)
       .call(d3.axisBottom(xAxis));
 
     // yAxis
@@ -68,8 +82,5 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.svg.append("g")
       .attr("transform", `translate(24,0)`)
       .call(d3.axisLeft(yAxis));
-
-     console.log('%cngAfterViewInit JzTechnicalAnalysisComponent', 'color:#e6e39e', this.svg);
-    
   }
 }
