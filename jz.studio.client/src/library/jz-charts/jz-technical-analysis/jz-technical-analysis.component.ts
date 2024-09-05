@@ -10,6 +10,12 @@ import * as techan from 'techan'; // Import techan
 export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
+  @ViewChild('sectionA', { static: true }) sectionA!: ElementRef;
+  @ViewChild('sectionA', { static: true }) sectionB!: ElementRef;
+  @ViewChild('sectionA', { static: true }) sectionC!: ElementRef;
+  @ViewChild('rectA', { static: true }) rectA!: ElementRef;
+  @ViewChild('rectB', { static: true }) rectB!: ElementRef;
+  @ViewChild('rectC', { static: true }) rectC!: ElementRef;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -60,7 +66,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   createSections() {
-
+    this.rectC.nativeElement.setAttribute('width', this.svgWidth);
   }
 
   createAxes() {
