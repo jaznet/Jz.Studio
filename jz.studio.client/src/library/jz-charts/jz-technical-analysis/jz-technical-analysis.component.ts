@@ -23,7 +23,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
  // margin = 24;
   
   // Initialize the `chart` property with default values
-  chart: {
+  svgChart: {
     width: number;
     height: number;
     margins: { top: number; right: number; bottom: number; left: number; };
@@ -60,13 +60,13 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
-    this.chart.margins = { top: 36, right: 36, bottom: 36, left: 36 };
-    this.chart.plotArea.width = this.svgWidth - this.chart.margins.left - this.chart.margins.right;
-    this.chart.plotArea.height = this.svgHeight - this.chart.margins.top - this.chart.margins.bottom;
+    this.svgChart.margins = { top: 36, right: 36, bottom: 36, left: 36 };
+    this.svgChart.plotArea.width = this.svgWidth - this.svgChart.margins.left - this.svgChart.margins.right;
+    this.svgChart.plotArea.height = this.svgHeight - this.svgChart.margins.top - this.svgChart.margins.bottom;
   }
 
   createSections() {
-    this.rectC.nativeElement.setAttribute('width', this.svgWidth);
+ //   this.rectC.nativeElement.setAttribute('width', this.svgWidth);
   }
 
   createAxes() {
@@ -74,16 +74,16 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     // xAxis
     const xAxis = d3.scaleUtc()
       .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-      .range([0, this.chart.plotArea.width]);
+      .range([0, this.svgChart.plotArea.width]);
 
     this.svg.append("g")
       .attr("transform", `translate(
-        ${this.chart.margins.top},
-        ${this.chart.plotArea.height - this.chart.margins.top - this.chart.margins.bottom - 36})`)
+        ${this.svgChart.margins.top},
+        ${this.svgHeight  - 36})`)
       .call(d3.axisBottom(xAxis));
 
     // yAxis
-    const yAxis = d3.scaleLinear().range([this.chart.plotArea.height, 0]);
+    const yAxis = d3.scaleLinear().range([this.svgChart.plotArea.height, 0]);
 
     this.svg.append("g")
       .attr("transform", `translate(24,0)`)
