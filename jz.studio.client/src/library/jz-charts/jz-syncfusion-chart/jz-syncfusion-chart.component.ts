@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { ChartModule, ChartAllModule } from '@syncfusion/ej2-angular-charts'
 
 @Component({
   selector: 'jz-syncfusion-chart',

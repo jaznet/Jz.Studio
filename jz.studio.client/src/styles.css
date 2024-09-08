@@ -45,7 +45,9 @@ div {
     display:flex;
 }
 
-
+body > div {
+    visibility:hidden;
+}
 
 /*mjx-container {
   color: cadetblue
