@@ -63,6 +63,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.svgChart.margins = { top: 36, right: 36, bottom: 36, left: 36 };
     this.svgChart.plotArea.width = this.svgWidth - this.svgChart.margins.left - this.svgChart.margins.right;
     this.svgChart.plotArea.height = this.svgHeight - this.svgChart.margins.top - this.svgChart.margins.bottom;
+
+
   }
 
   createSections() {
