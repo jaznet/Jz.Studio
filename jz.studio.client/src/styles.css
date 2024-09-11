@@ -65,3 +65,20 @@ body > div {
 .MJX-TEX {
   color: #a7aaa4;
 }*/
+/* Customize the axis line */
+.y-axis path {
+  stroke: black;
+  stroke-width: 2;
+}
+
+/* Customize tick lines */
+.y-axis .tick line {
+  stroke: black;
+  stroke-width: 1;
+}
+
+/* Customize tick labels */
+.y-axis .tick text {
+  font-size: 12px;
+  fill: black;
+}

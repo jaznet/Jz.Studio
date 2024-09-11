@@ -45,6 +45,14 @@ export class AppComponent implements OnInit {
     console.log(this.content);
     console.log(this.footer);
 
+    window.addEventListener("load", function () {
+      if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        console.log("The page was reloaded.");
+      } else {
+        console.log("The page was loaded for the first time.");
+      }
+    });
+
     this.appService.toggleHeaderEvent.subscribe((e) => {
       this.header.visibility = e === 'hide' ? 'collapse' : 'visible';
       console.log(e);
