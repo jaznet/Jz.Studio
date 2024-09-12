@@ -79,8 +79,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       this.svgRectHeight = rectDimensions.height;
     }
 
-    const rangeA: range = { start: 0, end: this.svgRectHeight * .5 };
-    const rangeB: range = { start: this.svgRectHeight * .5, end: this.svgRectHeight * .75 };
+    const rangeA: range = { start: 0, end:( this.svgRectHeight * .5)-1 };
+    const rangeB: range = { start: this.svgRectHeight * .5, end: (this.svgRectHeight * .75)-1 };
     const rangeC: range = { start: .75, end: this.svgRectHeight };
 
     this.svgChart.sections = { A: rangeA, B: rangeB, C: rangeC };
@@ -110,7 +110,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .call(d3.axisBottom(xAxis));
 
     // yAxis
-    const yAxis = d3.scaleLinear().range([this.svgChart.plotArea.height, 0]);
+    const yAxis = d3.scaleLinear().range([0,this.svgChart.sections.A.end]);
 
     this.svg.append("g")
       .attr("class", "y-axis")

@@ -14,8 +14,6 @@ namespace Jz.Studio.Server.Controllers {
             _context = context;
         }
 
-        
-
         [HttpGet("population-api")]
         public async Task<ActionResult<IEnumerable<Population>>> GetPopulationResults() {
             if (_context == null) {
@@ -23,6 +21,15 @@ namespace Jz.Studio.Server.Controllers {
             }
             Console.WriteLine("GetPopulation");
             return await _context.Populations.ToListAsync();
+        }
+
+        [HttpGet("stock-prices-api")]
+        public async Task<ActionResult<IEnumerable<StockPriceHistory>>> GetStockPriceHistory() {
+            if (_context == null) {
+                return NotFound();
+            }
+            Console.WriteLine("GetPopulation");
+            return await _context.StockPriceHistories.ToListAsync();
         }
     }
 }
