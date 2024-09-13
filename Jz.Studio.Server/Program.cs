@@ -51,12 +51,14 @@ namespace Jz.Studio.Server {
                 app.UseSwaggerUI();
             }
 
+            // Configure the HTTP request pipeline.
+            app.UseCors("AllowSpecificOrigin"); // Apply the CORS policy
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-            // Configure the HTTP request pipeline.
-            app.UseCors("AllowSpecificOrigin"); // Apply the CORS policy
+       
 
             app.MapControllers();
 
