@@ -23,13 +23,31 @@ namespace Jz.Studio.Server.Controllers {
             return await _context.Populations.ToListAsync();
         }
 
-        [HttpGet("stock-prices-api")]
-        public async Task<ActionResult<IEnumerable<StockPriceHistory>>> GetStockPriceHistory() {
-            if (_context == null) {
-                return NotFound();
+        [HttpGet("stock-prices-api/{ticker}")]
+        public async Task<ActionResult<IEnumerable<StockPriceHistory>>> GetStockPriceHistory(string ticker) {
+            try {
+                if (_context == null) {
+                    return NotFound();
+                }
+
+                // Filter by the ticker passed as a parameter
+                var stockPriceHistories = await _context.StockPriceHistories
+                    .Where(s => s.Ticker == ticker)
+                    .ToListAsync();
+
+                if (stockPriceHistories == null || !stockPriceHistories.Any()) {
+                    return NoContent();
+                }
+
+                return Ok(stockPriceHistories);
             }
-            Console.WriteLine("GetPopulation");
-            return await _context.StockPriceHistories.ToListAsync();
+            catch (Exception ex) {
+                // Log the exception
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+
     }
 }

@@ -39,6 +39,7 @@ declare module 'techan' {
     sma(): Plot;
     ema(): Plot;
     macd(): Plot;
+    candlestick(): Plot;
     // Add more plot types as needed
   }
 
@@ -52,6 +53,6 @@ declare module 'techan' {
     scale: ScaleFactory;
   }
 
-  const techan: Techan;
+  function techan(d3: typeof d3): Techan;
   export default techan;
 }

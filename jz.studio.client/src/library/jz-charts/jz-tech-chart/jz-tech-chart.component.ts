@@ -507,7 +507,7 @@ export class JzTechChartComponent implements OnInit,AfterViewInit {
           return {
             date: that.parseDate(d.Date),
             open: +d.Open,
-            high: +d.High,
+            high: +d.High,  
             low: +d.Low,
             close: +d.Close,
             volume: +d.Volume

@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { range } from 'rxjs';
-import * as techan from 'techan'; // Import techan
+import techan from 'techan'; // Import techan
+import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
+import { StockPriceHistory } from '../../../models/stock-price-history.model';
 
 export interface range {
   start: number;
@@ -53,17 +55,39 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       plotArea: { width: 760, height: 540 }, // This will be recalculated in `ngAfterViewInit`
       sections: { A: { start: 1, end: 100 }, B: { start: 101, end: 200 }, C: { start: 201, end: 300 } }
     };
+
+  stockPriceHistoryData: StockPriceHistory[] = []
+  candlestickPlot: any;
+  xScale: any;
+  yScale: any;
+  
  
-  constructor() { }
+  constructor(private stockPriceService: JzTechnicalAnalysisService) { }
 
   ngOnInit(): void {
     console.log('ngOnInit');
   }
 
   ngAfterViewInit(): void {
+    const ticker = 'NVDA';  // You can change this dynamically as needed
+
+    this.stockPriceService.getStockPrices(ticker).subscribe(
+      (data: StockPriceHistory[]) => {
+        this.stockPriceHistoryData = data;
+        this.createChart();
+        console.log('Stock Prices:', this.stockPriceHistoryData);
+      },
+      (error) => {
+        console.error('Error fetching stock prices:', error);
+      }
+    );
+  }
+
+  createChart(): void {
     this.createtChartLayoutISettings();
     this.createSections();
     this.createAxes();
+    this.plotData();
   }
 
   createtChartLayoutISettings() {
@@ -79,7 +103,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       this.svgRectHeight = rectDimensions.height;
     }
 
-    const rangeA: range = { start: 0, end:( this.svgRectHeight * .5)-1 };
+    const rangeA: range = { start: 0, end:( this.svgRectHeight * .5)-11 };
     const rangeB: range = { start: this.svgRectHeight * .5, end: (this.svgRectHeight * .75)-1 };
     const rangeC: range = { start: .75, end: this.svgRectHeight };
 
@@ -114,7 +138,35 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     this.svg.append("g")
       .attr("class", "y-axis")
-      .attr("transform", `translate(24,0)`)
+      .attr("transform", `translate(32,0)`)
       .call(d3.axisLeft(yAxis));
+  }
+
+  plotData() {
+    
+    console.log(this.stockPriceHistoryData);
+    const techanInstance = techan(d3); // Initialize techan with d3
+    this.candlestickPlot = techanInstance.plot.candlestick()
+      .xScale(this.xScale)
+      .yScale(this.yScale);
+  }
+
+  transformData(stockPriceHistoryData: StockPriceHistory[]): any[] {
+    // Define the accessor and pre-roll variables if needed
+    let accessor = this.candlestickPlot.accessor();
+    let indicatorPreRoll = 23; // Adjust this as needed
+
+    // Transform the StockPriceHistory array
+    const transformedData = stockPriceHistoryData.map(d => ({
+      date: new Date(d.timestamp), // Use timestamp or date depending on your requirement
+      open: d.open,
+      high: d.high,
+      low: d.low,
+      close: d.close,
+      volume: d.volume
+    }))
+      .sort((a, b) => d3.ascending(accessor.d(a), accessor.d(b)));
+
+    return transformedData;
   }
 }
