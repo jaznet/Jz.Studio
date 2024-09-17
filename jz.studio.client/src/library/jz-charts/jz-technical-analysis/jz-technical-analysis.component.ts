@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { range } from 'rxjs';
-import techan from 'techan'; // Import techan
+//import techan from 'techan'; // Import techan
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
 
@@ -61,7 +61,6 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   xScale: any;
   yScale: any;
   
- 
   constructor(private stockPriceService: JzTechnicalAnalysisService) { }
 
   ngOnInit(): void {
@@ -145,10 +144,10 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   plotData() {
     
     console.log(this.stockPriceHistoryData);
-    const techanInstance = techan(d3); // Initialize techan with d3
-    this.candlestickPlot = techanInstance.plot.candlestick()
-      .xScale(this.xScale)
-      .yScale(this.yScale);
+ //   const techanInstance = techan(d3); // Initialize techan with d3
+    //this.candlestickPlot = techanInstance.plot.candlestick()
+    //  .xScale(this.xScale)
+    //  .yScale(this.yScale);
   }
 
   transformData(stockPriceHistoryData: StockPriceHistory[]): any[] {
