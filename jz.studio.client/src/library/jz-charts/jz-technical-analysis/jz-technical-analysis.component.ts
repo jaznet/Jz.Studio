@@ -70,7 +70,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
 
-    this.stockPriceService.getStockPrices(ticker).subscribe(
+    this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
