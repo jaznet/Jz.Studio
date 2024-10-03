@@ -13,6 +13,10 @@ export class JzPopOversService {
     this.popoverLoadingEvent.emit(params);
   }
 
+  popOverError() {
+
+  }
+
   //hidePopOverLoading(params: PopOverLoadingParams) {
   //  params.action = 'hide'
   //  this.popoverLoadingEvent.emit(params);
