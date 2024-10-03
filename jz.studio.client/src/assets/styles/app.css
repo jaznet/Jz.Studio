@@ -15,3 +15,11 @@ body {
     border-radius:9px;
     color:var(--plt-clr-x);
 }
+
+.shadow {
+  width: 200px;
+  height: 100px;
+  background-color: #f4f4f4;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+

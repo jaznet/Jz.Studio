@@ -4,6 +4,8 @@ import { range } from 'rxjs';
 //import techan from 'techan'; // Import techan
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
+import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 
 export interface range {
   start: number;
@@ -25,6 +27,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @ViewChild('rectA', { static: true }) rectA!: ElementRef;
   @ViewChild('rectB', { static: true }) rectB!: ElementRef;
   @ViewChild('rectC', { static: true }) rectC!: ElementRef;
+  @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
+  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -140,7 +144,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr("transform", `translate(32,0)`)
       .call(d3.axisLeft(yAxis));
   }
-
+  
   plotData() {
     
     console.log(this.stockPriceHistoryData);

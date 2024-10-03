@@ -9,7 +9,7 @@ import { AppStateService } from '../../../app-services/app-state.service';
   styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent extends MenuBaseComponent implements AfterViewInit {
-  @HostBinding('class') classes = 'fit-to-parent';
+  @HostBinding('class') classes = 'fit-to-parent centered';
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
   isMainMenuVisible = 'collapse';
