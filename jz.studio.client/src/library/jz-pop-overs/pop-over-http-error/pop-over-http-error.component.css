@@ -1,4 +1,9 @@
 
+
+.dx-popup-title.dx-toolbar {
+  background-color: #BA6666;
+  padding: 0 20px;
+}
 .popover-content-container {
  /* background-color: red;*/
  flex-flow:column;
@@ -8,8 +13,6 @@
     justify-content:center;
     text-align:center;
 }
-
-
 
 .custom-popover-title {
   color: red; /* Change 'red' to your desired color */

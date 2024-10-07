@@ -12,7 +12,7 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
   @ViewChild('popover_loading', { static: false }) dxpopover: DxPopoverComponent | any;
 
   route: any;
-  title = 'not set';
+  title = 'Loading ...';
 
   constructor(private changeDetector: ChangeDetectorRef) {
     super();

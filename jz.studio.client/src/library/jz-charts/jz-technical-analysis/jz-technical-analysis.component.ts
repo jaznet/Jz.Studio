@@ -28,6 +28,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @ViewChild('rectA', { static: true }) rectA!: ElementRef;
   @ViewChild('rectB', { static: true }) rectB!: ElementRef;
   @ViewChild('rectC', { static: true }) rectC!: ElementRef;
+
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
@@ -79,10 +80,12 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
+        this.popover_loading.isPopupVisible = true;
         console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);
+        this.popover_httperror.isPopupVisible = true;
       }
     );
   }
