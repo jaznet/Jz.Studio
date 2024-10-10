@@ -75,17 +75,18 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
-
+    this.popover_loading.isPopupVisible = true;
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
-        this.popover_loading.isPopupVisible = true;
+        this.popover_loading.isPopupVisible = false;
         console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);
-        this.popover_httperror.isPopupVisible = true;
+        this.popover_loading.isPopupVisible = false;
+         this.popover_httperror.isPopupVisible = true;
       }
     );
   }
@@ -162,7 +163,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     // Define the accessor and pre-roll variables if needed
     let accessor = this.candlestickPlot.accessor();
     let indicatorPreRoll = 23; // Adjust this as needed
-
+    
     // Transform the StockPriceHistory array
     const transformedData = stockPriceHistoryData.map(d => ({
       date: new Date(d.timestamp), // Use timestamp or date depending on your requirement

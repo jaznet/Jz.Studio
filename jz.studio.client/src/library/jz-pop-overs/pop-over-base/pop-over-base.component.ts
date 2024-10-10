@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { DxPopupComponent } from 'devextreme-angular';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
@@ -7,7 +7,7 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
   templateUrl: './pop-over-base.component.html',
   styleUrls: ['./pop-over-base.component.css']
 })
-export class PopoverBaseComponent {
+export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'pop';
   @Input() target: string = 'jaz';
 
@@ -20,7 +20,16 @@ export class PopoverBaseComponent {
   api = "pop";
   data = "dbTable";
 
+  constructor(private changeDetector: ChangeDetectorRef) {
+  
+    console.log(this.target);
+  }
+
   ngAfterViewInit(): void {
     console.log(this.target);
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
   }
 }

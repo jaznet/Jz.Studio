@@ -14,10 +14,10 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
   route: any;
   title = 'Loading ...';
 
-  constructor(private changeDetector: ChangeDetectorRef) {
-    super();
-    console.log(this.target);
-  }
+  //constructor(private changeDetector: ChangeDetectorRef) {
+  //  super();
+  //  console.log(this.target);
+  //}
 
   ngOnInit(): void {  }
 

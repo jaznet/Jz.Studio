@@ -11,10 +11,10 @@ import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
 export class PopoverHttpErrorComponent extends PopoverBaseComponent {
   @ViewChild('popover_httperror', { static: false }) dxpopover: DxPopoverComponent | any;
  
-  constructor(private changeDetector: ChangeDetectorRef) {
-    super();
-    console.log(this.target);
-  }
+  //constructor(private changeDetector: ChangeDetectorRef) {
+  //  super();
+  //  console.log(this.target);
+  //}
 
   //override ngAfterViewInit(): void {
   //  this.dxpopover.target = this.target;

@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, ElementRef, Host, HostBinding, ViewChild } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Host, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { AppStateService } from '../../app-services/app-state.service';
 
 @Component({
@@ -7,7 +7,7 @@ import { AppStateService } from '../../app-services/app-state.service';
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.css']
 })
-export class AppHeaderComponent {
+export class AppHeaderComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'app-header';
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
