@@ -21,8 +21,7 @@ export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
   data = "dbTable";
 
   constructor(private changeDetector: ChangeDetectorRef) {
-  
-    console.log(this.target);
+    console.log('target',this.target);
   }
 
   ngAfterViewInit(): void {
