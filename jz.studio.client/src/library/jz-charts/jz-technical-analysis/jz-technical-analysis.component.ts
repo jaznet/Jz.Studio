@@ -152,7 +152,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   
   plotData() {
     
-    console.log(this.stockPriceHistoryData);
+  //  console.log(this.stockPriceHistoryData);
  //   const techanInstance = techan(d3); // Initialize techan with d3
     //this.candlestickPlot = techanInstance.plot.candlestick()
     //  .xScale(this.xScale)

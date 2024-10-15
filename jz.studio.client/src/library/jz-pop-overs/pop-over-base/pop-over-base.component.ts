@@ -19,8 +19,9 @@ export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
   message = "you've got mail";
   api = "pop";
   data = "dbTable";
+  id = 'popover'
 
-  constructor(private changeDetector: ChangeDetectorRef) {
+  constructor(protected changeDetector: ChangeDetectorRef) {
     console.log('target',this.target);
   }
 
@@ -29,6 +30,6 @@ export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    this.changeDetector.detectChanges();
+
   }
 }

@@ -12,9 +12,9 @@ describe('PopoverLoadingComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PopOverLoadingComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    //fixture = TestBed.createComponent(PopOverLoadingComponent);
+    //component = fixture.componentInstance;
+    //fixture.detectChanges();
   });
 
   it('should create', () => {

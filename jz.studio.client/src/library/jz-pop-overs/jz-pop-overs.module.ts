@@ -11,7 +11,6 @@ import { PopoverBaseComponent } from './pop-over-base/pop-over-base.component';
   declarations: [
     PopOverLoadingComponent,
     PopoverHttpErrorComponent,
-    PopoverBaseComponent,
     DynamicPopoverComponent,
   ],
   imports: [
@@ -21,7 +20,6 @@ import { PopoverBaseComponent } from './pop-over-base/pop-over-base.component';
     JzUiControlsModule
   ],
   exports: [
-    PopoverBaseComponent,
     PopOverLoadingComponent,
     PopoverHttpErrorComponent,
     DynamicPopoverComponent
