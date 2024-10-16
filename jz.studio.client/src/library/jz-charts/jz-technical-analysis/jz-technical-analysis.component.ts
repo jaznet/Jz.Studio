@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { range } from 'rxjs';
 //import techan from 'techan'; // Import techan
@@ -30,7 +30,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @ViewChild('rectC', { static: true }) rectC!: ElementRef;
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
-  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
+  @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -67,7 +67,10 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   xScale: any;
   yScale: any;
   
-  constructor(private stockPriceService: JzTechnicalAnalysisService, private popOverService: JzPopOversService) { }
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+    private stockPriceService: JzTechnicalAnalysisService,
+    private popOverService: JzPopOversService) { }
 
   ngOnInit(): void {
     console.log('ngOnInit');
@@ -75,18 +78,21 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
-    this.popover_loading.isPopupVisible = true;
+    console.log(this.popover_loading); this.popover_loading.isPopupVisible = true;
+   // this.popover_loading.instance.show();
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
         this.popover_loading.isPopupVisible = false;
+        this.changeDetector.detectChanges(); 
         console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);
         this.popover_loading.isPopupVisible = false;
-         this.popover_httperror.isPopupVisible = true;
+        this.popover_httperror.isPopupVisible = true;
+        this.changeDetector.detectChanges(); 
       }
     );
   }
