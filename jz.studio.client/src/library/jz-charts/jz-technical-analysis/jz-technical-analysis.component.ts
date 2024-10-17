@@ -7,6 +7,7 @@ import { StockPriceHistory } from '../../../models/stock-price-history.model';
 import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
+import { DxPopoverComponent } from 'devextreme-angular';
 
 export interface range {
   start: number;
@@ -31,6 +32,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
+  @ViewChild('popover_httperror', { static: true }) popoverhttperror!: DxPopoverComponent;
+  @ViewChild('popover_loading', { static: false }) popoverloading!: DxPopoverComponent;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -78,19 +81,25 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
-    console.log(this.popover_loading); this.popover_loading.isPopupVisible = true;
+    console.log(this.popover_loading);
+    console.log(this.popover_httperror);
+    console.log(this.popoverloading);
+    console.log(this.popoverhttperror);
+    this.popover_loading.isPopupVisible = true;
    // this.popover_loading.instance.show();
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
         this.popover_loading.isPopupVisible = false;
-        this.changeDetector.detectChanges(); 
+        this.popover_loading.hide();
+      //  this.changeDetector.detectChanges(); 
         console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);
         this.popover_loading.isPopupVisible = false;
+   
         this.popover_httperror.isPopupVisible = true;
         this.changeDetector.detectChanges(); 
       }

@@ -14,7 +14,7 @@ export class PopoverHttpErrorComponent extends PopoverBaseComponent implements O
 
 
   ngOnInit(): void {
-    this.id = 'httperror';
+    this.title = 'httperror';
   }
   //constructor(private changeDetector: ChangeDetectorRef) {
   //  super();

@@ -14,14 +14,13 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
   @ViewChild('popover_loading', { static: false }) dxpopover: DxPopoverComponent | any;
 
   route: any;
-  title = 'Loading ...';
 
   constructor(protected override changeDetector: ChangeDetectorRef) {
     super(changeDetector); // Correctly pass ChangeDetectorRef to base class
   }
 
   ngOnInit(): void {
-    this.id = 'loading';
+    this.title = 'loading';
   }
 
   override ngAfterViewInit(): void {

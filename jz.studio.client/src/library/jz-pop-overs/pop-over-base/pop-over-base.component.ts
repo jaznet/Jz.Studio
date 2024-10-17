@@ -1,3 +1,4 @@
+
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { DxPopupComponent } from 'devextreme-angular';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
@@ -19,7 +20,7 @@ export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
   message = "you've got mail";
   api = "pop";
   data = "dbTable";
-  id = 'popover'
+  title = 'popover'
 
   constructor(protected changeDetector: ChangeDetectorRef) {
     console.log('target',this.target);
@@ -31,5 +32,13 @@ export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
 
+  }
+
+  show() {
+    console.log(this.title);
+  }
+
+  hide() {
+    console.log(this.title);
   }
 }
