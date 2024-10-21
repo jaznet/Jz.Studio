@@ -16,12 +16,12 @@ export class SandboxComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.popoverservice.popoverLoadingEvent.subscribe((params: PopOverLoadingParams) => {
-      if (params.action === 'hide')
-        this.popover.isPopupVisible = false;
+      if (params.action === 'hide') { }
+   //     this.popover.isPopupVisible = false;
       else {
         this.popover.title = 'Loading';
         this.popover.url = params.route;
-        this.popover.isPopupVisible = true;
+   //     this.popover.isPopupVisible = true;
         console.log(params);
       }
     })
@@ -32,6 +32,6 @@ export class SandboxComponent implements OnInit, AfterViewInit {
   }
 
   showPopover(event: MouseEvent) {
-    this.popover.isPopupVisible = true;
+//    this.popover.isPopupVisible = true;
   }
 }

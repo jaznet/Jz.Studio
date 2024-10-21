@@ -12,16 +12,14 @@ export class PopoverHttpErrorComponent extends PopoverBaseComponent implements O
 
   @ViewChild('popover_httperror', { static: false }) dxpopover: DxPopoverComponent | any;
 
+  ok: any;
 
   ngOnInit(): void {
     this.title = 'httperror';
   }
-  //constructor(private changeDetector: ChangeDetectorRef) {
-  //  super();
-  //  console.log(this.target);
-  //}
 
-  //override ngAfterViewInit(): void {
-  //  this.dxpopover.target = this.target;
-  //}
+  override ngAfterViewInit(): void {
+    this.title = 'Error';
+     // Show the popover when error occurs
+  }
 }

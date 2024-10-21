@@ -9,6 +9,7 @@ import { PopoverBaseComponent } from './pop-over-base/pop-over-base.component';
 
 @NgModule({
   declarations: [
+    PopoverBaseComponent,
     PopOverLoadingComponent,
     PopoverHttpErrorComponent,
     DynamicPopoverComponent,

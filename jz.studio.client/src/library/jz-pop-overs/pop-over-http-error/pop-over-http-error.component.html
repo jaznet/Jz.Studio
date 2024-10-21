@@ -1,6 +1,6 @@
 
 <dx-popover #popover_httperror
-            *ngIf="isPopupVisible"
+       
             width="300"
             height="200"
             id="dxpopover"
@@ -10,7 +10,7 @@
             title="HttpErrorResponse"
             target="viewRouter"
             [position]="{ my: 'center', at: 'center', of: '#viewRouter' }"
-            [visible]="isPopupVisible"
+          
             [wrapperAttr]="{id: 'httperrorpopup', class:'httperror-popup custom-popover-title-wrapper'}">
   <div class="popover-content-container">
     <div class="popover-content-item">ok: {{ok}}</div>

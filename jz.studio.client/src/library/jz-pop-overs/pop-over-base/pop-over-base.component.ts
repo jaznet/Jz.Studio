@@ -4,41 +4,32 @@ import { DxPopupComponent } from 'devextreme-angular';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
 @Component({
-  selector: 'app-jz-popover-base',
+  selector: 'jz-popover-base',
   templateUrl: './pop-over-base.component.html',
   styleUrls: ['./pop-over-base.component.css']
 })
-export class PopoverBaseComponent implements AfterViewInit, AfterViewChecked {
-  @HostBinding('class') classes = 'pop';
-  @Input() target: string = 'jaz';
+export class PopoverBaseComponent implements AfterViewInit {
+  @ViewChild(DxPopoverComponent) popover!: DxPopoverComponent;
+//  isPopupVisible = false;
+  title = 'Shared Popover';
+  target: string = '';
+  data: any;
+  url: any;
+  statusText: any;
+  message: any;
+  showTitle: any;
 
-  isPopupVisible = false;
-  status = 0;
-  statusText='Status Text';
-  url: string | null='url';
-  ok:boolean | undefined;
-  message = "you've got mail";
-  api = "pop";
-  data = "dbTable";
-  title = 'popover'
-
-  constructor(protected changeDetector: ChangeDetectorRef) {
-    console.log('target',this.target);
-  }
+  constructor() { }
 
   ngAfterViewInit(): void {
-    console.log(this.target);
+    this.show();
   }
 
-  ngAfterViewChecked(): void {
-
+  show(): void {
+    this.popover.instance.show();
   }
 
-  show() {
-    console.log(this.title);
-  }
-
-  hide() {
-    console.log(this.title);
+  hide(): void {
+    this.popover.instance.hide();
   }
 }

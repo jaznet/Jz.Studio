@@ -1,2 +1,9 @@
-<p>jz-popover-base works!</p>
-<ng-content></ng-content>
+
+<dx-popover #popover
+            [target]="target"
+          
+         
+            title="{{title}}"
+            [position]="{ my: 'center', at: 'center', of: target }">
+  <ng-content></ng-content> <!-- This allows derived components to insert custom content -->
+</dx-popover>

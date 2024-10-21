@@ -85,22 +85,20 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     console.log(this.popover_httperror);
     console.log(this.popoverloading);
     console.log(this.popoverhttperror);
-    this.popover_loading.isPopupVisible = true;
+ //   this.popover_loading.isPopupVisible = true;
    // this.popover_loading.instance.show();
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
-        this.popover_loading.isPopupVisible = false;
         this.popover_loading.hide();
-      //  this.changeDetector.detectChanges(); 
         console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);
-        this.popover_loading.isPopupVisible = false;
+     
    
-        this.popover_httperror.isPopupVisible = true;
+       
         this.changeDetector.detectChanges(); 
       }
     );
