@@ -81,18 +81,15 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
-    console.log(this.popover_loading);
-    console.log(this.popover_httperror);
-    console.log(this.popoverloading);
-    console.log(this.popoverhttperror);
+  
  //   this.popover_loading.isPopupVisible = true;
-   // this.popover_loading.instance.show();
+    this.popover_loading.show();
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
         this.popover_loading.hide();
-        console.log('Stock Prices:', this.stockPriceHistoryData);
+       // console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         console.error('Error fetching stock prices:', error);

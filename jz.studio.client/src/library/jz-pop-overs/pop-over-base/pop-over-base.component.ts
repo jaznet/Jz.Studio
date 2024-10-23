@@ -8,7 +8,7 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
   templateUrl: './pop-over-base.component.html',
   styleUrls: ['./pop-over-base.component.css']
 })
-export class PopoverBaseComponent implements AfterViewInit {
+export class PopoverBaseComponent implements AfterViewChecked {
   @ViewChild(DxPopoverComponent) popover!: DxPopoverComponent;
 //  isPopupVisible = false;
   title = 'Shared Popover';
@@ -19,10 +19,16 @@ export class PopoverBaseComponent implements AfterViewInit {
   message: any;
   showTitle: any;
 
-  constructor() { }
+  constructor(private changeDetector:ChangeDetectorRef) { }
+
 
   ngAfterViewInit(): void {
     this.show();
+   
+  }
+
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
   }
 
   show(): void {
