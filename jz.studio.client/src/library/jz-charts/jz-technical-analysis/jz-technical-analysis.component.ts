@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { range } from 'rxjs';
-//import techan from 'techan'; // Import techan
+import techan from 'techan'; // Import techan
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
 import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
@@ -32,8 +32,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
-  @ViewChild('popover_httperror', { static: true }) popoverhttperror!: DxPopoverComponent;
-  @ViewChild('popover_loading', { static: false }) popoverloading!: DxPopoverComponent;
+  //@ViewChild('popover_httperror', { static: true }) popoverhttperror!: DxPopoverComponent;
+  //@ViewChild('popover_loading', { static: false }) popoverloading!: DxPopoverComponent;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -75,9 +75,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     private stockPriceService: JzTechnicalAnalysisService,
     private popOverService: JzPopOversService) { }
 
-  ngOnInit(): void {
-    console.log('ngOnInit');
-  }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     const ticker = 'NVDA';  // You can change this dynamically as needed
@@ -92,11 +90,12 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
        // console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
-        console.error('Error fetching stock prices:', error);
+        this.popover_httperror.show();
+    //    console.error('Error fetching stock prices:', error);
      
    
        
-        this.changeDetector.detectChanges(); 
+      //  this.changeDetector.detectChanges(); 
       }
     );
   }

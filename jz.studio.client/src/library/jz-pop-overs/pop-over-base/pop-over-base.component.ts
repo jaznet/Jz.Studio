@@ -21,14 +21,12 @@ export class PopoverBaseComponent implements AfterViewChecked {
 
   constructor(private changeDetector:ChangeDetectorRef) { }
 
-
   ngAfterViewInit(): void {
-    this.show();
-   
+   // this.show();
   }
 
-  ngAfterViewChecked(): void {
-    this.changeDetector.detectChanges();
+  ngAfterViewChecked(): void { 
+ this.changeDetector.detectChanges();
   }
 
   show(): void {

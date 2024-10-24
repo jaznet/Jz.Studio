@@ -21,10 +21,9 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
 
   constructor() { }
   
-
   ngOnInit(): void {  }
 
   ngAfterViewInit(): void {
-    console.log(this.menuType);
+ 
   }
 }
