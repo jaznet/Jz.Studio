@@ -1,13 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import * as d3 from 'd3';
 import { range } from 'rxjs';
-import techan from 'techan'; // Import techan
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
 import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { DxPopoverComponent } from 'devextreme-angular';
+
+import techan from 'techan'; // Import techan
 
 export interface range {
   start: number;
@@ -41,7 +42,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   svgRect!: any;
   svgRectWidth = 0;
   svgRectHeight = 0;
-  //techan: any;
+ // techan: any;
   // margin = 24;
 //  range: { start: number; end: number } = { start: 0, end: 0 };
   
@@ -158,10 +159,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
   
   plotData() {
-    
-  //  console.log(this.stockPriceHistoryData);
-  // const techanInstance = techan(d3); // Initialize techan with d3
-    //this.candlestickPlot = techan.
+    //const techanInstance = techan(d3); // Initialize techan with d3
+    //this.candlestickPlot = techanInstance.plot.candlestick()
     //  .xScale(this.xScale)
     //  .yScale(this.yScale);
   }

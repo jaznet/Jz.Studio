@@ -31,4 +31,34 @@
     <None Include=".backup\utilities\keyed-collection.ts" />
     <None Include=".backup\utilities\utilities.module.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove="src\library\jz-charts\jz-tech-chart\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\script-loader.service.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\script-loader.service.spec.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart.module.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart.component.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart.component.spec.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart.component.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart.component.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\library\jz-charts\jz-tech-chart\jz-tech-chart-router.module.ts" />
+  </ItemGroup>
 </Project>
