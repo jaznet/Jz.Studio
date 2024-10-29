@@ -41,6 +41,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   svgRect!: any;
   svgRectWidth = 0;
   svgRectHeight = 0;
+  //techan: any;
   // margin = 24;
 //  range: { start: number; end: number } = { start: 0, end: 0 };
   
@@ -92,9 +93,6 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       (error) => {
         this.popover_httperror.show();
     //    console.error('Error fetching stock prices:', error);
-     
-   
-       
       //  this.changeDetector.detectChanges(); 
       }
     );
@@ -162,8 +160,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   plotData() {
     
   //  console.log(this.stockPriceHistoryData);
- //   const techanInstance = techan(d3); // Initialize techan with d3
-    //this.candlestickPlot = techanInstance.plot.candlestick()
+  // const techanInstance = techan(d3); // Initialize techan with d3
+    //this.candlestickPlot = techan.
     //  .xScale(this.xScale)
     //  .yScale(this.yScale);
   }
