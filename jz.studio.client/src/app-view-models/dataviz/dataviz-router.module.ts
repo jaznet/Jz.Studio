@@ -23,10 +23,6 @@ const routes: Routes = [
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
       {
-        path: 'technical',
-        loadChildren: () => import('../../library/jz-charts/jz-tech-chart/jz-tech-chart.module').then(m => m.JazTechChartModule)
-      },
-      {
         path: 'technical-analysis',
         loadChildren: () => import('../../library/jz-charts/jz-technical-analysis/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
       },

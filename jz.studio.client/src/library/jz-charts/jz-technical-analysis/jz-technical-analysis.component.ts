@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
-import * as d3 from 'd3';
+
 import { range } from 'rxjs';
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
@@ -8,7 +8,9 @@ import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-erro
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { DxPopoverComponent } from 'devextreme-angular';
 
-import techan from 'techan'; // Import techan
+import * as d3 from 'd3';
+import techan from 'techan';
+
 
 export interface range {
   start: number;
@@ -69,8 +71,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = []
   candlestickPlot: any;
-  xScale: any;
-  yScale: any;
+  xScale!: d3.ScaleTime<number, number>;
+  yScale!: d3.ScaleLinear<number, number>;
   
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -103,7 +105,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.createtChartLayoutISettings();
     this.createSections();
     this.createAxes();
-    this.plotData();
+ //  this.plotData();
   }
 
   createtChartLayoutISettings() {
@@ -159,10 +161,21 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
   
   plotData() {
-    //const techanInstance = techan(d3); // Initialize techan with d3
-    //this.candlestickPlot = techanInstance.plot.candlestick()
-    //  .xScale(this.xScale)
-    //  .yScale(this.yScale);
+    // Use d3@4.2.6 to avoid compatibility issues with techan
+    this.svg = d3.select(this.svgElementRef.nativeElement);
+    this.xScale = d3.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
+    this.yScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
+
+    //const candlestickPlot = techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
+    //this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
+
+  //  // Generate and bind the candlestick data
+  //  const candlestickData = this.transformData(this.stockPriceHistoryData);
+
+  //  this.svg.append("g")
+  //    .attr("class", "candlestick")
+  //    .datum(candlestickData)
+  //    .call(techanCandlestick);
   }
 
   transformData(stockPriceHistoryData: StockPriceHistory[]): any[] {

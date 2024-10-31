@@ -1,4 +1,3 @@
-
 declare module 'techan' {
   import * as d3 from 'd3';
 
@@ -45,14 +44,21 @@ declare module 'techan' {
 
   export interface ScaleFactory {
     ohlc(): d3.ScaleLinear<number, number>;
+    financetime(): d3.ScaleTime<number, number>;
+  }
+
+  export interface Accessor {
+    ohlc(): any;
+    macd(): any;
   }
 
   export interface Techan {
     indicator: IndicatorFactory;
     plot: PlotFactory;
     scale: ScaleFactory;
+    accessor: Accessor;
   }
 
-  function techan(d3: typeof d3): Techan;
+  const techan: Techan;
   export default techan;
 }
