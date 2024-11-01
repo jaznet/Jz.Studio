@@ -60,6 +60,9 @@ declare module 'techan' {
   }
 
   // Modify the default export to be callable, accepting d3 and returning a Techan instance
-  function techan(d3: typeof d3): Techan;
+  // Declare `techan` as a callable function
+  const techan: (d3: typeof d3) => Techan;
   export default techan;
+
+
 }

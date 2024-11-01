@@ -8,9 +8,11 @@ import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-erro
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { DxPopoverComponent } from 'devextreme-angular';
 
-import * as techanModule from 'techan';
+import techanModule from 'techan';
 import * as d3 from 'd3';
 
+// Initialize techan with d3
+//const techan = techanModule(d3);
 
 export interface range {
   start: number;
@@ -73,6 +75,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   candlestickPlot: any;
   xScale!: d3.ScaleTime<number, number>;
   yScale!: d3.ScaleLinear<number, number>;
+
+  private techan: any | undefined; // Define techan as undefined initially
   
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -82,6 +86,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
+    this.initializeTechan();
+
     const ticker = 'NVDA';  // You can change this dynamically as needed
   
  //   this.popover_loading.isPopupVisible = true;
@@ -99,6 +105,12 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       //  this.changeDetector.detectChanges(); 
       }
     );
+  }
+
+  private initializeTechan() {
+    //if (!this.techan) {  // Check if techan is already initialized
+    //  this.techan = techanModule(d3);  // Initialize techan only when this method is called
+    //}
   }
 
   createChart(): void {
