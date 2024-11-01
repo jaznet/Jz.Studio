@@ -8,7 +8,7 @@ import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-erro
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { DxPopoverComponent } from 'devextreme-angular';
 
-import techanModule from 'techan';
+// import techanModule from 'techan';
 import * as d3 from 'd3';
 
 // Initialize techan with d3
@@ -107,10 +107,12 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private initializeTechan() {
-    //if (!this.techan) {  // Check if techan is already initialized
-    //  this.techan = techanModule(d3);  // Initialize techan only when this method is called
-    //}
+  private async initializeTechan() {
+    console.log('d3:', d3);
+    // Dynamically import techan only when this method is called
+    // Dynamically import techan only when this method is called
+    const techanModule = await import('techan');
+    this.techan = techanModule.default(d3);  // Initialize techan with d3
   }
 
   createChart(): void {
@@ -179,7 +181,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.yScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
 
    // const techanInstance = techan(d3);
-    //const candlestickPlot = techanInstance.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
+    const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
     //this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
 
   //  // Generate and bind the candlestick data
