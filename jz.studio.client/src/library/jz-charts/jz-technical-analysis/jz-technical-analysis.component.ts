@@ -103,9 +103,10 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   private async initializeTechan(): Promise<void> {
     if (!this.techan) {
       const d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3');  // Lazy load d3 v4 specifically
+      console.log(d3v4.min);
       const techanModule = await import(/* webpackChunkName: "techan" */ 'techan'); // Lazy load Techan
 
-      this.techan = techanModule.default(d3v4);  // Initialize Techan with d3 v4
+      this.techan = techanModule.default(d3v4.min);  // Initialize Techan with d3 v4
     }
   }
 
