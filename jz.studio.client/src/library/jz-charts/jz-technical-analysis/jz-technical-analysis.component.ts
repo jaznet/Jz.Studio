@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
-
 import { range } from 'rxjs';
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../models/stock-price-history.model';
@@ -7,12 +6,6 @@ import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop
 import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { DxPopoverComponent } from 'devextreme-angular';
-
-// import techanModule from 'techan';
-import * as d3 from 'd3';
-
-// Initialize techan with d3
-//const techan = techanModule(d3);
 
 export interface range {
   start: number;
@@ -37,8 +30,6 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
-  //@ViewChild('popover_httperror', { static: true }) popoverhttperror!: DxPopoverComponent;
-  //@ViewChild('popover_loading', { static: false }) popoverloading!: DxPopoverComponent;
 
   svg!: d3.Selection<any, unknown, null, undefined>;
   svgWidth = 0;
@@ -76,7 +67,9 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   xScale!: d3.ScaleTime<number, number>;
   yScale!: d3.ScaleLinear<number, number>;
 
-  private techan: any | undefined; // Define techan as undefined initially
+  //private techan: any | undefined; // Define techan as undefined initially
+  private techan: any;  // Store techan instance here
+  private d3v4: any;
   
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -85,8 +78,8 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
-  ngAfterViewInit(): void {
-    this.initializeTechan();
+ async  ngAfterViewInit() {
+   await  this.initializeTechan();
 
     const ticker = 'NVDA';  // You can change this dynamically as needed
   
@@ -107,13 +100,42 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private async initializeTechan() {
-    console.log('d3:', d3);
-    // Dynamically import techan only when this method is called
-    // Dynamically import techan only when this method is called
-    const techanModule = await import('techan');
-    this.techan = techanModule.default(d3);  // Initialize techan with d3
+  private async initializeTechan(): Promise<void> {
+    if (!this.techan) {
+      const d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3');  // Lazy load d3 v4 specifically
+      const techanModule = await import(/* webpackChunkName: "techan" */ 'techan'); // Lazy load Techan
+
+      this.techan = techanModule.default(d3v4);  // Initialize Techan with d3 v4
+    }
   }
+
+  //async initializeTechan() {
+  //  try {
+  //    // Lazy load the `d3-v4` module and inject it into Techan
+  //    const d3 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
+
+  //    // Pass the imported D3 into Techan's initialization
+  //    this.techan = techanModule(d3);
+
+  //    // Log to confirm Techan is initialized
+  //    console.log("Techan initialized successfully:", this.techan);
+
+  //    // Now you can proceed to use `this.techan` to create charts, plots, etc.
+  //    this.createChart();
+  //  } catch (error) {
+  //    console.error("Failed to initialize Techan with D3:", error);
+  //  }
+  //  console.log('D3 is loaded:', d3);  // Confirm d3 is available
+  //  console.log('d3.min function:', d3.min);  // Confirm d3.min is defined
+
+  //  // Lazy load and initialize Techan with D3
+  //  //try {
+  //  //  this.techan = techanModule(d3);
+  //  //  console.log('Techan initialized:', this.techan);
+  //  //} catch (error) {
+  //  //  console.error('Error initializing Techan:', error);
+  //  //}
+  //}
 
   createChart(): void {
     this.createtChartLayoutISettings();
@@ -123,11 +145,11 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   createtChartLayoutISettings() {
-    this.svg = d3.select(this.svgElementRef.nativeElement);
+    this.svg =this. d3v4.select(this.svgElementRef.nativeElement);
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
-    this.svgRect = d3.select("#plotArea");
+    this.svgRect = this.d3v4.select("#plotArea");
     const rectNode = this.svgRect.node(); // Get the actual DOM element
     if (rectNode) {
       const rectDimensions = rectNode.getBoundingClientRect();
@@ -155,7 +177,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   createAxes() {
     // Declare the x (horizontal position) scale.
     // xAxis
-    const xAxis = d3.scaleUtc()
+    const xAxis = this.d3v4.scaleUtc()
       .domain([new Date("2023-01-01"), new Date("2024-01-01")])
       .range([0, this.svgChart.plotArea.width]);
 
@@ -163,22 +185,22 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr("transform", `translate(
         ${this.svgChart.margins.top},
         ${this.svgHeight  - 36})`)
-      .call(d3.axisBottom(xAxis));
+      .call(this.d3v4.axisBottom(xAxis));
 
     // yAxis
-    const yAxis = d3.scaleLinear().range([0,this.svgChart.sections.A.end]);
+    const yAxis = this.d3v4.scaleLinear().range([0,this.svgChart.sections.A.end]);
 
     this.svg.append("g")
       .attr("class", "y-axis")
       .attr("transform", `translate(32,0)`)
-      .call(d3.axisLeft(yAxis));
+      .call(this.d3v4.axisLeft(yAxis));
   }
   
   plotData() {
     // Use d3@4.2.6 to avoid compatibility issues with techan
-    this.svg = d3.select(this.svgElementRef.nativeElement);
-    this.xScale = d3.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
-    this.yScale = d3.scaleLinear().domain([0, 100]).range([0, 400]);
+    this.svg = this.d3v4.select(this.svgElementRef.nativeElement);
+    this.xScale = this.d3v4.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
+    this.yScale = this.d3v4.scaleLinear().domain([0, 100]).range([0, 400]);
 
    // const techanInstance = techan(d3);
     const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
@@ -207,7 +229,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
       close: d.close,
       volume: d.volume
     }))
-      .sort((a, b) => d3.ascending(accessor.d(a), accessor.d(b)));
+      .sort((a, b) => this.d3v4.ascending(accessor.d(a), accessor.d(b)));
 
     return transformedData;
   }
