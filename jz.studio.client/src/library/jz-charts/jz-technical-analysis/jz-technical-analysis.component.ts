@@ -37,11 +37,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   svgRect!: any;
   svgRectWidth = 0;
   svgRectHeight = 0;
- // techan: any;
-  // margin = 24;
-//  range: { start: number; end: number } = { start: 0, end: 0 };
-  
-  // Initialize the `chart` property with default values
+
   svgChart: {
     width: number;
     height: number;
@@ -64,10 +60,9 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = []
   candlestickPlot: any;
-  xScale!: d3.ScaleTime<number, number>;
-  yScale!: d3.ScaleLinear<number, number>;
+  xScale!: any;
+  yScale!: any;
 
-  //private techan: any | undefined; // Define techan as undefined initially
   private techan: any;  // Store techan instance here
   private d3v4: any;
   
@@ -79,64 +74,35 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
  async  ngAfterViewInit() {
-   await  this.initializeTechan();
+   await this.initializeTechan();
 
     const ticker = 'NVDA';  // You can change this dynamically as needed
   
- //   this.popover_loading.isPopupVisible = true;
     this.popover_loading.show();
     this.stockPriceService.getStockPrices(ticker).subscribe( 
       (data: StockPriceHistory[]) => {
         this.stockPriceHistoryData = data;
         this.createChart();
         this.popover_loading.hide();
-       // console.log('Stock Prices:', this.stockPriceHistoryData);
       },
       (error) => {
         this.popover_httperror.show();
-    //    console.error('Error fetching stock prices:', error);
-      //  this.changeDetector.detectChanges(); 
       }
     );
   }
 
   private async initializeTechan(): Promise<void> {
     if (!this.techan) {
-      const d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3');  // Lazy load d3 v4 specifically
-      console.log(d3v4.min);
-      const techanModule = await import(/* webpackChunkName: "techan" */ 'techan'); // Lazy load Techan
+      this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
+      const techanModule = await import(/* webpackChunkName: "techan" */ 'techan');
 
-      this.techan = techanModule.default(d3v4.min);  // Initialize Techan with d3 v4
+      if (this.d3v4?.min) {
+        this.techan = techanModule.default(this.d3v4); // Initialize Techan with d3 v4
+      } else {
+        console.error("D3 v4 did not load correctly.");
+      }
     }
   }
-
-  //async initializeTechan() {
-  //  try {
-  //    // Lazy load the `d3-v4` module and inject it into Techan
-  //    const d3 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
-
-  //    // Pass the imported D3 into Techan's initialization
-  //    this.techan = techanModule(d3);
-
-  //    // Log to confirm Techan is initialized
-  //    console.log("Techan initialized successfully:", this.techan);
-
-  //    // Now you can proceed to use `this.techan` to create charts, plots, etc.
-  //    this.createChart();
-  //  } catch (error) {
-  //    console.error("Failed to initialize Techan with D3:", error);
-  //  }
-  //  console.log('D3 is loaded:', d3);  // Confirm d3 is available
-  //  console.log('d3.min function:', d3.min);  // Confirm d3.min is defined
-
-  //  // Lazy load and initialize Techan with D3
-  //  //try {
-  //  //  this.techan = techanModule(d3);
-  //  //  console.log('Techan initialized:', this.techan);
-  //  //} catch (error) {
-  //  //  console.error('Error initializing Techan:', error);
-  //  //}
-  //}
 
   createChart(): void {
     this.createtChartLayoutISettings();
@@ -205,15 +171,6 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
    // const techanInstance = techan(d3);
     const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
-    //this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
-
-  //  // Generate and bind the candlestick data
-  //  const candlestickData = this.transformData(this.stockPriceHistoryData);
-
-  //  this.svg.append("g")
-  //    .attr("class", "candlestick")
-  //    .datum(candlestickData)
-  //    .call(techanCandlestick);
   }
 
   transformData(stockPriceHistoryData: StockPriceHistory[]): any[] {
