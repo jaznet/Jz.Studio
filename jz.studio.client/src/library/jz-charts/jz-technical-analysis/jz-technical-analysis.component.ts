@@ -104,6 +104,19 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     }
   }
 
+  //private async initializeTechan(): Promise<void> {
+  //  if (!this.techan) {
+  //    this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
+  //    const techanModule = await import(/* webpackChunkName: "techan" */ 'techan');
+
+  //    if (this.d3v4?.min) {
+  //      this.techan = techanModule.default(this.d3v4); // Initialize Techan with d3 v4
+  //    } else {
+  //      console.error("D3 v4 did not load correctly.");
+  //    }
+  //  }
+  //}
+
   createChart(): void {
     this.createtChartLayoutISettings();
     this.createSections();
