@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { JzTechnicalAnalysisComponent } from './jz-technical-analysis.component';
 import { RouterModule } from '@angular/router';
 import { JzTechnicalAnalysisRoutingModule } from './jz-technical-analysis-routing.module';
-import { JzPopOversModule } from '../../jz-pop-overs/jz-pop-overs.module';
+import { JzPopOversModule } from '../../../jz-pop-overs/jz-pop-overs.module';
 
 
 

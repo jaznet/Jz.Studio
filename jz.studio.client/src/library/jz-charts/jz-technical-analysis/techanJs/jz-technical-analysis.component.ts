@@ -1,11 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { range } from 'rxjs';
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
-import { StockPriceHistory } from '../../../models/stock-price-history.model';
-import { PopOverLoadingComponent } from '../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { PopoverHttpErrorComponent } from '../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
-import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
-
+import { StockPriceHistory } from '../../../../models/stock-price-history.model';
+import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 export interface range {
   start: number;
   end: number;
