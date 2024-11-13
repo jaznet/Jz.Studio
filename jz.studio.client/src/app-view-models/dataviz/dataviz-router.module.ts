@@ -27,6 +27,10 @@ const routes: Routes = [
         loadChildren: () => import('../../library/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
       },
       {
+        path: 'techanTs',
+        loadChildren: () => import('../../library/jz-charts/jz-technical-analysis/techanTs/techanTs.module').then(m => m.TechanTsModule)
+      },
+      {
         path: 'syncfusion-chart',
         loadChildren: () => import('../../library/jz-charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
       },
