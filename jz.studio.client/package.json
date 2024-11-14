@@ -35,14 +35,14 @@
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "svg-path-bounds": "^1.0.2",
-    "techan": "^0.7.0",
+    "techan": "^0.8.0",
     "topojson": "^3.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.6",
-    "@angular/cli": "^17.0.6",
+    "@angular/cli": "^17.3.11",
     "@angular/compiler-cli": "^17.0.0",
     "@types/d3": "^7.4.3",
     "@types/jasmine": "~5.1.0",

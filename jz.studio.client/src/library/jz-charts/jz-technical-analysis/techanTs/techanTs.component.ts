@@ -29,8 +29,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   xScale!: any;
   yScale!: any;
 
-  private techan: any;
-  private d3v4: any;
+  //private techan: any;
+  //private d3v4: any;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -39,8 +39,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
-  async ngAfterViewInit() {
-    await this.initializeTechan();
+   ngAfterViewInit() {
+  
 
     const ticker = 'NVDA';
     this.stockPriceService.getStockPrices(ticker).subscribe(
@@ -54,31 +54,31 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  private async initializeTechan(): Promise<void> {
-    if (!this.techan) {
-      try {
-        this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
-        const d3CommonJS = { ...this.d3v4, __esModule: false };  // Simulate CommonJS module
+  //private async initializeTechan(): Promise<void> {
+  //  if (!this.techan) {
+  //    try {
+  //      this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
+  //      const d3CommonJS = { ...this.d3v4, __esModule: false };  // Simulate CommonJS module
 
-        const techanModule = await import(/* webpackChunkName: "techan" */ 'techan');
-        this.techan = techanModule.default(d3CommonJS); // Initialize Techan with d3 v4
+  //      const techanModule = await import(/* webpackChunkName: "techan" */ 'techan');
+  //      this.techan = techanModule.default(d3CommonJS); // Initialize Techan with d3 v4
 
-        console.log("Techan initialized successfully:", this.techan);
-      } catch (error) {
-        console.error("Failed to initialize Techan with D3:", error);
-      }
-    }
-  }
+  //      console.log("Techan initialized successfully:", this.techan);
+  //    } catch (error) {
+  //      console.error("Failed to initialize Techan with D3:", error);
+  //    }
+  //  }
+  //}
 
   createChart(): void {
-    this.svg = this.d3v4.select(this.svgElementRef.nativeElement);
+  /*  this.svg = this.d3v4.select(this.svgElementRef.nativeElement);*/
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
-    this.xScale = this.d3v4.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
-    this.yScale = this.d3v4.scaleLinear().domain([0, 100]).range([0, 400]);
+    //this.xScale = this.d3v4.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
+    //this.yScale = this.d3v4.scaleLinear().domain([0, 100]).range([0, 400]);
 
-    const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
-    this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
+    //const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
+    //this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
   }
 }
