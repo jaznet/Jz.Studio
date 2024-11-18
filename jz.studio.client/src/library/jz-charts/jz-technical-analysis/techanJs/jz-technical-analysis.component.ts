@@ -1,3 +1,4 @@
+
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { range } from 'rxjs';
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
