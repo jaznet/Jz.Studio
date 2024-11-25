@@ -73,6 +73,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.popover_loading.hide();
+        this.popover_httperror.error = error.error;
+        this.popover_httperror.error = error.headers;
+        this.popover_httperror.error = error.message;
+        this.popover_httperror.error = error.name;
+        this.popover_httperror.error = error.ok;
+        this.popover_httperror.error = error.status;
+        this.popover_httperror.error = error.statusText;
+        this.popover_httperror.error = error.url;
         this.popover_httperror.show();
         console.error("Error fetching stock prices:", error);
       }
@@ -96,7 +104,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width])
+      .range([0, this.sectionA.width]) 
       .padding(0.1); // Optional: add padding between bands
 
     this.yScale = scaleLinear().domain([0, 100]).range([0, this.sectionA.height]);
@@ -118,7 +126,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const xAxisGroup = gSectionA
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.svgHeight})`); // Translate to bottom of SVG
+      .attr("transform", `translate(0, ${this.sectionA.height})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
     xAxisGroup.call(this.xAxis);

@@ -12,7 +12,14 @@ export class PopoverHttpErrorComponent extends PopoverBaseComponent implements O
 
   @ViewChild('popover_httperror', { static: false }) dxpopover: DxPopoverComponent | any;
 
+  error: any;
+  headers: any;
+  //message: any;
+  name: any;
   ok: any;
+  status: any;
+  // statusText: any;
+  //url: any;
 
   ngOnInit(): void {
     this.title = 'httperror';
