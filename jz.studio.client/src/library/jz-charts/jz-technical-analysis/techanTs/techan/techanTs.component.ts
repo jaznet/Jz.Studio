@@ -7,7 +7,7 @@ import { select } from 'd3-selection';
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { SvgElementAttributes } from '../interfaces/techan-interfaces';
+import { SectionAttributes } from '../interfaces/techan-interfaces';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
 import { TechanLibService } from '../services/techan-lib.service';
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
@@ -43,9 +43,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionA: SvgElementAttributes = { x: 0, y: 0, width: 0, height: 0 };
-  sectionB: SvgElementAttributes = { x: 0, y: 0, width: 0, height: 0 };
-  sectionC: SvgElementAttributes = { x: 0, y: 0, width: 0, height: 0 };
+  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
+  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
+  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -111,10 +111,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.xAxis = axisBottom(this.xScale);
     this.yAxis = axisRight(this.yScale);
 
-    const gSectionA = select(this.gSectionAref.nativeElement);
+    const gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
-      //.attr("class", "candlestick")
-      //.attr("transform", "translate(0,-400)");
+      .attr("class", "candlestick")
+      .attr("transform", "translate(0,this.sectionA.height)");
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
@@ -126,7 +126,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const xAxisGroup = gSectionA
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.sectionA.height})`); // Translate to bottom of Section A
+      .attr("transform", `translate(0, ${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
     xAxisGroup.call(this.xAxis);
