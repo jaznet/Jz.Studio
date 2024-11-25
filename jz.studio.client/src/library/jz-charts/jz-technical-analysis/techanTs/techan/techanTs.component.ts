@@ -114,7 +114,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
       .attr("class", "candlestick")
-      .attr("transform", "translate(0,this.sectionA.height)");
+      .attr("transform", "translate(0,-500)");
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
