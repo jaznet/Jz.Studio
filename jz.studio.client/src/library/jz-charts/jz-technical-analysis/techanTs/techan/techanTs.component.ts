@@ -91,6 +91,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   createChart(): void {
     this.sizeChart();
     this.setScales();
+    this.setAxes();
     this.constructChart();
   }
 
@@ -121,9 +122,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
       .range([0, this.sectionA.width])
-      .padding(0.1); // Adjust as needed to fit bars comfortably
+      .padding(0.1); // Adjust as needed to fit bars comfortably 
   }
 
+  setAxes(): void {
+
+  }
 
   constructChart(): void {
     this.svg = select('#svg');
