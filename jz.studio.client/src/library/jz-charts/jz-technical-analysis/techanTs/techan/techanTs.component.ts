@@ -4,6 +4,7 @@ import { range } from 'rxjs';
 import { axisBottom, axisRight } from 'd3-axis';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
+import { max, min } from 'd3-array';
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
@@ -74,13 +75,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       (error) => {
         this.popover_loading.hide();
         this.popover_httperror.error = error.error;
-        this.popover_httperror.error = error.headers;
-        this.popover_httperror.error = error.message;
-        this.popover_httperror.error = error.name;
-        this.popover_httperror.error = error.ok;
-        this.popover_httperror.error = error.status;
-        this.popover_httperror.error = error.statusText;
-        this.popover_httperror.error = error.url;
+        this.popover_httperror.headers = error.headers;
+        this.popover_httperror.message = error.message;
+        this.popover_httperror.name = error.name;
+        this.popover_httperror.ok = error.ok;
+        this.popover_httperror.status = error.status;
+        this.popover_httperror.statusText = error.statusText;
+        this.popover_httperror.url = error.url;
         this.popover_httperror.show();
         console.error("Error fetching stock prices:", error);
       }
@@ -88,7 +89,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {
-    this.svg = select('#svg');
+    this.sizeChart();
+    this.setScales();
+    this.constructChart();
+  }
+
+  sizeChart(): void {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
@@ -101,20 +107,42 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     bbox = this.rectCref.nativeElement.getBBox();
     this.sectionC.width = bbox.width;
     this.sectionC.height = bbox.height;
+  }
+
+  setScales(): void {
+    const priceValues = this.stockPriceHistoryData.map(d => [d.open, d.high, d.low, d.close]).flat();
+    const minPrice = min(priceValues);
+    const maxPrice = max(priceValues);
+
+    this.yScale = scaleLinear()
+      .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
+      .range([this.sectionA.height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width]) 
-      .padding(0.1); // Optional: add padding between bands
+      .range([0, this.sectionA.width])
+      .padding(0.1); // Adjust as needed to fit bars comfortably
+  }
 
-    this.yScale = scaleLinear().domain([0, 100]).range([0, this.sectionA.height]);
+
+  constructChart(): void {
+    this.svg = select('#svg');
+
+
+    //this.xScale = scaleBand<Date>()
+    //  .domain(this.stockPriceHistoryData.map(d => d.date))
+    //  .range([0, this.sectionA.width]) 
+    //  .padding(0.1); // Optional: add padding between bands
+
+    //this.yScale = scaleLinear().domain([0, 100]).range([0, this.sectionA.height]);
+
     this.xAxis = axisBottom(this.xScale);
     this.yAxis = axisRight(this.yScale);
 
     const gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
       .attr("class", "candlestick")
-      .attr("transform", "translate(0,-500)");
+      .attr("transform", "translate(0,0)");
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
@@ -123,13 +151,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     candlestickPlot.draw(gSectionA, this.stockPriceHistoryData);
 
     // Append a new <g> element to `gSectionA` specifically for the x-axis
-    const xAxisGroup = gSectionA
+    const xAxisGroup = gSectionA  
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
+      .attr("transform", `translate(0,0)`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
     xAxisGroup.call(this.xAxis);
 
-  }
+   }
 }

@@ -12,6 +12,7 @@
 .popover-content-item {
     justify-content:center;
     text-align:center;
+    height:10px;
 }
 
 .custom-popover-title {
