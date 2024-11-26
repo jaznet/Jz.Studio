@@ -89,13 +89,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {
-    this.sizeChart();
+    this.createSections();
     this.setScales();
     this.setAxes();
     this.constructChart();
   }
 
-  sizeChart(): void {
+  createSections(): void {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
@@ -126,22 +126,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   setAxes(): void {
-
+    this.xAxis = axisBottom(this.xScale);
+    this.yAxis = axisRight(this.yScale);
   }
 
   constructChart(): void {
-    this.svg = select('#svg');
-
-
-    //this.xScale = scaleBand<Date>()
-    //  .domain(this.stockPriceHistoryData.map(d => d.date))
-    //  .range([0, this.sectionA.width]) 
-    //  .padding(0.1); // Optional: add padding between bands
-
-    //this.yScale = scaleLinear().domain([0, 100]).range([0, this.sectionA.height]);
-
-    this.xAxis = axisBottom(this.xScale);
-    this.yAxis = axisRight(this.yScale);
+ //   this.svg = select('#svg');
 
     const gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
