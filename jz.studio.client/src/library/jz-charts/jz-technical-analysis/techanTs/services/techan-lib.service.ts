@@ -39,12 +39,11 @@ export class TechanLibService {
           .attr("y", (d: CandlestickData) => yScale(Math.max(d.open, d.close)))
           .attr("width", xScale.bandwidth()) // Now this will work because xScale is a scaleBand
           .attr("height", (d: CandlestickData) => Math.abs(yScale(d.open) - yScale(d.close)))
-          .attr("fill", (d: CandlestickData) => d.open > d.close ? "red" : "green");
+          .attr("fill", (d: CandlestickData) => d.open > d.close ? "black" : "white");
 
         // Exit
         candle.exit().remove();
       }
-
 
     };
 

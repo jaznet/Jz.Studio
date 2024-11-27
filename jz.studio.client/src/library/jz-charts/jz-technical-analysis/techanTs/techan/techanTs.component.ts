@@ -36,7 +36,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
-    
+
   svg!: any;
   svgWidth = 0;
   svgHeight = 0;
@@ -47,6 +47,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
+
+  gSectionA: any;
+  gSectionB: any;
+  gSectionC: any;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -127,31 +131,42 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   setAxes(): void {
     this.xAxis = axisBottom(this.xScale);
+    console.log(this.xAxis);
+    //   let bb =this.xAxis.nativeElement.getBBox();
     this.yAxis = axisRight(this.yScale);
   }
 
   constructChart(): void {
- //   this.svg = select('#svg');
+    this.drawCandlestick();
+    this.drawAxes();
+  }
 
-    const gSectionA = select(this.gSectionAref.nativeElement)
+  drawCandlestick(): void {
+    this.gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
       .attr("class", "candlestick")
-      .attr("transform", "translate(0,0)"); 
+      .attr("transform", "translate(0,0)");
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
       .yScale(this.yScale);
-   
-    candlestickPlot.draw(gSectionA, this.stockPriceHistoryData);
 
+    candlestickPlot.draw(this.gSectionA, this.stockPriceHistoryData);
+  }
+
+  drawAxes() {
     // Append a new <g> element to `gSectionA` specifically for the x-axis
-    const xAxisGroup = gSectionA  
+    const xAxisGroup = this.gSectionA
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0,${this.sectionA.height})`); // Translate to bottom of Section A
-      this.sectionA.height
-    // Call the xAxis generator to create the axis
-    xAxisGroup.call(this.xAxis);
+      .attr("transform", `translate(0,${this.sectionA.height - 18.1})`); // Translate to bottom of Section A
 
-   }
+    // Call the xAxis generator to create the axis
+    //    xAxisGroup.call(this.xAxis);
+
+    console.log(xAxisGroup);
+    // let bb = xAxisGroup.nativeElement.getClientRectangle();
+  }
+
+  
 }
