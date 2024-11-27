@@ -143,7 +143,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawCandlestick(): void {
     this.gSectionA = select(this.gSectionAref.nativeElement)
-      //.append("g")
       .attr("class", "candlestick")
       .attr("transform", "translate(0,0)");
 
@@ -162,7 +161,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("transform", `translate(0,${this.sectionA.height - 18.1})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
-    //    xAxisGroup.call(this.xAxis);
+        xAxisGroup.call(this.xAxis);
 
     console.log(xAxisGroup);
     // let bb = xAxisGroup.nativeElement.getClientRectangle();
