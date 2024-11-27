@@ -136,7 +136,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const gSectionA = select(this.gSectionAref.nativeElement)
       //.append("g")
       .attr("class", "candlestick")
-      .attr("transform", "translate(0,0)");
+      .attr("transform", "translate(0,0)"); 
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
@@ -148,8 +148,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const xAxisGroup = gSectionA  
       .append("g")
       .attr("class", "x-axis")
-      .attr("transform", `translate(0,0)`); // Translate to bottom of Section A
-
+      .attr("transform", `translate(0,${this.sectionA.height})`); // Translate to bottom of Section A
+      this.sectionA.height
     // Call the xAxis generator to create the axis
     xAxisGroup.call(this.xAxis);
 
