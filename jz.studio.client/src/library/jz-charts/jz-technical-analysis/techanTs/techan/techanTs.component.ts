@@ -37,6 +37,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
 
+  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+
   svg!: any;
   svgWidth = 0;
   svgHeight = 0;
@@ -44,13 +46,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
-  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
-  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 20 } };
+  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
+  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
+  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
 
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
+
+  gCandlestick: any;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -125,7 +129,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width])
+      .range([0, this.sectionA.width-this.sectionA.margins.left])
       .padding(0.1); // Adjust as needed to fit bars comfortably 
   }
 
@@ -142,26 +146,38 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    this.gSectionA = select(this.gSectionAref.nativeElement)
+    console.log(this.sectionA.margins.left);
+    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
-      .attr("transform", "translate(0,0)");
+      .attr("transform", `translate(${this.sectionA.margins.left}, 0)`);
+
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
       .yScale(this.yScale);
 
-    candlestickPlot.draw(this.gSectionA, this.stockPriceHistoryData);
+    candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData);
   }
 
   drawAxes() {
+    this.gSectionA = select(this.gSectionAref.nativeElement);
     // Append a new <g> element to `gSectionA` specifically for the x-axis
     const xAxisGroup = this.gSectionA
       .append("g")
       .attr("class", "x-axis")
+      .attr('id','xAxisGroup')
       .attr("transform", `translate(0,${this.sectionA.height - 18.1})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
-        xAxisGroup.call(this.xAxis);
+    xAxisGroup.call(this.xAxis);
+
+    const yAxisGroup = this.gSectionA
+      .append("g")
+      .attr("class", "y-axis")
+      .attr('id', 'yAxisGroup')
+      .attr("transform", `translate(0,0)`);
+
+    yAxisGroup.call(this.yAxis);
 
     console.log(xAxisGroup);
     // let bb = xAxisGroup.nativeElement.getClientRectangle();
