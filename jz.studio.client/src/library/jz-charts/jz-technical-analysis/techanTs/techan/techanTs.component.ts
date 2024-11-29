@@ -145,14 +145,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawCandlestick(): void {
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width - this.sectionA.margins.left])
+      .range([0, this.sectionA.width - this.sectionA.margins.left-this.sectionA.margins.right])
       .padding(0.1); // Adjust as needed to fit bars comfortably
 
     this.xAxis = axisBottom(this.xScale);
 
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
-      .attr("transform", `translate(${this.sectionA.margins.left-this.sectionA.margins.right}, 0)`);
+      .attr("transform", `translate(${this.sectionA.margins.left}, 0)`);
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
