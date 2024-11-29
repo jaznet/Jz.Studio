@@ -149,8 +149,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     console.log(this.sectionA.margins.left);
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
-      .attr("transform", `translate(${this.sectionA.margins.left}, 0)`);
-
+      .attr("transform", `translate(${this.sectionA.margins.left-this.sectionA.margins.right}, 0)`);
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
