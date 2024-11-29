@@ -46,9 +46,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
-  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
-  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 20, bottom: 20, left: 30 } };
+  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
+  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
+  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
 
   gSectionA: any;
   gSectionB: any;
@@ -127,14 +127,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.sectionA.height, 0]); // Invert the range for correct orientation (top to bottom)
 
-    this.xScale = scaleBand<Date>()
-      .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width-this.sectionA.margins.left])
-      .padding(0.1); // Adjust as needed to fit bars comfortably 
+
   }
 
   setAxes(): void {
-    this.xAxis = axisBottom(this.xScale);
+   
     console.log(this.xAxis);
     //   let bb =this.xAxis.nativeElement.getBBox();
     this.yAxis = axisRight(this.yScale);
@@ -146,7 +143,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    console.log(this.sectionA.margins.left);
+    this.xScale = scaleBand<Date>()
+      .domain(this.stockPriceHistoryData.map(d => d.date))
+      .range([0, this.sectionA.width - this.sectionA.margins.left])
+      .padding(0.1); // Adjust as needed to fit bars comfortably
+
+    this.xAxis = axisBottom(this.xScale);
+
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.sectionA.margins.left-this.sectionA.margins.right}, 0)`);
@@ -165,7 +168,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .append("g")
       .attr("class", "x-axis")
       .attr('id','xAxisGroup')
-      .attr("transform", `translate(0,${this.sectionA.height - 18.1})`); // Translate to bottom of Section A
+      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
     xAxisGroup.call(this.xAxis);
