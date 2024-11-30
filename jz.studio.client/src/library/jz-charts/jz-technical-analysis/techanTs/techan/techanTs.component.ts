@@ -106,6 +106,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.constructChart();
   }
 
+
+
   createSections(): void {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
@@ -185,9 +187,5 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("transform", `translate(0,0)`);
 
     yAxisGroup.call(this.yAxis);
-
-  
   }
-
-  
 }
