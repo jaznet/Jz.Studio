@@ -38,6 +38,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
 
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+  @ViewChild('xaxisgroup', { static: true }) gXaxisgroupRef!: ElementRef<SVGGElement>;
 
   svg!: any;
   svgWidth = 0;
@@ -55,6 +56,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   gSectionC: any;
 
   gCandlestick: any;
+  gXaxis: any;
+  gXaxisGroup: any;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -107,12 +110,18 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
+
     let bbox = this.rectAref.nativeElement.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
+  // this.gCandlestick
+  //  this.sectionA.height = this.sectionA.height - this.sectionA.margins.bottom;
+   // bbox = this.rectAref.nativeElement.getBBox();
+
     bbox = this.rectBref.nativeElement.getBBox();
     this.sectionB.width = bbox.width;
     this.sectionB.height = bbox.height;
+
     bbox = this.rectCref.nativeElement.getBBox();
     this.sectionC.width = bbox.width;
     this.sectionC.height = bbox.height;
@@ -126,14 +135,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.sectionA.height, 0]); // Invert the range for correct orientation (top to bottom)
-
-
   }
 
   setAxes(): void {
-   
-    console.log(this.xAxis);
-    //   let bb =this.xAxis.nativeElement.getBBox();
     this.yAxis = axisRight(this.yScale);
   }
 
@@ -164,14 +168,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawAxes() {
     this.gSectionA = select(this.gSectionAref.nativeElement);
     // Append a new <g> element to `gSectionA` specifically for the x-axis
-    const xAxisGroup = this.gSectionA
-      .append("g")
-      .attr("class", "x-axis")
-      .attr('id','xAxisGroup')
-      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
+    this.gXaxisGroup = select(this.gXaxisgroupRef.nativeElement);
+    //const xAxisGroup = this.gSectionA
+    //  .append("g")
+    //  .attr("class", "x-axis")
+    //  .attr('id','xAxisGroup')
+    //  .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
-    xAxisGroup.call(this.xAxis);
+    this.gXaxisGroup.call(this.xAxis);
 
     const yAxisGroup = this.gSectionA
       .append("g")
@@ -181,8 +186,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     yAxisGroup.call(this.yAxis);
 
-    console.log(xAxisGroup);
-    // let bb = xAxisGroup.nativeElement.getClientRectangle();
+  
   }
 
   

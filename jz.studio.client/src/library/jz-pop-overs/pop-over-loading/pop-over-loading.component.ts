@@ -11,11 +11,7 @@ import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
 export class PopOverLoadingComponent extends PopoverBaseComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: false }) dxpopover: DxPopoverComponent | any;
 
-
-
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void { }
 
   override ngAfterViewInit(): void {
     this.title = 'Loading';  // Change the title as needed
