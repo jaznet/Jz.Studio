@@ -16,7 +16,7 @@ export class PaletteMenuComponent {
     private appMgr: AppMgrService,
     private paletteMgr:PaletteMgrService
   ) {
-    this.appMgr.paletteChnagedEvent.subscribe(palette => {
+    this.appMgr.paletteChangedEvent.subscribe(palette => {
       this.paletteName = palette;
     })
   }
