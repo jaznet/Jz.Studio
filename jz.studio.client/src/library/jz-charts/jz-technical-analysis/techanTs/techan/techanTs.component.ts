@@ -38,7 +38,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
 
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
-  @ViewChild('xaxisgroup', { static: true }) gXaxisgroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisGroup', { static: true }) gXaxisGroupRef!: ElementRef<SVGGElement>;
 
   svg!: any;
   svgWidth = 0;
@@ -168,7 +168,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawAxes() {
     this.gSectionA = select(this.gSectionAref.nativeElement);
     // Append a new <g> element to `gSectionA` specifically for the x-axis
-    this.gXaxisGroup = select(this.gXaxisgroupRef.nativeElement);
+    this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement);
     //const xAxisGroup = this.gSectionA
     //  .append("g")
     //  .attr("class", "x-axis")
