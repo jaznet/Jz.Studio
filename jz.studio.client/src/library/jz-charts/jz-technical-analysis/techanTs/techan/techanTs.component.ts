@@ -100,17 +100,20 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {
+    this.sizeChartFramework();
     this.createSections();
     this.setScales();
     this.setAxes();
     this.constructChart();
   }
 
-
-
-  createSections(): void {
+  sizeChartFramework() {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+  }
+
+  createSections(): void {
+  
 
 
     let bbox = this.rectAref.nativeElement.getBBox();
