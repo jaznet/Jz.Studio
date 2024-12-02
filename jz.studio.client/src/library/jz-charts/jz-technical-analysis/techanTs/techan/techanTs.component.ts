@@ -52,6 +52,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   svgRectHeight = 0;
 
   sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
+  rectCandlestick: any;
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
 
@@ -63,7 +64,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   gXaxis: any;
   gXaxisGroup: any;
 
-  rectCandlestick!: any;
+
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -117,7 +118,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   sizeChartFramework() {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
-  
+    this.rectCandlestick = this.rectCandlestickRef.nativeElement;
   }
 
   createSections(): void {
@@ -125,9 +126,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     let bbox = this.rectAref.nativeElement.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
-    this.rectCandlestick = this.rectCandlestickRef.nativeElement;
+    //this.rectCandlestick.width = this.svgWidth;
+    //this.rectCandlestick.height = this.svgHeight*.5;
     this.rectCandlestick.setAttribute('width', this.svgWidth);
-    this.rectCandlestick.setAttribute('height', this.svgHeight*.5);
+    this.rectCandlestick.setAttribute('height',( this.svgHeight*.5)-this.sectionA.margins.bottom);
 
     // SECTION B
     bbox = this.rectBref.nativeElement.getBBox();
