@@ -169,6 +169,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.xAxis = axisBottom(this.xScale);
 
+    this.gSectionA = select(this.gSectionAref.nativeElement);
+    this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement)
+     .attr('transform',`translate(${this.sectionA.margins.left},${this.sectionA.height-this.sectionA.margins.bottom})`) ;
+
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.sectionA.margins.left}, 0)`);
@@ -181,9 +185,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawAxes() {
-    this.gSectionA = select(this.gSectionAref.nativeElement);
-    // Append a new <g> element to `gSectionA` specifically for the x-axis
-    this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement);
+  
     //const xAxisGroup = this.gSectionA
     //  .append("g")
     //  .attr("class", "x-axis")
