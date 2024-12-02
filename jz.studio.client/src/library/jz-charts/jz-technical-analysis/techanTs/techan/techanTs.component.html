@@ -1,14 +1,14 @@
 
-<div class="grid-rows" margin="24px">
+<div class="grid-rows" style="margin:8px">
   <div class="grid-row-fixed" style="color:antiquewhite">techanTs</div>
   <svg class="grid-row-fill" #svg id="svg">
-    <rect #svgrect id="svgrect" x="0" y="0" width="100%" height="100%" fill="transparent" style="margin:24px"></rect>
+    <rect #svgrect id="svgrect"  class="svgrect" x="0" y="0" width="0" height="0"></rect>
 
     <g id="sectionA" #sectionA>
       <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="14" fill="black" font-weight="bold">Section A</text>
       <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" style="stroke:hotpink;fill:transparent"></rect>
       <g id="candlestick" #candlestick>
-        <rect #rectCandlestick height="50%" width="100%" fill="#888888"></rect>
+        <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"  [attr.width]="100"  [attr.height]="100" fill="#887788"></rect>
       </g>
       <g id="xAxisGroup" #xAxisGroup></g>
     </g>

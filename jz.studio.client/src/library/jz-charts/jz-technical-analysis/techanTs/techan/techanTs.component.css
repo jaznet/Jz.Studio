@@ -17,9 +17,17 @@
 }
 
 .tick text {
-    fill: white;
+  fill: white;
 }
 
 text {
-    fill:white;
+  fill: white;
+}
+
+rect {
+
+}
+
+.svgrect {
+    fill:cornflowerblue;
 }
