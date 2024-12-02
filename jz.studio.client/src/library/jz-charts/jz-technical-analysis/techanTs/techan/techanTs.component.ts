@@ -30,12 +30,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
+  @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
+  @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
   @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
 
 
-  @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
-  @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
   
