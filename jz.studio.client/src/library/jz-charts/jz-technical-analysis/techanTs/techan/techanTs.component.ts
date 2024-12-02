@@ -5,6 +5,7 @@ import { axisBottom, axisRight } from 'd3-axis';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import { max, min } from 'd3-array';
+import { timeFormat } from 'd3-time-format';
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
@@ -162,16 +163,21 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
+    console.log(this.stockPriceHistoryData);
     this.xScale = scaleBand<Date>()
       .domain(this.stockPriceHistoryData.map(d => d.date))
       .range([0, this.sectionA.width - this.sectionA.margins.left-this.sectionA.margins.right])
       .padding(0.1); // Adjust as needed to fit bars comfortably
 
-    this.xAxis = axisBottom(this.xScale);
+    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+    this.xAxis = axisBottom(this.xScale)
+      .tickValues(this.xScale.domain().filter((d:Date, i:number) => i % 5 === 0)) // Show every 5th date
+      .tickFormat(d => dateFormatter(d as Date)); // Cast 'd' to Date explicitly
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
     this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement)
-     .attr('transform',`translate(${this.sectionA.margins.left},${this.sectionA.height-this.sectionA.margins.bottom})`) ;
+      .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`);
+    this.gXaxisGroup.call(this.xAxis);
 
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
@@ -193,7 +199,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     //  .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
 
     // Call the xAxis generator to create the axis
-    this.gXaxisGroup.call(this.xAxis);
+  
 
     const yAxisGroup = this.gSectionA
       .append("g")
