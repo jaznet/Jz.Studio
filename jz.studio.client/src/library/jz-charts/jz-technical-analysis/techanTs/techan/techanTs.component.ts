@@ -74,7 +74,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     private techanLibService: TechanLibService,
-    private popOverService: JzPopOversService) { }
+    private popOverService: JzPopOversService)
+  { }
 
   ngOnInit(): void { }
 
@@ -114,23 +115,24 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   sizeChartFramework() {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
-    this.rectCandlestick = this.rectCandlestickRef.nativeElement;
-    this.rectCandlestick.setAttribute('width','200');
-    this.rectCandlestick.setAttribute('height', '300');
+  
   }
 
   createSections(): void {
+    // SECTION A
     let bbox = this.rectAref.nativeElement.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
-  // this.gCandlestick
-  //  this.sectionA.height = this.sectionA.height - this.sectionA.margins.bottom;
-   // bbox = this.rectAref.nativeElement.getBBox();
+    this.rectCandlestick = this.rectCandlestickRef.nativeElement;
+    this.rectCandlestick.setAttribute('width', this.svgWidth);
+    this.rectCandlestick.setAttribute('height', this.svgHeight*.5);
 
+    // SECTION B
     bbox = this.rectBref.nativeElement.getBBox();
     this.sectionB.width = bbox.width;
     this.sectionB.height = bbox.height;
 
+    // SECTION C
     bbox = this.rectCref.nativeElement.getBBox();
     this.sectionC.width = bbox.width;
     this.sectionC.height = bbox.height;
