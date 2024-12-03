@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { range } from 'rxjs';
 /*import * as d3 from 'd3';*/
-import { axisBottom, axisRight } from 'd3-axis';
+import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
 import { max, min } from 'd3-array';
@@ -32,19 +32,18 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
   @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
+  @ViewChild('rectYaxis', { static: true }) rectYaxisRef!: ElementRef<SVGRectElement>;
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
+  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisGroup', { static: true }) gXaxisGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisGroup', { static: true }) gYaxisGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
   @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
 
-
-
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
   
-  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisGroup', { static: true }) gXaxisGroupRef!: ElementRef<SVGGElement>;
-
   svg!: any;
   svgWidth = 0;
   svgHeight = 0;
@@ -52,7 +51,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
+  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 32, bottom: 20, left: 32 } };
+  rectYaxis: any;
   rectCandlestick: any;
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
@@ -64,8 +64,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   gCandlestick: any;
   gXaxis: any;
   gXaxisGroup: any;
-
-
+  gYaxisGroup: any;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
@@ -119,6 +118,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   sizeChartFramework() {
     this.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+    this.rectYaxis = this.rectYaxisRef.nativeElement;
     this.rectCandlestick = this.rectCandlestickRef.nativeElement;
   }
 
@@ -129,7 +129,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
     //this.rectCandlestick.height = this.svgHeight*.5;
-    this.rectCandlestick.setAttribute('width', this.svgWidth);
+    this.rectYaxis.setAttribute('x',-this.sectionA.margins.left);
+    this.rectYaxis.setAttribute('width', this.sectionA.margins.left);
+    this.rectYaxis.setAttribute('height', this.sectionA.height-this.sectionA.margins.bottom);
+    this.rectCandlestick.setAttribute('width', this.svgWidth-this.sectionA.margins.left-this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height',( this.svgHeight*.5)-this.sectionA.margins.bottom);
 
     // SECTION B
@@ -150,16 +153,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([this.sectionA.height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([this.sectionA.height - this.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
   }
 
   setAxes(): void {
-    this.yAxis = axisRight(this.yScale);
+    this.yAxis = axisLeft(this.yScale);
   }
 
   constructChart(): void {
     this.drawCandlestick();
-    this.drawAxes();
   }
 
   drawCandlestick(): void {
@@ -175,9 +177,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .tickFormat(d => dateFormatter(d as Date)); // Cast 'd' to Date explicitly
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
+
     this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`);
     this.gXaxisGroup.call(this.xAxis);
+
+    this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
+      .attr('transform', `translate(${this.sectionA.margins.left},0)`);
+    this.gYaxisGroup.call(this.yAxis);
 
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
@@ -190,23 +197,5 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData);
   }
 
-  drawAxes() {
-  
-    //const xAxisGroup = this.gSectionA
-    //  .append("g")
-    //  .attr("class", "x-axis")
-    //  .attr('id','xAxisGroup')
-    //  .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`); // Translate to bottom of Section A
 
-    // Call the xAxis generator to create the axis
-  
-
-    const yAxisGroup = this.gSectionA
-      .append("g")
-      .attr("class", "y-axis")
-      .attr('id', 'yAxisGroup')
-      .attr("transform", `translate(0,0)`);
-
-    yAxisGroup.call(this.yAxis);
-  }
 }
