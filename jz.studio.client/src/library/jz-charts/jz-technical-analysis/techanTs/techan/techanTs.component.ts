@@ -63,7 +63,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   gCandlestick: any;
   gXaxis: any;
-  gXaxisGroup: any;
+  gXaxisGroupTop: any;
+  gXaxisGroupBottom: any;
   gYaxisGroup: any;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
@@ -162,6 +163,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   constructChart(): void {
     this.drawCandlestick();
+    this.drawAxes();
   }
 
   drawCandlestick(): void {
@@ -178,13 +180,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
 
-    this.gXaxisGroup = select(this.gXaxisGroupRef.nativeElement)
-      .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`);
-    this.gXaxisGroup.call(this.xAxis);
 
-    this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
-      .attr('transform', `translate(${this.sectionA.margins.left},0)`);
-    this.gYaxisGroup.call(this.yAxis);
 
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
@@ -197,5 +193,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData);
   }
 
+  drawAxes(): void {
+    this.gXaxisGroupBottom = select(this.gXaxisGroupRef.nativeElement)
+      .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`);
+    this.gXaxisGroupBottom.call(this.xAxis);
+
+    this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
+      .attr('transform', `translate(${this.sectionA.margins.left},0)`);
+    this.gYaxisGroup.call(this.yAxis);
+  }
 
 }
