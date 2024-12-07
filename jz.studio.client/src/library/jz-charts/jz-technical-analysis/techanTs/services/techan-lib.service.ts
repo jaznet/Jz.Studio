@@ -43,7 +43,27 @@ export class TechanLibService {
 
         // Exit
         candle.exit().remove();
+
+        // Draw wicks
+        const wicks = selection.selectAll(".wick").data(data);
+
+        // Enter for wicks
+        wicks.enter()
+          .append("line")
+          .attr("class", "wick")
+          .merge(wicks)
+          .attr("x1", (d: CandlestickData) => xScale(d.date)! + xScale.bandwidth() / 2) // Center of the candlestick
+          .attr("x2", (d: CandlestickData) => xScale(d.date)! + xScale.bandwidth() / 2)
+          .attr("y1", (d: CandlestickData) => yScale(d.high)) // Top of the wick (highest price)
+          .attr("y2", (d: CandlestickData) => yScale(d.low)) // Bottom of the wick (lowest price)
+          .attr("stroke", "black")
+          .attr("stroke-width", 1);
+
+        // Exit for wicks
+        wicks.exit().remove();
       }
+
+
 
     };
 
