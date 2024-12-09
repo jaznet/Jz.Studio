@@ -134,7 +134,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rectYaxis.setAttribute('width', this.sectionA.margins.left);
     this.rectYaxis.setAttribute('height', this.sectionA.height-this.sectionA.margins.bottom);
     this.rectCandlestick.setAttribute('width', this.svgWidth-this.sectionA.margins.left-this.sectionA.margins.right);
-    this.rectCandlestick.setAttribute('height',( this.svgHeight*.5)-this.sectionA.margins.bottom);
+    this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top -this.sectionA.margins.bottom);
 
     // SECTION B
     bbox = this.rectBref.nativeElement.getBBox();
@@ -180,11 +180,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
 
-
-
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
-      .attr("transform", `translate(${this.sectionA.margins.left}, 0)`);
+      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
 
     const candlestickPlot = this.techanLibService.plot.candlestick()
       .xScale(this.xScale)
