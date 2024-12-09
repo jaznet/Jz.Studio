@@ -39,7 +39,7 @@ export class TechanLibService {
           .attr("y", (d: CandlestickData) => yScale(Math.max(d.open, d.close)))
           .attr("width", xScale.bandwidth()) // Now this will work because xScale is a scaleBand
           .attr("height", (d: CandlestickData) => Math.abs(yScale(d.open) - yScale(d.close)))
-          .attr("fill", (d: CandlestickData) => d.open > d.close ? "black" : "white");
+          .attr("fill", (d: CandlestickData) => d.open > d.close ? "#800E13" : "#166916");
 
         // Exit
         candle.exit().remove();
@@ -56,7 +56,7 @@ export class TechanLibService {
           .attr("x2", (d: CandlestickData) => xScale(d.date)! + xScale.bandwidth() / 2)
           .attr("y1", (d: CandlestickData) => yScale(d.high)) // Top of the wick (highest price)
           .attr("y2", (d: CandlestickData) => yScale(d.low)) // Bottom of the wick (lowest price)
-          .attr("stroke", "black")
+          .attr("stroke", "white")
           .attr("stroke-width", 1);
 
         // Exit for wicks
