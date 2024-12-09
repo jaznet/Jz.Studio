@@ -23,10 +23,13 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() btnTxt = "Tab Button";
-  isSubMenu: boolean = false;
+  @Input() palette = "not set";
+
   @Input() isSelected: boolean = false;
   /* @Input() parentValue!: string;*/
   @Input() menuType!: string;
+
+  isSubMenu: boolean = false;
 
   get parentGetter() {
     return this.menuType;
@@ -99,7 +102,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   onTabClicked() {
-    console.log('TAB', this.route);
+    console.log('TAB', this.menuType, this.palette);
   
     this.menuService.tabSelected(this);
     if (this.route === 'sandbox/choro-dash-loader') {
