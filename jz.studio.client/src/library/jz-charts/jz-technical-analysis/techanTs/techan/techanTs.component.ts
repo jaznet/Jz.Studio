@@ -154,7 +154,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([this.sectionA.height - this.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
   }
 
   setAxes(): void {
@@ -197,7 +197,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.gXaxisGroupBottom.call(this.xAxis);
 
     this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
-      .attr('transform', `translate(${this.sectionA.margins.left},0)`);
+      .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
     this.gYaxisGroup.call(this.yAxis);
   }
 

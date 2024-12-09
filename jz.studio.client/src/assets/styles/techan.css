@@ -1,0 +1,36 @@
+
+/* Customize the axis line */
+.x-axis path {
+  stroke: white;
+  stroke-width: 2;
+}
+
+/* Customize tick lines */
+.x-axis .tick line {
+  stroke: white;
+  stroke-width: 1;
+}
+
+/* Customize tick labels */
+.x-axis .tick text {
+  font-size: 12px;
+  fill: white;
+}
+
+/* Customize the axis line */
+.y-axis path {
+  stroke: white;
+  stroke-width: 2;
+}
+
+/* Customize tick lines */
+.y-axis .tick line {
+  stroke: white;
+  stroke-width: 1;
+}
+
+/* Customize tick labels */
+.y-axis .tick text {
+  font-size: 12px;
+  fill: white;
+}

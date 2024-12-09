@@ -8,7 +8,7 @@
       <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="14" fill="black" font-weight="bold">Section A</text>
       <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" style="stroke:hotpink;fill:transparent"></rect>
       <g #yAxisGroup id="yAxisGroup" class="y-axis">
-        <rect #rectYaxis width="30" height="200"></rect>
+        <rect #rectYaxis width="30" height="200" fill="transparent"></rect>
       </g>
       <g id="candlestick" #candlestick>
         <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
@@ -16,7 +16,7 @@
               [attr.height]="0"
               fill='var(--plt-clr-3'></rect>
       </g>
-      <g id="xAxisGroup" #xAxisGroup></g>
+      <g  class="x-axis" id="xAxisGroup" #xAxisGroup></g>
     </g>
 
     <g id="sectionB" #sectionB>
