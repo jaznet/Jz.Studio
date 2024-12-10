@@ -152,6 +152,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const minPrice = min(priceValues);
     const maxPrice = max(priceValues);
 
+    this.xScale = scaleBand<Date>()
+      .domain(this.stockPriceHistoryData.map(d => d.date))
+      .range([0, this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right])
+      .padding(0.1); // Adjust as needed to fit bars comfortably
+
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
@@ -168,10 +173,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawCandlestick(): void {
     console.log(this.stockPriceHistoryData);
-    this.xScale = scaleBand<Date>()
-      .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width - this.sectionA.margins.left-this.sectionA.margins.right])
-      .padding(0.1); // Adjust as needed to fit bars comfortably
+
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
     this.xAxis = axisBottom(this.xScale)
