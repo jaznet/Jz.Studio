@@ -42,8 +42,8 @@ export class PaletteMgrService {
       case 'charts':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#507577 ');
-        document.documentElement.style.setProperty('--plt-clr-2', '#5A716A');
-        document.documentElement.style.setProperty('--plt-clr-3', '#0A75AD');
+        document.documentElement.style.setProperty('--plt-clr-2', '92817a');
+        document.documentElement.style.setProperty('--plt-clr-3', '#0a122a');
         document.documentElement.style.setProperty('--plt-clr-4', '#5B8A8E');
         document.documentElement.style.setProperty('--plt-clr-5', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
@@ -52,8 +52,8 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-1', '#6ea288');
         document.documentElement.style.setProperty('--plt-txt-2', '#F2F7F7');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
-        document.documentElement.style.setProperty('--plt-txt-4', '#3BBFC4');
-        document.documentElement.style.setProperty('--plt-txt-5', 'white');
+        document.documentElement.style.setProperty('--plt-txt-4', '#e7decd');
+        document.documentElement.style.setProperty('--plt-txt-5', '#e7decd');
 
         document.documentElement.style.setProperty('--popup-color-1', '#6ea288');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
