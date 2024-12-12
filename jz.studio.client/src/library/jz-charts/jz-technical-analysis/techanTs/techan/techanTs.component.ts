@@ -198,7 +198,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
         .range([0, this.sectionA.width]);
     }
 
-    console.log('xScale', this.xScale.domain(), this.xScale.range());
+    console.log('xScale Domain:', this.xScale.domain());
+    console.log('xScale Range:', this.xScale.range());
 
 
 
