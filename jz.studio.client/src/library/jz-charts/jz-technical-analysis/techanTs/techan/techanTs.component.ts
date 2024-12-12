@@ -250,13 +250,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("height", (d) => Math.abs(this.yScale(d.open) - this.yScale(d.close)))
       .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
 
-    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+   
     //this.xAxis = axisBottom(this.xScale)
     //  .tickValues(this.xScale.domain().filter((d:Date, i:number) => i % 5 === 0)) // Show every 5th date
     //  .tickFormat(d => dateFormatter(d as Date)); // Cast 'd' to Date explicitly
 
     console.log('Tick Values:', this.xScale.ticks());
-    this.xAxis = axisBottom(this.xScale).ticks(5); // Adjust based on the chart width
+    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+    this.xAxis = axisBottom(this.xScale)
+      .ticks(5)
+      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
 
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
