@@ -190,12 +190,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     if (dateExtent[0] && dateExtent[1]) {
       this.xScale = scaleTime()
         .domain(dateExtent)
-        .range([0, this.sectionA.width]);
+        .range([0, this.sectionA.width-this.sectionA.margins.left-this.sectionA.margins.right]);
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
       this.xScale = scaleTime()
         .domain([new Date(), new Date()]) // Default to current date
-        .range([0, this.sectionA.width]);
+        .range([0, this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right]);
     }
 
     console.log('xScale Domain:', this.xScale.domain());
