@@ -29,8 +29,8 @@ export class TechanLibService {
         yScale = scale;
         return this;
       },
-      draw: function (selection: any, data: CandlestickData[], candleWidth: any) {
-        const candle = selection.selectAll(".candle").data(data);
+      draw: function (selection: any, data: CandlestickData[], candleWidth: any, parsedData:any) {
+        const candle = selection.selectAll(".candle").data(parsedData);
 
         // Enter
         candle.enter()
@@ -47,7 +47,7 @@ export class TechanLibService {
         candle.exit().remove();
 
         // Draw wicks
-        const wicks = selection.selectAll(".wick").data(data);
+        const wicks = selection.selectAll(".wick").data(parsedData);
 
         // Enter for wicks
         wicks.enter()
