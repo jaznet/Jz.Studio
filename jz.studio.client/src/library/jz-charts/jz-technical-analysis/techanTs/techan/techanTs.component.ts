@@ -3,19 +3,31 @@ import { range } from 'rxjs';
 /*import * as d3 from 'd3';*/
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
-import { select } from 'd3-selection';
-import { max, min } from 'd3-array';
+import { select, selection, selectAll } from 'd3-selection';
+import { max, min, extent } from 'd3-array';
 import { timeFormat } from 'd3-time-format';
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { SectionAttributes } from '../interfaces/techan-interfaces';
+import { CandlestickData, SectionAttributes } from '../interfaces/techan-interfaces';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
 import { TechanLibService } from '../services/techan-lib.service';
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
+
 export interface range {
   start: number;
   end: number;
+}
+
+interface DateType {
+  date: Date;
+  isValid: boolean;
+}
+
+interface DataType {
+  date: Date | string;
+  open: number;
+  close: number;
 }
 
 @Component({
@@ -60,6 +72,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
+
+  parsedData: any;
 
   gCandlestick: any;
   gXaxis: any;
@@ -152,10 +166,41 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const minPrice = min(priceValues);
     const maxPrice = max(priceValues);
 
-    this.xScale = scaleBand<Date>()
-      .domain(this.stockPriceHistoryData.map(d => d.date))
-      .range([0, this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right])
-      .padding(0.1); // Adjust as needed to fit bars comfortably
+    // Assuming data is an array of objects with a 'date' property as a string
+    this.parsedData = this.stockPriceHistoryData.map(d => ({
+      ...d,
+      date: new Date(d.date) // Convert date string to Date object
+    }));
+    this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
+
+
+    console.log('parsedata', this.parsedData); console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
+
+    //const dateExtent = extent<DataType, Date>(
+    //  this.parsedData,
+    //  (d) => new Date(d.date)
+    //) || [new Date(), new Date()];
+
+    const dateExtent = extent(this.parsedData, (d: CandlestickData) => {
+        return d.date;
+    });
+    console.log('Date Extent:', dateExtent);
+
+
+    if (dateExtent[0] && dateExtent[1]) {
+      this.xScale = scaleTime()
+        .domain(dateExtent)
+        .range([0, this.sectionA.width]);
+    } else {
+      // Handle the case where extent is undefined, e.g., set a default domain
+      this.xScale = scaleTime()
+        .domain([new Date(), new Date()]) // Default to current date
+        .range([0, this.sectionA.width]);
+    }
+
+    console.log('xScale', this.xScale.domain(), this.xScale.range());
+
+
 
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
@@ -174,11 +219,44 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawCandlestick(): void {
     console.log(this.stockPriceHistoryData);
 
+    // Calculate the width of each candlestick
+    const dataTimeIntervals = this.parsedData.map((d: any, i: number) => {
+      if (i === 0) return 0; // No interval for the first data point
+      return this.parsedData[i].date.getTime() - this.parsedData[i - 1].date.getTime();
+    }).filter((interval: number) => interval > 0); // Remove the first zero interval
+
+    const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
+    const timeDiff = this.parsedData.length > 1
+      ? this.parsedData[1].date.getTime() - this.parsedData[0].date.getTime()
+      : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
+
+    const candleWidth = this.xScale(new Date(this.parsedData[0].date.getTime() + timeDiff)) - this.xScale(this.parsedData[0].date);
+
+
+    // Drawing the candlesticks
+    selectAll<SVGRectElement, DataType>(".candle")
+      .data<DataType>(this.parsedData) // Explicitly specify the type of data
+      .enter()
+      .append("rect")
+      .attr("class", "candle")
+      .attr("x", d => {
+        const xValue = this.xScale(d.date) - candleWidth / 2;
+        console.log('x:', xValue, 'Date:', d.date);
+        return xValue;
+      })
+      .attr("y", (d) => this.yScale(Math.max(d.open, d.close)))
+      .attr("width", candleWidth)
+      .attr("height", (d) => Math.abs(this.yScale(d.open) - this.yScale(d.close)))
+      .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-    this.xAxis = axisBottom(this.xScale)
-      .tickValues(this.xScale.domain().filter((d:Date, i:number) => i % 5 === 0)) // Show every 5th date
-      .tickFormat(d => dateFormatter(d as Date)); // Cast 'd' to Date explicitly
+    //this.xAxis = axisBottom(this.xScale)
+    //  .tickValues(this.xScale.domain().filter((d:Date, i:number) => i % 5 === 0)) // Show every 5th date
+    //  .tickFormat(d => dateFormatter(d as Date)); // Cast 'd' to Date explicitly
+
+    console.log('Tick Values:', this.xScale.ticks());
+    this.xAxis = axisBottom(this.xScale).ticks(5); // Adjust based on the chart width
+
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
 
@@ -190,7 +268,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .xScale(this.xScale)
       .yScale(this.yScale);
 
-    candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData);
+    candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData, candleWidth);
   }
 
   drawAxes(): void {

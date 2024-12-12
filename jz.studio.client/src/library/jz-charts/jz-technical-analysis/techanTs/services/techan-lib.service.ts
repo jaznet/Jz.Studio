@@ -7,6 +7,8 @@ import * as d3 from 'd3';
 })
 export class TechanLibService {
 
+  candleWidth = 7;
+
   constructor() { }
 
   public plot = {
@@ -27,7 +29,7 @@ export class TechanLibService {
         yScale = scale;
         return this;
       },
-      draw: function (selection: any, data: CandlestickData[]) {
+      draw: function (selection: any, data: CandlestickData[], candleWidth: any) {
         const candle = selection.selectAll(".candle").data(data);
 
         // Enter
@@ -37,7 +39,7 @@ export class TechanLibService {
           .merge(candle)
           .attr("x", (d: CandlestickData) => xScale(d.date) ?? 0) // ?? 0 to provide a default if null
           .attr("y", (d: CandlestickData) => yScale(Math.max(d.open, d.close)))
-          .attr("width", xScale.bandwidth()) // Now this will work because xScale is a scaleBand
+          .attr("width", candleWidth) // Now this will work because xScale is a scaleBand
           .attr("height", (d: CandlestickData) => Math.abs(yScale(d.open) - yScale(d.close)))
           .attr("fill", (d: CandlestickData) => d.open > d.close ? "#bf211e" : "seagreen");
 
@@ -52,8 +54,8 @@ export class TechanLibService {
           .append("line")
           .attr("class", "wick")
           .merge(wicks)
-          .attr("x1", (d: CandlestickData) => xScale(d.date)! + xScale.bandwidth() / 2) // Center of the candlestick
-          .attr("x2", (d: CandlestickData) => xScale(d.date)! + xScale.bandwidth() / 2)
+          .attr("x1", (d: CandlestickData) => xScale(d.date)! + candleWidth / 2) // Center of the candlestick
+          .attr("x2", (d: CandlestickData) => xScale(d.date)! + candleWidth / 2)
           .attr("y1", (d: CandlestickData) => yScale(d.high)) // Top of the wick (highest price)
           .attr("y2", (d: CandlestickData) => yScale(d.low)) // Bottom of the wick (lowest price)
           .attr("stroke", "#52aa8a")
