@@ -1,6 +1,7 @@
+
 import { Injectable } from '@angular/core';
 import { CandlestickData } from '../interfaces/techan-interfaces';
-import * as d3 from 'd3';
+/*import * as d3 from 'd3';*/
 
 @Injectable({
   providedIn: 'root'
