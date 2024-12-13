@@ -43,7 +43,7 @@ export class PaletteMgrService {
 
         document.documentElement.style.setProperty('--plt-clr-1', '#507577 ');
         document.documentElement.style.setProperty('--plt-clr-2', '#38456C');
-        document.documentElement.style.setProperty('--plt-clr-3', '#0a122a');
+        document.documentElement.style.setProperty('--plt-clr-3', '#102542');
         document.documentElement.style.setProperty('--plt-clr-4', '#5B8A8E');
         document.documentElement.style.setProperty('--plt-clr-5', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-x', 'black');

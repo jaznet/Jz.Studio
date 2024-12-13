@@ -64,9 +64,6 @@ export class TechanLibService {
         // Exit for wicks
         wicks.exit().remove();
       }
-
-
-
     };
 
     return candlestickPlot;
