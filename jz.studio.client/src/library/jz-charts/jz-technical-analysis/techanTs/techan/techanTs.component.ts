@@ -242,7 +242,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("class", "candle")
       .attr("x", d => {
         const xValue = this.xScale(d.date) - candleWidth / 2;
-        console.log('x:', xValue, 'Date:', d.date);
+    /*    console.log('x:', xValue, 'Date:', d.date);*/
         return xValue;
       })
       .attr("y", (d) => this.yScale(Math.max(d.open, d.close)))

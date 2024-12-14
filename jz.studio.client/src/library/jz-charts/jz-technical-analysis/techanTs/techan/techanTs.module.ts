@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { TechanTsComponent } from './techanTs.component';
 import { TechanTsRoutingModule } from './techanTs-routing.module';
 import { JzPopOversModule } from '../../../../jz-pop-overs/jz-pop-overs.module';
+import { ChartsModule } from '../charts/charts.module';
 
 @NgModule({
   declarations: [TechanTsComponent],
@@ -12,7 +13,8 @@ import { JzPopOversModule } from '../../../../jz-pop-overs/jz-pop-overs.module';
     CommonModule,
     RouterModule,
     TechanTsRoutingModule,
-    JzPopOversModule
+    JzPopOversModule,
+    ChartsModule
   ],
   exports: [TechanTsComponent]
 })
