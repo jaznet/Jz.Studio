@@ -1,6 +1,9 @@
 import { Component, Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import * as d3 from 'd3';
+/*import * as d3 from 'd3';*/
 import { CandlestickData } from '../../interfaces/techan-interfaces';
+import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
+import { select, selection, selectAll } from 'd3-selection';
+import { max, min, extent } from 'd3-array';
 
 @Component({
   selector: 'candlestick-chart',
@@ -9,7 +12,7 @@ import { CandlestickData } from '../../interfaces/techan-interfaces';
 })
 export class CandlestickChartComponent implements AfterViewInit {
   @Input() data: CandlestickData[] = []; // Input to accept candlestick data
-  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<HTMLElement>;
+  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGElement>;
 
   private svg: any;
   private xScale: any;
@@ -24,22 +27,22 @@ export class CandlestickChartComponent implements AfterViewInit {
 
   private initializeChart(): void {
     // Initialize SVG
-    this.svg = d3.select(this.chartContainer.nativeElement)
+    this.svg = select(this.chartContainer.nativeElement)
       .append('svg')
       .attr('width', this.chartWidth)
       .attr('height', this.chartHeight);
 
     // Initialize scales
-    this.xScale = d3.scaleBand<Date>()
+    this.xScale = scaleBand<Date>()
       .domain(this.data.map(d => d.date))
       .range([0, this.chartWidth])
       .padding(0.1);
 
     const priceValues = this.data.flatMap(d => [d.open, d.high, d.low, d.close]);
-    const minPrice = d3.min(priceValues) ?? 0;
-    const maxPrice = d3.max(priceValues) ?? 100;
+    const minPrice = min(priceValues) ?? 0;
+    const maxPrice = max(priceValues) ?? 100;
 
-    this.yScale = d3.scaleLinear()
+    this.yScale = scaleLinear()
       .domain([minPrice, maxPrice])
       .range([this.chartHeight, 0]);
   }

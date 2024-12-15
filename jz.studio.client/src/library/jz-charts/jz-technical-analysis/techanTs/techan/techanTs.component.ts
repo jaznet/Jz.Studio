@@ -11,7 +11,7 @@ import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-htt
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { CandlestickData, SectionAttributes } from '../interfaces/techan-interfaces';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
-import { TechanLibService } from '../services/techan-lib.service';
+/*import { TechanLibService } from '../services/techan-lib.service';*/
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
 
 export interface range {
@@ -91,7 +91,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   constructor(
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
-    private techanLibService: TechanLibService,
+  /*  private techanLibService: TechanLibService,*/
     private popOverService: JzPopOversService)
   { }
 
@@ -172,7 +172,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       date: new Date(d.date) // Convert date string to Date object
     }));
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
-
 
     console.log('parsedata', this.parsedData); console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
 
@@ -263,11 +262,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
 
-    const candlestickPlot = this.techanLibService.plot.candlestick()
-      .xScale(this.xScale)
-      .yScale(this.yScale);
+    //const candlestickPlot = this.techanLibService.plot.candlestick()
+    //  .xScale(this.xScale)
+    //  .yScale(this.yScale);
 
-    candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData, candleWidth,this.parsedData);
+    //candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData, candleWidth,this.parsedData);
   }
 
   drawAxes(): void {
