@@ -175,11 +175,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     console.log('parsedata', this.parsedData); console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
 
-    //const dateExtent = extent<DataType, Date>(
-    //  this.parsedData,
-    //  (d) => new Date(d.date)
-    //) || [new Date(), new Date()];
-
     const dateExtent = extent(this.parsedData, (d: CandlestickData) => {
         return d.date;
     });
