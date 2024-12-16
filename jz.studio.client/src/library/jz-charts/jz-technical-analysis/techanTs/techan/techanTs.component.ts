@@ -84,7 +84,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   stockPriceHistoryData: StockPriceHistory[] = [];
 
   candlestickXscale!: any;
-  yScale!: any;
+  candlestickYscale!: any;
   xAxis: any;
   yAxis: any;
 
@@ -193,13 +193,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     console.log('xScale Domain:', this.candlestickXscale.domain());
     console.log('xScale Range:', this.candlestickXscale.range());
 
-    this.yScale = scaleLinear()
+    this.candlestickYscale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
   }
 
   setAxes(): void {
-    this.yAxis = axisLeft(this.yScale);
+    this.yAxis = axisLeft(this.candlestickYscale);
   }
 
   constructChart(): void {
@@ -235,9 +235,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     /*    console.log('x:', xValue, 'Date:', d.date);*/
         return xValue;
       })
-      .attr("y", (d) => this.yScale(Math.max(d.open, d.close)))
+      .attr("y", (d) => this.candlestickYscale(Math.max(d.open, d.close)))
       .attr("width", candleWidth)
-      .attr("height", (d) => Math.abs(this.yScale(d.open) - this.yScale(d.close)))
+      .attr("height", (d) => Math.abs(this.candlestickYscale(d.open) - this.candlestickYscale(d.close)))
       .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
 
     console.log('Tick Values:', this.candlestickXscale.ticks());
