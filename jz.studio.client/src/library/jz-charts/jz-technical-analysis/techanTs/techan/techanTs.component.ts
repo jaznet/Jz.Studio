@@ -83,7 +83,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
-  xScale!: any;
+  candlestickXscale!: any;
   yScale!: any;
   xAxis: any;
   yAxis: any;
@@ -125,7 +125,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   createChart(): void {
     this.sizeChartFramework();
     this.createSections();
-    this.setScales();
+    this.scrubData();
     this.setAxes();
     this.constructChart();
   }
@@ -161,7 +161,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.sectionC.height = bbox.height;
   }
 
-  setScales(): void {
+  scrubData(): void {
     const priceValues = this.stockPriceHistoryData.map(d => [d.open, d.high, d.low, d.close]).flat();
     const minPrice = min(priceValues);
     const maxPrice = max(priceValues);
@@ -172,7 +172,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       date: new Date(d.date) // Convert date string to Date object
     }));
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
-
     console.log('parsedata', this.parsedData); console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
 
     const dateExtent = extent(this.parsedData, (d: CandlestickData) => {
@@ -180,22 +179,19 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     });
     console.log('Date Extent:', dateExtent);
 
-
     if (dateExtent[0] && dateExtent[1]) {
-      this.xScale = scaleTime()
+      this.candlestickXscale = scaleTime()
         .domain(dateExtent)
         .range([0, this.sectionA.width-this.sectionA.margins.left-this.sectionA.margins.right]);
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
-      this.xScale = scaleTime()
+      this.candlestickXscale = scaleTime()
         .domain([new Date(), new Date()]) // Default to current date
         .range([0, this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right]);
     }
 
-    console.log('xScale Domain:', this.xScale.domain());
-    console.log('xScale Range:', this.xScale.range());
-
-
+    console.log('xScale Domain:', this.candlestickXscale.domain());
+    console.log('xScale Range:', this.candlestickXscale.range());
 
     this.yScale = scaleLinear()
       .domain([minPrice ?? 0, maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
@@ -225,8 +221,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       ? this.parsedData[1].date.getTime() - this.parsedData[0].date.getTime()
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
 
-    const candleWidth = this.xScale(new Date(this.parsedData[0].date.getTime() + timeDiff)) - this.xScale(this.parsedData[0].date);
-
+    const candleWidth =
+      this.candlestickXscale(new Date(this.parsedData[0].date.getTime() + timeDiff)) - this.candlestickXscale(this.parsedData[0].date);
 
     // Drawing the candlesticks
     selectAll<SVGRectElement, DataType>(".candle")
@@ -235,7 +231,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .append("rect")
       .attr("class", "candle")
       .attr("x", d => {
-        const xValue = this.xScale(d.date) - candleWidth / 2;
+        const xValue = this.candlestickXscale(d.date) - candleWidth / 2;
     /*    console.log('x:', xValue, 'Date:', d.date);*/
         return xValue;
       })
@@ -244,9 +240,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("height", (d) => Math.abs(this.yScale(d.open) - this.yScale(d.close)))
       .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
 
-    console.log('Tick Values:', this.xScale.ticks());
+    console.log('Tick Values:', this.candlestickXscale.ticks());
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-    this.xAxis = axisBottom(this.xScale)
+    this.xAxis = axisBottom(this.candlestickXscale)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
 
