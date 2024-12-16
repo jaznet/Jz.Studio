@@ -13,6 +13,7 @@ import { CandlestickData, SectionAttributes } from '../interfaces/techan-interfa
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
 /*import { TechanLibService } from '../services/techan-lib.service';*/
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
+import { CandlestickChartComponent } from '../charts/candlestick-chart/candlestick-chart.component';
 
 export interface range {
   start: number;
@@ -83,17 +84,20 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
+  candlestick;
   candlestickXscale!: any;
   candlestickYscale!: any;
-  xAxis: any;
-  yAxis: any;
+  candlestickXaxis: any;
+  candlestickYaxis: any;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
   /*  private techanLibService: TechanLibService,*/
     private popOverService: JzPopOversService)
-  { }
+  {
+    this.candlestick = new CandlestickChartComponent();
+  }
 
   ngOnInit(): void { }
 
@@ -199,7 +203,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   setAxes(): void {
-    this.yAxis = axisLeft(this.candlestickYscale);
+    this.candlestickYaxis = axisLeft(this.candlestickYscale);
   }
 
   constructChart(): void {
@@ -242,10 +246,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     console.log('Tick Values:', this.candlestickXscale.ticks());
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-    this.xAxis = axisBottom(this.candlestickXscale)
+    this.candlestickXaxis = axisBottom(this.candlestickXscale)
       .ticks(5)
-      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-
+      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date))
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
 
@@ -263,11 +266,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawAxes(): void {
     this.gXaxisGroupBottom = select(this.gXaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height - this.sectionA.margins.bottom})`);
-    this.gXaxisGroupBottom.call(this.xAxis);
+    this.gXaxisGroupBottom.call(this.candlestickXaxis);
 
     this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
-    this.gYaxisGroup.call(this.yAxis);
+    this.gYaxisGroup.call(this.candlestickXaxis);
   }
 
 }

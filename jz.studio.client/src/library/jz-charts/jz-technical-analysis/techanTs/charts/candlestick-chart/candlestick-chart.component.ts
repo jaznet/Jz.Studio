@@ -20,6 +20,10 @@ export class CandlestickChartComponent implements AfterViewInit {
   private chartWidth = 800;
   private chartHeight = 400;
 
+  constructor() {
+
+  }
+
   ngAfterViewInit(): void {
     this.initializeChart();
   //  this.drawChart();
