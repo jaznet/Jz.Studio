@@ -5,15 +5,13 @@ import { CandlestickChartComponent } from './candlestick-chart/candlestick-chart
 
 @NgModule({
   declarations: [
-    CandlestickChartComponent,
-    VolumeChartComponent
+   
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    CandlestickChartComponent,
-    VolumeChartComponent
+  
   ]
 })
 export class ChartsModule { }

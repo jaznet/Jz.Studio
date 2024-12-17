@@ -5,14 +5,14 @@ import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { select, selection, selectAll } from 'd3-selection';
 import { max, min, extent } from 'd3-array';
 
-@Component({
-  selector: 'candlestick-chart',
-  templateUrl: './candlestick-chart.component.html',
-  styleUrls: ['./candlestick-chart.component.css']
-})
-export class CandlestickChartComponent implements AfterViewInit {
-  @Input() data: CandlestickData[] = []; // Input to accept candlestick data
-  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGElement>;
+//@Component({
+//  selector: 'candlestick-chart',
+//  templateUrl: './candlestick-chart.component.html',
+//  styleUrls: ['./candlestick-chart.component.css']
+//})
+export class CandlestickChartComponent  {
+/*  @Input() data: CandlestickData[] = []; // Input to accept candlestick data*/
+/*  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGElement>;*/
 
   private svg: any;
   private xScale: any;
@@ -24,31 +24,31 @@ export class CandlestickChartComponent implements AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void {
-    this.initializeChart();
-  //  this.drawChart();
-  }
+  //ngAfterViewInit(): void {
+  //  this.initializeChart();
+  ////  this.drawChart();
+  //}
 
   private initializeChart(): void {
     // Initialize SVG
-    this.svg = select(this.chartContainer.nativeElement)
-      .append('svg')
-      .attr('width', this.chartWidth)
-      .attr('height', this.chartHeight);
+    //this.svg = select(this.chartContainer.nativeElement)
+    //  .append('svg')
+    //  .attr('width', this.chartWidth)
+    //  .attr('height', this.chartHeight);
 
-    // Initialize scales
-    this.xScale = scaleBand<Date>()
-      .domain(this.data.map(d => d.date))
-      .range([0, this.chartWidth])
-      .padding(0.1);
+    //// Initialize scales
+    //this.xScale = scaleBand<Date>()
+    //  .domain(this.data.map(d => d.date))
+    //  .range([0, this.chartWidth])
+    //  .padding(0.1);
 
-    const priceValues = this.data.flatMap(d => [d.open, d.high, d.low, d.close]);
-    const minPrice = min(priceValues) ?? 0;
-    const maxPrice = max(priceValues) ?? 100;
+    //const priceValues = this.data.flatMap(d => [d.open, d.high, d.low, d.close]);
+    //const minPrice = min(priceValues) ?? 0;
+    //const maxPrice = max(priceValues) ?? 100;
 
-    this.yScale = scaleLinear()
-      .domain([minPrice, maxPrice])
-      .range([this.chartHeight, 0]);
+    //this.yScale = scaleLinear()
+    //  .domain([minPrice, maxPrice])
+    //  .range([this.chartHeight, 0]);
   }
 
   public plot = {

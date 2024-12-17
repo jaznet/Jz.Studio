@@ -84,7 +84,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
-  candlestick;
+  candlestick:any;
   candlestickXscale!: any;
   candlestickYscale!: any;
   candlestickXaxis: any;
@@ -96,11 +96,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   /*  private techanLibService: TechanLibService,*/
     private popOverService: JzPopOversService)
   {
-    this.candlestick = new CandlestickChartComponent();
+ /*   this.candlestick = new CandlestickChartComponent();*/
   }
 
   ngOnInit(): void {
-    this.candlestick = new CandlestickChartComponent();
+ /*   this.candlestick = new CandlestickChartComponent();*/
   }
 
   ngAfterViewInit() {
