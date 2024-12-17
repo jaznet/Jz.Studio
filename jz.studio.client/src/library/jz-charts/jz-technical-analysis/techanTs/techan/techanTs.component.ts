@@ -99,9 +99,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.candlestick = new CandlestickChartComponent();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.candlestick = new CandlestickChartComponent();
+  }
 
   ngAfterViewInit() {
+  
     this.popover_loading.show();
     const ticker = 'NVDA';
     this.stockPriceService.getStockPrices(ticker).subscribe(
@@ -127,6 +130,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {
+    //this.candlestick = new CandlestickChartComponent();
+    //this.candlestick.plot.candlestick();
     this.sizeChartFramework();
     this.createSections();
     this.scrubData();
