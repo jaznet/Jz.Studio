@@ -20,8 +20,8 @@ export class CandlestickChartComponent  {
   private chartWidth = 800;
   private chartHeight = 400;
 
-  constructor() {
-
+  constructor(section:any) {
+    console.log(section);
   }
 
   //ngAfterViewInit(): void {
@@ -68,6 +68,9 @@ export class CandlestickChartComponent  {
       yScale: function (scale: any) {
         yScale = scale;
         return this;
+      },
+      test: function(section:any) {
+        const text = select(section).append('circle');
       },
       draw: function (selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
         const candle = selection.selectAll(".candle").data(parsedData);

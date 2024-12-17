@@ -67,6 +67,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 32, bottom: 20, left: 32 } };
   rectYaxis: any;
   rectCandlestick: any;
+
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
 
@@ -130,7 +131,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {
-    //this.candlestick = new CandlestickChartComponent();
+  
     //this.candlestick.plot.candlestick();
     this.sizeChartFramework();
     this.createSections();
@@ -217,6 +218,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
+    this.candlestick = new CandlestickChartComponent(this.gCandlestick);
+   
+    console.log(this.candlestick);
     console.log(this.stockPriceHistoryData);
 
     // Calculate the width of each candlestick
