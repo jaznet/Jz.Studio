@@ -4,30 +4,20 @@ import { CandlestickData } from '../../interfaces/techan-interfaces';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { select, selection, selectAll } from 'd3-selection';
 import { max, min, extent } from 'd3-array';
-
-//@Component({
-//  selector: 'candlestick-chart',
-//  templateUrl: './candlestick-chart.component.html',
-//  styleUrls: ['./candlestick-chart.component.css']
-//})
 export class CandlestickChartComponent  {
-/*  @Input() data: CandlestickData[] = []; // Input to accept candlestick data*/
-/*  @ViewChild('chartContainer', { static: true }) chartContainer!: ElementRef<SVGElement>;*/
 
+  private section: any;
   private svg: any;
   private xScale: any;
   private yScale: any;
   private chartWidth = 800;
   private chartHeight = 400;
 
-  constructor(section:any) {
+  constructor(section: any) {
+    this.section = section;
     console.log(section);
   }
 
-  //ngAfterViewInit(): void {
-  //  this.initializeChart();
-  ////  this.drawChart();
-  //}
 
   private initializeChart(): void {
     // Initialize SVG
@@ -57,10 +47,12 @@ export class CandlestickChartComponent  {
 
   private createCandlestickPlot() {
     // Create scales to be used for plotting
+    let section: any;
     let xScale: any;
     let yScale: any;
 
     const candlestickPlot = {
+      section: "zany",
       xScale: function (scale: any) {
         xScale = scale;
         return this;
@@ -69,8 +61,13 @@ export class CandlestickChartComponent  {
         yScale = scale;
         return this;
       },
-      test: function(section:any) {
-        const text = select(section).append('circle');
+      test: function (section: any) {
+        //const circle = select(section)
+        //  .append('circle')
+        //  .attr('cx', 50) // Set x-coordinate for the circle center
+        //  .attr('cy', 50) // Set y-coordinate for the circle center
+        //  .attr('r', 10) // Set the radius of the circle
+        //  .attr('fill', 'blue'); // Set the fill color of the circle
       },
       draw: function (selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
         const candle = selection.selectAll(".candle").data(parsedData);

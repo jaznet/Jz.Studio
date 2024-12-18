@@ -85,7 +85,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
-  candlestick:any;
+  candlestick!: CandlestickChartComponent;
   candlestickXscale!: any;
   candlestickYscale!: any;
   candlestickXaxis: any;
@@ -218,8 +218,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
+    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
+      .attr("class", "candlestick")
+      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
     this.candlestick = new CandlestickChartComponent(this.gCandlestick);
-   
+    this.candlestick.plot.candlestick().section = this.gCandlestick;
+    this.candlestick.plot.candlestick().test(this.gCandlestick);
     console.log(this.candlestick);
     console.log(this.stockPriceHistoryData);
 
@@ -261,9 +265,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
 
-    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
-      .attr("class", "candlestick")
-      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
+ 
 
     //const candlestickPlot = this.techanLibService.plot.candlestick()
     //  .xScale(this.xScale)
