@@ -182,11 +182,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       date: new Date(d.date) // Convert date string to Date object
     }));
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
-    console.log('parsedata', this.parsedData); console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
+    console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
 
     const dateExtent = extent(this.parsedData, (d: CandlestickData) => {
         return d.date;
     });
+
     console.log('Date Extent:', dateExtent);
 
     if (dateExtent[0] && dateExtent[1]) {
@@ -218,15 +219,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
-      .attr("class", "candlestick")
-      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
-    this.candlestick = new CandlestickChartComponent(this.gCandlestick);
-    this.candlestick.plot.candlestick().section = this.gCandlestick;
-    this.candlestick.plot.candlestick().test(this.gCandlestick);
-    console.log(this.candlestick);
-    console.log(this.stockPriceHistoryData);
-
     // Calculate the width of each candlestick
     const dataTimeIntervals = this.parsedData.map((d: any, i: number) => {
       if (i === 0) return 0; // No interval for the first data point
@@ -237,25 +229,36 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     const timeDiff = this.parsedData.length > 1
       ? this.parsedData[1].date.getTime() - this.parsedData[0].date.getTime()
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
-
     const candleWidth =
       this.candlestickXscale(new Date(this.parsedData[0].date.getTime() + timeDiff)) - this.candlestickXscale(this.parsedData[0].date);
+    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
+      .attr("class", "candlestick")
+      .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
+    this.candlestick = new CandlestickChartComponent(this.gCandlestick);
+    this.candlestick.plot.candlestick().section = this.gCandlestick;
+    this.candlestick.plot.candlestick().draw(this.gCandlestick,this.stockPriceHistoryData,candleWidth,this.parsedData);
+    console.log(this.candlestick);
+    console.log(this.stockPriceHistoryData);
+
+  
+
+
 
     // Drawing the candlesticks
-    selectAll<SVGRectElement, DataType>(".candle")
-      .data<DataType>(this.parsedData) // Explicitly specify the type of data
-      .enter()
-      .append("rect")
-      .attr("class", "candle")
-      .attr("x", d => {
-        const xValue = this.candlestickXscale(d.date) - candleWidth / 2;
-    /*    console.log('x:', xValue, 'Date:', d.date);*/
-        return xValue;
-      })
-      .attr("y", (d) => this.candlestickYscale(Math.max(d.open, d.close)))
-      .attr("width", candleWidth)
-      .attr("height", (d) => Math.abs(this.candlestickYscale(d.open) - this.candlestickYscale(d.close)))
-      .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
+    //selectAll<SVGRectElement, DataType>(".candle")
+    //  .data<DataType>(this.parsedData) // Explicitly specify the type of data
+    //  .enter()
+    //  .append("rect")
+    //  .attr("class", "candle")
+    //  .attr("x", d => {
+    //    const xValue = this.candlestickXscale(d.date) - candleWidth / 2;
+    ///*    console.log('x:', xValue, 'Date:', d.date);*/
+    //    return xValue;
+    //  })
+    //  .attr("y", (d) => this.candlestickYscale(Math.max(d.open, d.close)))
+    //  .attr("width", candleWidth)
+    //  .attr("height", (d) => Math.abs(this.candlestickYscale(d.open) - this.candlestickYscale(d.close)))
+    //  .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
 
     console.log('Tick Values:', this.candlestickXscale.ticks());
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
