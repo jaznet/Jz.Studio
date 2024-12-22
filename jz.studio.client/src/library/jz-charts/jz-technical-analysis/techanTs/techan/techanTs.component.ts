@@ -85,7 +85,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
 
-  candlestick!: CandlestickChartComponent;
+/*  candlestick!: CandlestickChartComponent;*/
   candlestickXscale!: any;
   candlestickYscale!: any;
   candlestickXaxis: any;
@@ -234,10 +234,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
-    this.candlestick = new CandlestickChartComponent(this.gCandlestick);
-    this.candlestick.plot.candlestick().section = this.gCandlestick;
-    this.candlestick.plot.candlestick().draw(this.gCandlestick,this.stockPriceHistoryData,candleWidth,this.parsedData);
-    console.log(this.candlestick);
+    const candlestick = new CandlestickChartComponent(this.gCandlestick);
+    const plot = candlestick.plot.candlestick();
+    plot.section = this.gCandlestick;
+    plot.xScale(this.candlestickXscale).yScale(this.candlestickYscale);
+    plot.draw(this.gCandlestick, this.stockPriceHistoryData, candleWidth, this.parsedData);
+
+    console.log(candlestick);
     console.log(this.stockPriceHistoryData);
 
   

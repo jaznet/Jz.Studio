@@ -46,15 +46,10 @@ export class CandlestickChartComponent  {
   };
 
   private createCandlestickPlot() {
-    // Create scales to be used for plotting
-    //let section: any;
-    //let xScale: any;
-    //let yScale: any;
-
     const candlestickPlot = {
       section: "zany",
-      _xScale: null as any, // Declare _xScale here
-      _yScale: null as any, // Declare _yScale here
+      _xScale: null as any, // Declare _xScale
+      _yScale: null as any, // Declare _yScale
       xScale: function (scale: any) {
         this._xScale = scale; // Assign scale to _xScale
         return this;
@@ -64,14 +59,14 @@ export class CandlestickChartComponent  {
         return this;
       },
       test: function (section: any) {
-        //const circle = select(section)
-        //  .append('circle')
-        //  .attr('cx', 50) // Set x-coordinate for the circle center
-        //  .attr('cy', 50) // Set y-coordinate for the circle center
-        //  .attr('r', 10) // Set the radius of the circle
-        //  .attr('fill', 'blue'); // Set the fill color of the circle
+        const circle = section
+          .append('circle')
+          .attr('cx', 50)
+          .attr('cy', 50)
+          .attr('r', 10)
+          .attr('fill', 'blue');
       },
-      draw: function (selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
+      draw: (selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) => {
         const candle = selection.selectAll(".candle").data(parsedData);
 
         // Enter
@@ -79,10 +74,16 @@ export class CandlestickChartComponent  {
           .append("rect")
           .attr("class", "candle")
           .merge(candle)
-          .attr("x", (d: CandlestickData) => this._xScale(d.date) ?? 0) // ?? 0 to provide a default if null
-          .attr("y", (d: CandlestickData) => this._yScale(Math.max(d.open, d.close)))
-          .attr("width", candleWidth) // Now this will work because xScale is a scaleBand
-          .attr("height", (d: CandlestickData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
+          .attr("x", (d: CandlestickData) => {
+            candlestickPlot._xScale(d.date) ?? 0;
+           
+          }) // Access candlestickPlot._xScale
+          .attr("y", (d: CandlestickData) => {
+            candlestickPlot._yScale(Math.max(d.open, d.close));
+            console.log('y', d);
+          }) // Access candlestickPlot._yScale
+          .attr("width", candleWidth)
+          .attr("height", (d: CandlestickData) => Math.abs(candlestickPlot._yScale(d.open) - candlestickPlot._yScale(d.close)))
           .attr("fill", (d: CandlestickData) => d.open > d.close ? "#bf211e" : "seagreen");
 
         // Exit
@@ -91,15 +92,14 @@ export class CandlestickChartComponent  {
         // Draw wicks
         const wicks = selection.selectAll(".wick").data(parsedData);
 
-        // Enter for wicks
         wicks.enter()
           .append("line")
           .attr("class", "wick")
           .merge(wicks)
-          .attr("x1", (d: CandlestickData) => this._xScale(d.date)! + candleWidth / 2) // Center of the candlestick
-          .attr("x2", (d: CandlestickData) => this._xScale(d.date)! + candleWidth / 2)
-          .attr("y1", (d: CandlestickData) => this._yScale(d.high)) // Top of the wick (highest price)
-          .attr("y2", (d: CandlestickData) => this._yScale(d.low)) // Bottom of the wick (lowest price)
+          .attr("x1", (d: CandlestickData) => (candlestickPlot._xScale(d.date)! + candleWidth / 2))
+          .attr("x2", (d: CandlestickData) => (candlestickPlot._xScale(d.date)! + candleWidth / 2))
+          .attr("y1", (d: CandlestickData) => candlestickPlot._yScale(d.high))
+          .attr("y2", (d: CandlestickData) => candlestickPlot._yScale(d.low))
           .attr("stroke", "#52aa8a")
           .attr("stroke-width", 1);
 
@@ -110,4 +110,5 @@ export class CandlestickChartComponent  {
 
     return candlestickPlot;
   }
+
 }
