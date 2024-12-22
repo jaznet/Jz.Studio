@@ -18,9 +18,9 @@ export class AppMgrService {
     });
   }
 
-  InitializePalette() {
-    this.paletteMgr.ChangePalette('onyx');
-  }
+  //InitializePalette() {
+  //  this.paletteMgr.ChangePalette('onyx');
+  //}
 
   OnViewSelected(view: any) {
     switch (view) {

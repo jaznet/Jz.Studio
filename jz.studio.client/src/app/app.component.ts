@@ -69,16 +69,5 @@ export class AppComponent implements OnInit {
     //})
   }
 
-  getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
   title = 'jz.studio.client';
 }
