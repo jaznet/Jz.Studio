@@ -243,10 +243,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     console.log(candlestick);
     console.log(this.stockPriceHistoryData);
 
-  
-
-
-
     // Drawing the candlesticks
     //selectAll<SVGRectElement, DataType>(".candle")
     //  .data<DataType>(this.parsedData) // Explicitly specify the type of data
