@@ -10,7 +10,7 @@ import { PaletteMgrService } from '../../../app-services/palette-mgr.service';
 export class PaletteMenuComponent {
   @HostBinding('class') classes = 'fit-to-content';
 
-  paletteName: string = '';
+  paletteName: string = 'palette';
 
   constructor(
     private appMgr: AppMgrService,
