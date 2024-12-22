@@ -243,22 +243,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     console.log(candlestick);
     console.log(this.stockPriceHistoryData);
 
-    // Drawing the candlesticks
-    //selectAll<SVGRectElement, DataType>(".candle")
-    //  .data<DataType>(this.parsedData) // Explicitly specify the type of data
-    //  .enter()
-    //  .append("rect")
-    //  .attr("class", "candle")
-    //  .attr("x", d => {
-    //    const xValue = this.candlestickXscale(d.date) - candleWidth / 2;
-    ///*    console.log('x:', xValue, 'Date:', d.date);*/
-    //    return xValue;
-    //  })
-    //  .attr("y", (d) => this.candlestickYscale(Math.max(d.open, d.close)))
-    //  .attr("width", candleWidth)
-    //  .attr("height", (d) => Math.abs(this.candlestickYscale(d.open) - this.candlestickYscale(d.close)))
-    //  .attr("fill", (d) => (d.open > d.close ? "#bf211e" : "seagreen"));
-
     console.log('Tick Values:', this.candlestickXscale.ticks());
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
     this.candlestickXaxis = axisBottom(this.candlestickXscale)
@@ -266,14 +250,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date))
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
-
- 
-
-    //const candlestickPlot = this.techanLibService.plot.candlestick()
-    //  .xScale(this.xScale)
-    //  .yScale(this.yScale);
-
-    //candlestickPlot.draw(this.gCandlestick, this.stockPriceHistoryData, candleWidth,this.parsedData);
   }
 
   drawAxes(): void {
@@ -283,7 +259,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
-    this.gYaxisGroup.call(this.candlestickXaxis);
+    this.gYaxisGroup.call(this.candlestickYaxis);
   }
 
 }
