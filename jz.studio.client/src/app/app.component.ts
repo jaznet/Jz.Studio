@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     private palette: PaletteMgrService)
   {
-    palette.InitializePalette();
+   // palette.InitializePalette();
   }
 
   ngOnInit() {

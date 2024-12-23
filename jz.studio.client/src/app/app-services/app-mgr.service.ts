@@ -7,7 +7,7 @@ import { PaletteMgrService } from './palette-mgr.service';
 })
 export class AppMgrService {
 
-  @Output() paletteChangedEvent = new EventEmitter();
+
 
   constructor(
     private appEvents: AppEventsService,

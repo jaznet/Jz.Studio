@@ -1,20 +1,21 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
+import { AppEventsService } from './app-events.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaletteMgrService {
 
-  @Output() paletteChangedEvent = new EventEmitter();
 
-  constructor() { }
 
-  InitializePalette() {
-    this.ChangePalette('gunmetal');
-  }
+  constructor(private events:AppEventsService) { }
+
+  //InitializePalette() {
+  //  this.ChangePalette('gunmetal');
+  //}
 
   ChangePalette(palette: string) {
-    this.paletteChangedEvent.emit(palette);
+    this.events.paletteChangedEvent.emit(palette);
     switch (palette) {
 
       case 'gunmetal':

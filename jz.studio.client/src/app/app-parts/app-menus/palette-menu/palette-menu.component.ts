@@ -1,6 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { AppMgrService } from '../../../app-services/app-mgr.service';
 import { PaletteMgrService } from '../../../app-services/palette-mgr.service';
+import { AppEventsService } from '../../../app-services/app-events.service';
 
 @Component({
   selector: 'palette-menu',
@@ -13,10 +14,10 @@ export class PaletteMenuComponent {
   paletteName: string = 'palette';
 
   constructor(
-    private appMgr: AppMgrService,
+    private events: AppEventsService,
     private paletteMgr:PaletteMgrService
   ) {
-    this.appMgr.paletteChangedEvent.subscribe(palette => {
+    this.events.paletteChangedEvent.subscribe(palette => {
       this.paletteName = palette;
     })
   }
@@ -24,7 +25,7 @@ export class PaletteMenuComponent {
   ngOnInit(): void { }
 
   setPalette(palette: string) {
-    this.paletteName = palette;
+     this.paletteName = palette;
     this.paletteMgr.ChangePalette(palette);
   }
 }

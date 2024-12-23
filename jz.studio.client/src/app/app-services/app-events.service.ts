@@ -5,6 +5,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 })
 export class AppEventsService {
 
+  @Output() paletteChangedEvent = new EventEmitter();
   @Output() setPaletteEvent = new EventEmitter<{ menu: string; item: string }>();
   @Output() popEvent = new EventEmitter();
   @Output() viewSelectedEvent = new EventEmitter();
