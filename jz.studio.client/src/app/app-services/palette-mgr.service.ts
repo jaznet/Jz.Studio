@@ -10,11 +10,11 @@ export class PaletteMgrService {
 
   constructor(private events:AppEventsService) { }
 
-  //InitializePalette() {
-  //  this.ChangePalette('gunmetal');
-  //}
+  InitializePalette() {
+    this.ChangePalette('gunmetal');
+  }
 
-  ChangePalette(palette: string) {
+  ChangePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
     switch (palette) {
 
@@ -42,9 +42,9 @@ export class PaletteMgrService {
 
       case 'charts':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#507577 ');
-        document.documentElement.style.setProperty('--plt-clr-2', '#38456C');
-        document.documentElement.style.setProperty('--plt-clr-3', '#102542');
+        document.documentElement.style.setProperty('--plt-clr-1', '#24443B ');
+        document.documentElement.style.setProperty('--plt-clr-2', '#2c2e1a');
+        document.documentElement.style.setProperty('--plt-clr-3', '#12100e');
         document.documentElement.style.setProperty('--plt-clr-4', '#5B8A8E');
         document.documentElement.style.setProperty('--plt-clr-5', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-x', 'black');

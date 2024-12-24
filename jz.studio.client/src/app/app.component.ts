@@ -45,6 +45,8 @@ export class AppComponent implements OnInit {
     console.log(this.content);
     console.log(this.footer);
 
+    this.palette.InitializePalette();
+
     window.addEventListener("load", function () {
       if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
         console.log("The page was reloaded.");

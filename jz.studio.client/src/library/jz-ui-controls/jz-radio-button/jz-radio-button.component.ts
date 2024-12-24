@@ -12,6 +12,7 @@ export class JzRadioButtonComponent {
   @HostBinding('class') classes = 'palette-menu-container';
   @Input() palette: string = 'gunmetal';
   @Input() btncolor: string = '#172626';
+  @Input() stroke: string = 'red';
   @ViewChild('circle', { static: false }) circle: ElementRef | undefined;
 
   constructor(
