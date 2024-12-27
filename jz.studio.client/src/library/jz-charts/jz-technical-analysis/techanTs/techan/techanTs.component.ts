@@ -117,6 +117,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createSections();
     this.data.scrubData();
     this.axes.setAxes();
+    this.scales.createScales();
     this.constructChart();
   }
 
