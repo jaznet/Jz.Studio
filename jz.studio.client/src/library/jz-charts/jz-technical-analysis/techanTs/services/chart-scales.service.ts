@@ -30,5 +30,5 @@ export class ChartScalesService {
     this.candlestickYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.layout.sectionA.height - this.layout.sectionA.margins.top - this.layout.sectionA.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
-  }
+   }
 }

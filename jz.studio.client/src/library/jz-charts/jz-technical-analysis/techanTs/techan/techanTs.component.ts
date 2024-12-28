@@ -177,6 +177,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+    console.log(this.axes.candlestickYaxis);
     this.gYaxisGroup.call(this.axes.candlestickYaxis);
   }
 
