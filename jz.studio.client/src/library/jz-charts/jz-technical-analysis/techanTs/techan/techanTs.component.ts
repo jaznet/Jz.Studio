@@ -158,19 +158,22 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     plot.xScale(this.scales.candlestickXscale).yScale(this.scales.candlestickYscale);
     plot.draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
 
-    console.log(candlestick);
-    console.log(this.data.stockPriceHistoryData);
-
     console.log('Tick Values:', this.scales.candlestickXscale.ticks());
-    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-    this.axes.candlestickXaxis = axisBottom(this.scales.candlestickXscale)
-      .ticks(5)
-      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date))
+ 
+  
 
     this.gSectionA = select(this.gSectionAref.nativeElement);
   }
 
   drawAxes(): void {
+    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+
+    this.axes.candlestickXaxis = axisBottom(this.scales.candlestickXscale)
+      .ticks(5)
+      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
+
+    this.axes.candlestickYaxis = axisLeft(this.scales.candlestickYscale);
+
     this.gXaxisGroupBottom = select(this.gXaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     this.gXaxisGroupBottom.call(this.axes.candlestickXaxis);

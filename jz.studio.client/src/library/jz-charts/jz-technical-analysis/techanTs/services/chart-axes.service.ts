@@ -13,6 +13,6 @@ export class ChartAxesService {
   constructor(private scales: ChartScalesService) { }
 
   setAxes(): void {
-    this.candlestickYaxis = axisLeft(this.scales.candlestickYscale);
+   /* this.candlestickYaxis = axisLeft(this.scales.candlestickYscale);*/
   }
 }
