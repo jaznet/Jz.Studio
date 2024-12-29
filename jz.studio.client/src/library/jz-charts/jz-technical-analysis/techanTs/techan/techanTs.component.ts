@@ -70,7 +70,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   gXaxis: any;
   gXaxisGroupTop: any;
   gXaxisGroupBottom: any;
-  gYaxisGroup: any;
+  gYaxisGroupLeft: any;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -157,12 +157,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     plot.section = this.gCandlestick;
     plot.xScale(this.scales.candlestickXscale).yScale(this.scales.candlestickYscale);
     plot.draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
-
-    console.log('Tick Values:', this.scales.candlestickXscale.ticks());
- 
-  
-
-    this.gSectionA = select(this.gSectionAref.nativeElement);
   }
 
   drawAxes(): void {
@@ -178,10 +172,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     this.gXaxisGroupBottom.call(this.axes.candlestickXaxis);
 
-    this.gYaxisGroup = select(this.gYaxisGroupRef.nativeElement)
+    this.gYaxisGroupLeft = select(this.gYaxisGroupRef.nativeElement)
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     console.log(this.axes.candlestickYaxis);
-    this.gYaxisGroup.call(this.axes.candlestickYaxis);
+    this.gYaxisGroupLeft.call(this.axes.candlestickYaxis);
   }
 
 }
