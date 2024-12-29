@@ -52,7 +52,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroup', { static: true }) gXaxisGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisGroup', { static: true }) gYaxisGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
@@ -172,7 +172,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     this.gXaxisGroupBottom.call(this.axes.candlestickXaxis);
 
-    this.gYaxisGroupLeft = select(this.gYaxisGroupRef.nativeElement)
+    this.gYaxisGroupLeft = select(this.gYaxisGroupLeftRef.nativeElement)
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     console.log(this.axes.candlestickYaxis);
     this.gYaxisGroupLeft.call(this.axes.candlestickYaxis);
