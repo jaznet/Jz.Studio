@@ -23,8 +23,13 @@ export class ChartAxesService {
     private layout: ChartLayoutService) { }
 
   drawAxes(): void {
+    this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
+      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
+    this.gYaxisGroupLeft = select(this.gYaxisGroupLeft.nativeElement)
+      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
+    // CANDLESTICK
     this.candlestickXaxis = axisBottom(this.scales.candlestickXscale)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));

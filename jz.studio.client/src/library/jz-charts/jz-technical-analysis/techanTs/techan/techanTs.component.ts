@@ -122,22 +122,21 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   sizeChartFramework() {
+    this.layout.svg = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
     this.layout.rectYaxis = this.rectYaxisRef.nativeElement;
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
-    this.layout.rectA = this.rectAref;
-    this.layout.rectB = this.rectBref;
-    this.layout.rectC = this.rectCref;
-    this.axes.gXaxisGroupBottom = select(this.gXaxisGroupBottomRef.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
-    this.axes.gYaxisGroupLeft =  select(this.gYaxisGroupLeftRef.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+    this.layout.rectA = this.rectAref.nativeElement;
+    this.layout.rectB = this.rectBref.nativeElement;
+    this.layout.rectC = this.rectCref.nativeElement;
+
+    this.axes.gXaxisGroupBottom = this.gXaxisGroupBottomRef;
+    this.axes.gYaxisGroupLeft = this.gYaxisGroupLeftRef;
   }
 
   constructChart(): void {
     this.drawCandlestick();
-  //  this.axes.drawAxes();
   }
 
   drawCandlestick(): void {

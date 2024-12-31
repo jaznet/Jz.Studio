@@ -27,7 +27,6 @@ export class ChartDataService {
     // Assuming data is an array of objects with a 'date' property as a string
   
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
-    console.log('Parsed Data:', this.parsedData.map((d: { date: { getTime: () => number; }; }) => ({ date: d.date, isValid: !isNaN(d.date.getTime()) })));
 
     this.dateExtent = extent(this.parsedData, (d: CandlestickData) => {
       return d.date;

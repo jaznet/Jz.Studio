@@ -9,7 +9,7 @@ export class ChartLayoutService {
   svg!: any;
   svgWidth = 0;
   svgHeight = 0;
-  svgRect!: any;
+  svgRect!: SVGRectElement;
   svgRectWidth = 0;
   svgRectHeight = 0;
 
@@ -17,9 +17,10 @@ export class ChartLayoutService {
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
 
-  rectA!: { nativeElement: { getBBox: () => any; }; };
-  rectB!: { nativeElement: { getBBox: () => any; }; };
-  rectC!: { nativeElement: { getBBox: () => any; }; };
+  rectA!: SVGRectElement;
+  rectB!: SVGRectElement;
+  rectC!: SVGRectElement;
+
 
   rectYaxis: any;
   rectCandlestick: any;
@@ -28,7 +29,7 @@ export class ChartLayoutService {
 
   createSections(): void {
     // SECTION A
-    let bbox = this.rectA.nativeElement.getBBox();
+    let bbox = this.rectA.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
@@ -40,12 +41,12 @@ export class ChartLayoutService {
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
 
     // SECTION B
-    bbox = this.rectB.nativeElement.getBBox();
+    bbox = this.rectB.getBBox();
     this.sectionB.width = bbox.width;
     this.sectionB.height = bbox.height;
 
     // SECTION C
-    bbox = this.rectC.nativeElement.getBBox();
+    bbox = this.rectC.getBBox();
     this.sectionC.width = bbox.width;
     this.sectionC.height = bbox.height;
   }
