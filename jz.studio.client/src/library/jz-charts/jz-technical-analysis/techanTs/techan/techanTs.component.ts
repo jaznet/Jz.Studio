@@ -3,9 +3,9 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, O
 import { range } from 'rxjs';
 
 
-import { select, selection, selectAll } from 'd3-selection';
+
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { timeFormat } from 'd3-time-format';
+
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
@@ -17,6 +17,7 @@ import { ChartDataService } from '../services/chart-data.service';
 import { ChartLayoutService } from '../services/chart-layout.service';
 import { ChartAxesService } from '../services/chart-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
+import { select, selection, selectAll } from 'd3-selection';
 
 export interface range {
   start: number;
@@ -51,7 +52,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectYaxis', { static: true }) rectYaxisRef!: ElementRef<SVGRectElement>;
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisGroup', { static: true }) gXaxisGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
@@ -68,9 +69,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   gCandlestick: any;
   gXaxis: any;
-  gXaxisGroupTop: any;
-  gXaxisGroupBottom: any;
-  gYaxisGroupLeft: any;
+
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -116,8 +115,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.sizeChartFramework();
     this.layout.createSections();
     this.data.scrubData();
-    this.axes.setAxes();
+  
     this.scales.createScales();
+    this.axes.drawAxes();
     this.constructChart();
   }
 
@@ -129,11 +129,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectA = this.rectAref;
     this.layout.rectB = this.rectBref;
     this.layout.rectC = this.rectCref;
+    this.axes.gXaxisGroupBottom = select(this.gXaxisGroupBottomRef.nativeElement)
+      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
+    this.axes.gYaxisGroupLeft =  select(this.gYaxisGroupLeftRef.nativeElement)
+      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
   }
 
   constructChart(): void {
     this.drawCandlestick();
-    this.drawAxes();
+  //  this.axes.drawAxes();
   }
 
   drawCandlestick(): void {
@@ -158,24 +162,4 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     plot.xScale(this.scales.candlestickXscale).yScale(this.scales.candlestickYscale);
     plot.draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
   }
-
-  drawAxes(): void {
-    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-
-    this.axes.candlestickXaxis = axisBottom(this.scales.candlestickXscale)
-      .ticks(5)
-      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-
-    this.axes.candlestickYaxis = axisLeft(this.scales.candlestickYscale);
-
-    this.gXaxisGroupBottom = select(this.gXaxisGroupRef.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
-    this.gXaxisGroupBottom.call(this.axes.candlestickXaxis);
-
-    this.gYaxisGroupLeft = select(this.gYaxisGroupLeftRef.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
-    console.log(this.axes.candlestickYaxis);
-    this.gYaxisGroupLeft.call(this.axes.candlestickYaxis);
-  }
-
 }
