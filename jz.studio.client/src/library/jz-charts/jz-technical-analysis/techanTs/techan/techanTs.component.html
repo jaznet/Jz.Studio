@@ -10,8 +10,12 @@
       <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="12" fill="black" font-weight="bold">Section A</text>
       <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" fill="var(--plt-clr-2)" style="stroke:hotpink"></rect>
 
+      <g class="x-axis" id="xAxisGroupTopA" #xAxisGroupBottomTopA>
+        <rect #xAxisGroupTopARect width="300" height="30" fill="red"></rect>
+      </g>
+
       <g #yAxisGroupLeft id="yAxisGroupLeft" class="y-axis">
-        <rect #yAxisGroupLeftRect width="` 300" height="30" fill="#2A6255"></rect>
+        <rect #yAxisGroupLeftRectA width="300" height="30" fill="#2A6255"></rect>
       </g>
 
       <!-- CANDLESTICK CHART -->
@@ -25,12 +29,13 @@
       </g>
 
       <g #yAxisGroupRight id="yAxisGroupRight" class="y-axis">
-        <rect #yAxisGroupLeft width="` 300" height="30" fill="#2A6255"></rect>
+        <rect #yAxisGroupRightRectA width="300" height="30" fill="#2A6255"></rect>
       </g>
 
-      <g class="x-axis" id="xAxisGroupBottom" #xAxisGroupBottom>
+      <g class="x-axis" id="xAxisGroupBottomA" #xAxisGroupBottom>
         <rect #rectYaxis width="300" height="30" fill="orange"></rect>
       </g>
+
     </g>
     <!-- SECTION B -->
     <g id="sectionB" #sectionB>

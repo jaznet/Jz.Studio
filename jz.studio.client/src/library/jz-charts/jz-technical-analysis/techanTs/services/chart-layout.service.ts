@@ -21,8 +21,11 @@ export class ChartLayoutService {
   rectB!: SVGRectElement;
   rectC!: SVGRectElement;
 
+  rectXaxisTopA!: SVGRectElement;
+  rectXaxisBottomA!: SVGRectElement;
+  rectYaxisLeftA!: SVGRectElement;
+  rectYaxisRightA!: SVGRectElement;
 
-  rectYaxisLeft: any;
   rectCandlestick: any;
 
   constructor() { }
@@ -34,9 +37,9 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
     //this.rectCandlestick.height = this.svgHeight*.5;
-    this.rectYaxisLeft.setAttribute('x', -this.sectionA.margins.left);
-    this.rectYaxisLeft.setAttribute('width', this.sectionA.margins.left);
-    this.rectYaxisLeft.setAttribute('height', this.sectionA.height - this.sectionA.margins.bottom);
+    this.rectYaxisLeftA.setAttribute('x', '${-this.sectionA.margins.left}');
+    this.rectYaxisLeftA.setAttribute('width','${ this.sectionA.margins.left}');
+    this.rectYaxisLeftA.setAttribute('height', '${this.sectionA.height - this.sectionA.margins.bottom}');
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
 
