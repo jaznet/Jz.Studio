@@ -49,7 +49,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
 
 
-  @ViewChild('rectYaxis', { static: true }) rectYaxisRef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisGroupLeftRect', { static: true }) yAxisGroupLeftRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
@@ -125,7 +125,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svg = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
-    this.layout.rectYaxis = this.rectYaxisRef.nativeElement;
+    this.layout.rectYaxisLeft = this.yAxisGroupLeftRectRef.nativeElement;
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
     this.layout.rectA = this.rectAref.nativeElement;
     this.layout.rectB = this.rectBref.nativeElement;
