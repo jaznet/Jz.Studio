@@ -49,7 +49,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
 
 
-  @ViewChild('yAxisGroupLeftRect', { static: true }) yAxisGroupLeftRectRef!: ElementRef<SVGRectElement>;
+ 
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
@@ -62,6 +62,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
+
+  @ViewChild('yAxisGroupLeftRect', { static: true }) yAxisGroupLeftRectRef!: ElementRef<SVGRectElement>;
 
   gSectionA: any;
   gSectionB: any;

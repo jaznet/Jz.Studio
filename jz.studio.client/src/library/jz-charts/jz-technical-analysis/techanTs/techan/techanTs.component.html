@@ -14,6 +14,7 @@
         <rect #yAxisGroupLeftRect width="` 300" height="30" fill="#2A6255"></rect>
       </g>
 
+      <!-- CANDLESTICK CHART -->
       <g id="candlestick" #candlestick>
         <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
               x="0" y="0"
@@ -21,6 +22,10 @@
               [attr.height]="100"
               fill='var(--plt-clr-3'>
         </rect>
+      </g>
+
+      <g #yAxisGroupRight id="yAxisGroupRight" class="y-axis">
+        <rect #yAxisGroupLeft width="` 300" height="30" fill="#2A6255"></rect>
       </g>
 
       <g class="x-axis" id="xAxisGroupBottom" #xAxisGroupBottom>
