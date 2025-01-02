@@ -46,9 +46,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('svgrect', { static: true }) svgRectElementRef!: ElementRef<SVGRectElement>;
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
-
-
-
  
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
@@ -62,11 +59,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectA', { static: true }) rectAref!: ElementRef<SVGRectElement>;
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
-  
-  @ViewChild('yAxisGroupLeftRectA', { static: true }) yAxisGroupLeftRectARef!: ElementRef<SVGRectElement>;
-  @ViewChild('yAxisGroupRightRectA', { static: true }) yAxisGroupRightRectARef!: ElementRef<SVGRectElement>;
+
   @ViewChild('xAxisGroupTopRectA', { static: true }) xAxisGroupTopRectARef!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisGroupBottomRectA', { static: true }) xAxisGroupBottomRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisGroupLeftRectA', { static: true }) yAxisGroupLeftRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisGroupRightRectA', { static: true }) yAxisGroupRightRectARef!: ElementRef<SVGRectElement>;
+
 
   gSectionA: any;
   gSectionB: any;
@@ -74,7 +72,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   gCandlestick: any;
   gXaxis: any;
-
 
   constructor(
     private changeDetector: ChangeDetectorRef,
@@ -135,14 +132,17 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectYaxisRightA = this.yAxisGroupRightRectARef.nativeElement;
     this.layout.rectXaxisTopA = this.yAxisGroupLeftRectARef.nativeElement;
     this.layout.rectXaxisBottomA = this.yAxisGroupLeftRectARef.nativeElement;
+
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
 
     this.layout.rectA = this.rectAref.nativeElement;
     this.layout.rectB = this.rectBref.nativeElement;
     this.layout.rectC = this.rectCref.nativeElement;
 
+    this.axes.gXaxisGroupTop = this.xAxisGroupTopRectARef;
     this.axes.gXaxisGroupBottom = this.gXaxisGroupBottomRef;
     this.axes.gYaxisGroupLeft = this.gYaxisGroupLeftRef;
+    this.axes.gYaxisGroupRight = this.yAxisGroupRightRectARef;
   }
 
   constructChart(): void {

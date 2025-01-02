@@ -13,9 +13,9 @@ export class ChartLayoutService {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 32, bottom: 20, left: 32 } };
-  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
-  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 20, right: 30, bottom: 20, left: 30 } };
+  sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
   rectA!: SVGRectElement;
   rectB!: SVGRectElement;
@@ -36,10 +36,19 @@ export class ChartLayoutService {
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
-    //this.rectCandlestick.height = this.svgHeight*.5;
-    this.rectYaxisLeftA.setAttribute('x', '${-this.sectionA.margins.left}');
-    this.rectYaxisLeftA.setAttribute('width','${ this.sectionA.margins.left}');
-    this.rectYaxisLeftA.setAttribute('height', '${this.sectionA.height - this.sectionA.margins.bottom}');
+
+    this.rectXaxisBottomA.setAttribute('x', `${-this.sectionA.margins.left}`);
+    this.rectXaxisBottomA.setAttribute('width', `${this.sectionA.margins.left}`);
+    this.rectXaxisBottomA.setAttribute('height', `${this.sectionA.margins.bottom}`);
+
+    this.rectYaxisLeftA.setAttribute('x', `${-this.sectionA.margins.left}`);
+    this.rectYaxisLeftA.setAttribute('width',`${ this.sectionA.margins.left}`);
+    this.rectYaxisLeftA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
+
+    this.rectYaxisRightA.setAttribute('x', `${-this.sectionA.width}`);
+    this.rectYaxisRightA.setAttribute('width', `${this.sectionA.margins.right}`);
+    this.rectYaxisRightA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
+
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
 
