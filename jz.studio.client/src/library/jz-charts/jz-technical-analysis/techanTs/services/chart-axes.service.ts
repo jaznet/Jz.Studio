@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { ChartScalesService } from './chart-scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll } from 'd3-selection';
 import { ChartLayoutService } from './chart-layout.service';
+import { Selection } from 'd3-v4';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ChartAxesService {
   candlestickXaxis: any;
   candlestickYaxis: any;
 
-  gXaxisGroupTop: any;
+  xAxisTop!: Selection<any, unknown, null, undefined> | ElementRef<SVGRectElement>;
   gXaxisGroupBottom: any;
   gYaxisGroupLeft: any;
   gYaxisGroupRight: any;
@@ -24,7 +25,7 @@ export class ChartAxesService {
 
   drawAxes(): void {
 
-    this.gXaxisGroupTop = select(this.gYaxisGroupRight.nativeElement);
+    this.xAxisTop = select(this.gYaxisGroupRight.nativeElement);
     this.gYaxisGroupRight = select(this.gYaxisGroupRight.nativeElement);
     this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
       .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);

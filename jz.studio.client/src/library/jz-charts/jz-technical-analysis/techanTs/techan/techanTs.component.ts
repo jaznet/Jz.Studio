@@ -61,10 +61,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisGroupTopRectA', { static: true }) xAxisGroupTopRectARef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisGroupBottomRectA', { static: true }) xAxisGroupBottomRectARef!: ElementRef<SVGRectElement>;
-  @ViewChild('yAxisGroupLeftRectA', { static: true }) yAxisGroupLeftRectARef!: ElementRef<SVGRectElement>;
   @ViewChild('yAxisGroupRightRectA', { static: true }) yAxisGroupRightRectARef!: ElementRef<SVGRectElement>;
-
+  @ViewChild('xAxisGroupBottomRectA', { static: true }) xAxisGroupBottomRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisLeftRectA', { static: true }) yAxisGroupLeftRectARef!: ElementRef<SVGRectElement>;
 
   gSectionA: any;
   gSectionB: any;
@@ -128,10 +127,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
-
-    this.layout.rectYaxisRightA = this.yAxisGroupRightRectARef.nativeElement;
     this.layout.rectXaxisTopA = this.xAxisGroupTopRectARef.nativeElement;
-    this.layout.rectXaxisBottomA = this.yAxisGroupLeftRectARef.nativeElement;
+    this.layout.rectYaxisRightA = this.yAxisGroupRightRectARef.nativeElement;
+    this.layout.rectXaxisBottomA = this.xAxisGroupBottomRectARef.nativeElement;
     this.layout.rectYaxisLeftA = this.yAxisGroupLeftRectARef.nativeElement;
 
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
@@ -140,7 +138,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectB = this.rectBref.nativeElement;
     this.layout.rectC = this.rectCref.nativeElement;
 
-    this.axes.gXaxisGroupTop = this.xAxisGroupTopRectARef;
+    this.axes.xAxisTop = this.xAxisGroupTopRectARef;
     this.axes.gXaxisGroupBottom = this.gXaxisGroupBottomRef;
     this.axes.gYaxisGroupLeft = this.gYaxisGroupLeftRef;
     this.axes.gYaxisGroupRight = this.yAxisGroupRightRectARef;

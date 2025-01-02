@@ -38,8 +38,9 @@ export class ChartLayoutService {
     //this.rectCandlestick.width = this.svgWidth;
 
     this.rectXaxisTopA.setAttribute('x', `${this.sectionA.margins.left}`);
-    this.rectXaxisTopA.setAttribute('width', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
-    this.rectXaxisTopA.setAttribute('height', `${this.sectionA.margins.bottom}`);
+    this.rectXaxisTopA.setAttribute('id', 'TopA');
+    this.rectXaxisTopA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
+    this.rectXaxisTopA.setAttribute('height', `${this.sectionA.margins.top}`);
     this.rectXaxisTopA.setAttribute('fill', 'yellow');
 
     this.rectYaxisRightA.setAttribute('x', `${-this.sectionA.width}`);
