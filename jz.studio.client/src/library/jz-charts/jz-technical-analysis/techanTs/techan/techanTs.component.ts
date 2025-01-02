@@ -128,10 +128,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
-    this.layout.rectYaxisLeftA = this.yAxisGroupLeftRectARef.nativeElement;
+
     this.layout.rectYaxisRightA = this.yAxisGroupRightRectARef.nativeElement;
-    this.layout.rectXaxisTopA = this.yAxisGroupLeftRectARef.nativeElement;
+    this.layout.rectXaxisTopA = this.xAxisGroupTopRectARef.nativeElement;
     this.layout.rectXaxisBottomA = this.yAxisGroupLeftRectARef.nativeElement;
+    this.layout.rectYaxisLeftA = this.yAxisGroupLeftRectARef.nativeElement;
 
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
 

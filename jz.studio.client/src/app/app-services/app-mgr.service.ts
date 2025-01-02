@@ -6,9 +6,6 @@ import { PaletteMgrService } from './palette-mgr.service';
   providedIn: 'root'
 })
 export class AppMgrService {
-
-
-
   constructor(
     private appEvents: AppEventsService,
     private paletteMgr: PaletteMgrService

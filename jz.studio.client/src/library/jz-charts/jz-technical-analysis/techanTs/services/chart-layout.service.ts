@@ -37,17 +37,24 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
 
+    this.rectXaxisTopA.setAttribute('x', `${-this.sectionA.margins.left}`);
+    this.rectXaxisTopA.setAttribute('width', `${this.sectionA.margins.left}`);
+    this.rectXaxisTopA.setAttribute('height', `${this.sectionA.margins.bottom}`);
+    this.rectXaxisTopA.setAttribute('fill', 'yellow');
+
+    this.rectYaxisRightA.setAttribute('x', `${-this.sectionA.width}`);
+    this.rectYaxisRightA.setAttribute('width', `${this.sectionA.margins.right}`);
+    this.rectYaxisRightA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
+
     this.rectXaxisBottomA.setAttribute('x', `${-this.sectionA.margins.left}`);
     this.rectXaxisBottomA.setAttribute('width', `${this.sectionA.margins.left}`);
     this.rectXaxisBottomA.setAttribute('height', `${this.sectionA.margins.bottom}`);
 
     this.rectYaxisLeftA.setAttribute('x', `${-this.sectionA.margins.left}`);
     this.rectYaxisLeftA.setAttribute('width',`${ this.sectionA.margins.left}`);
-    this.rectYaxisLeftA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
+    this.rectYaxisLeftA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
 
-    this.rectYaxisRightA.setAttribute('x', `${-this.sectionA.width}`);
-    this.rectYaxisRightA.setAttribute('width', `${this.sectionA.margins.right}`);
-    this.rectYaxisRightA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
+
 
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
