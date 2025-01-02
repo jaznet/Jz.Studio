@@ -37,8 +37,8 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     //this.rectCandlestick.width = this.svgWidth;
 
-    this.rectXaxisTopA.setAttribute('x', `${-this.sectionA.margins.left}`);
-    this.rectXaxisTopA.setAttribute('width', `${this.sectionA.margins.left}`);
+    this.rectXaxisTopA.setAttribute('x', `${this.sectionA.margins.left}`);
+    this.rectXaxisTopA.setAttribute('width', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
     this.rectXaxisTopA.setAttribute('height', `${this.sectionA.margins.bottom}`);
     this.rectXaxisTopA.setAttribute('fill', 'yellow');
 
