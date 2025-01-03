@@ -54,7 +54,11 @@ export class ChartLayoutService {
     this.rectXaxisBottomA.setAttribute('fill', 'white');
     this.rectXaxisBottomA.setAttribute('width', `${this.sectionA.width-this.sectionA.margins.left-this.sectionA.margins.right}`);
     this.rectXaxisBottomA.setAttribute('height', `${this.sectionA.margins.bottom}`);
-    this.rectXaxisBottomA.setAttribute('transform', "translate(`${this.sectionA.margins.left}`,0)");
+    this.rectXaxisBottomA.setAttribute(
+      'transform',
+      `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`
+    );
+
 
     this.rectYaxisLeftA.setAttribute('x', `${-this.sectionA.margins.left}`);
     this.rectYaxisLeftA.setAttribute('id', 'LeftA');
