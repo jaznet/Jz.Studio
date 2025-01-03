@@ -47,11 +47,16 @@ export class ChartLayoutService {
     this.rectYaxisRightA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.rectYaxisRightA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.bottom}`);
 
-    this.rectXaxisBottomA.setAttribute('x', `${-this.sectionA.margins.left}`);
-    this.rectXaxisBottomA.setAttribute('width', `${this.sectionA.margins.left}`);
+    this.rectXaxisBottomA.setAttribute('x', '0');
+    this.rectXaxisBottomA.setAttribute('id', 'BottomA');
+    this.rectXaxisBottomA.setAttribute('fill', 'white');
+    this.rectXaxisBottomA.setAttribute('width', `${this.sectionA.width-this.sectionA.margins.left-this.sectionA.margins.right}`);
     this.rectXaxisBottomA.setAttribute('height', `${this.sectionA.margins.bottom}`);
+    this.rectXaxisBottomA.setAttribute('transform', `translate(${this.sectionA.margins.left},0`);
 
     this.rectYaxisLeftA.setAttribute('x', `${-this.sectionA.margins.left}`);
+    this.rectYaxisLeftA.setAttribute('id', 'LeftA');
+    this.rectYaxisLeftA.setAttribute('fill', 'white');
     this.rectYaxisLeftA.setAttribute('width',`${ this.sectionA.margins.left}`);
     this.rectYaxisLeftA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
 
