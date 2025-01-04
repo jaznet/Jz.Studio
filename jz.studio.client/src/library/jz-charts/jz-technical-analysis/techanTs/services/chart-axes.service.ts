@@ -14,10 +14,10 @@ export class ChartAxesService {
   candlestickXaxis: any;
   candlestickYaxis: any;
 
-  xAxisTop!: Selection<any, unknown, null, undefined> | ElementRef<SVGRectElement>;
-  gXaxisGroupBottom: any;
-  gYaxisGroupLeft: any;
-  gYaxisGroupRight: any;
+  xAxisTop!: Selection<any, unknown, null, undefined> | ElementRef<SVGGElement>;
+  xAxisRight: any;
+  xAxisBottom: any;
+  xAxisLeft: any;
 
   constructor(
     private scales: ChartScalesService,
@@ -25,12 +25,13 @@ export class ChartAxesService {
 
   drawAxes(): void {
 
-    this.xAxisTop = select(this.gYaxisGroupRight.nativeElement);
-    this.gYaxisGroupRight = select(this.gYaxisGroupRight.nativeElement);
-    this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
-    this.gYaxisGroupLeft = select(this.gYaxisGroupLeft.nativeElement)
-      .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+    //this.xAxisTop = select(this.gYaxisGroupRight.nativeElement);
+    //this.gYaxisGroupRight = select(this.gYaxisGroupRight.nativeElement);
+    //this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
+    //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
+    //this.gYaxisGroupLeft = select(this.gYaxisGroupLeft.nativeElement)
+    //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
     // CANDLESTICK
@@ -39,8 +40,6 @@ export class ChartAxesService {
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
 
     this.candlestickYaxis = axisLeft(this.scales.candlestickYscale);
-
-
 
     //this.gXaxisGroupTop.call(this.candlestickXaxis.nativeElement);
     //this.gYaxisGroupRight.call(this.candlestickYaxis.nativeElement);
