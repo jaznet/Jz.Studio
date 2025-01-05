@@ -44,35 +44,33 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     this.rectCandlestick.setAttribute('width', this.svgWidth);
 
-    this.xAxisTopA.setAttribute('x', `${this.sectionA.margins.left}`);
+ // TOP
     this.xAxisTopA.setAttribute('id', 'TopA');
     this.xAxisTopA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
-    this.xAxisTopRectA.setAttribute('fill', 'yellow');
+    this.xAxisTopRectA.setAttribute('fill', '#69625d');
 
-    this.yAxisRightA.setAttribute('x', `${this.sectionA.width-this.sectionA.margins.right}`);
+    // RIGHT
     this.yAxisRightA.setAttribute('id', 'RightA');
-    this.yAxisRightA.setAttribute('fill', 'gold');
-    this.yAxisRightA.setAttribute('width', `${this.sectionA.margins.right}`);
-    this.yAxisRightA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
-
-    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
+    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.width-this.sectionA.margins.right},${this.sectionA.margins.top})`);
+    this.yAxisRightRectA.setAttribute('width', `${this.sectionA.margins.right}`);
+    this.yAxisRightRectA.setAttribute('height', `${ this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
+    this.yAxisRightRectA.setAttribute('fill', '#69625d');
 
     // BOLTTOM
-   // this.xAxisBottomA.setAttribute('x', '0');
     this.xAxisBottomA.setAttribute('id', 'BottomA');
-    this.xAxisBottomA.setAttribute('fill', 'white');
-    this.xAxisBottomA.setAttribute('width', `${this.sectionA.width-this.sectionA.margins.left-this.sectionA.margins.right}`);
-    this.xAxisBottomA.setAttribute('height', `${this.sectionA.margins.bottom}`);
-    this.xAxisBottomA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.height})`);
+    this.xAxisBottomA.setAttribute('transform', `translate(${this.sectionA.margins.left}, ${this.sectionA.height-this.sectionA.margins.bottom})`);
+    this.xAxisBottomRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
+    this.xAxisBottomRectA.setAttribute('height', `${this.sectionA.margins.bottom}`);
+    this.xAxisBottomRectA.setAttribute('fill', '#69625d');
 
     // LEFT
-    this.yAxisLeftA.setAttribute('x', `${-this.sectionA.margins.left}`);
     this.yAxisLeftA.setAttribute('id', 'LeftA');
-    this.yAxisLeftA.setAttribute('fill', 'white');
-    this.yAxisLeftA.setAttribute('width',`${ this.sectionA.margins.left}`);
-    this.yAxisLeftA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
+    this.yAxisLeftA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
+    this.yAxisLeftRectA.setAttribute('width', `${this.sectionA.margins.right}`);
+    this.yAxisLeftRectA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
+    this.yAxisLeftRectA.setAttribute('fill', '#69625d');
 
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);

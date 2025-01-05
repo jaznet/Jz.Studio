@@ -137,10 +137,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopRectA = this.xAxisTopRectARef.nativeElement;
     this.layout.yAxisRightA = this.yAxisRightARef.nativeElement;
-    
+    this.layout.yAxisRightRectA = this.yAxisRightRectARef.nativeElement; 
     this.layout.xAxisBottomA = this.xAxisBottomARef.nativeElement;
+    this.layout.xAxisBottomRectA = this.xAxisBottomRectARef.nativeElement;
     this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
-  
+    this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
 
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
 
@@ -149,7 +150,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectC = this.rectCref.nativeElement;
 
     this.axes.xAxisTop = this.xAxisTopARef;
-    this.axes.xAxisRight = this.yAxisRightRectARef;
+    this.axes.xAxisRight = this.yAxisRightARef;
     this.axes.xAxisBottom = this.xAxisBottomARef;
     this.axes.xAxisLeft = this.yAxisLeftARef;
 
