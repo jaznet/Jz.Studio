@@ -150,9 +150,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectC = this.rectCref.nativeElement;
 
     this.axes.xAxisTop = this.xAxisTopARef;
-    this.axes.xAxisRight = this.yAxisRightARef;
+    this.axes.yAxisRight = this.yAxisRightARef;
     this.axes.xAxisBottom = this.xAxisBottomARef;
-    this.axes.xAxisLeft = this.yAxisLeftARef;
+    this.axes.yAxisLeft = this.yAxisLeftARef;
 
   }
 

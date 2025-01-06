@@ -60,7 +60,6 @@ export class CandlestickChartComponent  {
         // Exit for wicks
         wicks.exit().remove();
 
-     
         const candle = selection.selectAll(".candle").data(parsedData);
         // Enter
         candle.enter()
