@@ -41,8 +41,8 @@ export class ChartAxesService {
 
     this.candlestickYaxis = axisRight(this.scales.candlestickYscale);
 
-    this.xAxisTop.call(this.candlestickXaxis);
-    this.yAxisRight.call(this.candlestickYaxis);
+/*    this.xAxisTop.call(this.candlestickXaxis);*/
+   // this.yAxisRight.call(this.candlestickYaxis);
     //this.gXaxisGroupBottom.call(this.candlestickXaxis.nativeElement);
     //this.gYaxisGroupLeft.call(this.candlestickYaxis.nativeElement);
   }
