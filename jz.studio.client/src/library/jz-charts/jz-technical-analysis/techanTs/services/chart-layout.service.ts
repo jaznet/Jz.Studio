@@ -46,7 +46,7 @@ export class ChartLayoutService {
 
  // TOP
     this.xAxisTopA.setAttribute('id', 'TopA');
-    this.xAxisTopA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
+    this.xAxisTopA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
     this.xAxisTopRectA.setAttribute('fill', '#69625d');
