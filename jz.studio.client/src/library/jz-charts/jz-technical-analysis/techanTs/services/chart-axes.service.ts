@@ -26,7 +26,7 @@ export class ChartAxesService {
   drawAxes(): void {
 
     this.xAxisTop = select(this.layout.xAxisTopA);
-    //this.gYaxisGroupRight = select(this.gYaxisGroupRight.nativeElement);
+    this.yAxisRight = select(this.layout.yAxisRightA);
     //this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
     //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     //this.gYaxisGroupLeft = select(this.gYaxisGroupLeft.nativeElement)
@@ -38,11 +38,11 @@ export class ChartAxesService {
     this.candlestickXaxis = axisTop(this.scales.candlestickXscale)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-    console.log(this.candlestickXaxis);
-    this.candlestickYaxis = axisLeft(this.scales.candlestickYscale);
-    console.log(this.candlestickYaxis);
+
+    this.candlestickYaxis = axisRight(this.scales.candlestickYscale);
+
     this.xAxisTop.call(this.candlestickXaxis);
-    //this.gYaxisGroupRight.call(this.candlestickYaxis.nativeElement);
+    this.yAxisRight.call(this.candlestickYaxis);
     //this.gXaxisGroupBottom.call(this.candlestickXaxis.nativeElement);
     //this.gYaxisGroupLeft.call(this.candlestickYaxis.nativeElement);
   }
