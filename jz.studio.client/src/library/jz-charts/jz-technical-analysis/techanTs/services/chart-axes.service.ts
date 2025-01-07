@@ -28,6 +28,7 @@ export class ChartAxesService {
 
     this.xAxisTop = select(this.layout.xAxisTopA);
     this.yAxisRight = select(this.layout.yAxisRightA);
+    this.xAxisBottom = select(this.layout.xAxisBottomA);
     //this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
     //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     this.yAxisLeft = select(this.layout.yAxisLeftA);

@@ -49,14 +49,11 @@ export class ChartLayoutService {
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
-    this.xAxisTopA.setAttribute('id', 'TopA');
-    this.xAxisTopA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
     this.xAxisTopRectA.setAttribute('fill', 'var(--plt-clr-4)');
-   
-/*    this.xAxisTopRectA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);*/
-
+    this.xAxisTopA.setAttribute('id', 'TopA');
+    this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
 
     // RIGHT
     this.yAxisRightA.setAttribute('id', 'RightA');
