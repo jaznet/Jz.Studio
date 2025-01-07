@@ -58,6 +58,7 @@ export class ChartLayoutService {
 
     // RIGHT
     this.yAxisRightA.setAttribute('id', 'RightA');
+/*    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);*/
     this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionA.width-this.sectionA.margins.right},${this.sectionA.margins.top})`);
     this.yAxisRightRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisRightRectA.setAttribute('height', `${ this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
@@ -72,7 +73,7 @@ export class ChartLayoutService {
 
     // LEFT
     this.yAxisLeftA.setAttribute('id', 'LeftA');
-    this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
+    this.yAxisLeftGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisLeftRectA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
     this.yAxisLeftRectA.setAttribute('fill', '#69625d');
