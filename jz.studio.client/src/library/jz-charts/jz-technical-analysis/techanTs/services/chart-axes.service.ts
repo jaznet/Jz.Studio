@@ -29,7 +29,7 @@ export class ChartAxesService {
     this.yAxisRight = select(this.layout.yAxisRightA);
     //this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
     //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
-    //this.gYaxisGroupLeft = select(this.gYaxisGroupLeft.nativeElement)
+    this.yAxisLeft = select(this.layout.yAxisLeftA);
     //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
@@ -44,6 +44,6 @@ export class ChartAxesService {
     this.xAxisTop.call(this.candlestickXaxis);
    // this.yAxisRight.call(this.candlestickYaxis);
     //this.gXaxisGroupBottom.call(this.candlestickXaxis.nativeElement);
-    //this.gYaxisGroupLeft.call(this.candlestickYaxis.nativeElement);
+    this.yAxisLeft.call(this.candlestickYaxis);
   }
 }
