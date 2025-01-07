@@ -47,14 +47,16 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     this.rectCandlestick.setAttribute('width', this.svgWidth);
 
- // TOP
+    // TOP
+    this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
     this.xAxisTopA.setAttribute('id', 'TopA');
     this.xAxisTopA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
-    this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
-/*    this.xAxisTopRectA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);*/
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
-    this.xAxisTopRectA.setAttribute('fill', '#69625d');
+    this.xAxisTopRectA.setAttribute('fill', 'var(--plt-clr-4)');
+   
+/*    this.xAxisTopRectA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);*/
+
 
     // RIGHT
     this.yAxisRightA.setAttribute('id', 'RightA');
