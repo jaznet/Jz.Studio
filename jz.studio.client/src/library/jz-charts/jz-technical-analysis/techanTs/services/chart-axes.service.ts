@@ -11,7 +11,8 @@ import { Selection } from 'd3-v4';
 })
 export class ChartAxesService {
 
-  candlestickXaxis: any;
+  candlestickXaxisTop: any;
+  candlestickXaxisBottom: any;
   candlestickYaxisLeft: any;
   candlestickYaxisRight: any;
 
@@ -37,17 +38,20 @@ export class ChartAxesService {
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
     // CANDLESTICK
-    this.candlestickXaxis = axisTop(this.scales.candlestickXscale)
+    this.candlestickXaxisTop = axisTop(this.scales.candlestickXscale)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
 
-    this.candlestickYaxisLeft = axisLeft(this.scales.candlestickYscale);
     this.candlestickYaxisRight = axisRight(this.scales.candlestickYscale);
+    this.candlestickXaxisBottom = axisBottom(this.scales.candlestickXscale)
+      .ticks(5)
+      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
+    this.candlestickYaxisLeft = axisLeft(this.scales.candlestickYscale);
 
-    this.xAxisTop.call(this.candlestickXaxis);
-  //  this.yAxisRight.call(this.candlestickYaxis);
-    //this.gXaxisGroupBottom.call(this.candlestickXaxis.nativeElement);
-    this.yAxisLeft.call(this.candlestickYaxisLeft);
+    this.xAxisTop.call(this.candlestickXaxisTop);
     this.yAxisRight.call(this.candlestickYaxisRight);
+    this.xAxisBottom.call(this.candlestickXaxisBottom);
+    this.yAxisLeft.call(this.candlestickYaxisLeft);
+
   }
 }
