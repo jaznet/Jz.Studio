@@ -48,11 +48,11 @@ export class ChartLayoutService {
 
  // TOP
     this.xAxisTopA.setAttribute('id', 'TopA');
-    this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
+/*    this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);*/
 /*    this.xAxisTopRectA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);*/
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
-/*    this.xAxisTopRectA.setAttribute('fill', '#69625d');*/
+    this.xAxisTopRectA.setAttribute('fill', '#69625d');
 
     // RIGHT
     this.yAxisRightA.setAttribute('id', 'RightA');
