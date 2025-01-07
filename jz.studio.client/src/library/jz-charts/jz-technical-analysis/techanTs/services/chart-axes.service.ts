@@ -30,10 +30,7 @@ export class ChartAxesService {
     this.xAxisTop = select(this.layout.xAxisTopA);
     this.yAxisRight = select(this.layout.yAxisRightA);
     this.xAxisBottom = select(this.layout.xAxisBottomA);
-    //this.gXaxisGroupBottom = select(this.gXaxisGroupBottom.nativeElement)
-    //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.height - this.layout.sectionA.margins.bottom})`);
     this.yAxisLeft = select(this.layout.yAxisLeftA);
-    //  .attr('transform', `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
@@ -41,7 +38,6 @@ export class ChartAxesService {
     this.candlestickXaxisTop = axisTop(this.scales.candlestickXscale)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-
     this.candlestickYaxisRight = axisRight(this.scales.candlestickYscale);
     this.candlestickXaxisBottom = axisBottom(this.scales.candlestickXscale)
       .ticks(5)

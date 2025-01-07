@@ -145,12 +145,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisRightGroupA = this.yAxisRightGroupARef.nativeElement;
     this.layout.yAxisRightRectA = this.yAxisRightRectARef.nativeElement;
 
-    this.layout.xAxisBottomA = this.xAxisBottomARef.nativeElement;
-    this.layout.xAxisBottomRectA = this.xAxisBottomRectARef.nativeElement;
-
     this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
     this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
     this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
+
+    this.layout.xAxisBottomA = this.xAxisBottomARef.nativeElement;
+    this.layout.xAxisBottomRectA = this.xAxisBottomRectARef.nativeElement;
 
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
 
