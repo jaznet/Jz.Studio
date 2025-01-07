@@ -31,6 +31,7 @@ export class ChartLayoutService {
   xAxisBottomRectA!: SVGRectElement;
 
   yAxisLeftA!: SVGGElement;
+  yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
 
   rectCandlestick: any;
@@ -68,7 +69,7 @@ export class ChartLayoutService {
 
     // LEFT
     this.yAxisLeftA.setAttribute('id', 'LeftA');
-    this.yAxisLeftA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
+    this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisLeftRectA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
     this.yAxisLeftRectA.setAttribute('fill', '#69625d');

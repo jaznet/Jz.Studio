@@ -16,32 +16,32 @@
       </g>
 
       // LEFT AXIS
-      <g  id="yAxisLeft" class="y-axis">
+      <g #yAxisLeftGroupA id="yAxisLeft" class="y-axis">
         <rect #yAxisLeftRectA width="0" height="0" fill="violet"></rect>
         <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
-        </g>
-
-        <!-- CANDLESTICK CHART -->
-        <g id="candlestick" #candlestick>
-          <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
-                x="0" y="0"
-                [attr.width]="161.8"
-                [attr.height]="100"
-                fill='var(--plt-clr-3'>
-          </rect>
-        </g>
-
-        // RIGHT AXIS
-        <g #yAxisRightA id="yAxisGroupRight" class="y-axis">
-          <rect #yAxisRightRectA width="0" height="0" fill="blue"></rect>
-        </g>
-
-        // BOTTOM AXIS
-        <g #xAxisBottomA class="x-axis" id="xAxisBottomA">
-          <rect #xAxisBottomRectA width="0" id="axisbottom" height="0" fill="orange"></rect>
-        </g>
-
       </g>
+
+      <!-- CANDLESTICK CHART -->
+      <g id="candlestick" #candlestick>
+        <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
+              x="0" y="0"
+              [attr.width]="161.8"
+              [attr.height]="100"
+              fill='var(--plt-clr-3'>
+        </rect>
+      </g>
+
+      // RIGHT AXIS
+      <g #yAxisRightA id="yAxisGroupRight" class="y-axis">
+        <rect #yAxisRightRectA width="0" height="0" fill="blue"></rect>
+      </g>
+
+      // BOTTOM AXIS
+      <g #xAxisBottomA class="x-axis" id="xAxisBottomA">
+        <rect #xAxisBottomRectA width="0" id="axisbottom" height="0" fill="orange"></rect>
+      </g>
+
+    </g>
     <!-- SECTION B -->
     <g id="sectionB" #sectionB>
       <text x="20" y="50%" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
