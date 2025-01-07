@@ -12,7 +12,8 @@ import { Selection } from 'd3-v4';
 export class ChartAxesService {
 
   candlestickXaxis: any;
-  candlestickYaxis: any;
+  candlestickYaxisLeft: any;
+  candlestickYaxisRight: any;
 
   xAxisTop!: any;
   yAxisRight: any;
@@ -39,11 +40,13 @@ export class ChartAxesService {
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
 
-    this.candlestickYaxis = axisRight(this.scales.candlestickYscale);
+    this.candlestickYaxisLeft = axisLeft(this.scales.candlestickYscale);
+    this.candlestickYaxisRight = axisRight(this.scales.candlestickYscale);
 
     this.xAxisTop.call(this.candlestickXaxis);
-   // this.yAxisRight.call(this.candlestickYaxis);
+  //  this.yAxisRight.call(this.candlestickYaxis);
     //this.gXaxisGroupBottom.call(this.candlestickXaxis.nativeElement);
-    this.yAxisLeft.call(this.candlestickYaxis);
+    this.yAxisLeft.call(this.candlestickYaxisLeft);
+    this.yAxisRight.call(this.candlestickYaxisRight);
   }
 }
