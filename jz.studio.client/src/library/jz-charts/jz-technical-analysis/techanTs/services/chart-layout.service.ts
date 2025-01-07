@@ -56,7 +56,6 @@ export class ChartLayoutService {
     this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
 
     // RIGHT
-
 /*    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);*/
     this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionA.width-this.sectionA.margins.right},${this.sectionA.margins.top})`);
     this.yAxisRightRectA.setAttribute('width', `${this.sectionA.margins.right}`);
@@ -64,7 +63,7 @@ export class ChartLayoutService {
     this.yAxisRightRectA.setAttribute('fill', '#69625d');
     this.yAxisRightA.setAttribute('id', 'RightA');
 
-    // BOLTTOM
+    // BOTTOM
     this.xAxisBottomA.setAttribute('id', 'BottomA');
     this.xAxisBottomA.setAttribute('transform', `translate(${this.sectionA.margins.left}, ${this.sectionA.height-this.sectionA.margins.bottom})`);
     this.xAxisBottomRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
@@ -72,12 +71,12 @@ export class ChartLayoutService {
     this.xAxisBottomRectA.setAttribute('fill', '#69625d');
 
     // LEFT
-
-    this.yAxisLeftGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},${this.sectionA.margins.top})`);
+    this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisLeftRectA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
     this.yAxisLeftRectA.setAttribute('fill', '#69625d');
     this.yAxisLeftA.setAttribute('id', 'LeftA');
+    this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
 
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
