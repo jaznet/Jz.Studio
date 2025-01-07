@@ -51,7 +51,7 @@ export class ChartLayoutService {
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
     this.xAxisTopRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisTopRectA.setAttribute('height', `${this.sectionA.margins.top}`);
-    this.xAxisTopRectA.setAttribute('fill', 'var(--plt-clr-4)');
+    this.xAxisTopRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.xAxisTopA.setAttribute('id', 'TopA');
     this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
 
@@ -60,7 +60,7 @@ export class ChartLayoutService {
     this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionA.width-this.sectionA.margins.right},${this.sectionA.margins.top})`);
     this.yAxisRightRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisRightRectA.setAttribute('height', `${ this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
-    this.yAxisRightRectA.setAttribute('fill', '#69625d');
+    this.yAxisRightRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisRightA.setAttribute('id', 'RightA');
 
     // BOTTOM
@@ -68,13 +68,13 @@ export class ChartLayoutService {
     this.xAxisBottomA.setAttribute('transform', `translate(${this.sectionA.margins.left}, ${this.sectionA.height-this.sectionA.margins.bottom})`);
     this.xAxisBottomRectA.setAttribute('width', `${this.sectionA.width - this.sectionA.margins.left - this.sectionA.margins.right}`);
     this.xAxisBottomRectA.setAttribute('height', `${this.sectionA.margins.bottom}`);
-    this.xAxisBottomRectA.setAttribute('fill', '#69625d');
+    this.xAxisBottomRectA.setAttribute('fill', 'var(--plt-clr-2)');
 
     // LEFT
     this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionA.margins.top})`);
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionA.margins.right}`);
     this.yAxisLeftRectA.setAttribute('height', `${this.sectionA.height - this.sectionA.margins.top - this.sectionA.margins.bottom}`);
-    this.yAxisLeftRectA.setAttribute('fill', '#69625d');
+    this.yAxisLeftRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisLeftA.setAttribute('id', 'LeftA');
     this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
 
