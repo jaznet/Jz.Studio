@@ -34,14 +34,7 @@ export class CandlestickChartComponent  {
         this._yScale = scale; // Assign scale to _yScale
         return this;
       },
-      test: function (section: any) {
-        const circle = section
-          .append('circle')
-          .attr('cx', 50)
-          .attr('cy', 50)
-          .attr('r', 10)
-          .attr('fill', 'blue');
-      },
+
       draw: (selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) => {
         // Draw wicks
         const wicks = selection.selectAll(".wick").data(parsedData);
