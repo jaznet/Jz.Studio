@@ -182,13 +182,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
     const candleWidth =
       this.scales.candlestickXscale(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.candlestickXscale(this.data.parsedData[0].date);
+
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     const candlestick = new CandlestickChartComponent(this.gCandlestick);
-    const plot = candlestick.plot.candlestick();
-    plot.section = this.gCandlestick;
-    plot.xScale(this.scales.candlestickXscale).yScale(this.scales.candlestickYscale);
-    plot.draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
+    candlestick
+      .xScale(this.scales.candlestickXscale)
+      .yScale(this.scales.candlestickYscale)
+      .draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
+
   }
 }
