@@ -190,6 +190,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     candlestick
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
+      .setCandleWidth()
       .draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
 
   }

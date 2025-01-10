@@ -4,6 +4,7 @@ import { select } from 'd3-selection';
 export class CandlestickChartComponent {
   private _xScale: any;
   private _yScale: any;
+  candleWidth = 10;
 
   constructor(private section: any) {
     console.log(section);
@@ -19,7 +20,9 @@ export class CandlestickChartComponent {
     return this;
   }
 
-  public setCandleWidth() { }
+  public setCandleWidth() {
+    return this;
+}
 
   public draw(selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
     const wicks = selection.selectAll(".wick").data(parsedData);
