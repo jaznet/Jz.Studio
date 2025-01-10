@@ -34,4 +34,3 @@ export class ChartDataService {
     console.log('Date Extent:', this.dateExtent);
   }
 }
-2wq

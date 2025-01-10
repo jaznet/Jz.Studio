@@ -19,6 +19,8 @@ export class CandlestickChartComponent {
     return this;
   }
 
+  public setCandleWidth() { }
+
   public draw(selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
     const wicks = selection.selectAll(".wick").data(parsedData);
 
