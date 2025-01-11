@@ -24,15 +24,15 @@ export class CandlestickChartComponent {
     return this;
 }
 
-  public draw(selection: any, data: CandlestickData[], candleWidth: any, parsedData: any) {
+  public draw(selection: any, data: CandlestickData[],  parsedData: any) {
     const wicks = selection.selectAll(".wick").data(parsedData);
 
     wicks.enter()
       .append("line")
       .attr("class", "wick")
       .merge(wicks)
-      .attr("x1", (d: CandlestickData) => this._xScale(d.date)! + candleWidth / 2)
-      .attr("x2", (d: CandlestickData) => this._xScale(d.date)! + candleWidth / 2)
+      .attr("x1", (d: CandlestickData) => this._xScale(d.date)! + this.candleWidth / 2)
+      .attr("x2", (d: CandlestickData) => this._xScale(d.date)! + this.candleWidth / 2)
       .attr("y1", (d: CandlestickData) => this._yScale(d.high))
       .attr("y2", (d: CandlestickData) => this._yScale(d.low))
       .attr("stroke", "#52aa8a")
@@ -48,7 +48,7 @@ export class CandlestickChartComponent {
       .merge(candle)
       .attr("x", (d: CandlestickData) => this._xScale(d.date) ?? 0)
       .attr("y", (d: CandlestickData) => this._yScale(Math.max(d.open, d.close)))
-      .attr("width", candleWidth)
+      .attr("width", this.candleWidth)
       .attr("height", (d: CandlestickData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
       .attr("fill", (d: CandlestickData) => d.open > d.close ? "#bf211e" : "seagreen");
 

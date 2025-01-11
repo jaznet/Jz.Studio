@@ -170,18 +170,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    // Calculate the width of each candlestick
-    const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {
-      if (i === 0) return 0; // No interval for the first data point
-      return this.data.parsedData[i].date.getTime() - this.data.parsedData[i - 1].date.getTime();
-    }).filter((interval: number) => interval > 0); // Remove the first zero interval
-
-    const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
-    const timeDiff = this.data.parsedData.length > 1
-      ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
-      : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
-    const candleWidth =
-      this.scales.candlestickXscale(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.candlestickXscale(this.data.parsedData[0].date);
+  
 
     this.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
@@ -191,7 +180,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
       .setCandleWidth()
-      .draw(this.gCandlestick, this.data.stockPriceHistoryData, candleWidth, this.data.parsedData);
+      .draw(this.gCandlestick, this.data.stockPriceHistoryData,  this.data.parsedData);
 
   }
 }
