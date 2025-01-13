@@ -36,7 +36,8 @@ export class ChartLayoutService {
   yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
 
-  rectCandlestick: any;
+  rectCandlestick!: SVGRectElement;
+  rectVolume!: SVGRectElement;
 
   constructor() { }
 
@@ -45,7 +46,7 @@ export class ChartLayoutService {
     let bbox = this.rectA.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
-    this.rectCandlestick.setAttribute('width', this.svgWidth);
+    this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
@@ -78,8 +79,8 @@ export class ChartLayoutService {
     this.yAxisLeftA.setAttribute('id', 'LeftA');
     this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
 
-    this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
-    this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
+    this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right).toString());
+    this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom).toString());
 
     // SECTION A-1
 

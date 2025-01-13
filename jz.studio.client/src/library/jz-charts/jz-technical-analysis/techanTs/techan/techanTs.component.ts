@@ -19,6 +19,7 @@ import { ChartAxesService } from '../services/chart-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { CandlestickChartService } from '../services/candlestick-chart.service';
+import { VolumeChartService } from '../services/charts/volume-chart.service';
 
 export interface range {
   start: number;
@@ -48,8 +49,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
  
-  @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
-  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -76,9 +76,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
 
+  // CANDLESTICK
+  @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
+  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+
   // VOLUME GROUP
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('volumeGroupRect', { static: true }) volumeRectRef!: ElementRef<SVGGElement>;
+  @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGGElement>;
 
   gSectionA: any;
   gSectionB: any;
@@ -96,6 +100,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,
     private candlestickChart: CandlestickChartService,
+    private volumeChart: VolumeChartService
    )  { }
 
   ngOnInit(): void {  }
@@ -169,6 +174,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.yAxisLeft = this.yAxisLeftARef;
 
     this.candlestickChart.gCandlestick = this.gCandlestickRef;
+
+  /*  this.volumeChart.*/
   }
 
   constructChart(): void {
