@@ -18,6 +18,7 @@ import { ChartLayoutService } from '../services/chart-layout.service';
 import { ChartAxesService } from '../services/chart-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
+import { CandlestickChartService } from '../services/candlestick-chart.service';
 
 export interface range {
   start: number;
@@ -89,7 +90,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private layout: ChartLayoutService,
     private axes: ChartAxesService,
     private scales:ChartScalesService,
-    private popOverService: JzPopOversService)
+    private popOverService: JzPopOversService,
+    private candlestickChart: CandlestickChartService
+   )
+    
   {
   }
 
@@ -163,6 +167,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.xAxisBottom = this.xAxisBottomARef;
     this.axes.yAxisLeft = this.yAxisLeftARef;
 
+    this.candlestickChart.gCandlestick = this.gCandlestickRef;
   }
 
   constructChart(): void {
@@ -172,15 +177,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawCandlestick(): void {
   
 
-    this.gCandlestick = select(this.gCandlestickRef.nativeElement)
+    this.candlestickChart.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
-    const candlestick = new CandlestickChartComponent(this.gCandlestick);
-    candlestick
+    /* const candlestick = new CandlestickChartComponent(this.gCandlestick);*/
+   /* const candleStickChart = new CandlestickChartComponent();*/
+   this.candlestickChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
       .setCandleWidth()
-      .draw(this.gCandlestick, this.data.stockPriceHistoryData,  this.data.parsedData);
+      .draw();
 
   }
 }

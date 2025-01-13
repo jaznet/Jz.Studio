@@ -1,13 +1,17 @@
 import { CandlestickData } from '../../interfaces/techan-interfaces';
 import { select } from 'd3-selection';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ChartScalesService } from '../../services/chart-scales.service';
 
 export class CandlestickChartComponent {
   private _xScale: any;
   private _yScale: any;
   candleWidth = 10;
+  gCandlestick: any;
 
-  constructor(private section: any) {
-    console.log(section);
+  constructor( //private section: any,
+    private data: ChartDataService,
+   private scales: ChartScalesService) {
   }
 
   public xScale(scale: any) {
@@ -21,11 +25,24 @@ export class CandlestickChartComponent {
   }
 
   public setCandleWidth() {
+    // Calculate the width of each candlestick
+    const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {
+      if (i === 0) return 0; // No interval for the first data point
+      return this.data.parsedData[i].date.getTime() - this.data.parsedData[i - 1].date.getTime();
+    }).filter((interval: number) => interval > 0); // Remove the first zero interval
+
+    const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
+    const timeDiff = this.data.parsedData.length > 1
+      ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
+      : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
+    const candleWidth =
+      this.scales.candlestickXscale(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.candlestickXscale(this.data.parsedData[0].date);
     return this;
 }
 
-  public draw(selection: any, data: CandlestickData[],  parsedData: any) {
-    const wicks = selection.selectAll(".wick").data(parsedData);
+  /*public draw(selection: any, data: CandlestickData[],  parsedData: any) {*/
+  public draw() {
+    const wicks = this.gCandlestick.selectAll(".wick").data(this.data.parsedData);
 
     wicks.enter()
       .append("line")
@@ -40,7 +57,7 @@ export class CandlestickChartComponent {
 
     wicks.exit().remove();
 
-    const candle = selection.selectAll(".candle").data(parsedData);
+    const candle = this.gCandlestick.selectAll(".candle").data(this.data.parsedData);
 
     candle.enter()
       .append("rect")
