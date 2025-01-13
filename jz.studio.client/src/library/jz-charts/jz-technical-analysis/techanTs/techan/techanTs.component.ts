@@ -76,6 +76,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
 
+  // VOLUME GROUP
+  @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('volumeGroupRect', { static: true }) volumeRectRef!: ElementRef<SVGGElement>;
+
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
@@ -91,11 +95,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private axes: ChartAxesService,
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,
-    private candlestickChart: CandlestickChartService
-   )
-    
-  {
-  }
+    private candlestickChart: CandlestickChartService,
+   )  { }
 
   ngOnInit(): void {  }
 
@@ -175,8 +176,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-  
-
     this.candlestickChart.gCandlestick = select(this.gCandlestickRef.nativeElement)
       .attr("class", "candlestick")
       .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);

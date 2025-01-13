@@ -81,6 +81,9 @@ export class ChartLayoutService {
     this.rectCandlestick.setAttribute('width', this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right);
     this.rectCandlestick.setAttribute('height', (this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom);
 
+    // SECTION A-1
+
+
     // SECTION B
     bbox = this.rectB.getBBox();
     this.sectionB.width = bbox.width;
