@@ -12,7 +12,7 @@ export class CandlestickChartService {
   private _xScale: any;
   private _yScale: any;
   private _candleWidth: number = 0;
-    gCandlestick: any;
+  gCandlestick: any;
 
   constructor(
     private scales: ChartScalesService,
