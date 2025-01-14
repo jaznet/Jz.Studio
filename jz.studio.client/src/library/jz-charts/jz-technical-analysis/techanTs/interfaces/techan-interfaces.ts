@@ -16,9 +16,12 @@ export interface SectionAttributes {
 }
 
 export interface CandlestickData {
+  timestamp: Date;
+  ticker: string;
   date: Date;
   open: number;
   high: number;
   low: number;
   close: number;
+  volume: number;
 }

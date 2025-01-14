@@ -59,16 +59,16 @@ export class VolumeChartService {
     const volumeBars = this.gVolume.selectAll('.volume-bar').data(parsedData);
 
     // Enter
-    //  volumeBars
-    //    .enter()
-    //    .append('rect')
-    //    .attr('class', 'volume-bar')
-    //    .merge(volumeBars)
-    //    .attr('x', (d: CandlestickData) => this._xScale(d.date) ?? 0)
-    //    .attr('y', (d: CandlestickData) => this._yScale(d.volume))
-    //    .attr('width', this._barWidth)
-    //    .attr('height', (d: CandlestickData) => this._yScale(0) - this._yScale(d.volume))
-    //    .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
+      volumeBars
+        .enter()
+        .append('rect')
+        .attr('class', 'volume-bar')
+        .merge(volumeBars)
+        .attr('x', (d: CandlestickData) => this._xScale(d.date) ?? 0)
+        .attr('y', (d: CandlestickData) => this._yScale(d.volume))
+        .attr('width', this._barWidth)
+        .attr('height', (d: CandlestickData) => this._yScale(0) - this._yScale(d.volume))
+        .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
     //  // Exit
     //  volumeBars.exit().remove();
