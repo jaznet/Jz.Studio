@@ -46,7 +46,7 @@ export class ChartLayoutService {
     let bbox = this.rectA.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
-    this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
+  //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
@@ -81,6 +81,9 @@ export class ChartLayoutService {
 
     this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right).toString());
     this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom).toString());
+    this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right).toString());
+    console.log('volume', this.rectCandlestick.height);
+    this.rectVolume.setAttribute('height', ((this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom).toString());
 
     // SECTION A-1
 
