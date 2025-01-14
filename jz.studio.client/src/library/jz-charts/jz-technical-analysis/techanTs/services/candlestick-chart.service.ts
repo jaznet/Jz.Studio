@@ -29,6 +29,10 @@ export class CandlestickChartService {
     return this; // Allows method chaining
   }
 
+  public setTargetGroup() {
+    return this;
+  }
+
   public setCandleWidth() {
     // Calculate the width of each candlestick
     const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {

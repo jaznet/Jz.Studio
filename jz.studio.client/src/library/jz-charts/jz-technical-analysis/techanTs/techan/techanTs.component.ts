@@ -188,9 +188,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     /* const candlestick = new CandlestickChartComponent(this.gCandlestick);*/
    /* const candleStickChart = new CandlestickChartComponent();*/
-   this.candlestickChart
+    this.candlestickChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
+      .setTargetGroup()
       .setCandleWidth()
       .draw();
 
