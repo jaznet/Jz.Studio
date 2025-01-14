@@ -83,6 +83,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // VOLUME GROUP
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGGElement>;
+  @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
   gSectionA: any;
   gSectionB: any;
@@ -196,7 +197,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.volumeChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup(this.volumeGroupRef.nativeElement)
+      .setTargetGroup(this.volumeChartRef.nativeElement)
       .setBarWidth()
       .draw();
   }
