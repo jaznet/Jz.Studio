@@ -4,6 +4,7 @@ import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartScalesService } from '../chart-scales.service';
 import { CandlestickData } from '../../interfaces/techan-interfaces';
+import { ChartLayoutService } from '../chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class VolumeChartService {
 
   constructor(
     private scales: ChartScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+  private layout: ChartLayoutService
   ) { }
 
   public xScale(scale: any): this {
@@ -27,6 +29,13 @@ export class VolumeChartService {
   public yScale(scale: any): this {
     this._yScale = scale;
     return this; // Enables method chaining
+  }
+
+  public setTargetGroup(gTargetRef: any) {
+    this.gVolume = select(gTargetRef)
+      .attr("class", "candlestick")
+      .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+    return this;
   }
 
   public setBarWidth(): this {
@@ -42,8 +51,8 @@ export class VolumeChartService {
     return this; // Enables method chaining
   }
 
-  public draw(gVolume: any): void {
-    this.gVolume = gVolume;
+  public draw(): void {
+   // this.gVolume = gVolume;
 
     const parsedData = this.data.parsedData;
 

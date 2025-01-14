@@ -180,18 +180,24 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   constructChart(): void {
     this.drawCandlestick();
+    this.drawVolume();
   }
 
   drawCandlestick(): void {
-
-    /* const candlestick = new CandlestickChartComponent(this.gCandlestick);*/
-   /* const candleStickChart = new CandlestickChartComponent();*/
     this.candlestickChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.gCandlestickRef.nativeElement)
       .setCandleWidth()
       .draw();
+  }
 
+  drawVolume(): void {
+    this.volumeChart
+      .xScale(this.scales.candlestickXscale)
+      .yScale(this.scales.candlestickYscale)
+      .setTargetGroup(this.volumeGroupRef.nativeElement)
+      .setBarWidth()
+      .draw();
   }
 }
