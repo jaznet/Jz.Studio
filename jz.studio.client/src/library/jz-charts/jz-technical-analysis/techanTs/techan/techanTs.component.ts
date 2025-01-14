@@ -198,7 +198,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.volumeChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup(this.volumeChartRef.nativeElement)
+      .setTargetGroup(this.volumeGroupRef.nativeElement)
       .setBarWidth()
       .draw();
   }
