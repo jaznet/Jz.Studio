@@ -183,15 +183,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    this.candlestickChart.gCandlestick = select(this.gCandlestickRef.nativeElement)
-      .attr("class", "candlestick")
-      .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+
     /* const candlestick = new CandlestickChartComponent(this.gCandlestick);*/
    /* const candleStickChart = new CandlestickChartComponent();*/
     this.candlestickChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup()
+      .setTargetGroup(this.gCandlestickRef.nativeElement)
       .setCandleWidth()
       .draw();
 

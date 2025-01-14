@@ -4,6 +4,7 @@ import { ChartScalesService } from './chart-scales.service';
 import { ChartDataService } from './chart-data.service';
 import { select } from 'd3-selection';
 import { CandlestickData } from '../interfaces/techan-interfaces';
+import { ChartLayoutService } from './chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class CandlestickChartService {
 
   constructor(
     private scales: ChartScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private layout: ChartLayoutService
   ) { }
 
   public xScale(scale: any) {
@@ -29,7 +31,10 @@ export class CandlestickChartService {
     return this; // Allows method chaining
   }
 
-  public setTargetGroup() {
+  public setTargetGroup(gTargetRef: any) {
+    this.gCandlestick = select(gTargetRef)
+      .attr("class", "candlestick")
+      .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
     return this;
   }
 
