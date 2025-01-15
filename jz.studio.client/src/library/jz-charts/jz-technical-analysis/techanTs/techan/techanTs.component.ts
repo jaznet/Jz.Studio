@@ -48,7 +48,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('svgrect', { static: true }) svgRectElementRef!: ElementRef<SVGRectElement>;
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
- 
 
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
@@ -75,6 +74,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
+
+  // BODY
+  @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>; 
 
   // CANDLESTICK
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
@@ -147,6 +149,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svg = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+
+    this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
 
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;

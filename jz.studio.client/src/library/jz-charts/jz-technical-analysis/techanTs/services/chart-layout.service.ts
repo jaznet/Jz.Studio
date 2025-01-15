@@ -15,6 +15,7 @@ export class ChartLayoutService {
   svgRectHeight = 0;
 
   sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  sectionAcontent!: SVGGElement;;
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
@@ -47,7 +48,8 @@ export class ChartLayoutService {
     let bbox = this.rectA.getBBox();
     this.sectionA.width = bbox.width;
     this.sectionA.height = bbox.height;
-  //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
+    //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
+    this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
