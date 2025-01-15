@@ -33,8 +33,7 @@ export class VolumeChartService {
 
   public setTargetGroup(gTargetRef: any) {
     this.gVolume = select(gTargetRef)
-      .attr("class", "candlestick")
-      ;
+      .attr("class", "candlestick")  ;
     return this;
   }
 

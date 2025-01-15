@@ -15,7 +15,8 @@ export class ChartLayoutService {
   svgRectHeight = 0;
 
   sectionA: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
-  sectionAcontent!: SVGGElement;;
+  sectionAcontent!: SVGGElement;
+  sectionAvolume!: SVGGElement;
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
@@ -50,6 +51,8 @@ export class ChartLayoutService {
     this.sectionA.height = bbox.height;
     //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
     this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
+    console.log('sectionAcontent', this.sectionAcontent.getBBox());
+    this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontent.getBBox().height})`);
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);

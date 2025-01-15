@@ -53,6 +53,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
+  // BODY
+  @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>;
+  @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
+
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
   @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
 
@@ -75,15 +79,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
 
-  // BODY
-  @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>; 
-
   // CANDLESTICK
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
   @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
 
   // VOLUME GROUP
-  @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
@@ -151,6 +151,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
+    this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
 
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
