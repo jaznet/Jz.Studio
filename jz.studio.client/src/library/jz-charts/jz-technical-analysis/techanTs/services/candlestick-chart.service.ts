@@ -33,8 +33,7 @@ export class CandlestickChartService {
 
   public setTargetGroup(gTargetRef: any) {
     this.gCandlestick = select(gTargetRef)
-      .attr("class", "candlestick")
-      .attr("transform", `translate(${this.layout.sectionA.margins.left},${this.layout.sectionA.margins.top})`);
+      .attr("class", "candlestick");
     return this;
   }
 

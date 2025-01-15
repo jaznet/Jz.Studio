@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SectionAttributes } from '../interfaces/techan-interfaces';
+import { CandlestickChartService } from './candlestick-chart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -79,11 +80,14 @@ export class ChartLayoutService {
     this.yAxisLeftA.setAttribute('id', 'LeftA');
     this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);
 
+    //BODY
     this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right).toString());
     this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionA.margins.top - this.sectionA.margins.bottom).toString());
     this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionA.margins.left - this.sectionA.margins.right).toString());
     console.log('volume', this.rectCandlestick.height);
-    this.rectVolume.setAttribute('height', (this.sectionA.height * .2) .toString());
+    this.rectVolume.setAttribute('height', (this.sectionA.height * .2).toString());
+
+/*    this.candlestick.gCandlestick.setAttribute('transform', `translate(${this.sectionA.margins.left, this.sectionA.margins.right})`);*/
 
     // SECTION A-1
 
