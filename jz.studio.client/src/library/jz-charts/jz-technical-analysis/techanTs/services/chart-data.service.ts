@@ -11,6 +11,7 @@ export class ChartDataService {
   dateExtent!: [undefined, undefined] | [Date, Date];
   minPrice: number | undefined;
   maxPrice: number | undefined;
+  maxVolume: number | undefined;
   parsedData!: any[];
 
   constructor() { }
@@ -19,18 +20,23 @@ export class ChartDataService {
     const priceValues = this.stockPriceHistoryData.map(d => [d.open, d.high, d.low, d.close]).flat();
     this.minPrice = min(priceValues);
     this.maxPrice = max(priceValues);
+
+    // Calculate the maximum volume
+    this.maxVolume = max(this.stockPriceHistoryData, d => d.volume); // Assuming `volume` is a property in your data
+
     this.parsedData = this.stockPriceHistoryData.map(d => ({
       ...d,
       date: new Date(d.date) // Convert date string to Date object
     }));
 
-    // Assuming data is an array of objects with a 'date' property as a string
+    // Filter out invalid dates
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
 
-    this.dateExtent = extent(this.parsedData, (d: CandlestickData) => {
-      return d.date;
-    });
+    // Calculate date extent
+    this.dateExtent = extent(this.parsedData, (d: CandlestickData) => d.date);
 
     console.log('Date Extent:', this.dateExtent);
+    console.log('Maximum Volume:', this.maxVolume);
   }
+
 }
