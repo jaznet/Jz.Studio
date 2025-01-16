@@ -133,13 +133,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  createChart(): void {
-  
-    //this.candlestick.plot.candlestick();
+  createChart(): void {  
     this.sizeChartFramework();
     this.layout.createSections();
     this.data.scrubData();
-  
     this.scales.createScales();
     this.axes.drawAxes();
     this.constructChart();
@@ -150,6 +147,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
 
+    this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
     
