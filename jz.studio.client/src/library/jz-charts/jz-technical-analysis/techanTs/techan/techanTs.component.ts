@@ -152,7 +152,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
-
+    
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
     this.layout.xAxisTopRectA = this.xAxisTopRectARef.nativeElement;
@@ -202,7 +202,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawVolume(): void {
     this.volumeChart
       .xScale(this.scales.candlestickXscale)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.volumeYscale)
       .setTargetGroup(this.volumeGroupRef.nativeElement)
       .setBarWidth()
       .draw();
