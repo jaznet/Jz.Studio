@@ -53,7 +53,7 @@ export class ChartLayoutService {
     //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
     this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     console.log('sectionAcontent', this.sectionAcontent.getBBox());
-   //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontent.getBBox().height})`);
+   this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontent.getBBox().height*.8})`);
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);

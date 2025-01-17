@@ -3,12 +3,12 @@
   <div class="grid-row-fixed" style="color:antiquewhite">techanTs</div>
 
   <svg class="grid-row-fill" #svg id="svg">
-    <!-- SECTION A -->
-    <rect #svgrect id="svgrect" class="svgrect" x="0" y="0" width="0" height="0"></rect>
 
+    <rect #svgrect id="svgrect" class="svgrect" x="0" y="0" width="0" height="0"></rect>
+    <!-- SECTION A -->
     <g id="sectionA" #sectionA>
       <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="12" fill="black" font-weight="bold">Section A</text>
-      <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" fill="var(--plt-clr-2)" style="stroke:hotpink"></rect>
+      <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%"></rect>
 
       <g #candlestickChart>
         // TOP AXIS
@@ -35,20 +35,22 @@
         </g>
 
         <!-- CANDLESTICK CHART -->
-        <g #sectionAcontent>
-          <g #candlestick id="candlestick">
-            <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
-                  x="0" y="0"
-                  [attr.width]="0"
-                  [attr.height]="0"
-                  fill='var(--plt-clr-3'>
-            </rect>
-          </g>
+        <g #sectionAcontent id="sectionAcontent">
           <!-- Section A-1 Volume Chart -->
           <g #volumeGroup id="volumeGroup">
             <rect #volumeRect width="100%" height="20%" stroke="white" fill="#466056"></rect>
             <g #volumeChart id="volumeChart"></g>
           </g>
+          <g #candlestick id="candlestick">
+            <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
+                  x="0" y="0"
+                  [attr.width]="0"
+                  [attr.height]="0"
+                  fill="transparent">
+                  <!--fill='var(--plt-clr-3'>-->
+            </rect>
+          </g>
+
         </g>
       </g>
 
