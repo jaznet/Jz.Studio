@@ -55,6 +55,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
   // BODY
   @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionAcontentRect', { static: true }) sectionAcontentRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
@@ -149,6 +150,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
+    this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
