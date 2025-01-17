@@ -52,9 +52,11 @@ export class ChartLayoutService {
     this.sectionAattributes.width = bbox.width;
     this.sectionAattributes.height = bbox.height;
     //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
+    this.sectionAcontentRect.setAttribute('width', `${this.sectionAattributes.width-this.sectionAattributes.margins.left-this.sectionAattributes.margins.right}`);
+    this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height-this.sectionAattributes.margins.top-this.sectionAattributes.margins.bottom}`);
     this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
-    console.log('sectionAcontent', this.sectionAcontent.getBBox().height);
-   this.sectionAvolume.setAttribute('transform', `translate(0,320)`);
+    console.log('sectionAcontent', this.sectionAcontentRect.getBBox().height);
+    this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height*.8})`);
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
