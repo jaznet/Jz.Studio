@@ -51,12 +51,18 @@ export class ChartLayoutService {
     let bbox = this.rectA.getBBox();
     this.sectionAattributes.width = bbox.width;
     this.sectionAattributes.height = bbox.height;
+    //BODY
+    this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
+    this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom).toString());
+    this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
+    console.log('volume', this.rectCandlestick.height);
+    this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
     //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
     this.sectionAcontentRect.setAttribute('width', `${this.sectionAattributes.width-this.sectionAattributes.margins.left-this.sectionAattributes.margins.right}`);
     this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height-this.sectionAattributes.margins.top-this.sectionAattributes.margins.bottom}`);
     this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
-    console.log('sectionAcontent', this.sectionAcontentRect.getBBox().height);
-    this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height*.8-13})`);
+    console.log('sectionAcontent', this.rectVolume.getBBox().height);
+    this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);
 
     // TOP
     this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
@@ -89,12 +95,7 @@ export class ChartLayoutService {
     this.yAxisLeftA.setAttribute('id', 'LeftA');
     this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
 
-    //BODY
-    this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
-    this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom).toString());
-    this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
-    console.log('volume', this.rectCandlestick.height);
-    this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
+
 
 /*    this.candlestick.gCandlestick.setAttribute('transform', `translate(${this.sectionA.margins.left, this.sectionA.margins.right})`);*/
 
