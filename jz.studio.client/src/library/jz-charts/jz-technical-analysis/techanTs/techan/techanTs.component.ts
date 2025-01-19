@@ -13,9 +13,9 @@ import { ChartLayoutService } from '../services/chart-layout.service';
 import { ChartAxesService } from '../services/chart-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
-import { CandlestickChartService } from '../services/candlestick-chart.service';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
-
+import { CandlestickChartService } from '../services/charts/candlestick-chart.service';
+CandlestickChartService
 export interface range {
   start: number;
   end: number;

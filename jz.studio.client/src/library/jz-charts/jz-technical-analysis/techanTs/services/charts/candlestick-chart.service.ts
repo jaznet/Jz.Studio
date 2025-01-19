@@ -1,10 +1,10 @@
 
 import { Injectable } from '@angular/core';
-import { ChartScalesService } from './chart-scales.service';
-import { ChartDataService } from './chart-data.service';
+import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
-import { CandlestickData } from '../interfaces/techan-interfaces';
-import { ChartLayoutService } from './chart-layout.service';
+import { ChartLayoutService } from '../chart-layout.service';
+import { ChartScalesService } from '../chart-scales.service';
+import { CandlestickData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',

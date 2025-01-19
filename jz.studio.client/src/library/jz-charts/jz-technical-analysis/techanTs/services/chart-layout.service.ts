@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SectionAttributes } from '../interfaces/techan-interfaces';
-import { CandlestickChartService } from './candlestick-chart.service';
 
 @Injectable({
   providedIn: 'root'

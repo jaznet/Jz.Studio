@@ -38,5 +38,4 @@ export class ChartDataService {
     console.log('Date Extent:', this.dateExtent);
     console.log('Maximum Volume:', this.maxVolume);
   }
-
 }
