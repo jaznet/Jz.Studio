@@ -1,22 +1,82 @@
 import { Injectable } from '@angular/core';
+import { select } from 'd3-selection';
+import { line } from 'd3-shape';
+import { ChartDataService } from '../chart-data.service';
+import { ChartLayoutService } from '../chart-layout.service';
+import { ChartScalesService } from '../chart-scales.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SmaChartService {
-  calculateSma(data: { close: number }[], windowSize: number): { date: Date; value: number }[] {
-    if (!data || data.length < windowSize) return [];
+  private _xScale: any;
+  private _yScale: any;
+  private gSma: any;
+  private windowSize: number = 10; // Default SMA window size
 
-    const smaValues = [];
-    for (let i = 0; i <= data.length - windowSize; i++) {
-      const windowData = data.slice(i, i + windowSize);
-      const average =
-        windowData.reduce((sum, point) => sum + point.close, 0) / windowSize;
+  constructor(
+    private scales: ChartScalesService,
+    private data: ChartDataService,
+    private layout: ChartLayoutService
+  ) { }
+
+  public xScale(scale: any): this {
+    this._xScale = scale;
+    return this; // Enables method chaining
+  }
+
+  public yScale(scale: any): this {
+    this._yScale = scale;
+    return this; // Enables method chaining
+  }
+
+  public setTargetGroup(gTargetRef: any): this {
+    this.gSma = select(gTargetRef).attr('class', 'sma-chart');
+    return this;
+  }
+
+  public setWindowSize(size: number): this {
+    this.windowSize = size;
+    return this;
+  }
+
+  private calculateSma(data: { date: Date; close: number }[]): { date: Date; value: number }[] {
+    if (!data || data.length < this.windowSize) return [];
+
+    const smaValues: { date: Date; value: number }[] = [];
+    for (let i = 0; i <= data.length - this.windowSize; i++) {
+      const windowData = data.slice(i, i + this.windowSize);
+      const average = windowData.reduce((sum, point) => sum + point.close, 0) / this.windowSize;
       smaValues.push({
-        date: new Date(data[i + windowSize - 1].date),
+        date: windowData[this.windowSize - 1].date, // The last date in the current window
         value: average,
       });
     }
     return smaValues;
+  }
+
+  public draw(): void {
+    // Calculate the SMA data
+    const smaData = this.calculateSma(this.data.parsedData);
+
+    // Define the line generator
+    const smaLine = line<{ date: Date; value: number }>()
+      .x((d) => this._xScale(d.date))
+      .y((d) => this._yScale(d.value));
+
+    // Append or update the SMA path
+    const smaPath = this.gSma.selectAll('.sma-line').data([smaData]);
+
+    smaPath
+      .enter()
+      .append('path')
+      .attr('class', 'sma-line')
+      .merge(smaPath)
+      .attr('d', smaLine)
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 2)
+      .attr('fill', 'none');
+
+    smaPath.exit().remove();
   }
 }

@@ -67,7 +67,7 @@ export class VolumeChartService {
         .attr('y', (d: CandlestickData) => this._yScale(d.volume))
         .attr('width', this._barWidth)
         .attr('height', (d: CandlestickData) => this._yScale(0) - this._yScale(d.volume))
-        .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#532E2D' : '#72897C'));
+        .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#532E2D' : '#174C2E'));
 
     //  // Exit
     //  volumeBars.exit().remove();
