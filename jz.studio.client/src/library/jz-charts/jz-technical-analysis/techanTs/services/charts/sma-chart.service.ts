@@ -12,7 +12,7 @@ export class SmaChartService {
   private _xScale: any;
   private _yScale: any;
   private gSma: any;
-  private windowSize: number = 10; // Default SMA window size
+  private rollingPeriod: number = 10; // Default SMA window size
 
   constructor(
     private scales: ChartScalesService,
@@ -36,19 +36,19 @@ export class SmaChartService {
   }
 
   public setWindowSize(size: number): this {
-    this.windowSize = size;
+    this.rollingPeriod = size;
     return this;
   }
 
   private calculateSma(data: { date: Date; close: number }[]): { date: Date; value: number }[] {
-    if (!data || data.length < this.windowSize) return [];
+    if (!data || data.length < this.rollingPeriod) return [];
 
     const smaValues: { date: Date; value: number }[] = [];
-    for (let i = 0; i <= data.length - this.windowSize; i++) {
-      const windowData = data.slice(i, i + this.windowSize);
-      const average = windowData.reduce((sum, point) => sum + point.close, 0) / this.windowSize;
+    for (let i = 0; i <= data.length - this.rollingPeriod; i++) {
+      const windowData = data.slice(i, i + this.rollingPeriod);
+      const average = windowData.reduce((sum, point) => sum + point.close, 0) / this.rollingPeriod;
       smaValues.push({
-        date: windowData[this.windowSize - 1].date, // The last date in the current window
+        date: windowData[this.rollingPeriod - 1].date, // The last date in the current window
         value: average,
       });
     }
