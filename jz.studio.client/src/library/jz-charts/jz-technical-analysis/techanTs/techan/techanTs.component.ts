@@ -15,6 +15,7 @@ import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
 import { CandlestickChartService } from '../services/charts/candlestick-chart.service';
+import { SmaChartService } from '../services/charts/sma-chart.service';
 CandlestickChartService
 export interface range {
   start: number;
@@ -99,7 +100,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,
     private candlestickChart: CandlestickChartService,
-    private volumeChart: VolumeChartService
+    private volumeChart: VolumeChartService,
+    private smaChart: SmaChartService
    )  { }
 
   ngOnInit(): void {  }
@@ -183,6 +185,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   constructChart(): void {
     this.drawCandlestick();
     this.drawVolume();
+    this.drawSma();
   }
 
   drawCandlestick(): void {
@@ -200,6 +203,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.volumeYscale)
       .setTargetGroup(this.volumeGroupRef.nativeElement)
       .setBarWidth()
+      .draw();
+  }
+
+  drawSma(): void {
+    this.smaChart
+      .xScale(this.scales.candlestickXscale)
+      .yScale(this.scales.candlestickYscale)
+      .setTargetGroup(this.layout.sectionAcontent) // Specify target group
+      .setWindowSize(10) // Set desired SMA window size
       .draw();
   }
 }
