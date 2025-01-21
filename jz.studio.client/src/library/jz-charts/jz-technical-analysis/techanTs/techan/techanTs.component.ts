@@ -84,6 +84,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
+  @ViewChild('sma', { static: true }) smaRef!: ElementRef<SVGGElement>;
+
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
@@ -132,7 +134,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChart(): void {  
-    this.sizeChartFramework();
+    this.createChartFramework();
     this.layout.createSections();
     this.data.scrubData();
     this.scales.createScales();
@@ -140,7 +142,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.constructChart();
   }
 
-  sizeChartFramework() {
+  createChartFramework() {
     this.layout.svg = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
@@ -149,6 +151,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
+    this.layout.sma = this.smaRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
@@ -212,7 +215,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.smaChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup(this.layout.sectionAcontent) // Specify target group
+      .setTargetGroup(this.layout.sma) // Specify target group
       .setWindowSize(period) // Set desired SMA window size
       .draw();
   }

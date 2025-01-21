@@ -14,10 +14,13 @@ export class ChartLayoutService {
   svgRectHeight = 0;
 
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+
   sectionA!: SVGGElement;
   sectionAcontent!: SVGGElement;
   sectionAcontentRect!: SVGRectElement;
   sectionAvolume!: SVGGElement;
+  sma!: SVGElement;
+
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
