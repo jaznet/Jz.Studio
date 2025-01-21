@@ -84,7 +84,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('sma', { static: true }) smaRef!: ElementRef<SVGGElement>;
+  @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
+  @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
+  @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
 
   gSectionA: any;
   gSectionB: any;
@@ -151,7 +153,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
-    this.layout.sma = this.smaRef.nativeElement;
+    this.layout.sma1 = this.sma1Ref.nativeElement;
+    this.layout.sma2 = this.sma2Ref.nativeElement;
+    this.layout.sma3 = this.sma3Ref.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
@@ -188,9 +192,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   constructChart(): void {
     this.drawCandlestick();
     this.drawVolume();
-    this.drawSma(5);
-    this.drawSma(50);
-    this.drawSma(100);
+    this.drawSma1(5);
+    this.drawSma2(50);
+    this.drawSma3(100);
   }
 
   drawCandlestick(): void {
@@ -211,14 +215,31 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .draw();
   }
 
-  drawSma(period:number): void {
+  drawSma1(period:number): void {
     this.smaChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup(this.layout.sma) // Specify target group
-      .setWindowSize(period) // Set desired SMA window size
+      .setTargetGroup(this.layout.sma1) // Specify target group
+   //   .setRollingPeriod(period) // Set desired SMA window size
       .draw();
   }
 
+  drawSma2(period: number): void {
+    this.smaChart
+      .xScale(this.scales.candlestickXscale)
+      .yScale(this.scales.candlestickYscale)
+      .setTargetGroup(this.layout.sma2) // Specify target group
+      .setRollingPeriod(period) // Set desired SMA window size
+      .draw();
+  }
+
+  drawSma3(period: number): void {
+    this.smaChart
+      .xScale(this.scales.candlestickXscale)
+      .yScale(this.scales.candlestickYscale)
+      .setTargetGroup(this.layout.sma3) // Specify target group
+      .setRollingPeriod(period) // Set desired SMA window size
+      .draw();
+  }
 
 }

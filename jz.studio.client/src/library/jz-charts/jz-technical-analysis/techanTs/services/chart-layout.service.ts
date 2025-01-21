@@ -19,7 +19,9 @@ export class ChartLayoutService {
   sectionAcontent!: SVGGElement;
   sectionAcontentRect!: SVGRectElement;
   sectionAvolume!: SVGGElement;
-  sma!: SVGElement;
+  sma1!: SVGElement;
+  sma2!: SVGElement;
+  sma3!: SVGElement;
 
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };

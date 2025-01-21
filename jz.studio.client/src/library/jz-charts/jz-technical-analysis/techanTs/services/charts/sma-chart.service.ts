@@ -13,6 +13,7 @@ export class SmaChartService {
   private _yScale: any;
   private gSma: any;
   private rollingPeriod: number = 10; // Default SMA window size
+  
 
   constructor(
     private scales: ChartScalesService,
@@ -35,7 +36,7 @@ export class SmaChartService {
     return this;
   }
 
-  public setWindowSize(size: number): this {
+  public setRollingPeriod(size: number): this {
     this.rollingPeriod = size;
     return this;
   }
