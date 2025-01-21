@@ -185,7 +185,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   constructChart(): void {
     this.drawCandlestick();
     this.drawVolume();
-    this.drawSma();
+    this.drawSma(5);
+    this.drawSma(50);
+    this.drawSma(100);
   }
 
   drawCandlestick(): void {
@@ -206,12 +208,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .draw();
   }
 
-  drawSma(): void {
+  drawSma(period:number): void {
     this.smaChart
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sectionAcontent) // Specify target group
-      .setWindowSize(10) // Set desired SMA window size
+      .setWindowSize(period) // Set desired SMA window size
       .draw();
   }
+
+
 }
