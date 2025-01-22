@@ -35,11 +35,11 @@ export class ChartAxesService {
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
     // CANDLESTICK
-    this.candlestickXaxisTop = axisTop(this.scales.candlestickXscale)
+    this.candlestickXaxisTop = axisTop(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
     this.candlestickYaxisRight = axisRight(this.scales.candlestickYscale);
-    this.candlestickXaxisBottom = axisBottom(this.scales.candlestickXscale)
+    this.candlestickXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
     this.candlestickYaxisLeft = axisLeft(this.scales.candlestickYscale);

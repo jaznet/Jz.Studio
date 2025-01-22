@@ -9,7 +9,7 @@ import { AxisScale, AxisDomain, ScaleLinear } from 'd3-v4';
 })
 export class ChartScalesService {
 
-  candlestickXscale!: any;
+  dateScaleX!: any;
   candlestickYscale!: any;
   volumeYscale: any;
 
@@ -19,12 +19,12 @@ export class ChartScalesService {
 
   createScales() {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
-      this.candlestickXscale = scaleTime()
+      this.dateScaleX = scaleTime()
         .domain(this.data.dateExtent)
         .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right]);
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
-      this.candlestickXscale = scaleTime()
+      this.dateScaleX = scaleTime()
         .domain([new Date(), new Date()]) // Default to current date
         .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right]);
     }

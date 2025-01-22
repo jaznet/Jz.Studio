@@ -44,8 +44,8 @@ export class VolumeChartService {
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
 
     this._barWidth =
-      this.scales.candlestickXscale(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) -
-      this.scales.candlestickXscale(this.data.parsedData[0].date);
+      this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) -
+      this.scales.dateScaleX(this.data.parsedData[0].date);
 
     return this; // Enables method chaining
   }

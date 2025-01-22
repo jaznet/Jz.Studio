@@ -199,7 +199,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawCandlestick(): void {
     this.candlestickChart
-      .xScale(this.scales.candlestickXscale)
+      .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.gCandlestickRef.nativeElement)
       .setCandleWidth()
@@ -208,7 +208,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawVolume(): void {
     this.volumeChart
-      .xScale(this.scales.candlestickXscale)
+      .xScale(this.scales.dateScaleX)
       .yScale(this.scales.volumeYscale)
       .setTargetGroup(this.volumeGroupRef.nativeElement)
       .setBarWidth()
@@ -217,7 +217,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawSma1(period:number): void {
     this.smaChart
-      .xScale(this.scales.candlestickXscale)
+      .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma1) // Specify target group
       .setRollingPeriod(period)
@@ -227,7 +227,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawSma2(period: number): void {
     this.smaChart
-      .xScale(this.scales.candlestickXscale)
+      .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
@@ -237,7 +237,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   drawSma3(period: number): void {
     this.smaChart
-      .xScale(this.scales.candlestickXscale)
+      .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
