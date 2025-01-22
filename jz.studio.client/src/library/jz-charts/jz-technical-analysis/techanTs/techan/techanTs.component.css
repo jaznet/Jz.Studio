@@ -17,20 +17,12 @@
   stroke-width: 2;
 }
 
-
-
 .tick text {
   fill: white;
 }
 
 text {
-  fill: white;
+  fill: yellow;
 }
 
-rect {
 
-}
-
-.svgrect {
-    fill:cornflowerblue;
-}

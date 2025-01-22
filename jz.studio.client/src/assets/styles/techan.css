@@ -1,7 +1,7 @@
 
 /* Customize the axis line */
 .x-axis path {
-  stroke: white;
+  stroke: #F1FEC6;
   stroke-width: 2;
 }
 

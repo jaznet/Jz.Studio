@@ -220,7 +220,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .xScale(this.scales.candlestickXscale)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma1) // Specify target group
-   //   .setRollingPeriod(period) // Set desired SMA window size
+      .setRollingPeriod(period)
+      .setColor('#4E59D0')
       .draw();
   }
 
@@ -230,6 +231,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
+      .setColor('#F1FEC6')
       .draw();
   }
 
@@ -239,6 +241,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
+      .setColor('#ff3a20')
       .draw();
   }
 

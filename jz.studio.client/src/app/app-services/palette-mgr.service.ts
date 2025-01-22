@@ -6,8 +6,6 @@ import { AppEventsService } from './app-events.service';
 })
 export class PaletteMgrService {
 
-
-
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
@@ -20,7 +18,7 @@ export class PaletteMgrService {
 
       case 'gunmetal':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#172626 ');
+        document.documentElement.style.setProperty('--plt-clr-1', '#16302b ');
         document.documentElement.style.setProperty('--plt-clr-2', '#2f4f4f');
         document.documentElement.style.setProperty('--plt-clr-3', '#10376C');
         document.documentElement.style.setProperty('--plt-clr-4', '#889999');

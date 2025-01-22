@@ -13,7 +13,7 @@ export class SmaChartService {
   private _yScale: any;
   private gSma: any;
   private rollingPeriod: number = 10; // Default SMA window size
-  
+  private color = 'white';
 
   constructor(
     private scales: ChartScalesService,
@@ -33,6 +33,11 @@ export class SmaChartService {
 
   public setTargetGroup(gTargetRef: any): this {
     this.gSma = select(gTargetRef).attr('class', 'sma-chart');
+    return this;
+  }
+
+  public setColor(color: any):this {
+    this.color = color;
     return this;
   }
 
@@ -74,7 +79,7 @@ export class SmaChartService {
       .attr('class', 'sma-line')
       .merge(smaPath)
       .attr('d', smaLine)
-      .attr('stroke', 'blue')
+      .attr('stroke',this.color)
       .attr('stroke-width', 2)
       .attr('fill', 'none');
 
