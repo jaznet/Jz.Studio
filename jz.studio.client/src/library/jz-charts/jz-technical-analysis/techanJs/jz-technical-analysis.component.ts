@@ -79,7 +79,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.xScale = this.d3v4.scaleUtc().domain([new Date("2023-01-01"), new Date("2024-01-01")]).range([0, 800]);
     this.yScale = this.d3v4.scaleLinear().domain([0, 100]).range([0, 400]);
 
-    const candlestickPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
-    this.svg.append("g").attr("class", "candlestick").call(candlestickPlot);
+    const ohlcPlot = this.techan.plot.candlestick().xScale(this.xScale).yScale(this.yScale);
+    this.svg.append("g").attr("class", "candlestick").call(ohlcPlot);
   }
 }

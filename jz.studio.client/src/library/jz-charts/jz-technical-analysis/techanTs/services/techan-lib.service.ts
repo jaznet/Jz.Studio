@@ -21,7 +21,7 @@ export class TechanLibService {
     let xScale: any;
     let yScale: any;
 
-    const candlestickPlot = {
+    const ohlcPlot = {
       xScale: function (scale: any) {
         xScale = scale;
         return this;
@@ -67,6 +67,6 @@ export class TechanLibService {
       }
     };
 
-    return candlestickPlot;
+    return ohlcPlot;
   }
 }
