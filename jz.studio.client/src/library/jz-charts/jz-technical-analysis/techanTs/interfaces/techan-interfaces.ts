@@ -15,7 +15,7 @@ export interface SectionAttributes {
   fill?: string;
 }
 
-export interface CandlestickData {
+export interface olhcData {
   timestamp: Date;
   ticker: string;
   date: Date;

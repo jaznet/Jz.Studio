@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartScalesService } from '../chart-scales.service';
-import { CandlestickData } from '../../interfaces/techan-interfaces';
+import { olhcData } from '../../interfaces/techan-interfaces';
 import { ChartLayoutService } from '../chart-layout.service';
 
 @Injectable({
@@ -63,11 +63,11 @@ export class VolumeChartService {
         .append('rect')
         .attr('class', 'volume-bar')
         .merge(volumeBars)
-        .attr('x', (d: CandlestickData) => this._xScale(d.date) ?? 0)
-        .attr('y', (d: CandlestickData) => this._yScale(d.volume))
+        .attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)
+        .attr('y', (d: olhcData) => this._yScale(d.volume))
         .attr('width', this._barWidth)
-        .attr('height', (d: CandlestickData) => this._yScale(0) - this._yScale(d.volume))
-        .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#532E2D' : '#174C2E'));
+        .attr('height', (d: olhcData) => this._yScale(0) - this._yScale(d.volume))
+        .attr('fill', (d: olhcData) => (d.open > d.close ? '#532E2D' : '#174C2E'));
 
     //  // Exit
     //  volumeBars.exit().remove();

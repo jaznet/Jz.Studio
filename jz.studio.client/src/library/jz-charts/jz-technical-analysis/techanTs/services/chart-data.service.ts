@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { max, min, extent } from 'd3-array';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
-import { CandlestickData } from '../interfaces/techan-interfaces';
+import { olhcData } from '../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class ChartDataService {
     this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
 
     // Calculate date extent
-    this.dateExtent = extent(this.parsedData, (d: CandlestickData) => d.date);
+    this.dateExtent = extent(this.parsedData, (d: olhcData) => d.date);
 
     console.log('Date Extent:', this.dateExtent);
     console.log('Maximum Volume:', this.maxVolume);

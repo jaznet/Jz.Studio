@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { CandlestickData } from '../interfaces/techan-interfaces';
+import { olhcData } from '../interfaces/techan-interfaces';
 /*import * as d3 from 'd3';*/
 
 @Injectable({
@@ -30,7 +30,7 @@ export class TechanLibService {
         yScale = scale;
         return this;
       },
-      draw: function (selection: any, data: CandlestickData[], candleWidth: any, parsedData:any) {
+      draw: function (selection: any, data: olhcData[], candleWidth: any, parsedData:any) {
         const candle = selection.selectAll(".candle").data(parsedData);
 
         // Enter
@@ -38,11 +38,11 @@ export class TechanLibService {
           .append("rect")
           .attr("class", "candle")
           .merge(candle)
-          .attr("x", (d: CandlestickData) => xScale(d.date) ?? 0) // ?? 0 to provide a default if null
-          .attr("y", (d: CandlestickData) => yScale(Math.max(d.open, d.close)))
+          .attr("x", (d: olhcData) => xScale(d.date) ?? 0) // ?? 0 to provide a default if null
+          .attr("y", (d: olhcData) => yScale(Math.max(d.open, d.close)))
           .attr("width", candleWidth) // Now this will work because xScale is a scaleBand
-          .attr("height", (d: CandlestickData) => Math.abs(yScale(d.open) - yScale(d.close)))
-          .attr("fill", (d: CandlestickData) => d.open > d.close ? "#bf211e" : "seagreen");
+          .attr("height", (d: olhcData) => Math.abs(yScale(d.open) - yScale(d.close)))
+          .attr("fill", (d: olhcData) => d.open > d.close ? "#bf211e" : "seagreen");
 
         // Exit
         candle.exit().remove();
@@ -55,10 +55,10 @@ export class TechanLibService {
           .append("line")
           .attr("class", "wick")
           .merge(wicks)
-          .attr("x1", (d: CandlestickData) => xScale(d.date)! + candleWidth / 2) // Center of the candlestick
-          .attr("x2", (d: CandlestickData) => xScale(d.date)! + candleWidth / 2)
-          .attr("y1", (d: CandlestickData) => yScale(d.high)) // Top of the wick (highest price)
-          .attr("y2", (d: CandlestickData) => yScale(d.low)) // Bottom of the wick (lowest price)
+          .attr("x1", (d: olhcData) => xScale(d.date)! + candleWidth / 2) // Center of the candlestick
+          .attr("x2", (d: olhcData) => xScale(d.date)! + candleWidth / 2)
+          .attr("y1", (d: olhcData) => yScale(d.high)) // Top of the wick (highest price)
+          .attr("y2", (d: olhcData) => yScale(d.low)) // Bottom of the wick (lowest price)
           .attr("stroke", "#52aa8a")
           .attr("stroke-width", 1);
 

@@ -4,7 +4,7 @@ import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartLayoutService } from '../chart-layout.service';
 import { ChartScalesService } from '../chart-scales.service';
-import { CandlestickData } from '../../interfaces/techan-interfaces';
+import { olhcData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -64,10 +64,10 @@ export class CandlestickChartService {
       .append('line')
       .attr('class', 'wick')
       .merge(wicks)
-      .attr('x1', (d: CandlestickData) => this._xScale(d.date)! + this._candleWidth / 2)
-      .attr('x2', (d: CandlestickData) => this._xScale(d.date)! + this._candleWidth / 2)
-      .attr('y1', (d: CandlestickData) => this._yScale(d.high))
-      .attr('y2', (d: CandlestickData) => this._yScale(d.low))
+      .attr('x1', (d: olhcData) => this._xScale(d.date)! + this._candleWidth / 2)
+      .attr('x2', (d: olhcData) => this._xScale(d.date)! + this._candleWidth / 2)
+      .attr('y1', (d: olhcData) => this._yScale(d.high))
+      .attr('y2', (d: olhcData) => this._yScale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
@@ -79,11 +79,11 @@ export class CandlestickChartService {
       .append('rect')
       .attr('class', 'candle')
       .merge(candle)
-      .attr('x', (d: CandlestickData) => this._xScale(d.date) ?? 0)
-      .attr('y', (d: CandlestickData) => this._yScale(Math.max(d.open, d.close)))
+      .attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)
+      .attr('y', (d: olhcData) => this._yScale(Math.max(d.open, d.close)))
       .attr('width', this._candleWidth)
-      .attr('height', (d: CandlestickData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
-      .attr('fill', (d: CandlestickData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
+      .attr('height', (d: olhcData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
+      .attr('fill', (d: olhcData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
     candle.exit().remove();
   }
