@@ -88,6 +88,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
 
+  // MACD GROUP
+  @ViewChild('macdChart', { static: true }) macdChartRef!: ElementRef<SVGGElement>;
+
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
