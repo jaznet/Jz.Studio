@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { select, line } from 'd3-selection';
+import { select } from 'd3-selection';
+import { line } from 'd3-shape';
 import { ChartScalesService } from '../chart-scales.service';
 import { ChartDataService } from '../chart-data.service';
 
@@ -126,11 +127,11 @@ export class MacdChartService {
       .append('rect')
       .attr('class', 'divergence-bar')
       .merge(bars)
-      .attr('x', (d) => this._xScale(d.date) - 2) // Adjust width for bar spacing
-      .attr('y', (d) => Math.min(this._yScale(0), this._yScale(d.divergence)))
+      .attr('x', (d: { date: any; }) => this._xScale(d.date) - 2) // Adjust width for bar spacing
+      .attr('y', (d: { divergence: any; }) => Math.min(this._yScale(0), this._yScale(d.divergence)))
       .attr('width', 4)
-      .attr('height', (d) => Math.abs(this._yScale(d.divergence) - this._yScale(0)))
-      .attr('fill', (d) => (d.divergence > 0 ? 'green' : 'red'));
+      .attr('height', (d: { divergence: any; }) => Math.abs(this._yScale(d.divergence) - this._yScale(0)))
+      .attr('fill', (d: { divergence: number; }) => (d.divergence > 0 ? 'green' : 'red'));
 
     bars.exit().remove();
   }

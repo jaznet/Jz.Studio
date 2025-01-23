@@ -16,6 +16,7 @@ import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
 import { CandlestickChartService } from '../services/charts/candlestick-chart.service';
 import { SmaChartService } from '../services/charts/sma-chart.service';
+import { MacdChartService } from '../services/charts/macd-chart.service';
 CandlestickChartService
 export interface range {
   start: number;
@@ -108,7 +109,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private popOverService: JzPopOversService,
     private candlestickChart: CandlestickChartService,
     private volumeChart: VolumeChartService,
-    private smaChart: SmaChartService
+    private smaChart: SmaChartService,
+    private macdChart: MacdChartService
    )  { }
 
   ngOnInit(): void {  }
@@ -159,6 +161,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
+    this.layout.macdGroup = this.macdChartRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
@@ -198,6 +201,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawSma1(5);
     this.drawSma2(50);
     this.drawSma3(100);
+    this.drawMacd();
   }
 
   drawCandlestick(): void {
@@ -246,6 +250,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')
       .draw();
+  }
+
+  drawMacd():void {
+    this.macdChart
+      .xScale(this.scales.dateScaleX)
+      .yScale(this.scales.candlestickYscale)
+      .setTargetGroup(this.layout.macdGroup)
+      .setPeriods(12, 26, 9) // Typical MACD periods
+      .draw();
+
   }
 
 }

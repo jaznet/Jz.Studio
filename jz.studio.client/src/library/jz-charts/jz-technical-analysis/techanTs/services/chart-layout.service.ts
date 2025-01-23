@@ -24,6 +24,7 @@ export class ChartLayoutService {
   sma3!: SVGElement;
 
   sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  macdGroup: any;
   sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
   rectA!: SVGRectElement;
