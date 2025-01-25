@@ -13,6 +13,7 @@ export class ChartDataService {
   maxPrice: number | undefined;
   maxVolume: number | undefined;
   parsedData!: any[];
+  macdData!: any;
 
   constructor() { }
 
@@ -37,6 +38,12 @@ export class ChartDataService {
 
     console.log('Date Extent:', this.dateExtent);
     console.log('Maximum Volume:', this.maxVolume);
+
+    const shortPeriod = 12;
+    const longPeriod = 26;
+    const signalPeriod = 9;
+
+    this.macdData = this.calculateMacd(this.parsedData, shortPeriod, longPeriod, signalPeriod);
   }
 
   private calculateMacd(data: { date: Date; close: number }[], shortPeriod: number, longPeriod: number, signalPeriod: number): any[] {
@@ -53,14 +60,14 @@ export class ChartDataService {
     const signalLine = this.calculateEma(macdLine.map(d => ({ date: d.date, value: d.macd })), signalPeriod);
 
     // Calculate Histogram
-    const macdData = macdLine.map((macdPoint, index) => ({
+    this.macdData = macdLine.map((macdPoint, index) => ({
       date: macdPoint.date,
       macd: macdPoint.macd,
       signal: signalLine[index],
       histogram: macdPoint.macd - signalLine[index],
     }));
 
-    return macdData;
+    return this.macdData;
   }
 
 

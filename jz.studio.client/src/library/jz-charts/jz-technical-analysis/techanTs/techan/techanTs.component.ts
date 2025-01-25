@@ -145,6 +145,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createSections();
     this.data.scrubData();
     this.scales.createScales();
+    this.scales.createMacdYScale(this.data.macdData, 100);
     this.axes.drawAxes();
     this.constructChart();
   }
@@ -255,7 +256,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawMacd():void {
     this.macdChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.macdYscale)
       .setTargetGroup(this.layout.macdGroup)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .draw();

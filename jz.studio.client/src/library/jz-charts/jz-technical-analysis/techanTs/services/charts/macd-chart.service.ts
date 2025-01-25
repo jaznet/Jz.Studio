@@ -81,7 +81,7 @@ export class MacdChartService {
   }
 
   public draw(): void {
-    const macdData = this.calculateMacd(this.data.parsedData);
+ //   this.data.macdData = this.calculateMacd(this.data.parsedData);
 
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
@@ -93,7 +93,7 @@ export class MacdChartService {
       .y((d) => this._yScale(d.signal));
 
     // Draw MACD line
-    const macdLine = this.gMacd.selectAll('.macd-line').data([macdData]);
+    const macdLine = this.gMacd.selectAll('.macd-line').data([this.data.macdData]);
     macdLine
       .enter()
       .append('path')
@@ -107,7 +107,7 @@ export class MacdChartService {
     macdLine.exit().remove();
 
     // Draw Signal line
-    const signalLine = this.gMacd.selectAll('.signal-line').data([macdData]);
+    const signalLine = this.gMacd.selectAll('.signal-line').data([this.data.macdData]);
     signalLine
       .enter()
       .append('path')
@@ -121,7 +121,7 @@ export class MacdChartService {
     signalLine.exit().remove();
 
     // Draw Divergence as bars
-    const bars = this.gMacd.selectAll('.divergence-bar').data(macdData);
+    const bars = this.gMacd.selectAll('.divergence-bar').data(this.data.macdData);
     bars
       .enter()
       .append('rect')

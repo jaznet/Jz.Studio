@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
@@ -12,6 +13,7 @@ export class ChartScalesService {
   dateScaleX!: any;
   candlestickYscale!: any;
   volumeYscale: any;
+  macdYscale: any;
 
   constructor(private data: ChartDataService,
  
@@ -37,8 +39,22 @@ export class ChartScalesService {
       .domain([ 0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([this.layout.sectionAvolume.getBBox().height, 0]); // Invert the range for correct orientation (top to bottom)
 
+   /*   this.macdYscale = */
+
     console.log(this.layout.sectionAvolume.getBBox().height);
   }
 
+  createMacdYScale(macdData: { macd: number; signal: number; histogram: number }[], chartHeight: number): any {
+    // Calculate the min and max values from MACD data
+    const allValues = macdData.flatMap(d => [d.macd, d.signal, d.histogram]);
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
 
+    // Create the y-scale
+    this.macdYscale = scaleLinear()
+      .domain([min, max]) // Domain based on MACD values
+      .range([chartHeight, 0]); // Range based on the chart height
+
+  //  return macdYScale;
+  }
 }
