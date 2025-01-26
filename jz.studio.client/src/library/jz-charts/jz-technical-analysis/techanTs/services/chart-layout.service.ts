@@ -112,7 +112,7 @@ export class ChartLayoutService {
     let bboxB = this.rectB.getBBox();
     this.sectionBattributes.width = bboxB.width;
     this.sectionBattributes.height = bboxB.height;
-   // this.macdChart.setAttribute('transform', `translate(${this.sectionBattributes.margins.left, this.sectionAattributes.height})`);
+   this.macdChart.setAttribute('transform', `translate(100,100)`);
 
     // SECTION C
     let bboxC = this.rectC.getBBox();
