@@ -121,18 +121,20 @@ export class MacdChartService {
     signalLine.exit().remove();
 
     // Draw Divergence as bars
-    const bars = this.gMacd.selectAll('.divergence-bar').data(this.data.macdData);
+    const bars = this.gMacd.selectAll('.histogram-bar').data(this.data.macdData);
+
     bars
       .enter()
       .append('rect')
-      .attr('class', 'divergence-bar')
+      .attr('class', 'histogram-bar')
       .merge(bars)
-      .attr('x', (d: { date: any; }) => this._xScale(d.date) - 2) // Adjust width for bar spacing
-      .attr('y', (d: { divergence: any; }) => Math.min(this._yScale(0), this._yScale(d.divergence)))
-      .attr('width', 4)
-      .attr('height', (d: { divergence: any; }) => Math.abs(this._yScale(d.divergence) - this._yScale(0)))
-      .attr('fill', (d: { divergence: number; }) => (d.divergence > 0 ? 'green' : 'red'));
+      .attr('x', (d: { date: any }) => this._xScale(d.date) - 2) // Adjust width for bar spacing
+      .attr('y', (d: { histogram: any }) => Math.min(this._yScale(0), this._yScale(d.histogram)))
+      .attr('width', 4) // Width of each bar
+      .attr('height', (d: { histogram: any }) => Math.abs(this._yScale(d.histogram) - this._yScale(0)))
+      .attr('fill', (d: { histogram: number }) => (d.histogram > 0 ? 'green' : 'red')); // Color based on positive or negative histogram value
 
     bars.exit().remove();
+
   }
 }
