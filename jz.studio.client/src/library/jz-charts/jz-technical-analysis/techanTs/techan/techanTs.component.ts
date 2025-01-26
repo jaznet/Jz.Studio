@@ -162,7 +162,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
-    this.layout.macdGroup = this.macdChartRef.nativeElement;
+    this.layout.macdChart = this.macdChartRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;
@@ -257,7 +257,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.macdChart
       .xScale(this.scales.dateScaleX)
       .yScale(this.scales.macdYscale)
-      .setTargetGroup(this.layout.macdGroup)
+      .setTargetGroup(this.layout.macdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .draw();
 
