@@ -111,6 +111,7 @@ export class ChartLayoutService {
     bbox = this.rectB.getBBox();
     this.sectionB.width = bbox.width;
     this.sectionB.height = bbox.height;
+    this.
 
     // SECTION C
     bbox = this.rectC.getBBox();

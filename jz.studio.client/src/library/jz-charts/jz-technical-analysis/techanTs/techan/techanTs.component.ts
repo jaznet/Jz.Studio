@@ -145,7 +145,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createSections();
     this.data.scrubData();
     this.scales.createScales();
-    this.scales.createMacdYScale(this.data.macdData, 100);
+    this.scales.createMacdYScale(this.data.macdData, this.layout.rectB.height.baseVal.value);
     this.axes.drawAxes();
     this.constructChart();
   }

@@ -100,7 +100,7 @@ export class MacdChartService {
       .attr('class', 'macd-line')
       .merge(macdLine)
       .attr('d', lineGenerator)
-      .attr('stroke', 'blue')
+      .attr('stroke', '#f8f32b')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
 
