@@ -93,6 +93,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // MACD GROUP
   @ViewChild('macdChart', { static: true }) macdChartRef!: ElementRef<SVGGElement>;
 
+  // RSIGROUP
+  @ViewChild('rsiGroup', { static: true }) rsiGroupRef!: ElementRef<SVGGElement>;
+
   gSectionA: any;
   gSectionB: any;
   gSectionC: any;
@@ -148,6 +151,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.data.scrubData();
     this.scales.createScales();
     this.scales.createMacdYScale(this.data.macdData, this.layout.rectB.height.baseVal.value);
+    this.scales.createRsiYScale(this.layout.rectC.height.baseVal.value);
+    this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
   }
@@ -165,6 +170,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
+    this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;
     this.layout.xAxisTopGroupA = this.xAxisTopGroupARef.nativeElement;

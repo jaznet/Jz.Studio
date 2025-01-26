@@ -120,5 +120,6 @@ export class ChartLayoutService {
     let bboxC = this.rectC.getBBox();
     this.sectionCattributes.width = bboxC.width;
     this.sectionCattributes.height = bboxC.height;
+   this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);
   }
 }
