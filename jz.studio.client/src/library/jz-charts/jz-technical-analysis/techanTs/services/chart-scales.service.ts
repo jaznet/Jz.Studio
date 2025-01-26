@@ -14,6 +14,7 @@ export class ChartScalesService {
   candlestickYscale!: any;
   volumeYscale: any;
   macdYscale: any;
+  rsiYscale: any;
 
   constructor(private data: ChartDataService,
  

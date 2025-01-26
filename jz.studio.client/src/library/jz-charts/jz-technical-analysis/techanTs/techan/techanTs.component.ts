@@ -17,6 +17,7 @@ import { VolumeChartService } from '../services/charts/volume-chart.service';
 import { CandlestickChartService } from '../services/charts/candlestick-chart.service';
 import { SmaChartService } from '../services/charts/sma-chart.service';
 import { MacdChartService } from '../services/charts/macd-chart.service';
+import { RsiIndicatorService } from '../services/charts/rsi-indicator.service';
 CandlestickChartService
 export interface range {
   start: number;
@@ -110,7 +111,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private candlestickChart: CandlestickChartService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
-    private macdChart: MacdChartService
+    private macdChart: MacdChartService,
+    private rsiIndicator: RsiIndicatorService
    )  { }
 
   ngOnInit(): void {  }
@@ -203,6 +205,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawSma2(50);
     this.drawSma3(100);
     this.drawMacd();
+    this.drawRsi();
   }
 
   drawCandlestick(): void {
@@ -259,6 +262,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.macdYscale)
       .setTargetGroup(this.layout.macdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
+      .draw();
+
+  }
+
+  drawRsi(): void {
+    this.rsiIndicator
+      .xScale(this.scales.dateScaleX)
+      .yScale(this.scales.rsiYscale)
+      .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
+      .setRollingPeriod(14) // Optional: Change the period
       .draw();
 
   }
