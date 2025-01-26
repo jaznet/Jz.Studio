@@ -23,9 +23,10 @@ export class ChartLayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
-  sectionB: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  sectionBattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
   macdChart: any;
-  sectionC: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+
+  sectionCattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
 
   rectA!: SVGRectElement;
   rectB!: SVGRectElement;
@@ -109,13 +110,13 @@ export class ChartLayoutService {
 
     // SECTION B
     let bboxB = this.rectB.getBBox();
-    this.sectionB.width = bboxB.width;
-    this.sectionB.height = bboxB.height;
-    this.macdChart.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
+    this.sectionBattributes.width = bboxB.width;
+    this.sectionBattributes.height = bboxB.height;
+   // this.macdChart.setAttribute('transform', `translate(${this.sectionBattributes.margins.left, this.sectionAattributes.height})`);
 
     // SECTION C
     let bboxC = this.rectC.getBBox();
-    this.sectionC.width = bboxC.width;
-    this.sectionC.height = bboxC.height;
+    this.sectionCattributes.width = bboxC.width;
+    this.sectionCattributes.height = bboxC.height;
   }
 }
