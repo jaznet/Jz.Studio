@@ -100,5 +100,30 @@ export class RsiIndicatorService {
       .attr('fill', 'none');
 
     rsiPath.exit().remove();
+
+    // Draw overbought, oversold, and middle lines
+    this.drawThresholdLine(70, 'overbought', 'dotted');
+    this.drawThresholdLine(30, 'oversold', 'dotted');
+    this.drawThresholdLine(50, 'middle', 'solid');
+  }
+
+  private drawThresholdLine(level: number, className: string, strokeDasharray: string): void {
+    const thresholdLine = this.gRsi.selectAll(`.${className}-line`).data([level]);
+
+    thresholdLine
+      .enter()
+      .append('line')
+      .attr('class', `${className}-line`)
+      .merge(thresholdLine)
+      .attr('x1', this._xScale.range()[0]) // Start of the x-axis
+      .attr('x2', this._xScale.range()[1]) // End of the x-axis
+      .attr('y1', this._yScale(level))
+      .attr('y2', this._yScale(level))
+      .attr('stroke', className === 'middle' ? 'gray' : 'red') // Different color for middle line
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', strokeDasharray === 'dotted' ? '4, 2' : 'none') // Dotted or solid
+      .attr('fill', 'none');
+
+    thresholdLine.exit().remove();
   }
 }
