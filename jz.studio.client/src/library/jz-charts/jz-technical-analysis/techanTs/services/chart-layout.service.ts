@@ -13,7 +13,7 @@ export class ChartLayoutService {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 32, right: 32, bottom: 32, left: 32 } };
+  sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sectionA!: SVGGElement;
   sectionAcontent!: SVGGElement;
@@ -102,7 +102,7 @@ export class ChartLayoutService {
     this.yAxisLeftA.setAttribute('id', 'LeftA');
     this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
 
-
+    this.sectionA.setAttribute('transform', `0,32`);
 
 /*    this.candlestick.gCandlestick.setAttribute('transform', `translate(${this.sectionA.margins.left, this.sectionA.margins.right})`);*/
 
@@ -121,5 +121,9 @@ export class ChartLayoutService {
     this.sectionCattributes.width = bboxC.width;
     this.sectionCattributes.height = bboxC.height;
    this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);
+  }
+
+  alignChartsToScaffold(): void {
+
   }
 }
