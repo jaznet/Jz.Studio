@@ -6,6 +6,13 @@ export interface Margins {
   left: number;
 }
 
+export interface ChartAttributes {
+  xAxisTop: number;
+  xAxisBottom: number;
+  yAxisLeft: number;
+  yAxisRight: number;
+}
+
 export interface SectionAttributes {
   x: number;
   y: number;

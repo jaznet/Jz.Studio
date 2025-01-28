@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SectionAttributes } from '../interfaces/techan-interfaces';
+import { ChartAttributes, SectionAttributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class ChartLayoutService {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
+  chartAttributes: ChartAttributes = { xAxisTop: 32, xAxisBottom: 32, yAxisLeft:32,yAxisRight:32 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sectionA!: SVGGElement;
@@ -36,7 +37,7 @@ export class ChartLayoutService {
   rectC!: SVGRectElement;
 
   xAxisTopA!: SVGGElement;
-  xAxisTopGroupA!: SVGGElement;
+  xAxisTopGroup!: SVGGElement;
   xAxisTopRectA!: SVGRectElement;
 
   yAxisRightA!: SVGGElement;
@@ -133,7 +134,7 @@ export class ChartLayoutService {
     this.sectionC.setAttribute('transform', `translate(32,600)`);
     //this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);
-    //this.xAxisTopGroupA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
+    this.xAxisTopGroup.setAttribute('transform', `translate(${this.chartAttributes.yAxisLeft},${this.chartAttributes.xAxisTop})`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
     //this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
     //this.xAxisBottomA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left}, ${this.sectionAattributes.height - this.sectionAattributes.margins.bottom})`);
