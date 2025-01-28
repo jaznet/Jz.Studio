@@ -147,7 +147,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   createChart(): void {  
     this.createChartFramework();
-    this.layout.createSections();
+    this.layout.createScaffolding();
     this.data.scrubData();
     this.scales.createScales();
     this.scales.createMacdYScale(this.data.macdData, this.layout.rectB.height.baseVal.value);
@@ -169,7 +169,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
+
+    this.layout.sectionB = this.gSectionBref.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
+
+    this.layout.sectionC = this.gSectionCref.nativeElement;
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
     
     this.layout.xAxisTopA = this.xAxisTopARef.nativeElement;

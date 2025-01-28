@@ -9,12 +9,35 @@ export class PaletteMgrService {
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
-    this.ChangePalette('gunmetal');
+    this.ChangePalette('slate');
   }
 
   ChangePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
     switch (palette) {
+
+      case 'slate':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#251605 ');
+        document.documentElement.style.setProperty('--plt-clr-2', '#dbb957');
+        document.documentElement.style.setProperty('--plt-clr-3', '#10376C');
+        document.documentElement.style.setProperty('--plt-clr-4', '#889999');
+        document.documentElement.style.setProperty('--plt-clr-5', '#D5BFB0');
+        document.documentElement.style.setProperty('--plt-clr-x', 'black');
+        document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#ceb3a1');
+        document.documentElement.style.setProperty('--plt-txt-2', '#9DD0D0');
+        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-4', '#3BBFC4');
+        document.documentElement.style.setProperty('--plt-txt-5', '#D5BFB0');
+
+        document.documentElement.style.setProperty('--popup-color-1', '#6ea288');
+        document.documentElement.style.setProperty('--popup-color-2', '#679267');
+        document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
+
+        break;
+
 
       case 'gunmetal':
 

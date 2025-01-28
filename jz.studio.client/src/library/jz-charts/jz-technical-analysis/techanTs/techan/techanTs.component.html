@@ -2,6 +2,7 @@
 <div class="grid-rows" style="margin:8px">
   <div class="grid-row-fixed" style="justify-content:center; color:#FAF3DD">Technical Analysis Chart</div>
 
+  <!-- SVG -->
   <svg class="grid-row-fill" #svg id="svg">
 
     <rect #svgrect id="svgrect" class="svgrect" x="0" y="0" width="0" height="0"></rect>
@@ -15,7 +16,7 @@
       <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="12" fill="black" font-weight="bold">Section A</text>
       <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%"></rect>
 
-      <g #candlestickChart>
+      <g #candlestickChart id="candlestickChart">
 
 
         // BOTTOM AXIS
