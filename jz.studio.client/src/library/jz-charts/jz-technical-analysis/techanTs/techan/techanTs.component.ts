@@ -161,6 +161,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svg = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+    this.layout.svgRect = this.svgRectElementRef.nativeElement;
 
     this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
