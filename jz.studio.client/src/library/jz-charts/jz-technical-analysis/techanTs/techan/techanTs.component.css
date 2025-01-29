@@ -8,7 +8,6 @@
 /* Customize tick labels */
 .y-axis .tick text {
   font-size: 12px;
-  fill: yellow;
 }
 
 /* Customize the axis line */
@@ -22,7 +21,7 @@
 }
 
 text {
-  fill: yellow;
+ 
 }
 
 
