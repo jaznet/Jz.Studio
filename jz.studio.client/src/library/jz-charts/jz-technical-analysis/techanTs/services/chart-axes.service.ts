@@ -29,7 +29,7 @@ export class ChartAxesService {
 
     this.xAxisTop = select(this.layout.xAxisTopA);
     this.yAxisRight = select(this.layout.yAxisRightA);
-    this.xAxisBottom = select(this.layout.xAxisBottomA);
+    this.xAxisBottom = select(this.layout.xAxisBottomGroup);
     this.yAxisLeft = select(this.layout.yAxisLeftA);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'

@@ -67,12 +67,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisTopA', { static: true }) xAxisTopARef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRectA', { static: true }) xAxisTopRectARef!: ElementRef<SVGRectElement>;
 
+  @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('yAxisRightGroupA', { static: true }) yAxisRightGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightA', { static: true }) yAxisRightARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectA', { static: true }) yAxisRightRectARef!: ElementRef<SVGRectElement>;
-
-  @ViewChild('xAxisBottomA', { static: true }) xAxisBottomARef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottomRectA', { static: true }) xAxisBottomRectARef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
@@ -80,7 +80,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // CANDLESTICK
   @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
-  @ViewChild('candlestick', { static: true }) gCandlestickRef!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
 
   // VOLUME GROUP
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
@@ -162,6 +162,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgRect = this.svgRectElementRef.nativeElement;
+    this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth;
+    this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight;
 
     this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
@@ -189,8 +191,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
     this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
 
-    this.layout.xAxisBottomA = this.xAxisBottomARef.nativeElement;
-    this.layout.xAxisBottomRectA = this.xAxisBottomRectARef.nativeElement;
+    this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
+    this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
 
     this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
@@ -201,10 +203,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.axes.xAxisTop = this.xAxisTopARef;
     this.axes.yAxisRight = this.yAxisRightARef;
-    this.axes.xAxisBottom = this.xAxisBottomARef;
+    this.axes.xAxisBottom = this.xAxisBottomGroupRef;
     this.axes.yAxisLeft = this.yAxisLeftARef;
 
-    this.candlestickChart.gCandlestick = this.gCandlestickRef;
+    this.candlestickChart.gCandlestick = this.ohlcGroupRef;
 
   /*  this.volumeChart.*/
   }
@@ -223,7 +225,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.candlestickChart
       .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
-      .setTargetGroup(this.gCandlestickRef.nativeElement)
+      .setTargetGroup(this.ohlcGroupRef.nativeElement)
       .setCandleWidth()
       .draw();
   }

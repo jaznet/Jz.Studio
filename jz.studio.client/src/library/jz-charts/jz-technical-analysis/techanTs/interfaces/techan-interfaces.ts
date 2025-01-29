@@ -7,6 +7,8 @@ export interface Margins {
 }
 
 export interface ChartAttributes {
+  height: number;
+  width: number;
   xAxisTop: number;
   xAxisBottom: number;
   yAxisLeft: number;
