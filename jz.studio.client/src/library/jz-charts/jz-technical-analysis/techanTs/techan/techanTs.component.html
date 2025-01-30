@@ -12,66 +12,69 @@
       <g #xAxisTopA id="yAxisTop" class="y-axis"></g>
     </g>
 
-    <!-- SECTION A -->
-    <g id="sectionA" #sectionA>
-      <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="12" fill="black" font-weight="bold">Section A</text>
-      <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" fill="#0D1F2D"></rect>
+    <g #sections id="sections">
+      <!-- SECTION A -->
+      <g id="sectionA" #sectionA>
+        <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" font-size="12" fill="black" font-weight="bold">Section A</text>
+        <rect id="rectA" #rectA x="0" y="0" width="100%" height="50%" fill="#0D1F2D"></rect>
 
-      <g #ohlcChart id="ohlcChart">
+        <g #ohlcChart id="ohlcChart">
 
 
-        // RIGHT AXIS
-        <g #yAxisRightGroupA id="yAxisGroupRight" class="y-axis">
-          <rect #yAxisRightRectA width="0" height="0" fill="blue"></rect>
-          <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
-        </g>
-
-        // LEFT AXIS
-        <g #yAxisLeftGroupA id="yAxisLeft" class="y-axis">
-          <rect #yAxisLeftRectA width="0" height="0" fill="violet"></rect>
-          <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
-        </g>
-
-        <!-- CANDLESTICK CHART -->
-        <g #sectionAcontent id="sectionAcontent">
-          <rect #sectionAcontentRect id="sectionAcontentRect"></rect>
-
-          <!-- Section A-1 Volume Chart -->
-          <g #volumeGroup id="volumeGroup">
-            <rect #volumeRect></rect>
-            <g #volumeChart id="volumeChart"></g>
+          // RIGHT AXIS
+          <g #yAxisRightGroupA id="yAxisGroupRight" class="y-axis">
+            <rect #yAxisRightRectA width="0" height="0" fill="blue"></rect>
+            <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
           </g>
 
-          <g  #ohlcGroup id="ohlcGroup">
-            <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
-                  x="0" y="0"
-                  [attr.width]="0"
-                  [attr.height]="0"
-                  fill="transparent">
-              <!--fill='var(--plt-clr-3'>-->
-            </rect>
+          // LEFT AXIS
+          <g #yAxisLeftGroupA id="yAxisLeft" class="y-axis">
+            <rect #yAxisLeftRectA width="0" height="0" fill="violet"></rect>
+            <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
           </g>
 
-          <g #sma1 id="sma1"></g>
-          <g #sma2 id="sma2"></g>
-          <g #sma3 id="sma3"></g>
+          <!-- CANDLESTICK CHART -->
+          <g #sectionAcontent id="sectionAcontent">
+            <rect #sectionAcontentRect id="sectionAcontentRect"></rect>
 
+            <!-- Section A-1 Volume Chart -->
+            <g #volumeGroup id="volumeGroup">
+              <rect #volumeRect></rect>
+              <g #volumeChart id="volumeChart"></g>
+            </g>
+
+            <g #ohlcGroup id="ohlcGroup">
+              <rect #rectCandlestick class="rectCandlestick" id="rectCandlestick"
+                    x="0" y="0"
+                    [attr.width]="0"
+                    [attr.height]="0"
+                    fill="transparent">
+                <!--fill='var(--plt-clr-3'>-->
+              </rect>
+            </g>
+
+            <g #sma1 id="sma1"></g>
+            <g #sma2 id="sma2"></g>
+            <g #sma3 id="sma3"></g>
+
+          </g>
         </g>
       </g>
-    </g>
 
-    <!-- SECTION B -->
-    <g id="sectionB" #sectionB>
-      <text x="20" y="50%" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-      <rect id="rectB" #rectB x="0" y="50%" width="100%" height="25%" style="stroke: yellow; fill: #0D1F2D"></rect>
-      <g #macdChart id="macdChart"></g>
-    </g>
+      <!-- SECTION B -->
+      <g id="sectionB" #sectionB>
+        <text x="20" y="50%" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
+        <rect id="rectB" #rectB x="0" y="50%" width="100%" height="25%" style="stroke: yellow; fill: #0D1F2D"></rect>
+        <g #macdChart id="macdChart"></g>
+      </g>
 
-    <!-- SECTION C -->
-    <g id="sectionC" #sectionC>
-      <text x="20" y="75%" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-      <rect id="rectC" #rectC x="0" y="75%" width="100%" height="25%" style="stroke: lightblue; fill: #0D1F2D"></rect>
-      <g #rsiGroup id="rsiGroup"></g>
+      <!-- SECTION C -->
+      <g id="sectionC" #sectionC>
+        <text x="20" y="75%" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
+        <rect id="rectC" #rectC x="0" y="75%" width="100%" height="25%" style="stroke: lightblue; fill: #0D1F2D"></rect>
+        <g #rsiGroup id="rsiGroup"></g>
+      </g>
+
     </g>
 
     // BOTTOM AXIS

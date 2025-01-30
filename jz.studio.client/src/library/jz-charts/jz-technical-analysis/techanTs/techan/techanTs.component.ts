@@ -48,6 +48,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
+
+  @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
+
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
@@ -165,6 +168,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth;
     this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight;
 
+    this.layout.sections = this.sectionsRef.nativeElement;
     this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
@@ -276,7 +280,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setTargetGroup(this.layout.macdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .draw();
-
   }
 
   drawRsi(): void {
@@ -286,7 +289,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .draw();
-
   }
 
 }
