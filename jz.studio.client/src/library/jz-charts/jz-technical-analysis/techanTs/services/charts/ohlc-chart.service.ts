@@ -1,4 +1,6 @@
 
+
+
 import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
@@ -9,7 +11,7 @@ import { olhcData } from '../../interfaces/techan-interfaces';
 @Injectable({
   providedIn: 'root',
 })
-export class CandlestickChartService {
+export class OhlcChartService {
   private _xScale: any;
   private _yScale: any;
   private _candleWidth: number = 0;
@@ -48,9 +50,9 @@ export class CandlestickChartService {
     const timeDiff = this.data.parsedData.length > 1
       ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
-     this._candleWidth =
+    this._candleWidth =
       this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.dateScaleX(this.data.parsedData[0].date);
-  
+
     return this; // Allows method chaining
   }
 
@@ -88,3 +90,4 @@ export class CandlestickChartService {
     candle.exit().remove();
   }
 }
+

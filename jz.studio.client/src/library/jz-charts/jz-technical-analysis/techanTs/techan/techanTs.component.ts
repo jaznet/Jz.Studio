@@ -14,11 +14,11 @@ import { ChartAxesService } from '../services/chart-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
-import { CandlestickChartService } from '../services/charts/candlestick-chart.service';
+import { OhlcChartService } from '../services/charts/ohlc-chart.service';
 import { SmaChartService } from '../services/charts/sma-chart.service';
 import { MacdChartService } from '../services/charts/macd-chart.service';
 import { RsiIndicatorService } from '../services/charts/rsi-indicator.service';
-CandlestickChartService
+
 export interface range {
   start: number;
   end: number;
@@ -114,7 +114,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private axes: ChartAxesService,
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,
-    private candlestickChart: CandlestickChartService,
+    private ohlcChart: OhlcChartService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
     private macdChart: MacdChartService,
@@ -210,7 +210,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.xAxisBottom = this.xAxisBottomGroupRef;
     this.axes.yAxisLeft = this.yAxisLeftARef;
 
-    this.candlestickChart.gCandlestick = this.ohlcGroupRef;
+    this.ohlcChart.gCandlestick = this.ohlcGroupRef;
 
   /*  this.volumeChart.*/
   }
@@ -226,7 +226,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawCandlestick(): void {
-    this.candlestickChart
+    this.ohlcChart
       .xScale(this.scales.dateScaleX)
       .yScale(this.scales.candlestickYscale)
       .setTargetGroup(this.ohlcGroupRef.nativeElement)
@@ -289,6 +289,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .draw();
+
   }
 
 }
