@@ -81,7 +81,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
 
   // CANDLESTICK
-  @ViewChild('rectCandlestick', { static: true }) rectCandlestickRef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
 
   // VOLUME GROUP
@@ -201,7 +201,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
 
-    this.layout.rectCandlestick = this.rectCandlestickRef.nativeElement;
+    this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
 
     this.layout.rectA = this.rectAref.nativeElement;

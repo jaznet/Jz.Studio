@@ -52,7 +52,7 @@ export class ChartLayoutService {
   yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
 
-  rectCandlestick!: SVGRectElement;
+  ohlcRect!: SVGRectElement;
   rectVolume!: SVGRectElement;
 
   constructor() { }
@@ -68,12 +68,12 @@ export class ChartLayoutService {
     this.sectionAattributes.width = bboxA.width;
     this.sectionAattributes.height = bboxA.height;
     //BODY
-    this.rectCandlestick.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
-    this.rectCandlestick.setAttribute('height', ((this.svgHeight * .5) - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom).toString());
+    this.ohlcRect.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
+    this.ohlcRect.setAttribute('height', ((this.svgHeight * .5) - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom).toString());
     this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
-    console.log('volume', this.rectCandlestick.height);
+    console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
-    //  this.rectCandlestick.setAttribute('width', this.svgWidth.toString());
+    //  this.ohlcRect.setAttribute('width', this.svgWidth.toString());
     this.sectionAcontentRect.setAttribute('width', `${this.sectionAattributes.width-this.sectionAattributes.margins.left-this.sectionAattributes.margins.right}`);
     this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height-this.sectionAattributes.margins.top-this.sectionAattributes.margins.bottom}`);
 
