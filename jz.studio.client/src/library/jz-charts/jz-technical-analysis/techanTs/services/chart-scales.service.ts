@@ -11,7 +11,7 @@ import { AxisScale, AxisDomain, ScaleLinear } from 'd3-v4';
 export class ChartScalesService {
 
   dateScaleX!: any;
-  candlestickYscale!: any;
+  ohlcYscale!: any;
   volumeYscale: any;
   macdYscale: any;
   rsiYscale: any;
@@ -32,7 +32,7 @@ export class ChartScalesService {
         .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right]);
     }
 
-    this.candlestickYscale = scaleLinear()
+    this.ohlcYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([this.layout.sectionAattributes.height - this.layout.sectionAattributes.margins.top - this.layout.sectionAattributes.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
 

@@ -44,8 +44,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgrect', { static: true }) svgRectElementRef!: ElementRef<SVGRectElement>;
-  @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
-  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
+
 
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
@@ -98,6 +97,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // RSIGROUP
   @ViewChild('rsiGroup', { static: true }) rsiGroupRef!: ElementRef<SVGGElement>;
+
+  @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
+  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
 
   gSectionA: any;
   gSectionB: any;
@@ -165,6 +167,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgRect = this.svgRectElementRef.nativeElement;
+
     this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth;
     this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight;
 
@@ -228,7 +231,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawCandlestick(): void {
     this.ohlcChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.ohlcYscale)
       .setTargetGroup(this.ohlcGroupRef.nativeElement)
       .setCandleWidth()
       .draw();
@@ -246,7 +249,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma1(period:number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.ohlcYscale)
       .setTargetGroup(this.layout.sma1) // Specify target group
       .setRollingPeriod(period)
       .setColor('#4E59D0')
@@ -256,7 +259,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma2(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.ohlcYscale)
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#F1FEC6')
@@ -266,7 +269,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma3(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.candlestickYscale)
+      .yScale(this.scales.ohlcYscale)
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')

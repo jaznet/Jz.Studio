@@ -38,11 +38,11 @@ export class ChartAxesService {
     this.candlestickXaxisTop = axisTop(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-    this.candlestickYaxisRight = axisRight(this.scales.candlestickYscale);
+    this.candlestickYaxisRight = axisRight(this.scales.ohlcYscale);
     this.candlestickXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-    this.candlestickYaxisLeft = axisLeft(this.scales.candlestickYscale);
+    this.candlestickYaxisLeft = axisLeft(this.scales.ohlcYscale);
 
     this.xAxisTop.call(this.candlestickXaxisTop);
     this.yAxisRight.call(this.candlestickYaxisRight);

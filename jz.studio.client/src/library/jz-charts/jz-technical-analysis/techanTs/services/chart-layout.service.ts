@@ -48,8 +48,6 @@ export class ChartLayoutService {
   yAxisRightGroupA!: SVGGElement;
   yAxisRightRectA!: SVGRectElement;
 
-
-
   yAxisLeftA!: SVGGElement;
   yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
