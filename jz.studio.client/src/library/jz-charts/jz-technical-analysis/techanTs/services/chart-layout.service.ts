@@ -21,6 +21,8 @@ export class ChartLayoutService {
   sectionAcontent!: SVGGElement;
   sectionAcontentRect!: SVGRectElement;
   sectionAvolume!: SVGGElement;
+
+  ohlcRect!: SVGRectElement;
   sma1!: SVGElement;
   sma2!: SVGElement;
   sma3!: SVGElement;
@@ -52,7 +54,7 @@ export class ChartLayoutService {
   yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
 
-  ohlcRect!: SVGRectElement;
+
   rectVolume!: SVGRectElement;
 
   constructor() { }
@@ -69,13 +71,13 @@ export class ChartLayoutService {
     this.sectionAattributes.height = bboxA.height;
     //BODY
     this.ohlcRect.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
-    this.ohlcRect.setAttribute('height', ((this.svgHeight * .5) - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom).toString());
+    this.ohlcRect.setAttribute('height', ((this.svgHeight * .5) ).toString());
     this.rectVolume.setAttribute('width', (this.svgWidth - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right).toString());
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
     //  this.ohlcRect.setAttribute('width', this.svgWidth.toString());
     this.sectionAcontentRect.setAttribute('width', `${this.sectionAattributes.width-this.sectionAattributes.margins.left-this.sectionAattributes.margins.right}`);
-    this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height-this.sectionAattributes.margins.top-this.sectionAattributes.margins.bottom}`);
+    this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height}`);
 
     console.log('sectionAcontent', this.rectVolume.getBBox().height);
 

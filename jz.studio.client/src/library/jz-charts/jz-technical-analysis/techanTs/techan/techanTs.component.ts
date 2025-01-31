@@ -56,6 +56,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // BODY
   @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionAcontentRect', { static: true }) sectionAcontentRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
@@ -79,10 +81,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
-
-  // CANDLESTICK
-  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
 
   // VOLUME GROUP
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
