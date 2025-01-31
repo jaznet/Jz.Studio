@@ -131,7 +131,7 @@ export class ChartLayoutService {
 
   alignChartsToScaffold(): void {
     this.sectionA.setAttribute('transform', `translate(32,32)`);
-    this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+32})`);
+    this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chartAttributes.xAxisTop})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     //this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);

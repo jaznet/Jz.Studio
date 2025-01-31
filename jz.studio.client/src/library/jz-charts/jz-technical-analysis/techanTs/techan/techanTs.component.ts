@@ -223,7 +223,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawSma2(50);
     this.drawSma3(100);
     this.drawMacd();
-    this.drawRsi();
+//    this.drawRsi();
   }
 
   drawCandlestick(): void {
