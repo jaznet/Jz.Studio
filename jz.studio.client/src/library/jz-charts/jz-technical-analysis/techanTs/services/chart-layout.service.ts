@@ -13,10 +13,11 @@ export class ChartLayoutService {
   svgRectWidth = 0;
   svgRectHeight = 0;
 
-  chartAttributes: ChartAttributes = {width:0, height:0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft:32,yAxisRight:32 };
+  chartAttributes: ChartAttributes = { width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 32, yAxisRight: 32 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sections!: SVGGElement;
+  sectionsRect!: any;
   sectionA!: SVGGElement;
   sectionAcontent!: SVGGElement;
   sectionAcontentRect!: SVGRectElement;

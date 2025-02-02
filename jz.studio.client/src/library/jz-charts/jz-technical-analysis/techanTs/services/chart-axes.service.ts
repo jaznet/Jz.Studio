@@ -44,10 +44,10 @@ export class ChartAxesService {
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
     this.candlestickYaxisLeft = axisLeft(this.scales.ohlcYscale);
 
-    this.xAxisTop.call(this.candlestickXaxisTop);
-    this.yAxisRight.call(this.candlestickYaxisRight);
-    this.xAxisBottom.call(this.candlestickXaxisBottom);
-    this.yAxisLeft.call(this.candlestickYaxisLeft);
+    //this.xAxisTop.call(this.candlestickXaxisTop);
+    //this.yAxisRight.call(this.candlestickYaxisRight);
+    //this.xAxisBottom.call(this.candlestickXaxisBottom);
+    //this.yAxisLeft.call(this.candlestickYaxisLeft);
 
   }
 }

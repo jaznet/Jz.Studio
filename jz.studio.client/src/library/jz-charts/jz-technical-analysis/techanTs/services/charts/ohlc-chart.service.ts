@@ -1,6 +1,4 @@
 
-
-
 import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';

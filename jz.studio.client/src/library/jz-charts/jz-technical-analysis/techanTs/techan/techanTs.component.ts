@@ -49,6 +49,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionsRect', { static: true }) sectionsRectRef!: ElementRef<SVGGElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -170,6 +171,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight;
 
     this.layout.sections = this.sectionsRef.nativeElement;
+    this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
+
     this.layout.sectionA = this.gSectionAref.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
@@ -217,13 +220,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   constructChart(): void {
-    this.drawCandlestick();
-    this.drawVolume();
-    this.drawSma1(5);
-    this.drawSma2(50);
-    this.drawSma3(100);
-    this.drawMacd();
-    this.drawRsi();
+    //this.drawCandlestick();
+    //this.drawVolume();
+    //this.drawSma1(5);
+    //this.drawSma2(50);
+    //this.drawSma3(100);
+    //this.drawMacd();
+    //this.drawRsi();
   }
 
   drawCandlestick(): void {
