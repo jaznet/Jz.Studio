@@ -55,8 +55,6 @@ export class ChartScalesService {
     this.macdYscale = scaleLinear()
       .domain([min, max]) // Domain based on MACD values
       .range([chartHeight, 0]); // Range based on the chart height
-
-  //  return macdYScale;
   }
 
   createRsiYScale(chartHeight: number) {

@@ -6,7 +6,7 @@ import { ChartAttributes, SectionAttributes } from '../interfaces/techan-interfa
 })
 export class ChartLayoutService {
 
-  svg!: any;
+  svgElement!: any;
   svgWidth = 0;
   svgHeight = 0;
   svgRect!: SVGRectElement;
@@ -18,6 +18,7 @@ export class ChartLayoutService {
 
   sections!: SVGGElement;
   sectionsRect!: any;
+
   sectionA!: SVGGElement;
   sectionAcontent!: SVGGElement;
   sectionAcontentRect!: SVGRectElement;
@@ -61,13 +62,14 @@ export class ChartLayoutService {
   constructor() { }
 
   createScaffolding() {
-    this.createSections();
+    this.sizeSections();
     this.alignChartsToScaffold();
   }
 
-  createSections(): void {
+  sizeSections(): void {
+    let svgBbox = this.svgElement.getBBox();
     // SECTION A
-    let bboxA = this.   rectA.getBBox();
+    let bboxA = this.rectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
     this.sectionAattributes.height = bboxA.height;
     //BODY
@@ -100,10 +102,10 @@ export class ChartLayoutService {
     this.yAxisRightA.setAttribute('id', 'RightA');
 
     // X AXIS BOTTOM
-    this.xAxisBottomGroup.setAttribute('id', 'BottomA');
+    this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
     this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right}`);
     this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
-    this.xAxisBottomRect.setAttribute('fill', 'var(--plt-clr-2)');
+    this.xAxisBottomRect.setAttribute('fill', 'brown');
 
     // LEFT
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
@@ -131,13 +133,14 @@ export class ChartLayoutService {
   }
 
   alignChartsToScaffold(): void {
+    this.sections.setAttribute('transform', 'translate(32.32)')
     this.sectionA.setAttribute('transform', `translate(32,32)`);
     this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chartAttributes.xAxisTop})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     //this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);
-    this.xAxisTopGroup.setAttribute('transform', `translate(${this.chartAttributes.yAxisLeft},${this.chartAttributes.xAxisTop})`);
-    this.xAxisBottomGroup.setAttribute('transform', `translate(${this.chartAttributes.yAxisLeft}, ${this.chartAttributes.height - this.chartAttributes.xAxisBottom})`);
+    this.xAxisTopGroup.setAttribute('transform', `translate(${this.chartAttributes.yAxisLeft},0)`);
+    this.xAxisBottomGroup.setAttribute('transform', `translate(${this.chartAttributes.yAxisLeft}, ${this.chartAttributes.height - this.chartAttributes.xAxisTop, this.chartAttributes.xAxisBottom})`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
     //this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
 

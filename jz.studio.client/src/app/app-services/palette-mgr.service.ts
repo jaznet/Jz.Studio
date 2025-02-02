@@ -38,7 +38,6 @@ export class PaletteMgrService {
 
         break;
 
-
       case 'gunmetal':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#16302b ');

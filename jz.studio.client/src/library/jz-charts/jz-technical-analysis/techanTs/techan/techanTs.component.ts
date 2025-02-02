@@ -42,7 +42,7 @@ interface DataType {
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
-  @ViewChild('svg', { static: true }) svgElementRef!: ElementRef;
+  @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgrect', { static: true }) svgRectElementRef!: ElementRef<SVGRectElement>;
 
 
@@ -162,7 +162,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChartFramework() {
-    this.layout.svg = this.svgElementRef.nativeElement;
+    this.layout.svgElement = this.svgElementRef.nativeElement;
     this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
     this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgRect = this.svgRectElementRef.nativeElement;
