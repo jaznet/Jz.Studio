@@ -72,7 +72,7 @@ export class ChartLayoutService {
     this.svg_attribute.height = svgBbox.height;
     this.svg_attribute.width = svgBbox.width;
     // SECTION A
-    let bboxA = this.rectA.getBBox();
+    5let bboxA = this.rectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
     this.sectionAattributes.height = bboxA.height;
     // X-AXIS TOP
