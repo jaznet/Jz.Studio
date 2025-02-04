@@ -11,8 +11,6 @@ export interface ChartAttributes {
   width: number;
   xAxisTop: number;
   xAxisBottom: number;
-  yAxisLeft: number;
-  yAxisRight: number;
 }
 
 export interface SectionAttributes {
