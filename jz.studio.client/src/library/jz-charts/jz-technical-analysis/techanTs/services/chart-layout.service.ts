@@ -9,7 +9,7 @@ export class ChartLayoutService {
   svgElement!: any;
   //svgWidth = 0;
   //svgHeight = 0;
-  svgRect!: SVGRectElement;
+  svgElementRect!: SVGRectElement;
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 

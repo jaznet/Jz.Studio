@@ -1,4 +1,9 @@
 
+
+.svg-container {
+  background-color: #ff5a5f;
+}
+
 /* Customize tick lines */
 .y-axis .tick line {
   stroke: yellow;
