@@ -14,7 +14,7 @@ export class ChartLayoutService {
   //svgRectHeight = 0;
 
   chartAttributes: ChartAttributes = { width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32 };
-  svg_attribute: SvgAttributes = { width: 0, height:0 };
+  svg_attribute: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sections!: SVGGElement;
@@ -91,12 +91,6 @@ export class ChartLayoutService {
     this.sectionAcontentRect.setAttribute('height', `${this.sectionAattributes.height}`);
 
     console.log('sectionAcontent', this.rectVolume.getBBox().height);
-
-
-
-
-
-
     // RIGHT
 /*    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);*/
 
