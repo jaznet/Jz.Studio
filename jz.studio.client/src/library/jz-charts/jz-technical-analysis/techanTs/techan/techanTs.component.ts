@@ -163,8 +163,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   createChartFramework() {
     this.layout.svgElement = this.svgElementRef.nativeElement;
-    this.layout.svgWidth = this.svgElementRef.nativeElement.clientWidth;
-    this.layout.svgHeight = this.svgElementRef.nativeElement.clientHeight;
+    this.layout.svg_attribute.width = this.svgElementRef.nativeElement.clientWidth;
+    this.layout.svg_attribute.height = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgRect = this.svgRectElementRef.nativeElement;
 
     this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth;

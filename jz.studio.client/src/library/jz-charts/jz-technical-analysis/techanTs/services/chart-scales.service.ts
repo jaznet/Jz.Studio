@@ -17,8 +17,8 @@ export class ChartScalesService {
   rsiYscale: any;
 
   constructor(private data: ChartDataService,
- 
-  private layout:ChartLayoutService) { }
+
+    private layout: ChartLayoutService) { }
 
   createScales() {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
@@ -37,10 +37,10 @@ export class ChartScalesService {
       .range([this.layout.sectionAattributes.height - this.layout.sectionAattributes.margins.top - this.layout.sectionAattributes.margins.bottom, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.volumeYscale = scaleLinear()
-      .domain([ 0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
+      .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([this.layout.sectionAvolume.getBBox().height, 0]); // Invert the range for correct orientation (top to bottom)
 
-   /*   this.macdYscale = */
+    /*   this.macdYscale = */
 
     console.log(this.layout.sectionAvolume.getBBox().height);
   }
@@ -58,5 +58,6 @@ export class ChartScalesService {
   }
 
   createRsiYScale(chartHeight: number) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartHeight, 0]); 
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
+  }
 }

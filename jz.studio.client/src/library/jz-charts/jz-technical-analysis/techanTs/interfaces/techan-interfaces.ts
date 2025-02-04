@@ -13,6 +13,12 @@ export interface ChartAttributes {
   xAxisBottom: number;
 }
 
+export interface SvgAttributes {
+  height: number;
+  width: number;
+
+}
+
 export interface SectionAttributes {
   x: number;
   y: number;
