@@ -58,6 +58,5 @@ export class ChartScalesService {
   }
 
   createRsiYScale(chartHeight: number) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
-  }
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartHeight, 0]); 
 }

@@ -7,11 +7,11 @@ import { ChartAttributes, SectionAttributes } from '../interfaces/techan-interfa
 export class ChartLayoutService {
 
   svgElement!: any;
-  svgWidth = 0;
-  svgHeight = 0;
-  svgRect!: SVGRectElement;
-  svgRectWidth = 0;
-  svgRectHeight = 0;
+  //svgWidth = 0;
+  //svgHeight = 0;
+  //svgRect!: SVGRectElement;
+  //svgRectWidth = 0;
+  //svgRectHeight = 0;
 
   chartAttributes: ChartAttributes = { width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32};
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
