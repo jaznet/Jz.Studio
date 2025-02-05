@@ -72,7 +72,7 @@ export class ChartLayoutService {
     this.svg_attribute.height = svgBbox.height;
     this.svg_attribute.width = svgBbox.width;
     // SECTION A
-    5let bboxA = this.rectA.getBBox();
+    let bboxA = this.rectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
     this.sectionAattributes.height = bboxA.height;
     // X-AXIS TOP
@@ -131,7 +131,7 @@ export class ChartLayoutService {
   }
 
   alignChartsToScaffold(): void {
-    this.sections.setAttribute('transform', 'translate(32.32)')
+    this.sections.setAttribute('transform', 'translate(0,32)')
     this.sectionA.setAttribute('transform', `translate(32,32)`);
     this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chartAttributes.xAxisTop})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
