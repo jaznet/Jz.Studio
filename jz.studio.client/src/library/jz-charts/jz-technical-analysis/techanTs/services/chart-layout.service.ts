@@ -13,7 +13,7 @@ export class ChartLayoutService {
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 
-  chartAttributes: ChartAttributes = { width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32 };
+  chartAttributes: ChartAttributes = { width: 0, height: 0, margin: 8, xAxisTop: 32, xAxisBottom: 32 };
   svg_attribute: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
@@ -69,10 +69,14 @@ export class ChartLayoutService {
 
   sizeSections(): void {
     let svgBbox: SVGRect = this.svgElement.getBBox();
-    this.svg_attribute.height = svgBbox.height;
+    this.svg_attribute.height = svgBbox.height- this.chartAttributes.margin;
     this.svg_attribute.width = svgBbox.width;
+
+    this.svgElementRect.setAttribute('height', `${this.chartAttributes.height}`);
+    this.svgElementRect.setAttribute('width', `${this.chartAttributes.width}`);
+
     // SECTION A
-    let bboxA = this.rectA.getBBox();
+      let bboxA = this.rectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
     this.sectionAattributes.height = bboxA.height;
     // X-AXIS TOP

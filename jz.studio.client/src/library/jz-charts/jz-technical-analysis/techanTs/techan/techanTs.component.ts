@@ -42,9 +42,10 @@ interface DataType {
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
+ // @HostBinding('style.margin') margin = '8px';
+
   @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
-
 
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
@@ -163,12 +164,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   createChartFramework() {
     this.layout.svgElement = this.svgElementRef.nativeElement;
-    this.layout.svg_attribute.width = this.svgElementRef.nativeElement.clientWidth;
-    this.layout.svg_attribute.height = this.svgElementRef.nativeElement.clientHeight;
+    //this.layout.svg_attribute.width = this.svgElementRef.nativeElement.clientWidth;
+    //this.layout.svg_attribute.height = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgElementRect = this.svgElementRectRef.nativeElement;
 
-    this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth;
-    this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight;
+    this.layout.chartAttributes.width = this.svgElementRef.nativeElement.clientWidth - (this.layout.chartAttributes.margin * 2);
+    this.layout.chartAttributes.height = this.svgElementRef.nativeElement.clientHeight - (this.layout.chartAttributes.margin*2);
 
     this.layout.sections = this.sectionsRef.nativeElement;
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
