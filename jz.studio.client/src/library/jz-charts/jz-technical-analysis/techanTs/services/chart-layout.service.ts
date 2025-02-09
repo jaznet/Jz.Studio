@@ -1,5 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
-import { ChartAttributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
+import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class ChartLayoutService {
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 
-  chartAttributes: ChartAttributes = { width: 0, height: 0, margin: 8, xAxisTop: 32, xAxisBottom: 32 };
+  chart_attributes: chart_attributes = { width: 0, height: 0, margin: 8, xAxisTop: 32, xAxisBottom: 32 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
@@ -69,21 +69,21 @@ export class ChartLayoutService {
   }
 
   sizeSections(): void {
-    console.log('Chart Attributes', this.chartAttributes);
+    console.log('Chart Attributes', this.chart_attributes);
 
- //   this.chartAttributes.width = this.svgElement.clientWidth - (this.chartAttributes.margin * 2);
-    this.chartAttributes.width = this.svgContainer.clientWidth - (this.chartAttributes.margin * 2);
-    this.chartAttributes.height = this.svgContainer.clientHeight - (this.chartAttributes.margin * 2);
+ //   this.chart_attributes.width = this.svgElement.clientWidth - (this.chart_attributes.margin * 2);
+    this.chart_attributes.width = this.svgContainer.clientWidth ;
+    this.chart_attributes.height = this.svgContainer.clientHeight - (this.chart_attributes.margin * 2);
    
     let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
-    this.svg_attributes.height = svgBRect.height - (this.chartAttributes.margin * 2);
+    this.svg_attributes.height = svgBRect.height - (this.chart_attributes.margin * 2);
     this.svg_attributes.width = svgBRect.width;
     console.log('SVG Attributes', this.svg_attributes);
 
-    this.svgElement.nativeElement.setAttribute('height', `${this.chartAttributes.height}`);
-    this.svgElement.nativeElement.setAttribute('width', `${this.chartAttributes.width}`);
-    this.svgElementRect.setAttribute('height', `${this.chartAttributes.height}`);
-    this.svgElementRect.setAttribute('width', `${this.chartAttributes.width}`);
+    this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
+    this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
+    this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
+    this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
 
     // SECTION A
       let bboxA = this.rectA.getBBox();
@@ -91,8 +91,8 @@ export class ChartLayoutService {
     this.sectionAattributes.height = bboxA.height; 
     // X-AXIS TOP
     this.xAxisTop.setAttribute('id', 'TopA');
-    this.xAxisTopRect.setAttribute('width', `${this.chartAttributes.width}`);
-    this.xAxisTopRect.setAttribute('height', `${this.chartAttributes.xAxisTop}`);
+    this.xAxisTopRect.setAttribute('width', `${this.chart_attributes.width}`);
+    this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
     this.xAxisTopRect.setAttribute('fill', '#0B3954');
     //BODY
     this.ohlcRect.setAttribute('width', (this.svg_attributes.width.toString()));
@@ -115,7 +115,7 @@ export class ChartLayoutService {
 
     // X AXIS BOTTOM
     this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
-    this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right}`);
+    this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width}`);
     this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
     this.xAxisBottomRect.setAttribute('fill', 'brown');
 
@@ -147,12 +147,12 @@ export class ChartLayoutService {
   alignChartsToScaffold(): void {
     this.sections.setAttribute('transform', 'translate(0,32)')
     this.sectionA.setAttribute('transform', `translate(32,32)`);
-    this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chartAttributes.xAxisTop})`);
+    this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chart_attributes.xAxisTop})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     //this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
-    this.xAxisBottomGroup.setAttribute('transform', `translate(0, ${this.chartAttributes.height - this.chartAttributes.xAxisTop, this.chartAttributes.xAxisBottom})`);
+    this.xAxisBottomGroup.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
     //this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
 

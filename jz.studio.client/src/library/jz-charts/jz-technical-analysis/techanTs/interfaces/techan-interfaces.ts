@@ -6,7 +6,7 @@ export interface Margins {
   left: number;
 }
 
-export interface ChartAttributes {
+export interface chart_attributes {
   height: number;
   width: number;
   margin: number;
