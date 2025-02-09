@@ -145,7 +145,7 @@ export class ChartLayoutService {
   }
 
   alignChartsToScaffold(): void {
-    this.sections.setAttribute('transform', 'translate(0,32)')
+    this.sections.setAttribute('transform', 'translate(0,0)')
     this.sectionA.setAttribute('transform', `translate(32,32)`);
     this.sectionB.setAttribute('transform', `translate(32,${this.sectionAattributes.height+this.chart_attributes.xAxisTop})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
