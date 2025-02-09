@@ -77,7 +77,7 @@ export class ChartLayoutService {
    
     let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
     this.svg_attributes.height = svgBRect.height - (this.chartAttributes.margin * 2);
-    this.svg_attributes.width = svgBRect.width - (this.chartAttributes.margin * 2);
+    this.svg_attributes.width = svgBRect.width;
     console.log('SVG Attributes', this.svg_attributes);
 
     this.svgElement.nativeElement.setAttribute('height', `${this.chartAttributes.height}`);
