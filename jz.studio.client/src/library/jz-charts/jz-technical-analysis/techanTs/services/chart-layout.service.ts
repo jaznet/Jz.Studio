@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { ChartAttributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
@@ -6,7 +6,8 @@ import { ChartAttributes, SectionAttributes, SvgAttributes } from '../interfaces
 })
 export class ChartLayoutService {
 
-  svgElement!: any;
+  svgContainer: any;
+  svgElement!: ElementRef<any>;
   //svgWidth = 0;
   //svgHeight = 0;
   svgElementRect!: SVGRectElement;
@@ -14,7 +15,7 @@ export class ChartLayoutService {
   //svgRectHeight = 0;
 
   chartAttributes: ChartAttributes = { width: 0, height: 0, margin: 8, xAxisTop: 32, xAxisBottom: 32 };
-  svg_attribute: SvgAttributes = { width: 0, height: 0 };
+  svg_attributes: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sections!: SVGGElement;
@@ -68,26 +69,35 @@ export class ChartLayoutService {
   }
 
   sizeSections(): void {
-    let svgBbox: SVGRect = this.svgElement.getBBox();
-    this.svg_attribute.height = svgBbox.height- this.chartAttributes.margin;
-    this.svg_attribute.width = svgBbox.width;
+    console.log('Chart Attributes', this.chartAttributes);
 
+ //   this.chartAttributes.width = this.svgElement.clientWidth - (this.chartAttributes.margin * 2);
+    this.chartAttributes.width = this.svgContainer.clientWidth - (this.chartAttributes.margin * 2);
+    this.chartAttributes.height = this.svgContainer.clientHeight - (this.chartAttributes.margin * 2);
+   
+    let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
+    this.svg_attributes.height = svgBRect.height - (this.chartAttributes.margin * 2);
+    this.svg_attributes.width = svgBRect.width - (this.chartAttributes.margin * 2);
+    console.log('SVG Attributes', this.svg_attributes);
+
+    this.svgElement.nativeElement.setAttribute('height', `${this.chartAttributes.height}`);
+    this.svgElement.nativeElement.setAttribute('width', `${this.chartAttributes.width}`);
     this.svgElementRect.setAttribute('height', `${this.chartAttributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chartAttributes.width}`);
 
     // SECTION A
       let bboxA = this.rectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
-    this.sectionAattributes.height = bboxA.height;
+    this.sectionAattributes.height = bboxA.height; 
     // X-AXIS TOP
     this.xAxisTop.setAttribute('id', 'TopA');
     this.xAxisTopRect.setAttribute('width', `${this.chartAttributes.width}`);
     this.xAxisTopRect.setAttribute('height', `${this.chartAttributes.xAxisTop}`);
     this.xAxisTopRect.setAttribute('fill', '#0B3954');
     //BODY
-    this.ohlcRect.setAttribute('width', (this.svg_attribute.width.toString()));
-    this.ohlcRect.setAttribute('height', ((this.svg_attribute.height * .5)).toString());
-    this.rectVolume.setAttribute('width', (this.svg_attribute.width.toString() ));
+    this.ohlcRect.setAttribute('width', (this.svg_attributes.width.toString()));
+    this.ohlcRect.setAttribute('height', ((this.svg_attributes.height * .5)).toString());
+    this.rectVolume.setAttribute('width', (this.svg_attributes.width.toString() ));
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
     //  this.ohlcRect.setAttribute('width', this.svgWidth.toString());
