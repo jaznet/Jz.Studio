@@ -19,7 +19,7 @@ export class ChartLayoutService {
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 32, left: 32 } };
 
   sections!: SVGGElement;
-  sectionsRect!: any;
+  sectionsRect!: SVGRectElement;
 
   sectionA!: SVGGElement;
   sectionAcontent!: SVGGElement;
@@ -58,7 +58,6 @@ export class ChartLayoutService {
   yAxisLeftGroupA!: SVGGElement;
   yAxisLeftRectA!: SVGRectElement;
 
-
   rectVolume!: SVGRectElement;
 
   constructor() { }
@@ -84,6 +83,10 @@ export class ChartLayoutService {
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
+
+    this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
+    this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
+    this.sectionsRect.setAttribute('stroke', 'white');
 
     // SECTION A
     let bboxA = this.sectionRectA.getBBox();
@@ -145,7 +148,7 @@ export class ChartLayoutService {
   }
 
   alignChartsToScaffold(): void {
-    this.sections.setAttribute('transform', 'translate(0,0)')
+    this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
     this.sectionA.setAttribute('transform', `translate(0,0)`);
     this.sectionB.setAttribute('transform', `translate(0,${this.chart_attributes.height*.5})`);
     this.sectionC.setAttribute('transform', `translate(32,528.75  )`);

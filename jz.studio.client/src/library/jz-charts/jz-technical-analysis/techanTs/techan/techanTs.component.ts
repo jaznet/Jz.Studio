@@ -51,7 +51,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionsRect', { static: true }) sectionsRectRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionsRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
