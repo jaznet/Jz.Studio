@@ -102,8 +102,8 @@ export class ChartLayoutService {
     this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
     this.xAxisTopRect.setAttribute('fill', '#0B3954');
     //BODY
-    this.ohlcRect.setAttribute('width', (this.svg_attributes.width.toString()));
-    this.ohlcRect.setAttribute('height', ((this.svg_attributes.height * .5)).toString());
+    this.ohlcRect.setAttribute('width', (this.sectionAcontentRect.width.toString()));
+    this.ohlcRect.setAttribute('height', ((this.sectionAcontentRect.height.baseVal.value * .5)).toString());
     this.rectVolume.setAttribute('width', (this.svg_attributes.width.toString() ));
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
@@ -155,10 +155,10 @@ export class ChartLayoutService {
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
     this.sectionA.setAttribute('transform', `translate(0,0)`);
     this.sectionB.setAttribute('transform', `translate(0,${this.chart_attributes.height*.5})`);
-    this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
+   // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     //this.sectionAcontent.setAttribute('transform', `translate(32,32)`);
     //this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionAcontentRect.getBBox().height - this.rectVolume.getBBox().height})`);
-    this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
+    this.xAxisTopGroup.setAttribute('transform', `translate(32,32)`);
     this.xAxisBottomGroup.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
     //this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
