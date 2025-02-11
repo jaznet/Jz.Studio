@@ -9,6 +9,7 @@ export class PaletteMgrService {
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
+
     this.ChangePalette('slate');
   }
 
