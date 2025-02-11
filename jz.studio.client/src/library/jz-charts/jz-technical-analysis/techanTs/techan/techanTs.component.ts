@@ -55,7 +55,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('sectionA', { static: true }) gSectionAref!: ElementRef<SVGGElement>;
+  @ViewChild('sectionA', { static: true }) sectionARef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
   // BODY
   @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionAcontentRect', { static: true }) sectionAcontentRectRef!: ElementRef<SVGRectElement>;
@@ -66,7 +67,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
   @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
 
-  @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
   @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
   @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
 
@@ -173,7 +173,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sections = this.sectionsRef.nativeElement;
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
 
-    this.layout.sectionA = this.gSectionAref.nativeElement;
+    this.layout.sectionA = this.sectionARef.nativeElement;
+    this.layout.sectionRectA = this.sectionRectARef.nativeElement;
     this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
     this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
@@ -205,7 +206,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
 
-    this.layout.sectionRectA = this.sectionRectARef.nativeElement;
+
     this.layout.rectB = this.rectBref.nativeElement;
     this.layout.rectC = this.rectCref.nativeElement;
 

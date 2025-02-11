@@ -88,6 +88,10 @@ export class ChartLayoutService {
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
     this.sectionsRect.setAttribute('stroke', 'white');
 
+    console.log('sections', this.sectionsRect);
+    this.sectionRectA.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.sectionRectA.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
+
     // SECTION A
     let bboxA = this.sectionRectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
