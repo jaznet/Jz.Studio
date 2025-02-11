@@ -88,13 +88,13 @@ export class ChartLayoutService {
     this.xAxisTop.setAttribute('id', 'TopA');
     this.xAxisTopRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
-    this.xAxisTopRect.setAttribute('fill', '#0B3954');
+    this.xAxisTopRect.setAttribute('fill', 'var(--chart-clr-2');
 
     // X AXIS BOTTOM
     this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
     this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width}`);
     this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
-    this.xAxisBottomRect.setAttribute('fill', 'brown');
+    this.xAxisBottomRect.setAttribute('fill', 'var(--chart-clr-2');
 
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
@@ -129,10 +129,7 @@ export class ChartLayoutService {
     this.yAxisRightA.setAttribute('id', 'RightA');
 
     // X AXIS BOTTOM
-    this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
-    this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width}`);
-    this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
-    this.xAxisBottomRect.setAttribute('fill', 'brown');
+
 
     // LEFT
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
