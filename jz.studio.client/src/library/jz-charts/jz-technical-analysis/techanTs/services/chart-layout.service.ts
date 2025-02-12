@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core'; 
 import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
@@ -108,7 +108,18 @@ export class ChartLayoutService {
     // SECTION A
     let bboxA = this.sectionRectA.getBBox();
     this.sectionAattributes.width = bboxA.width;
-    this.sectionAattributes.height = bboxA.height; 
+    this.sectionAattributes.height = bboxA.height;
+
+    // SECTION B
+    let bboxB = this.rectB.getBBox();
+    this.sectionBattributes.width = bboxB.width;
+    this.sectionBattributes.height = bboxB.height;
+    console.log(this.sectionAattributes.height);
+
+    // SECTION C
+    let bboxC = this.rectC.getBBox();
+    this.sectionCattributes.width = bboxC.width;
+    this.sectionCattributes.height = bboxC.height;
 
     //BODY
     this.sectionContentARect.setAttribute('width', `${this.sectionAattributes.width - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right}`);
@@ -146,16 +157,7 @@ export class ChartLayoutService {
     // SECTION A-1
 
 
-    // SECTION B
-    let bboxB = this.rectB.getBBox();
-    this.sectionBattributes.width = bboxB.width;
-    this.sectionBattributes.height = bboxB.height;
-    console.log(this.sectionAattributes.height);
 
-    // SECTION C
-    let bboxC = this.rectC.getBBox();
-    this.sectionCattributes.width = bboxC.width;
-    this.sectionCattributes.height = bboxC.height;
 
   }
 
