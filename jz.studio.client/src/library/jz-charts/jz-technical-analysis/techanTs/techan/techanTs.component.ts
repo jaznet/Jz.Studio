@@ -58,8 +58,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionA', { static: true }) sectionARef!: ElementRef<SVGGElement>;
   @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
   // BODY
-  @ViewChild('sectionAcontent', { static: true }) sectionAcontentRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionAcontentRect', { static: true }) sectionAcontentRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('sectionContentA', { static: true }) sectionContentARef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
@@ -178,8 +178,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.sectionA = this.sectionARef.nativeElement;
     this.layout.sectionRectA = this.sectionRectARef.nativeElement;
-    this.layout.sectionAcontent = this.sectionAcontentRef.nativeElement;
-    this.layout.sectionAcontentRect = this.sectionAcontentRectRef.nativeElement;
+    this.layout.sectionContentA = this.sectionContentARef.nativeElement;
+    this.layout.sectionContentARect = this.sectionContentARectRef.nativeElement;
     this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
