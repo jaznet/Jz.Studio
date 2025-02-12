@@ -96,6 +96,7 @@ export class ChartLayoutService {
     this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
     this.xAxisBottomRect.setAttribute('fill', 'var(--chart-clr-2');
 
+    // SECTIONS
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
     this.sectionsRect.setAttribute('stroke', 'white');
@@ -110,14 +111,16 @@ export class ChartLayoutService {
     this.sectionAattributes.height = bboxA.height; 
 
     //BODY
-    this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.toString()));
+    this.sectionContentARect.setAttribute('width', `${this.sectionAattributes.width - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right}`);
+    this.sectionContentARect.setAttribute('height', `${this.sectionAattributes.height}`);
+    console.log('sectionContentARect', this.sectionContentARect);
+    this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.baseVal.valueAsString));
     this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value * .5)).toString());
-    this.rectVolume.setAttribute('width', (this.svg_attributes.width.toString() ));
+    this.rectVolume.setAttribute('width', (this.sectionContentARect.width.baseVal.value.toString() ));
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
     //  this.ohlcRect.setAttribute('width', this.svgWidth.toString());
-    this.sectionContentARect.setAttribute('width', `${this.sectionAattributes.width-this.sectionAattributes.margins.left-this.sectionAattributes.margins.right}`);
-    this.sectionContentARect.setAttribute('height', `${this.sectionAattributes.height}`);
+
 
     console.log('sectionContentA', this.rectVolume.getBBox().height);
     // RIGHT
@@ -159,7 +162,7 @@ export class ChartLayoutService {
   alignChartsToScaffold(): void {
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
     this.sectionA.setAttribute('transform', `translate(0,0)`);
-    this.sectionB.setAttribute('transform', `translate(0,${this.chart_attributes.height*.5})`);
+    this.sectionB.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value*.5})`);
    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     this.sectionContentA.setAttribute('transform', `translate(32,0)`);
     this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionContentARect.getBBox().height - this.rectVolume.getBBox().height})`);
