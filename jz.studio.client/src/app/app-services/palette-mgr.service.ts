@@ -64,7 +64,7 @@ export class PaletteMgrService {
       case 'charts':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#484844 ');
-        document.documentElement.style.setProperty('--plt-clr-2', '#201e1e');
+        document.documentElement.style.setProperty('--plt-clr-2', '#a9927d');
         document.documentElement.style.setProperty('--plt-clr-3', '#12100e');
         document.documentElement.style.setProperty('--plt-clr-4', '#937666');
         document.documentElement.style.setProperty('--plt-clr-5', '#6FA288'); 
