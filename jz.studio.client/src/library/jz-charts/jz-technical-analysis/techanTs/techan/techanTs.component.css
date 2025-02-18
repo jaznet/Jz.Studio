@@ -26,7 +26,11 @@
 }
 
 text {
- 
+ fill:yellow;
+}
+
+.title-text {
+    fill:lightgray;
 }
 
 
