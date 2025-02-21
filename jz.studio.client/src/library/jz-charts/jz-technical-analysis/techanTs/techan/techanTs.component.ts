@@ -65,10 +65,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
-  @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
+  @ViewChild('sectionRectB', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('rectB', { static: true }) rectBref!: ElementRef<SVGRectElement>;
-  @ViewChild('rectC', { static: true }) rectCref!: ElementRef<SVGRectElement>;
+  @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
+  @ViewChild('sectionRectC', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTop', { static: true }) xAxisTopRef!: ElementRef<SVGGElement>;
@@ -159,8 +159,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createScaffolding();
     this.data.scrubData();
     this.scales.createScales();
-    this.scales.createMacdYScale(this.data.macdData, this.layout.rectB.height.baseVal.value);
-    this.scales.createRsiYScale(this.layout.rectC.height.baseVal.value);
+    this.scales.createMacdYScale(this.data.macdData, this.layout.sectionRectB.height.baseVal.value);
+    this.scales.createRsiYScale(this.layout.sectionRectC.height.baseVal.value);
     this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
@@ -210,8 +210,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
 
 
-    this.layout.rectB = this.rectBref.nativeElement;
-    this.layout.rectC = this.rectCref.nativeElement;
+    this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
+    this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
 
     this.axes.xAxisTop = this.xAxisTopRef;
     this.axes.yAxisRight = this.yAxisRightARef;

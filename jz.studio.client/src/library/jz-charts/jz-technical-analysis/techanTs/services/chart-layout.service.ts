@@ -40,8 +40,8 @@ export class ChartLayoutService {
   rsiGroup: any;
 
   sectionRectA!: SVGRectElement;
-  rectB!: SVGRectElement;
-  rectC!: SVGRectElement;
+  sectionRectB!: SVGRectElement;
+  sectionRectC!: SVGRectElement;
 
   xAxisTop!: SVGGElement;
   xAxisTopGroup!: SVGGElement;
@@ -104,6 +104,10 @@ export class ChartLayoutService {
     console.log('sections', this.sectionsRect);
     this.sectionRectA.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectA.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
+    this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
+    this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
 
     // SECTION A
     let bboxA = this.sectionRectA.getBBox();
@@ -111,13 +115,13 @@ export class ChartLayoutService {
     this.sectionAattributes.height = bboxA.height;
 
     // SECTION B
-    let bboxB = this.rectB.getBBox();
+    let bboxB = this.sectionRectB.getBBox();
     this.sectionBattributes.width = bboxB.width;
-    this.sectionBattributes.height = bboxB.height;
+    this.sectionBattributes.height = bboxB.height-16;
     console.log(this.sectionAattributes.height);
 
     // SECTION C
-    let bboxC = this.rectC.getBBox();
+    let bboxC = this.sectionRectC.getBBox();
     this.sectionCattributes.width = bboxC.width;
     this.sectionCattributes.height = bboxC.height;
 

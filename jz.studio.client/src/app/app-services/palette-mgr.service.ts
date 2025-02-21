@@ -19,10 +19,10 @@ export class PaletteMgrService {
 
       case 'slate':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#251605 ');
+        document.documentElement.style.setProperty('--plt-clr-1', '#1B1004 ');
         document.documentElement.style.setProperty('--plt-clr-2', '#dbb957');
-        document.documentElement.style.setProperty('--plt-clr-3', '#10376C');
-        document.documentElement.style.setProperty('--plt-clr-4', '#889999');
+        document.documentElement.style.setProperty('--plt-clr-3', '#A9927D');
+        document.documentElement.style.setProperty('--plt-clr-4', '#7e7553');
         document.documentElement.style.setProperty('--plt-clr-5', '#D5BFB0');
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
