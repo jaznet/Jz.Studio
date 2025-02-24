@@ -21,17 +21,18 @@ export class PaletteMgrService {
 
         document.documentElement.style.setProperty('--plt-clr-1', '#1B1004 ');
         document.documentElement.style.setProperty('--plt-clr-2', '#dbb957');
-        document.documentElement.style.setProperty('--plt-clr-3', '#A9927D');
-        document.documentElement.style.setProperty('--plt-clr-4', '#7e7553');
-        document.documentElement.style.setProperty('--plt-clr-5', '#D5BFB0');
+        document.documentElement.style.setProperty('--plt-clr-3', '#388697');
+        document.documentElement.style.setProperty('--plt-clr-4', '#A2D2DD');
+        document.documentElement.style.setProperty('--plt-clr-5', '#e8e9eb');
+
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 
-        document.documentElement.style.setProperty('--plt-txt-1', '#ceb3a1');
+        document.documentElement.style.setProperty('--plt-txt-1', 'white');
         document.documentElement.style.setProperty('--plt-txt-2', '#9DD0D0');
-        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-3', '#388697');
         document.documentElement.style.setProperty('--plt-txt-4', '#3BBFC4');
-        document.documentElement.style.setProperty('--plt-txt-5', '#D5BFB0');
+        document.documentElement.style.setProperty('--plt-txt-5', 'black');
 
         document.documentElement.style.setProperty('--popup-color-1', '#6ea288');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
@@ -63,18 +64,21 @@ export class PaletteMgrService {
 
       case 'charts':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#484844 ');
-        document.documentElement.style.setProperty('--plt-clr-2', '#a9927d');
-        document.documentElement.style.setProperty('--plt-clr-3', '#12100e');
-        document.documentElement.style.setProperty('--plt-clr-4', '#937666');
-        document.documentElement.style.setProperty('--plt-clr-5', '#6FA288'); 
+ 
+    
+        document.documentElement.style.setProperty('--plt-clr-1', '#12100e');
+        document.documentElement.style.setProperty('--plt-clr-2', '#484844 ');
+        document.documentElement.style.setProperty('--plt-clr-3', '#937666');
+        document.documentElement.style.setProperty('--plt-clr-4', '#6FA288');
+        document.documentElement.style.setProperty('--plt-clr-5', '#a9927d');
+
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#6ea288');
         document.documentElement.style.setProperty('--plt-txt-2', '#F2F7F7');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
-        document.documentElement.style.setProperty('--plt-txt-4', '#e7decd');
+        document.documentElement.style.setProperty('--plt-txt-4', '#e7decd'); 
         document.documentElement.style.setProperty('--plt-txt-5', '#e7decd');
 
         document.documentElement.style.setProperty('--popup-color-1', '#6ea288');

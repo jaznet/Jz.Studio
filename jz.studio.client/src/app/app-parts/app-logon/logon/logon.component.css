@@ -13,12 +13,9 @@
   border: 1px solid var(--plt-clr-2);
   border-radius: 8px;
   box-shadow: 0 0 15px 10px rgba(136, 153, 153, 0.2);
-  background-color: var(--plt-clr-4);
-  color: var(--plt-clr-5);
+  background-color: var(--plt-clr-3);
+  color: var(--plt-txt-1);
 }
-
-
-
 
 .logon-title {
     color:black;
@@ -36,13 +33,14 @@
   font-size: 16px;
   padding-left: 4px;
   margin-bottom: 2px;
+  color:var(--plt-txt-5);
 }
 
 .form-group-input {
   width: 100%;
   height: 24px;
   border: 1px solid var(--plt-clr-1);
-  background-color: var(--plt-clr-5);
+  background-color: var(--plt-clr-4);
   border-radius: 8px;
   font-size: 16px;
   padding-left: 6px;
@@ -52,6 +50,7 @@ forn-label {
   display: block;
   font-weight: bold;
   margin-left: 3px;
+  color:black;
 }
 
 .form-control {

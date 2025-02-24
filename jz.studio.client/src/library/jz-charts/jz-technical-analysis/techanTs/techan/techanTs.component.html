@@ -6,8 +6,8 @@
     <rect #svgElementRect id="svgElementRect" class="svgElementRect" x="0" y="0"  width="0" height="0"  fill="#74776b"></rect>
 
     <!--X AXIS TOP-->
-    <g #xAxisTopGroup class="x-axis" id="xAxisTopGroup">
-      <rect #xAxisTopRect width="0" height="0" fill="var(--chart-clr-1)"></rect>
+    <g #xAxisTopGroup class="axis x-axis" id="xAxisTopGroup">
+      <rect #xAxisTopRect  class="axis x-axis" width="0" height="0" fill="var(--chart-clr-1)"></rect>
       <g #xAxisTop id="yAxisTop" class="y-axis"></g>
     </g>
 
@@ -16,7 +16,6 @@
 
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
-
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(--chart-clr-1)" stroke="white"></rect>
 
         <g #ohlcChart id="ohlcChart">
@@ -58,9 +57,9 @@
             <g #sma3 id="sma3"></g>
             <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
           </g>
-         
+
         </g>
-     
+
       </g>
 
       <!-- SECTION B -->
@@ -72,8 +71,8 @@
 
       <!-- SECTION C -->
       <g id="sectionC" #sectionC>
-        <text x="20" y="75%" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <rect #sectionRectC id="sectionRectC" x="0" y="75%"  style="stroke: lightblue; fill: #12100e"></rect>
+        <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
+        <rect #sectionRectC id="sectionRectC" x="0" y="0" style="stroke: lightblue; fill: #12100e"></rect>
         <g #rsiGroup id="rsiGroup"></g>
       </g>
 

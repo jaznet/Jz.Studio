@@ -1,7 +1,11 @@
 
 .svg-container {
   margin: 8px;
-  background-color: #ff5a5f;
+/*  background-color: var(--plt-clr-1);*/
+}
+
+.axis {
+    background-color: var(--plt-chart-2);
 }
 
 /* Customize tick lines */

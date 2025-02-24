@@ -72,7 +72,7 @@ export class ChartLayoutService {
 
  //   this.chart_attributes.width = this.svgElement.clientWidth - (this.chart_attributes.margin * 2);
     this.chart_attributes.width = this.svgContainer.clientWidth ;
-    this.chart_attributes.height = this.svgContainer.clientHeight - (this.chart_attributes.margin * 2);
+    this.chart_attributes.height = this.svgContainer.clientHeight - (this.chart_attributes.margin * 2) ;
    
     let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
     this.svg_attributes.height = svgBRect.height - (this.chart_attributes.margin * 2);
@@ -136,39 +136,27 @@ export class ChartLayoutService {
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
     //  this.ohlcRect.setAttribute('width', this.svgWidth.toString());
 
-
     console.log('sectionContentA', this.rectVolume.getBBox().height);
+
     // RIGHT
 /*    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);*/
-
     this.yAxisRightRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
     this.yAxisRightRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom}`);
     this.yAxisRightRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisRightA.setAttribute('id', 'RightA');
-
-    // X AXIS BOTTOM
-
 
     // LEFT
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
     this.yAxisLeftRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom}`);
     this.yAxisLeftRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisLeftA.setAttribute('id', 'LeftA');
-
-
-/*    this.candlestick.gCandlestick.setAttribute('transform', `translate(${this.sectionA.margins.left, this.sectionA.margins.right})`);*/
-
-    // SECTION A-1
-
-
-
-
   }
 
   alignChartsToScaffold(): void {
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
     this.sectionA.setAttribute('transform', `translate(0,0)`);
-    this.sectionB.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value*.5})`);
+    this.sectionB.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .5})`);
+    this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     this.sectionContentA.setAttribute('transform', `translate(32,0)`);
     this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionContentARect.getBBox().height - this.rectVolume.getBBox().height})`);
