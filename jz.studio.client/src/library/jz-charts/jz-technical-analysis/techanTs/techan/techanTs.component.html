@@ -6,17 +6,17 @@
     <rect #svgElementRect id="svgElementRect" class="svgElementRect" x="0" y="0"  width="0" height="0"  fill="#74776b"></rect>
 
     <!--X AXIS TOP-->
-    <g #xAxisTopGroup class="axis x-axis" id="xAxisTopGroup">
-      <rect #xAxisTopRect  class="axis x-axis" width="0" height="0" fill="var(--chart-clr-1)"></rect>
+    <g #xAxisTopGroup id="xAxisTopGroup">
+      <rect #xAxisTopRect  class="axis x-axis" width="0" height="0"></rect>
       <g #xAxisTop id="yAxisTop" class="y-axis"></g>
     </g>
 
     <g #sections id="sections">
-      <rect #sectionsRect id="" fill="skyblue"></rect>
+      <rect #sectionsRect id="" fill="skyblue"></rect>bn 
 
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
-        <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(--chart-clr-1)" stroke="white"></rect>
+        <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(--chart-1)" stroke="white"></rect>
 
         <g #ohlcChart id="ohlcChart">
 
@@ -34,7 +34,7 @@
 
           <!-- OHLC CHART -->
           <g #sectionContentA id="sectionContentA">
-            <rect #sectionContentARect id="sectionContentARect" stroke="blue"></rect>
+            <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
             <!-- Section A-1 Volume Chart -->
             <g #volumeGroup id="volumeGroup">

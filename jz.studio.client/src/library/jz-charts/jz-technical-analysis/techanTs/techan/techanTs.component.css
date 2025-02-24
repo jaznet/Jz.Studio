@@ -37,4 +37,6 @@ text {
     fill:lightgray;
 }
 
-
+.ohlcRect {
+fill:var(--plt-chart-1);
+}
