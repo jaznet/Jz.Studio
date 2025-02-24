@@ -10,7 +10,7 @@
   width: 325px;
   margin: 0 auto;
   padding: 16px 16px 16px 16px;
-  border: 1px solid var(--plt-clr-2);
+  border: 1px solid var(--plt-clr-4);
   border-radius: 8px;
   box-shadow: 0 0 15px 10px rgba(136, 153, 153, 0.2);
   background-color: var(--plt-clr-3);

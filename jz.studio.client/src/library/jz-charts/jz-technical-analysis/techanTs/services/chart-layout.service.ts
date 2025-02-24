@@ -130,7 +130,7 @@ export class ChartLayoutService {
     this.sectionContentARect.setAttribute('height', `${this.sectionAattributes.height}`);
     console.log('sectionContentARect', this.sectionContentARect);
     this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.baseVal.valueAsString));
-    this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value * .5)).toString());
+    this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value)).toString());
     this.rectVolume.setAttribute('width', (this.sectionContentARect.width.baseVal.value.toString() ));
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
