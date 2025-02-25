@@ -12,13 +12,39 @@
     </g>
 
     <g #sections id="sections">
-      <rect #sectionsRect id="" fill="skyblue"></rect>bn 
+      <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn 
 
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
-        <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(--chart-1)" stroke="white"></rect>
+        <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--chart-1)" stroke="white"></rect>
 
         <g #ohlcChart id="ohlcChart">
+
+          <!-- OHLC CHART -->
+          <g #sectionContentA id="sectionContentA">
+            <rect #sectionContentARect id="sectionContentARect" fill="var(--chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+
+            <g #ohlcGroup id="ohlcGroup">
+              <rect #ohlcRect class="ohlcRect" id="ohlcRect"
+                    x="0" y="0"
+                    width="0" height="0"
+                    [attr.width]="0"
+                    [attr.height]="0"
+                    fill='var(--plt)'>
+              </rect>
+            </g>
+
+            <!-- Section A-1 Volume Chart -->
+            <g #volumeGroup id="volumeGroup">
+              <rect #volumeRect stroke="#00a9a5" width="0" height="0"></rect>
+              <g #volumeChart id="volumeChart"></g>
+            </g>
+
+            <g #sma1 id="sma1"></g>
+            <g #sma2 id="sma2"></g>
+            <g #sma3 id="sma3"></g>
+            <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+          </g>
 
           // RIGHT AXIS
           <g #yAxisRightGroupA id="yAxisGroupRight" class="y-axis">
@@ -32,31 +58,7 @@
             <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
           </g>
 
-          <!-- OHLC CHART -->
-          <g #sectionContentA id="sectionContentA">
-            <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
-            <!-- Section A-1 Volume Chart -->
-            <g #volumeGroup id="volumeGroup">
-              <rect #volumeRect stroke="#00a9a5"></rect>
-              <g #volumeChart id="volumeChart"></g>
-            </g>
-
-            <g #ohlcGroup id="ohlcGroup">
-              <rect #ohlcRect class="ohlcRect" id="ohlcRect"
-                    x="0" y="0"
-                    [attr.width]="0"
-                    [attr.height]="0"
-                    fill="transparent">
-                <!--fill='var(--plt-clr-3'>-->
-              </rect>
-            </g>
-
-            <g #sma1 id="sma1"></g>
-            <g #sma2 id="sma2"></g>
-            <g #sma3 id="sma3"></g>
-            <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
-          </g>
 
         </g>
 

@@ -72,6 +72,12 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-4', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-5', '#a9927d');
 
+        document.documentElement.style.setProperty('--chart-1', '#1B1004');
+        document.documentElement.style.setProperty('--chart-2', '#231505 ');
+        document.documentElement.style.setProperty('--chart-3', '#937666');
+        document.documentElement.style.setProperty('--chart-4', '#6FA288');
+        document.documentElement.style.setProperty('--chart-5', '#a9927d');
+
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 
@@ -124,7 +130,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');
 
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
 
         document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
@@ -146,7 +152,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');
 
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
 
         document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
@@ -168,7 +174,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-4', '#A9CEF4');
         document.documentElement.style.setProperty('--plt-txt-5', '#DCE6EF');
 
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
 
         document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
@@ -188,8 +194,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-txt-3', 'var(--plt-clr-4');
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');
-
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
 
         document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
@@ -257,7 +262,7 @@ export class PaletteMgrService {
      
 
       case 'gray':
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
         document.documentElement.style.setProperty('--jz-palette-highlight', '#F5EE9E');
         document.documentElement.style.setProperty('--plt-txt-1', 'var(--plt-clr-5');
         document.documentElement.style.setProperty('--plt-txt-2', '#0C3A64');
@@ -331,7 +336,7 @@ export class PaletteMgrService {
         break;
 
       case 'xyno':
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
         document.documentElement.style.setProperty('--plt-txt-1', 'black');
         document.documentElement.style.setProperty('--plt-txt-2', '#0C3A64');
         document.documentElement.style.setProperty('--plt-txt-3', '#B6AFAF');
@@ -388,7 +393,7 @@ export class PaletteMgrService {
         break;
 
       case 'liver':
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-1');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-1)');
         document.documentElement.style.setProperty('--jz-palette-app-body', 'var(--plt-clr-1');
         document.documentElement.style.setProperty('--plt-txt-1', '#A6BFC9');
         document.documentElement.style.setProperty('--plt-txt-2', '#DCE6EF');
@@ -443,7 +448,7 @@ export class PaletteMgrService {
         break;
 
       case 'oxford':
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-1');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-1)');
         document.documentElement.style.setProperty('--jz-palette-app-body', 'var(--plt-clr-1');
         document.documentElement.style.setProperty('--plt-txt-1', '#A6BFC9');
         document.documentElement.style.setProperty('--plt-txt-2', '#DCE6EF');
@@ -502,7 +507,7 @@ export class PaletteMgrService {
       case "findash":
 
       case 'indigo2':
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3');
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
         document.documentElement.style.setProperty('--plt-txt-1', 'var(--plt-clr-3');
         document.documentElement.style.setProperty('--plt-txt-2', '#97A9BB');
         document.documentElement.style.setProperty('--plt-txt-3', 'black');
