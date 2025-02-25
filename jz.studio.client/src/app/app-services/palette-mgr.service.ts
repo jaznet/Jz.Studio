@@ -69,8 +69,6 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-4', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-5', '#a9927d');
 
-    
-
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 

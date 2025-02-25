@@ -12,7 +12,19 @@
     </g>
 
     <g #sections id="sections">
-      <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn 
+      <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn
+
+      // LEFT AXIS
+      <g #yAxisLeftGroupA id="yAxisLeft">
+        <rect #yAxisLeftRectA width="0" height="0" class="axis y-axis "></rect>
+        <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
+      </g>
+
+      // RIGHT AXIS
+      <g #yAxisRightGroupA id="yAxisGroupRight">
+        <rect #yAxisRightRectA width="0" height="0" class="axis y-axis "></rect>
+        <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
+      </g>
 
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
@@ -29,8 +41,7 @@
                     x="0" y="0"
                     width="0" height="0"
                     [attr.width]="0"
-                    [attr.height]="0"
-                    fill='var(--plt)'>
+                    [attr.height]="0">
               </rect>
             </g>
 
@@ -46,17 +57,9 @@
             <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
           </g>
 
-          // RIGHT AXIS
-          <g #yAxisRightGroupA id="yAxisGroupRight" class="y-axis">
-            <rect #yAxisRightRectA width="0" height="0" fill="blue"></rect>
-            <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
-          </g>
 
-          // LEFT AXIS
-          <g #yAxisLeftGroupA id="yAxisLeft" class="y-axis">
-            <rect #yAxisLeftRectA width="0" height="0" fill="violet"></rect>
-            <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
-          </g>
+
+
 
 
 
