@@ -30,45 +30,48 @@
           <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
         </g>
 
-          <!-- SECTION CONTENT A -->
-          <g #sectionContentA id="sectionContentA">
-            <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+        <!-- SECTION CONTENT A -->
+        <g #sectionContentA id="sectionContentA">
+          <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
-            <!-- OHLC GROUP-->
-            <g #ohlcGroup id="ohlcGroup">
-              <rect #ohlcRect class="ohlcRect" id="ohlcRect"
-                    x="0" y="0"
-                    width="0" height="0"
-                    [attr.width]="0"
-                    [attr.height]="0">
-              </rect>
-            </g>
-
-            <!-- Section A-1 Volume Chart -->
-            <g #volumeGroup id="volumeGroup">
-              <rect #volumeRect stroke="#00a9a5" width="0" height="0"></rect>
-              <g #volumeChart id="volumeChart"></g>
-            </g>
-
-            <g #sma1 id="sma1"></g>
-            <g #sma2 id="sma2"></g>
-            <g #sma3 id="sma3"></g>
-            <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+          <!-- OHLC GROUP-->
+          <g #ohlcGroup id="ohlcGroup">
+            <rect #ohlcRect class="ohlcRect" id="ohlcRect"
+                  x="0" y="0"
+                  width="0" height="0"
+                  [attr.width]="0"
+                  [attr.height]="0">
+            </rect>
           </g>
-    
+
+          <!-- Section A-1 Volume Chart -->
+          <g #volumeGroup id="volumeGroup">
+            <rect #volumeRect stroke="#00a9a5" width="0" height="0"></rect>
+            <g #volumeChart id="volumeChart"></g>
+          </g>
+
+          <g #sma1 id="sma1"></g>
+          <g #sma2 id="sma2"></g>
+          <g #sma3 id="sma3"></g>
+          <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+        </g>
+
       </g>
 
       <!-- SECTION B -->
-      <g id="sectionB" #sectionB>
+      <g #sectionB id="sectionB">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-        <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke: yellow  fill: var("--plt-chart-3)"></rect>
-        <g #macdChart id="macdChart"></g>
+        <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke="yellow"  fill= "var(--plt-clr-3)"></rect>
+        <g #sectionContentB id="sectionContentB">
+          <rect #sectionContentBRect id="sectionContentBRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+          <g #macdChart id="macdChart"></g>
+        </g>
       </g>
 
       <!-- SECTION C -->
-      <g id="sectionC" #sectionC>
+      <g #sectionC id="sectionC">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <!--<rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke: lightblue ></rect>-->
+        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke="lightblue"  ></rect>
         <g #rsiGroup id="rsiGroup"></g>
       </g>
 

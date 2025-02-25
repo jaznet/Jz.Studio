@@ -57,17 +57,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sectionA', { static: true }) sectionARef!: ElementRef<SVGGElement>;
   @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
-  // BODY
   @ViewChild('sectionContentA', { static: true }) sectionContentARef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('sectionB', { static: true }) gSectionBref!: ElementRef<SVGGElement>;
+  @ViewChild('sectionB', { static: true }) sectionBRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionRectB', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('sectionC', { static: true }) gSectionCref!: ElementRef<SVGGElement>;
+  @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionRectC', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
@@ -131,11 +130,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
 }
 
   ngAfterViewInit() {
-   
     this.popover_loading.show();
     const ticker = 'NVDA';
     this.stockPriceService.getStockPrices(ticker).subscribe(
@@ -191,10 +188,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
 
-    this.layout.sectionB = this.gSectionBref.nativeElement;
+    this.layout.sectionB = this.sectionBRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
 
-    this.layout.sectionC = this.gSectionCref.nativeElement;
+    this.layout.sectionC = this.sectionCRef.nativeElement;
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
     
     this.layout.xAxisTop = this.xAxisTopRef.nativeElement;
