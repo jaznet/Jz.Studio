@@ -14,22 +14,23 @@
     <g #sections id="sections">
       <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn
 
-      // LEFT AXIS
-      <g #yAxisLeftGroupA id="yAxisLeft">
-        <rect #yAxisLeftRectA width="0" height="0" class="axis y-axis "></rect>
-        <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
-      </g>
 
-      // RIGHT AXIS
-      <g #yAxisRightGroupA id="yAxisGroupRight">
-        <rect #yAxisRightRectA width="0" height="0" class="axis y-axis "></rect>
-        <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
-      </g>
 
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)" stroke="white"></rect>
 
+        // LEFT AXIS
+        <g #yAxisLeftGroupA id="yAxisLeft">
+          <rect #yAxisLeftRectA width="0" height="0" class="axis y-axis "></rect>
+          <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
+        </g>
+
+        // RIGHT AXIS
+        <g #yAxisRightGroupA id="yAxisGroupRight">
+          <rect #yAxisRightRectA width="0" height="0" class="axis y-axis "></rect>
+          <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
+        </g>
         <g #ohlcChart id="ohlcChart">
 
           <!-- OHLC CHART -->

@@ -160,11 +160,12 @@ export class ChartLayoutService {
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
     this.sectionContentA.setAttribute('transform', `translate(32,0)`);
+    this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
     this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionContentARect.getBBox().height - this.rectVolume.getBBox().height})`);
     this.xAxisTop.setAttribute('transform', `translate(32,32)`);
    this.xAxisBottomGroup.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
-    //this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
+   
 
     //this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
     //this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
