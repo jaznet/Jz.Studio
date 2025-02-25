@@ -123,11 +123,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private macdChart: MacdChartService,
     private rsiIndicator: RsiIndicatorService
   ) {
-    document.documentElement.style.setProperty('--chart-1', '#1B1004');
-    document.documentElement.style.setProperty('--chart-2', '#231505');
-    document.documentElement.style.setProperty('--chart-3', '#937666');
-    document.documentElement.style.setProperty('--chart-4', '#6FA288');
-    document.documentElement.style.setProperty('--chart-5', '#a9927d');
+    document.documentElement.style.setProperty('--plt-chart-1', '#1B1004');
+    document.documentElement.style.setProperty('--plt-chart-2', '#231505');
+    document.documentElement.style.setProperty('--plt-chart-3', '#937666');
+    document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
+    document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
   ngOnInit(): void {

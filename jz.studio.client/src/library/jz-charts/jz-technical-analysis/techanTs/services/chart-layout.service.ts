@@ -88,13 +88,13 @@ export class ChartLayoutService {
     this.xAxisTop.setAttribute('id', 'TopA');
     this.xAxisTopRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
-    this.xAxisTopRect.setAttribute('fill', 'var(--chart-2');
+    this.xAxisTopRect.setAttribute('fill', 'var(--plt-chart-2');
 
     // X AXIS BOTTOM
     this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
     this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width}`);
     this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
-    this.xAxisBottomRect.setAttribute('fill', 'var(--chart-2');
+    this.xAxisBottomRect.setAttribute('fill', 'var(--plt-chart-2');
 
     // SECTIONS
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
@@ -131,7 +131,7 @@ export class ChartLayoutService {
     console.log('sectionContentARect', this.sectionContentARect);
     this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.baseVal.valueAsString));
     this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value)).toString());
-    this.ohlcRect.setAttribute('fill', 'var(--chart-1)');
+    this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
     this.rectVolume.setAttribute('width', (this.sectionContentARect.width.baseVal.value.toString() ));
     console.log('volume', this.ohlcRect.height);
     this.rectVolume.setAttribute('height', (this.sectionAattributes.height * .2).toString());
