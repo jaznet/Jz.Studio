@@ -63,20 +63,13 @@ export class PaletteMgrService {
         break;
 
       case 'charts':
-
- 
-    
         document.documentElement.style.setProperty('--plt-clr-1', '#12100e');
         document.documentElement.style.setProperty('--plt-clr-2', '#484844 ');
         document.documentElement.style.setProperty('--plt-clr-3', '#937666');
         document.documentElement.style.setProperty('--plt-clr-4', '#6FA288');
         document.documentElement.style.setProperty('--plt-clr-5', '#a9927d');
 
-        document.documentElement.style.setProperty('--chart-1', '#1B1004');
-        document.documentElement.style.setProperty('--chart-2', '#231505 ');
-        document.documentElement.style.setProperty('--chart-3', '#937666');
-        document.documentElement.style.setProperty('--chart-4', '#6FA288');
-        document.documentElement.style.setProperty('--chart-5', '#a9927d');
+    
 
         document.documentElement.style.setProperty('--plt-clr-x', 'black');
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
