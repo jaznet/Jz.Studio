@@ -68,17 +68,13 @@ export class ChartLayoutService {
   }
 
   sizeSections(): void {
-    console.log('Chart Attributes', this.chart_attributes);
-
- //   this.chart_attributes.width = this.svgElement.clientWidth - (this.chart_attributes.margin * 2);
     this.chart_attributes.width = this.svgContainer.clientWidth ;
     this.chart_attributes.height = this.svgContainer.clientHeight - (this.chart_attributes.margin * 2) ;
-   
+
+    // SVG
     let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
     this.svg_attributes.height = svgBRect.height - (this.chart_attributes.margin * 2);
     this.svg_attributes.width = svgBRect.width;
-    console.log('SVG Attributes', this.svg_attributes);
-
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
@@ -142,13 +138,13 @@ export class ChartLayoutService {
 /*  RIGHT*/
 /*    this.yAxisRightA.setAttribute('transform', `translate(${this.sectionA.margins.left},0)`);*/
     this.yAxisRightRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
-    this.yAxisRightRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom}`);
+    this.yAxisRightRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top}`);
     this.yAxisRightRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisRightA.setAttribute('id', 'RightA');
 
     /*LEFT*/
     this.yAxisLeftRectA.setAttribute('width', `${this.sectionAattributes.margins.right}`);
-    this.yAxisLeftRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top - this.sectionAattributes.margins.bottom}`);
+    this.yAxisLeftRectA.setAttribute('height', `${this.sectionAattributes.height - this.sectionAattributes.margins.top}`);
     this.yAxisLeftRectA.setAttribute('fill', 'var(--plt-clr-2)');
     this.yAxisLeftA.setAttribute('id', 'LeftA');
   }
