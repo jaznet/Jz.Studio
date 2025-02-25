@@ -230,8 +230,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   constructChart(): void {
-    //this.drawCandlestick();
-    //this.drawVolume();
+    this.drawCandlestick();
+    this.drawVolume();
     //this.drawSma1(5);
     //this.drawSma2(50);
     //this.drawSma3(100);

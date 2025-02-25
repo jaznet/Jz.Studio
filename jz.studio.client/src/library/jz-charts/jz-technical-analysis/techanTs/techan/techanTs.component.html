@@ -14,19 +14,17 @@
     <g #sections id="sections">
       <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn
 
-
-
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)" stroke="white"></rect>
 
-        // LEFT AXIS
+        <!-- LEFT AXIS-->
         <g #yAxisLeftGroupA id="yAxisLeft">
           <rect #yAxisLeftRectA width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisLeftA id="yAxisLeft" class="y-axis"></g>
         </g>
 
-        // RIGHT AXIS
+        <!-- RIGHT AXIS-->
         <g #yAxisRightGroupA id="yAxisGroupRight">
           <rect #yAxisRightRectA width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisRightA id="yAxisRight" class="y-axis"></g>
@@ -37,6 +35,7 @@
           <g #sectionContentA id="sectionContentA">
             <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
+            <!-- OHLC GROUP-->
             <g #ohlcGroup id="ohlcGroup">
               <rect #ohlcRect class="ohlcRect" id="ohlcRect"
                     x="0" y="0"
@@ -57,28 +56,20 @@
             <g #sma3 id="sma3"></g>
             <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
           </g>
-
-
-
-
-
-
-
         </g>
-
       </g>
 
       <!-- SECTION B -->
       <g id="sectionB" #sectionB>
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-        <rect #sectionRectB id="sectionRectB" x="0" y="0" style="stroke: yellow; fill: #251605"></rect>
+        <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" style="stroke: yellow; fill: #251605"></rect>
         <g #macdChart id="macdChart"></g>
       </g>
 
       <!-- SECTION C -->
       <g id="sectionC" #sectionC>
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <rect #sectionRectC id="sectionRectC" x="0" y="0" style="stroke: lightblue; fill: #12100e"></rect>
+        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" style="stroke: lightblue; fill: #12100e"></rect>
         <g #rsiGroup id="rsiGroup"></g>
       </g>
 

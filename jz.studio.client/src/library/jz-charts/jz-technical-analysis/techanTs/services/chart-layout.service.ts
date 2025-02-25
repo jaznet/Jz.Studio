@@ -112,13 +112,13 @@ export class ChartLayoutService {
 
     // SECTION B
     let bboxB = this.sectionRectB.getBBox();
-    this.sectionBattributes.width = bboxB.width;
+    this.sectionBattributes.width = bboxB.width - this.sectionBattributes.margins.left - this.sectionBattributes.margins.right;
     this.sectionBattributes.height = bboxB.height-16;
     console.log(this.sectionAattributes.height);
 
     // SECTION C
     let bboxC = this.sectionRectC.getBBox();
-    this.sectionCattributes.width = bboxC.width;
+    this.sectionCattributes.width = bboxC.width - this.sectionCattributes.margins.left - this.sectionCattributes.margins.right;
     this.sectionCattributes.height = bboxC.height;
 
     //BODY
