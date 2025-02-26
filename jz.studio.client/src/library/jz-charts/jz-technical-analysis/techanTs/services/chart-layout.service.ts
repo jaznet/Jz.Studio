@@ -50,13 +50,29 @@ export class ChartLayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
+  yAxisLeftA!: SVGGElement;
+  yAxisLeftGroupA!: SVGGElement;
+  yAxisLeftRectA!: SVGRectElement;
+
   yAxisRightA!: SVGGElement;
   yAxisRightGroupA!: SVGGElement;
   yAxisRightRectA!: SVGRectElement;
 
-  yAxisLeftA!: SVGGElement;
-  yAxisLeftGroupA!: SVGGElement;
-  yAxisLeftRectA!: SVGRectElement;
+  yAxisLeftB!: SVGGElement;
+  yAxisLeftGroupB!: SVGGElement;
+  yAxisLeftRectB!: SVGRectElement;
+
+  yAxisRightB!: SVGGElement;
+  yAxisRightGroupB!: SVGGElement;
+  yAxisRightRectB!: SVGRectElement;
+
+  yAxisLeftC!: SVGGElement;
+  yAxisLeftGroupC!: SVGGElement;
+  yAxisLeftRectC!: SVGRectElement;
+
+  yAxisRightC!: SVGGElement;
+  yAxisRightGroupC!: SVGGElement;
+  yAxisRightRectC!: SVGRectElement;
 
   rectVolume!: SVGRectElement;
 

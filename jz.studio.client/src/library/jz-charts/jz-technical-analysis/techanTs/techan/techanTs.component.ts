@@ -76,13 +76,29 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
 
+  @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
+
   @ViewChild('yAxisRightGroupA', { static: true }) yAxisRightGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightA', { static: true }) yAxisRightARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectA', { static: true }) yAxisRightRectARef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisLeftGroupB', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftRectB', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
+
+  @ViewChild('yAxisRightGroupB', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisRightB', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisRightRectB', { static: true }) yAxisRightRectBRef!: ElementRef<SVGRectElement>;
+
+  @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftC', { static: true }) yAxisLeftCRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectCRef!: ElementRef<SVGRectElement>;
+
+  @ViewChild('yAxisRightGroupC', { static: true }) yAxisRightGroupCRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisRightC', { static: true }) yAxisRightCRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectCRef!: ElementRef<SVGRectElement>;
 
   // VOLUME GROUP
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
@@ -198,20 +214,35 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
 
+    this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
+    this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
+    this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
+
     this.layout.yAxisRightA = this.yAxisRightARef.nativeElement;
     this.layout.yAxisRightGroupA = this.yAxisRightGroupARef.nativeElement;
     this.layout.yAxisRightRectA = this.yAxisRightRectARef.nativeElement;
 
-    this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
-    this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
-    this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
+     this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
+    this.layout.yAxisLeftGroupB = this.yAxisLeftGroupBRef.nativeElement;;
+    this.layout.yAxisLeftRectB = this.yAxisLeftRectBRef.nativeElement;
+
+    this.layout.yAxisRightB = this.yAxisRightBRef.nativeElement;
+    this.layout.yAxisRightGroupB = this.yAxisRightGroupBRef.nativeElement;
+    this.layout.yAxisRightRectB = this.yAxisRightRectCRef.nativeElement;
+
+    this.layout.yAxisLeftC = this.yAxisLeftCRef.nativeElement;
+    this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
+    this.layout.yAxisLeftRectC = this.yAxisLeftRectCRef.nativeElement;
+
+    this.layout.yAxisRightC = this.yAxisRightCRef.nativeElement;
+    this.layout.yAxisRightGroupC = this.yAxisRightGroupCRef.nativeElement;
+    this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
 
     this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
-
 
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
