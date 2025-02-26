@@ -5,7 +5,7 @@
 }
 
 .axis {
-    background-color: var(--plt-chart-2);
+    fill: var(--plt-chart-2);
 }
 
 /* Customize tick lines */
