@@ -7,13 +7,13 @@
 
     <!--X AXIS TOP-->
     <g #xAxisTopGroup id="xAxisTopGroup">
-      <rect #xAxisTopRect  class="axis x-axis" width="0" height="0"></rect>
+      <rect #xAxisTopRect id="xAxisTopRect"  class="axis x-axis" width="0" height="0" ></rect>
       <g #xAxisTop id="yAxisTop" class="y-axis"></g>
     </g>
 
     <g #sections id="sections">
       <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn
-
+      <!-- region SECTION A -->
       <!-- SECTION A -->
       <g #sectionA id="sectionA">
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)" stroke="white"></rect>
@@ -25,8 +25,8 @@
         </g>
 
         <!-- RIGHT AXIS-->
-        <g #yAxisRightGroupA id="yAxisGroupRight">
-          <rect #yAxisRightRectA width="0" height="0" class="axis y-axis "></rect>
+        <g #yAxisRightGroupA id="yAxisGroupRightA">
+          <rect #yAxisRightRectA id="yAxisRightRectA" width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisRightA id="yAxisRightA" class="y-axis"></g>
         </g>
 
@@ -55,40 +55,30 @@
           <g #sma3 id="sma3"></g>
           <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
         </g>
-
       </g>
+      <!-- endregion -->
 
       <!-- SECTION B -->
       <g #sectionB id="sectionB">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
         <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke="yellow" fill="var(--plt-clr-3)"></rect>
 
-        <!-- LEFT AXIS-->
+        <!-- LEFT AXIS B  -->
         <g #yAxisLeftGroupB id="yAxisLeftGroupB">
-          <rect #yAxisLeftRectB width="0" height="0" class="axis y-axis "></rect>
+          <rect #yAxisLeftRectB id="yAxisLeftRectB" width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisLeftB id="yAxisLeftB" class="y-axis"></g>
         </g>
 
-        <!-- RIGHT AXIS-->
+        <!-- RIGHT AXIS B -->
         <g #yAxisRightGroupB id="yAxisGroupRightB">
-          <rect #yAxisRightRectB width="0" height="0" class="axis y-axis "></rect>
+          <rect #yAxisRightRectB id="yAxisRightRectB" width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisRightB id="yAxisRighB" class="y-axis"></g>
         </g>
 
         <g #sectionContentB id="sectionContentB">
           <rect #sectionContentBRect id="sectionContentBRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
-          <!-- LEFT AXIS-->
-          <g #yAxisLeftGroupC id="yAxisLeftGroupC">
-            <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
-            <g #yAxisLeftC id="yAxisLeftC" class="y-axis"></g>
-          </g>
 
-          <!-- RIGHT AXIS-->
-          <g #yAxisRightGroupC id="yAxisGroupRightC">
-            <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
-            <g #yAxisRightC id="yAxisRighC" class="y-axis"></g>
-          </g>
 
           <g #macdChart id="macdChart"></g>
         </g>
@@ -97,7 +87,18 @@
       <!-- SECTION C -->
       <g #sectionC id="sectionC">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke="lightblue"  ></rect>
+        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke="lightblue"></rect>
+        <!-- LEFT AXIS-->
+        <g #yAxisLeftGroupC id="yAxisLeftGroupC">
+          <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
+          <g #yAxisLeftC id="yAxisLeftC" class="y-axis"></g>
+        </g>
+
+        <!-- RIGHT AXIS-->
+        <g #yAxisRightGroupC id="yAxisGroupRightC">
+          <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
+          <g #yAxisRightC id="yAxisRighC" class="y-axis"></g>
+        </g>
         <g #rsiGroup id="rsiGroup"></g>
       </g>
 
@@ -105,7 +106,7 @@
 
     // BOTTOM AXIS
     <g #xAxisBottomGroup class="x-axis" id="xAxisBottomGroup">
-      <rect #xAxisBottomRect width="0" id="xAxisBottomRect" height="0" fill="orange"></rect>
+      <rect #xAxisBottomRect width="0" id="xAxisBottomRect" height="0" class="axis"></rect>
     </g>
 
   </svg>
