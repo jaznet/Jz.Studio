@@ -58,8 +58,6 @@ namespace Jz.Studio.Server {
 
             app.UseAuthorization();
 
-       
-
             app.MapControllers();
 
             app.MapFallbackToFile("/index.html");

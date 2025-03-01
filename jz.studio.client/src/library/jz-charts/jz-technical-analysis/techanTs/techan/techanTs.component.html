@@ -59,8 +59,7 @@
         <!-- #endregion -->
       </g>
       <!-- #endregion -->
-
-      <!-- SECTION B -->
+      <!-- #region SECTION B -->
       <g #sectionB id="sectionB">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
         <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke="yellow" fill="var(--plt-clr-1)"></rect>
@@ -79,14 +78,12 @@
 
         <g #sectionContentB id="sectionContentB">
           <rect #sectionContentBRect id="sectionContentBRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
-
-
-
           <g #macdChart id="macdChart"></g>
         </g>
       </g>
+      <!-- #endregion SECTION B -->
 
-      <!-- SECTION C -->
+      <!-- #region SECTION C -->
       <g #sectionC id="sectionC">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
         <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke="lightblue"></rect>
@@ -101,9 +98,13 @@
           <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisRightC id="yAxisRighC" class="y-axis"></g>
         </g>
+        <g #sectionContentC id="sectionContentC">
+          <rect #sectionContentCRect id="sectionContentCRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+          <g #macdChart id="macdChart"></g>
+        </g>
         <g #rsiGroup id="rsiGroup"></g>
       </g>
-
+      <!-- #endregion SECTION C -->
     </g>
 
     // BOTTOM AXIS

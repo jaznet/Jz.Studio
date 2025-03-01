@@ -32,10 +32,14 @@ export class ChartLayoutService {
   sma3!: SVGElement;
 
   sectionB!: SVGGElement;
+  sectionContentB!: SVGGElement;
+  sectionContentBRect!: SVGRectElement;
   sectionBattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 0, left: 32 } };
   macdChart: any;
 
   sectionC!: SVGGElement;
+  sectionContentC!: SVGGElement;
+  sectionContentCRect!: SVGRectElement;
   sectionCattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 0, left: 32 } };
   rsiGroup: any;
 
@@ -139,7 +143,13 @@ export class ChartLayoutService {
     //BODY
     this.sectionContentARect.setAttribute('width', `${this.sectionAattributes.width - this.sectionAattributes.margins.left - this.sectionAattributes.margins.right}`);
     this.sectionContentARect.setAttribute('height', `${this.sectionAattributes.height}`);
+    this.sectionContentBRect.setAttribute('width', `${this.sectionBattributes.width - this.sectionBattributes.margins.left - this.sectionBattributes.margins.right}`);
+    this.sectionContentBRect.setAttribute('height', `${this.sectionBattributes.height}`);
+    this.sectionContentCRect.setAttribute('width', `${this.sectionCattributes.width - this.sectionCattributes.margins.left - this.sectionCattributes.margins.right}`);
+    this.sectionContentCRect.setAttribute('height', `${this.sectionCattributes.height}`);
     console.log('sectionContentARect', this.sectionContentARect);
+
+
     this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.baseVal.valueAsString));
     this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value)).toString());
     this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');

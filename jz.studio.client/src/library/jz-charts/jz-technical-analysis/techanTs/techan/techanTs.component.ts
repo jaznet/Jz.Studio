@@ -63,9 +63,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) sectionBRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionContentB', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionContentBRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('sectionRectB', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionContentC', { static: true }) sectionContentCRef!: ElementRef<SVGGElement>;
+  @ViewChild('sectionContentCRect', { static: true }) sectionContentCRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('sectionRectC', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
@@ -204,9 +208,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma3 = this.sma3Ref.nativeElement;
 
     this.layout.sectionB = this.sectionBRef.nativeElement;
+    this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
+    this.layout.sectionContentB = this.sectionContentBRef.nativeElement;
+    this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
 
     this.layout.sectionC = this.sectionCRef.nativeElement;
+    this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
+    this.layout.sectionContentC = this.sectionContentCRef.nativeElement;
+    this.layout.sectionContentCRect = this.sectionContentCRectRef.nativeElement;
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
     
     this.layout.xAxisTop = this.xAxisTopRef.nativeElement;
