@@ -214,16 +214,10 @@ export class ChartLayoutService {
     this.xAxisTop.setAttribute('transform', `translate(32,32)`);
    this.xAxisBottomGroup.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
-   
-
     //this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectionAattributes.margins.top})`);
-    //this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
-
-
+    this.yAxisLeftA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
     //this.macdChart.setAttribute('transform', `translate(32,391.5)`);
     //this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);
-
    // this.macdChart.setAttribute('transform', `translate(32,391.5)`);
-
   }
 }
