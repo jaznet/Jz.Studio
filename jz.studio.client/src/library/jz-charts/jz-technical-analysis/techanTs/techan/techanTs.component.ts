@@ -38,11 +38,10 @@ interface DataType {
 @Component({
   selector: 'techanTs',
   templateUrl: './techanTs.component.html',
-  styleUrls: ['./techanTs.component.css'] // Corrected from `styleUrl` to `styleUrls`
+  styleUrls: ['./techanTs.component.css'] 
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
- // @HostBinding('style.margin') margin = '8px';
   
   @ViewChild('svgContainer', { static: true }) svgContainerRef!: ElementRef;
   @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;

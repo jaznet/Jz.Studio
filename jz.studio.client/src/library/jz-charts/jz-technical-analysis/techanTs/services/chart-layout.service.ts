@@ -133,7 +133,7 @@ export class ChartLayoutService {
 
     // SECTION C
     let bboxC = this.sectionRectC.getBBox();
-    this.sectionCattributes.width = bboxC.width - this.sectionCattributes.margins.left - this.sectionCattributes.margins.right;
+    this.sectionCattributes.width = bboxC.width;
     this.sectionCattributes.height = bboxC.height;
 
     //BODY
@@ -199,8 +199,6 @@ export class ChartLayoutService {
     console.log('right axis', this.yAxisRightRectC);
 
   }
-
-
 
   alignChartsToScaffold(): void {
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)

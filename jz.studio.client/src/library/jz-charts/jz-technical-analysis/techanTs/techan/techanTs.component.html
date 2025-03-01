@@ -12,9 +12,9 @@
     </g>
 
     <g #sections id="sections">
-      <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>bn
-      <!-- region SECTION A -->
-      <!-- SECTION A -->
+      <rect #sectionsRect id="" fill="skyblue" width="0" height="0"></rect>
+
+      <!-- #region SECTION A -->
       <g #sectionA id="sectionA">
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)" stroke="white"></rect>
 
@@ -30,7 +30,7 @@
           <g #yAxisRightA id="yAxisRightA" class="y-axis"></g>
         </g>
 
-        <!-- SECTION CONTENT A -->
+        <!-- #region SECTION CONTENT A -->
         <g #sectionContentA id="sectionContentA">
           <rect #sectionContentARect id="sectionContentARect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
 
@@ -54,14 +54,16 @@
           <g #sma2 id="sma2"></g>
           <g #sma3 id="sma3"></g>
           <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+
         </g>
+        <!-- #endregion -->
       </g>
-      <!-- endregion -->
+      <!-- #endregion -->
 
       <!-- SECTION B -->
       <g #sectionB id="sectionB">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-        <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke="yellow" fill="var(--plt-clr-3)"></rect>
+        <rect #sectionRectB id="sectionRectB" x="0" y="0" width="0" height="0" stroke="yellow" fill="var(--plt-clr-1)"></rect>
 
         <!-- LEFT AXIS B  -->
         <g #yAxisLeftGroupB id="yAxisLeftGroupB">
