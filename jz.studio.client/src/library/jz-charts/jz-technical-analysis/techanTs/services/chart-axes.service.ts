@@ -47,7 +47,7 @@ export class ChartAxesService {
     this.xAxisTop.call(this.candlestickXaxisTop);
     this.xAxisBottom.call(this.candlestickXaxisBottom);
     this.yAxisLeft.call(this.candlestickYaxisLeft);
-    //this.yAxisRight.call(this.candlestickYaxisRight);
+    this.yAxisRight.call(this.candlestickYaxisRight);
   
 
 

@@ -72,6 +72,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionContentCRect', { static: true }) sectionContentCRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('sectionRectC', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
+  // #region Axes
+
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTop', { static: true }) xAxisTopRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
@@ -102,6 +104,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisRightGroupC', { static: true }) yAxisRightGroupCRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightC', { static: true }) yAxisRightCRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectCRef!: ElementRef<SVGRectElement>;
+
+  // #endregion Axes
 
   // VOLUME GROUP
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;

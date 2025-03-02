@@ -176,37 +176,31 @@ export class ChartLayoutService {
     this.yAxisLeftRectB.setAttribute('width', `${this.sectionBattributes.margins.right}`);
     this.yAxisLeftRectB.setAttribute('height', `${this.sectionBattributes.height}`);
     this.yAxisLeftRectB.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('left axis', this.yAxisLeftRectB);
 
     /*  RIGHT B */
     this.yAxisRightRectB.setAttribute('width', `${this.sectionBattributes.margins.right}`);
     this.yAxisRightRectB.setAttribute('height', `${this.sectionBattributes.height}`);
     this.yAxisRightRectB.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('right axis', this.yAxisRightRectB);
 
     /* LEFT  B*/
     this.yAxisLeftRectC.setAttribute('width', `${this.sectionCattributes.margins.right}`);
     this.yAxisLeftRectC.setAttribute('height', `${this.sectionCattributes.height}`);
     this.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('left axis', this.yAxisLeftRectC);
 
     /*  RIGHT B */
     this.yAxisRightRectC.setAttribute('width', `${this.sectionCattributes.margins.right}`);
     this.yAxisRightRectC.setAttribute('height', `${this.sectionCattributes.height}`);
     this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('right axis', this.yAxisRightRectC);
 
     /* LEFT  C*/
     this.yAxisLeftRectC.setAttribute('width', `${this.sectionCattributes.margins.right}`);
     this.yAxisLeftRectC.setAttribute('height', `${this.sectionCattributes.height}`);
     this.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('left axis', this.yAxisLeftRectC);
 
     /*  RIGHT C */
     this.yAxisRightRectC.setAttribute('width', `${this.sectionCattributes.margins.right}`);
     this.yAxisRightRectC.setAttribute('height', `${this.sectionCattributes.height}`);
     this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
-    console.log('right axis', this.yAxisRightRectC);
 
   }
 
@@ -216,7 +210,9 @@ export class ChartLayoutService {
     this.sectionB.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .5})`);
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
-    this.sectionContentA.setAttribute('transform', `translate(32,0)`);
+    this.sectionContentA.setAttribute('transform', `translate(${this.sectionAattributes.margins.left},0)`);
+    this.sectionContentB.setAttribute('transform', `translate(${this.sectionBattributes.width},0)`);
+    this.sectionContentC.setAttribute('transform', `translate(${this.sectionCattributes.width},0)`);
     this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectionAattributes.width - this.sectionAattributes.margins.right},${this.sectionAattributes.margins.top})`);
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectionBattributes.width - this.sectionBattributes.margins.right},${this.sectionBattributes.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectionCattributes.width - this.sectionCattributes.margins.right},${this.sectionCattributes.margins.top})`);
