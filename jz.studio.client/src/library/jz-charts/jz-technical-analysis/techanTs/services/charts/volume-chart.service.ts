@@ -67,7 +67,7 @@ export class VolumeChartService {
         .attr('y', (d: olhcData) => this._yScale(d.volume))
         .attr('width', this._barWidth)
         .attr('height', (d: olhcData) => this._yScale(0) - this._yScale(d.volume))
-        .attr('fill', (d: olhcData) => (d.open > d.close ? '#532E2D' : '#174C2E'));
+        .attr('fill', (d: olhcData) => (d.open > d.close ? '#620C09' : '#0C4525'));
 
     //  // Exit
     //  volumeBars.exit().remove();

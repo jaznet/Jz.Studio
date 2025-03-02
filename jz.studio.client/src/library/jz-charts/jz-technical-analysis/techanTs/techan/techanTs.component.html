@@ -39,6 +39,7 @@
             <rect #ohlcRect class="ohlcRect" id="ohlcRect"
                   x="0" y="0"
                   width="0" height="0"
+                   fill="transparent"
                   [attr.width]="0"
                   [attr.height]="0">
             </rect>
@@ -46,7 +47,7 @@
 
           <!-- Section A-1 Volume Chart -->
           <g #volumeGroup id="volumeGroup">
-            <rect #volumeRect stroke="#00a9a5" width="0" height="0"></rect>
+            <rect #volumeRect width="0" height="0" fill="transparent"></rect>
             <g #volumeChart id="volumeChart"></g>
           </g>
 
