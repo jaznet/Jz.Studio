@@ -38,20 +38,27 @@ export class OhlcChartService {
   }
 
   public setCandleWidth() {
-    // Calculate the width of each candlestick
-    const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {
-      if (i === 0) return 0; // No interval for the first data point
-      return this.data.parsedData[i].date.getTime() - this.data.parsedData[i - 1].date.getTime();
-    }).filter((interval: number) => interval > 0); // Remove the first zero interval
+    const uniqueDates = this.data.parsedData.map(d => d.date.toISOString());
 
-    const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
-    const timeDiff = this.data.parsedData.length > 1
-      ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
-      : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
-    this._candleWidth =
-      this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.dateScaleX(this.data.parsedData[0].date);
+    // Use bandWidth() for `scaleBand()` instead of manual calculations
+    this._candleWidth = this.scales.dateScaleX.bandwidth();
 
     return this; // Allows method chaining
+
+    //// Calculate the width of each candlestick
+    //const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {
+    //  if (i === 0) return 0; // No interval for the first data point
+    //  return this.data.parsedData[i].date.getTime() - this.data.parsedData[i - 1].date.getTime();
+    //}).filter((interval: number) => interval > 0); // Remove the first zero interval
+
+    //const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
+    //const timeDiff = this.data.parsedData.length > 1
+    //  ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
+    //  : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
+    //this._candleWidth =
+    //  this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.dateScaleX(this.data.parsedData[0].date);
+
+    //return this; // Allows method chaining
   }
 
   /*  public draw(selection: any): void {*/
@@ -79,7 +86,11 @@ export class OhlcChartService {
       .append('rect')
       .attr('class', 'candle')
       .merge(candle)
-      .attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)
+      /*.attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)*/
+      .attr('x', (d: olhcData) => {
+        console.log("Date:", d.date, "Scaled X:", this._xScale(d.date.toISOString()));
+        return this._xScale(d.date.toISOString()) ?? 0;
+      })
       .attr('y', (d: olhcData) => this._yScale(Math.max(d.open, d.close)))
       .attr('width', this._candleWidth)
       .attr('height', (d: olhcData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))

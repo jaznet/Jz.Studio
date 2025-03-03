@@ -22,14 +22,15 @@ export class ChartScalesService {
 
   createScales() {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
-      this.dateScaleX = scaleTime()
-        .domain(this.data.dateExtent)
-        .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right]);
+      this.dateScaleX = scaleBand()
+        .domain(this.data.parsedData.map(d => d.date.toISOString())) // Ensure only valid trading days
+        .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right])
+        .padding(0.1); // Adjust padding if needed
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
-      this.dateScaleX = scaleTime()
-        .domain([new Date(), new Date()]) // Default to current date
-        .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right]);
+      this.dateScaleX = scaleBand()
+        .domain([])
+        .range([0, this.layout.sectionAattributes.width]);
     }
 
     this.ohlcYscale = scaleLinear()
