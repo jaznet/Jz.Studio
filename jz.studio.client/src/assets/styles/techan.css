@@ -1,36 +1,31 @@
 
-/* Customize the axis line */
 .x-axis path {
-  stroke: #F1FEC6;
+  stroke: var(--plt-chart-3);
   stroke-width: 2;
 }
 
-/* Customize tick lines */
 .x-axis .tick line {
-  stroke: white;
+  stroke: var(--plt-chart-3);
   stroke-width: 1;
 }
 
-/* Customize tick labels */
 .x-axis .tick text {
   font-size: 12px;
-  fill: white;
+  fill: var(--plt-chart-3);
 }
 
-/* Customize the axis line */
 .y-axis path {
-  stroke: white;
+  stroke: var(--plt-chart-3);
   stroke-width: 2;
 }
 
-/* Customize tick lines */
 .y-axis .tick line {
-  stroke: white;
+  stroke: var(--plt-chart-3);
   stroke-width: 1;
 }
 
-/* Customize tick labels */
 .y-axis .tick text {
   font-size: 12px;
-  fill: white;
+  fill: var(--plt-chart-3);
+  
 }
