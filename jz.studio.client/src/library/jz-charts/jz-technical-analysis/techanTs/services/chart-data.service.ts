@@ -31,7 +31,7 @@ export class ChartDataService {
     }));
 
     // Filter out invalid dates
-    //this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
+    this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
 
     //this.parsedData = this.stockPriceHistoryData
     //  .map(d => ({
