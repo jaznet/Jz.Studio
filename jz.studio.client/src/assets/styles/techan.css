@@ -6,11 +6,11 @@
 
 .x-axis .tick line {
   stroke: var(--plt-chart-3);
-  stroke-width: 1;
+  stroke-width: 2;
 }
 
 .x-axis .tick text {
-  font-size: 12px;
+  font-size: 14px;
   fill: var(--plt-chart-3);
 }
 
@@ -27,5 +27,5 @@
 .y-axis .tick text {
   font-size: 12px;
   fill: var(--plt-chart-3);
-  
+  font-size: 14px;
 }
