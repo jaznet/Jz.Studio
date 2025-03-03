@@ -20,7 +20,7 @@ export class PaletteMgrService {
       case 'slate':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#1B1004 ');
-        document.documentElement.style.setProperty('--plt-clr-2', '#dbb957');
+        document.documentElement.style.setProperty('--plt-clr-2', '#0A0A0A');
         document.documentElement.style.setProperty('--plt-clr-3', '#388697');
         document.documentElement.style.setProperty('--plt-clr-4', '#A2D2DD');
         document.documentElement.style.setProperty('--plt-clr-5', '#e8e9eb');

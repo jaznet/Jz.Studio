@@ -42,7 +42,8 @@ interface DataType {
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
-  
+
+  // #region @ViewChilds
   @ViewChild('svgContainer', { static: true }) svgContainerRef!: ElementRef;
   @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
@@ -123,6 +124,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
+  // #endregion
 
   gSectionA: any;
   gSectionB: any;
@@ -146,14 +148,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private rsiIndicator: RsiIndicatorService
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', 'black');
-    document.documentElement.style.setProperty('--plt-chart-2', '#484844');
-    document.documentElement.style.setProperty('--plt-chart-3', '#937666');
+    document.documentElement.style.setProperty('--plt-chart-2', '#0A0A0A');
+    document.documentElement.style.setProperty('--plt-chart-3', '#388697');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
-  ngOnInit(): void {
-}
+  ngOnInit(): void {  }
 
   ngAfterViewInit() {
     this.popover_loading.show();

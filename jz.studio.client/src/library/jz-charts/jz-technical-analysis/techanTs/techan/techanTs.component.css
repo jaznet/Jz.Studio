@@ -8,21 +8,22 @@
     fill: var(--plt-chart-2);
 }
 
-/* Customize tick lines */
-.y-axis .tick line {
-  stroke: yellow;
-  stroke-width: 1;
+.x-axis {
+  fill: var(--plt-chart-2);
 }
 
-/* Customize tick labels */
-.y-axis .tick text {
-  font-size: 12px;
-}
-
-/* Customize the axis line */
 .y-axis path {
   stroke: yellow;
   stroke-width: 2;
+}
+
+.y-axis .tick line {
+  stroke: var(--plt-chart-3);
+  stroke-width: 1;
+}
+
+.y-axis .tick text {
+  font-size: 12px;
 }
 
 .tick text {

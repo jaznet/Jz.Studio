@@ -107,8 +107,8 @@ export class ChartLayoutService {
 
     // X AXIS BOTTOM
     this.xAxisBottomGroup.setAttribute('id', 'xAxisBottom');
-    this.xAxisBottomRect.setAttribute('width', `${this.sectionAattributes.width}`);
-    this.xAxisBottomRect.setAttribute('height', `${this.sectionAattributes.margins.bottom}`);
+    this.xAxisBottomRect.setAttribute('width', `${this.chart_attributes.width}`);
+    this.xAxisBottomRect.setAttribute('height', `${this.chart_attributes.xAxisBottom}`);
     //this.xAxisBottomRect.setAttribute('fill', 'var(--plt-chart-2');
 
     // SECTIONS
