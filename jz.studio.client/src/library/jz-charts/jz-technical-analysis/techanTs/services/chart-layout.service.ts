@@ -14,7 +14,7 @@ export class ChartLayoutService {
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 
-  chart_attributes: chart_attributes = { width: 0, height: 0, margin: 8, xAxisTop: 32, xAxisBottom: 32 };
+  chart_attributes: chart_attributes = { width: 0, height: 0, margin: 16, xAxisTop: 32, xAxisBottom: 32 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 0, left: 32 } };
 
