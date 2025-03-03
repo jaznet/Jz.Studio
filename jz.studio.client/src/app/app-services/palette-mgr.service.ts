@@ -555,7 +555,7 @@ export class PaletteMgrService {
 
       case 'red':
         document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
-        document.documentElement.style.setProperty('--plt-txt-1', 'skyblue');
+        document.documentElement.style.setProperty('--plt-txt-1', 'chartXaxisBottom');
         document.documentElement.style.setProperty('--plt-txt-2', '#0C3A64');
         document.documentElement.style.setProperty('--plt-txt-3', 'black');
         document.documentElement.style.setProperty('--plt-txt-4', '#0DBDF2');
