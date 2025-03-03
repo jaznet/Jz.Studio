@@ -31,15 +31,15 @@ export class ChartDataService {
     }));
 
     // Filter out invalid dates
-    this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
+   // this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
 
-    //this.parsedData = this.stockPriceHistoryData
-    //  .map(d => ({
-    //    ...d,
-    //    date: new Date(d.date) // Convert date string to Date object
-    //  }))
-    //  .filter(d => !isNaN(d.date.getTime())) // Filter out invalid dates
-    //  .filter(d => d.date.getDay() !== 0 && d.date.getDay() !== 6); // Exclude weekends
+    this.parsedData = this.stockPriceHistoryData
+      .map(d => ({
+        ...d,
+        date: new Date(d.date) // Convert date string to Date object
+      }))
+      .filter(d => !isNaN(d.date.getTime())) // Filter out invalid dates
+      .filter(d => d.date.getDay() !== 0 && d.date.getDay() !== 6); // Exclude weekends
 
     // Calculate date extent
     this.dateExtent = extent(this.parsedData, (d: olhcData) => d.date);

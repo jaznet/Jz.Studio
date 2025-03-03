@@ -14,7 +14,7 @@ export class ChartLayoutService {
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 
-  chart_attributes: chart_attributes = { width: 0, height: 0, margin: 16, xAxisTop: 32, xAxisBottom: 32 };
+  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:16,yAxisRight:16 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
   sectionAattributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 32, bottom: 0, left: 32 } };
 
@@ -89,11 +89,11 @@ export class ChartLayoutService {
 
   sizeSections(): void {
     this.chart_attributes.width = this.svgContainer.clientWidth ;
-    this.chart_attributes.height = this.svgContainer.clientHeight - (this.chart_attributes.margin * 2) ;
+    this.chart_attributes.height = this.svgContainer.clientHeight - this.chart_attributes.yAxisLeft -  this.y) ;
 
     // SVG
     let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
-    this.svg_attributes.height = svgBRect.height - (this.chart_attributes.margin * 2);
+    this.svg_attributes.height = svgBRect.height - this.chart_attributes.yAxisLeft - this.chart_attributes.yAxisRight);
     this.svg_attributes.width = svgBRect.width;
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);

@@ -9,9 +9,11 @@ export interface Margins {
 export interface chart_attributes {
   height: number;
   width: number;
-  margin: number;
+ // margin: number;
   xAxisTop: number;
   xAxisBottom: number;
+  yAxisLeft: number;
+  yAxisRight: number;
 }
 
 export interface SvgAttributes {
