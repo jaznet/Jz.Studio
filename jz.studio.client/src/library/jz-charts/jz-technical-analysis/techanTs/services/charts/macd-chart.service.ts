@@ -85,11 +85,11 @@ export class MacdChartService {
 
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
-      .x((d) => this._xScale(d.date))
+      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
       .y((d) => this._yScale(d.macd));
 
     const signalLineGenerator = line<{ date: Date; signal: number }>()
-      .x((d) => this._xScale(d.date))
+      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
       .y((d) => this._yScale(d.signal));
 
     // Draw Divergence as bars
@@ -135,8 +135,5 @@ export class MacdChartService {
       .attr('fill', 'none');
 
     signalLine.exit().remove();
-
-
-
   }
 }

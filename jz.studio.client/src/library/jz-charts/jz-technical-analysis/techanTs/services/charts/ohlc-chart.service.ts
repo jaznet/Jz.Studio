@@ -71,14 +71,15 @@ export class OhlcChartService {
       .append('line')
       .attr('class', 'wick')
       .merge(wicks)
-      .attr('x1', (d: olhcData) => this._xScale(d.date)! + this._candleWidth / 2)
-      .attr('x2', (d: olhcData) => this._xScale(d.date)! + this._candleWidth / 2)
+      .attr('x1', (d: olhcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
+      .attr('x2', (d: olhcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
       .attr('y1', (d: olhcData) => this._yScale(d.high))
       .attr('y2', (d: olhcData) => this._yScale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
     wicks.exit().remove();
+
 
     const candle = this.gCandlestick.selectAll('.candle').data(parsedData);
 

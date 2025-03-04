@@ -51,26 +51,21 @@ export class VolumeChartService {
   }
 
   public draw(): void {
-   // this.gVolume = gVolume;
-
     const parsedData = this.data.parsedData;
 
     const volumeBars = this.gVolume.selectAll('.volume-bar').data(parsedData);
 
-    // Enter
-      volumeBars
-        .enter()
-        .append('rect')
-        .attr('class', 'volume-bar')
-        .merge(volumeBars)
-        .attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)
-        .attr('y', (d: olhcData) => this._yScale(d.volume))
-        .attr('width', this._barWidth)
-        .attr('height', (d: olhcData) => this._yScale(0) - this._yScale(d.volume))
-        .attr('fill', (d: olhcData) => (d.open > d.close ? '#620C09' : '#0C4525'));
+    volumeBars.enter()
+      .append('rect')
+      .attr('class', 'volume-bar')
+      .merge(volumeBars)
+      .attr('x', (d: { date: Date }) => this._xScale(d.date.toISOString()) ?? 0) // Convert Date to string
+      .attr('y', (d: { volume: number }) => this._yScale(d.volume))
+      .attr('width', this._xScale.bandwidth()) // Use scaleBand's bandwidth
+      .attr('height', (d: { volume: number }) => this._yScale(0) - this._yScale(d.volume))
+      .attr('fill', (d: { open: number; close: number }) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
-    //  // Exit
-    //  volumeBars.exit().remove();
-    //}
+    volumeBars.exit().remove();
   }
+
 }

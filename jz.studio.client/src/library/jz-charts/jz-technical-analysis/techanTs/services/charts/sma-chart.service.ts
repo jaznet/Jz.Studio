@@ -67,7 +67,7 @@ export class SmaChartService {
 
     // Define the line generator
     const smaLine = line<{ date: Date; value: number }>()
-      .x((d) => this._xScale(d.date))
+      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Convert Date to string
       .y((d) => this._yScale(d.value));
 
     // Append or update the SMA path
