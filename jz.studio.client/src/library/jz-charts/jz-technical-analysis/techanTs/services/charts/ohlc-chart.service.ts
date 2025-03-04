@@ -89,7 +89,7 @@ export class OhlcChartService {
       .merge(candle)
       /*.attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)*/
       .attr('x', (d: olhcData) => {
-        console.log("Date:", d.date, "Scaled X:", this._xScale(d.date.toISOString()));
+     //   console.log("Date:", d.date, "Scaled X:", this._xScale(d.date.toISOString()));
         return this._xScale(d.date.toISOString()) ?? 0;
       })
       .attr('y', (d: olhcData) => this._yScale(Math.max(d.open, d.close)))

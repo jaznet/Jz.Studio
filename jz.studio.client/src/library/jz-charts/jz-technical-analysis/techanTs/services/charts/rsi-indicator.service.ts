@@ -83,8 +83,9 @@ export class RsiIndicatorService {
 
     // Define the RSI line generator
     const rsiLine = line<{ date: Date; rsi: number }>()
-      .x((d) => this._xScale(d.date))
-      .y((d) => this._yScale(d.rsi));
+      .x((d) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2) // Fix x mapping
+      .y((d) => isNaN(this._yScale(d.rsi)) ? this._yScale(50) : this._yScale(d.rsi)); // Fix y mapping
+
 
     // Append or update the RSI path
     const rsiPath = this.gRsi.selectAll('.rsi-line').data([rsiData]);

@@ -100,8 +100,8 @@ export class MacdChartService {
       .append('rect')
       .attr('class', 'histogram-bar')
       .merge(bars)
-      .attr('x', (d: { date: any }) => this._xScale(d.date) - 2) // Adjust width for bar spacing
-      .attr('y', (d: { histogram: any }) => Math.min(this._yScale(0), this._yScale(d.histogram)))
+      .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2 - 2)
+      .attr('y', (d: { histogram: any; }) => isNaN(this._yScale(d.histogram)) ? 0 : this._yScale(d.histogram))
       .attr('width', 4) // Width of each bar
       .attr('height', (d: { histogram: any }) => Math.abs(this._yScale(d.histogram) - this._yScale(0)))
       .attr('fill', (d: { histogram: number }) => (d.histogram > 0 ? 'green' : 'red')); // Color based on positive or negative histogram value
