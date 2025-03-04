@@ -68,8 +68,8 @@ export class ChartAxesService {
     this.macdYaxisLeft = axisLeft(this.scales.macdYscale);
     this.macdYaxisRight = axisRight(this.scales.macdYscale);
 
-//    this.xAxisTop.call(this.chartXaxisTop);
-//    this.xAxisBottom.call(this.chartXaxisBottom);
+    this.xAxisTop.call(this.chartXaxisTop);
+    this.xAxisBottom.call(this.chartXaxisBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);
     this.yAxisRightA.call(this.chartYaxisRight);
