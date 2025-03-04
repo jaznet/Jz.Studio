@@ -5,6 +5,7 @@ import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll } from 'd3-selection';
 import { ChartLayoutService } from './chart-layout.service';
 import { Selection } from 'd3-v4';
+import { lab } from 'd3';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,24 @@ export class ChartAxesService {
 
   chartXaxisTop: any;
   chartXaxisBottom: any;
+
   chartYaxisLeft: any;
   chartYaxisRight: any;
 
+  macdYaxisLeft: any;
+  macdYaxisRight: any;
+
   xAxisTop!: any;
-  yAxisRight: any;
   xAxisBottom: any;
-  yAxisLeft: any;
+
+  yAxisLeftA: any;
+  yAxisRightA: any;
+
+  yAxisLeftB: any;
+  yAxisRightB: any;
+
+  yAxisLeftC: any;
+  yAxisRightC: any;
 
   constructor(
     private scales: ChartScalesService,
@@ -28,9 +40,16 @@ export class ChartAxesService {
   drawAxes(): void {
 
     this.xAxisTop = select(this.layout.xAxisTop);
-    this.yAxisRight = select(this.layout.yAxisRightA);
     this.xAxisBottom = select(this.layout.xAxisBottomGroup);
-    this.yAxisLeft = select(this.layout.yAxisLeftA);
+
+    this.yAxisLeftA = select(this.layout.yAxisLeftA);
+    this.yAxisRightA = select(this.layout.yAxisRightA);
+
+    this.yAxisLeftB = select(this.layout.yAxisLeftB);
+    this.yAxisRightB = select(this.layout.yAxisRightB);
+
+    this.yAxisLeftC = select(this.layout.yAxisLeftC);
+    this.yAxisRightC = select(this.layout.yAxisRightC);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
@@ -38,18 +57,25 @@ export class ChartAxesService {
     this.chartXaxisTop = axisTop(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
-    this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
+
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
       .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
+
     this.chartYaxisLeft = axisLeft(this.scales.ohlcYscale);
+    this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
 
-    this.xAxisTop.call(this.chartXaxisTop);
-    this.xAxisBottom.call(this.chartXaxisBottom);
-    this.yAxisLeft.call(this.chartYaxisLeft);
-   this.yAxisRight.call(this.chartYaxisRight);
+    this.macdYaxisLeft = axisLeft(this.scales.macdYscale);
+    this.macdYaxisRight = axisRight(this.scales.macdYscale);
+
+//    this.xAxisTop.call(this.chartXaxisTop);
+//    this.xAxisBottom.call(this.chartXaxisBottom);
+
+    this.yAxisLeftA.call(this.chartYaxisLeft);
+    this.yAxisRightA.call(this.chartYaxisRight);
   
-
+    this.yAxisLeftB.call(this.macdYaxisLeft);
+    this.yAxisRightB.call(this.macdYaxisRight);
 
   }
 }

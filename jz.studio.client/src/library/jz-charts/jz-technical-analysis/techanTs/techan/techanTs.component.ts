@@ -262,9 +262,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
 
     this.axes.xAxisTop = this.xAxisTopRef;
-    this.axes.yAxisRight = this.yAxisRightARef;
     this.axes.xAxisBottom = this.xAxisBottomGroupRef;
-    this.axes.yAxisLeft = this.yAxisLeftARef;
+
+    this.axes.yAxisLeftA = this.yAxisLeftARef;
+    this.axes.yAxisRightA = this.yAxisRightARef;
+
+    this.axes.yAxisLeftB = this.yAxisLeftBRef;
+    this.axes.yAxisRightB = this.yAxisRightBRef;
+
+    this.axes.yAxisLeftC = this.yAxisLeftCRef;
+    this.axes.yAxisRightC = this.yAxisRightCRef;
 
     this.ohlcChart.gCandlestick = this.ohlcGroupRef;
 
