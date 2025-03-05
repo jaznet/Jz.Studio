@@ -21,6 +21,9 @@ export class ChartAxesService {
   macdYaxisLeft: any;
   macdYaxisRight: any;
 
+  rsiYaxisLeft: any;
+  rsiYaxisRight: any;
+
   xAxisTop!: any;
   xAxisBottom: any;
 
@@ -68,6 +71,9 @@ export class ChartAxesService {
     this.macdYaxisLeft = axisLeft(this.scales.macdYscale);
     this.macdYaxisRight = axisRight(this.scales.macdYscale);
 
+    this.rsiYaxisLeft = axisLeft(this.scales.rsiYscale);
+    this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
+
     this.xAxisTop.call(this.chartXaxisTop);
     this.xAxisBottom.call(this.chartXaxisBottom);
 
@@ -76,6 +82,9 @@ export class ChartAxesService {
   
     this.yAxisLeftB.call(this.macdYaxisLeft);
     this.yAxisRightB.call(this.macdYaxisRight);
+
+    this.yAxisLeftC.call(this.rsiYaxisLeft);
+    this.yAxisRightC.call(this.rsiYaxisRight);
 
   }
 }

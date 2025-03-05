@@ -76,11 +76,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #region Axes
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisTop', { static: true }) xAxisTopRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisTop', { static: true }) xAxisTopRef!: ElementRef<SVGGElement>;
 
   @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
@@ -196,8 +197,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   createChartFramework() {
     this.layout.svgContainer = this.svgContainerRef.nativeElement;
     this.layout.svgElement = this.svgElementRef;
-    //this.layout.svg_attribute.width = this.svgElementRef.nativeElement.clientWidth;
-    //this.layout.svg_attribute.height = this.svgElementRef.nativeElement.clientHeight;
     this.layout.svgElementRect = this.svgElementRectRef.nativeElement;
 
     this.layout.sections = this.sectionsRef.nativeElement;
@@ -207,10 +206,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionRectA = this.sectionRectARef.nativeElement;
     this.layout.sectionContentA = this.sectionContentARef.nativeElement;
     this.layout.sectionContentARect = this.sectionContentARectRef.nativeElement;
-    this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
-    this.layout.sma1 = this.sma1Ref.nativeElement;
-    this.layout.sma2 = this.sma2Ref.nativeElement;
-    this.layout.sma3 = this.sma3Ref.nativeElement;
 
     this.layout.sectionB = this.sectionBRef.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
@@ -222,11 +217,23 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
     this.layout.sectionContentC = this.sectionContentCRef.nativeElement;
     this.layout.sectionContentCRect = this.sectionContentCRectRef.nativeElement;
+
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
+    this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
+    this.layout.sma1 = this.sma1Ref.nativeElement;
+    this.layout.sma2 = this.sma2Ref.nativeElement;
+    this.layout.sma3 = this.sma3Ref.nativeElement;
+
+
     
-    this.layout.xAxisTop = this.xAxisTopRef.nativeElement;
+
     this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
+    this.layout.xAxisTop = this.xAxisTopRef.nativeElement;
+
+    this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
+    this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
+    this.layout.xAxisBottom = this.xAxisBottomRef.nativeElement;
 
     this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
     this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
@@ -252,7 +259,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisRightGroupC = this.yAxisRightGroupCRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
-    this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
+     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
 
     this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
@@ -262,7 +269,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
 
     this.axes.xAxisTop = this.xAxisTopRef;
-    this.axes.xAxisBottom = this.xAxisBottomGroupRef;
+    this.axes.xAxisBottom = this.xAxisBottomRef;
 
     this.axes.yAxisLeftA = this.yAxisLeftARef;
     this.axes.yAxisRightA = this.yAxisRightARef;
