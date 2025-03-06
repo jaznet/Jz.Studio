@@ -224,9 +224,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
 
-
-    
-
     this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
     this.layout.xAxisTop = this.xAxisTopRef.nativeElement;

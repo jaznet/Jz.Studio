@@ -43,7 +43,7 @@ export class ChartAxesService {
   drawAxes(): void {
 
     this.xAxisTop = select(this.layout.xAxisTop);
-    this.xAxisBottom = select(this.layout.xAxisBottomGroup);
+    this.xAxisBottom = select(this.layout.xAxisBottom);
 
     this.yAxisLeftA = select(this.layout.yAxisLeftA);
     this.yAxisRightA = select(this.layout.yAxisRightA);
