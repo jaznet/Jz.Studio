@@ -57,9 +57,7 @@ export class ChartAxesService {
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
 
     // CHART
-    this.chartXaxisTop = axisTop(this.scales.dateScaleX)
-      .ticks(5)
-      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
+
 
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
@@ -74,6 +72,11 @@ export class ChartAxesService {
     this.rsiYaxisLeft = axisLeft(this.scales.rsiYscale);
     this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
 
+    this.chartXaxisTop = axisTop(this.scales.dateScaleX)
+      .ticks(10)
+      .tickFormat(function (domainValue, index) {
+        return dateFormatter(domainValue as Date);
+      });
     this.xAxisTop.call(this.chartXaxisTop);
     this.xAxisBottom.call(this.chartXaxisBottom);
 

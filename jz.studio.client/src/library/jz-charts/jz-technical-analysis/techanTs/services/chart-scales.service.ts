@@ -24,13 +24,13 @@ export class ChartScalesService {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
       this.dateScaleX = scaleBand()
         .domain(this.data.parsedData.map(d => d.date.toISOString())) // Ensure only valid trading days
-        .range([0, this.layout.sectionAattributes.width - this.layout.sectionAattributes.margins.left - this.layout.sectionAattributes.margins.right])
+        .range([0, this.layout.sectAttr_A.width - this.layout.sectAttr_A.margins.left - this.layout.sectAttr_A.margins.right])
         .padding(0.1); // Adjust padding if needed
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
       this.dateScaleX = scaleBand()
         .domain([])
-        .range([0, this.layout.sectionAattributes.width]);
+        .range([0, this.layout.sectAttr_A.width]);
     }
 
     this.ohlcYscale = scaleLinear()
