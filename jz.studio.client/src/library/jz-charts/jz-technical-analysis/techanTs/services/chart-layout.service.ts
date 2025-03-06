@@ -205,9 +205,9 @@ export class ChartLayoutService {
 
   alignChartsToScaffold(): void {
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
-    this.xAxisTop.setAttribute('transform', `translate(0,32)`);
+    this.xAxisTop.setAttribute('transform', `translate(32,32)`);
     this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height})`);
-    this.xAxisBottom.setAttribute('transform', `translate(0,-32)`);
+    this.xAxisBottom.setAttribute('transform', `translate(32,-32)`);
 
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
 
