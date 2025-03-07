@@ -4,7 +4,7 @@ import { ChartScalesService } from './chart-scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll } from 'd3-selection';
 import { ChartLayoutService } from './chart-layout.service';
-import { Selection } from 'd3-v4';
+import { AxisDomain, Selection } from 'd3-v4';
 import { lab } from 'd3';
 
 @Injectable({
@@ -74,9 +74,23 @@ export class ChartAxesService {
 
     this.chartXaxisTop = axisTop(this.scales.dateScaleX)
       .ticks(10)
-      .tickFormat(function (domainValue, index) {
-        return dateFormatter(domainValue as Date);
+      .tickFormat((domainValue: AxisDomain, index: number) => {
+        if (typeof domainValue === "string") {
+          return domainValue; // Return as is if already a string
+        } else if (typeof domainValue === "number") {
+          return dateFormatter(new Date(domainValue)); // Convert timestamp to Date
+        } else if (domainValue instanceof Date) {
+          return dateFormatter(domainValue); // Already a Date, format it
+        } else if (domainValue && typeof domainValue.valueOf === "function") {
+          return dateFormatter(new Date(domainValue.valueOf())); // Handle `{ valueOf(): number }`
+        }
+
+        console.error("Unexpected tick value type:", domainValue);
+        return ""; // Return empty string to avoid NaN
       });
+
+
+
     this.xAxisTop.call(this.chartXaxisTop);
     this.xAxisBottom.call(this.chartXaxisBottom);
 
