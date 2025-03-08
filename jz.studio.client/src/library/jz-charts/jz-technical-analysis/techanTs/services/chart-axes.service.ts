@@ -55,9 +55,57 @@ export class ChartAxesService {
     this.yAxisRightC = select(this.layout.yAxisRightC);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+    const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
+    const dateFormatterMinor = timeFormat("%d");    // Example: 1, 2, 3...
+
+
+
 
     // CHART
+    let lastMonth = -1;
+    let lastYear = -1;
 
+    type CustomAxisDomain = string | number | Date | { valueOf(): number };
+
+    this.chartXaxisTop = axisTop(this.scales.dateScaleX)
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
+
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return ""; // Skip invalid ticks
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          // First tick of the month → Show month and year
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return dateFormatterMajor(date); // Example: "Jan 2023"
+        } else {
+          // Other ticks within the same month → Show just the day
+          return date.getDate().toString(); // Example: "5"
+        }
+      });
+
+
+
+
+    // Apply the tick values based on the domain of scaleBand
+    const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
+    this.chartXaxisTop.tickValues(tickValues);
+
+
+
+
+ 
 
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
@@ -72,22 +120,7 @@ export class ChartAxesService {
     this.rsiYaxisLeft = axisLeft(this.scales.rsiYscale);
     this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
 
-    this.chartXaxisTop = axisTop(this.scales.dateScaleX)
-      .ticks(10)
-      .tickFormat((domainValue: AxisDomain, index: number) => {
-        if (typeof domainValue === "string") {
-          return domainValue; // Return as is if already a string
-        } else if (typeof domainValue === "number") {
-          return dateFormatter(new Date(domainValue)); // Convert timestamp to Date
-        } else if (domainValue instanceof Date) {
-          return dateFormatter(domainValue); // Already a Date, format it
-        } else if (domainValue && typeof domainValue.valueOf === "function") {
-          return dateFormatter(new Date(domainValue.valueOf())); // Handle `{ valueOf(): number }`
-        }
 
-        console.error("Unexpected tick value type:", domainValue);
-        return ""; // Return empty string to avoid NaN
-      });
 
 
 
