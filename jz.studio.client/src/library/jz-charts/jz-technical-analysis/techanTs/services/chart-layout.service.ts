@@ -150,7 +150,7 @@ export class ChartLayoutService {
 
 
     this.ohlcRect.setAttribute('width', (this.sectionContentARect.width.baseVal.valueAsString));
-    this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value)).toString());
+    this.ohlcRect.setAttribute('height', ((this.sectionContentARect.height.baseVal.value * .75)).toString());
     this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
     this.rectVolume.setAttribute('width', (this.sectionContentARect.width.baseVal.value.toString() ));
     console.log('volume', this.ohlcRect.height);

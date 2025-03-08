@@ -61,6 +61,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
+
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) sectionBRef!: ElementRef<SVGGElement>;
@@ -277,7 +279,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.yAxisLeftC = this.yAxisLeftCRef;
     this.axes.yAxisRightC = this.yAxisRightCRef;
 
-    this.ohlcChart.gCandlestick = this.ohlcGroupRef;
+
 
   /*  this.volumeChart.*/
   }
@@ -296,7 +298,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart
       .xScale(this.scales.dateScaleX)
       .yScale(this.scales.ohlcYscale)
-      .setTargetGroup(this.ohlcGroupRef.nativeElement)
+      .setTargetGroup(this.ohlcRef.nativeElement)
       .setCandleWidth()
       .draw();
   }
