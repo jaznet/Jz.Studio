@@ -30,6 +30,9 @@ export class ChartAxesService {
   yAxisLeftA: any;
   yAxisRightA: any;
 
+  yAxisVolLeftA: any;
+  yAxisVolRightA: any;
+
   yAxisLeftB: any;
   yAxisRightB: any;
 
@@ -47,6 +50,9 @@ export class ChartAxesService {
 
     this.yAxisLeftA = select(this.layout.yAxisLeftA);
     this.yAxisRightA = select(this.layout.yAxisRightA);
+
+    this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
+    this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
 
     this.yAxisLeftB = select(this.layout.yAxisLeftB);
     this.yAxisRightB = select(this.layout.yAxisRightB);

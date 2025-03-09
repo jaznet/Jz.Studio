@@ -63,6 +63,14 @@ export class ChartLayoutService {
   yAxisRightGroupA!: SVGGElement;
   yAxisRightRectA!: SVGRectElement;
 
+  yAxisVolLeftA!: SVGGElement;
+  yAxisVolLeftGroupA!: SVGGElement;
+  yAxisVolLeftRectA!: SVGRectElement;
+
+  yAxisVolRightA!: SVGGElement;
+  yAxisVolRightGroupA!: SVGGElement;
+  yAxisVolRightRectA!: SVGRectElement;
+
   yAxisLeftB!: SVGGElement;
   yAxisLeftGroupB!: SVGGElement;
   yAxisLeftRectB!: SVGRectElement;
