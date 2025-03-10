@@ -12,7 +12,8 @@ import { lab } from 'd3';
 })
 export class ChartAxesService {
 
-  chartXaxisTop: any;
+  chartXaxisTopMonths: any;
+  chartXaxisTopDays: any;
   chartXaxisBottom: any;
 
   chartYaxisLeft: any;
@@ -24,7 +25,8 @@ export class ChartAxesService {
   rsiYaxisLeft: any;
   rsiYaxisRight: any;
 
-  xAxisTop!: any;
+  xAxisMonths!: any;
+  xAxisDays!: any;
   xAxisBottom: any;
 
   yAxisLeftA: any;
@@ -45,7 +47,7 @@ export class ChartAxesService {
 
   drawAxes(): void {
 
-    this.xAxisTop = select(this.layout.xAxisTop);
+    this.xAxisMonths = select(this.layout.xAxisMonths);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
     this.yAxisLeftA = select(this.layout.yAxisLeftA);
@@ -64,16 +66,13 @@ export class ChartAxesService {
     const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
     const dateFormatterMinor = timeFormat("%d");    // Example: 1, 2, 3...
 
-
-
-
     // CHART
     let lastMonth = -1;
     let lastYear = -1;
 
     type CustomAxisDomain = string | number | Date | { valueOf(): number };
 
-    this.chartXaxisTop = axisTop(this.scales.dateScaleX)
+    this.chartXaxisTopDays = axisTop(this.scales.dateScaleX)
       .tickFormat((domainValue: CustomAxisDomain, index: number) => {
         let date: Date;
 
@@ -101,17 +100,37 @@ export class ChartAxesService {
         }
       });
 
+    this.chartXaxisTopMonths = axisTop(this.scales.dateScaleX)
+     
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
 
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return "";
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
+        } else {
+          return ""; // Skip redundant months
+        }      });
 
 
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
-    this.chartXaxisTop.tickValues(tickValues);
-
-
-
-
- 
+    this.chartXaxisTopDays.tickValues(tickValues);
+    this.chartXaxisTopMonths.tickValues(tickValues);
 
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
@@ -128,9 +147,9 @@ export class ChartAxesService {
 
 
 
-
-
-    this.xAxisTop.call(this.chartXaxisTop);
+    /*DRAW*/
+    this.xAxisMonths.call(this.chartXaxisTopMonths);
+/*    this.xAxisDays.call(this.chartXaxisTopDays);*/
     this.xAxisBottom.call(this.chartXaxisBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);

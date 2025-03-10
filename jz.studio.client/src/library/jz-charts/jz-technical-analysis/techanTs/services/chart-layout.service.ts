@@ -47,7 +47,9 @@ export class ChartLayoutService {
   sectionRectB!: SVGRectElement;
   sectionRectC!: SVGRectElement;
 
-  xAxisTop!: SVGGElement;
+  // #region Axes
+  xAxisMonths!: SVGGElement;
+  xAxisDays!: SVGGElement;
   xAxisTopGroup!: SVGGElement;
   xAxisTopRect!: SVGRectElement;
 
@@ -87,6 +89,8 @@ export class ChartLayoutService {
   yAxisRightGroupC!: SVGGElement;
   yAxisRightRectC!: SVGRectElement;
 
+  // #endregion Axes
+
   rectVolume!: SVGRectElement;
 
   constructor() { }
@@ -110,7 +114,7 @@ export class ChartLayoutService {
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
 
     // X-AXIS TOP
-    this.xAxisTop.setAttribute('id', 'TopA');
+
     this.xAxisTopRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
 
@@ -213,7 +217,7 @@ export class ChartLayoutService {
 
   alignChartsToScaffold(): void {
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
-    this.xAxisTop.setAttribute('transform', `translate(40,32)`);
+ //   this.xAxisMonths.setAttribute('transform', `translate(40,32)`);
     this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height})`);
     this.xAxisBottom.setAttribute('transform', `translate(40,-32)`);
 
