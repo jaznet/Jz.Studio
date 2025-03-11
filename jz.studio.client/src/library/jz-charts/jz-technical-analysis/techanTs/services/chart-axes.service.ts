@@ -12,7 +12,7 @@ import { lab } from 'd3';
 })
 export class ChartAxesService {
 
-  chartXaxisTopMonths: any;
+  chartXaxisMonthsTop: any;
 //  chartXaxisTopDays: any;
   chartXaxisBottom: any;
 
@@ -73,7 +73,7 @@ export class ChartAxesService {
 
     type CustomAxisDomain = string | number | Date | { valueOf(): number };
 
-    this.chartXaxisTopMonths = axisTop(this.scales.dateScaleX)
+    this.chartXaxisMonthsTop = axisTop(this.scales.dateScaleX)
       .tickFormat((domainValue: CustomAxisDomain, index: number) => {
         let date: Date;
         if (typeof domainValue === "string") {
@@ -100,7 +100,7 @@ export class ChartAxesService {
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
  //   this.chartXaxisTopDays.tickValues(tickValues);
-    this.chartXaxisTopMonths.tickValues(tickValues);
+    this.chartXaxisMonthsTop.tickValues(tickValues);
 
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
       .ticks(5)
@@ -116,7 +116,7 @@ export class ChartAxesService {
     this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
 
     /*DRAW*/
-    this.xAxisMonths.call(this.chartXaxisTopMonths);
+    this.xAxisMonths.call(this.chartXaxisMonthsTop);
     this.xAxisBottom.call(this.chartXaxisBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);

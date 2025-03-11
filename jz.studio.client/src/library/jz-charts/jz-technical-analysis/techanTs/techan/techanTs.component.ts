@@ -230,7 +230,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
     this.layout.xAxisMonths = this.xAxisMonthsRef.nativeElement;
-    this.layout.xAxisDays = this.xAxisDaysRef.nativeElement;
+  /*  this.layout.xAxisDays = this.xAxisDaysRef.nativeElement;*/
 
     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;

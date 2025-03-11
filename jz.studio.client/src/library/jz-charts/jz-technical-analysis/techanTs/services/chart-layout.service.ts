@@ -218,7 +218,7 @@ export class ChartLayoutService {
   alignChartsToScaffold(): void {
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
     this.xAxisMonths.setAttribute('transform', `translate(40,32)`);
-    this.xAxisDays.setAttribute('transform', `translate(40,32)`);
+
     this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height})`);
     this.xAxisBottom.setAttribute('transform', `translate(40,-32)`);
 
