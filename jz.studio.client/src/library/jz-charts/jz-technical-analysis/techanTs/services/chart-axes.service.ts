@@ -94,7 +94,7 @@ export class ChartAxesService {
           // First tick of the month → Show month and year
           lastMonth = currentMonth;
           lastYear = currentYear;
-          return dateFormatterMajor(date); // Example: "Jan 2023"
+          return date.getDate().toString(); // Example: "5"
         } else {
           // Other ticks within the same month → Show just the day
           return date.getDate().toString(); // Example: "5"
