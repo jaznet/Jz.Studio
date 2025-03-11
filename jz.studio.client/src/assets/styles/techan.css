@@ -27,5 +27,4 @@
 .y-axis .tick text {
   font-size: 12px;
   fill: var(--plt-chart-3);
-  font-size: 14px;
 }

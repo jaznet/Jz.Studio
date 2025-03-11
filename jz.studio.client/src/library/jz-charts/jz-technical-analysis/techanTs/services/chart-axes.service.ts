@@ -13,7 +13,7 @@ import { lab } from 'd3';
 export class ChartAxesService {
 
   chartXaxisTopMonths: any;
-  chartXaxisTopDays: any;
+//  chartXaxisTopDays: any;
   chartXaxisBottom: any;
 
   chartYaxisLeft: any;
@@ -73,34 +73,6 @@ export class ChartAxesService {
 
     type CustomAxisDomain = string | number | Date | { valueOf(): number };
 
-    this.chartXaxisTopDays = axisTop(this.scales.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
-        let date: Date;
-
-        if (typeof domainValue === "string") {
-          date = new Date(domainValue);
-        } else if (domainValue instanceof Date) {
-          date = domainValue;
-        } else if (typeof domainValue === "number") {
-          date = new Date(domainValue);
-        } else {
-          return ""; // Skip invalid ticks
-        }
-
-        const currentMonth = date.getMonth();
-        const currentYear = date.getFullYear();
-
-        if (currentMonth !== lastMonth || currentYear !== lastYear) {
-          // First tick of the month → Show month and year
-          lastMonth = currentMonth;
-          lastYear = currentYear;
-          return date.getDate().toString(); // Example: "5"
-        } else {
-          // Other ticks within the same month → Show just the day
-          return date.getDate().toString(); // Example: "5"
-        }
-      });
-
     this.chartXaxisTopMonths = axisTop(this.scales.dateScaleX)
       .tickFormat((domainValue: CustomAxisDomain, index: number) => {
         let date: Date;
@@ -125,10 +97,9 @@ export class ChartAxesService {
           return ""; // Skip redundant months
         }      });
 
-
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
-    this.chartXaxisTopDays.tickValues(tickValues);
+ //   this.chartXaxisTopDays.tickValues(tickValues);
     this.chartXaxisTopMonths.tickValues(tickValues);
 
     this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
@@ -146,7 +117,6 @@ export class ChartAxesService {
 
     /*DRAW*/
     this.xAxisMonths.call(this.chartXaxisTopMonths);
-    this.xAxisDays.call(this.chartXaxisTopDays);
     this.xAxisBottom.call(this.chartXaxisBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);

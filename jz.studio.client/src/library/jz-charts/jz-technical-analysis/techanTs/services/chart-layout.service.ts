@@ -14,7 +14,7 @@ export class ChartLayoutService {
   //svgRectWidth = 0;
   //svgRectHeight = 0;
 
-  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 64, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 };
+  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
   sectAttr_A: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
 
@@ -218,7 +218,7 @@ export class ChartLayoutService {
   alignChartsToScaffold(): void {
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
     this.xAxisMonths.setAttribute('transform', `translate(40,32)`);
-    this.xAxisDays.setAttribute('transform', `translate(40,64)`);
+    this.xAxisDays.setAttribute('transform', `translate(40,32)`);
     this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height})`);
     this.xAxisBottom.setAttribute('transform', `translate(40,-32)`);
 
