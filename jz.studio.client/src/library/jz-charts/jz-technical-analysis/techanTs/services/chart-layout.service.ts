@@ -233,9 +233,6 @@ export class ChartLayoutService {
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
-
-
-   
     this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectAttr_A.width - this.sectAttr_A.margins.right},${this.sectAttr_A.margins.top})`);
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
