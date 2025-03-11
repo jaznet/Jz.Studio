@@ -13,8 +13,7 @@ import { lab } from 'd3';
 export class ChartAxesService {
 
   chartXaxisMonthsTop: any;
-//  chartXaxisTopDays: any;
-  chartXaxisBottom: any;
+  chartXaxisMonthsBottom: any;
 
   chartYaxisLeft: any;
   chartYaxisRight: any;
@@ -99,12 +98,31 @@ export class ChartAxesService {
 
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
- //   this.chartXaxisTopDays.tickValues(tickValues);
-    this.chartXaxisMonthsTop.tickValues(tickValues);
 
-    this.chartXaxisBottom = axisBottom(this.scales.dateScaleX)
-      .ticks(5)
-      .tickFormat((domainValue, index) => dateFormatter(domainValue as Date));
+    this.chartXaxisMonthsBottom = axisBottom(this.scales.dateScaleX)
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return "";
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
+        } else {
+          return ""; // Skip redundant months
+        }
+      });
 
     this.chartYaxisLeft = axisLeft(this.scales.ohlcYscale);
     this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
@@ -117,7 +135,7 @@ export class ChartAxesService {
 
     /*DRAW*/
     this.xAxisMonths.call(this.chartXaxisMonthsTop);
-    this.xAxisBottom.call(this.chartXaxisBottom);
+    this.xAxisBottom.call(this.chartXaxisMonthsBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);
     this.yAxisRightA.call(this.chartYaxisRight);
