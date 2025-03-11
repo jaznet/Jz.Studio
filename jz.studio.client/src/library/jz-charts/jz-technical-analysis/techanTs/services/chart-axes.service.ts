@@ -48,6 +48,7 @@ export class ChartAxesService {
   drawAxes(): void {
 
     this.xAxisMonths = select(this.layout.xAxisMonths);
+    this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
     this.yAxisLeftA = select(this.layout.yAxisLeftA);
@@ -101,10 +102,8 @@ export class ChartAxesService {
       });
 
     this.chartXaxisTopMonths = axisTop(this.scales.dateScaleX)
-     
       .tickFormat((domainValue: CustomAxisDomain, index: number) => {
         let date: Date;
-
         if (typeof domainValue === "string") {
           date = new Date(domainValue);
         } else if (domainValue instanceof Date) {
@@ -145,11 +144,9 @@ export class ChartAxesService {
     this.rsiYaxisLeft = axisLeft(this.scales.rsiYscale);
     this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
 
-
-
     /*DRAW*/
     this.xAxisMonths.call(this.chartXaxisTopMonths);
-/*    this.xAxisDays.call(this.chartXaxisTopDays);*/
+    this.xAxisDays.call(this.chartXaxisTopDays);
     this.xAxisBottom.call(this.chartXaxisBottom);
 
     this.yAxisLeftA.call(this.chartYaxisLeft);
