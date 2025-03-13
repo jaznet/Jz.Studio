@@ -57,10 +57,10 @@ export class ChartLayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
-  yAxisLeftA!: SVGGElement;
-  yAxisLeftGroupA!: SVGGElement;
-  yAxisLeftRectA!: SVGRectElement;
-
+  ohlc_yAxis_left!: SVGGElement;
+  ohlc_yAxis_group_left!: SVGGElement;
+  ohlc_yAxis_rect_left!: SVGRectElement;
+   
   yAxisRightA!: SVGGElement;
   yAxisRightGroupA!: SVGGElement;
   yAxisRightRectA!: SVGRectElement;
@@ -172,10 +172,9 @@ export class ChartLayoutService {
     console.log('sectionContentA', this.rectVolume.getBBox().height);
 
     /* LEFT A */
-    this.yAxisLeftRectA.setAttribute('width', `${this.sectAttr_A.margins.right}`);
-    this.yAxisLeftRectA.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
-    this.yAxisLeftRectA.setAttribute('fill', 'var(--plt-clr-2)');
-    this.yAxisLeftA.setAttribute('id', 'LeftA');
+    this.ohlc_yAxis_rect_left.setAttribute('width', `${this.sectAttr_A.margins.right}`);
+    this.ohlc_yAxis_rect_left.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
+    this.ohlc_yAxis_rect_left.setAttribute('fill', 'var(--plt-clr-2)');
 
 /*  RIGHT A */
     this.yAxisRightRectA.setAttribute('width', `${this.sectAttr_A.margins.right}`);
@@ -241,7 +240,7 @@ export class ChartLayoutService {
   //this.xAxisBottom.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectAttr_A.margins.top})`);
     //this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectAttr_A.margins.top})`);
-    this.yAxisLeftA.setAttribute('transform', `translate(${this.sectAttr_A.margins.left},0)`);
+    this.ohlc_yAxis_group_left.setAttribute('transform', `translate(${this.sectAttr_A.margins.left},0)`);
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
     //this.macdChart.setAttribute('transform', `translate(32,391.5)`);

@@ -4,12 +4,22 @@ import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartLayoutService } from '../chart-layout.service';
 import { ChartScalesService } from '../chart-scales.service';
-import { olhcData } from '../../interfaces/techan-interfaces';
+import { ohlcData } from '../../interfaces/techan-interfaces';
+import { axisLeft, axisRight } from 'd3-axis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OhlcChartService {
+
+  ohlc_yAxis_left: any;
+  ohlc_yAxis_grp_left: any;
+  ohlc_yAxis_rct_left: any;
+
+  yAxisRightA: any;
+  chartYaxisLeft: any;
+  chartYaxisRight: any;
+
   private _xScale: any;
   private _yScale: any;
   private _candleWidth: number = 0;
@@ -44,24 +54,21 @@ export class OhlcChartService {
     this._candleWidth = this.scales.dateScaleX.bandwidth();
 
     return this; // Allows method chaining
-
-    //// Calculate the width of each candlestick
-    //const dataTimeIntervals = this.data.parsedData.map((d: any, i: number) => {
-    //  if (i === 0) return 0; // No interval for the first data point
-    //  return this.data.parsedData[i].date.getTime() - this.data.parsedData[i - 1].date.getTime();
-    //}).filter((interval: number) => interval > 0); // Remove the first zero interval
-
-    //const averageTimeInterval = dataTimeIntervals.reduce((a: any, b: any) => a + b, 0) / dataTimeIntervals.length;
-    //const timeDiff = this.data.parsedData.length > 1
-    //  ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
-    //  : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
-    //this._candleWidth =
-    //  this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) - this.scales.dateScaleX(this.data.parsedData[0].date);
-
-    //return this; // Allows method chaining
   }
 
-  /*  public draw(selection: any): void {*/
+  public drawAxes() {
+    this.ohlc_yAxis_left = select(this.layout.ohlc_yAxis_left); 
+    this.yAxisRightA = select(this.layout.yAxisRightA);
+
+    this.chartYaxisLeft = axisLeft(this.scales.ohlcYscale);
+    this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
+
+    this.ohlc_yAxis_left.call(this.chartYaxisLeft);
+    this.yAxisRightA.call(this.chartYaxisRight);
+
+    return this;
+  }
+
   public draw(): void {
     const parsedData = this.data.parsedData;
 
@@ -71,10 +78,10 @@ export class OhlcChartService {
       .append('line')
       .attr('class', 'wick')
       .merge(wicks)
-      .attr('x1', (d: olhcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
-      .attr('x2', (d: olhcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
-      .attr('y1', (d: olhcData) => this._yScale(d.high))
-      .attr('y2', (d: olhcData) => this._yScale(d.low))
+      .attr('x1', (d: ohlcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
+      .attr('x2', (d: ohlcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
+      .attr('y1', (d: ohlcData) => this._yScale(d.high))
+      .attr('y2', (d: ohlcData) => this._yScale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
@@ -88,14 +95,14 @@ export class OhlcChartService {
       .attr('class', 'candle')
       .merge(candle)
       /*.attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)*/
-      .attr('x', (d: olhcData) => {
+      .attr('x', (d: ohlcData) => {
      //   console.log("Date:", d.date, "Scaled X:", this._xScale(d.date.toISOString()));
         return this._xScale(d.date.toISOString()) ?? 0;
       })
-      .attr('y', (d: olhcData) => this._yScale(Math.max(d.open, d.close)))
+      .attr('y', (d: ohlcData) => this._yScale(Math.max(d.open, d.close)))
       .attr('width', this._candleWidth)
-      .attr('height', (d: olhcData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
-      .attr('fill', (d: olhcData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
+      .attr('height', (d: ohlcData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
+      .attr('fill', (d: ohlcData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
     candle.exit().remove();
   }

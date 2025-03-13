@@ -31,7 +31,7 @@ export interface SectionAttributes {
   fill?: string;
 }
 
-export interface olhcData {
+export interface ohlcData {
   timestamp: Date;
   ticker: string;
   date: Date;

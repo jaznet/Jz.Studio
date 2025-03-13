@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { max, min, extent } from 'd3-array';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
-import { olhcData } from '../interfaces/techan-interfaces';
+import { ohlcData } from '../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class ChartDataService {
       .filter(d => d.date.getDay() !== 0 && d.date.getDay() !== 6); // Exclude weekends
 
     // Calculate date extent
-    this.dateExtent = extent(this.parsedData, (d: olhcData) => d.date);
+    this.dateExtent = extent(this.parsedData, (d: ohlcData) => d.date);
 
     console.log('Date Extent:', this.dateExtent);
     console.log('Maximum Volume:', this.maxVolume);

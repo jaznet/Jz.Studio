@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartScalesService } from '../chart-scales.service';
-import { olhcData } from '../../interfaces/techan-interfaces';
+import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartLayoutService } from '../chart-layout.service';
 
 @Injectable({

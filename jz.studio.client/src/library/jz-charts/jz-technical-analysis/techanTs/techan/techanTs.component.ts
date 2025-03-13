@@ -5,7 +5,7 @@ import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
 import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { olhcData, SectionAttributes } from '../interfaces/techan-interfaces';
+import { ohlcData, SectionAttributes } from '../interfaces/techan-interfaces';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
 import { ChartDataService } from '../services/chart-data.service';
@@ -86,9 +86,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('yAxisLeftGroupA', { static: true }) yAxisLeftGroupARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftA', { static: true }) yAxisLeftARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftRectA', { static: true }) yAxisLeftRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlc_yAxis_grp_left', { static: true }) ohlc_yAxis_grp_leftRef!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxis_left', { static: true }) ohlc_yAxis_leftRef!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxis_rct_left', { static: true }) ohlc_yAxis_rct_leftRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisRightGroupA', { static: true }) yAxisRightGroupARef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightA', { static: true }) yAxisRightARef!: ElementRef<SVGGElement>;
@@ -236,9 +236,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisBottom = this.xAxisBottomRef.nativeElement;
 
-    this.layout.yAxisLeftA = this.yAxisLeftARef.nativeElement;
-    this.layout.yAxisLeftGroupA = this.yAxisLeftGroupARef.nativeElement;;
-    this.layout.yAxisLeftRectA = this.yAxisLeftRectARef.nativeElement;
+
 
     this.layout.yAxisRightA = this.yAxisRightARef.nativeElement;
     this.layout.yAxisRightGroupA = this.yAxisRightGroupARef.nativeElement;
@@ -272,8 +270,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.xAxisMonths = this.xAxisMonthsRef;
     this.axes.xAxisBottom = this.xAxisBottomRef;
 
-    this.axes.yAxisLeftA = this.yAxisLeftARef;
-    this.axes.yAxisRightA = this.yAxisRightARef;
+    this.layout.ohlc_yAxis_left = this.ohlc_yAxis_leftRef.nativeElement;
+    this.layout.ohlc_yAxis_group_left = this.ohlc_yAxis_grp_leftRef.nativeElement;
+    this.layout.ohlc_yAxis_rect_left = this.ohlc_yAxis_rct_leftRef.nativeElement;
+
+    this.ohlcChart.ohlc_yAxis_left = this.ohlc_yAxis_leftRef;
+    this.ohlcChart.ohlc_yAxis_grp_left = this.ohlc_yAxis_grp_leftRef.nativeElement;
+    this.ohlcChart.ohlc_yAxis_rct_left = this.ohlc_yAxis_rct_leftRef.nativeElement;
+
+    this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 
     this.axes.yAxisLeftB = this.yAxisLeftBRef;
     this.axes.yAxisRightB = this.yAxisRightBRef;
@@ -302,6 +307,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.ohlcYscale)
       .setTargetGroup(this.ohlcRef.nativeElement)
       .setCandleWidth()
+      .drawAxes()
       .draw();
   }
 
