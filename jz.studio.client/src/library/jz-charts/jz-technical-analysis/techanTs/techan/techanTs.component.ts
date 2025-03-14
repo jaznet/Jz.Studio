@@ -86,13 +86,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('ohlc_yAxis_grp_left', { static: true }) ohlc_yAxis_grp_leftRef!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxis_left', { static: true }) ohlc_yAxis_leftRef!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxis_rct_left', { static: true }) ohlc_yAxis_rct_leftRef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisL', { static: true }) ohlc_yAxisL!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisL_rct', { static: true }) ohlc_yAxisL_rct!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisRightGroupA', { static: true }) yAxisRightGroupARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightA', { static: true }) yAxisRightARef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightRectA', { static: true }) yAxisRightRectARef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisR_rct', { static: true }) ohlc_yAxisR_rct!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupB', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
@@ -238,9 +238,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
 
 
-    this.layout.yAxisRightA = this.yAxisRightARef.nativeElement;
-    this.layout.yAxisRightGroupA = this.yAxisRightGroupARef.nativeElement;
-    this.layout.yAxisRightRectA = this.yAxisRightRectARef.nativeElement;
+
 
      this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
     this.layout.yAxisLeftGroupB = this.yAxisLeftGroupBRef.nativeElement;;
@@ -270,15 +268,23 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.xAxisMonths = this.xAxisMonthsRef;
     this.axes.xAxisBottom = this.xAxisBottomRef;
 
-    this.layout.ohlc_yAxis_left = this.ohlc_yAxis_leftRef.nativeElement;
-    this.layout.ohlc_yAxis_group_left = this.ohlc_yAxis_grp_leftRef.nativeElement;
-    this.layout.ohlc_yAxis_rect_left = this.ohlc_yAxis_rct_leftRef.nativeElement;
+    this.layout.ohlc_yAxisL = this.ohlc_yAxisL.nativeElement;
+    this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    this.layout.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-    this.ohlcChart.ohlc_yAxis_left = this.ohlc_yAxis_leftRef;
-    this.ohlcChart.ohlc_yAxis_grp_left = this.ohlc_yAxis_grp_leftRef.nativeElement;
-    this.ohlcChart.ohlc_yAxis_rct_left = this.ohlc_yAxis_rct_leftRef.nativeElement;
+    this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
+    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    this.ohlcChart.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-    this.ohlcChart.yAxisRightA = this.yAxisRightARef;
+    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+
+    this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
+    this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+
+  //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 
     this.axes.yAxisLeftB = this.yAxisLeftBRef;
     this.axes.yAxisRightB = this.yAxisRightBRef;

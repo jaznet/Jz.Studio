@@ -57,13 +57,13 @@ export class ChartLayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
-  ohlc_yAxis_left!: SVGGElement;
-  ohlc_yAxis_group_left!: SVGGElement;
-  ohlc_yAxis_rect_left!: SVGRectElement;
+  ohlc_yAxisL!: SVGGElement;
+  ohlc_yAxisL_grp!: SVGGElement;
+  ohlc_yAxisL_rct!: SVGRectElement;
    
-  yAxisRightA!: SVGGElement;
-  yAxisRightGroupA!: SVGGElement;
-  yAxisRightRectA!: SVGRectElement;
+  ohlc_yAxisR!: SVGGElement;
+  ohlc_yAxisR_grp!: SVGGElement;
+  ohlc_yAxisR_rct!: SVGRectElement;
 
   yAxisVolLeftA!: SVGGElement;
   yAxisVolLeftGroupA!: SVGGElement;
@@ -172,15 +172,14 @@ export class ChartLayoutService {
     console.log('sectionContentA', this.rectVolume.getBBox().height);
 
     /* LEFT A */
-    this.ohlc_yAxis_rect_left.setAttribute('width', `${this.sectAttr_A.margins.right}`);
-    this.ohlc_yAxis_rect_left.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
-    this.ohlc_yAxis_rect_left.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlc_yAxisL_rct.setAttribute('width', `${this.sectAttr_A.margins.right}`);
+    this.ohlc_yAxisL_rct.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
+    this.ohlc_yAxisL_rct.setAttribute('fill', 'var(--plt-clr-2)');
 
-/*  RIGHT A */
-    this.yAxisRightRectA.setAttribute('width', `${this.sectAttr_A.margins.right}`);
-    this.yAxisRightRectA.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
-    this.yAxisRightRectA.setAttribute('fill', 'var(--plt-clr-2)');
-    this.yAxisRightA.setAttribute('id', 'RightA');
+    /*  RIGHT A */
+    this.ohlc_yAxisR_rct.setAttribute('width', `${this.sectAttr_A.margins.right}`);
+    this.ohlc_yAxisR_rct.setAttribute('height', `${this.sectAttr_A.height - this.sectAttr_A.margins.top}`);
+    this.ohlc_yAxisR_rct.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  B*/
     this.yAxisLeftRectB.setAttribute('width', `${this.sectAttr_B.margins.right}`);
@@ -231,8 +230,8 @@ export class ChartLayoutService {
 
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
-   // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
-    this.yAxisRightGroupA.setAttribute('transform', `translate(${this.sectAttr_A.width - this.sectAttr_A.margins.right},${this.sectAttr_A.margins.top})`);
+    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
+    this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.sectAttr_A.width - this.sectAttr_A.margins.right},${this.sectAttr_A.margins.top})`);
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
     this.sectionAvolume.setAttribute('transform', `translate(0,${this.sectionContentARect.getBBox().height - this.rectVolume.getBBox().height})`);
@@ -240,7 +239,7 @@ export class ChartLayoutService {
   //this.xAxisBottom.setAttribute('transform', `translate(0, ${this.chart_attributes.height - this.chart_attributes.xAxisTop })`);
     //this.xAxisTopA.setAttribute('transform', `translate(0,${this.sectAttr_A.margins.top})`);
     //this.yAxisLeftGroupA.setAttribute('transform', `translate(0,${this.sectAttr_A.margins.top})`);
-    this.ohlc_yAxis_group_left.setAttribute('transform', `translate(${this.sectAttr_A.margins.left},0)`);
+    this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.sectAttr_A.margins.left},0)`);
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
     //this.macdChart.setAttribute('transform', `translate(32,391.5)`);

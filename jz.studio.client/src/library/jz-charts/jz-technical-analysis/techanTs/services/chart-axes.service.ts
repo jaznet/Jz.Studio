@@ -15,8 +15,8 @@ export class ChartAxesService {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-  ohlc_yAxis_left: any;
-  yAxisRightA: any;
+  ohlc_yAxisL: any;
+  ohlc_yAxisR: any;
 
   macdYaxisLeft: any;
   macdYaxisRight: any;
@@ -27,8 +27,6 @@ export class ChartAxesService {
   xAxisMonths!: any;
   xAxisDays!: any;
   xAxisBottom: any;
-
-
 
   yAxisVolLeftA: any;
   yAxisVolRightA: any;
@@ -49,8 +47,8 @@ export class ChartAxesService {
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
-    this.ohlc_yAxis_left = select(this.layout.ohlc_yAxis_left);
-    this.yAxisRightA = select(this.layout.yAxisRightA);
+    this.ohlc_yAxisL = select(this.layout.ohlc_yAxisL);
+    this.ohlc_yAxisR = select(this.layout.ohlc_yAxisR);
 
     this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
     this.yAxisVolRightA = select(this.layout.yAxisVolRightA);

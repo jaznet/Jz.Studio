@@ -12,11 +12,15 @@ import { axisLeft, axisRight } from 'd3-axis';
 })
 export class OhlcChartService {
 
-  ohlc_yAxis_left: any;
-  ohlc_yAxis_grp_left: any;
-  ohlc_yAxis_rct_left: any;
+  ohlc_yAxisL: any;
+  ohlc_yAxisL_grp: any;
+  ohlc_yAxisL_rct: any;
 
-  yAxisRightA: any;
+  ohlc_yAxisR: any;
+  ohlc_yAxisR_grp: any;
+  ohlc_yAxisR_rct: any;
+
+  //yAxisRightA: any;
   chartYaxisLeft: any;
   chartYaxisRight: any;
 
@@ -57,14 +61,14 @@ export class OhlcChartService {
   }
 
   public drawAxes() {
-    this.ohlc_yAxis_left = select(this.layout.ohlc_yAxis_left); 
-    this.yAxisRightA = select(this.layout.yAxisRightA);
+    this.ohlc_yAxisL = select(this.layout.ohlc_yAxisL);
+    this.ohlc_yAxisR = select(this.layout.ohlc_yAxisR);
 
     this.chartYaxisLeft = axisLeft(this.scales.ohlcYscale);
     this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
 
-    this.ohlc_yAxis_left.call(this.chartYaxisLeft);
-    this.yAxisRightA.call(this.chartYaxisRight);
+    this.ohlc_yAxisL.call(this.chartYaxisLeft);
+    this.ohlc_yAxisR.call(this.chartYaxisRight);
 
     return this;
   }
