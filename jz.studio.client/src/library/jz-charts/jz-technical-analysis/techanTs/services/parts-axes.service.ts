@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { ChartScalesService } from './chart-scales.service';
+import { ScalesService } from './scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll } from 'd3-selection';
 import { LayoutService } from './layout.service';
@@ -38,7 +38,7 @@ export class PartsAxesService {
   yAxisRightC: any;
 
   constructor(
-    private scales: ChartScalesService,
+    private scales: ScalesService,
     private layout: LayoutService) { }
 
   drawAxes(): void {

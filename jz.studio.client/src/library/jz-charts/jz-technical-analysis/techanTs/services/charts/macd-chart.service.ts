@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 import { line } from 'd3-shape';
-import { ChartScalesService } from '../chart-scales.service';
+import { ScalesService } from '../scales.service';
 import { ChartDataService } from '../chart-data.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class MacdChartService {
   private signalPeriod: number = 9; // Default signal line period
 
   constructor(
-    private scales: ChartScalesService,
+    private scales: ScalesService,
     private data: ChartDataService
   ) { }
 

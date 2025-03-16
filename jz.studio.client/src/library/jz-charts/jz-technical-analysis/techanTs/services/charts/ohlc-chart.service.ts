@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { LayoutService } from '../layout.service';
-import { ChartScalesService } from '../chart-scales.service';
+import { ScalesService } from '../scales.service';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { axisLeft, axisRight } from 'd3-axis';
 
@@ -30,7 +30,7 @@ export class OhlcChartService {
   gCandlestick: any;
 
   constructor(
-    private scales: ChartScalesService,
+    private scales: ScalesService,
     private data: ChartDataService,
     private layout: LayoutService
   ) { }

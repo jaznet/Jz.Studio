@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
-import { ChartScalesService } from '../chart-scales.service';
+import { ScalesService } from '../scales.service';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { LayoutService } from '../layout.service';
 
@@ -16,7 +16,7 @@ export class VolumeChartService {
   private gVolume: any;
 
   constructor(
-    private scales: ChartScalesService,
+    private scales: ScalesService,
     private data: ChartDataService,
   private layout: LayoutService
   ) { }

@@ -11,7 +11,7 @@ import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service
 import { ChartDataService } from '../services/chart-data.service';
 import { LayoutService } from '../services/layout.service';
 import { PartsAxesService } from '../services/parts-axes.service';
-import { ChartScalesService } from '../services/chart-scales.service';
+import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
 import { OhlcChartService } from '../services/charts/ohlc-chart.service';
@@ -143,7 +143,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private data: ChartDataService,
     private layout: LayoutService,
     private axes: PartsAxesService,
-    private scales:ChartScalesService,
+    private scales:ScalesService,
     private popOverService: JzPopOversService,
     private ohlcChart: OhlcChartService,
     private volumeChart: VolumeChartService,

@@ -8,7 +8,7 @@ import { AxisScale, AxisDomain, ScaleLinear } from 'd3-v4';
 @Injectable({
   providedIn: 'root'
 })
-export class ChartScalesService {
+export class ScalesService {
 
   dateScaleX!: any;
   ohlcYscale!: any;

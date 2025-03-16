@@ -3,7 +3,7 @@ import { line } from 'd3-shape';
 import { select } from 'd3-selection';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
-import { ChartScalesService } from '../chart-scales.service';
+import { ScalesService } from '../scales.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class RsiIndicatorService {
   private rollingPeriod: number = 14; // Default RSI period
 
   constructor(
-    private scales: ChartScalesService,
+    private scales: ScalesService,
     private data: ChartDataService,
     private layout: LayoutService
   ) { }
