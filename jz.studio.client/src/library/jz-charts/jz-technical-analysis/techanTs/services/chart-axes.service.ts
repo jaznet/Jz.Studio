@@ -47,11 +47,10 @@ export class ChartAxesService {
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
-    this.ohlc_yAxisL = select(this.layout.ohlc_yAxisL);
-    this.ohlc_yAxisR = select(this.layout.ohlc_yAxisR);
 
-    this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
-    this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
+
+    //this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
+    //this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
 
     this.yAxisLeftB = select(this.layout.yAxisLeftB);
     this.yAxisRightB = select(this.layout.yAxisRightB);

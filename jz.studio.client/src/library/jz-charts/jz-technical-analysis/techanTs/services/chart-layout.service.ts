@@ -65,13 +65,14 @@ export class ChartLayoutService {
   ohlc_yAxisR_grp!: SVGGElement;
   ohlc_yAxisR_rct!: SVGRectElement;
 
-  yAxisVolLeftA!: SVGGElement;
-  yAxisVolLeftGroupA!: SVGGElement;
-  yAxisVolLeftRectA!: SVGRectElement;
+  vol_yAxisL!: SVGGElement;
+  vol_yAxisL_grp!: SVGGElement;
+  vol_yAxisL_rct!: SVGRectElement;
 
-  yAxisVolRightA!: SVGGElement;
-  yAxisVolRightGroupA!: SVGGElement;
-  yAxisVolRightRectA!: SVGRectElement;
+  vol_yAxisR!: SVGGElement;
+  vol_yAxisR_grp!: SVGGElement;
+  vol_yAxisR_rct!: SVGRectElement;
+
 
   yAxisLeftB!: SVGGElement;
   yAxisLeftGroupB!: SVGGElement;
