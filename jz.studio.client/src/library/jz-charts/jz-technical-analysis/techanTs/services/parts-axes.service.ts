@@ -10,7 +10,7 @@ import { lab } from 'd3';
 @Injectable({
   providedIn: 'root'
 })
-export class ChartAxesService {
+export class PartsAxesService {
 
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;

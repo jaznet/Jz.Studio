@@ -10,7 +10,7 @@ import { StockPriceHistory } from '../../../../../models/stock-price-history.mod
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
 import { ChartDataService } from '../services/chart-data.service';
 import { ChartLayoutService } from '../services/chart-layout.service';
-import { ChartAxesService } from '../services/chart-axes.service';
+import { PartsAxesService } from '../services/parts-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
@@ -142,7 +142,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private stockPriceService: TechanTsService,
     private data: ChartDataService,
     private layout: ChartLayoutService,
-    private axes: ChartAxesService,
+    private axes: PartsAxesService,
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,
     private ohlcChart: OhlcChartService,
