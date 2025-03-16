@@ -7,7 +7,7 @@ import { ChartDataService } from '../chart-data.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ChartsMacdService {
+export class ChartMacdService {
   private _xScale: any;
   private _yScale: any;
   private gMacd: any;

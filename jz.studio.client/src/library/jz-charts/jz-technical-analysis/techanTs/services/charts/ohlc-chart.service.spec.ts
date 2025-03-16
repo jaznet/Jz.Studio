@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OhlcChartService } from './ohlc-chart.service';
+import { OhlcChartService } from './chart.ohlc-service';
 
 describe('OhlcChartService', () => {
   let service: OhlcChartService;
