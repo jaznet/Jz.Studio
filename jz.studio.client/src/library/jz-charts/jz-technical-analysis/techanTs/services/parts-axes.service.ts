@@ -3,7 +3,7 @@ import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { ChartScalesService } from './chart-scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll } from 'd3-selection';
-import { ChartLayoutService } from './chart-layout.service';
+import { LayoutService } from './layout.service';
 import { AxisDomain, Selection } from 'd3-v4';
 import { lab } from 'd3';
 
@@ -39,7 +39,7 @@ export class PartsAxesService {
 
   constructor(
     private scales: ChartScalesService,
-    private layout: ChartLayoutService) { }
+    private layout: LayoutService) { }
 
   drawAxes(): void {
 

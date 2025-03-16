@@ -4,7 +4,7 @@ import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ChartScalesService } from '../chart-scales.service';
 import { ohlcData } from '../../interfaces/techan-interfaces';
-import { ChartLayoutService } from '../chart-layout.service';
+import { LayoutService } from '../layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class VolumeChartService {
   constructor(
     private scales: ChartScalesService,
     private data: ChartDataService,
-  private layout: ChartLayoutService
+  private layout: LayoutService
   ) { }
 
   public xScale(scale: any): this {

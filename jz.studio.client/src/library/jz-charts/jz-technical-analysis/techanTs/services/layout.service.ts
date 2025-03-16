@@ -4,7 +4,7 @@ import { chart_attributes, SectionAttributes, SvgAttributes } from '../interface
 @Injectable({
   providedIn: 'root'
 })
-export class ChartLayoutService {
+export class LayoutService {
 
   svgContainer: any;
   svgElement!: ElementRef<any>;

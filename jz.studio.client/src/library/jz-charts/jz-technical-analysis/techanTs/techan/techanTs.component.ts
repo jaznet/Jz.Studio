@@ -9,7 +9,7 @@ import { ohlcData, SectionAttributes } from '../interfaces/techan-interfaces';
 import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
 import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
 import { ChartDataService } from '../services/chart-data.service';
-import { ChartLayoutService } from '../services/chart-layout.service';
+import { LayoutService } from '../services/layout.service';
 import { PartsAxesService } from '../services/parts-axes.service';
 import { ChartScalesService } from '../services/chart-scales.service';
 import { select, selection, selectAll } from 'd3-selection';
@@ -141,7 +141,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     private data: ChartDataService,
-    private layout: ChartLayoutService,
+    private layout: LayoutService,
     private axes: PartsAxesService,
     private scales:ChartScalesService,
     private popOverService: JzPopOversService,

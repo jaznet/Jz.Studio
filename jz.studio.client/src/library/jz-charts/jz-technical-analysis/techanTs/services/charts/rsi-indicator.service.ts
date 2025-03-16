@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { line } from 'd3-shape';
 import { select } from 'd3-selection';
 import { ChartDataService } from '../chart-data.service';
-import { ChartLayoutService } from '../chart-layout.service';
+import { LayoutService } from '../layout.service';
 import { ChartScalesService } from '../chart-scales.service';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class RsiIndicatorService {
   constructor(
     private scales: ChartScalesService,
     private data: ChartDataService,
-    private layout: ChartLayoutService
+    private layout: LayoutService
   ) { }
 
   public xScale(scale: any): this {

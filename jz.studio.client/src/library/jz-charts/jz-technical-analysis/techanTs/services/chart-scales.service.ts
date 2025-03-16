@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
-import { ChartLayoutService } from './chart-layout.service';
+import { LayoutService } from './layout.service';
 import { AxisScale, AxisDomain, ScaleLinear } from 'd3-v4';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class ChartScalesService {
 
   constructor(private data: ChartDataService,
 
-    private layout: ChartLayoutService) { }
+    private layout: LayoutService) { }
 
   createScales() {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
