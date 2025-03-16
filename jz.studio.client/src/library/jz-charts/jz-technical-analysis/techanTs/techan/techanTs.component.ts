@@ -16,7 +16,7 @@ import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/volume-chart.service';
 import { OhlcChartService } from '../services/charts/ohlc-chart.service';
 import { SmaChartService } from '../services/charts/sma-chart.service';
-import { MacdChartService } from '../services/charts/macd-chart.service';
+import { ChartsMacdService } from '../services/charts/charts-macd.service';
 import { RsiIndicatorService } from '../services/charts/rsi-indicator.service';
 
 export interface range {
@@ -148,7 +148,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private ohlcChart: OhlcChartService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
-    private macdChart: MacdChartService,
+    private macdChart: ChartsMacdService,
     private rsiIndicator: RsiIndicatorService
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', 'black');

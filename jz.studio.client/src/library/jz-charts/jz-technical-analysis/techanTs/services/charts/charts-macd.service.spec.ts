@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MacdChartService } from './macd-chart.service';
+import { MacdChartService } from './charts-macd.service';
 
 describe('MacdChartService', () => {
   let service: MacdChartService;
