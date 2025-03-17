@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RsiIndicatorService } from './rsi-indicator.service';
+import { SmaChartService } from './chart-sma.service';
 
-describe('RsiIndicatorService', () => {
-  let service: RsiIndicatorService;
+describe('SmaChartService', () => {
+  let service: SmaChartService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(RsiIndicatorService);
+    service = TestBed.inject(SmaChartService);
   });
 
   it('should be created', () => {

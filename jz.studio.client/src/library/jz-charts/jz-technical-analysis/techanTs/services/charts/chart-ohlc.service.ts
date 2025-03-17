@@ -10,7 +10,7 @@ import { axisLeft, axisRight } from 'd3-axis';
 @Injectable({
   providedIn: 'root',
 })
-export class OhlcChartService {
+export class ChartOhlcService {
 
   ohlc_yAxisL: any;
   ohlc_yAxisL_grp: any;

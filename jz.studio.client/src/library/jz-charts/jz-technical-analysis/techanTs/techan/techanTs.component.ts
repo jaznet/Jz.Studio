@@ -14,10 +14,10 @@ import { PartsAxesService } from '../services/parts-axes.service';
 import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/chart-volume.service';
-import { OhlcChartService } from '../services/charts/chart.ohlc-service';
-import { SmaChartService } from '../services/charts/sma-chart.service';
+import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
+import { SmaChartService } from '../services/charts/chart-sma.service';
 import { ChartMacdService } from '../services/charts/chart-macd.service';
-import { RsiIndicatorService } from '../services/charts/rsi-indicator.service';
+import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
 
 export interface range {
   start: number;
@@ -145,11 +145,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private axes: PartsAxesService,
     private scales:ScalesService,
     private popOverService: JzPopOversService,
-    private ohlcChart: OhlcChartService,
+    private ohlcChart: ChartOhlcService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
     private macdChart: ChartMacdService,
-    private rsiIndicator: RsiIndicatorService
+    private rsiIndicator: ChartRsiIndic
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', 'black');
     document.documentElement.style.setProperty('--plt-chart-2', '#0A0A0A');

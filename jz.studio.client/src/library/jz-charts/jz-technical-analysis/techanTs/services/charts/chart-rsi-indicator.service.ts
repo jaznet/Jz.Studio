@@ -8,7 +8,7 @@ import { ScalesService } from '../scales.service';
 @Injectable({
   providedIn: 'root',
 })
-export class RsiIndicatorService {
+export class ChartRsiIndic {
   private _xScale: any;
   private _yScale: any;
   private gRsi: any;

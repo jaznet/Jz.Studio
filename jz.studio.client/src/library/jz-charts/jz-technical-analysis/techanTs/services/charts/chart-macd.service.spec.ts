@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MacdChartService } from './chart-macd.service';
+import { ChartMacdService } from './chart-macd.service';
 
 describe('MacdChartService', () => {
-  let service: MacdChartService;
+  let service: ChartMacdService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MacdChartService);
+    service = TestBed.inject(ChartMacdService);
   });
 
   it('should be created', () => {

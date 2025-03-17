@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { OhlcChartService } from './chart.ohlc-service';
+import { ChartRsiIndic } from './chart-rsi-indicator.service';
 
-describe('OhlcChartService', () => {
-  let service: OhlcChartService;
+describe('ChartRsiIndic', () => {
+  let service: ChartRsiIndic;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(OhlcChartService);
+    service = TestBed.inject(ChartRsiIndic);
   });
 
   it('should be created', () => {

@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { ChartOhlcService } from './chart-ohlc.service';
 
-import { SmaChartService } from './sma-chart.service';
 
-describe('SmaChartService', () => {
-  let service: SmaChartService;
+
+describe('ChartOhlcService', () => {
+  let service: ChartOhlcService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SmaChartService);
+    service = TestBed.inject(ChartOhlcService);
   });
 
   it('should be created', () => {
