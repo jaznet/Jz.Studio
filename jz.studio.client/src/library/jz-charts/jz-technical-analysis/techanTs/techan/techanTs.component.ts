@@ -256,8 +256,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisRightGroupC = this.yAxisRightGroupCRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
-     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
-    this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
+
 
     this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;

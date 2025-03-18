@@ -102,17 +102,18 @@ export class LayoutService {
   }
 
   sizeSections(): void {
-    this.chart_attributes.width = this.svgContainer.clientWidth ;
-    this.chart_attributes.height = this.svgContainer.clientHeight - this.chart_attributes.yAxisLeft -  this.chart_attributes.yAxisRight ;
+    this.chart_attributes.width = this.svgContainer.clientWidth-16;
+    this.chart_attributes.height = this.svgContainer.clientHeight-16 ;
 
     // SVG
-    let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
-    this.svg_attributes.height = svgBRect.height - this.chart_attributes.yAxisLeft - this.chart_attributes.yAxisRight;
-    this.svg_attributes.width = svgBRect.width;
-    this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
+    //let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
+    //this.svg_attributes.width = svgBRect.width;
+    //this.svg_attributes.height = svgBRect.height - this.chart_attributes.yAxisLeft - this.chart_attributes.yAxisRight;
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
-    this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
+    this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
+    this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
+
 
     // X-AXIS TOP
 
