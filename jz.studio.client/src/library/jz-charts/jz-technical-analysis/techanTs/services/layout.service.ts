@@ -8,14 +8,11 @@ export class LayoutService {
 
   svgContainer: any;
   svgElement!: ElementRef<any>;
-  //svgWidth = 0;
-  //svgHeight = 0;
   svgElementRect!: SVGRectElement;
-  //svgRectWidth = 0;
-  //svgRectHeight = 0;
 
   chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
+
   sectAttr_A: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
 
   sections!: SVGGElement;
@@ -48,7 +45,8 @@ export class LayoutService {
   sectionRectC!: SVGRectElement;
 
   // #region Axes
-  xAxisMonths!: SVGGElement;
+  xAxisMonthsTop!: SVGGElement;
+  xAxisMonthsBottom!: SVGGElement;
   xAxisDays!: SVGGElement;
   xAxisTopGroup!: SVGGElement;
   xAxisTopRect!: SVGRectElement;
@@ -106,14 +104,11 @@ export class LayoutService {
     this.chart_attributes.height = this.svgContainer.clientHeight-16 ;
 
     // SVG
-    //let svgBRect: SVGRect = this.svgContainer.getBoundingClientRect();
-    //this.svg_attributes.width = svgBRect.width;
-    //this.svg_attributes.height = svgBRect.height - this.chart_attributes.yAxisLeft - this.chart_attributes.yAxisRight;
+
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
-
 
     // X-AXIS TOP
 
@@ -217,10 +212,10 @@ export class LayoutService {
 
   alignChartsToScaffold(): void {
     this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
-    this.xAxisMonths.setAttribute('transform', `translate(40,32)`);
+    this.xAxisMonthsTop.setAttribute('transform', `translate(40,32)`);
 
-    this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height})`);
-    this.xAxisBottom.setAttribute('transform', `translate(40,-32)`);
+    this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.chart_attributes.height - this.chart_attributes.xAxisBottom})`);
+    this.xAxisMonthsBottom.setAttribute('transform', `translate(40,0)`);
 
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
 

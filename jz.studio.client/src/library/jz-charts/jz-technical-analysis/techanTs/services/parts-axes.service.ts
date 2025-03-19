@@ -24,7 +24,8 @@ export class PartsAxesService {
   rsiYaxisLeft: any;
   rsiYaxisRight: any;
 
-  xAxisMonths!: any;
+  xAxisMonthsTop!: any;
+  xAxisMonthsBottom!: any;
   xAxisDays!: any;
   xAxisBottom: any;
 
@@ -43,7 +44,8 @@ export class PartsAxesService {
 
   drawAxes(): void {
 
-    this.xAxisMonths = select(this.layout.xAxisMonths);
+    this.xAxisMonthsTop = select(this.layout.xAxisMonthsTop);
+    this.xAxisMonthsBottom = select(this.layout.xAxisMonthsBottom);
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
@@ -129,8 +131,8 @@ export class PartsAxesService {
     this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
 
     /*DRAW*/
-    this.xAxisMonths.call(this.chartXaxisMonthsTop);
-    this.xAxisBottom.call(this.chartXaxisMonthsBottom);
+    this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
+    this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
 
 
   

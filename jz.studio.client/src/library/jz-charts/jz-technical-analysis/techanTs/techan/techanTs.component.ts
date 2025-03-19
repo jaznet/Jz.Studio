@@ -79,11 +79,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonths', { static: true }) xAxisMonthsRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisMonthsTop', { static: true }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: true }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
   @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
@@ -229,12 +230,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
-    this.layout.xAxisMonths = this.xAxisMonthsRef.nativeElement;
-  /*  this.layout.xAxisDays = this.xAxisDaysRef.nativeElement;*/
+    this.layout.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
 
     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
-    this.layout.xAxisBottom = this.xAxisBottomRef.nativeElement;
+    this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
 
 
@@ -264,7 +264,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
 
-    this.axes.xAxisMonths = this.xAxisMonthsRef;
+    this.axes.xAxisMonthsTop = this.xAxisMonthsTopRef;
+    this.axes.xAxisMonthsBottom = this.xAxisMonthsBottomRef;
     this.axes.xAxisBottom = this.xAxisBottomRef;
 
     this.layout.ohlc_yAxisL = this.ohlc_yAxisL.nativeElement;

@@ -14,7 +14,7 @@
 
 text {
   fill: yellow;
-}
+} 
 
 .x-axis {
   fill: var(--plt-chart-2);
