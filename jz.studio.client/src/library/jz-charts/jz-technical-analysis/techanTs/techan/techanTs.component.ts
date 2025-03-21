@@ -44,6 +44,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionContentA', { static: true }) sectionContentARef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
 
+  // #region ohlc
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
@@ -55,8 +56,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
   @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
   @ViewChild('ohlc_yAxisR_rct', { static: true }) ohlc_yAxisR_rct!: ElementRef<SVGRectElement>;
+  // #endregion ohlc
 
+  // VOLUME GROUP
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sectionB', { static: true }) sectionBRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentB', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
@@ -100,9 +105,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // #endregion Axes
 
-  // VOLUME GROUP
-  @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
+
 
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
