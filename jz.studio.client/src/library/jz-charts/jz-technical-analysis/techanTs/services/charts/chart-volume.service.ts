@@ -15,6 +15,9 @@ export class VolumeChartService {
   private _barWidth: number = 0;
   private gVolume: any;
 
+  yAxisVolLeftA: any;
+  yAxisVolRightA: any;
+
   constructor(
     private scales: ScalesService,
     private data: ChartDataService,

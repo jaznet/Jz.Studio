@@ -41,3 +41,19 @@ export interface ohlcData {
   close: number;
   volume: number;
 }
+
+export interface range {
+  start: number;
+  end: number;
+}
+
+interface DateType {
+  date: Date;
+  isValid: boolean;
+}
+
+interface DataType {
+  date: Date | string;
+  open: number;
+  close: number;
+}

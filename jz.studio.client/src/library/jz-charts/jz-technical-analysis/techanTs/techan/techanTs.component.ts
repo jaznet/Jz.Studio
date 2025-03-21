@@ -19,22 +19,6 @@ import { SmaChartService } from '../services/charts/chart-sma.service';
 import { ChartMacdService } from '../services/charts/chart-macd.service';
 import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
 
-export interface range {
-  start: number;
-  end: number;
-}
-
-interface DateType {
-  date: Date;
-  isValid: boolean;
-}
-
-interface DataType {
-  date: Date | string;
-  open: number;
-  close: number;
-}
-
 @Component({
   selector: 'techanTs',
   templateUrl: './techanTs.component.html',
@@ -59,9 +43,18 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
   @ViewChild('sectionContentA', { static: true }) sectionContentARef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
+
+  @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisL', { static: true }) ohlc_yAxisL!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisL_rct', { static: true }) ohlc_yAxisL_rct!: ElementRef<SVGRectElement>;
+
+  @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
+  @ViewChild('ohlc_yAxisR_rct', { static: true }) ohlc_yAxisR_rct!: ElementRef<SVGRectElement>;
 
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
 
@@ -87,13 +80,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisL', { static: true }) ohlc_yAxisL!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisL_rct', { static: true }) ohlc_yAxisL_rct!: ElementRef<SVGRectElement>;
 
-  @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisR_rct', { static: true }) ohlc_yAxisR_rct!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupB', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
@@ -206,6 +193,19 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sections = this.sectionsRef.nativeElement;
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
 
+    this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
+    this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
+    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    this.ohlcChart.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
+
+    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+
+    this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
+    this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+
     this.layout.sectionA = this.sectionARef.nativeElement;
     this.layout.sectionRectA = this.sectionRectARef.nativeElement;
     this.layout.sectionContentA = this.sectionContentARef.nativeElement;
@@ -236,11 +236,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-
-
-
-
-     this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
+    this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
     this.layout.yAxisLeftGroupB = this.yAxisLeftGroupBRef.nativeElement;;
     this.layout.yAxisLeftRectB = this.yAxisLeftRectBRef.nativeElement;
 
@@ -257,8 +253,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
 
-
-    this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.layout.rectVolume = this.volumeRectRef.nativeElement;;
 
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
@@ -272,17 +266,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.layout.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-    this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
-    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
-    this.ohlcChart.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
-    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
-
-    this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
-    this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
 
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 

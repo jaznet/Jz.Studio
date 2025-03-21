@@ -29,8 +29,7 @@ export class PartsAxesService {
   xAxisDays!: any;
   xAxisBottom: any;
 
-  yAxisVolLeftA: any;
-  yAxisVolRightA: any;
+
 
   yAxisLeftB: any;
   yAxisRightB: any;

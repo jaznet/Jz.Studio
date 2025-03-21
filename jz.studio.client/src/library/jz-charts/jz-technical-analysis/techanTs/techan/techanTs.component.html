@@ -13,17 +13,18 @@
 
     <g #sections id="sections">
       <rect #sectionsRect id="" width="0" height="0"></rect>
+
       <!-- #region SECTION A -->
       <g #sectionA id="sectionA">
         <rect #sectionRectA id="sectionRectA" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)"></rect>
 
-        <!-- LEFT AXIS-->
+        <!-- OHLC LEFT AXIS-->
         <g #ohlc_yAxisL_grp id="ohlc_yAxisL_grp">
           <rect #ohlc_yAxisL_rct id="ohlc_yAxisL_rct" width="0" height="0" class="axis y-axis "></rect>
           <g #ohlc_yAxisL id="ohlc_yAxisL" class="y-axis"></g>
         </g>
 
-        <!-- RIGHT AXIS-->
+        <!-- OHLC RIGHT AXIS-->
         <g #ohlc_yAxisR_grp id="ohlc_yAxisR_grp">
           <rect #ohlc_yAxisR_rct id="ohlc_yAxisR_rct" width="0" height="0" class="axis y-axis "></rect>
           <g #ohlc_yAxisR id="ohlc_yAxisR" class="y-axis"></g>
@@ -51,9 +52,22 @@
           <!-- Section A-1 Volume Chart -->
           <g #volumeGroup id="volumeGroup">
             <rect #volumeRect width="0" height="0" fill="transparent"></rect>
-            <g #volumeChart id="volumeChart"></g>
-          </g>
 
+            <!-- Volume LEFT AXIS-->
+            <g #volume_yAxisL_grp id="volume_yAxisL_grp">
+              <rect #volume_yAxisL_rct id="volume_yAxisL_rct" width="0" height="0" class="axis y-axis "></rect>
+              <g #volume_yAxisL id="volume_yAxisL" class="y-axis"></g>
+            </g>
+
+            <!-- Volume RIGHT AXIS-->
+            <g #volume_yAxisR_grp id="volume_yAxisR_grp">
+              <rect #volume_yAxisR_rct id="volume_yAxisR_rct" width="0" height="0" class="axis y-axis "></rect>
+              <g #volume_yAxisR id="volume_yAxisR" class="y-axis"></g>
+            </g>
+
+            <g #volumeChart id="volumeChart"></g>
+
+          </g>
 
           <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
 

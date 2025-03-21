@@ -111,7 +111,6 @@ export class LayoutService {
     this.svgElementRect.setAttribute('height', `${this.chart_attributes.height}`);
 
     // X-AXIS TOP
-
     this.xAxisTopRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.xAxisTopRect.setAttribute('height', `${this.chart_attributes.xAxisTop}`);
 
