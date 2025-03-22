@@ -218,9 +218,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
-    // @endreion OHLC
+    // @endregion OHLC
 
+    // @region VOLUME
 
+    // @endregion VOLUME
 
 
     this.layout.sectionA = this.sectionARef.nativeElement;
