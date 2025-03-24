@@ -15,8 +15,13 @@ export class VolumeChartService {
   private _barWidth: number = 0;
   private gVolume: any;
 
-  yAxisVolLeftA: any;
-  yAxisVolRightA: any;
+  volume_yAxisL: any;
+  volume_yAxisL_grp: any;
+  volume_yAxisL_rct: any;
+
+  volume_yAxisR: any;
+  volume_yAxisR_grp: any;
+  volume_yAxisR_rct: any;
 
   constructor(
     private scales: ScalesService,

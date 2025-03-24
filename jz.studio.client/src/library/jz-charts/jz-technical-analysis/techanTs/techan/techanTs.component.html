@@ -48,8 +48,11 @@
             <g #sma2 id="sma2"></g>
             <g #sma3 id="sma3"></g>
           </g>
+        </g>
 
-          <!-- Section A-1 Volume Chart -->
+        <g #volumeSection id="volumeSection">
+          <rect #volumeSectionRect id="volumeSectionRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
+          <!-- Section Volume Chart -->
           <g #volumeGroup id="volumeGroup">
             <rect #volumeRect width="0" height="0" fill="transparent"></rect>
 
@@ -67,11 +70,11 @@
 
             <g #volumeChart id="volumeChart"></g>
 
+            <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+
           </g>
-
-          <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
-
         </g>
+
         <!-- #endregion -->
       </g>
       <!-- #endregion -->

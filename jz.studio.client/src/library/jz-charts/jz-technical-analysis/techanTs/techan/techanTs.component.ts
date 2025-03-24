@@ -27,7 +27,7 @@ import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  // #region @ViewChilds
+  // #region @ViewChild List
   @ViewChild('svgContainer', { static: true }) svgContainerRef!: ElementRef;
   @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
@@ -59,6 +59,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #endregion ohlc
 
   // #region VOLUME GROUP
+  @ViewChild('volumeSection', { static: true }) volumeSection!: ElementRef<SVGGElement>;
   @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('volumeRect', { static: true }) volumeRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
@@ -94,8 +95,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
-
-
   @ViewChild('yAxisLeftGroupB', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectB', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
@@ -115,7 +114,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #endregion Axes
 
 
-  //@region
+  // #region
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
@@ -205,30 +204,32 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sections = this.sectionsRef.nativeElement;
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
 
-    // @region OHLC
+    // #region OHLC
     this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
     this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.ohlcChart.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
-    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+    //this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    //this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    //this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
 
     this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
-    // @endregion OHLC
+    // #endregion OHLC
 
     // @region VOLUME
-
+    this.layout.volumeSection = this.volumeSection.nativeElement;
     // @endregion VOLUME
 
 
-    this.layout.sectionA = this.sectionARef.nativeElement;
+    this.layout.ohlcSection = this.sectionARef.nativeElement;
     this.layout.sectionRectA = this.sectionRectARef.nativeElement;
-    this.layout.sectionContentA = this.sectionContentARef.nativeElement;
-    this.layout.sectionContentARect = this.sectionContentARectRef.nativeElement;
+    this.layout.ohlcSectionContent = this.sectionContentARef.nativeElement;
+    this.layout.ohlcSectionContentRect = this.sectionContentARectRef.nativeElement;
+
+    this.layout.volumeSection = this.volumeSection.nativeElement;
 
     this.layout.sectionB = this.sectionBRef.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
@@ -242,7 +243,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionContentCRect = this.sectionContentCRectRef.nativeElement;
 
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
-    this.layout.sectionAvolume = this.volumeGroupRef.nativeElement;
+   
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
@@ -285,7 +286,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.layout.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
 
-
+    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
 
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 

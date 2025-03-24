@@ -39,11 +39,11 @@ export class ScalesService {
 
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
-      .range([this.layout.sectionAvolume.getBBox().height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([this.layout.volumeSection.getBBox().height, 0]); // Invert the range for correct orientation (top to bottom)
 
     /*   this.macdYscale = */
 
-    console.log(this.layout.sectionAvolume.getBBox().height);
+    console.log(this.layout.volumeSection.getBBox().height);
   }
 
   createMacdYScale(macdData: { macd: number; signal: number; histogram: number }[], chartHeight: number): any {
