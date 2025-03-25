@@ -113,7 +113,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // #endregion Axes
 
-
   // #region
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
@@ -129,12 +128,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
-  gSectionA: any;
-  gSectionB: any;
-  gSectionC: any;
-
   gCandlestick: any;
-  gXaxis: any;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
