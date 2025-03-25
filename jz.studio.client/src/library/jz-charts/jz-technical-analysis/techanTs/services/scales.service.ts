@@ -16,9 +16,10 @@ export class ScalesService {
   macdYscale: any;
   rsiYscale: any;
 
-  constructor(private data: ChartDataService,
-
-    private layout: LayoutService) { }
+  constructor(
+    private data: ChartDataService,
+    private layout: LayoutService) {
+  }
 
   createScales() {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {

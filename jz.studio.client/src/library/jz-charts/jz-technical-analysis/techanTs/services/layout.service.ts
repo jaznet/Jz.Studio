@@ -6,6 +6,7 @@ import { chart_attributes, SectionAttributes, SvgAttributes } from '../interface
 })
 export class LayoutService {
 
+  // #region PROPERTIES
   svgContainer: any;
   svgElement!: ElementRef<any>;
   svgElementRect!: SVGRectElement;
@@ -13,21 +14,21 @@ export class LayoutService {
   chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
 
-  ohlcSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
-
   sections!: SVGGElement;
   sectionsRect!: SVGRectElement;
 
+  ohlcSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   ohlcSection!: SVGGElement;
   ohlcSectionContent!: SVGGElement;
   ohlcSectionContentRect!: SVGRectElement;
   ohlcSectionRect!: SVGRectElement;
-
   ohlcRect!: SVGRectElement;
+
   sma1!: SVGElement;
   sma2!: SVGElement;
   sma3!: SVGElement;
 
+  volumnSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   volumeSection!: SVGGElement;
   volumeSectionContent!: SVGGElement;
   volumeSectionContentRect!: SVGRectElement;
@@ -95,6 +96,7 @@ export class LayoutService {
   // #endregion Axes
 
   rectVolume!: SVGRectElement;
+  // #endregion
 
   constructor() { }
 
@@ -108,7 +110,6 @@ export class LayoutService {
     this.chart_attributes.height = this.svgContainer.clientHeight-16 ;
 
     // SVG
-
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
@@ -228,9 +229,11 @@ export class LayoutService {
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
+    this.volumeSection.setAttribute('transform', `translate(${this.volumnSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
+
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
-    this.volumeSection.setAttribute('transform', `translate(0,100)`);
+
 
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
