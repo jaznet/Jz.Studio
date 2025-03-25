@@ -21,6 +21,7 @@ export class LayoutService {
   ohlcSection!: SVGGElement;
   ohlcSectionContent!: SVGGElement;
   ohlcSectionContentRect!: SVGRectElement;
+  ohlcSectionRect!: SVGRectElement;
 
   ohlcRect!: SVGRectElement;
   sma1!: SVGElement;
@@ -43,7 +44,7 @@ export class LayoutService {
   sectAttr_C: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   rsiGroup: any;
 
-  sectionRectA!: SVGRectElement;
+
   sectionRectB!: SVGRectElement;
   sectionRectC!: SVGRectElement;
 
@@ -127,15 +128,15 @@ export class LayoutService {
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
 
    // console.log('sections', this.sectionsRect);
-    this.sectionRectA.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.sectionRectA.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
+    this.ohlcSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.ohlcSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
 
     // SECTION A
-    let bboxA = this.sectionRectA.getBBox();
+    let bboxA = this.ohlcSectionRect.getBBox();
     this.sectAttr_A.width = bboxA.width;
     this.sectAttr_A.height = bboxA.height;
 

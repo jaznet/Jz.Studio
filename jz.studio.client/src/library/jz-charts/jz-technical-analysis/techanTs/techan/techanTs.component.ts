@@ -226,7 +226,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
 
     this.layout.ohlcSection = this.sectionARef.nativeElement;
-    this.layout.sectionRectA = this.sectionRectARef.nativeElement;
+    this.layout.ohlcSectionRect = this.sectionRectARef.nativeElement;
     this.layout.ohlcSectionContent = this.sectionContentARef.nativeElement;
     this.layout.ohlcSectionContentRect = this.sectionContentARectRef.nativeElement;
 
