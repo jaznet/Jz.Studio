@@ -28,6 +28,8 @@ export class LayoutService {
   sma3!: SVGElement;
 
   volumeSection!: SVGGElement;
+  volumeSectionContent!: SVGGElement;
+  volumeSectionContentRect!: SVGRectElement;
 
   sectionB!: SVGGElement;
   sectionContentB!: SVGGElement;
@@ -227,7 +229,7 @@ export class LayoutService {
 
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
-    this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionContentRect.getBBox().height - this.rectVolume.getBBox().height})`);
+    this.volumeSection.setAttribute('transform', `translate(0,100)`);
 
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);

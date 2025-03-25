@@ -221,6 +221,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     // @region VOLUME
     this.layout.volumeSection = this.volumeSection.nativeElement;
+    //this.layout.volumeSectionContent = this.v
     // @endregion VOLUME
 
 
@@ -229,7 +230,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.ohlcSectionContent = this.sectionContentARef.nativeElement;
     this.layout.ohlcSectionContentRect = this.sectionContentARectRef.nativeElement;
 
-    this.layout.volumeSection = this.volumeSection.nativeElement;
+
 
     this.layout.sectionB = this.sectionBRef.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
