@@ -1,4 +1,4 @@
-import { ElementRef, Injectable } from '@angular/core'; 
+import { ElementRef, Injectable } from '@angular/core';
 import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class LayoutService {
   svgElement!: ElementRef<any>;
   svgElementRect!: SVGRectElement;
 
-  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 ,charts:[.4,.2,.2,.2]};
+  chart_attributes: chart_attributes = { width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40, charts: [.4, .2, .2, .2] };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
 
   sections!: SVGGElement;
@@ -23,7 +23,7 @@ export class LayoutService {
   ohlcSectionContent!: SVGGElement;
   ohlcSectionContentRect!: SVGRectElement;
 
-/*  ohlcRect!: SVGRectElement;*/
+  /*  ohlcRect!: SVGRectElement;*/
 
   sma1!: SVGElement;
   sma2!: SVGElement;
@@ -65,18 +65,18 @@ export class LayoutService {
   ohlc_yAxisL!: SVGGElement;
   ohlc_yAxisL_grp!: SVGGElement;
   ohlc_yAxisL_rct!: SVGRectElement;
-   
+
   ohlc_yAxisR!: SVGGElement;
   ohlc_yAxisR_grp!: SVGGElement;
   ohlc_yAxisR_rct!: SVGRectElement;
 
-  vol_yAxisL!: SVGGElement;
-  vol_yAxisL_grp!: SVGGElement;
-  vol_yAxisL_rct!: SVGRectElement;
+  volume_yAxisL!: SVGGElement;
+  volume_yAxisL_grp!: SVGGElement;
+  volume_yAxisL_rct!: SVGRectElement;
 
-  vol_yAxisR!: SVGGElement;
-  vol_yAxisR_grp!: SVGGElement;
-  vol_yAxisR_rct!: SVGRectElement;
+  volume_yAxisR!: SVGGElement;
+  volume_yAxisR_grp!: SVGGElement;
+  volume_yAxisR_rct!: SVGRectElement;
 
 
   yAxisLeftB!: SVGGElement;
@@ -108,10 +108,10 @@ export class LayoutService {
   }
 
   sizeSections(): void {
-    this.chart_attributes.width = this.svgContainer.clientWidth-16;
-    this.chart_attributes.height = this.svgContainer.clientHeight-16 ;
+    this.chart_attributes.width = this.svgContainer.clientWidth - 16;
+    this.chart_attributes.height = this.svgContainer.clientHeight - 16;
 
-// #region MAIN
+    // #region MAIN
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
@@ -144,8 +144,8 @@ export class LayoutService {
     // #endregion OHLC
 
     this.volumeSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.volumeSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value* this.chart_attributes.charts[1]}`);
-   
+    this.volumeSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[1]}`);
+
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
@@ -245,9 +245,9 @@ export class LayoutService {
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
     // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
-  
+
     //this.macdChart.setAttribute('transform', `translate(32,391.5)`);
     //this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);
-   // this.macdChart.setAttribute('transform', `translate(32,391.5)`);
+    // this.macdChart.setAttribute('transform', `translate(32,391.5)`);
   }
 }

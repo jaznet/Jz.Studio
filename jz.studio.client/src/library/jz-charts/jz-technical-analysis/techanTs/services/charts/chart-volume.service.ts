@@ -5,6 +5,7 @@ import { select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { LayoutService } from '../layout.service';
+import { axisLeft, axisRight } from 'd3-v4';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,9 @@ export class VolumeChartService {
   volume_yAxisR: any;
   volume_yAxisR_grp: any;
   volume_yAxisR_rct: any;
+
+  YaxisLeft: any;
+  YaxisRight: any;
 
   constructor(
     private scales: ScalesService,
@@ -56,6 +60,17 @@ export class VolumeChartService {
       this.scales.dateScaleX(this.data.parsedData[0].date);
 
     return this; // Enables method chaining
+  }
+
+  public drawAxes() {
+    this.volume_yAxisL = select(this.layout.volume_yAxisL);
+    this.volume_yAxisR = select(this.layout.volume_yAxisR);
+
+    this.YaxisLeft = axisLeft(this.scales.volumeYscale);
+    this.YaxisRight = axisRight(this.scales.volumeYscale);
+
+    this.volume_yAxisL.call(this.YaxisLeft);
+    this.volume_yAxisR.call(this.YaxisRight);
   }
 
   public draw(): void {
