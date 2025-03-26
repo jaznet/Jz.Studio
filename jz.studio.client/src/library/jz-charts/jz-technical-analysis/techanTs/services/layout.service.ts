@@ -11,7 +11,7 @@ export class LayoutService {
   svgElement!: ElementRef<any>;
   svgElementRect!: SVGRectElement;
 
-  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 };
+  chart_attributes: chart_attributes = { width: 0, height: 0,  xAxisTop: 32, xAxisBottom: 32, yAxisLeft:40,yAxisRight:40 ,charts:[.4,.2,.2,.2]};
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
 
   sections!: SVGGElement;

@@ -38,15 +38,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionsRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
-   
+
+  // #region ohlc
   @ViewChild('ohlcSection', { static: true }) ohlcSection!: ElementRef<SVGGElement>;
   @ViewChild('ohlcSectionRect', { static: true }) ohlcSectionRect!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('ohlcSectionContentRect', { static: true }) ohlcSectionContentRect!: ElementRef<SVGRectElement>;
 
-  // #region ohlc
  // @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
+/*  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;*/
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
   @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
@@ -113,7 +113,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // #endregion Axes
 
-  // #region
+  // #region @VIEWCHILD lIST
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
@@ -156,6 +156,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.popover_loading.show();
     const ticker = 'NVDA';
+
     this.stockPriceService.getStockPrices(ticker).subscribe(
       (data: StockPriceHistory[]) => {
         this.popover_loading.hide();
