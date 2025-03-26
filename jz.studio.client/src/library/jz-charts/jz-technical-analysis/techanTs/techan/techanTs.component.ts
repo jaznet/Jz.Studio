@@ -74,7 +74,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volume_yAxisR_rct', { static: true }) volume_yAxisR_rct!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP
 
-  @ViewChild('sectionB', { static: true }) sectionBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentB', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentBRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('sectionRectB', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
@@ -223,7 +223,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.volumeSectionRect = this.volumeSection.nativeElement;
     // #endregion VOLUME
 
-    this.layout.sectionB = this.sectionBRef.nativeElement;
+    this.layout.macdSection = this.macdSection.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
     this.layout.sectionContentB = this.sectionContentBRef.nativeElement;
     this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;

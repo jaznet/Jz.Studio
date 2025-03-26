@@ -35,7 +35,8 @@ export class LayoutService {
   volumeSectionContent!: SVGGElement;
   volumeSectionContentRect!: SVGRectElement;
 
-  sectionB!: SVGGElement;
+  macdSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  macdSection!: SVGGElement;
   sectionContentB!: SVGGElement;
   sectionContentBRect!: SVGRectElement;
   sectAttr_B: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
@@ -238,10 +239,10 @@ export class LayoutService {
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
 
-    this.sectionB.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .5})`);
+    this.macdSection.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1])})`);
     this.sectionContentB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
 
-    this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * .75})`);
+    this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1] + this.chart_attributes.charts[2])})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
     // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
 
