@@ -29,7 +29,7 @@ export class LayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
-  volumnSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  volumneSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   volumeSection!: SVGGElement;
   volumeSectionRect!: SVGGElement;
   volumeSectionContent!: SVGGElement;
@@ -230,11 +230,10 @@ export class LayoutService {
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
-    this.volumeSection.setAttribute('transform', `translate(${this.volumnSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
+    this.volumeSection.setAttribute('transform', `translate(${this.volumneSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
 
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
-
 
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
