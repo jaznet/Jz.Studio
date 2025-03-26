@@ -91,16 +91,13 @@ export class ChartOhlcService {
 
     wicks.exit().remove();
 
-
     const candle = this.gCandlestick.selectAll('.candle').data(parsedData);
 
     candle.enter()
       .append('rect')
       .attr('class', 'candle')
       .merge(candle)
-      /*.attr('x', (d: olhcData) => this._xScale(d.date) ?? 0)*/
       .attr('x', (d: ohlcData) => {
-     //   console.log("Date:", d.date, "Scaled X:", this._xScale(d.date.toISOString()));
         return this._xScale(d.date.toISOString()) ?? 0;
       })
       .attr('y', (d: ohlcData) => this._yScale(Math.max(d.open, d.close)))

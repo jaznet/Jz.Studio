@@ -17,12 +17,14 @@ export class LayoutService {
   sections!: SVGGElement;
   sectionsRect!: SVGRectElement;
 
+
   ohlcSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   ohlcSection!: SVGGElement;
+  ohlcSectionRect!: SVGRectElement;
   ohlcSectionContent!: SVGGElement;
   ohlcSectionContentRect!: SVGRectElement;
-  ohlcSectionRect!: SVGRectElement;
-  ohlcRect!: SVGRectElement;
+
+/*  ohlcRect!: SVGRectElement;*/
 
   sma1!: SVGElement;
   sma2!: SVGElement;
@@ -109,7 +111,7 @@ export class LayoutService {
     this.chart_attributes.width = this.svgContainer.clientWidth-16;
     this.chart_attributes.height = this.svgContainer.clientHeight-16 ;
 
-    // SVG
+// #region MAIN
     this.svgElement.nativeElement.setAttribute('width', `${this.chart_attributes.width}`);
     this.svgElement.nativeElement.setAttribute('height', `${this.chart_attributes.height}`);
     this.svgElementRect.setAttribute('width', `${this.chart_attributes.width}`);
@@ -128,9 +130,20 @@ export class LayoutService {
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
 
-   // console.log('sections', this.sectionsRect);
+    // #endregion MAIN
+    // #region OHLC
     this.ohlcSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.ohlcSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
+    this.ohlcSectionContentRect.setAttribute('width', `${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.left - this.ohlcSectionAttributes.margins.right}`);
+    this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
+    this.ohlcSectionAttributes.width = this.ohlcSectionRect.getBBox().width;
+    this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height;
+    //this.ohlcRect.setAttribute('width', (this.ohlcSectionContentRect.width.baseVal.valueAsString));
+    //this.ohlcRect.setAttribute('height', ((this.ohlcSectionContentRect.height.baseVal.value * .75)).toString());
+    //this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
+    // #endregion OHLC
+
+   
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
@@ -138,8 +151,7 @@ export class LayoutService {
 
     // SECTION A
     let bboxA = this.ohlcSectionRect.getBBox();
-    this.ohlcSectionAttributes.width = bboxA.width;
-    this.ohlcSectionAttributes.height = bboxA.height;
+
 
     // SECTION B
     let bboxB = this.sectionRectB.getBBox();
@@ -153,8 +165,7 @@ export class LayoutService {
     this.sectAttr_C.height = bboxC.height;
 
     //BODY
-  //  this.ohlcSectionContentRect.setAttribute('width', `${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.left - this.ohlcSectionAttributes.margins.right}`);
-  //  this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
+
     this.sectionContentBRect.setAttribute('width', `${this.sectAttr_B.width - this.sectAttr_B.margins.left - this.sectAttr_B.margins.right}`);
     this.sectionContentBRect.setAttribute('height', `${this.sectAttr_B.height}`);
     this.sectionContentCRect.setAttribute('width', `${this.sectAttr_C.width - this.sectAttr_C.margins.left - this.sectAttr_C.margins.right}`);
@@ -162,9 +173,7 @@ export class LayoutService {
     console.log('sectionContentARect', this.ohlcSectionContentRect);
 
 
-    this.ohlcRect.setAttribute('width', (this.ohlcSectionContentRect.width.baseVal.valueAsString));
-    this.ohlcRect.setAttribute('height', ((this.ohlcSectionContentRect.height.baseVal.value * .75)).toString());
-    this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
+
     this.rectVolume.setAttribute('width', (this.ohlcSectionContentRect.width.baseVal.value.toString() ));
     console.log('volume', this.rectVolume.height);
     this.rectVolume.setAttribute('height', (this.ohlcSectionAttributes.height * .2).toString());

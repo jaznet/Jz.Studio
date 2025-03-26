@@ -39,13 +39,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
    
-  @ViewChild('sectionA', { static: true }) sectionARef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionRectA', { static: true }) sectionRectARef!: ElementRef<SVGRectElement>;
-  @ViewChild('sectionContentA', { static: true }) sectionContentARef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionContentARect', { static: true }) sectionContentARectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlcSection', { static: true }) ohlcSection!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcSectionRect', { static: true }) ohlcSectionRect!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcSectionContentRect', { static: true }) ohlcSectionContentRect!: ElementRef<SVGRectElement>;
 
   // #region ohlc
-  @ViewChild('ohlcGroup', { static: true }) ohlcGroupRef!: ElementRef<SVGGElement>;
+ // @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
@@ -199,7 +199,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.layout.ohlcRect = this.ohlcRectRef.nativeElement;
     this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
     this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.ohlcChart.ohlc_yAxisL_rct = this.ohlc_yAxisL_rct.nativeElement;
@@ -211,20 +210,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+
+    this.layout.ohlcSection = this.ohlcSection.nativeElement;
+    this.layout.ohlcSectionRect = this.ohlcSectionRect.nativeElement;
+    this.layout.ohlcSectionContent = this.ohlcSectionContent.nativeElement;
+    this.layout.ohlcSectionContentRect = this.ohlcSectionContentRect.nativeElement;
     // #endregion OHLC
-
-    // @region VOLUME
+    // #region VOLUME
     this.layout.volumeSection = this.volumeSection.nativeElement;
-    //this.layout.volumeSectionContent = this.v
-    // @endregion VOLUME
-
-
-    this.layout.ohlcSection = this.sectionARef.nativeElement;
-    this.layout.ohlcSectionRect = this.sectionRectARef.nativeElement;
- //   this.layout.ohlcSectionContent = this.sectionContentARef.nativeElement;
-  //  this.layout.ohlcSectionContentRect = this.sectionContentARectRef.nativeElement;
-
-
+    // #endregion VOLUME
 
     this.layout.sectionB = this.sectionBRef.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
