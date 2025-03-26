@@ -71,6 +71,8 @@ export class VolumeChartService {
 
     this.volume_yAxisL.call(this.YaxisLeft);
     this.volume_yAxisR.call(this.YaxisRight);
+
+    return this;
   }
 
   public draw(): void {

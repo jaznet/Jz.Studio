@@ -223,11 +223,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.volumeSectionRect = this.volumeSection.nativeElement;
     // #endregion VOLUME
 
+    // #region MACD
     this.layout.macdSection = this.macdSection.nativeElement;
     this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
     this.layout.sectionContentB = this.sectionContentBRef.nativeElement;
     this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
+    // #rendegion MACD
 
     this.layout.sectionC = this.sectionCRef.nativeElement;
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
@@ -321,6 +323,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.volumeYscale)
       .setTargetGroup(this.volumeGroupRef.nativeElement)
       .setBarWidth()
+      .drawAxes()
       .draw();
   }
 
