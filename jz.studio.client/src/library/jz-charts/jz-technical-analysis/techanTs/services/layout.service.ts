@@ -133,7 +133,8 @@ export class LayoutService {
     // #endregion MAIN
     // #region OHLC
     this.ohlcSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.ohlcSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .5}`);
+    console.log(this.chart_attributes.charts[0]);
+    this.ohlcSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[0]}`);
     this.ohlcSectionContentRect.setAttribute('width', `${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.left - this.ohlcSectionAttributes.margins.right}`);
     this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
     this.ohlcSectionAttributes.width = this.ohlcSectionRect.getBBox().width;
@@ -151,7 +152,6 @@ export class LayoutService {
 
     // SECTION A
     let bboxA = this.ohlcSectionRect.getBBox();
-
 
     // SECTION B
     let bboxB = this.sectionRectB.getBBox();
