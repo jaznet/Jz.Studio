@@ -36,7 +36,7 @@ export class ScalesService {
 
     this.ohlcYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([this.layout.ohlcSectionRect.height.baseVal.value * .75, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([this.layout.ohlcSectionRect.height.baseVal.value , 0]); // Invert the range for correct orientation (top to bottom)
 
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain

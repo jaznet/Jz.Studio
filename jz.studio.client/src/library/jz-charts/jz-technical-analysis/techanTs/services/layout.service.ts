@@ -146,9 +146,9 @@ export class LayoutService {
 
    
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
+    this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * .25}`);
+    this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[3]}`);
 
     // SECTION A
     let bboxA = this.ohlcSectionRect.getBBox();
