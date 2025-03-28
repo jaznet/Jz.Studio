@@ -60,9 +60,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // #region VOLUME GROUP
   @ViewChild('volumeSection', { static: true }) volumeSection!: ElementRef<SVGGElement>;
-  @ViewChild('volumeSectionRect', { static: true }) volumeSectionRect!: ElementRef<SVGGElement>;
-  @ViewChild('volumeGroup', { static: true }) volumeGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('volumeGroupRect', { static: true }) volumeGroupRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('volumeSectionRect', { static: true }) volumeSectionRect!: ElementRef<SVGRectElement>;
+  @ViewChild('volumeContent', { static: true }) volumeContent!: ElementRef<SVGGElement>;
+  @ViewChild('volumeContentRect', { static: true }) volumeContentRect!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
   @ViewChild('volume_yAxisL_grp', { static: true }) volume_yAxisL_grp!: ElementRef<SVGGElement>;
@@ -220,7 +220,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion OHLC
     // #region VOLUME
     this.layout.volumeSection = this.volumeSection.nativeElement;
-    this.layout.volumeSectionRect = this.volumeSection.nativeElement;
+    this.layout.volumeSectionRect = this.volumeSectionRect.nativeElement;
+    this.layout.volumeContent = this.volumeContent.nativeElement;
+    this.layout.volumeContentRect = this.volumeContentRect.nativeElement;
     // #endregion VOLUME
 
     // #region MACD
@@ -321,7 +323,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.volumeChart
       .xScale(this.scales.dateScaleX)
       .yScale(this.scales.volumeYscale)
-      .setTargetGroup(this.volumeGroupRef.nativeElement)
+      .setTargetGroup(this.volumeContent.nativeElement)
       .setBarWidth()
       .drawAxes()
       .draw();

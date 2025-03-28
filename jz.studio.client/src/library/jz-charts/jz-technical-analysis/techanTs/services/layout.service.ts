@@ -29,11 +29,11 @@ export class LayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
-  volumneSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  volumeSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   volumeSection!: SVGGElement;
-  volumeSectionRect!: SVGGElement;
-  volumeSectionContent!: SVGGElement;
-  volumeSectionContentRect!: SVGRectElement;
+  volumeSectionRect!: SVGRectElement;
+  volumeContent!: SVGGElement;
+  volumeContentRect!: SVGRectElement;
 
   macdSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   macdSection!: SVGGElement;
@@ -47,7 +47,6 @@ export class LayoutService {
   sectionContentCRect!: SVGRectElement;
   sectAttr_C: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   rsiGroup: any;
-
 
   sectionRectB!: SVGRectElement;
   sectionRectC!: SVGRectElement;
@@ -78,7 +77,6 @@ export class LayoutService {
   volume_yAxisR!: SVGGElement;
   volume_yAxisR_grp!: SVGGElement;
   volume_yAxisR_rct!: SVGRectElement;
-
 
   yAxisLeftB!: SVGGElement;
   yAxisLeftGroupB!: SVGGElement;
@@ -146,6 +144,8 @@ export class LayoutService {
 
     this.volumeSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.volumeSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[1]}`);
+    this.volumeSectionAttributes.width = this.volumeSectionRect.getBBox().width;
+    this.volumeSectionAttributes.height = this.volumeSectionRect.getBBox().height;
 
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
@@ -231,7 +231,7 @@ export class LayoutService {
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
-    this.volumeSection.setAttribute('transform', `translate(${this.volumneSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
+    this.volumeSection.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
 
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
