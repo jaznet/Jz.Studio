@@ -142,10 +142,16 @@ export class LayoutService {
     //this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
     // #endregion OHLC
 
+    // #region VOLUME
     this.volumeSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.volumeSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[1]}`);
     this.volumeSectionAttributes.width = this.volumeSectionRect.getBBox().width;
     this.volumeSectionAttributes.height = this.volumeSectionRect.getBBox().height;
+    this.volume_yAxisL_rct.setAttribute('width', `${this.volumeSectionAttributes.margins.left}`);
+    this.volume_yAxisL_rct.setAttribute('height', `${this.volumeSectionAttributes.height}`);
+    this.volume_yAxisR_rct.setAttribute('width', `${this.volumeSectionAttributes.margins.right}`);
+    this.volume_yAxisR_rct.setAttribute('height', `${this.volumeSectionAttributes.height}`);
+    // #endregion VOLUME
 
     this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
@@ -231,7 +237,10 @@ export class LayoutService {
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
-    this.volumeSection.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},${this.ohlcSectionAttributes.height})`);
+    this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height})`);
+    this.volumeContent.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
+    this.volume_yAxisL.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left})`);
+    this.volume_yAxisR.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);

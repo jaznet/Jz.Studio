@@ -27,7 +27,6 @@
     "@types/svg-path-bounds": "^1.0.2",
     "@types/topojson": "^3.2.6",
     "d3": "^7.9.0",
-    "d3-v4": "npm:d3@^4.2.6",
     "devextreme": "^23.2.4",
     "devextreme-angular": "^23.2.4",
     "jest-editor-support": "*",
@@ -35,8 +34,8 @@
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "svg-path-bounds": "^1.0.2",
-    "techan": "^0.8.0",
-    "three.js": "^0.77.1",
+    "techan": "^0.7.0",
+    "three.js": "^0.77.0",
     "topojson": "^3.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

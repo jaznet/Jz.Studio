@@ -1,5 +1,5 @@
 
-import { rgb } from "d3";
+import { rgb } from "d3-color";
 import { CountyPaintingStrategy } from "../interfaces/county-painting-strategy";
 import { ChoroDataService } from "../../../jz-choropleths/services/choro-data.service";
 import { CountyDataService } from "../../../jz-choropleths/services/county-data.service";

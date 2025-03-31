@@ -1,6 +1,12 @@
 
 import { Component, AfterViewInit, ViewChild, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import * as d3 from 'd3';
+import { select } from 'd3-selection';
+import { selection } from 'd3-selection';
+import { scaleLinear } from 'd3-scale';
+import { range } from 'd3-array';
+import { format } from 'd3-format';
+import { axisRight, axisBottom } from 'd3-axis';
+import { line, linkVertical } from 'd3-shape'
 
 interface Margin {
   top: number;
@@ -31,23 +37,23 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
   private time = 0;
   private xIncrement = 0;
 
-  private xScale!: d3.ScaleLinear<number, number>;
-  private yScale!: d3.ScaleLinear<number, number>;
-  private xAxisScale!: d3.AxisScale<number>;
-  private yAxisScale!: d3.AxisScale<number>;
+  private xScale!: any;
+  private yScale!: any;
+  private xAxisScale!: any;
+  private yAxisScale!: any;
 
-  private svgElementContainer!: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>;
-  private graphContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-  private unitCircleContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
-  private sineWaveContainer!: d3.Selection<SVGGElement, unknown, HTMLElement, any>;
+  private svgElementContainer!: any;
+  private graphContainer!: any;
+  private unitCircleContainer!: any;
+  private sineWaveContainer!: any;
 
-  private axisDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  private unitCircleDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  private verticalDot!: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>;
-  private hypotenuseLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  private oppositeLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  private adjacentLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
-  private joiningLine!: d3.Selection<SVGLineElement, unknown, HTMLElement, any>;
+  private axisDot!: any;
+  private unitCircleDot!: any;
+  private verticalDot!: any;
+  private hypotenuseLine!: any;
+  private oppositeLine!: any;
+  private adjacentLine!: any;
+  private joiningLine!: any;
 
   constructor() { }
 
@@ -116,12 +122,12 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
     this.graphHeight = this.height;
     this.graphWidth = this.width;// * 0.75;
 
-    this.xScale = d3.scaleLinear().domain([0, 20]).range([0, this.width]);
-    this.yScale = d3.scaleLinear().domain([0, 20]).range([this.height, 0]);
+    this.xScale = scaleLinear().domain([0, 20]).range([0, this.width]);
+    this.yScale = scaleLinear().domain([0, 20]).range([this.height, 0]);
   }
 
   private createSvgElement(): void {
-    this.svgElementContainer = d3.select('#plotSvgContainer').append('svg')
+    this.svgElementContainer = select('#plotSvgContainer').append('svg')
       .attr('id', 'svgElement')
       .attr('class', 'svg-element')
       .attr('width', this.width)
@@ -222,12 +228,12 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
   }
 
   private addGraphAxes(): void {
-    const intTickFormat: any = d3.format('d');
+    const intTickFormat: any = format('d');
     const xTickValues = [0, 1.57, 3.14, 4.71, 6.28];
 
-   this.yAxisScale = d3.scaleLinear().domain([-1, 1]).range([this.unitCircleRadius * 2, 0]);
+   this.yAxisScale = scaleLinear().domain([-1, 1]).range([this.unitCircleRadius * 2, 0]);
 
-    const yAxis = d3.axisRight(this.yAxisScale)
+    const yAxis = axisRight(this.yAxisScale)
       .ticks(3)
       .tickValues([-1, 0, 1])
        .tickFormat(intTickFormat);
@@ -246,9 +252,9 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
       .style('stroke','dodgerblue')
       .call(yAxis);
 
-    this.xAxisScale = d3.scaleLinear().domain([0, 6.28]).range([0, this.graphWidth]);
+    this.xAxisScale = scaleLinear().domain([0, 6.28]).range([0, this.graphWidth]);
 
-    const xAxis = d3.axisBottom(this.xAxisScale).tickValues(xTickValues).tickSizeInner(0).tickSizeOuter(0);
+    const xAxis = axisBottom(this.xAxisScale).tickValues(xTickValues).tickSizeInner(0).tickSizeOuter(0);
 
     translate = `translate(${this.unitCircleRadius * 1.5},0)`;
     this.sineWaveContainer.append('g').attr('class', 'x axis bottom').attr('transform', translate).call(xAxis);
@@ -300,10 +306,10 @@ export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
   }
 
   private updateSineWave(): void {
-    d3.select('.sine-curve').remove();
-    const sineData = d3.range(0, 54).map(x => x * 10 / 84).map(x => ({ x, y: -Math.sin(x - this.time) }));
+    select('.sine-curve').remove();
+    const sineData = range(0, 54).map(x => x * 10 / 84).map(x => ({ x, y: -Math.sin(x - this.time) }));
 
-    const sine = d3.line<{ x: number, y: number }>()
+    const sine = line<{ x: number, y: number }>()
       .x(d => this.xAxisScale(d.x)!)
       .y(d => this.yAxisScale(d.y)!);
 

@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import * as d3 from 'd3';
+import { GeoPermissibleObjects } from 'd3-geo';
+import { json } from 'd3-fetch';
 import { Feature, Point, GeoJsonProperties, FeatureCollection } from 'geojson';
 import { BehaviorSubject } from 'rxjs';
 import * as topojson from 'topojson';
@@ -17,11 +18,11 @@ export class TopoService {
   private albersUsaLoadedEvent = new BehaviorSubject<boolean>(false);
   dataReady$ = this.albersUsaLoadedEvent.asObservable();
 
-  stateMesh!: d3.GeoPermissibleObjects;
+  stateMesh!: GeoPermissibleObjects;
   countyFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
   stateFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
   nationFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
-  nationMesh!: d3.GeoPermissibleObjects;
+  nationMesh!: GeoPermissibleObjects;
 
   constructor() { }
 
@@ -30,7 +31,7 @@ export class TopoService {
   }
 
   getTopology() {
-    d3.json<MyTopoJSON>("/assets/maps/counties-albers-10m.json")
+    json<MyTopoJSON>("/assets/maps/counties-albers-10m.json")
       .then((topo: any) => {
         const topology: Topology<Objects> = topo;
         this.countyFeaturesCollection = topojson.feature(topology, topology.objects['counties']) as unknown as FeatureCollection<Point, GeoJsonProperties>;

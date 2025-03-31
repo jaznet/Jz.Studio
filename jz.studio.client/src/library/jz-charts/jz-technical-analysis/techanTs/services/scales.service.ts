@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { LayoutService } from './layout.service';
-import { AxisScale, AxisDomain, ScaleLinear } from 'd3-v4';
+import { AxisScale, AxisDomain } from 'd3-axis';
+import {  ScaleLinear } from 'd3-scale';
 
 @Injectable({
   providedIn: 'root'

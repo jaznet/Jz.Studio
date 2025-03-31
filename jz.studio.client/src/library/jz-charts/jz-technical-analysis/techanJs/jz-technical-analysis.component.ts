@@ -58,7 +58,7 @@ export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   private async initializeTechan(): Promise<void> {
     if (!this.techan) {
       try {
-        this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3-v4');
+        this.d3v4 = await import(/* webpackChunkName: "d3v4" */ 'd3');
         const d3CommonJS = { ...this.d3v4, __esModule: false };  // Simulate CommonJS module
 
         const techanModule = await import(/* webpackChunkName: "techan" */ 'techan');

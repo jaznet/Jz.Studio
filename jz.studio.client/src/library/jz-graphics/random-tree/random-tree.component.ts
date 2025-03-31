@@ -1,8 +1,8 @@
 import { Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
-import * as d3Selection from 'd3-selection';
-import * as d3Hierarchy from 'd3-hierarchy';
-import * as d3Shape from 'd3-shape';
-import * as d3 from 'd3';
+import { select } from 'd3-selection';
+import { tree, hierarchy } from 'd3-hierarchy';
+import { DefaultLinkObject, linkVertical } from 'd3-shape';
+import { interval } from 'd3-timer';
 
 @Component({
   selector: 'random-tree',
@@ -34,13 +34,13 @@ export class RandomTreeComponent implements OnInit {
 
   createTree() {
     const viewport = " 0 0 " + this.svgWidth + " " + this.svgHeight;
-    const svg = d3Selection.select(this.svgCxntainer)
+    const svg = select(this.svgCxntainer)
       .append("svg")
       .attr('width', '100%')
       .attr('height', '100%')
       .attr('viewBox', viewport);
-    const treeLayout = d3Hierarchy.tree().size([this.svgWidth - 10, this.svgHeight - 20]);
-    const treeNode = d3Hierarchy.hierarchy.prototype.constructor;
+    const treeLayout = tree().size([this.svgWidth - 10, this.svgHeight - 20]);
+    const treeNode = hierarchy.prototype.constructor;
     const root: any = new treeNode();
     root.name = '0';
     const nodes: any = [root];
@@ -54,7 +54,7 @@ export class RandomTreeComponent implements OnInit {
       .attr('class', 'linksGroup')
       .attr("fill", "none")
       .attr("stroke", "#fff")
-      .selectAll<SVGPathElement, d3Shape.DefaultLinkObject>(".link");
+      .selectAll<SVGPathElement, DefaultLinkObject>(".link");
 
     let nodeGroup = svg.append("g")
       .attr('class', 'nodesGroup')
@@ -72,9 +72,9 @@ export class RandomTreeComponent implements OnInit {
       .style("font-weight", "100")
       .selectAll<SVGTextElement, SVGGElement>('g');
 
-    const interval = d3.interval(() => {
+    const interv = interval(() => {
 
-      if (nodes.length >= 48) return interval.stop();
+      if (nodes.length >= 48) return interv.stop();
 
       // Add a new child node to a random parent.
       const i = Math.floor(Math.random() * nodes.length);
@@ -194,7 +194,7 @@ export class RandomTreeComponent implements OnInit {
     }, duration);
   }
 
-  renderLink = d3.linkVertical().x((d: any) => {
+  renderLink = linkVertical().x((d: any) => {
     return d[0];
   }).y((d: any) => {
     return d[1];

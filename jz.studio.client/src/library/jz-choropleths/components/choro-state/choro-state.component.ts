@@ -1,8 +1,8 @@
 
 import { Component, ElementRef, EventEmitter, HostBinding, Inject, Output, ViewChild } from '@angular/core';
 import { first, Subscription } from 'rxjs';
-import * as d3 from 'd3';
-import * as d3Select from 'd3-selection';
+import { select } from "d3-selection";
+import { geoPath } from "d3-geo";
 import { StateLookupService } from '../../services/state-lookup.service';
 import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
@@ -68,7 +68,7 @@ export class ChoroStateComponent {
   }
 
   createStateChoroplethContainer() {
-    this.svg = d3Select.select(this.state_Ref!.nativeElement).append('svg')
+    this.svg = select(this.state_Ref!.nativeElement).append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
       ;
@@ -82,7 +82,7 @@ export class ChoroStateComponent {
 
   createCountyLayer() {
     const stateFipsCode = '13'; // Replace with dynamic state code if necessary
-    const geoPath = d3.geoPath(); // Ensure you have the correct projection set up
+    const geopath = geoPath(); // Ensure you have the correct projection set up
 
     this.counties = this.state.append('g').attr('id', 'counties');
 
@@ -92,7 +92,7 @@ export class ChoroStateComponent {
       ))
       .enter()
       .append("path")
-      .attr("d", geoPath)
+      .attr("d", geopath)
       .style('stroke', 'black')
       .style('stroke-width', '.2')
       .style("fill", 'pink')

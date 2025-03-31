@@ -1,6 +1,6 @@
 
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import * as d3 from 'd3';
+import { select } from 'd3-selection'
 import { JzPlotterService } from '../jz-plotter.service';
 
 interface Margin {
@@ -40,15 +40,15 @@ export class UnitCircleComponent implements AfterViewInit {
     this.height = this.elementRef.nativeElement.clientHeight;
     this.radius = (this.width * .5) / 2;
 
-    this.svgElement = d3.select('#svgElement')
+    this.svgElement = select('#svgElement')
       .attr('id', 'svgElement')
       .attr('class', 'svg-element')
       .attr('width', this.width)
       .attr('height', this.height);
 
-    this.gElement = d3.select('#gElement');
+    this.gElement = select('#gElement');
 
-    this.unitCircleGroup = d3.select('#unitCircleGroup')
+    this.unitCircleGroup = select('#unitCircleGroup')
     this.unitCircleGroup.append('circle')
       .attr('cx', 0)
       .attr('cy', 0)
@@ -65,7 +65,7 @@ export class UnitCircleComponent implements AfterViewInit {
   }
 
   drawSpokes() {
-    this.spokes = d3.select('#spokes');
+    this.spokes = select('#spokes');
     this.plotter.radianValues.forEach((ray) => {
       let cosX = this.unitCircleRadius * Math.cos(ray.val);
       let sinY = this.unitCircleRadius * -Math.sin(ray.val);
@@ -96,7 +96,7 @@ export class UnitCircleComponent implements AfterViewInit {
   }
 
   drawLabels() {
-    this.labels = d3.select('#labels');
+    this.labels = select('#labels');
    
     this.plotter.radianValues.forEach((ray) => {
       let cosX = (this.unitCircleRadius * 1.25) * Math.cos(ray.val);

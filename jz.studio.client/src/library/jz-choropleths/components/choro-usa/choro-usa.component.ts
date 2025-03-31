@@ -1,8 +1,8 @@
 
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { TopoService } from '../../services/topo.service';
-import * as d3 from 'd3';
-import * as d3Select from 'd3-selection';
+import { select } from 'd3-selection';
+import { geoPath} from 'd3-geo';
 import { first, Subscription } from 'rxjs';
 import { ChoroUtilsService } from '../../services/choro-utils.service';
 import { StateLookupService } from '../../services/state-lookup.service';
@@ -33,7 +33,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   public countyLayer: any;
   private nationLayer: any;
   private stateTextLayer: any;
-  private geoPath = d3.geoPath();
+  private geoPath = geoPath();
 
   constructor(
     @Inject(PAINTING_STRATEGY_TOKEN) private paintingStrategy: CountyPaintingStrategy,
@@ -86,7 +86,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createChoroplethContainer() {
   
-    this.svg = d3Select.select(this.USA_Ref!.nativeElement).append('svg')
+    this.svg = select(this.USA_Ref!.nativeElement).append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
       ;
@@ -107,7 +107,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     //  console.log('data', this.topoService.stateMesh.coordinates);
     var that = this;
 
-    const stateLayer: any = d3Select.select("#state-layer")
+    const stateLayer: any = select("#state-layer")
       .attr("id", "state-layer")
       .attr("class", "state_style");
 
@@ -192,7 +192,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     var that = this;
 
     const t = topojson;
-    d3Select.select("#nation-layer")
+    select("#nation-layer")
       .attr("id", "nation-layer")
       .attr("class", "nation_style")
       .selectAll("path")
@@ -212,7 +212,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
 
   createStatesTextLayer() {
     const that = this;
-    const stateNameLayer: any = d3Select.select("#state-name-layer")
+    const stateNameLayer: any = select("#state-name-layer")
       .attr("id", "state-name-layer")
       .attr("class", "small");
 

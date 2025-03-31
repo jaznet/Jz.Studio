@@ -1,3 +1,3 @@
-declare module 'd3-v4' {
+declare module 'd3' {
   export * from 'd3'; // Re-export all exports from 'd3'
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as d3 from 'd3';
+import * as d3 from 'd3-fetch';
 
 export class DataItem {
   source: string | undefined;

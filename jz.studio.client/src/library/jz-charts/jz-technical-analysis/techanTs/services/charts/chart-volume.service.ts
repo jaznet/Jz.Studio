@@ -5,7 +5,7 @@ import { select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { LayoutService } from '../layout.service';
-import { axisLeft, axisRight } from 'd3-v4';
+import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 
 @Injectable({
   providedIn: 'root',
@@ -24,8 +24,8 @@ export class VolumeChartService {
   volume_yAxisR_grp: any;
   volume_yAxisR_rct: any;
 
-  YaxisLeft: any;
-  YaxisRight: any;
+  YaxisLeft!: Axis<AxisDomain>;
+  YaxisRight!: Axis<AxisDomain>;
 
   constructor(
     private scales: ScalesService,
