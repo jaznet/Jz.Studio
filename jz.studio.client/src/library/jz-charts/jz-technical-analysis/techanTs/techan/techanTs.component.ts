@@ -224,8 +224,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.volumeContent = this.volumeContent.nativeElement;
     this.layout.volumeContentRect = this.volumeContentRect.nativeElement;
     this.layout.volume_yAxisL = this.volume_yAxisL.nativeElement;
+    this.layout.volume_yAxisL_grp = this.volume_yAxisL_grp.nativeElement;
     this.layout.volume_yAxisL_rct = this.volume_yAxisL_rct.nativeElement;
     this.layout.volume_yAxisR = this.volume_yAxisR.nativeElement;
+    this.layout.volume_yAxisR_grp = this.volume_yAxisR_grp.nativeElement;
     this.layout.volume_yAxisR_rct = this.volume_yAxisR_rct.nativeElement;
     // #endregion VOLUME
 

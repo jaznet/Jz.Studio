@@ -239,8 +239,8 @@ export class LayoutService {
 
     this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height})`);
     this.volumeContent.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
-    this.volume_yAxisL.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left})`);
-    this.volume_yAxisR.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
+    this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
+    this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
     this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
