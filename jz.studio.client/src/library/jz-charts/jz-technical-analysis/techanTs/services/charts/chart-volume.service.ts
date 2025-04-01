@@ -66,8 +66,12 @@ export class VolumeChartService {
     this.volume_yAxisL = select(this.layout.volume_yAxisL);
     this.volume_yAxisR = select(this.layout.volume_yAxisR);
 
-    this.YaxisLeft = axisLeft(this.scales.volumeYscale);
-    this.YaxisRight = axisRight(this.scales.volumeYscale);
+    this.YaxisLeft = axisLeft(this.scales.volumeYscale)
+      .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
+
+    this.YaxisRight = axisRight(this.scales.volumeYscale)
+      .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
+
 
     this.volume_yAxisL.call(this.YaxisLeft);
     this.volume_yAxisR.call(this.YaxisRight);

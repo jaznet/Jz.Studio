@@ -16,6 +16,7 @@ export class LayoutService {
 
   sections!: SVGGElement;
   sectionsRect!: SVGRectElement;
+  spacer: any;
 
   ohlcSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
   ohlcSection!: SVGGElement;
@@ -107,6 +108,7 @@ export class LayoutService {
   }
 
   sizeSections(): void {
+    this.spacer = 8;
     this.chart_attributes.width = this.svgContainer.clientWidth - 16;
     this.chart_attributes.height = this.svgContainer.clientHeight - 16;
 
@@ -132,11 +134,11 @@ export class LayoutService {
     // #endregion MAIN
     // #region OHLC
     this.ohlcSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.ohlcSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[0]}`);
+    this.ohlcSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[0])-this.spacer}`);
     this.ohlcSectionContentRect.setAttribute('width', `${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.left - this.ohlcSectionAttributes.margins.right}`);
     this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
     this.ohlcSectionAttributes.width = this.ohlcSectionRect.getBBox().width;
-    this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height;
+    this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height - 8;
     //this.ohlcRect.setAttribute('width', (this.ohlcSectionContentRect.width.baseVal.valueAsString));
     //this.ohlcRect.setAttribute('height', ((this.ohlcSectionContentRect.height.baseVal.value * .75)).toString());
     //this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
@@ -219,7 +221,6 @@ export class LayoutService {
     this.yAxisRightRectC.setAttribute('width', `${this.sectAttr_C.margins.right}`);
     this.yAxisRightRectC.setAttribute('height', `${this.sectAttr_C.height}`);
     this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
-
   }
 
   alignChartsToScaffold(): void {
@@ -231,7 +232,7 @@ export class LayoutService {
 
     this.sections.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
 
-    this.ohlcSection.setAttribute('transform', `translate(0,0)`);
+    this.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
     this.ohlcSectionContent.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
 
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);

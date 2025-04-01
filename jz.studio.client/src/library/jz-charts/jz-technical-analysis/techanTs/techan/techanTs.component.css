@@ -4,6 +4,10 @@
   /*  background-color: var(--plt-clr-1);*/
 }
 
+.sectionContainer {
+ // transform: translate(0,8px);
+}
+
 .axis {
   fill: var(--plt-chart-2);
 }
@@ -48,3 +52,5 @@ text {
 .ohlcRect {
   fill: var(--plt-chart-1);
 }
+
+

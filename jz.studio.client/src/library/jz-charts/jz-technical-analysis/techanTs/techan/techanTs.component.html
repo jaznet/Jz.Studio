@@ -15,7 +15,7 @@
       <rect #sectionsRect id="" width="0" height="0"></rect>
 
       <!-- #region OHLC SECTION -->
-      <g #ohlcSection id="ohlcSection">
+      <g #ohlcSection id="ohlcSection" class="sectionContainer">
         <rect #ohlcSectionRect id="ohlcSectionRect" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)"></rect>
 
         <!-- OHLC LEFT AXIS-->
@@ -30,9 +30,8 @@
           <g #ohlc_yAxisR id="ohlc_yAxisR" class="y-axis"></g>
         </g>
 
-        <!-- #region SECTION CONTENT A -->
         <!-- OHLC GROUP-->
-        <g #ohlcSectionContent id="ohlcSectionContent">
+        <g #ohlcSectionContent id="ohlcSectionContent"  class="sectionContainer">
           <rect #ohlcSectionContentRect class="ohlcSectionContentRect" id="ohlcSectionContentRect"
                 x="0" y="0"
                 width="0" height="0"
@@ -45,9 +44,11 @@
           <g #sma2 id="sma2"></g>
           <g #sma3 id="sma3"></g>
         </g>
-        <!-- #endregion -->
-      </g>
 
+      </g>
+      <!-- #endregion -->
+
+      <!-- #region VOLUME-->
       <g #volumeSection id="volumeSection">
         <rect #volumeSectionRect id="volumeSectionRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
         <!-- Section Volume Chart -->
@@ -71,6 +72,7 @@
         </g>
       </g>
       <!-- #endregion -->
+
       <!--#region SECTION D-->
       <!-- #endregion -->
       <!-- #region SECTION B -->
