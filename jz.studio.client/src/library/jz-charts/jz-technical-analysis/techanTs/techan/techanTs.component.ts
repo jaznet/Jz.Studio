@@ -100,7 +100,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectB', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisRightGroupB', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisGroupRight', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightB', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectB', { static: true }) yAxisRightRectBRef!: ElementRef<SVGRectElement>;
 
@@ -263,7 +263,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.yAxisLeftRectB = this.yAxisLeftRectBRef.nativeElement;
 
     this.layout.yAxisRightB = this.yAxisRightBRef.nativeElement;
-    this.layout.yAxisRightGroupB = this.yAxisRightGroupBRef.nativeElement;
+    this.layout.macdAxisGroupRight = this.yAxisRightGroupBRef.nativeElement;
     this.layout.yAxisRightRectB = this.yAxisRightRectBRef.nativeElement;
 
     this.layout.yAxisLeftC = this.yAxisLeftCRef.nativeElement;

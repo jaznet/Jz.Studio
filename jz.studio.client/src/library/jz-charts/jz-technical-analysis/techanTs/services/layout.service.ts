@@ -104,7 +104,7 @@ export class LayoutService {
   yAxisLeftRectB!: SVGRectElement;
 
   yAxisRightB!: SVGGElement;
-  yAxisRightGroupB!: SVGGElement;
+  macdAxisGroupRight!: SVGGElement;
   yAxisRightRectB!: SVGRectElement;
 
   yAxisLeftC!: SVGGElement;
@@ -263,7 +263,7 @@ export class LayoutService {
     this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
-    this.yAxisRightGroupB.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
+    this.macdAxisGroupRight.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
 
     this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
