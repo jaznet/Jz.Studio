@@ -69,7 +69,7 @@ export class LayoutService {
   };
   rsiGroup: any;
 
-  sectionRectB!: SVGRectElement;
+  macdSectionRect!: SVGRectElement;
   sectionRectC!: SVGRectElement;
 
   // #region Axes
@@ -176,15 +176,15 @@ export class LayoutService {
     this.volume_yAxisR_rct.setAttribute('height', `${this.volumeSectionAttributes.height}`);
     // #endregion VOLUME
 
-    this.sectionRectB.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.sectionRectB.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
+    this.macdSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.macdSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[3]}`);
 
 
 
     // SECTION B
-    let bboxB = this.sectionRectB.getBBox();
+    let bboxB = this.macdSectionRect.getBBox();
     this.sectAttr_B.width = bboxB.width;
     this.sectAttr_B.height = bboxB.height;
     console.log(this.ohlcSectionAttributes.height);

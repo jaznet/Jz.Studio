@@ -77,7 +77,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentB', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentBRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('sectionRectB', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
+  @ViewChild('macdSectionRect', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentC', { static: true }) sectionContentCRef!: ElementRef<SVGGElement>;
@@ -185,7 +185,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createScaffolding();
     this.data.scrubData();
     this.scales.createScales();
-    this.scales.createMacdYScale(this.data.macdData, this.layout.sectionRectB.height.baseVal.value);
+    this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
     this.scales.createRsiYScale(this.layout.sectionRectC.height.baseVal.value);
     this.scales.rsiYscale
     this.axes.drawAxes();
@@ -233,7 +233,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     // #region MACD
     this.layout.macdSection = this.macdSection.nativeElement;
-    this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
+    this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.sectionContentB = this.sectionContentBRef.nativeElement;
     this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
@@ -277,7 +277,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
    this.layout.volumeSectionRect = this.volumeSectionRect.nativeElement;
 
-    this.layout.sectionRectB = this.sectionRectBRef.nativeElement;
+    this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
 
     this.axes.xAxisMonthsTop = this.xAxisMonthsTopRef;
