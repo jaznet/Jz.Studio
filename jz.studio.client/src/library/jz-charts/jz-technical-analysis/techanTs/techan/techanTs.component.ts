@@ -75,7 +75,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #endregion VOLUME GROUP
 
   @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
-  @ViewChild('sectionContentB', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdContent', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentBRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('macdSectionRect', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
@@ -98,7 +98,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('macdAxisGroupLeft', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftRectB', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
+  @ViewChild('macdAxisRectLeft', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('macdAxisGroupRight', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('macdAxisRight', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
@@ -234,7 +234,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #region MACD
     this.layout.macdSection = this.macdSection.nativeElement;
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
-    this.layout.sectionContentB = this.sectionContentBRef.nativeElement;
+    this.layout.macdContent = this.sectionContentBRef.nativeElement;
     this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
     // #rendegion MACD
@@ -260,7 +260,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
     this.layout.macdAxisGroupLeft = this.yAxisLeftGroupBRef.nativeElement;;
-    this.layout.yAxisLeftRectB = this.yAxisLeftRectBRef.nativeElement;
+    this.layout.macdAxisRectLeft = this.yAxisLeftRectBRef.nativeElement;
 
     this.layout.macdAxisRight = this.yAxisRightBRef.nativeElement;
     this.layout.macdAxisGroupRight = this.yAxisRightGroupBRef.nativeElement;

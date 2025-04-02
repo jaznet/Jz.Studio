@@ -50,7 +50,7 @@ export class LayoutService {
     content: { width: 0, height: 0, x: 0, y: 0 }
   };
   macdSection!: SVGGElement;
-  sectionContentB!: SVGGElement;
+  macdContent!: SVGGElement;
   sectionContentBRect!: SVGRectElement;
   sectAttr_B: SectionAttributes = {
     x: 0, y: 0, width: 0, height: 0,
@@ -101,7 +101,7 @@ export class LayoutService {
 
   yAxisLeftB!: SVGGElement;
   macdAxisGroupLeft!: SVGGElement;
-  yAxisLeftRectB!: SVGRectElement;
+  macdAxisRectLeft!: SVGRectElement;
 
   macdAxisRight!: SVGGElement;
   macdAxisGroupRight!: SVGGElement;
@@ -213,9 +213,9 @@ export class LayoutService {
     this.ohlc_yAxisR_rct.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  B*/
-    this.yAxisLeftRectB.setAttribute('width', `${this.sectAttr_B.margins.right}`);
-    this.yAxisLeftRectB.setAttribute('height', `${this.sectAttr_B.height}`);
-    this.yAxisLeftRectB.setAttribute('fill', 'var(--plt-clr-2)');
+    this.macdAxisRectLeft.setAttribute('width', `${this.sectAttr_B.margins.right}`);
+    this.macdAxisRectLeft.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT B */
     this.macdAxisRectRight.setAttribute('width', `${this.sectAttr_B.margins.right}`);
@@ -270,7 +270,7 @@ export class LayoutService {
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
 
     this.macdSection.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1])})`);
-    this.sectionContentB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
+    this.macdContent.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
 
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1] + this.chart_attributes.charts[2])})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
