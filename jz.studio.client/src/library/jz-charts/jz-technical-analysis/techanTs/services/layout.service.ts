@@ -52,11 +52,7 @@ export class LayoutService {
   macdSection!: SVGGElement;
   macdContent!: SVGGElement;
   macdContentRect!: SVGRectElement;
-  sectAttr_B: SectionAttributes = {
-    x: 0, y: 0, width: 0, height: 0,
-    margins: { top: 0, right: 40, bottom: 0, left: 40 },
-    content: { width: 0, height: 0, x: 0, y: 0 }
-  };
+
   macdChart: any;
 
   sectionC!: SVGGElement;
@@ -184,10 +180,9 @@ export class LayoutService {
 
 
     // SECTION B
-    let bboxB = this.macdSectionRect.getBBox();
-    this.sectAttr_B.width = bboxB.width;
-    this.sectAttr_B.height = bboxB.height;
-    console.log(this.ohlcSectionAttributes.height);
+  
+    this.macdSectionAttributes.width = this.macdSectionRect.getBBox().width;
+    this.macdSectionAttributes.height = this.macdSectionRect.getBBox().height;
 
     // SECTION C
     let bboxC = this.sectionRectC.getBBox();
@@ -196,8 +191,8 @@ export class LayoutService {
 
     //BODY
 
-    this.macdContentRect.setAttribute('width', `${this.sectAttr_B.width - this.sectAttr_B.margins.left - this.sectAttr_B.margins.right}`);
-    this.macdContentRect.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdContentRect.setAttribute('width', `${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.left - this.macdSectionAttributes.margins.right}`);
+    this.macdContentRect.setAttribute('height', `${this.macdSectionAttributes.height}`);
     this.sectionContentCRect.setAttribute('width', `${this.sectAttr_C.width - this.sectAttr_C.margins.left - this.sectAttr_C.margins.right}`);
     this.sectionContentCRect.setAttribute('height', `${this.sectAttr_C.height}`);
     console.log('sectionContentARect', this.ohlcSectionContentRect);
@@ -213,13 +208,13 @@ export class LayoutService {
     this.ohlc_yAxisR_rct.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  B*/
-    this.macdAxisRectLeft.setAttribute('width', `${this.sectAttr_B.margins.right}`);
-    this.macdAxisRectLeft.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdAxisRectLeft.setAttribute('width', `${this.macdSectionAttributes.margins.right}`);
+    this.macdAxisRectLeft.setAttribute('height', `${this.macdSectionAttributes.height}`);
     this.macdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT B */
-    this.macdAxisRectRight.setAttribute('width', `${this.sectAttr_B.margins.right}`);
-    this.macdAxisRectRight.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdAxisRectRight.setAttribute('width', `${this.macdSectionAttributes.margins.right}`);
+    this.macdAxisRectRight.setAttribute('height', `${this.macdSectionAttributes.height}`);
     this.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  B*/
@@ -263,14 +258,14 @@ export class LayoutService {
     this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
-    this.macdAxisGroupRight.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
+    this.macdAxisGroupRight.setAttribute('transform', `translate(${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.right},${this.macdSectionAttributes.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
 
-    this.macdAxisLeft.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
+    this.macdAxisLeft.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
 
     this.macdSection.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1])})`);
-    this.macdContent.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
+    this.macdContent.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
 
     this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1] + this.chart_attributes.charts[2])})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
