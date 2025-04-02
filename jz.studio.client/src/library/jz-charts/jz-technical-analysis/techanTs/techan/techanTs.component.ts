@@ -96,12 +96,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('yAxisLeftGroupB', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisGroupLeft', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectB', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('macdAxisGroupRight', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightB', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisRight', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
   @ViewChild('macdAxisRectRight', { static: true }) yAxisRightRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
@@ -259,10 +259,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
     this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
-    this.layout.yAxisLeftGroupB = this.yAxisLeftGroupBRef.nativeElement;;
+    this.layout.macdAxisGroupLeft = this.yAxisLeftGroupBRef.nativeElement;;
     this.layout.yAxisLeftRectB = this.yAxisLeftRectBRef.nativeElement;
 
-    this.layout.yAxisRightB = this.yAxisRightBRef.nativeElement;
+    this.layout.macdAxisRight = this.yAxisRightBRef.nativeElement;
     this.layout.macdAxisGroupRight = this.yAxisRightGroupBRef.nativeElement;
     this.layout.macdAxisRectRight = this.yAxisRightRectBRef.nativeElement;
 
@@ -295,7 +295,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 
     this.axes.yAxisLeftB = this.yAxisLeftBRef;
-    this.axes.yAxisRightB = this.yAxisRightBRef;
+    this.axes.macdAxisRight = this.yAxisRightBRef;
 
     this.axes.yAxisLeftC = this.yAxisLeftCRef;
     this.axes.yAxisRightC = this.yAxisRightCRef;

@@ -29,7 +29,7 @@ export class PartsAxesService {
   xAxisDays!: any;
   xAxisBottom: any;
   yAxisLeftB: any;
-  yAxisRightB: any;
+  macdAxisRight: any;
 
   yAxisLeftC: any;
   yAxisRightC: any;
@@ -51,7 +51,7 @@ export class PartsAxesService {
     //this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
 
     this.yAxisLeftB = select(this.layout.yAxisLeftB);
-    this.yAxisRightB = select(this.layout.yAxisRightB);
+    this.macdAxisRight = select(this.layout.macdAxisRight);
 
     this.yAxisLeftC = select(this.layout.yAxisLeftC);
     this.yAxisRightC = select(this.layout.yAxisRightC);
@@ -133,7 +133,7 @@ export class PartsAxesService {
 
   
     this.yAxisLeftB.call(this.macdYaxisLeft);
-    this.yAxisRightB.call(this.macdYaxisRight);
+    this.macdAxisRight.call(this.macdYaxisRight);
 
     this.yAxisLeftC.call(this.rsiYaxisLeft);
     this.yAxisRightC.call(this.rsiYaxisRight);

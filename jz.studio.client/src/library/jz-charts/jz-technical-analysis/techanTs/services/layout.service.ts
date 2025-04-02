@@ -100,10 +100,10 @@ export class LayoutService {
   volume_yAxisR_rct!: SVGRectElement;
 
   yAxisLeftB!: SVGGElement;
-  yAxisLeftGroupB!: SVGGElement;
+  macdAxisGroupLeft!: SVGGElement;
   yAxisLeftRectB!: SVGRectElement;
 
-  yAxisRightB!: SVGGElement;
+  macdAxisRight!: SVGGElement;
   macdAxisGroupRight!: SVGGElement;
   macdAxisRectRight!: SVGRectElement;
 
