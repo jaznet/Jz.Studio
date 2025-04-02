@@ -105,7 +105,7 @@ export class LayoutService {
 
   yAxisRightB!: SVGGElement;
   macdAxisGroupRight!: SVGGElement;
-  yAxisRightRectB!: SVGRectElement;
+  macdAxisRectRight!: SVGRectElement;
 
   yAxisLeftC!: SVGGElement;
   yAxisLeftGroupC!: SVGGElement;
@@ -218,9 +218,9 @@ export class LayoutService {
     this.yAxisLeftRectB.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT B */
-    this.yAxisRightRectB.setAttribute('width', `${this.sectAttr_B.margins.right}`);
-    this.yAxisRightRectB.setAttribute('height', `${this.sectAttr_B.height}`);
-    this.yAxisRightRectB.setAttribute('fill', 'var(--plt-clr-2)');
+    this.macdAxisRectRight.setAttribute('width', `${this.sectAttr_B.margins.right}`);
+    this.macdAxisRectRight.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  B*/
     this.yAxisLeftRectC.setAttribute('width', `${this.sectAttr_C.margins.right}`);
