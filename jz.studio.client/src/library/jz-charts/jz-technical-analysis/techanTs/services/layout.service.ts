@@ -145,7 +145,7 @@ export class LayoutService {
 
     // SECTIONS
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
-    this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
+    this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom - (this.spacer*3)}`);
 
     // #endregion MAIN
 
@@ -174,15 +174,15 @@ export class LayoutService {
 
     this.macdSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.macdSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[2]}`);
+    this.macdSectionAttributes.width = this.macdSectionRect.getBBox().width;
+    this.macdSectionAttributes.height = this.macdSectionRect.getBBox().height;
+    this.macdContentRect.setAttribute('width',
+      `${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.left - this.macdSectionAttributes.margins.right}`);
+    this.macdContentRect.setAttribute('height', `${this.macdSectionAttributes.height - this.spacer}`);
+
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[3]}`);
 
-
-
-    // SECTION B
-  
-    this.macdSectionAttributes.width = this.macdSectionRect.getBBox().width;
-    this.macdSectionAttributes.height = this.macdSectionRect.getBBox().height;
 
     // SECTION C
     let bboxC = this.sectionRectC.getBBox();
@@ -191,10 +191,9 @@ export class LayoutService {
 
     //BODY
 
-    this.macdContentRect.setAttribute('width', `${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.left - this.macdSectionAttributes.margins.right}`);
-    this.macdContentRect.setAttribute('height', `${this.macdSectionAttributes.height}`);
+
     this.sectionContentCRect.setAttribute('width', `${this.sectAttr_C.width - this.sectAttr_C.margins.left - this.sectAttr_C.margins.right}`);
-    this.sectionContentCRect.setAttribute('height', `${this.sectAttr_C.height}`);
+    this.sectionContentCRect.setAttribute('height', `${this.sectAttr_C.height-this.spacer}`);
     console.log('sectionContentARect', this.ohlcSectionContentRect);
 
     /* LEFT A */
@@ -258,16 +257,22 @@ export class LayoutService {
     this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
-    this.macdAxisGroupRight.setAttribute('transform', `translate(${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.right},${this.macdSectionAttributes.margins.top})`);
+    this.macdSection.setAttribute('transform',
+      `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1]) + (this.spacer)})`);
+    this.macdContent.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
+    this.macdAxisLeft.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
+    this.macdAxisGroupRight.setAttribute('transform',
+      `translate(${this.macdSectionAttributes.width - this.macdSectionAttributes.margins.right},${this.macdSectionAttributes.margins.top})`);
+
+
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
 
-    this.macdAxisLeft.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
+ 
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
 
-    this.macdSection.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1])})`);
-    this.macdContent.setAttribute('transform', `translate(${this.macdSectionAttributes.margins.left},0)`);
 
-    this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1] + this.chart_attributes.charts[2])})`);
+
+    this.sectionC.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1] + this.chart_attributes.charts[2])+(this.spacer*2)})`);
     this.sectionContentC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
     // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
 

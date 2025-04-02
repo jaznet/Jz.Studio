@@ -3,7 +3,7 @@
 
   <!-- SVG -->
   <svg #svgElement id="svgElement">
-    <rect #svgElementRect id="svgElementRect" class="svgElementRect" x="0" y="0" width="0" height="0" fill="#74776b"></rect>
+    <rect #svgElementRect id="svgElementRect" class="svgElementRect" x="0" y="0" width="0" height="0" fill="var_--plt-chart-1"></rect>
 
     <!-- X AXIS TOP -->
     <g #xAxisTopGroup id="xAxisTopGroup">
@@ -77,7 +77,7 @@
       <!-- #region SECTION MACD -->
       <g #macdSection id="#macdSection">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-        <rect #macdSectionRect id="macdSectionRect" x="0" y="0" width="0" height="0" stroke="yellow" fill="var(--plt-clr-1)"></rect>
+        <rect #macdSectionRect id="macdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
 
         <!-- LEFT AXIS MACD  -->
         <g #macdAxisGroupLeft id="macdAxisGroupLeft">
@@ -92,7 +92,7 @@
         </g>
 
         <g #macdContent id="macdContent">
-          <rect #macdContentRect id="macdContentRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+          <rect #macdContentRect id="macdContentRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
           <g #macdChart id="macdChart"></g>
         </g>
       </g>
@@ -101,7 +101,7 @@
       <!-- #region SECTION C -->
       <g #sectionC id="sectionC">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" stroke="lightblue"></rect>
+        <rect #sectionRectC id="sectionRectC" x="0" y="0" width="0" height="0" ></rect>
         <!-- LEFT AXIS-->
         <g #yAxisLeftGroupC id="yAxisLeftGroupC">
           <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
@@ -114,7 +114,7 @@
           <g #yAxisRightC id="yAxisRighC" class="y-axis"></g>
         </g>
         <g #sectionContentC id="sectionContentC">
-          <rect #sectionContentCRect id="sectionContentCRect" fill="var(--plt-chart-1)" stroke="var(--plt-clr-3)" width="0" height="0"></rect>
+          <rect #sectionContentCRect id="sectionContentCRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
           <g #macdChart id="macdChart"></g>
         </g>
         <g #rsiGroup id="rsiGroup"></g>
