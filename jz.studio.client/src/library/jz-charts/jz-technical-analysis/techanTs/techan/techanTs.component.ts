@@ -76,7 +76,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
   @ViewChild('macdContent', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionContentBRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('macdContentRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('macdSectionRect', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
@@ -97,7 +97,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('macdAxisGroupLeft', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftB', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisLeft', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
   @ViewChild('macdAxisRectLeft', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('macdAxisGroupRight', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
@@ -235,7 +235,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.macdSection = this.macdSection.nativeElement;
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.macdContent = this.sectionContentBRef.nativeElement;
-    this.layout.sectionContentBRect = this.sectionContentBRectRef.nativeElement;
+    this.layout.macdContentRect = this.sectionContentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
     // #rendegion MACD
 
@@ -258,7 +258,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    this.layout.yAxisLeftB = this.yAxisLeftBRef.nativeElement;
+    this.layout.macdAxisLeft = this.yAxisLeftBRef.nativeElement;
     this.layout.macdAxisGroupLeft = this.yAxisLeftGroupBRef.nativeElement;;
     this.layout.macdAxisRectLeft = this.yAxisLeftRectBRef.nativeElement;
 
@@ -294,7 +294,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 
-    this.axes.yAxisLeftB = this.yAxisLeftBRef;
+    this.axes.macdAxisLeft = this.yAxisLeftBRef;
     this.axes.macdAxisRight = this.yAxisRightBRef;
 
     this.axes.yAxisLeftC = this.yAxisLeftCRef;

@@ -28,7 +28,7 @@ export class PartsAxesService {
   xAxisMonthsBottom!: any;
   xAxisDays!: any;
   xAxisBottom: any;
-  yAxisLeftB: any;
+  macdAxisLeft: any;
   macdAxisRight: any;
 
   yAxisLeftC: any;
@@ -50,7 +50,7 @@ export class PartsAxesService {
     //this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
     //this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
 
-    this.yAxisLeftB = select(this.layout.yAxisLeftB);
+    this.macdAxisLeft = select(this.layout.macdAxisLeft);
     this.macdAxisRight = select(this.layout.macdAxisRight);
 
     this.yAxisLeftC = select(this.layout.yAxisLeftC);
@@ -132,7 +132,7 @@ export class PartsAxesService {
 
 
   
-    this.yAxisLeftB.call(this.macdYaxisLeft);
+    this.macdAxisLeft.call(this.macdYaxisLeft);
     this.macdAxisRight.call(this.macdYaxisRight);
 
     this.yAxisLeftC.call(this.rsiYaxisLeft);

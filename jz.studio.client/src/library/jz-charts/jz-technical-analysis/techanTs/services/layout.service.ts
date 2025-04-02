@@ -51,7 +51,7 @@ export class LayoutService {
   };
   macdSection!: SVGGElement;
   macdContent!: SVGGElement;
-  sectionContentBRect!: SVGRectElement;
+  macdContentRect!: SVGRectElement;
   sectAttr_B: SectionAttributes = {
     x: 0, y: 0, width: 0, height: 0,
     margins: { top: 0, right: 40, bottom: 0, left: 40 },
@@ -99,7 +99,7 @@ export class LayoutService {
   volume_yAxisR_grp!: SVGGElement;
   volume_yAxisR_rct!: SVGRectElement;
 
-  yAxisLeftB!: SVGGElement;
+  macdAxisLeft!: SVGGElement;
   macdAxisGroupLeft!: SVGGElement;
   macdAxisRectLeft!: SVGRectElement;
 
@@ -196,8 +196,8 @@ export class LayoutService {
 
     //BODY
 
-    this.sectionContentBRect.setAttribute('width', `${this.sectAttr_B.width - this.sectAttr_B.margins.left - this.sectAttr_B.margins.right}`);
-    this.sectionContentBRect.setAttribute('height', `${this.sectAttr_B.height}`);
+    this.macdContentRect.setAttribute('width', `${this.sectAttr_B.width - this.sectAttr_B.margins.left - this.sectAttr_B.margins.right}`);
+    this.macdContentRect.setAttribute('height', `${this.sectAttr_B.height}`);
     this.sectionContentCRect.setAttribute('width', `${this.sectAttr_C.width - this.sectAttr_C.margins.left - this.sectAttr_C.margins.right}`);
     this.sectionContentCRect.setAttribute('height', `${this.sectAttr_C.height}`);
     console.log('sectionContentARect', this.ohlcSectionContentRect);
@@ -266,7 +266,7 @@ export class LayoutService {
     this.macdAxisGroupRight.setAttribute('transform', `translate(${this.sectAttr_B.width - this.sectAttr_B.margins.right},${this.sectAttr_B.margins.top})`);
     this.yAxisRightGroupC.setAttribute('transform', `translate(${this.sectAttr_C.width - this.sectAttr_C.margins.right},${this.sectAttr_C.margins.top})`);
 
-    this.yAxisLeftB.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
+    this.macdAxisLeft.setAttribute('transform', `translate(${this.sectAttr_B.margins.left},0)`);
     this.yAxisLeftC.setAttribute('transform', `translate(${this.sectAttr_C.margins.left},0)`);
 
     this.macdSection.setAttribute('transform', `translate(0,${this.sectionsRect.height.baseVal.value * (this.chart_attributes.charts[0] + this.chart_attributes.charts[1])})`);
