@@ -152,13 +152,14 @@ export class LayoutService {
     this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom}`);
 
     // #endregion MAIN
+
     // #region OHLC
     this.ohlcSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.ohlcSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[0])-this.spacer}`);
+    this.ohlcSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[0]) - this.spacer}`);
     this.ohlcSectionContentRect.setAttribute('width', `${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.left - this.ohlcSectionAttributes.margins.right}`);
     this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
     this.ohlcSectionAttributes.width = this.ohlcSectionRect.getBBox().width;
-    this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height - 8;
+    this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height;
     //this.ohlcRect.setAttribute('width', (this.ohlcSectionContentRect.width.baseVal.valueAsString));
     //this.ohlcRect.setAttribute('height', ((this.ohlcSectionContentRect.height.baseVal.value * .75)).toString());
     //this.ohlcRect.setAttribute('fill', 'var(--plt-chart-1)');
@@ -166,7 +167,7 @@ export class LayoutService {
 
     // #region VOLUME
     this.volumeSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.volumeSectionRect.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[1]}`);
+    this.volumeSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[1]) - this.spacer}`);
     this.volumeSectionAttributes.width = this.volumeSectionRect.getBBox().width;
     this.volumeSectionAttributes.height = this.volumeSectionRect.getBBox().height;
     this.volume_yAxisL_rct.setAttribute('width', `${this.volumeSectionAttributes.margins.left}`);
@@ -180,8 +181,7 @@ export class LayoutService {
     this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
     this.sectionRectC.setAttribute('height', `${this.sectionsRect.height.baseVal.value * this.chart_attributes.charts[3]}`);
 
-    // SECTION A
-    let bboxA = this.ohlcSectionRect.getBBox();
+
 
     // SECTION B
     let bboxB = this.sectionRectB.getBBox();
