@@ -18,7 +18,11 @@ export class LayoutService {
   sectionsRect!: SVGRectElement;
   spacer: any;
 
-  ohlcSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  ohlcSectionAttributes: SectionAttributes = {
+    x: 0, y: 0, width: 0, height: 0,
+    margins: { top: 0, right: 40, bottom: 0, left: 40 },
+    content: { width: 0, height: 0, x: 0, y: 0 }
+  };
   ohlcSection!: SVGGElement;
   ohlcSectionRect!: SVGRectElement;
   ohlcSectionContent!: SVGGElement;
@@ -30,23 +34,39 @@ export class LayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
-  volumeSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  volumeSectionAttributes: SectionAttributes = {
+    x: 0, y: 0, width: 0, height: 0,
+    margins: { top: 0, right: 40, bottom: 0, left: 40 },
+    content: { width: 0, height: 0, x: 0, y: 0 }
+  };
   volumeSection!: SVGGElement;
   volumeSectionRect!: SVGRectElement;
   volumeContent!: SVGGElement;
   volumeContentRect!: SVGRectElement;
 
-  macdSectionAttributes: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  macdSectionAttributes: SectionAttributes = {
+    x: 0, y: 0, width: 0, height: 0,
+    margins: { top: 0, right: 40, bottom: 0, left: 40 },
+    content: { width: 0, height: 0, x: 0, y: 0 }
+  };
   macdSection!: SVGGElement;
   sectionContentB!: SVGGElement;
   sectionContentBRect!: SVGRectElement;
-  sectAttr_B: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  sectAttr_B: SectionAttributes = {
+    x: 0, y: 0, width: 0, height: 0,
+    margins: { top: 0, right: 40, bottom: 0, left: 40 },
+    content: { width: 0, height: 0, x: 0, y: 0 }
+  };
   macdChart: any;
 
   sectionC!: SVGGElement;
   sectionContentC!: SVGGElement;
   sectionContentCRect!: SVGRectElement;
-  sectAttr_C: SectionAttributes = { x: 0, y: 0, width: 0, height: 0, margins: { top: 0, right: 40, bottom: 0, left: 40 } };
+  sectAttr_C: SectionAttributes = {
+    x: 0, y: 0, width: 0, height: 0,
+    margins: { top: 0, right: 40, bottom: 0, left: 40 },
+    content: { width: 0, height: 0, x: 0, y: 0 }
+  };
   rsiGroup: any;
 
   sectionRectB!: SVGRectElement;
@@ -238,7 +258,7 @@ export class LayoutService {
     this.ohlc_yAxisL_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
-    this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height})`);
+    this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height + this.spacer + this.spacer})`);
     this.volumeContent.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);

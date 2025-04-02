@@ -1,4 +1,11 @@
 
+export interface RectDimensions {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface Margins {
   top: number;
   right: number;
@@ -20,7 +27,6 @@ export interface chart_attributes {
 export interface SvgAttributes {
   height: number;
   width: number;
-
 }
 
 export interface SectionAttributes {
@@ -29,6 +35,7 @@ export interface SectionAttributes {
   width: number;
   height: number;
   margins: Margins;
+  content: RectDimensions;
   fill?: string;
 }
 
