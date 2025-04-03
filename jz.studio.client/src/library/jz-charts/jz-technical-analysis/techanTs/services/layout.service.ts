@@ -125,7 +125,7 @@ export class LayoutService {
 
   sizeSections(): void {
     this.spacer = 8;
-    this.chart_attributes.width = this.svgContainer.clientWidth - 16;
+    this.chart_attributes.width = this.svgContainer.clientWidth;
     this.chart_attributes.height = this.svgContainer.clientHeight - 16;
 
     // #region MAIN
@@ -254,7 +254,7 @@ export class LayoutService {
 
     this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height + this.spacer + this.spacer})`);
     this.volumeContent.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
-    this.volume_yAxisL_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
+    this.volume_yAxisL.setAttribute('transform', `translate(${this.volumeSectionAttributes.margins.left},0)`);
     this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.volumeSectionAttributes.width - this.volumeSectionAttributes.margins.right})`);
 
     this.macdSection.setAttribute('transform',
