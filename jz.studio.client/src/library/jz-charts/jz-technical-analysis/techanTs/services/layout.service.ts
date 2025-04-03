@@ -145,7 +145,7 @@ export class LayoutService {
 
     // SECTIONS
     this.sectionsRect.setAttribute('width', `${this.chart_attributes.width}`);
-    this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom - (this.spacer*3)}`);
+    this.sectionsRect.setAttribute('height', `${this.chart_attributes.height - this.chart_attributes.xAxisTop - this.chart_attributes.xAxisBottom }`);
 
     // #endregion MAIN
 
