@@ -82,7 +82,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentC', { static: true }) sectionContentCRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentCRect', { static: true }) sectionContentCRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('sectionRectC', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rsiSectionRect', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
   // #region Axes
 
@@ -186,7 +186,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.data.scrubData();
     this.scales.createScales();
     this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
-    this.scales.createRsiYScale(this.layout.sectionRectC.height.baseVal.value);
+    this.scales.createRsiYScale(this.layout.rsiSectionRect.height.baseVal.value);
     this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
@@ -240,7 +240,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #rendegion MACD
 
     this.layout.sectionC = this.sectionCRef.nativeElement;
-    this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
+    this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
     this.layout.sectionContentC = this.sectionContentCRef.nativeElement;
     this.layout.sectionContentCRect = this.sectionContentCRectRef.nativeElement;
 
@@ -278,7 +278,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
    this.layout.volumeSectionRect = this.volumeSectionRect.nativeElement;
 
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
-    this.layout.sectionRectC = this.sectionRectCRef.nativeElement;
+    this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
     this.axes.xAxisMonthsTop = this.xAxisMonthsTopRef;
     this.axes.xAxisMonthsBottom = this.xAxisMonthsBottomRef;

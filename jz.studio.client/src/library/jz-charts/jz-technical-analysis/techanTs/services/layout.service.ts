@@ -67,7 +67,7 @@ export class LayoutService {
   rsiGroup: any;
 
   macdSectionRect!: SVGRectElement;
-  sectionRectC!: SVGRectElement;
+  rsiSectionRect!: SVGRectElement;
 
   // #region Axes
   xAxisMonthsTop!: SVGGElement;
@@ -192,11 +192,11 @@ export class LayoutService {
     this.macdAxisRectRight.setAttribute('height', `${this.macdSectionAttributes.height}`);
     this.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
 
-    this.sectionRectC.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
-    this.sectionRectC.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.sections[3]) - this.adjSpacer}`);
+    this.rsiSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);
+    this.rsiSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.sections[3]) - this.adjSpacer}`);
 
     // SECTION C
-    let bboxC = this.sectionRectC.getBBox();
+    let bboxC = this.rsiSectionRect.getBBox();
     this.sectAttr_C.width = bboxC.width;
     this.sectAttr_C.height = bboxC.height;
 
