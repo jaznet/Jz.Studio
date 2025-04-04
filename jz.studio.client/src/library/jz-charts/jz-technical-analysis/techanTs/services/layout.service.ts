@@ -81,7 +81,7 @@ export class LayoutService {
 
   ohlc_yAxisL!: SVGGElement;
   ohlc_yAxisL_grp!: SVGGElement;
-  ohlc_yAxisL_rct!: SVGRectElement;
+  ohlcAxisRectLeft!: SVGRectElement;
 
   ohlc_yAxisR!: SVGGElement;
   ohlc_yAxisR_grp!: SVGGElement;
@@ -156,9 +156,9 @@ export class LayoutService {
     this.ohlcSectionContentRect.setAttribute('height', `${this.ohlcSectionAttributes.height}`);
     this.ohlcSectionAttributes.width = this.ohlcSectionRect.getBBox().width;
     this.ohlcSectionAttributes.height = this.ohlcSectionRect.getBBox().height;
-    this.ohlc_yAxisL_rct.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
-    this.ohlc_yAxisL_rct.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
-    this.ohlc_yAxisL_rct.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlcAxisRectLeft.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
+    this.ohlcAxisRectLeft.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
+    this.ohlcAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
     this.ohlc_yAxisR_rct.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
     this.ohlc_yAxisR_rct.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
     this.ohlc_yAxisR_rct.setAttribute('fill', 'var(--plt-clr-2)');
