@@ -89,11 +89,11 @@ export class LayoutService {
 
   volume_yAxisL!: SVGGElement;
   volume_yAxisL_grp!: SVGGElement;
-  volume_yAxisL_rct!: SVGRectElement;
+  volumeAxisRectLeft!: SVGRectElement;
 
   volume_yAxisR!: SVGGElement;
   volume_yAxisR_grp!: SVGGElement;
-  volume_yAxisR_rct!: SVGRectElement;
+  volumeAxisRectRight!: SVGRectElement;
 
   macdAxisLeft!: SVGGElement;
   macdAxisGroupLeft!: SVGGElement;
@@ -162,7 +162,6 @@ export class LayoutService {
     this.ohlcAxisRectRight.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
     this.ohlcAxisRectRight.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
     this.ohlcAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
-
     // #endregion OHLC
 
     // #region VOLUME
@@ -170,10 +169,10 @@ export class LayoutService {
     this.volumeSectionRect.setAttribute('height', `${(this.sectionsRect.height.baseVal.value * this.chart_attributes.sections[1]) - this.spacer}`);
     this.volumeSectionAttributes.width = this.volumeSectionRect.getBBox().width;
     this.volumeSectionAttributes.height = this.volumeSectionRect.getBBox().height;
-    this.volume_yAxisL_rct.setAttribute('width', `${this.volumeSectionAttributes.margins.left}`);
-    this.volume_yAxisL_rct.setAttribute('height', `${this.volumeSectionAttributes.height}`);
-    this.volume_yAxisR_rct.setAttribute('width', `${this.volumeSectionAttributes.margins.right}`);
-    this.volume_yAxisR_rct.setAttribute('height', `${this.volumeSectionAttributes.height}`);
+    this.volumeAxisRectLeft.setAttribute('width', `${this.volumeSectionAttributes.margins.left}`);
+    this.volumeAxisRectLeft.setAttribute('height', `${this.volumeSectionAttributes.height}`);
+    this.volumeAxisRectRight.setAttribute('width', `${this.volumeSectionAttributes.margins.right}`);
+    this.volumeAxisRectRight.setAttribute('height', `${this.volumeSectionAttributes.height}`);
     // #endregion VOLUME
 
     this.macdSectionRect.setAttribute('width', `${this.sectionsRect.width.baseVal.value}`);

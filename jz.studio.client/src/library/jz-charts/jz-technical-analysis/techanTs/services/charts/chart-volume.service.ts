@@ -18,11 +18,11 @@ export class VolumeChartService {
 
   volume_yAxisL: any;
   volume_yAxisL_grp: any;
-  volume_yAxisL_rct: any;
+  volumeAxisRectLeft: any;
 
   volume_yAxisR: any;
   volume_yAxisR_grp: any;
-  volume_yAxisR_rct: any;
+  volumeAxisRectRight: any;
 
   YaxisLeft!: Axis<AxisDomain>;
   YaxisRight!: Axis<AxisDomain>;
