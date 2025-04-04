@@ -55,7 +55,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
   @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisR_rct', { static: true }) ohlc_yAxisR_rct!: ElementRef<SVGRectElement>;
+  @ViewChild('ohlcAxisRectRight', { static: true }) ohlcAxisRectRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
   // #region VOLUME GROUP
@@ -207,11 +207,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     //this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
     //this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    //this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+    //this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
     this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.ohlcChart.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+    this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
     this.layout.ohlcSection = this.ohlcSection.nativeElement;
     this.layout.ohlcSectionRect = this.ohlcSectionRect.nativeElement;
@@ -290,7 +290,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
     this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.layout.ohlc_yAxisR_rct = this.ohlc_yAxisR_rct.nativeElement;
+    this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 

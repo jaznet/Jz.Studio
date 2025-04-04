@@ -85,7 +85,7 @@ export class LayoutService {
 
   ohlc_yAxisR!: SVGGElement;
   ohlc_yAxisR_grp!: SVGGElement;
-  ohlc_yAxisR_rct!: SVGRectElement;
+  ohlcAxisRectRight!: SVGRectElement;
 
   volume_yAxisL!: SVGGElement;
   volume_yAxisL_grp!: SVGGElement;
@@ -159,9 +159,9 @@ export class LayoutService {
     this.ohlcAxisRectLeft.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
     this.ohlcAxisRectLeft.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
     this.ohlcAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
-    this.ohlc_yAxisR_rct.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
-    this.ohlc_yAxisR_rct.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
-    this.ohlc_yAxisR_rct.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlcAxisRectRight.setAttribute('width', `${this.ohlcSectionAttributes.margins.right}`);
+    this.ohlcAxisRectRight.setAttribute('height', `${this.ohlcSectionAttributes.height - this.ohlcSectionAttributes.margins.top}`);
+    this.ohlcAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
 
     // #endregion OHLC
 

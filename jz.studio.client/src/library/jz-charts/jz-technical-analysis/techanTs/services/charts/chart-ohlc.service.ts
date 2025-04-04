@@ -18,7 +18,7 @@ export class ChartOhlcService {
 
   ohlc_yAxisR: any;
   ohlc_yAxisR_grp: any;
-  ohlc_yAxisR_rct: any;
+  ohlcAxisRectRight: any;
 
   //yAxisRightA: any;
   chartYaxisLeft: any;
