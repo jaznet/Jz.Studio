@@ -50,11 +50,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
   @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisL', { static: true }) ohlc_yAxisL!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcAxisLeft', { static: true }) ohlcAxisLeft!: ElementRef<SVGGElement>;
   @ViewChild('ohlcAxisRectLeft', { static: true }) ohlcAxisRectLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
-  @ViewChild('ohlc_yAxisR', { static: true }) ohlc_yAxisR!: ElementRef<SVGGElement>;
+  @ViewChild('ohlcAxisRight', { static: true }) ohlcAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('ohlcAxisRectRight', { static: true }) ohlcAxisRectRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
@@ -201,15 +201,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.ohlcChart.ohlc_yAxisL = this.ohlc_yAxisL;
+    this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft;
     this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
 
-    //this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    //this.layout.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
     //this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     //this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
-    this.ohlcChart.ohlc_yAxisR = this.ohlc_yAxisR;
+    this.ohlcChart.ohlcAxisRight = this.ohlcAxisRight;
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
@@ -284,11 +284,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.xAxisMonthsBottom = this.xAxisMonthsBottomRef;
     this.axes.xAxisBottom = this.xAxisBottomRef;
 
-    this.layout.ohlc_yAxisL = this.ohlc_yAxisL.nativeElement;
+    this.layout.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
     this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.layout.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
 
-    this.layout.ohlc_yAxisR = this.ohlc_yAxisR.nativeElement;
+    this.layout.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
     this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
@@ -299,8 +299,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.axes.yAxisLeftC = this.yAxisLeftCRef;
     this.axes.yAxisRightC = this.yAxisRightCRef;
-
-
 
   /*  this.volumeChart.*/
   }

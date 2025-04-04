@@ -80,11 +80,11 @@ export class LayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
-  ohlc_yAxisL!: SVGGElement;
+  ohlcAxisLeft!: SVGGElement;
   ohlc_yAxisL_grp!: SVGGElement;
   ohlcAxisRectLeft!: SVGRectElement;
 
-  ohlc_yAxisR!: SVGGElement;
+  ohlcAxisRight!: SVGGElement;
   ohlc_yAxisR_grp!: SVGGElement;
   ohlcAxisRectRight!: SVGRectElement;
 
@@ -238,7 +238,7 @@ export class LayoutService {
     this.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
     this.ohlcSectionContent.setAttribute('transform', `translate(${this.ohlcSectionAttributes.margins.left},0)`);
 
-    this.ohlc_yAxisL.setAttribute('transform', `translate(40,0)`);
+    this.ohlcAxisLeft.setAttribute('transform', `translate(40,0)`);
     this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.ohlcSectionAttributes.width - this.ohlcSectionAttributes.margins.right},${this.ohlcSectionAttributes.margins.top})`);
 
     this.volumeSection.setAttribute('transform', `translate(0,${this.ohlcSectionAttributes.height + this.spacer + this.spacer})`);
