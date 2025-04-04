@@ -21,7 +21,7 @@ export interface chart_attributes {
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
-  charts: number[];
+  sections: number[];
 }
 
 export interface SvgAttributes {
