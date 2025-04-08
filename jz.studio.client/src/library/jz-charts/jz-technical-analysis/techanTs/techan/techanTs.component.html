@@ -15,7 +15,7 @@
       <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0"></rect>
 
       <!-- #region OHLC SECTION -->
-      <g #ohlcSection id="ohlcSection" class="sectionContainer">
+      <g #ohlcSection id="ohlcSection" class="rsiSectionontainer">
         <rect #ohlcSectionRect id="ohlcSectionRect" x="0" y="0" width="0" height="0" fill="var(plt--plt-chart-1)"></rect>
 
         <!-- OHLC LEFT AXIS-->
@@ -31,7 +31,7 @@
         </g>
 
         <!-- OHLC GROUP-->
-        <g #ohlcSectionContent id="ohlcSectionContent"  class="sectionContainer">
+        <g #ohlcSectionContent id="ohlcSectionContent"  class="rsiSectionontainer">
           <rect #ohlcSectionContentRect class="ohlcSectionContentRect" id="ohlcSectionContentRect"
                 x="0" y="0"
                 width="0" height="0"
@@ -99,7 +99,7 @@
       <!-- #endregion SECTION B -->
 
       <!-- #region SECTION C -->
-      <g #sectionC id="sectionC">
+      <g #rsiSection id="rsiSection">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
         <rect #rsiSectionRect id="rsiSectionRect" x="0" y="0" width="0" height="0" ></rect>
         <!-- LEFT AXIS-->
@@ -113,7 +113,7 @@
           <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
           <g #yAxisRightC id="yAxisRighC" class="y-axis"></g>
         </g>
-        <g #sectionContentC id="sectionContentC">
+        <g #rsiSectionContent id="rsiSectionContent">
           <rect #rsiSectionContentRect id="rsiSectionContentRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
           <g #macdChart id="macdChart"></g>
         </g>

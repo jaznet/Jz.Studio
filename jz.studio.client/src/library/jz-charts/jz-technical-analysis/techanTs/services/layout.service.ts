@@ -233,7 +233,7 @@ export class LayoutService {
     //BODY
     this.rsiSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
     this.rsiSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
-    console.log('sectionContentARect', this.ohlcSectionContentRect);
+    console.log('rsiSectionontentARect', this.ohlcSectionContentRect);
 
     /* LEFT  B*/
     this.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
@@ -291,11 +291,11 @@ export class LayoutService {
 
 
 
-    this.sectionC.setAttribute('transform',
+    this.rsiSection.setAttribute('transform',
       `translate(0,
         ${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
-    this.sectionContentC.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
-    // this.sectionC.setAttribute('transform', `translate(32,528.75  )`);
+    this.rsiSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
+    // this.rsiSection.setAttribute('transform', `translate(32,528.75  )`);
 
     //this.macdChart.setAttribute('transform', `translate(32,391.5)`);
     //this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);

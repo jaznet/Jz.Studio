@@ -73,12 +73,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #endregion VOLUME GROUP
 
   @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
-  @ViewChild('macdContent', { static: true }) sectionContentBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdContentRect', { static: true }) sectionContentBRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('macdContent', { static: true }) rsiSectionontentBRef!: ElementRef<SVGGElement>;
+  @ViewChild('macdContentRect', { static: true }) rsiSectionontentBRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('macdSectionRect', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionContentC', { static: true }) sectionContentCRef!: ElementRef<SVGGElement>;
+  @ViewChild('rsiSection', { static: true }) rsiSectionRef!: ElementRef<SVGGElement>;
+  @ViewChild('rsiSectionContent', { static: true }) rsiSectionContentRef!: ElementRef<SVGGElement>;
   @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('rsiSectionRect', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
@@ -232,14 +232,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #region MACD
     this.layout.macdSection = this.macdSection.nativeElement;
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
-    this.layout.macdContent = this.sectionContentBRef.nativeElement;
-    this.layout.macdContentRect = this.sectionContentBRectRef.nativeElement;
+    this.layout.macdContent = this.rsiSectionontentBRef.nativeElement;
+    this.layout.macdContentRect = this.rsiSectionontentBRectRef.nativeElement;
     this.layout.macdChart = this.macdChartRef.nativeElement;
     // #rendegion MACD
 
-    this.layout.sectionC = this.sectionCRef.nativeElement;
+    this.layout.rsiSection = this.rsiSectionRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
-    this.layout.sectionContentC = this.sectionContentCRef.nativeElement;
+    this.layout.rsiSectionContent = this.rsiSectionContentRef.nativeElement;
     this.layout.rsiSectionContentRect = this.rsiSectionContentRectRef.nativeElement;
 
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
