@@ -3,11 +3,24 @@ import { select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { ScalesService } from '../scales.service';
 import { ChartDataService } from '../chart-data.service';
+import { LayoutService } from '../layout.service';
+import { axisLeft, axisRight } from 'd3-axis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartMacdService {
+  macdAxisLeft: any;
+  macd_yAxisL_grp: any;
+  macdAxisRectLeft: any;
+
+  macdAxisRight: any;
+  macd_yAxisR_grp: any;
+  macdAxisRectRight: any;
+
+  chartYaxisLeft: any;
+  chartYaxisRight: any;
+
   private _xScale: any;
   private _yScale: any;
   private gMacd: any;
@@ -17,7 +30,8 @@ export class ChartMacdService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private layout:LayoutService
   ) { }
 
   public xScale(scale: any): this {
@@ -78,6 +92,19 @@ export class ChartMacdService {
       signal: signal[i],
       divergence: divergence[i],
     }));
+  }
+
+  public drawAxes() {
+    this.macdAxisLeft = select(this.layout.macdAxisLeft);
+    this.macdAxisRight = select(this.layout.macdAxisRight);
+
+    this.chartYaxisLeft = axisLeft(this.scales.macdYscale);
+    this.chartYaxisRight = axisRight(this.scales.macdYscale);
+
+    this.macdAxisLeft.call(this.chartYaxisLeft);
+    this.macdAxisRight.call(this.chartYaxisRight);
+
+    return this;
   }
 
   public draw(): void {

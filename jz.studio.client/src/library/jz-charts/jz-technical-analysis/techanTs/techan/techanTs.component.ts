@@ -103,11 +103,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('macdAxisRectRight', { static: true }) yAxisRightRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftC', { static: true }) yAxisLeftCRef!: ElementRef<SVGGElement>;
+  @ViewChild('rsiAxisLeft', { static: true }) rsiAxisLeftRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectCRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisRightGroupC', { static: true }) yAxisRightGroupCRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightC', { static: true }) yAxisRightCRef!: ElementRef<SVGGElement>;
+  @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRightRef!: ElementRef<SVGGElement>;
+  @ViewChild('rsiAxisRight', { static: true }) rsiAxisRightRef!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectCRef!: ElementRef<SVGRectElement>;
 
   // #endregion Axes
@@ -264,12 +264,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.macdAxisGroupRight = this.yAxisRightGroupBRef.nativeElement;
     this.layout.macdAxisRectRight = this.yAxisRightRectBRef.nativeElement;
 
-    this.layout.yAxisLeftC = this.yAxisLeftCRef.nativeElement;
+    this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
     this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
     this.layout.yAxisLeftRectC = this.yAxisLeftRectCRef.nativeElement;
 
-    this.layout.yAxisRightC = this.yAxisRightCRef.nativeElement;
-    this.layout.yAxisRightGroupC = this.yAxisRightGroupCRef.nativeElement;
+    this.layout.rsiAxisRight = this.rsiAxisRightRef.nativeElement;
+    this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
 
@@ -295,8 +295,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.axes.macdAxisLeft = this.yAxisLeftBRef;
     this.axes.macdAxisRight = this.yAxisRightBRef;
 
-    this.axes.yAxisLeftC = this.yAxisLeftCRef;
-    this.axes.yAxisRightC = this.yAxisRightCRef;
+    this.axes.rsiAxisLeft = this.rsiAxisLeftRef;
+    this.axes.rsiAxisRight = this.rsiAxisRightRef;
 
   /*  this.volumeChart.*/
   }
@@ -367,6 +367,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.macdYscale)
       .setTargetGroup(this.layout.macdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
+      .drawAxes()
       .draw();
   }
 

@@ -15,14 +15,13 @@ export class PartsAxesService {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-  ohlc_yAxisL: any;
-  ohlc_yAxisR: any;
+
 
   macdYaxisLeft: any;
   macdYaxisRight: any;
 
-  rsiYaxisLeft: any;
-  rsiYaxisRight: any;
+  rsiAxisLeft: any;
+  rsiAxisRight: any;
 
   xAxisMonthsTop!: any;
   xAxisMonthsBottom!: any;
@@ -30,9 +29,6 @@ export class PartsAxesService {
   xAxisBottom: any;
   macdAxisLeft: any;
   macdAxisRight: any;
-
-  yAxisLeftC: any;
-  yAxisRightC: any;
 
   constructor(
     private scales: ScalesService,
@@ -45,16 +41,11 @@ export class PartsAxesService {
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
-
-
-    //this.yAxisVolLeftA = select(this.layout.yAxisVolLeftA);
-    //this.yAxisVolRightA = select(this.layout.yAxisVolRightA);
-
     this.macdAxisLeft = select(this.layout.macdAxisLeft);
     this.macdAxisRight = select(this.layout.macdAxisRight);
 
-    this.yAxisLeftC = select(this.layout.yAxisLeftC);
-    this.yAxisRightC = select(this.layout.yAxisRightC);
+    this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
+    this.rsiAxisRight = select(this.layout.rsiAxisRight);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
     const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
@@ -94,49 +85,23 @@ export class PartsAxesService {
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
 
     this.chartXaxisMonthsBottom = axisBottom(this.scales.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
-        let date: Date;
-        if (typeof domainValue === "string") {
-          date = new Date(domainValue);
-        } else if (domainValue instanceof Date) {
-          date = domainValue;
-        } else if (typeof domainValue === "number") {
-          date = new Date(domainValue);
-        } else {
-          return "";
-        }
-
-        const currentMonth = date.getMonth();
-        const currentYear = date.getFullYear();
-
-        if (currentMonth !== lastMonth || currentYear !== lastYear) {
-          lastMonth = currentMonth;
-          lastYear = currentYear;
-          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
-        } else {
-          return ""; // Skip redundant months
-        }
-      });
-
-
+      .tickFormat;
 
     this.macdYaxisLeft = axisLeft(this.scales.macdYscale);
     this.macdYaxisRight = axisRight(this.scales.macdYscale);
 
-    this.rsiYaxisLeft = axisLeft(this.scales.rsiYscale);
-    this.rsiYaxisRight = axisRight(this.scales.rsiYscale);
+    this.rsiAxisLeft = axisLeft(this.scales.rsiYscale);
+    this.rsiAxisRight = axisRight(this.scales.rsiYscale);
 
     /*DRAW*/
     this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
-
-
   
-    this.macdAxisLeft.call(this.macdYaxisLeft);
-    this.macdAxisRight.call(this.macdYaxisRight);
+//    this.macdAxisLeft.call(this.macdYaxisLeft);
+//    this.macdAxisRight.call(this.macdYaxisRight);
 
-    this.yAxisLeftC.call(this.rsiYaxisLeft);
-    this.yAxisRightC.call(this.rsiYaxisRight);
+    //this.rsiAxisLeft.call(this.rsiAxisLeft);
+  //  this.rsiAxisRight.call(this.rsiAxisRight);
 
   }
 }

@@ -91,12 +91,12 @@ export class LayoutService {
   macdAxisGroupRight!: SVGGElement;
   macdAxisRectRight!: SVGRectElement;
 
-  yAxisLeftC!: SVGGElement;
+  rsiAxisLeft!: SVGGElement;
   yAxisLeftGroupC!: SVGGElement;
   yAxisLeftRectC!: SVGRectElement;
 
-  yAxisRightC!: SVGGElement;
-  yAxisRightGroupC!: SVGGElement;
+  rsiAxisRight!: SVGGElement;
+  rsiAxisGroupRight!: SVGGElement;
   yAxisRightRectC!: SVGRectElement;
 
   // #endregion Axes
@@ -208,6 +208,7 @@ export class LayoutService {
     this.volumeAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[1].height}`);
     // #endregion VOLUME
 
+    // #region MACD
     this.macdSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
     this.macdSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[2].pct) - this.adjSpacer}`);
     this.chart_attributes.sections[2].width = this.macdSectionRect.getBBox().width;
@@ -221,16 +222,13 @@ export class LayoutService {
     this.macdAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
     this.macdAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
     this.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
+    // #endregion MACD
 
+    // #region RSI
     this.rsiSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
     this.rsiSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[3].pct) - this.adjSpacer}`);
-
-    // SECTION C
-    let bboxC = this.rsiSectionRect.getBBox();
-    this.chart_attributes.sections[3].width = bboxC.width;
-    this.chart_attributes.sections[3].height = bboxC.height;
-
-    //BODY
+    this.chart_attributes.sections[3].width = this.rsiSectionRect.getBBox().width;
+    this.chart_attributes.sections[3].height = this.rsiSectionRect.getBBox().height;
     this.rsiSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
     this.rsiSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
     console.log('rsiSectionontentARect', this.ohlcSectionContentRect);
@@ -254,6 +252,7 @@ export class LayoutService {
     this.yAxisRightRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
     this.yAxisRightRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
     this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    // #endregion RSI
   }
 
   alignChartsToScaffold(): void {
@@ -284,10 +283,10 @@ export class LayoutService {
       `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
 
 
-    this.yAxisRightGroupC.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
+    this.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
 
  
-    this.yAxisLeftC.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
+    this.rsiAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
 
 
 
