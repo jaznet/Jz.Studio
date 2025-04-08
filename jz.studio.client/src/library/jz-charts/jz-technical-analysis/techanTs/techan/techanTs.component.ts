@@ -35,7 +35,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionsRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('sectionsContainerRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -45,8 +45,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('ohlcSectionContentRect', { static: true }) ohlcSectionContentRect!: ElementRef<SVGRectElement>;
 
- // @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
-/*  @ViewChild('ohlcRect', { static: true }) ohlcRectRef!: ElementRef<SVGRectElement>;*/
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
   @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
@@ -197,8 +195,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgElement = this.svgElementRef;
     this.layout.svgElementRect = this.svgElementRectRef.nativeElement;
 
-    this.layout.sections = this.sectionsRef.nativeElement;
-    this.layout.sectionsRect = this.sectionsRectRef.nativeElement;
+    this.layout.sectionsContainer = this.sectionsRef.nativeElement;
+    this.layout.sectionsContainerRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
     this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft;

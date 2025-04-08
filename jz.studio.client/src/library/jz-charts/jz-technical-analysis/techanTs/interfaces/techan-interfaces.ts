@@ -21,7 +21,7 @@ export interface chart_attributes {
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
-  sections: number[];
+  sections: SectionAttributes[];
 }
 
 export interface SvgAttributes {
@@ -37,6 +37,8 @@ export interface SectionAttributes {
   margins: Margins;
   content: RectDimensions;
   fill?: string;
+  spacer: number;
+  pct: number;
 }
 
 export interface ohlcData {

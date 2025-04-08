@@ -72,7 +72,6 @@ export class VolumeChartService {
     this.YaxisRight = axisRight(this.scales.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
-
     this.volume_yAxisL.call(this.YaxisLeft);
     this.volume_yAxisR.call(this.YaxisRight);
 

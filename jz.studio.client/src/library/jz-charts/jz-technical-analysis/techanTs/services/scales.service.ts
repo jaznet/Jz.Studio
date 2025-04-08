@@ -26,18 +26,18 @@ export class ScalesService {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
       this.dateScaleX = scaleBand()
         .domain(this.data.parsedData.map(d => d.date.toISOString())) // Ensure only valid trading days
-        .range([0, this.layout.ohlcSectionAttributes.width - this.layout.ohlcSectionAttributes.margins.left - this.layout.ohlcSectionAttributes.margins.right])
+        .range([0, this.layout.chart_attributes.sections[0].width - this.layout.chart_attributes.sections[0].margins.left - this.layout.chart_attributes.sections[0].margins.right])
         .padding(0.1); // Adjust padding if needed
     } else {
       // Handle the case where extent is undefined, e.g., set a default domain
       this.dateScaleX = scaleBand()
         .domain([])
-        .range([0, this.layout.ohlcSectionAttributes.width]);
+        .range([0, this.layout.chart_attributes.sections[0].width]);
     }
 
     this.ohlcYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([this.layout.ohlcSectionRect.height.baseVal.value , 0]); // Invert the range for correct orientation (top to bottom)
+      .range([this.layout.chart_attributes.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
