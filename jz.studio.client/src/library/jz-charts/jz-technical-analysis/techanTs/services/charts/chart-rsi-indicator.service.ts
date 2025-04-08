@@ -4,11 +4,23 @@ import { select } from 'd3-selection';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
 import { ScalesService } from '../scales.service';
+import { axisLeft, axisRight } from 'd3-axis';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartRsiIndic {
+  rsiAxisLeft: any;
+  rsi_yAxisL_grp: any;
+  rsiAxisRectLeft: any;
+
+  rsiAxisRight: any;
+  rsi_yAxisR_grp: any;
+  rsiAxisRectRight: any;
+
+  chartYaxisLeft: any;
+  chartYaxisRight: any;
+
   private _xScale: any;
   private _yScale: any;
   private gRsi: any;
@@ -75,6 +87,19 @@ export class ChartRsiIndic {
     }
 
     return rsiValues;
+  }
+
+  public drawAxes() {
+    this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
+    this.rsiAxisRight = select(this.layout.rsiAxisRight);
+
+    this.chartYaxisLeft = axisLeft(this.scales.rsiYscale);
+    this.chartYaxisRight = axisRight(this.scales.rsiYscale);
+
+    this.rsiAxisLeft.call(this.chartYaxisLeft);
+    this.rsiAxisRight.call(this.chartYaxisRight);
+
+    return this;
   }
 
   public draw(): void {

@@ -377,6 +377,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .yScale(this.scales.rsiYscale)
       .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
+      .drawAxes()
       .draw();
 
   }
