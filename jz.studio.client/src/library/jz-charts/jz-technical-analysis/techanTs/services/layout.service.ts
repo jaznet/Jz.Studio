@@ -47,9 +47,9 @@ export class LayoutService {
 
   macdChart: any;
 
-  sectionC!: SVGGElement;
-  sectionContentC!: SVGGElement;
-  sectionContentCRect!: SVGRectElement;
+  rsiSection!: SVGGElement;
+  rsiSectionContent!: SVGGElement;
+  rsiSectionContentRect!: SVGRectElement;
 
   rsiGroup: any;
 
@@ -231,8 +231,8 @@ export class LayoutService {
     this.chart_attributes.sections[3].height = bboxC.height;
 
     //BODY
-    this.sectionContentCRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
-    this.sectionContentCRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
+    this.rsiSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
+    this.rsiSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
     console.log('sectionContentARect', this.ohlcSectionContentRect);
 
     /* LEFT  B*/

@@ -79,7 +79,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sectionC', { static: true }) sectionCRef!: ElementRef<SVGGElement>;
   @ViewChild('sectionContentC', { static: true }) sectionContentCRef!: ElementRef<SVGGElement>;
-  @ViewChild('sectionContentCRect', { static: true }) sectionContentCRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('rsiSectionRect', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
 
   // #region Axes
@@ -240,7 +240,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionC = this.sectionCRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
     this.layout.sectionContentC = this.sectionContentCRef.nativeElement;
-    this.layout.sectionContentCRect = this.sectionContentCRectRef.nativeElement;
+    this.layout.rsiSectionContentRect = this.rsiSectionContentRectRef.nativeElement;
 
     this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
    
