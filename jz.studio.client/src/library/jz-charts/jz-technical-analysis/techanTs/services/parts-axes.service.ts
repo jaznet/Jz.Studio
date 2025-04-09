@@ -15,8 +15,6 @@ export class PartsAxesService {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-
-
   macdYaxisLeft: any;
   macdYaxisRight: any;
 
@@ -79,29 +77,46 @@ export class PartsAxesService {
           return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
         } else {
           return ""; // Skip redundant months
-        }      });
+        }
+      });
+    this.chartXaxisMonthsBottom = axisBottom(this.scales.dateScaleX)
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return "";
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
+        } else {
+          return ""; // Skip redundant months
+        }
+      });
+
 
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
 
-    this.chartXaxisMonthsBottom = axisBottom(this.scales.dateScaleX)
-      .tickFormat;
 
-    this.macdYaxisLeft = axisLeft(this.scales.macdYscale);
-    this.macdYaxisRight = axisRight(this.scales.macdYscale);
 
-    this.rsiAxisLeft = axisLeft(this.scales.rsiYscale);
-    this.rsiAxisRight = axisRight(this.scales.rsiYscale);
+
 
     /*DRAW*/
     this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
   
-//    this.macdAxisLeft.call(this.macdYaxisLeft);
-//    this.macdAxisRight.call(this.macdYaxisRight);
 
-    //this.rsiAxisLeft.call(this.rsiAxisLeft);
-  //  this.rsiAxisRight.call(this.rsiAxisRight);
 
   }
 }
