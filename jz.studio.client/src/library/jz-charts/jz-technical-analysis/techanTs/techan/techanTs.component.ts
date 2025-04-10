@@ -145,7 +145,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', 'black');
     document.documentElement.style.setProperty('--plt-chart-2', '#212922');
-    document.documentElement.style.setProperty('--plt-chart-3', '#6F9E7C');
+    document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }

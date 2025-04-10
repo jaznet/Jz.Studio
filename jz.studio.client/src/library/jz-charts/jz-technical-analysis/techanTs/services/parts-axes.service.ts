@@ -39,12 +39,6 @@ export class PartsAxesService {
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
-    this.macdAxisLeft = select(this.layout.macdAxisLeft);
-    this.macdAxisRight = select(this.layout.macdAxisRight);
-
-    this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
-    this.rsiAxisRight = select(this.layout.rsiAxisRight);
-
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
     const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
     const dateFormatterMinor = timeFormat("%d");    // Example: 1, 2, 3...
@@ -79,6 +73,7 @@ export class PartsAxesService {
           return ""; // Skip redundant months
         }
       });
+
     this.chartXaxisMonthsBottom = axisBottom(this.scales.dateScaleX)
       .tickFormat((domainValue: CustomAxisDomain, index: number) => {
         let date: Date;
@@ -104,19 +99,11 @@ export class PartsAxesService {
         }
       });
 
-
     // Apply the tick values based on the domain of scaleBand
     const tickValues = this.scales.dateScaleX.domain(); // Get the domain values from scaleBand
-
-
-
-
 
     /*DRAW*/
     this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
-  
-
-
   }
 }

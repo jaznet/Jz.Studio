@@ -282,22 +282,11 @@ export class LayoutService {
     this.macdAxisGroupRight.setAttribute('transform',
       `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
 
-
-    this.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
-
- 
-    this.rsiAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
-
-
-
     this.rsiSection.setAttribute('transform',
       `translate(0,
         ${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
     this.rsiSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
-    // this.rsiSection.setAttribute('transform', `translate(32,528.75  )`);
-
-    //this.macdChart.setAttribute('transform', `translate(32,391.5)`);
-    //this.rsiGroup.setAttribute('transform', `translate(32,590.15)`);
-    // this.macdChart.setAttribute('transform', `translate(32,391.5)`);
+    this.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
+    this.rsiAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
   }
 }
