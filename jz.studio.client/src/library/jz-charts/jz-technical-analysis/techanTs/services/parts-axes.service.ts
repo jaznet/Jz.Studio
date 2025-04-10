@@ -15,18 +15,10 @@ export class PartsAxesService {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-  macdYaxisLeft: any;
-  macdYaxisRight: any;
-
-  rsiAxisLeft: any;
-  rsiAxisRight: any;
-
   xAxisMonthsTop!: any;
   xAxisMonthsBottom!: any;
   xAxisDays!: any;
   xAxisBottom: any;
-  macdAxisLeft: any;
-  macdAxisRight: any;
 
   constructor(
     private scales: ScalesService,

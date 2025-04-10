@@ -292,11 +292,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
 
-    this.axes.macdAxisLeft = this.yAxisLeftBRef;
-    this.axes.macdAxisRight = this.yAxisRightBRef;
-
-    this.axes.rsiAxisLeft = this.rsiAxisLeftRef;
-    this.axes.rsiAxisRight = this.rsiAxisRightRef;
+    //this.axes.macdAxisLeft = this.yAxisLeftBRef;
+    //this.axes.macdAxisRight = this.yAxisRightBRef;
+    //this.axes.rsiAxisLeft = this.rsiAxisLeftRef;
+    //this.axes.rsiAxisRight = this.rsiAxisRightRef;
 
   /*  this.volumeChart.*/
   }
