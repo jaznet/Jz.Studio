@@ -278,10 +278,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
-    //this.axes.xAxisMonthsTop = this.xAxisMonthsTopRef;
-    //this.axes.xAxisMonthsBottom = this.xAxisMonthsBottomRef;
-    //this.axes.xAxisBottom = this.xAxisBottomRef;
-
     this.layout.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
     this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.layout.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
@@ -289,15 +285,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
     this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
-
-  //  this.ohlcChart.yAxisRightA = this.yAxisRightARef;
-
-    //this.axes.macdAxisLeft = this.yAxisLeftBRef;
-    //this.axes.macdAxisRight = this.yAxisRightBRef;
-    //this.axes.rsiAxisLeft = this.rsiAxisLeftRef;
-    //this.axes.rsiAxisRight = this.rsiAxisRightRef;
-
-  /*  this.volumeChart.*/
   }
 
   constructChart(): void {
