@@ -3,18 +3,19 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
-import { ohlcData } from '../../interfaces/techan-interfaces';
-import { LayoutService } from '../layout.service';
+import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
+import { scaleLinear } from 'd3-scale';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VolumeChartService {
   private _xScale: any;
-  private _yScale: any;
   private _barWidth: number = 0;
   private gVolume: any;
+
+  volumeYscale: any;
 
   volume_yAxisL: any;
   volume_yAxisL_grp: any;
@@ -29,8 +30,7 @@ export class VolumeChartService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
-  private layout: LayoutService
+    private data: ChartDataService
   ) { }
 
   public xScale(scale: any): this {
@@ -38,10 +38,10 @@ export class VolumeChartService {
     return this; // Enables method chaining
   }
 
-  public yScale(scale: any): this {
-    this._yScale = scale;
-    return this; // Enables method chaining
-  }
+  //public yScale(scale: any): this {
+  //  this._yScale = scale;
+  //  return this; // Enables method chaining
+  //}
 
   public setTargetGroup(gTargetRef: any) {
     this.gVolume = select(gTargetRef)
@@ -62,18 +62,22 @@ export class VolumeChartService {
     return this; // Enables method chaining
   }
 
-  public drawAxes() {
-    this.volume_yAxisL = select(this.layout.volume_yAxisL);
-    this.volume_yAxisR = select(this.layout.volume_yAxisR);
+  public drawAxes(chart_attributes:chart_attributes) {
+    this.volumeYscale = scaleLinear()
+      .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
+      .range([chart_attributes.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
 
-    this.YaxisLeft = axisLeft(this.scales.volumeYscale)
+    this.volume_yAxisL = select(this.volume_yAxisL);
+    this.volume_yAxisR = select(this.volume_yAxisR);
+
+    this.YaxisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
 
-    this.YaxisRight = axisRight(this.scales.volumeYscale)
+    this.YaxisRight = axisRight(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
-    this.volume_yAxisL.call(this.YaxisLeft);
-    this.volume_yAxisR.call(this.YaxisRight);
+    //this.volume_yAxisL.call(this.YaxisLeft);
+    //this.volume_yAxisR.call(this.YaxisRight);
 
     return this;
   }
@@ -88,9 +92,9 @@ export class VolumeChartService {
       .attr('class', 'volume-bar')
       .merge(volumeBars)
       .attr('x', (d: { date: Date }) => this._xScale(d.date.toISOString()) ?? 0) // Convert Date to string
-      .attr('y', (d: { volume: number }) => this._yScale(d.volume))
+      .attr('y', (d: { volume: number }) => this.volumeYscale(d.volume))
       .attr('width', this._xScale.bandwidth()) // Use scaleBand's bandwidth
-      .attr('height', (d: { volume: number }) => this._yScale(0) - this._yScale(d.volume))
+      .attr('height', (d: { volume: number }) => this.volumeYscale(0) - this.volumeYscale(d.volume))
       .attr('fill', (d: { open: number; close: number }) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
     volumeBars.exit().remove();

@@ -1,18 +1,27 @@
 
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
-import { select } from 'd3-selection';
-import { LayoutService } from '../layout.service';
+import { Selection, select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
-import { ohlcData } from '../../interfaces/techan-interfaces';
+import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 import { axisLeft, axisRight } from 'd3-axis';
+import { scaleLinear } from 'd3-scale';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartOhlcService {
+  ohlcSection!: SVGGElement;
+  ohlcSectionRect!: SVGRectElement;
+  ohlcSectionContent!: SVGGElement;
+  ohlcSectionContentRect!: SVGRectElement;
 
-  ohlcAxisLeft: any;
+  ohlcYscale: any;
+
+  axisLeft: any;
+  axisRight: any;
+
+  ohlcAxisLeft!: SVGGElement | Selection<any, unknown, null, undefined> | ElementRef<SVGGElement>;
   ohlc_yAxisL_grp: any;
   ohlcAxisRectLeft: any;
 
@@ -21,8 +30,8 @@ export class ChartOhlcService {
   ohlcAxisRectRight: any;
 
   //yAxisRightA: any;
-  chartYaxisLeft: any;
-  chartYaxisRight: any;
+  //chartYaxisLeft: any;
+  //chartYaxisRight: any;
 
   private _xScale: any;
   private _yScale: any;
@@ -31,8 +40,7 @@ export class ChartOhlcService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
-    private layout: LayoutService
+    private data: ChartDataService
   ) { }
 
   public xScale(scale: any) {
@@ -40,10 +48,10 @@ export class ChartOhlcService {
     return this; // Allows method chaining
   }
 
-  public yScale(scale: any) {
-    this._yScale = scale;
-    return this; // Allows method chaining
-  }
+  //public yScale(scale: any) {
+  //  this._yScale = scale;
+  //  return this; // Allows method chaining
+  //}
 
   public setTargetGroup(gTargetRef: any) {
     this.gCandlestick = select(gTargetRef)
@@ -60,15 +68,20 @@ export class ChartOhlcService {
     return this; // Allows method chaining
   }
 
-  public drawAxes() {
-    this.ohlcAxisLeft = select(this.layout.ohlcAxisLeft);
-    this.ohlcAxisRight = select(this.layout.ohlcAxisRight);
+  public drawAxes(chart_attributes: chart_attributes) {
 
-    this.chartYaxisLeft = axisLeft(this.scales.ohlcYscale);
-    this.chartYaxisRight = axisRight(this.scales.ohlcYscale);
+    this.ohlcYscale = scaleLinear()
+      .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
+      .range([chart_attributes.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
 
-    this.ohlcAxisLeft.call(this.chartYaxisLeft);
-    this.ohlcAxisRight.call(this.chartYaxisRight);
+    //this.ohlcAxisLeft = select(this.ohlcYscale);
+    //this.ohlcAxisRight = select(this.ohlcYscale);
+
+    this.axisLeft = axisLeft(this.ohlcYscale);
+    this.axisRight = axisRight(this.ohlcYscale);
+
+    //this.axisLeft.call(this.ohlcYscale);
+    //this.axisRight.call(this.ohlcYscale);
 
     return this;
   }
@@ -84,8 +97,8 @@ export class ChartOhlcService {
       .merge(wicks)
       .attr('x1', (d: ohlcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
       .attr('x2', (d: ohlcData) => (this._xScale(d.date.toISOString()) ?? 0) + this._candleWidth / 2)
-      .attr('y1', (d: ohlcData) => this._yScale(d.high))
-      .attr('y2', (d: ohlcData) => this._yScale(d.low))
+      .attr('y1', (d: ohlcData) => this.ohlcYscale(d.high))
+      .attr('y2', (d: ohlcData) => this.ohlcYscale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
@@ -100,9 +113,9 @@ export class ChartOhlcService {
       .attr('x', (d: ohlcData) => {
         return this._xScale(d.date.toISOString()) ?? 0;
       })
-      .attr('y', (d: ohlcData) => this._yScale(Math.max(d.open, d.close)))
+      .attr('y', (d: ohlcData) => this.ohlcYscale(Math.max(d.open, d.close)))
       .attr('width', this._candleWidth)
-      .attr('height', (d: ohlcData) => Math.abs(this._yScale(d.open) - this._yScale(d.close)))
+      .attr('height', (d: ohlcData) => Math.abs(this.ohlcYscale(d.open) - this.ohlcYscale(d.close)))
       .attr('fill', (d: ohlcData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
 
     candle.exit().remove();

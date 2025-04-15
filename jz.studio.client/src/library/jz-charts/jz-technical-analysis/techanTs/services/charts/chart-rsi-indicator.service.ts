@@ -10,6 +10,8 @@ import { axisLeft, axisRight } from 'd3-axis';
   providedIn: 'root',
 })
 export class ChartRsiIndic {
+  rsiYscale: any;
+
   rsiAxisLeft: any;
   rsi_yAxisL_grp: any;
   rsiAxisRectLeft: any;
@@ -93,8 +95,8 @@ export class ChartRsiIndic {
     this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
     this.rsiAxisRight = select(this.layout.rsiAxisRight);
 
-    this.chartYaxisLeft = axisLeft(this.scales.rsiYscale);
-    this.chartYaxisRight = axisRight(this.scales.rsiYscale);
+    this.chartYaxisLeft = axisLeft(this.rsiYscale);
+    this.chartYaxisRight = axisRight(this.rsiYscale);
 
     this.rsiAxisLeft.call(this.chartYaxisLeft);
     this.rsiAxisRight.call(this.chartYaxisRight);

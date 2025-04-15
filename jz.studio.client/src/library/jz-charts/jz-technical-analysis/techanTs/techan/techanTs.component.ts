@@ -182,10 +182,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.createChartFramework();
     this.layout.createScaffolding();
     this.data.scrubData();
-    this.scales.createScales();
-    this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
-    this.scales.createRsiYScale(this.layout.rsiSectionRect.height.baseVal.value);
-    this.scales.rsiYscale
+    this.scales.createScales(this.layout.chart_attributes);
+    //this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
+    //this.scales.createRsiYScale(this.layout.rsiSectionRect.height.baseVal.value);
+    //this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
   }
@@ -211,10 +211,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
     this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
-    this.layout.ohlcSection = this.ohlcSection.nativeElement;
-    this.layout.ohlcSectionRect = this.ohlcSectionRect.nativeElement;
-    this.layout.ohlcSectionContent = this.ohlcSectionContent.nativeElement;
-    this.layout.ohlcSectionContentRect = this.ohlcSectionContentRect.nativeElement;
+    this.ohlcChart.ohlcSection = this.ohlcSection.nativeElement;
+    this.ohlcChart.ohlcSectionRect = this.ohlcSectionRect.nativeElement;
+    this.ohlcChart.ohlcSectionContent = this.ohlcSectionContent.nativeElement;
+    this.ohlcChart.ohlcSectionContentRect = this.ohlcSectionContentRect.nativeElement;
     // #endregion OHLC
     // #region VOLUME
     this.layout.volumeSection = this.volumeSection.nativeElement;
@@ -278,13 +278,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
-    this.layout.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
-    this.layout.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
-    this.layout.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
+    this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
+    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
 
-    this.layout.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
-    this.layout.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.layout.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
+    this.ohlcChart.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
+    this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
   }
 
   constructChart(): void {
@@ -300,27 +300,27 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawCandlestick(): void {
     this.ohlcChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.ohlcYscale)
+/*      .yScale(this.ohlcChart.ohlcYscale)*/
       .setTargetGroup(this.ohlcRef.nativeElement)
       .setCandleWidth()
-      .drawAxes()
+      .drawAxes(this.layout.chart_attributes)
       .draw();
-  }
+  }  
 
   drawVolume(): void {
     this.volumeChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.volumeYscale)
+  /*    .yScale(this.volumeChart.volumeYscale)*/
       .setTargetGroup(this.volumeContent.nativeElement)
       .setBarWidth()
-      .drawAxes()
+      .drawAxes(this.layout.chart_attributes)
       .draw();
   }
 
   drawSma1(period:number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.ohlcYscale)
+      /*.yScale(this.layout.chart_attributes)*/
       .setTargetGroup(this.layout.sma1) // Specify target group
       .setRollingPeriod(period)
       .setColor('#4E59D0')
@@ -330,7 +330,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma2(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.ohlcYscale)
+   /*   .yScale(this.layout.chart_attributes)*/
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#F1FEC6')
@@ -340,7 +340,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma3(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.ohlcYscale)
+   /*   .yScale(this.layout.chart_attributes)*/
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')
@@ -350,7 +350,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawMacd():void {
     this.macdChart
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.macdYscale)
+   /*   .yScale(this.layout.chart_attributes)*/
       .setTargetGroup(this.layout.macdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .drawAxes()
@@ -360,7 +360,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawRsi(): void {
     this.rsiIndicator
       .xScale(this.scales.dateScaleX)
-      .yScale(this.scales.rsiYscale)
+     /* .yScale(this.scales.rsiYscale)*/
       .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .drawAxes()

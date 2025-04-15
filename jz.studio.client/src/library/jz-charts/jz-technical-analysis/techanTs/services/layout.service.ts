@@ -1,5 +1,6 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
+import { ChartOhlcService } from './charts/chart-ohlc.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,7 @@ export class LayoutService {
   adjSpacer = 0;
 
 
-  ohlcSection!: SVGGElement;
-  ohlcSectionRect!: SVGRectElement;
-  ohlcSectionContent!: SVGGElement;
-  ohlcSectionContentRect!: SVGRectElement;
+
 
   sma1!: SVGElement;
   sma2!: SVGElement;
@@ -67,13 +65,7 @@ export class LayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
-  ohlcAxisLeft!: SVGGElement;
-  ohlc_yAxisL_grp!: SVGGElement;
-  ohlcAxisRectLeft!: SVGRectElement;
 
-  ohlcAxisRight!: SVGGElement;
-  ohlc_yAxisR_grp!: SVGGElement;
-  ohlcAxisRectRight!: SVGRectElement;
 
   volume_yAxisL!: SVGGElement;
   volume_yAxisL_grp!: SVGGElement;
@@ -104,7 +96,9 @@ export class LayoutService {
   rectVolume!: SVGRectElement;
   // #endregion
 
-  constructor() { }
+  constructor(
+    private ohlcChart: ChartOhlcService
+  ) { }
 
   createScaffolding() {
     this.loadSections();
@@ -182,19 +176,19 @@ export class LayoutService {
     // #endregion MAIN
 
     // #region OHLC
-    this.ohlcSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.ohlcSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[0].pct) - this.adjSpacer}`);
+    this.ohlcChart.ohlcSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
+    this.ohlcChart.ohlcSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[0].pct) - this.adjSpacer}`);
     console.log(this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right);
-    this.ohlcSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right}`);
-    this.ohlcSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[0].height}`);
-    this.chart_attributes.sections[0].width = this.ohlcSectionRect.getBBox().width;
-    this.chart_attributes.sections[0].height = this.ohlcSectionRect.getBBox().height;
-    this.ohlcAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[0].margins.right}`);
-    this.ohlcAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[0].height - this.chart_attributes.sections[0].margins.top}`);
-    this.ohlcAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
-    this.ohlcAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[0].margins.right}`);
-    this.ohlcAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[0].height - this.chart_attributes.sections[0].margins.top}`);
-    this.ohlcAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlcChart.ohlcSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right}`);
+    this.ohlcChart.ohlcSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[0].height}`);
+    this.chart_attributes.sections[0].width = this.ohlcChart.ohlcSectionRect.getBBox().width;
+    this.chart_attributes.sections[0].height = this.ohlcChart.ohlcSectionRect.getBBox().height;
+    this.ohlcChart.ohlcAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[0].margins.right}`);
+    this.ohlcChart.ohlcAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[0].height - this.chart_attributes.sections[0].margins.top}`);
+    this.ohlcChart.ohlcAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlcChart.ohlcAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[0].margins.right}`);
+    this.ohlcChart.ohlcAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[0].height - this.chart_attributes.sections[0].margins.top}`);
+    this.ohlcChart.ohlcAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
     // #endregion OHLC
 
     // #region VOLUME
@@ -231,7 +225,6 @@ export class LayoutService {
     this.chart_attributes.sections[3].height = this.rsiSectionRect.getBBox().height;
     this.rsiSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
     this.rsiSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
-    console.log('rsiSectionontentARect', this.ohlcSectionContentRect);
 
     /* LEFT  B*/
     this.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
@@ -264,11 +257,11 @@ export class LayoutService {
 
     this.sectionsContainer.setAttribute('transform', `translate(0,${this.chart_attributes.xAxisTop})`)
 
-    this.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
-    this.ohlcSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[0].margins.left},0)`);
+    this.ohlcChart.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
+    this.ohlcChart.ohlcSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[0].margins.left},0)`);
 
-    this.ohlcAxisLeft.setAttribute('transform', `translate(40,0)`);
-    this.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.right},${this.chart_attributes.sections[0].margins.top})`);
+    //this.ohlcChart.ohlcAxisLeft.setAttribute('transform', `translate(40,0)`);
+    this.ohlcChart.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.right},${this.chart_attributes.sections[0].margins.top})`);
 
     this.volumeSection.setAttribute('transform', `translate(0,${this.chart_attributes.sections[0].height + this.spacer + this.spacer})`);
     this.volumeContent.setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);

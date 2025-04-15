@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 import { line } from 'd3-shape';
+import { scaleLinear } from 'd3-scale';
 import { ScalesService } from '../scales.service';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
@@ -10,6 +11,8 @@ import { axisLeft, axisRight } from 'd3-axis';
   providedIn: 'root',
 })
 export class ChartMacdService {
+  macdYscale: any;
+
   macdAxisLeft: any;
   macd_yAxisL_grp: any;
   macdAxisRectLeft: any;
@@ -22,7 +25,7 @@ export class ChartMacdService {
   chartYaxisRight: any;
 
   private _xScale: any;
-  private _yScale: any;
+/*  private _yScale: any;*/
   private gMacd: any;
   private fastPeriod: number = 12; // Default fast EMA period
   private slowPeriod: number = 26; // Default slow EMA period
@@ -39,10 +42,10 @@ export class ChartMacdService {
     return this;
   }
 
-  public yScale(scale: any): this {
-    this._yScale = scale;
-    return this;
-  }
+  //public yScale(scale: any): this {
+  //  this._yScale = scale;
+  //  return this;
+  //}
 
   public setTargetGroup(gTargetRef: any): this {
     this.gMacd = select(gTargetRef).attr('class', 'macd-chart');
@@ -95,14 +98,25 @@ export class ChartMacdService {
   }
 
   public drawAxes() {
+    // Calculate the min and max values from MACD data
+    const allValues = this.data.macdData.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
+        return [d.macd, d.signal, d.histogram];
+    });
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
+
+    // Create the y-scale
+    this.macdYscale = scaleLinear()
+      .domain([min, max]) // Domain based on MACD values
+      .range([this.layout.chart_attributes.sections[2].height, 0]); // Range based on the chart height
     this.macdAxisLeft = select(this.layout.macdAxisLeft);
     this.macdAxisRight = select(this.layout.macdAxisRight);
 
-    this.chartYaxisLeft = axisLeft(this.scales.macdYscale);
-    this.chartYaxisRight = axisRight(this.scales.macdYscale);
+    //this.chartYaxisLeft = axisLeft(this.macdYscale);
+    //this.chartYaxisRight = axisRight(this.macdYscale);
 
-    this.macdAxisLeft.call(this.chartYaxisLeft);
-    this.macdAxisRight.call(this.chartYaxisRight);
+    //this.macdAxisLeft.call(this.macdAxisLeft);
+    //this.macdAxisRight.call(this.macdAxisRight);
 
     return this;
   }
@@ -113,11 +127,11 @@ export class ChartMacdService {
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
       .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
-      .y((d) => this._yScale(d.macd));
+      .y((d) => this.macdYscale(d.macd));
 
     const signalLineGenerator = line<{ date: Date; signal: number }>()
       .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
-      .y((d) => this._yScale(d.signal));
+      .y((d) => this.macdYscale(d.signal));
 
     // Draw Divergence as bars
     const bars = this.gMacd.selectAll('.histogram-bar').data(this.data.macdData);
@@ -128,9 +142,9 @@ export class ChartMacdService {
       .attr('class', 'histogram-bar')
       .merge(bars)
       .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2 - 2)
-      .attr('y', (d: { histogram: any; }) => isNaN(this._yScale(d.histogram)) ? 0 : this._yScale(d.histogram))
+      .attr('y', (d: { histogram: any; }) => isNaN(this.macdYscale(d.histogram)) ? 0 : this.macdYscale(d.histogram))
       .attr('width', 4) // Width of each bar
-      .attr('height', (d: { histogram: any }) => Math.abs(this._yScale(d.histogram) - this._yScale(0)))
+      .attr('height', (d: { histogram: any }) => Math.abs(this.macdYscale(d.histogram) - this.macdYscale(0)))
       .attr('fill', (d: { histogram: number }) => (d.histogram > 0 ? 'green' : 'red')); // Color based on positive or negative histogram value
 
     bars.exit().remove();
