@@ -5,6 +5,7 @@ import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
 import { ScalesService } from '../scales.service';
 import { axisLeft, axisRight } from 'd3-axis';
+import { scaleLinear } from 'd3-scale'
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class ChartRsiIndic {
   chartYaxisRight: any;
 
   private _xScale: any;
-  private _yScale: any;
+/*  private _yScale: any;*/
   private gRsi: any;
   private rollingPeriod: number = 14; // Default RSI period
 
@@ -40,7 +41,7 @@ export class ChartRsiIndic {
   }
 
   public yScale(scale: any): this {
-    this._yScale = scale;
+   /* this._yScale = scale;*/
     return this;
   }
 
@@ -92,14 +93,16 @@ export class ChartRsiIndic {
   }
 
   public drawAxes() {
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([this.layout.chart_attributes.sections[3].height, 0]);
+
     this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
     this.rsiAxisRight = select(this.layout.rsiAxisRight);
 
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
-    this.rsiAxisLeft.call(this.chartYaxisLeft);
-    this.rsiAxisRight.call(this.chartYaxisRight);
+    //this.rsiAxisLeft.call(this.chartYaxisLeft);
+    //this.rsiAxisRight.call(this.chartYaxisRight);
 
     return this;
   }
@@ -111,7 +114,7 @@ export class ChartRsiIndic {
     // Define the RSI line generator
     const rsiLine = line<{ date: Date; rsi: number }>()
       .x((d) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2) // Fix x mapping
-      .y((d) => isNaN(this._yScale(d.rsi)) ? this._yScale(50) : this._yScale(d.rsi)); // Fix y mapping
+      .y((d) => isNaN(this.rsiYscale(d.rsi)) ? this.rsiYscale(50) : this.rsiYscale(d.rsi)); // Fix y mapping
 
 
     // Append or update the RSI path
@@ -145,8 +148,8 @@ export class ChartRsiIndic {
       .merge(thresholdLine)
       .attr('x1', this._xScale.range()[0]) // Start of the x-axis
       .attr('x2', this._xScale.range()[1]) // End of the x-axis
-      .attr('y1', this._yScale(level))
-      .attr('y2', this._yScale(level))
+      .attr('y1', this.rsiYscale(level))
+      .attr('y2', this.rsiYscale(level))
       .attr('stroke', className === 'middle' ? 'gray' : 'red') // Different color for middle line
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', strokeDasharray === 'dotted' ? '4, 2' : 'none') // Dotted or solid

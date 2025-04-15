@@ -2,7 +2,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { ScalesService } from './scales.service';
 import { timeFormat } from 'd3-time-format';
-import { select, selection, selectAll } from 'd3-selection';
+import { select, selection, selectAll, Selection } from 'd3-selection';
 import { LayoutService } from './layout.service';
 //import { AxisDomain } from 'd3-axis';
 //import { Selection } from 'd3-selection';
@@ -15,8 +15,8 @@ export class PartsAxesService {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-  xAxisMonthsTop!: any;
-  xAxisMonthsBottom!: any;
+  xAxisMonthsTop!: Selection<SVGGElement, unknown, null, undefined>;
+  xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisDays!: any;
   xAxisBottom: any;
 
