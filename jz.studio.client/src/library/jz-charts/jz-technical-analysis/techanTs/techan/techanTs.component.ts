@@ -199,7 +199,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.sectionsContainerRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft;
+    this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
     this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
     this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
 
@@ -278,13 +278,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
-    this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
-    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
-    this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
+    //this.ohlcChart.ohlcAxisLeft = this.ohlcAxisLeft.nativeElement;
+    //this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    //this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
 
-    this.ohlcChart.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
-    this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
+    //this.ohlcChart.ohlcAxisRight = this.ohlcAxisRight.nativeElement;
+    //this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
+    //this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
   }
 
   constructChart(): void {
