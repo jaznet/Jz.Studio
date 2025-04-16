@@ -67,8 +67,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gVolumeAxisLeft_grp', { static: true }) gVolumeAxisLeft_grp!: ElementRef<SVGGElement>;
   @ViewChild('volumeAxisRectLeft', { static: true }) volumeAxisRectLeft!: ElementRef<SVGRectElement>;
 
-  @ViewChild('volume_yAxisR', { static: true }) volume_yAxisR!: ElementRef<SVGGElement>;
-  @ViewChild('volume_yAxisR_grp', { static: true }) volume_yAxisR_grp!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisRight', { static: true }) gVolumeAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisRight_grp', { static: true }) gVolumeAxisRight_grp!: ElementRef<SVGGElement>;
   @ViewChild('volumeAxisRectRight', { static: true }) volumeAxisRectRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP
 
@@ -220,8 +220,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.volumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
     this.volumeChart.gVolumeAxisLeft_grp = this.gVolumeAxisLeft_grp.nativeElement;
     this.volumeChart.volumeAxisRectLeft = this.volumeAxisRectLeft.nativeElement;
-    this.volumeChart.volume_yAxisR = this.volume_yAxisR.nativeElement;
-    this.volumeChart.volume_yAxisR_grp = this.volume_yAxisR_grp.nativeElement;
+    this.volumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
+    this.volumeChart.gVolumeAxisRight_grp = this.gVolumeAxisRight_grp.nativeElement;
     this.volumeChart.volumeAxisRectRight = this.volumeAxisRectRight.nativeElement;
     this.volumeChart.volumeSectionRect = this.volumeSectionRect.nativeElement;
     // #endregion VOLUME

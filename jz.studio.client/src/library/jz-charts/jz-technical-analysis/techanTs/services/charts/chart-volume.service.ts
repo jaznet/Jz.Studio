@@ -26,8 +26,8 @@ export class VolumeChartService {
   gVolumeAxisLeft_grp: any;
   volumeAxisRectLeft: any;
 
-  volume_yAxisR: any;
-  volume_yAxisR_grp: any;
+  gVolumeAxisRight: any;
+  gVolumeAxisRight_grp: any;
   volumeAxisRectRight: any;
 
   axisLeft!: Axis<AxisDomain>;
@@ -73,7 +73,7 @@ export class VolumeChartService {
       .range([chart_attributes.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
 
     //this.gVolumeAxisLeft = select(this.gVolumeAxisLeft);
-    //this.volume_yAxisR = select(this.volume_yAxisR);
+    //this.gVolumeAxisRight = select(this.gVolumeAxisRight);
 
     this.axisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
@@ -82,7 +82,7 @@ export class VolumeChartService {
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
     this.gVolumeAxisLeft.call(this.axisLeft);
-    //this.volume_yAxisR.call(this.axisRight);
+    this.gVolumeAxisRight.call(this.axisRight);
 
     return this;
   }

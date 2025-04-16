@@ -69,8 +69,8 @@ export class LayoutService {
   gVolumeAxisLeft_grp!: SVGGElement;
   volumeAxisRectLeft!: SVGRectElement;
 
-  volume_yAxisR!: SVGGElement;
-  volume_yAxisR_grp!: SVGGElement;
+  gVolumeAxisRight!: SVGGElement;
+  gVolumeAxisRight_grp!: SVGGElement;
   volumeAxisRectRight!: SVGRectElement;
 
   macdAxisLeft!: SVGGElement;
@@ -267,7 +267,7 @@ export class LayoutService {
     this.volumeChart.gVolumeAxisLeft
       .attr('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`)
     /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
-    this.volumeChart.volume_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
+    this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
     this.macdSection.setAttribute('transform',
       `translate(0,${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer*3))})`);
