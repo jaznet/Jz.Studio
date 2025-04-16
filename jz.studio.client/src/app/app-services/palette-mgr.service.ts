@@ -108,14 +108,14 @@ export class PaletteMgrService {
 
       case 'gold':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#406B6B');
+        document.documentElement.style.setProperty('--plt-clr-1', '#12100e');
         document.documentElement.style.setProperty('--plt-clr-2', '#172626');
         document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
         document.documentElement.style.setProperty('--plt-clr-4', '#c4c393');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
         document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 
-        document.documentElement.style.setProperty('--plt-txt-1', 'black');
+        document.documentElement.style.setProperty('--plt-txt-1', 'white');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
         document.documentElement.style.setProperty('--plt-txt-4', 'black');

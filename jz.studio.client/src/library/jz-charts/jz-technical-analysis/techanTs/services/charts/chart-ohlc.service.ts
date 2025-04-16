@@ -75,12 +75,14 @@ export class ChartOhlcService {
       .range([chart_attributes.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.ohlcAxisLeft = select(this.ohlcAxisLeft);
+    
     //this.ohlcAxisRight = select(this.ohlcYscale);
 
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
     this.ohlcAxisLeft.call(this.axisLeft);
+//    this.ohlcAxisLeft.setAttribures('transform', `${chart_attributes.sections[0].margins.left}`);
     //this.axisRight.call(this.ohlcYscale);
 
     return this;
