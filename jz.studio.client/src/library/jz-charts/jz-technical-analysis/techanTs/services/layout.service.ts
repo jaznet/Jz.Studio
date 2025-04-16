@@ -1,6 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartOhlcService } from './charts/chart-ohlc.service';
+import { VolumeChartService } from './charts/chart-volume.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,7 @@ export class LayoutService {
   sma3!: SVGElement;
 
 
-  volumeSection!: SVGGElement;
-  volumeSectionRect!: SVGRectElement;
-  volumeContent!: SVGGElement;
-  volumeContentRect!: SVGRectElement;
+
 
 
   macdSection!: SVGGElement;
@@ -67,8 +65,8 @@ export class LayoutService {
 
 
 
-  volume_yAxisL!: SVGGElement;
-  volume_yAxisL_grp!: SVGGElement;
+  gVolumeAxisLeft!: SVGGElement;
+  gVolumeAxisLeft_grp!: SVGGElement;
   volumeAxisRectLeft!: SVGRectElement;
 
   volume_yAxisR!: SVGGElement;
@@ -97,7 +95,8 @@ export class LayoutService {
   // #endregion
 
   constructor(
-    private ohlcChart: ChartOhlcService
+    private ohlcChart: ChartOhlcService,
+    private volumeChart: VolumeChartService
   ) { }
 
   createScaffolding() {
@@ -192,14 +191,14 @@ export class LayoutService {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.volumeSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[1].pct) - this.adjSpacer}`);
-    this.chart_attributes.sections[1].width = this.volumeSectionRect.getBBox().width;
-    this.chart_attributes.sections[1].height = this.volumeSectionRect.getBBox().height;
-    this.volumeAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[1].margins.left}`);
-    this.volumeAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[1].height}`);
-    this.volumeAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[1].margins.right}`);
-    this.volumeAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[1].height}`);
+    this.volumeChart.volumeSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
+    this.volumeChart.volumeSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[1].pct) - this.adjSpacer}`);
+    this.chart_attributes.sections[1].width = this.volumeChart.volumeSectionRect.getBBox().width;
+    this.chart_attributes.sections[1].height = this.volumeChart.volumeSectionRect.getBBox().height;
+    this.volumeChart.volumeAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[1].margins.left}`);
+    this.volumeChart.volumeAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[1].height}`);
+    this.volumeChart.volumeAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[1].margins.right}`);
+    this.volumeChart.volumeAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[1].height}`);
     // #endregion VOLUME
 
     // #region MACD
@@ -263,10 +262,12 @@ export class LayoutService {
     //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
     this.ohlcChart.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.right},${this.chart_attributes.sections[0].margins.top})`);
 
-    this.volumeSection.setAttribute('transform', `translate(0,${this.chart_attributes.sections[0].height + this.spacer + this.spacer})`);
-    this.volumeContent.setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);
-    this.volume_yAxisL.setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);
-    this.volume_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
+    this.volumeChart.volumeSection.setAttribute('transform', `translate(0,${this.chart_attributes.sections[0].height + this.spacer + this.spacer})`);
+    this.volumeChart.volumeContent.setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);
+    this.volumeChart.gVolumeAxisLeft
+      .attr('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`)
+    /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
+    this.volumeChart.volume_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
     this.macdSection.setAttribute('transform',
       `translate(0,${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer*3))})`);

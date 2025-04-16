@@ -74,17 +74,13 @@ export class ChartOhlcService {
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([chart_attributes.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
 
-/*    this.gOhlcAxisLeft = select(this.gOhlcAxisLeft);*/
-    
-    //this.gOhlcAxisRight = select(this.ohlcYscale);
-
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
     this.gOhlcAxisLeft.call(this.axisLeft);
     this.gOhlcAxisLeft
       .attr('transform', `translate(${chart_attributes.sections[0].margins.left}, 0)`);
-//    this.gOhlcAxisLeft.setAttribures('transform', `${chart_attributes.sections[0].margins.left}`);
+
     this.gOhlcAxisRight.call(this.axisRight);
     this.gOhlcAxisRight
       .attr('transform', `translate(${chart_attributes.sections[0].margins.left + chart_attributes.sections[0].content.width - chart_attributes.sections[0].margins.right}, 0)`);

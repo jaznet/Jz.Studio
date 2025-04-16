@@ -17,16 +17,21 @@ export class VolumeChartService {
 
   volumeYscale: any;
 
-  volume_yAxisL: any;
-  volume_yAxisL_grp: any;
+  volumeSection!: SVGGElement;
+  volumeSectionRect!: SVGRectElement;
+  volumeContent!: SVGGElement;
+  volumeContentRect!: SVGRectElement;
+
+  gVolumeAxisLeft: any;
+  gVolumeAxisLeft_grp: any;
   volumeAxisRectLeft: any;
 
   volume_yAxisR: any;
   volume_yAxisR_grp: any;
   volumeAxisRectRight: any;
 
-  YaxisLeft!: Axis<AxisDomain>;
-  YaxisRight!: Axis<AxisDomain>;
+  axisLeft!: Axis<AxisDomain>;
+  axisRight!: Axis<AxisDomain>;
 
   constructor(
     private scales: ScalesService,
@@ -67,17 +72,17 @@ export class VolumeChartService {
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([chart_attributes.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
 
-    this.volume_yAxisL = select(this.volume_yAxisL);
-    this.volume_yAxisR = select(this.volume_yAxisR);
+    //this.gVolumeAxisLeft = select(this.gVolumeAxisLeft);
+    //this.volume_yAxisR = select(this.volume_yAxisR);
 
-    this.YaxisLeft = axisLeft(this.volumeYscale)
+    this.axisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
 
-    this.YaxisRight = axisRight(this.volumeYscale)
+    this.axisRight = axisRight(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
-    //this.volume_yAxisL.call(this.YaxisLeft);
-    //this.volume_yAxisR.call(this.YaxisRight);
+    this.gVolumeAxisLeft.call(this.axisLeft);
+    //this.volume_yAxisR.call(this.axisRight);
 
     return this;
   }

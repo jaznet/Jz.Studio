@@ -63,8 +63,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('volumeContentRect', { static: true }) volumeContentRect!: ElementRef<SVGRectElement>;
   @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('volume_yAxisL', { static: true }) volume_yAxisL!: ElementRef<SVGGElement>;
-  @ViewChild('volume_yAxisL_grp', { static: true }) volume_yAxisL_grp!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisLeft', { static: true }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisLeft_grp', { static: true }) gVolumeAxisLeft_grp!: ElementRef<SVGGElement>;
   @ViewChild('volumeAxisRectLeft', { static: true }) volumeAxisRectLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('volume_yAxisR', { static: true }) volume_yAxisR!: ElementRef<SVGGElement>;
@@ -213,16 +213,17 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlcSectionContentRect = this.ohlcSectionContentRect.nativeElement;
     // #endregion OHLC
     // #region VOLUME
-    this.layout.volumeSection = this.volumeSection.nativeElement;
-    this.layout.volumeSectionRect = this.volumeSectionRect.nativeElement;
-    this.layout.volumeContent = this.volumeContent.nativeElement;
-    this.layout.volumeContentRect = this.volumeContentRect.nativeElement;
-    this.layout.volume_yAxisL = this.volume_yAxisL.nativeElement;
-    this.layout.volume_yAxisL_grp = this.volume_yAxisL_grp.nativeElement;
-    this.layout.volumeAxisRectLeft = this.volumeAxisRectLeft.nativeElement;
-    this.layout.volume_yAxisR = this.volume_yAxisR.nativeElement;
-    this.layout.volume_yAxisR_grp = this.volume_yAxisR_grp.nativeElement;
-    this.layout.volumeAxisRectRight = this.volumeAxisRectRight.nativeElement;
+    this.volumeChart.volumeSection = this.volumeSection.nativeElement;
+    this.volumeChart.volumeSectionRect = this.volumeSectionRect.nativeElement;
+    this.volumeChart.volumeContent = this.volumeContent.nativeElement;
+    this.volumeChart.volumeContentRect = this.volumeContentRect.nativeElement;
+    this.volumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
+    this.volumeChart.gVolumeAxisLeft_grp = this.gVolumeAxisLeft_grp.nativeElement;
+    this.volumeChart.volumeAxisRectLeft = this.volumeAxisRectLeft.nativeElement;
+    this.volumeChart.volume_yAxisR = this.volume_yAxisR.nativeElement;
+    this.volumeChart.volume_yAxisR_grp = this.volume_yAxisR_grp.nativeElement;
+    this.volumeChart.volumeAxisRectRight = this.volumeAxisRectRight.nativeElement;
+    this.volumeChart.volumeSectionRect = this.volumeSectionRect.nativeElement;
     // #endregion VOLUME
 
     // #region MACD
@@ -267,9 +268,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rsiAxisRight = this.rsiAxisRightRef.nativeElement;
     this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
-
-
-   this.layout.volumeSectionRect = this.volumeSectionRect.nativeElement;
 
     this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
