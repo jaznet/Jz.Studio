@@ -260,7 +260,7 @@ export class LayoutService {
     this.ohlcChart.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
     this.ohlcChart.ohlcSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[0].margins.left},0)`);
 
-    //this.ohlcChart.ohlcAxisLeft.setAttribute('transform', `translate(40,0)`);
+    //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
     this.ohlcChart.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.right},${this.chart_attributes.sections[0].margins.top})`);
 
     this.volumeSection.setAttribute('transform', `translate(0,${this.chart_attributes.sections[0].height + this.spacer + this.spacer})`);
