@@ -25,7 +25,7 @@ export class ChartOhlcService {
   ohlc_yAxisL_grp: any;
   ohlcAxisRectLeft: any;
 
-  ohlcAxisRight: any;
+  gOhlcAxisRight: any;
   ohlc_yAxisR_grp: any;
   ohlcAxisRectRight: any;
 
@@ -76,16 +76,18 @@ export class ChartOhlcService {
 
 /*    this.gOhlcAxisLeft = select(this.gOhlcAxisLeft);*/
     
-    //this.ohlcAxisRight = select(this.ohlcYscale);
+    //this.gOhlcAxisRight = select(this.ohlcYscale);
 
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
     this.gOhlcAxisLeft.call(this.axisLeft);
     this.gOhlcAxisLeft
-      .attr('transform', 'translate(40,0)');
+      .attr('transform', `translate(${chart_attributes.sections[0].margins.left}, 0)`);
 //    this.gOhlcAxisLeft.setAttribures('transform', `${chart_attributes.sections[0].margins.left}`);
-    //this.axisRight.call(this.ohlcYscale);
+    this.gOhlcAxisRight.call(this.axisRight);
+    this.gOhlcAxisRight
+      .attr('transform', `translate(${chart_attributes.sections[0].margins.left + chart_attributes.sections[0].content.width - chart_attributes.sections[0].margins.right}, 0)`);
 
     return this;
   }
