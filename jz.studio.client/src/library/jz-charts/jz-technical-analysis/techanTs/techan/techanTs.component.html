@@ -12,7 +12,7 @@
     </g>
 
     <g #sections id="sections">
-      <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0"></rect>
+      <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0" fill="var(--plt-chart-2)"></rect>
 
       <!-- #region OHLC SECTION -->
       <g #ohlcSection id="ohlcSection" class="rsiSectionontainer">
@@ -75,28 +75,28 @@
       <!-- #endregion -->
 
       <!-- #region SECTION MACD -->
-      <g #macdSection id="macdSection">
-        <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">Section B</text>
-        <rect #macdSectionRect id="macdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
+      <g #gMacdSection id="gMacdSection">
+        <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">MCAD</text>
+        <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
 
         <!-- LEFT AXIS MACD  -->
-        <g #macdAxisGroupLeft id="macdAxisGroupLeft">
+        <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
           <rect #macdAxisRectLeft id="macdAxisRectLeft" width="0" height="0" class="axis y-axis "></rect>
-          <g #macdAxisLeft id="macdAxisLeft" class="y-axis"></g>
+          <g #gMacdAxisLeft id="gMacdAxisLeft" class="y-axis"></g>
         </g>
 
         <!-- RIGHT AXIS MACD -->
         <g #macdAxisGroupRight id="macdAxisGroupRight">
           <rect #macdAxisRectRight id="macdAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
-          <g #macdAxisRight id="macdAxisRight" class="y-axis"></g>
+          <g #gMacdAxisRight id="gMacdAxisRight" class="y-axis"></g>
         </g>
 
-        <g #macdContent id="macdContent">
-          <rect #macdContentRect id="macdContentRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
-          <g #macdChart id="macdChart"></g>
+        <g #gMacdContent id="#gMacdContent">
+          <rect #rMacdContentRect id="rMacdContentRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
+          <g #gMacdChart id="gMacdChart"></g>
         </g>
       </g>
-      <!-- #endregion SECTION B -->
+      <!-- #endregion SECTION MACD -->
 
       <!-- #region SECTION RSI -->
       <g #rsiSection id="rsiSection">
@@ -113,9 +113,10 @@
           <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
           <g #rsiAxisRight id="yAxisRighC" class="y-axis"></g>
         </g>
+
         <g #rsiSectionContent id="rsiSectionContent">
           <rect #rsiSectionContentRect id="rsiSectionContentRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
-          <g #macdChart id="macdChart"></g>
+          <g #gRsiChart id="gRsiChart"></g>
         </g>
         <g #rsiGroup id="rsiGroup"></g>
       </g>

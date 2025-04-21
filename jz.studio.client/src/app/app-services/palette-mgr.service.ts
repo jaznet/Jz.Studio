@@ -9,7 +9,6 @@ export class PaletteMgrService {
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
-
     this.ChangePalette('slate');
   }
 
@@ -111,7 +110,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-1', '#12100e');
         document.documentElement.style.setProperty('--plt-clr-2', '#172626');
         document.documentElement.style.setProperty('--plt-clr-3', '#2f9d87');
-        document.documentElement.style.setProperty('--plt-clr-4', '#c4c393');
+        document.documentElement.style.setProperty('--plt-clr-4', '#cbb552');
         document.documentElement.style.setProperty('--plt-clr-5', '#F5FBFB');
         document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 

@@ -2,6 +2,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { chart_attributes, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { VolumeChartService } from './charts/chart-volume.service';
+import { ChartMacdService } from './charts/chart-macd.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +38,7 @@ export class LayoutService {
 
 
 
-  macdSection!: SVGGElement;
-  macdContent!: SVGGElement;
-  macdContentRect!: SVGRectElement;
 
-  macdChart: any;
 
   rsiSection!: SVGGElement;
   rsiSectionContent!: SVGGElement;
@@ -49,7 +46,7 @@ export class LayoutService {
 
   rsiGroup: any;
 
-  macdSectionRect!: SVGRectElement;
+
   rsiSectionRect!: SVGRectElement;
 
   // #region Axes
@@ -73,13 +70,15 @@ export class LayoutService {
   gVolumeAxisRight_grp!: SVGGElement;
   volumeAxisRectRight!: SVGRectElement;
 
-  macdAxisLeft!: SVGGElement;
-  macdAxisGroupLeft!: SVGGElement;
+  gMacdAxisLeft!: SVGGElement;
+  gMacdAxisGroupLeft!: SVGGElement;
   macdAxisRectLeft!: SVGRectElement;
 
-  macdAxisRight!: SVGGElement;
+  gMacdAxisRight!: SVGGElement;
   macdAxisGroupRight!: SVGGElement;
   macdAxisRectRight!: SVGRectElement;
+
+  gMacdChart: any;
 
   rsiAxisLeft!: SVGGElement;
   yAxisLeftGroupC!: SVGGElement;
@@ -96,7 +95,8 @@ export class LayoutService {
 
   constructor(
     private ohlcChart: ChartOhlcService,
-    private volumeChart: VolumeChartService
+    private volumeChart: VolumeChartService,
+    private macdChart: ChartMacdService
   ) { }
 
   createScaffolding() {
@@ -135,8 +135,6 @@ export class LayoutService {
       pct: .2
     };
   }
-
-
 
   sizeSections(): void {
     this.spacer = 8;
@@ -202,19 +200,20 @@ export class LayoutService {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.macdSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[2].pct) - this.adjSpacer}`);
-    this.chart_attributes.sections[2].width = this.macdSectionRect.getBBox().width;
-    this.chart_attributes.sections[2].height = this.macdSectionRect.getBBox().height;
-    this.macdContentRect.setAttribute('width',
+    this.macdChart.rMacdSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
+    this.macdChart.rMacdSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[2].pct) - this.adjSpacer}`);
+    this.chart_attributes.sections[2].width = this.macdChart.rMacdSectionRect.getBBox().width;
+    this.chart_attributes.sections[2].height = this.macdChart.rMacdSectionRect.getBBox().height;
+
+    this.macdChart.rMacdSectionRect.setAttribute('width',
       `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
-    this.macdContentRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
-    this.macdAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
-    this.macdAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
-    this.macdAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
+    this.macdChart.rMacdSectionRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.macdAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
+    this.macdChart.macdAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.macdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
+    this.macdChart.macdAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
+    this.macdChart.macdAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
     // #endregion MACD
 
     // #region RSI
@@ -269,11 +268,12 @@ export class LayoutService {
     /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
     this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
-    this.macdSection.setAttribute('transform',
-      `translate(0,${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer*3))})`);
-    this.macdContent.setAttribute('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
-    this.macdAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
-    this.macdAxisGroupRight.setAttribute('transform',
+    this.macdChart.gMacdSection
+      .attr('transform',
+        `translate(${this.chart_attributes.sections[2].margins.left},
+                       ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
+    this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
+    this.macdChart.gMacdAxisRight.attr('transform',
       `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
 
     this.rsiSection.setAttribute('transform',

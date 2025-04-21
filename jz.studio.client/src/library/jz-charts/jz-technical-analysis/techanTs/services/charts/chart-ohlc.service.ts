@@ -11,6 +11,7 @@ import { scaleLinear } from 'd3-scale';
   providedIn: 'root',
 })
 export class ChartOhlcService {
+  // #region PROPERTIES
   ohlcSection!: SVGGElement;
   ohlcSectionRect!: SVGRectElement;
   ohlcSectionContent!: SVGGElement;
@@ -37,6 +38,8 @@ export class ChartOhlcService {
   private _yScale: any;
   private _candleWidth: number = 0;
   gCandlestick: any;
+
+  // #endregion PROPERTIES
 
   constructor(
     private scales: ScalesService,

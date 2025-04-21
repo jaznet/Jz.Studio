@@ -32,6 +32,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
   @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
 
+  @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisMonthsTop', { static: true }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisDays', { static: true }) xAxisDaysRef!: ElementRef<SVGGElement>;
+
+  @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
@@ -71,36 +80,26 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gVolumeAxisRight_grp', { static: true }) gVolumeAxisRight_grp!: ElementRef<SVGGElement>;
   @ViewChild('volumeAxisRectRight', { static: true }) volumeAxisRectRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP
+  
+  @ViewChild('gMacdSection', { static: true }) gMacdSection!: ElementRef<SVGGElement>;
+  @ViewChild('gMacdContent', { static: true }) gMacdContent!: ElementRef<SVGGElement>;
+  @ViewChild('rMacdContentRect', { static: true }) rMacdContentRect!: ElementRef<SVGRectElement>;
+  @ViewChild('rMacdSectionRect', { static: true }) rMacdSectionRect!: ElementRef<SVGRectElement>;
 
-  @ViewChild('macdSection', { static: true }) macdSection!: ElementRef<SVGGElement>;
-  @ViewChild('macdContent', { static: true }) rsiSectionontentBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdContentRect', { static: true }) rsiSectionontentBRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('macdSectionRect', { static: true }) sectionRectBRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gMacdAxisGroupLeft', { static: true }) gMacdAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('gMacdAxisLeft', { static: true }) gMacdAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisRectLeft', { static: true }) macdAxisRectLeft!: ElementRef<SVGRectElement>;
+
+  @ViewChild('macdAxisGroupRight', { static: true }) macdAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('gMacdAxisRight', { static: true }) gMacdAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('macdAxisRectRight', { static: true }) macdAxisRectRight!: ElementRef<SVGRectElement>;
+
+  @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 
   @ViewChild('rsiSection', { static: true }) rsiSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rsiSectionContent', { static: true }) rsiSectionContentRef!: ElementRef<SVGGElement>;
   @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('rsiSectionRect', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
-
-  // #region Axes
-
-  @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsTop', { static: true }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisDays', { static: true }) xAxisDaysRef!: ElementRef<SVGGElement>;
-
-  @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
-
-  @ViewChild('macdAxisGroupLeft', { static: true }) yAxisLeftGroupBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisLeft', { static: true }) yAxisLeftBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisRectLeft', { static: true }) yAxisLeftRectBRef!: ElementRef<SVGRectElement>;
-
-  @ViewChild('macdAxisGroupRight', { static: true }) yAxisRightGroupBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisRight', { static: true }) yAxisRightBRef!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisRectRight', { static: true }) yAxisRightRectBRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
   @ViewChild('rsiAxisLeft', { static: true }) rsiAxisLeftRef!: ElementRef<SVGGElement>;
@@ -116,9 +115,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
-
-  // MACD GROUP
-  @ViewChild('macdChart', { static: true }) macdChartRef!: ElementRef<SVGGElement>;
 
   // RSIGROUP
   @ViewChild('rsiGroup', { static: true }) rsiGroupRef!: ElementRef<SVGGElement>;
@@ -227,11 +223,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    this.layout.macdSection = this.macdSection.nativeElement;
-    this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
-    this.layout.macdContent = this.rsiSectionontentBRef.nativeElement;
-    this.layout.macdContentRect = this.rsiSectionontentBRectRef.nativeElement;
-    this.layout.macdChart = this.macdChartRef.nativeElement;
+    this.macdChart.gMacdSection = select(this.gMacdSection.nativeElement);
+    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
+    this.macdChart.gMacdContent = this.gMacdContent.nativeElement;
+    this.macdChart.rMacdContentRect = this.rMacdContentRect.nativeElement;
+    this.macdChart.gMacdChart = this.gMacdChart.nativeElement;
     // #rendegion MACD
 
     this.layout.rsiSection = this.rsiSectionRef.nativeElement;
@@ -253,13 +249,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    this.layout.macdAxisLeft = this.yAxisLeftBRef.nativeElement;
-    this.layout.macdAxisGroupLeft = this.yAxisLeftGroupBRef.nativeElement;;
-    this.layout.macdAxisRectLeft = this.yAxisLeftRectBRef.nativeElement;
+    this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
+    this.macdChart.gMacdAxisGroupLeft = this.gMacdAxisGroupLeft.nativeElement;;
+    this.macdChart.macdAxisRectLeft = this.macdAxisRectLeft.nativeElement;
 
-    this.layout.macdAxisRight = this.yAxisRightBRef.nativeElement;
-    this.layout.macdAxisGroupRight = this.yAxisRightGroupBRef.nativeElement;
-    this.layout.macdAxisRectRight = this.yAxisRightRectBRef.nativeElement;
+    this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
+    this.macdChart.gMacdAxisGroupRight = this.macdAxisGroupRight.nativeElement;
+    this.macdChart.macdAxisRectRight = this.macdAxisRectRight.nativeElement;
 
     this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
     this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
@@ -269,7 +265,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
-    this.layout.macdSectionRect = this.sectionRectBRef.nativeElement;
+    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
     //this.ohlcChart.gOhlcAxisLeft = this.gOhlcAxisLeft.nativeElement;
@@ -345,9 +341,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.macdChart
       .xScale(this.scales.dateScaleX)
    /*   .yScale(this.layout.chart_attributes)*/
-      .setTargetGroup(this.layout.macdChart)
+      .setTargetGroup(this.layout.gMacdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
-      .drawAxes()
+      .drawAxes(this.layout.chart_attributes)
       .draw();
   }
 

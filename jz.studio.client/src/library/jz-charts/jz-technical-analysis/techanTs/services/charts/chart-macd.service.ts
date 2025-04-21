@@ -1,28 +1,36 @@
 import { Injectable } from '@angular/core';
-import { select } from 'd3-selection';
+import { Selection, select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { ScalesService } from '../scales.service';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
 import { axisLeft, axisRight } from 'd3-axis';
+import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartMacdService {
+  gMacdChart: any;
+  gMacdSection!: any;
+  rMacdSectionRect!: SVGRectElement;
+
+  gMacdContent!: any;
+  rMacdContentRect!: SVGRectElement;
+
   macdYscale: any;
 
-  macdAxisLeft: any;
-  macd_yAxisL_grp: any;
+  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
+  gMacdAxisGroupLeft: any;
   macdAxisRectLeft: any;
 
-  macdAxisRight: any;
-  macd_yAxisR_grp: any;
+  gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
+  gMacdAxisGroupRight: any;
   macdAxisRectRight: any;
 
-  chartYaxisLeft: any;
-  chartYaxisRight: any;
+  axisLeft: any;
+  axisRight: any;
 
   private _xScale: any;
 /*  private _yScale: any;*/
@@ -33,8 +41,7 @@ export class ChartMacdService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
-    private layout:LayoutService
+    private data: ChartDataService
   ) { }
 
   public xScale(scale: any): this {
@@ -97,7 +104,7 @@ export class ChartMacdService {
     }));
   }
 
-  public drawAxes() {
+  public drawAxes(chart_attributes: chart_attributes) {
     // Calculate the min and max values from MACD data
     const allValues = this.data.macdData.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
         return [d.macd, d.signal, d.histogram];
@@ -108,15 +115,15 @@ export class ChartMacdService {
     // Create the y-scale
     this.macdYscale = scaleLinear()
       .domain([min, max]) // Domain based on MACD values
-      .range([this.layout.chart_attributes.sections[2].height, 0]); // Range based on the chart height
-    this.macdAxisLeft = select(this.layout.macdAxisLeft);
-    this.macdAxisRight = select(this.layout.macdAxisRight);
+      .range([chart_attributes.sections[2].height, 0]); // Range based on the chart height
+    this.gMacdAxisLeft = select(this.gMacdChart.gMacdAxisLeft);
+    this.gMacdAxisRight = select(this.gMacdChart.gMacdAxisRight);
 
-    //this.chartYaxisLeft = axisLeft(this.macdYscale);
-    //this.chartYaxisRight = axisRight(this.macdYscale);
+    this.axisLeft = axisLeft(this.macdYscale);
+    this.axisRight = axisRight(this.macdYscale);
 
-    //this.macdAxisLeft.call(this.macdAxisLeft);
-    //this.macdAxisRight.call(this.macdAxisRight);
+    this.gMacdAxisLeft.call(this.axisLeft);
+    this.gMacdAxisRight.call(this.axisRight);
 
     return this;
   }
