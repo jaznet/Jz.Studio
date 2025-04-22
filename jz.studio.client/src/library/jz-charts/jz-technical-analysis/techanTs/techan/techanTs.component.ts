@@ -92,7 +92,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gMacdAxisGroupRight', { static: true }) gMacdAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('gMacdAxisRight', { static: true }) gMacdAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisRectRight', { static: true }) macdAxisRectRight!: ElementRef<SVGRectElement>;
+  @ViewChild('rMacdAxisRectRight', { static: true }) rMacdAxisRectRight!: ElementRef<SVGRectElement>;
 
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 
@@ -249,13 +249,15 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
+    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
+
     this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
-    this.macdChart.gMacdAxisGroupLeft = this.gMacdAxisGroupLeft.nativeElement;;
-    this.macdChart.rMacdAxisRectLeft = this.rMacdAxisRectLeft.nativeElement;
+    this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
+    this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
 
     this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    this.macdChart.gMacdAxisGroupRight = this.gMacdAxisGroupRight.nativeElement;
-    this.macdChart.macdAxisRectRight = this.macdAxisRectRight.nativeElement;
+    this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
+    this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
 
     this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
     this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
@@ -265,7 +267,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
-    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
+
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
     //this.ohlcChart.gOhlcAxisLeft = this.gOhlcAxisLeft.nativeElement;

@@ -27,7 +27,7 @@ export class ChartMacdService {
 
   gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
   gMacdAxisGroupRight: any;
-  macdAxisRectRight: any;
+  rMacdAxisRectRight: any;
 
   axisLeft: any;
   axisRight: any;

@@ -27,18 +27,9 @@ export class LayoutService {
   spacer=0;
   adjSpacer = 0;
 
-
-
-
   sma1!: SVGElement;
   sma2!: SVGElement;
   sma3!: SVGElement;
-
-
-
-
-
-
 
   rsiSection!: SVGGElement;
   rsiSectionContent!: SVGGElement;
@@ -76,7 +67,7 @@ export class LayoutService {
 
   gMacdAxisRight!: SVGGElement;
   gMacdAxisGroupRight!: SVGGElement;
-  macdAxisRectRight!: SVGRectElement;
+  rMacdAxisRectRight!: SVGRectElement;
 
   gMacdChart: any;
 
@@ -208,13 +199,14 @@ export class LayoutService {
     //this.macdChart.rMacdSectionRect.setAttribute('width',
     //  `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
     //this.macdChart.rMacdSectionRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdChart.rMacdAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
-    this.macdChart.rMacdAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdChart.rMacdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
+    this.macdChart.rMacdAxisRectLeft.attr('width', `${this.chart_attributes.sections[2].margins.right}`);
+    this.macdChart.rMacdAxisRectLeft.attr('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.rMacdAxisRectLeft.attr('fill', 'var(--plt-clr-2)');
     console.log(this.macdChart.rMacdAxisRectLeft);
-    this.macdChart.macdAxisRectRight.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
-    this.macdChart.macdAxisRectRight.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
-    this.macdChart.macdAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');
+
+    this.macdChart.rMacdAxisRectRight.attr('width', `${this.chart_attributes.sections[2].margins.right}`);
+    this.macdChart.rMacdAxisRectRight.attr('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.rMacdAxisRectRight.attr('fill', 'var(--plt-clr-2)');
     // #endregion MACD
 
     // #region RSI
@@ -269,11 +261,13 @@ export class LayoutService {
     /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
     this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
+    /*MACD*/
     this.macdChart.gMacdSection
       .attr('transform',     `translate(0,  ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
-    this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
-    this.macdChart.gMacdAxisRight.attr('transform',
-      `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
+    //this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
+    //this.macdChart.gMacdAxisRight.attr('transform',
+    //  `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
+    this.macdChart.gMacdAxisGroupRight.attr('transform', `${this.chart_attributes.sections[2].margins.left + this.chart_attributes.sections[2].width},0`);
 
     this.rsiSection.setAttribute('transform',
       `translate(0,
