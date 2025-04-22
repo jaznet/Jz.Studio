@@ -43,11 +43,6 @@ export class VolumeChartService {
     return this; // Enables method chaining
   }
 
-  //public yScale(scale: any): this {
-  //  this._yScale = scale;
-  //  return this; // Enables method chaining
-  //}
-
   public setTargetGroup(gTargetRef: any) {
     this.gVolume = select(gTargetRef)
       .attr("class", "candlestick")  ;

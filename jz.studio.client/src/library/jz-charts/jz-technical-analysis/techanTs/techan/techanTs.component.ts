@@ -88,9 +88,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gMacdAxisGroupLeft', { static: true }) gMacdAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('gMacdAxisLeft', { static: true }) gMacdAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('macdAxisRectLeft', { static: true }) macdAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rMacdAxisRectLeft', { static: true }) rMacdAxisRectLeft!: ElementRef<SVGRectElement>;
 
-  @ViewChild('macdAxisGroupRight', { static: true }) macdAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('gMacdAxisGroupRight', { static: true }) gMacdAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('gMacdAxisRight', { static: true }) gMacdAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('macdAxisRectRight', { static: true }) macdAxisRectRight!: ElementRef<SVGRectElement>;
 
@@ -251,10 +251,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
     this.macdChart.gMacdAxisGroupLeft = this.gMacdAxisGroupLeft.nativeElement;;
-    this.macdChart.macdAxisRectLeft = this.macdAxisRectLeft.nativeElement;
+    this.macdChart.rMacdAxisRectLeft = this.rMacdAxisRectLeft.nativeElement;
 
     this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    this.macdChart.gMacdAxisGroupRight = this.macdAxisGroupRight.nativeElement;
+    this.macdChart.gMacdAxisGroupRight = this.gMacdAxisGroupRight.nativeElement;
     this.macdChart.macdAxisRectRight = this.macdAxisRectRight.nativeElement;
 
     this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
