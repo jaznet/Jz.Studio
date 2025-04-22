@@ -205,9 +205,9 @@ export class LayoutService {
     this.chart_attributes.sections[2].width = this.macdChart.rMacdSectionRect.getBBox().width;
     this.chart_attributes.sections[2].height = this.macdChart.rMacdSectionRect.getBBox().height;
 
-    this.macdChart.rMacdSectionRect.setAttribute('width',
-      `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
-    this.macdChart.rMacdSectionRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
+    //this.macdChart.rMacdSectionRect.setAttribute('width',
+    //  `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
+    //this.macdChart.rMacdSectionRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
     this.macdChart.macdAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[2].margins.right}`);
     this.macdChart.macdAxisRectLeft.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
     this.macdChart.macdAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
@@ -269,9 +269,7 @@ export class LayoutService {
     this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
     this.macdChart.gMacdSection
-      .attr('transform',
-        `translate(${this.chart_attributes.sections[2].margins.left},
-                       ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
+      .attr('transform',     `translate(0,  ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
     this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
     this.macdChart.gMacdAxisRight.attr('transform',
       `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
