@@ -207,7 +207,10 @@ export class LayoutService {
      .attr('transform', `translate(0,  ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
     this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
     //  this.macdChart.gMacdAxisRight.attr('transform', `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
-    this.macdChart.gMacdAxisGroupRight.attr('transform', `${this.chart_attributes.sections[2].width},0`);
+    this.macdChart.gMacdAxisGroupRight.attr('transform', `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},0)`);
+    this.macdChart.rMacdContentRect.attr('width', `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
+    this.macdChart.rMacdContentRect.attr('height', `${this.chart_attributes.sections[2].height}`);
+    this.macdChart.gMacdContent.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
     // #endregion MACD
 
     // #region RSI

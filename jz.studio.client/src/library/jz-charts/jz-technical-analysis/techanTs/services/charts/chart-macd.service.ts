@@ -112,9 +112,6 @@ export class ChartMacdService {
       .domain([min, max]) // Domain based on MACD values
       .range([chart_attributes.sections[2].height, 0]); // Range based on the chart height
 
-    //this.gMacdAxisLeft = select(this.gMacdChart.gMacdAxisLeft);
-    //this.gMacdAxisRight = select(this.gMacdChart.gMacdAxisRight);
-
     this.axisLeft = axisLeft(this.macdYscale);
     this.axisRight = axisRight(this.macdYscale);
 
