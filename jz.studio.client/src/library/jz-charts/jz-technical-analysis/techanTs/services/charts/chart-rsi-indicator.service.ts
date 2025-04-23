@@ -101,8 +101,8 @@ export class ChartRsiIndic {
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
-    //this.rsiAxisLeft.call(this.chartYaxisLeft);
-    //this.rsiAxisRight.call(this.chartYaxisRight);
+    this.rsiAxisLeft.call(this.chartYaxisLeft);
+    this.rsiAxisRight.call(this.chartYaxisRight);
 
     return this;
   }

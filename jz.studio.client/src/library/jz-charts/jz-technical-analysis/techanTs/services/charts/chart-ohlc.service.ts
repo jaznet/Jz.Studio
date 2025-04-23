@@ -30,10 +30,6 @@ export class ChartOhlcService {
   ohlc_yAxisR_grp: any;
   ohlcAxisRectRight: any;
 
-  //yAxisRightA: any;
-  //chartYaxisLeft: any;
-  //chartYaxisRight: any;
-
   private _xScale: any;
   private _yScale: any;
   private _candleWidth: number = 0;
@@ -50,11 +46,6 @@ export class ChartOhlcService {
     this._xScale = scale;
     return this; // Allows method chaining
   }
-
-  //public yScale(scale: any) {
-  //  this._yScale = scale;
-  //  return this; // Allows method chaining
-  //}
 
   public setTargetGroup(gTargetRef: any) {
     this.gCandlestick = select(gTargetRef)

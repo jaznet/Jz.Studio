@@ -59,13 +59,13 @@ export class LayoutService {
   gVolumeAxisRight_grp!: SVGGElement;
   volumeAxisRectRight!: SVGRectElement;
 
-  gMacdAxisLeft!: SVGGElement;
-  gMacdAxisGroupLeft!: SVGGElement;
-  rMacdAxisRectLeft!: SVGRectElement;
+  //gMacdAxisLeft!: SVGGElement;
+  //gMacdAxisGroupLeft!: SVGGElement;
+  //rMacdAxisRectLeft!: SVGRectElement;
 
-  gMacdAxisRight!: SVGGElement;
-  gMacdAxisGroupRight!: SVGGElement;
-  rMacdAxisRectRight!: SVGRectElement;
+  //gMacdAxisRight!: SVGGElement;
+  //gMacdAxisGroupRight!: SVGGElement;
+  //rMacdAxisRectRight!: SVGRectElement;
 
   gMacdChart: any;
 

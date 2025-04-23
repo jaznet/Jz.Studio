@@ -229,11 +229,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.macdChart.rMacdContentRect = select(this.rMacdContentRect.nativeElement);
     this.macdChart.gMacdChart = select(this.gMacdChart.nativeElement);
 
-    //this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
-
-    this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
-    //this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
+    this.macdChart.gMacdAxisLeft = select(this.gMacdAxisLeft.nativeElement);
+    this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
     this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
+
     this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
     this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
     this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
@@ -258,8 +257,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    
-
     this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
     this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
     this.layout.yAxisLeftRectC = this.yAxisLeftRectCRef.nativeElement;
@@ -267,7 +264,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rsiAxisRight = this.rsiAxisRightRef.nativeElement;
     this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
-
 
     this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
 
@@ -289,6 +285,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawMacd();
    this.drawRsi();
   }
+
+  // #region DRAW
 
   drawCandlestick(): void {
     this.ohlcChart
@@ -343,7 +341,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawMacd():void {
     this.macdChart
       .xScale(this.scales.dateScaleX)
-      /*   .yScale(this.layout.chart_attributes)*/
       .setTargetGroup(this.macdChart.gMacdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .drawAxes(this.layout.chart_attributes)
@@ -358,7 +355,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setRollingPeriod(14) // Optional: Change the period
       .drawAxes()
       .draw();
-
   }
-
+  // #endregion DRAW
 }
