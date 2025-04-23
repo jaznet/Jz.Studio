@@ -14,10 +14,10 @@ import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 export class ChartMacdService {
   gMacdChart: any;
   gMacdSection!: any;
-  rMacdSectionRect!: SVGRectElement;
+  rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
   gMacdContent!: any;
-  rMacdContentRect!: SVGRectElement;
+  rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined> ;
 
   macdYscale: any;
 
@@ -48,11 +48,6 @@ export class ChartMacdService {
     this._xScale = scale;
     return this;
   }
-
-  //public yScale(scale: any): this {
-  //  this._yScale = scale;
-  //  return this;
-  //}
 
   public setTargetGroup(gTargetRef: any): this {
     this.gMacd = select(gTargetRef).attr('class', 'macd-chart');

@@ -224,10 +224,19 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     // #region MACD
     this.macdChart.gMacdSection = select(this.gMacdSection.nativeElement);
-    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
-    this.macdChart.gMacdContent = this.gMacdContent.nativeElement;
-    this.macdChart.rMacdContentRect = this.rMacdContentRect.nativeElement;
-    this.macdChart.gMacdChart = this.gMacdChart.nativeElement;
+    this.macdChart.rMacdSectionRect = select(this.rMacdSectionRect.nativeElement);
+    this.macdChart.gMacdContent = select(this.gMacdContent.nativeElement);
+    this.macdChart.rMacdContentRect = select(this.rMacdContentRect.nativeElement);
+    this.macdChart.gMacdChart = select(this.gMacdChart.nativeElement);
+
+    //this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
+
+    this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
+    //this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
+    this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
+    this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
+    //this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
+    this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
     this.layout.rsiSection = this.rsiSectionRef.nativeElement;
@@ -249,15 +258,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    this.macdChart.rMacdSectionRect = this.rMacdSectionRect.nativeElement;
-
-    this.macdChart.gMacdAxisLeft =select( this.gMacdAxisLeft.nativeElement);
-    this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
-    this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
-
-    this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
-    this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
+    
 
     this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
     this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
