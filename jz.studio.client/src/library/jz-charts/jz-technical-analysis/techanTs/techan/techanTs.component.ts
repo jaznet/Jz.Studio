@@ -343,8 +343,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawMacd():void {
     this.macdChart
       .xScale(this.scales.dateScaleX)
-   /*   .yScale(this.layout.chart_attributes)*/
-      .setTargetGroup(this.layout.gMacdChart)
+      /*   .yScale(this.layout.chart_attributes)*/
+      .setTargetGroup(this.macdChart.gMacdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .drawAxes(this.layout.chart_attributes)
       .draw();

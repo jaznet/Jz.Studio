@@ -50,7 +50,7 @@ export class ChartMacdService {
   }
 
   public setTargetGroup(gTargetRef: any): this {
-    this.gMacd = select(gTargetRef).attr('class', 'macd-chart');
+    this.gMacd=gTargetRef;
     return this;
   }
 
