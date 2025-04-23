@@ -235,7 +235,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     //this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
     this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
     this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    //this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
+    this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
     this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
