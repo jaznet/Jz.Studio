@@ -20,13 +20,21 @@ export class ChartRsiIndic {
   rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 
-  rsiAxisLeft: any;
+  gRsiAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   rsi_yAxisL_grp: any;
   rsiAxisRectLeft: any;
 
   rsiAxisRight: any;
   rsi_yAxisR_grp: any;
   rsiAxisRectRight: any;
+
+
+  yAxisLeftGroupC!: SVGGElement;
+  yAxisLeftRectC!: SVGRectElement;
+
+
+  rsiAxisGroupRight!: SVGGElement;
+  yAxisRightRectC!: SVGRectElement;
 
   chartYaxisLeft: any;
   chartYaxisRight: any;
@@ -101,12 +109,12 @@ export class ChartRsiIndic {
   public drawAxes(chart_attributes: chart_attributes) {
     this.rsiYscale = scaleLinear().domain([0, 100]).range([chart_attributes.sections[3].height, 0]);
 
-    this.rsiAxisLeft = chart_attributes.sections[3].margins.left;
-    this.rsiAxisRight = chart_attributes.sections[3].margins.right;
+    //this.gRsiAxisLeft = chart_attributes.sections[3].margins.left;
+    //this.rsiAxisRight = chart_attributes.sections[3].margins.right;
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
-    this.rsiAxisLeft.call(this.chartYaxisLeft);
+    this.gRsiAxisLeft.call(this.chartYaxisLeft);
     this.rsiAxisRight.call(this.chartYaxisRight);
 
     return this;

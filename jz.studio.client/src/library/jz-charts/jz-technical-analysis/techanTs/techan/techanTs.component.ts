@@ -102,13 +102,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
 
 
-  @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
-  @ViewChild('rsiAxisLeft', { static: true }) rsiAxisLeftRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectCRef!: ElementRef<SVGRectElement>;
+  @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupC!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectC!: ElementRef<SVGRectElement>;
 
-  @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRightRef!: ElementRef<SVGGElement>;
-  @ViewChild('rsiAxisRight', { static: true }) rsiAxisRightRef!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectCRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('rsiAxisRight', { static: true }) rsiAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectC!: ElementRef<SVGRectElement>;
 
   // #endregion Axes
 
@@ -138,7 +138,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
     private macdChart: ChartMacdService,
-    private rsiIndicator: ChartRsiIndic
+    private rsi: ChartRsiIndic
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', 'black');
     document.documentElement.style.setProperty('--plt-chart-2', '#212922');
@@ -239,13 +239,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
-    this.rsiIndicator.gRsiSection = select( this.gRsiSection.nativeElement);
-    this.rsiIndicator.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
-    this.rsiIndicator.rsiSectionContent = select( this.rsiSectionContent.nativeElement);
-    this.rsiIndicator.rsiSectionContentRect = select( this.rsiSectionContentRect.nativeElement);
-    this.rsiIndicator.rsiGroup = this.rsiGroupRef.nativeElement;
-   
-    this.layout.sma1 = this.sma1Ref.nativeElement;
+    this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
+    this.rsi.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
+    this.rsi.rsiSectionContent = select( this.rsiSectionContent.nativeElement);
+    this.rsi.rsiSectionContentRect = select( this.rsiSectionContentRect.nativeElement);
+    this.rsi.rsiGroup = this.rsiGroupRef.nativeElement;
+
+   this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
 
@@ -257,13 +257,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    this.layout.rsiAxisLeft = this.rsiAxisLeftRef.nativeElement;
-    this.layout.yAxisLeftGroupC = this.yAxisLeftGroupCRef.nativeElement;;
-    this.layout.yAxisLeftRectC = this.yAxisLeftRectCRef.nativeElement;
+    this.rsi.gRsiAxisLeft = select(this.gRsiAxisLeft.nativeElement);
+    this.rsi.yAxisLeftGroupC = this.yAxisLeftGroupC.nativeElement;;
+    this.rsi.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
 
-    this.layout.rsiAxisRight = this.rsiAxisRightRef.nativeElement;
-    this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
-    this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
+    this.rsi.rsiAxisRight = this.rsiAxisRight.nativeElement;
+    this.rsi.rsiAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
+    this.rsi.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
 
   //  this.rsiIndicator.rRsiSectionRect = this.rRsiSectionRect.nativeElement;
 
@@ -348,10 +348,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawRsi(): void {
-    this.rsiIndicator
+    this.rsi
       .xScale(this.scales.dateScaleX)
      /* .yScale(this.scales.rsiYscale)*/
-      .setTargetGroup(this.rsiIndicator.rsiGroup) // Define a <g> for RSI
+      .setTargetGroup(this.rsi.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .drawAxes(this.layout.chart_attributes)
       .draw();

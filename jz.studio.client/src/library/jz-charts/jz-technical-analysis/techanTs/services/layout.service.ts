@@ -63,13 +63,13 @@ export class LayoutService {
 
   //gMacdChart: any;
 
-  rsiAxisLeft!: SVGGElement;
-  yAxisLeftGroupC!: SVGGElement;
-  yAxisLeftRectC!: SVGRectElement;
+  //gRsiAxisLeft!: SVGGElement;
+  //yAxisLeftGroupC!: SVGGElement;
+  //yAxisLeftRectC!: SVGRectElement;
 
-  rsiAxisRight!: SVGGElement;
-  rsiAxisGroupRight!: SVGGElement;
-  yAxisRightRectC!: SVGRectElement;
+  //rsiAxisRight!: SVGGElement;
+  //rsiAxisGroupRight!: SVGGElement;
+  //yAxisRightRectC!: SVGRectElement;
 
   // #endregion Axes
 
@@ -215,24 +215,24 @@ export class LayoutService {
     this.rsiChart.rsiSectionContentRect.attr('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
 
     /* LEFT  B*/
-    this.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
-    this.yAxisLeftRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
-    this.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiChart.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
+    this.rsiChart.yAxisLeftRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
+    this.rsiChart.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT B */
-    this.yAxisRightRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
-    this.yAxisRightRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
-    this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiChart.yAxisRightRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
+    this.rsiChart.yAxisRightRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
+    this.rsiChart.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  C*/
-    this.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
-    this.yAxisLeftRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
-    this.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiChart.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
+    this.rsiChart.yAxisLeftRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
+    this.rsiChart.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT C */
-    this.yAxisRightRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
-    this.yAxisRightRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
-    this.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiChart.yAxisRightRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
+    this.rsiChart.yAxisRightRectC.setAttribute('height', `${this.chart_attributes.sections[3].height}`);
+    this.rsiChart.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
     // #endregion RSI
   }
 
@@ -260,7 +260,7 @@ export class LayoutService {
 
     this.rsiChart.gRsiSection.attr('transform', `translate(0,${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
     this.rsiChart.rsiSectionContent.attr('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
-    this.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
-    this.rsiAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
+    this.rsiChart.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
+    this.rsiChart.gRsiAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
   }
 }
