@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
 import { line } from 'd3-shape';
-import { select } from 'd3-selection';
+import { Selection, select } from 'd3-selection';
 import { ChartDataService } from '../chart-data.service';
-import { LayoutService } from '../layout.service';
 import { ScalesService } from '../scales.service';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
+import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChartRsiIndic {
+ 
+  gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
+  rsiSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
+  rsiSectionContentRectElement: any;
+  rsiSectionContentRect!: Selection<SVGRectElement, unknown, null, undefined>
+  rsiGroup: any;
+  rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 
   rsiAxisLeft: any;
@@ -31,8 +38,7 @@ export class ChartRsiIndic {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
-    private layout: LayoutService
+    private data: ChartDataService
   ) { }
 
   public xScale(scale: any): this {
@@ -92,12 +98,11 @@ export class ChartRsiIndic {
     return rsiValues;
   }
 
-  public drawAxes() {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([this.layout.chart_attributes.sections[3].height, 0]);
+  public drawAxes(chart_attributes: chart_attributes) {
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chart_attributes.sections[3].height, 0]);
 
-    this.rsiAxisLeft = select(this.layout.rsiAxisLeft);
-    this.rsiAxisRight = select(this.layout.rsiAxisRight);
-
+    this.rsiAxisLeft = chart_attributes.sections[3].margins.left;
+    this.rsiAxisRight = chart_attributes.sections[3].margins.right;
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 

@@ -96,10 +96,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 
-  @ViewChild('rsiSection', { static: true }) rsiSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rsiSectionContent', { static: true }) rsiSectionContentRef!: ElementRef<SVGGElement>;
-  @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('rsiSectionRect', { static: true }) sectionRectCRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
+  @ViewChild('rsiSectionContent', { static: true }) rsiSectionContent!: ElementRef<SVGGElement>;
+  @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRect!: ElementRef<SVGRectElement>;
+  @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
+
 
   @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupCRef!: ElementRef<SVGGElement>;
   @ViewChild('rsiAxisLeft', { static: true }) rsiAxisLeftRef!: ElementRef<SVGGElement>;
@@ -180,7 +181,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.data.scrubData();
     this.scales.createScales(this.layout.chart_attributes);
     //this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
-    //this.scales.createRsiYScale(this.layout.rsiSectionRect.height.baseVal.value);
+    //this.scales.createRsiYScale(this.layout.gRsiSectionRect.height.baseVal.value);
     //this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
@@ -238,12 +239,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
-    this.layout.rsiSection = this.rsiSectionRef.nativeElement;
-    this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
-    this.layout.rsiSectionContent = this.rsiSectionContentRef.nativeElement;
-    this.layout.rsiSectionContentRect = this.rsiSectionContentRectRef.nativeElement;
-
-    this.layout.rsiGroup = this.rsiGroupRef.nativeElement;
+    this.rsiIndicator.gRsiSection = select( this.gRsiSection.nativeElement);
+    this.rsiIndicator.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
+    this.rsiIndicator.rsiSectionContent = select( this.rsiSectionContent.nativeElement);
+    this.rsiIndicator.rsiSectionContentRect = select( this.rsiSectionContentRect.nativeElement);
+    this.rsiIndicator.rsiGroup = this.rsiGroupRef.nativeElement;
    
     this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
@@ -265,7 +265,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rsiAxisGroupRight = this.rsiAxisGroupRightRef.nativeElement;
     this.layout.yAxisRightRectC = this.yAxisRightRectCRef.nativeElement;
 
-    this.layout.rsiSectionRect = this.sectionRectCRef.nativeElement;
+  //  this.rsiIndicator.rRsiSectionRect = this.rRsiSectionRect.nativeElement;
 
     //this.ohlcChart.gOhlcAxisLeft = this.gOhlcAxisLeft.nativeElement;
     //this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
@@ -351,9 +351,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsiIndicator
       .xScale(this.scales.dateScaleX)
      /* .yScale(this.scales.rsiYscale)*/
-      .setTargetGroup(this.layout.rsiGroup) // Define a <g> for RSI
+      .setTargetGroup(this.rsiIndicator.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
-      .drawAxes()
+      .drawAxes(this.layout.chart_attributes)
       .draw();
   }
   // #endregion DRAW

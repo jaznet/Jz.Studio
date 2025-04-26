@@ -3,6 +3,7 @@ import { chart_attributes, SectionAttributes, SvgAttributes } from '../interface
 import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { VolumeChartService } from './charts/chart-volume.service';
 import { ChartMacdService } from './charts/chart-macd.service';
+import { ChartRsiIndic } from './charts/chart-rsi-indicator.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,14 +32,7 @@ export class LayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
-  rsiSection!: SVGGElement;
-  rsiSectionContent!: SVGGElement;
-  rsiSectionContentRect!: SVGRectElement;
-
-  rsiGroup: any;
-
-
-  rsiSectionRect!: SVGRectElement;
+ 
 
   // #region Axes
   xAxisMonthsTop!: SVGGElement;
@@ -67,7 +61,7 @@ export class LayoutService {
   //gMacdAxisGroupRight!: SVGGElement;
   //rMacdAxisRectRight!: SVGRectElement;
 
-  gMacdChart: any;
+  //gMacdChart: any;
 
   rsiAxisLeft!: SVGGElement;
   yAxisLeftGroupC!: SVGGElement;
@@ -85,7 +79,8 @@ export class LayoutService {
   constructor(
     private ohlcChart: ChartOhlcService,
     private volumeChart: VolumeChartService,
-    private macdChart: ChartMacdService
+    private macdChart: ChartMacdService,
+    private rsiChart: ChartRsiIndic
   ) { }
 
   createScaffolding() {
@@ -192,7 +187,7 @@ export class LayoutService {
     this.macdChart.rMacdSectionRect.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
     this.macdChart.rMacdSectionRect.attr('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[2].pct) - this.adjSpacer}`);
     this.chart_attributes.sections[2].width = this.macdChart.rMacdSectionRect.node()?.width.baseVal.value ?? 0;
-    this.chart_attributes.sections[2].height = this.macdChart.rMacdSectionRect.node()?.height.baseVal.value ?? 0;;
+    this.chart_attributes.sections[2].height = this.macdChart.rMacdSectionRect.node()?.height.baseVal.value ?? 0;
 
     //this.macdChart.rMacdSectionRect.setAttribute('width',
     //  `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
@@ -202,9 +197,7 @@ export class LayoutService {
 
     this.macdChart.rMacdAxisRectRight.attr('width', `${this.chart_attributes.sections[2].margins.right}`);
     this.macdChart.rMacdAxisRectRight.attr('height', `${this.chart_attributes.sections[2].height}`);
-    /*MACD*/
-    this.macdChart.gMacdSection
-     .attr('transform', `translate(0,  ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
+    this.macdChart.gMacdSection.attr('transform', `translate(0,  ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + (this.spacer * 3))})`);
     this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[2].margins.left},0)`);
     //  this.macdChart.gMacdAxisRight.attr('transform', `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},${this.chart_attributes.sections[2].margins.top})`);
     this.macdChart.gMacdAxisGroupRight.attr('transform', `translate(${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.right},0)`);
@@ -214,12 +207,12 @@ export class LayoutService {
     // #endregion MACD
 
     // #region RSI
-    this.rsiSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.rsiSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[3].pct) - this.adjSpacer}`);
-    this.chart_attributes.sections[3].width = this.rsiSectionRect.getBBox().width;
-    this.chart_attributes.sections[3].height = this.rsiSectionRect.getBBox().height;
-    this.rsiSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
-    this.rsiSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
+    this.rsiChart.rRsiSectionRect.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
+    this.rsiChart.rRsiSectionRect.attr('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[3].pct) - this.adjSpacer}`);
+    this.chart_attributes.sections[3].width = this.rsiChart.rRsiSectionRect.node()?.width.baseVal.value ?? 0;
+    this.chart_attributes.sections[3].height = this.rsiChart.rRsiSectionRect.node()?.height.baseVal.value ?? 0;
+    this.rsiChart.rsiSectionContentRect.attr('width', `${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.left - this.chart_attributes.sections[3].margins.right}`);
+    this.rsiChart.rsiSectionContentRect.attr('height', `${this.chart_attributes.sections[3].height-this.spacer}`);
 
     /* LEFT  B*/
     this.yAxisLeftRectC.setAttribute('width', `${this.chart_attributes.sections[3].margins.right}`);
@@ -265,12 +258,8 @@ export class LayoutService {
     /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
     this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
-
-
-    this.rsiSection.setAttribute('transform',
-      `translate(0,
-        ${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
-    this.rsiSectionContent.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
+    this.rsiChart.gRsiSection.attr('transform', `translate(0,${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
+    this.rsiChart.rsiSectionContent.attr('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
     this.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
     this.rsiAxisLeft.setAttribute('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
   }
