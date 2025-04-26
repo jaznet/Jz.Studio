@@ -67,7 +67,7 @@ export class LayoutService {
   //yAxisLeftGroupC!: SVGGElement;
   //yAxisLeftRectC!: SVGRectElement;
 
-  //rsiAxisRight!: SVGGElement;
+  //gRsiAxisRight!: SVGGElement;
   //rsiAxisGroupRight!: SVGGElement;
   //yAxisRightRectC!: SVGRectElement;
 

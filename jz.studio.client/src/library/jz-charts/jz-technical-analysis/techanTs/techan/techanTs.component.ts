@@ -107,7 +107,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectC!: ElementRef<SVGRectElement>;
 
   @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('rsiAxisRight', { static: true }) rsiAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisRight', { static: true }) gRsiAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectC!: ElementRef<SVGRectElement>;
 
   // #endregion Axes
@@ -261,7 +261,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsi.yAxisLeftGroupC = this.yAxisLeftGroupC.nativeElement;;
     this.rsi.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
 
-    this.rsi.rsiAxisRight = this.rsiAxisRight.nativeElement;
+    this.rsi.gRsiAxisRight = select(this.gRsiAxisRight.nativeElement);
     this.rsi.rsiAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
     this.rsi.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
 

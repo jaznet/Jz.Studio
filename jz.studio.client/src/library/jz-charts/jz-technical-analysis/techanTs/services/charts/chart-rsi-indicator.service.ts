@@ -24,7 +24,7 @@ export class ChartRsiIndic {
   rsi_yAxisL_grp: any;
   rsiAxisRectLeft: any;
 
-  rsiAxisRight: any;
+  gRsiAxisRight: any;
   rsi_yAxisR_grp: any;
   rsiAxisRectRight: any;
 
@@ -110,12 +110,12 @@ export class ChartRsiIndic {
     this.rsiYscale = scaleLinear().domain([0, 100]).range([chart_attributes.sections[3].height, 0]);
 
     //this.gRsiAxisLeft = chart_attributes.sections[3].margins.left;
-    //this.rsiAxisRight = chart_attributes.sections[3].margins.right;
+    //this.gRsiAxisRight = chart_attributes.sections[3].margins.right;
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
     this.gRsiAxisLeft.call(this.chartYaxisLeft);
-    this.rsiAxisRight.call(this.chartYaxisRight);
+    this.gRsiAxisRight.call(this.chartYaxisRight);
 
     return this;
   }
