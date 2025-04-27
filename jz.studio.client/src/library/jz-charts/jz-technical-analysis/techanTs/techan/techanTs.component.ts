@@ -138,7 +138,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private macdChart: ChartMacdService,
     private rsi: ChartRsiIndic
   ) {
-    document.documentElement.style.setProperty('--plt-chart-1', 'black');
+    document.documentElement.style.setProperty('--plt-chart-1', '111111');
     document.documentElement.style.setProperty('--plt-chart-2', '#212922');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
