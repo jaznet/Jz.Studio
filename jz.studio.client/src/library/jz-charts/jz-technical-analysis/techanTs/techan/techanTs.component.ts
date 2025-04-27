@@ -98,7 +98,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
   @ViewChild('rsiSectionContent', { static: true }) rsiSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('rsiSectionContentRect', { static: true }) rsiSectionContentRect!: ElementRef<SVGRectElement>;
+  @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
 
 
@@ -237,7 +237,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
     this.rsi.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
     this.rsi.rsiSectionContent = select( this.rsiSectionContent.nativeElement);
-    this.rsi.rsiSectionContentRect = select( this.rsiSectionContentRect.nativeElement);
+    this.rsi.rRsiSectionContent = select( this.rRsiSectionContent.nativeElement);
     this.rsi.rsiGroup = this.rsiGroupRef.nativeElement;
 
    this.layout.sma1 = this.sma1Ref.nativeElement;
