@@ -2,8 +2,6 @@
 import { Injectable } from '@angular/core';
 import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
-import { AxisScale, AxisDomain } from 'd3-axis';
-import {  ScaleLinear } from 'd3-scale';
 import { chart_attributes } from '../interfaces/techan-interfaces';
 
 @Injectable({
@@ -12,10 +10,6 @@ import { chart_attributes } from '../interfaces/techan-interfaces';
 export class ScalesService {
 
   dateScaleX!: any;
-  //ohlcYscale!: any;
-  //volumeYscale: any;
-  //macdYscale: any;
-  //rsiYscale: any;
 
   constructor(
     private data: ChartDataService) {
@@ -33,19 +27,5 @@ export class ScalesService {
         .domain([])
         .range([0, chart_attributes.sections[0].width]);
     }
-
-
-
-
-
-    /*   this.macdYscale = */
-
-  //  console.log(this.layout.volumeSection.getBBox().height);
   }
-
-
-
-  //createRsiYScale(chartHeight: number) {
-  //  this.rsiYscale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
-  //}
 }

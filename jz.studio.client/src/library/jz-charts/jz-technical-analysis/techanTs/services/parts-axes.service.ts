@@ -4,8 +4,6 @@ import { ScalesService } from './scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { LayoutService } from './layout.service';
-//import { AxisDomain } from 'd3-axis';
-//import { Selection } from 'd3-selection';
 
 @Injectable({
   providedIn: 'root'
