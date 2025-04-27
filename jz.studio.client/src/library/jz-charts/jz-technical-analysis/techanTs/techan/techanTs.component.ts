@@ -124,8 +124,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
-  gCandlestick: any;
-
   constructor(
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
@@ -180,9 +178,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.createScaffolding();
     this.data.scrubData();
     this.scales.createScales(this.layout.chart_attributes);
-    //this.scales.createMacdYScale(this.data.macdData, this.layout.macdSectionRect.height.baseVal.value);
-    //this.scales.createRsiYScale(this.layout.gRsiSectionRect.height.baseVal.value);
-    //this.scales.rsiYscale
     this.axes.drawAxes();
     this.constructChart();
   }
@@ -264,16 +259,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsi.gRsiAxisRight = select(this.gRsiAxisRight.nativeElement);
     this.rsi.rsiAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
     this.rsi.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
-
-  //  this.rsiIndicator.rRsiSectionRect = this.rRsiSectionRect.nativeElement;
-
-    //this.ohlcChart.gOhlcAxisLeft = this.gOhlcAxisLeft.nativeElement;
-    //this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
-    //this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
-
-    //this.ohlcChart.gOhlcAxisRight = this.gOhlcAxisRight.nativeElement;
-    //this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    //this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
   }
 
   constructChart(): void {
