@@ -129,7 +129,6 @@ export class ChartRsiIndic {
       .x((d) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2) // Fix x mapping
       .y((d) => isNaN(this.rsiYscale(d.rsi)) ? this.rsiYscale(50) : this.rsiYscale(d.rsi)); // Fix y mapping
 
-
     // Append or update the RSI path
     const rsiPath = this.gRsi.selectAll('.rsi-line').data([rsiData]);
 
