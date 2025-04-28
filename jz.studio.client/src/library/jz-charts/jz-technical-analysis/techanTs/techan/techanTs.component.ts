@@ -28,9 +28,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
   // #region @ViewChild List
-  @ViewChild('svgContainer', { static: true }) svgContainerRef!: ElementRef;
-  @ViewChild('svgElement', { static: true }) svgElement!: ElementRef;
-  @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('divSvgContainer', { static: true }) divSvgContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('svgElement', { static: true }) svgElement!: ElementRef<SVGElement>;
+  @ViewChild('rSvgElement', { static: true }) rSvgElementRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
@@ -182,9 +182,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   createChartFramework() {
-    this.layout.svgContainer = this.svgContainerRef.nativeElement;
+    this.layout.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layout.svgElement = select( this.svgElement.nativeElement);
-    this.layout.svgElementRect = this.svgElementRectRef.nativeElement;
+    this.layout.rSvgElement =select(this.rSvgElementRef.nativeElement);
 
     this.layout.sectionsContainer = this.sectionsRef.nativeElement;
     this.layout.sectionsContainerRect = this.sectionsRectRef.nativeElement;

@@ -12,9 +12,9 @@ import { Selection } from 'd3-selection';
 export class LayoutService {
 
   // #region PROPERTIES
-  svgContainer: any;
+  divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
   svgElement!: Selection<SVGElement, unknown, null, undefined>;
-  svgElementRect!: SVGRectElement;
+  rSvgElement!: Selection<SVGRectElement, unknown, null, undefined>;
 
   ohlc!: SectionAttributes;
   volume!: SectionAttributes;
@@ -45,13 +45,13 @@ export class LayoutService {
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
-  gVolumeAxisLeft!: SVGGElement;
-  gVolumeAxisLeft_grp!: SVGGElement;
-  volumeAxisRectLeft!: SVGRectElement;
+  //gVolumeAxisLeft!: SVGGElement;
+  //gVolumeAxisLeft_grp!: SVGGElement;
+  //volumeAxisRectLeft!: SVGRectElement;
 
-  gVolumeAxisRight!: SVGGElement;
-  gVolumeAxisRight_grp!: SVGGElement;
-  volumeAxisRectRight!: SVGRectElement;
+  //gVolumeAxisRight!: SVGGElement;
+  //gVolumeAxisRight_grp!: SVGGElement;
+  //volumeAxisRectRight!: SVGRectElement;
   // #endregion Axes
 
   rectVolume!: SVGRectElement;
@@ -104,14 +104,14 @@ export class LayoutService {
   sizeSections(): void {
     this.spacer = 8;
 
-    this.scaffold.width = this.svgContainer.clientWidth;
-    this.scaffold.height = this.svgContainer.clientHeight ;
+    this.scaffold.width = this.divSvgContainer.node()!.clientWidth;
+    this.scaffold.height = this.divSvgContainer.node()!.clientHeight ;
 
     // #region MAIN
     this.svgElement.attr('width', `${this.scaffold.width}`);
     this.svgElement.attr('height', `${this.scaffold.height}`);
-    this.svgElementRect.setAttribute('width', `${this.scaffold.width}`);
-    this.svgElementRect.setAttribute('height', `${this.scaffold.height}`);
+    this.rSvgElement.attr('width', `${this.scaffold.width}`);
+    this.rSvgElement.attr('height', `${this.scaffold.height}`);
 
     // X-AXIS TOP
     this.xAxisTopRect.setAttribute('width', `${this.scaffold.width}`);
