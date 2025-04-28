@@ -97,7 +97,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 
   @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
-  @ViewChild('rsiSectionContent', { static: true }) rsiSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
 
@@ -236,7 +235,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
     this.rsi.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
-    this.rsi.rsiSectionContent = select( this.rsiSectionContent.nativeElement);
+    this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
     this.rsi.rRsiSectionContent = select( this.rRsiSectionContent.nativeElement);
     this.rsi.rsiGroup = this.rsiGroupRef.nativeElement;
 

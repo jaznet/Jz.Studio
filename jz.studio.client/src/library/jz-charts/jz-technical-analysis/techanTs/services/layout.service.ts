@@ -32,8 +32,6 @@ export class LayoutService {
   sma2!: SVGElement;
   sma3!: SVGElement;
 
- 
-
   // #region Axes
   xAxisMonthsTop!: SVGGElement;
   xAxisMonthsBottom!: SVGGElement;
@@ -53,23 +51,6 @@ export class LayoutService {
   gVolumeAxisRight_grp!: SVGGElement;
   volumeAxisRectRight!: SVGRectElement;
 
-  //gMacdAxisLeft!: SVGGElement;
-  //gMacdAxisGroupLeft!: SVGGElement;
-  //rMacdAxisRectLeft!: SVGRectElement;
-
-  //gMacdAxisRight!: SVGGElement;
-  //gMacdAxisGroupRight!: SVGGElement;
-  //rMacdAxisRectRight!: SVGRectElement;
-
-  //gMacdChart: any;
-
-  //gRsiAxisLeft!: SVGGElement;
-  //yAxisLeftGroupC!: SVGGElement;
-  //yAxisLeftRectC!: SVGRectElement;
-
-  //gRsiAxisRight!: SVGGElement;
-  //rsiAxisGroupRight!: SVGGElement;
-  //yAxisRightRectC!: SVGRectElement;
 
   // #endregion Axes
 
@@ -189,9 +170,6 @@ export class LayoutService {
     this.chart_attributes.sections[2].width = this.macdChart.rMacdSectionRect.node()?.width.baseVal.value ?? 0;
     this.chart_attributes.sections[2].height = this.macdChart.rMacdSectionRect.node()?.height.baseVal.value ?? 0;
 
-    //this.macdChart.rMacdSectionRect.setAttribute('width',
-    //  `${this.chart_attributes.sections[2].width - this.chart_attributes.sections[2].margins.left - this.chart_attributes.sections[2].margins.right}`);
-    //this.macdChart.rMacdSectionRect.setAttribute('height', `${this.chart_attributes.sections[2].height}`);
     this.macdChart.rMacdAxisRectLeft.attr('width', `${this.chart_attributes.sections[2].margins.right}`);
     this.macdChart.rMacdAxisRectLeft.attr('height', `${this.chart_attributes.sections[2].height}`);
 
@@ -258,8 +236,9 @@ export class LayoutService {
     /*  .setAttribute('transform', `translate(${this.chart_attributes.sections[1].margins.left},0)`);*/
     this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.chart_attributes.sections[1].width - this.chart_attributes.sections[1].margins.right})`);
 
-    this.rsiChart.gRsiSection.attr('transform', `translate(0,${ (this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer*4)})`);
-    this.rsiChart.rsiSectionContent.attr('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
+    this.rsiChart.gRsiSection.attr('transform', `translate(
+      0,
+      ${(this.chart_attributes.sections[0].height + this.chart_attributes.sections[1].height + this.chart_attributes.sections[2].height) + (this.spacer * 4)})`);
     this.rsiChart.rsiAxisGroupRight.setAttribute('transform', `translate(${this.chart_attributes.sections[3].width - this.chart_attributes.sections[3].margins.right},${this.chart_attributes.sections[3].margins.top})`);
     this.rsiChart.gRsiAxisLeft.attr('transform', `translate(${this.chart_attributes.sections[3].margins.left},0)`);
   }

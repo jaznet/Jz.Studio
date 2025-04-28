@@ -62,7 +62,7 @@ namespace Jz.Studio.Server {
 
             app.MapFallbackToFile("/index.html");
 
-            app.Run();
+             app.Run();
         }
     }
 }

@@ -13,7 +13,6 @@ import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
 export class ChartRsiIndic {
  
   gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rsiSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
   rRsiSectionContentElement: any;
   rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
   rsiGroup: any;
