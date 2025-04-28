@@ -141,8 +141,8 @@ export class LayoutService {
     this.ohlcChart.ohlcSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
     this.ohlcChart.ohlcSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.chart_attributes.sections[0].pct) - this.adjSpacer}`);
     console.log(this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right);
-    this.ohlcChart.ohlcSectionContentRect.setAttribute('width', `${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right}`);
-    this.ohlcChart.ohlcSectionContentRect.setAttribute('height', `${this.chart_attributes.sections[0].height}`);
+    this.ohlcChart.rOhlcSectionContent.attr('width', `${this.chart_attributes.sections[0].width - this.chart_attributes.sections[0].margins.left - this.chart_attributes.sections[0].margins.right}`);
+    this.ohlcChart.rOhlcSectionContent.attr('height', `${this.chart_attributes.sections[0].height}`);
     this.chart_attributes.sections[0].width = this.ohlcChart.ohlcSectionRect.getBBox().width;
     this.chart_attributes.sections[0].height = this.ohlcChart.ohlcSectionRect.getBBox().height;
     this.ohlcChart.ohlcAxisRectLeft.setAttribute('width', `${this.chart_attributes.sections[0].margins.right}`);

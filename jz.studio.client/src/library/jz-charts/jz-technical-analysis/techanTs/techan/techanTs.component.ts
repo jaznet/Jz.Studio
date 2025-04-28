@@ -52,7 +52,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('ohlcSection', { static: true }) ohlcSection!: ElementRef<SVGGElement>;
   @ViewChild('ohlcSectionRect', { static: true }) ohlcSectionRect!: ElementRef<SVGRectElement>;
   @ViewChild('ohlcSectionContent', { static: true }) ohlcSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('ohlcSectionContentRect', { static: true }) ohlcSectionContentRect!: ElementRef<SVGRectElement>;
+  @ViewChild('rOhlcSectionContent', { static: true }) rOhlcSectionContent!: ElementRef<SVGRectElement>;
 
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
@@ -201,7 +201,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlcSection = this.ohlcSection.nativeElement;
     this.ohlcChart.ohlcSectionRect = this.ohlcSectionRect.nativeElement;
     this.ohlcChart.ohlcSectionContent = this.ohlcSectionContent.nativeElement;
-    this.ohlcChart.ohlcSectionContentRect = this.ohlcSectionContentRect.nativeElement;
+    this.ohlcChart.rOhlcSectionContent = select( this.rOhlcSectionContent.nativeElement);
     // #endregion OHLC
     // #region VOLUME
     this.volumeChart.volumeSection = this.volumeSection.nativeElement;
