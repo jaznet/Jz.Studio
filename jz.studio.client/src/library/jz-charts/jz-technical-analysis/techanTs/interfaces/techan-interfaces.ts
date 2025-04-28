@@ -21,6 +21,7 @@ export interface scaffold {
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
+  sectionsContainer: any;
   sections: SectionAttributes[];
 }
 

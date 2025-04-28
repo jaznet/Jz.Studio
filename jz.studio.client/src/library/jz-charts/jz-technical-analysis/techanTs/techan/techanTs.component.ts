@@ -199,7 +199,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
 
     this.ohlcChart.ohlcSection = this.ohlcSection.nativeElement;
-    this.ohlcChart.rOhlcSection = this.rOhlcSection.nativeElement;
+    this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);
     this.ohlcChart.ohlcSectionContent = this.ohlcSectionContent.nativeElement;
     this.ohlcChart.rOhlcSectionContent = select( this.rOhlcSectionContent.nativeElement);
     // #endregion OHLC
