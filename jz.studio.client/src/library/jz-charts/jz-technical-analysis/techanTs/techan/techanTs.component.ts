@@ -29,7 +29,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   // #region @ViewChild List
   @ViewChild('svgContainer', { static: true }) svgContainerRef!: ElementRef;
-  @ViewChild('svgElement', { static: true }) svgElementRef!: ElementRef;
+  @ViewChild('svgElement', { static: true }) svgElement!: ElementRef;
   @ViewChild('svgElementRect', { static: true }) svgElementRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
@@ -176,14 +176,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.createChartFramework();
     this.layout.createScaffolding();
     this.data.scrubData();
-    this.scales.createScales(this.layout.chart_attributes);
+    this.scales.createScales(this.layout.scaffold);
     this.axes.drawAxes();
     this.constructChart();
   }
 
   createChartFramework() {
     this.layout.svgContainer = this.svgContainerRef.nativeElement;
-    this.layout.svgElement = this.svgElementRef;
+    this.layout.svgElement = select( this.svgElement.nativeElement);
     this.layout.svgElementRect = this.svgElementRectRef.nativeElement;
 
     this.layout.sectionsContainer = this.sectionsRef.nativeElement;
@@ -278,7 +278,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 /*      .yScale(this.ohlcChart.ohlcYscale)*/
       .setTargetGroup(this.ohlcRef.nativeElement)
       .setCandleWidth()
-      .drawAxes(this.layout.chart_attributes)
+      .drawAxes(this.layout.scaffold)
       .draw();
   }  
 
@@ -288,14 +288,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   /*    .yScale(this.volumeChart.volumeYscale)*/
       .setTargetGroup(this.volumeContent.nativeElement)
       .setBarWidth()
-      .drawAxes(this.layout.chart_attributes)
+      .drawAxes(this.layout.scaffold)
       .draw();
   }
 
   drawSma1(period:number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-      /*.yScale(this.layout.chart_attributes)*/
+      /*.yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma1) // Specify target group
       .setRollingPeriod(period)
       .setColor('#4E59D0')
@@ -305,7 +305,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma2(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-   /*   .yScale(this.layout.chart_attributes)*/
+   /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#F1FEC6')
@@ -315,7 +315,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawSma3(period: number): void {
     this.smaChart
       .xScale(this.scales.dateScaleX)
-   /*   .yScale(this.layout.chart_attributes)*/
+   /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')
@@ -327,7 +327,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .xScale(this.scales.dateScaleX)
       .setTargetGroup(this.macdChart.gMacdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
-      .drawAxes(this.layout.chart_attributes)
+      .drawAxes(this.layout.scaffold)
       .draw();
   }
 
@@ -337,7 +337,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
      /* .yScale(this.scales.rsiYscale)*/
       .setTargetGroup(this.rsi.rsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
-      .drawAxes(this.layout.chart_attributes)
+      .drawAxes(this.layout.scaffold)
       .draw();
   }
   // #endregion DRAW

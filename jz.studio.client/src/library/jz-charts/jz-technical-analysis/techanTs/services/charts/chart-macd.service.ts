@@ -6,7 +6,7 @@ import { ScalesService } from '../scales.service';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
 import { axisLeft, axisRight } from 'd3-axis';
-import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
+import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -99,7 +99,7 @@ export class ChartMacdService {
     }));
   }
 
-  public drawAxes(chart_attributes: chart_attributes) {
+  public drawAxes(scaffold: scaffold) {
     // Calculate the min and max values from MACD data
     const allValues = this.data.macdData.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
         return [d.macd, d.signal, d.histogram];
@@ -110,7 +110,7 @@ export class ChartMacdService {
     // Create the y-scale
     this.macdYscale = scaleLinear()
       .domain([min, max]) // Domain based on MACD values
-      .range([chart_attributes.sections[2].height, 0]); // Range based on the chart height
+      .range([scaffold.sections[2].height, 0]); // Range based on the chart height
 
     this.axisLeft = axisLeft(this.macdYscale);
     this.axisRight = axisRight(this.macdYscale);

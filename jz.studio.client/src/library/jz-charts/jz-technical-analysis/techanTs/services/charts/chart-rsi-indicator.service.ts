@@ -5,7 +5,7 @@ import { ChartDataService } from '../chart-data.service';
 import { ScalesService } from '../scales.service';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
-import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
+import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -105,11 +105,11 @@ export class ChartRsiIndic {
     return rsiValues;
   }
 
-  public drawAxes(chart_attributes: chart_attributes) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chart_attributes.sections[3].height, 0]);
+  public drawAxes(scaffold: scaffold) {
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([scaffold.sections[3].height, 0]);
 
-    //this.gRsiAxisLeft = chart_attributes.sections[3].margins.left;
-    //this.gRsiAxisRight = chart_attributes.sections[3].margins.right;
+    //this.gRsiAxisLeft = scaffold.sections[3].margins.left;
+    //this.gRsiAxisRight = scaffold.sections[3].margins.right;
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 

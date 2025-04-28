@@ -3,7 +3,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { Selection, select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
-import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
+import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 
@@ -62,22 +62,22 @@ export class ChartOhlcService {
     return this; // Allows method chaining
   }
 
-  public drawAxes(chart_attributes: chart_attributes) {
+  public drawAxes(scaffold: scaffold) {
 
     this.ohlcYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([chart_attributes.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([scaffold.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
     this.gOhlcAxisLeft.call(this.axisLeft);
     this.gOhlcAxisLeft
-      .attr('transform', `translate(${chart_attributes.sections[0].margins.left}, 0)`);
+      .attr('transform', `translate(${scaffold.sections[0].margins.left}, 0)`);
 
     this.gOhlcAxisRight.call(this.axisRight);
     this.gOhlcAxisRight
-      .attr('transform', `translate(${chart_attributes.sections[0].margins.left + chart_attributes.sections[0].content.width - chart_attributes.sections[0].margins.right}, 0)`);
+      .attr('transform', `translate(${scaffold.sections[0].margins.left + scaffold.sections[0].content.width - scaffold.sections[0].margins.right}, 0)`);
 
     return this;
   }

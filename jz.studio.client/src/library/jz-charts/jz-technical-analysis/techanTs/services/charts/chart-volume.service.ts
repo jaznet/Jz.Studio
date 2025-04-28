@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
 import { select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
-import { chart_attributes, ohlcData } from '../../interfaces/techan-interfaces';
+import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 
@@ -62,10 +62,10 @@ export class VolumeChartService {
     return this; // Enables method chaining
   }
 
-  public drawAxes(chart_attributes:chart_attributes) {
+  public drawAxes(scaffold:scaffold) {
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
-      .range([chart_attributes.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([scaffold.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
 
     //this.gVolumeAxisLeft = select(this.gVolumeAxisLeft);
     //this.gVolumeAxisRight = select(this.gVolumeAxisRight);

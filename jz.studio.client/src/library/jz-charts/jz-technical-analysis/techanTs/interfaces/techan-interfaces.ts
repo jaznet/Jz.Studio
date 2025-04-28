@@ -13,7 +13,7 @@ export interface Margins {
   left: number;
 }
 
-export interface chart_attributes {
+export interface scaffold {
   height: number;
   width: number;
  // margin: number;
