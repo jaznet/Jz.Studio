@@ -43,7 +43,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gSections', { static: true }) gSections!: ElementRef<SVGGElement>;
+  @ViewChild('gSectionsContainer', { static: true }) gSectionsContainer!: ElementRef<SVGGElement>;
   @ViewChild('sectionsContainerRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
@@ -95,11 +95,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rMacdAxisRectRight', { static: true }) rMacdAxisRectRight!: ElementRef<SVGRectElement>;
 
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
-
+/*  #region*/
   @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
-
 
   @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupC!: ElementRef<SVGGElement>;
   @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
@@ -109,7 +108,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gRsiAxisRight', { static: true }) gRsiAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectC!: ElementRef<SVGRectElement>;
 
-  // #endregion Axes
+  // #endregion Rsi
 
   // #region @VIEWCHILD lIST
   @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
@@ -186,7 +185,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgElement = select( this.svgElement.nativeElement);
     this.layout.rSvgElement =select(this.rSvgElementRef.nativeElement);
 
-    this.layout.sectionsContainer = this.gSections.nativeElement;
+    this.layout.sectionsContainer = this.gSectionsContainer.nativeElement;
     this.layout.sectionsContainerRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC

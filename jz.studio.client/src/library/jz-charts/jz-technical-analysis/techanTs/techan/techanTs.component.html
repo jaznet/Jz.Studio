@@ -12,7 +12,7 @@
           <g #xAxisMonthsTop id="xAxisMonthsTop" class="x-axis"></g>
         </g>
 
-        <g #gSections id="gSections">
+        <g #gSectionsContainer id="gSectionsContainer">
           <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0"></rect>
 
           <!-- #region OHLC SECTION -->
@@ -48,6 +48,7 @@
 
           </g>
           <!-- #endregion -->
+
           <!-- #region VOLUME-->
           <g #volumeSection id="volumeSection">
             <rect #volumeSectionRect id="volumeSectionRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
@@ -73,6 +74,7 @@
             </g>
           </g>
           <!-- #endregion -->
+
           <!-- #region SECTION MACD -->
           <g #gMacdSection id="gMacdSection">
             <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">MCAD</text>
@@ -96,6 +98,7 @@
             </g>
           </g>
           <!-- #endregion SECTION MACD -->
+
           <!-- #region SECTION RSI -->
           <g #gRsiSection id="gRsiSection">
             <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
@@ -112,7 +115,7 @@
               <g #gRsiAxisRight id="yAxisRighC" class="y-axis"></g>
             </g>
 
-            <g #gRsiSection id="gRsiSection">
+            <g #gRsiSectionContent id="gRsiSectionContent">
               <rect #rRsiSectionContent id="rRsiSectionContent" fill="var(--plt-chart-1)" width="0" height="0"></rect>
               <g #gRsiChart id="gRsiChart"></g>
             </g>

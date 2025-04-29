@@ -119,10 +119,10 @@ export class LayoutService {
     this.sectionsContainerRect.setAttribute('width', `${this.scaffold.width}`);
     this.sectionsContainerRect.setAttribute('height', `${this.scaffold.height - this.scaffold.xAxisTop - this.scaffold.xAxisBottom}`);
     console.log(this.sectionsContainerRect);
-    this.scaffold.sections[0].height = this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[0].pct;
-    this.scaffold.sections[1].height = this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[1].pct;
-    this.scaffold.sections[2].height = this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[2].pct;
-    this.scaffold.sections[3].height = this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[3].pct;
+    this.scaffold.sections[0].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[0].pct;
+    this.scaffold.sections[1].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[1].pct;
+    this.scaffold.sections[2].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[2].pct;
+    this.scaffold.sections[3].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[3].pct;
 
     this.scaffold.sections[0].width = this.sectionsContainerRect.width.baseVal.value;
     this.scaffold.sections[1].width = this.sectionsContainerRect.width.baseVal.value;
@@ -182,7 +182,7 @@ export class LayoutService {
 
     // #region RSI
     this.rsiChart.rRsiSectionRect.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.rsiChart.rRsiSectionRect.attr('height', `${(this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[3].pct) - this.spacerAdjusted}`);
+    this.rsiChart.rRsiSectionRect.attr('height', `${((this.sectionsContainerRect.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
     this.scaffold.sections[3].width = this.rsiChart.rRsiSectionRect.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[3].height = this.rsiChart.rRsiSectionRect.node()?.height.baseVal.value ?? 0;
     this.rsiChart.rRsiSectionContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
