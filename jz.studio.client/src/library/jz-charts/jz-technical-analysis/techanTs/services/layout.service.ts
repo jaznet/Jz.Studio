@@ -12,6 +12,7 @@ import { Selection } from 'd3-selection';
 export class LayoutService {
 
   // #region PROPERTIES
+  svgBorder = 8;
   divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
   svgElement!: Selection<SVGElement, unknown, null, undefined>;
   rSvgElement!: Selection<SVGRectElement, unknown, null, undefined>;
@@ -44,15 +45,6 @@ export class LayoutService {
   xAxisBottom!: SVGGElement;
   xAxisBottomGroup!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
-
-  //gVolumeAxisLeft!: SVGGElement;
-  //gVolumeAxisLeft_grp!: SVGGElement;
-  //volumeAxisRectLeft!: SVGRectElement;
-
-  //gVolumeAxisRight!: SVGGElement;
-  //gVolumeAxisRight_grp!: SVGGElement;
-  //volumeAxisRectRight!: SVGRectElement;
-  // #endregion Axes
 
   rectVolume!: SVGRectElement;
   // #endregion
@@ -104,8 +96,8 @@ export class LayoutService {
   sizeSections(): void {
     this.spacer = 8;
 
-    this.scaffold.width = this.divSvgContainer.node()!.clientWidth;
-    this.scaffold.height = this.divSvgContainer.node()!.clientHeight ;
+    this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder*2);
+    this.scaffold.height = this.divSvgContainer.node()!.clientHeight - (this.svgBorder * 2);
 
     // #region MAIN
     this.svgElement.attr('width', `${this.scaffold.width}`);

@@ -1,136 +1,135 @@
 
-<div #divSvgContainer  id="divSvgContainer" class="svg-container grid-rows">
+<div #divSvgContainer  id="divSvgContainer" class="svg-container grid-rows" >
 
   <!-- SVG -->
-  <svg #svgElement id="svgElement">
-    <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" ></rect>
 
-    <!-- X AXIS TOP -->
-    <g #xAxisTopGroup id="xAxisTopGroup">
-      <rect #xAxisTopRect id="xAxisTopRect" class="axis x-axis" width="0" height="0"></rect>
-      <g #xAxisMonthsTop id="xAxisMonthsTop" class="x-axis"></g>
-    </g>
-
-    <g #sections id="sections">
-      <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0" ></rect>
-
-      <!-- #region OHLC SECTION -->
-      <g #ohlcSection id="ohlcSection" class="rsiSectionontainer">
-        <rect #rOhlcSection id="rOhlcSection" x="0" y="0" width="0" height="0" ></rect>
-
-        <!-- OHLC LEFT AXIS-->
-        <g #ohlc_yAxisL_grp id="ohlc_yAxisL_grp">
-          <rect #ohlcAxisRectLeft id="ohlcAxisRectLeft" width="0" height="0" class="axis y-axis"></rect>
-          <g #gOhlcAxisLeft id="gOhlcAxisLeft" class="y-axis"></g>
+    <svg #svgElement id="svgElement" style=" transform:translate(8px, 8px)">
+      <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0"></rect>
+     
+        <!-- X AXIS TOP -->
+        <g #xAxisTopGroup id="xAxisTopGroup">
+          <rect #xAxisTopRect id="xAxisTopRect" class="axis x-axis" width="0" height="0"></rect>
+          <g #xAxisMonthsTop id="xAxisMonthsTop" class="x-axis"></g>
         </g>
 
-        <!-- OHLC RIGHT AXIS-->
-        <g #ohlc_yAxisR_grp id="ohlc_yAxisR_grp">
-          <rect #ohlcAxisRectRight id="ohlcAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
-          <g #gOhlcAxisRight id="gOhlcAxisRight" class="y-axis"></g>
+        <g #sections id="sections">
+          <rect #sectionsContainerRect id="sectionsContainerRect" width="0" height="0"></rect>
+
+          <!-- #region OHLC SECTION -->
+          <g #ohlcSection id="ohlcSection" class="rsiSectionontainer">
+            <rect #rOhlcSection id="rOhlcSection" x="0" y="0" width="0" height="0"></rect>
+
+            <!-- OHLC LEFT AXIS-->
+            <g #ohlc_yAxisL_grp id="ohlc_yAxisL_grp">
+              <rect #ohlcAxisRectLeft id="ohlcAxisRectLeft" width="0" height="0" class="axis y-axis"></rect>
+              <g #gOhlcAxisLeft id="gOhlcAxisLeft" class="y-axis"></g>
+            </g>
+
+            <!-- OHLC RIGHT AXIS-->
+            <g #ohlc_yAxisR_grp id="ohlc_yAxisR_grp">
+              <rect #ohlcAxisRectRight id="ohlcAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
+              <g #gOhlcAxisRight id="gOhlcAxisRight" class="y-axis"></g>
+            </g>
+
+            <!-- OHLC GROUP-->
+            <g #ohlcSectionContent id="ohlcSectionContent" class="rsiSectionontainer">
+              <rect #rOhlcSectionContent class="rOhlcSectionContent" id="rOhlcSectionContent"
+                    x="0" y="0"
+                    width="0" height="0"
+                    fill="transparent"
+                    [attr.width]="0"
+                    [attr.height]="0">
+              </rect>
+              <g #ohlc id="ohlc"></g>r
+              <g #sma1 id="sma1"></g>
+              <g #sma2 id="sma2"></g>
+              <g #sma3 id="sma3"></g>
+            </g>
+
+          </g>
+          <!-- #endregion -->
+          <!-- #region VOLUME-->
+          <g #volumeSection id="volumeSection">
+            <rect #volumeSectionRect id="volumeSectionRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
+            <!-- Section Volume Chart -->
+            <!-- Volume LEFT AXIS-->
+            <g #gVolumeAxisLeft_grp id="gVolumeAxisLeft_grp">
+              <rect #volumeAxisRectLeft id="volumeAxisRectLeft" width="0" height="0" class="axis y-axis "></rect>
+              <g #gVolumeAxisLeft id="gVolumeAxisLeft" class="y-axis"></g>
+            </g>
+
+            <!-- Volume RIGHT AXIS-->
+            <g #gVolumeAxisRight_grp id="gVolumeAxisRight_grp">
+              <rect #volumeAxisRectRight id="volumeAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
+              <g #gVolumeAxisRight id="gVolumeAxisRight" class="y-axis"></g>
+            </g>
+
+            <g #volumeContent id="volumeContent">
+              <rect #volumeContentRect id="volumeContentRect" width="0" height="0" fill="transparent"></rect>
+              <g #volumeChart id="volumeChart"></g>
+
+              <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
+
+            </g>
+          </g>
+          <!-- #endregion -->
+          <!-- #region SECTION MACD -->
+          <g #gMacdSection id="gMacdSection">
+            <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">MCAD</text>
+            <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
+
+            <!-- LEFT AXIS MACD  -->
+            <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
+              <rect #rMacdAxisRectLeft id="rMacdAxisRectLeft" width="0" height="0" class="axis y-axis "></rect>
+              <g #gMacdAxisLeft id="gMacdAxisLeft" class="y-axis"></g>
+            </g>
+
+            <!-- RIGHT AXIS MACD -->
+            <g #gMacdAxisGroupRight id="gMacdAxisGroupRight">
+              <rect #rMacdAxisRectRight id="rMacdAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
+              <g #gMacdAxisRight id="gMacdAxisRight" class="y-axis"></g>
+            </g>
+
+            <g #gMacdContent id="gMacdContent">
+              <rect #rMacdContentRect id="rMacdContentRect" width="0" height="0"></rect>
+              <g #gMacdChart id="gMacdChart"></g>
+            </g>
+          </g>
+          <!-- #endregion SECTION MACD -->
+          <!-- #region SECTION RSI -->
+          <g #gRsiSection id="gRsiSection">
+            <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
+            <rect #rRsiSectionRect id="rRsiSectionRect" x="0" y="0" width="0" height="0"></rect>
+            <!-- LEFT AXIS-->
+            <g #yAxisLeftGroupC id="yAxisLeftGroupC">
+              <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
+              <g #gRsiAxisLeft id="gRsiAxisLeft" class="y-axis"></g>
+            </g>
+
+            <!-- RIGHT AXIS-->
+            <g #rsiAxisGroupRight id="yAxisGroupRightC">
+              <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
+              <g #gRsiAxisRight id="yAxisRighC" class="y-axis"></g>
+            </g>
+
+            <g #gRsiSection id="gRsiSection">
+              <rect #rRsiSectionContent id="rRsiSectionContent" fill="var(--plt-chart-1)" width="0" height="0"></rect>
+              <g #gRsiChart id="gRsiChart"></g>
+            </g>
+            <g #rsiGroup id="rsiGroup"></g>
+          </g>
+          <!-- #endregion SECTION RSI-->
+
         </g>
 
-        <!-- OHLC GROUP-->
-        <g #ohlcSectionContent id="ohlcSectionContent"  class="rsiSectionontainer">
-          <rect #rOhlcSectionContent class="rOhlcSectionContent" id="rOhlcSectionContent"
-                x="0" y="0"
-                width="0" height="0"
-                fill="transparent"
-                [attr.width]="0"
-                [attr.height]="0">
-          </rect>
-          <g #ohlc id="ohlc"></g>r
-          <g #sma1 id="sma1"></g>
-          <g #sma2 id="sma2"></g>
-          <g #sma3 id="sma3"></g>
+        <!-- X AXIS BOTTOM -->
+        <g #xAxisBottomGroup id="xAxisBottomGroup">
+          <rect #xAxisBottomRect id="xAxisBottomRect" width="0" height="0" x="0" y="0" class="axis"></rect>
+          <g #xAxisMonthsBottom id="xAxisMonthsBottom" class="x-axis"></g>
         </g>
+  
+    </svg>
 
-      </g>
-      <!-- #endregion -->
-
-      <!-- #region VOLUME-->
-      <g #volumeSection id="volumeSection">
-        <rect #volumeSectionRect id="volumeSectionRect" fill="var(--plt-chart-1)" width="0" height="0"></rect>
-        <!-- Section Volume Chart -->
-        <!-- Volume LEFT AXIS-->
-        <g #gVolumeAxisLeft_grp id="gVolumeAxisLeft_grp">
-          <rect #volumeAxisRectLeft id="volumeAxisRectLeft" width="0" height="0" class="axis y-axis "></rect>
-          <g #gVolumeAxisLeft id="gVolumeAxisLeft" class="y-axis"></g>
-        </g>
-
-        <!-- Volume RIGHT AXIS-->
-        <g #gVolumeAxisRight_grp id="gVolumeAxisRight_grp">
-          <rect #volumeAxisRectRight id="volumeAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
-          <g #gVolumeAxisRight id="gVolumeAxisRight" class="y-axis"></g>
-        </g>
-
-        <g #volumeContent id="volumeContent">
-          <rect #volumeContentRect id="volumeContentRect" width="0" height="0" fill="transparent"></rect>
-          <g #volumeChart id="volumeChart"></g>
-
-          <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="title-text" font-size="12" fill="white" font-weight="lighter">OHLC</text>
-
-        </g>
-      </g>
-      <!-- #endregion -->
-
-      <!-- #region SECTION MACD -->
-      <g #gMacdSection id="gMacdSection">
-        <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="16" fill="black">MCAD</text>
-        <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
-
-        <!-- LEFT AXIS MACD  -->
-        <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
-          <rect #rMacdAxisRectLeft id="rMacdAxisRectLeft" width="0" height="0" class="axis y-axis "></rect>
-          <g #gMacdAxisLeft id="gMacdAxisLeft" class="y-axis"></g>
-        </g>
-
-        <!-- RIGHT AXIS MACD -->
-        <g #gMacdAxisGroupRight id="gMacdAxisGroupRight">
-          <rect #rMacdAxisRectRight id="rMacdAxisRectRight" width="0" height="0" class="axis y-axis "></rect>
-          <g #gMacdAxisRight id="gMacdAxisRight" class="y-axis"></g>
-        </g>
-
-        <g #gMacdContent id="gMacdContent">
-          <rect #rMacdContentRect id="rMacdContentRect"  width="0" height="0"></rect>
-          <g #gMacdChart id="gMacdChart"></g>
-        </g>
-      </g>
-      <!-- #endregion SECTION MACD -->
-
-      <!-- #region SECTION RSI -->
-      <g #gRsiSection id="gRsiSection">
-        <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" font-size="18" fill="black">Section C</text>
-        <rect #rRsiSectionRect id="rRsiSectionRect" x="0" y="0" width="0" height="0" ></rect>
-        <!-- LEFT AXIS-->
-        <g #yAxisLeftGroupC id="yAxisLeftGroupC">
-          <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
-          <g #gRsiAxisLeft id="gRsiAxisLeft" class="y-axis"></g>
-        </g>
-
-        <!-- RIGHT AXIS-->
-        <g #rsiAxisGroupRight id="yAxisGroupRightC">
-          <rect #yAxisRightRectC width="0" height="0" class="axis y-axis "></rect>
-          <g #gRsiAxisRight id="yAxisRighC" class="y-axis"></g>
-        </g>
-
-        <g #gRsiSection id="gRsiSection">
-          <rect #rRsiSectionContent id="rRsiSectionContent" fill="var(--plt-chart-1)" width="0" height="0"></rect>
-          <g #gRsiChart id="gRsiChart"></g>
-        </g>
-        <g #rsiGroup id="rsiGroup"></g>
-      </g>
-      <!-- #endregion SECTION RSI-->
-
-    </g>
-
-    <!-- X AXIS BOTTOM -->
-    <g #xAxisBottomGroup id="xAxisBottomGroup">
-      <rect #xAxisBottomRect id="xAxisBottomRect" width="0" height="0" x="0" y="0" class="axis"></rect>
-      <g #xAxisMonthsBottom id="xAxisMonthsBottom" class="x-axis"></g>
-    </g>
-
-  </svg>
 </div>
 
 <pop-over-loading #popover_loading id="popover_loading"></pop-over-loading>
