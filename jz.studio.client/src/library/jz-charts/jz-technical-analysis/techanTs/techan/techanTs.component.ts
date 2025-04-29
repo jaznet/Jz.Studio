@@ -43,7 +43,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('sections', { static: true }) sectionsRef!: ElementRef<SVGGElement>;
+  @ViewChild('gSections', { static: true }) gSections!: ElementRef<SVGGElement>;
   @ViewChild('sectionsContainerRect', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
@@ -186,7 +186,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.svgElement = select( this.svgElement.nativeElement);
     this.layout.rSvgElement =select(this.rSvgElementRef.nativeElement);
 
-    this.layout.sectionsContainer = this.sectionsRef.nativeElement;
+    this.layout.sectionsContainer = this.gSections.nativeElement;
     this.layout.sectionsContainerRect = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
