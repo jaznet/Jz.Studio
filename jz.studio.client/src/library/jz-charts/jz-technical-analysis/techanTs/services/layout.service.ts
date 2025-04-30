@@ -147,10 +147,10 @@ export class LayoutService {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeChart.volumeSectionRect.setAttribute('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.volumeChart.volumeSectionRect.setAttribute('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
-    this.scaffold.sections[1].width = this.volumeChart.volumeSectionRect.getBBox().width;
-    this.scaffold.sections[1].height = this.volumeChart.volumeSectionRect.getBBox().height;
+    this.volumeChart.rVolumeSection.setAttribute('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.volumeChart.rVolumeSection.setAttribute('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
+    this.scaffold.sections[1].width = this.volumeChart.rVolumeSection.getBBox().width;
+    this.scaffold.sections[1].height = this.volumeChart.rVolumeSection.getBBox().height;
     this.volumeChart.volumeAxisRectLeft.setAttribute('width', `${this.scaffold.sections[1].margins.left}`);
     this.volumeChart.volumeAxisRectLeft.setAttribute('height', `${this.scaffold.sections[1].height}`);
     this.volumeChart.volumeAxisRectRight.setAttribute('width', `${this.scaffold.sections[1].margins.right}`);

@@ -18,7 +18,7 @@ export class VolumeChartService {
   volumeYscale: any;
 
   volumeSection!: SVGGElement;
-  volumeSectionRect!: SVGRectElement;
+  rVolumeSection!: SVGRectElement;
   volumeContent!: SVGGElement;
   volumeContentRect!: SVGRectElement;
 
