@@ -140,9 +140,9 @@ export class LayoutService {
     this.scaffold.sections[0].height = (this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
 
     this.ohlcChart.rOhlcSectionContent.attr('height', `${this.scaffold.sections[0].height}`);
-    this.ohlcChart.ohlcAxisRectLeft.setAttribute('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcChart.ohlcAxisRectLeft.setAttribute('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
-    this.ohlcChart.ohlcAxisRectLeft.setAttribute('fill', 'var(--plt-clr-2)');
+    this.ohlcChart.ohlcAxisRectLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcChart.ohlcAxisRectLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcChart.ohlcAxisRectLeft.attr('fill', 'var(--plt-clr-2)');
     this.ohlcChart.ohlcAxisRectRight.setAttribute('width', `${this.scaffold.sections[0].margins.right}`);
     this.ohlcChart.ohlcAxisRectRight.setAttribute('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
     this.ohlcChart.ohlcAxisRectRight.setAttribute('fill', 'var(--plt-clr-2)');

@@ -24,7 +24,7 @@ export class ChartOhlcService {
 
   gOhlcAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   ohlc_yAxisL_grp: any;
-  ohlcAxisRectLeft: any;
+  ohlcAxisRectLeft!: any;
 
   gOhlcAxisRight: any;
   ohlc_yAxisR_grp: any;

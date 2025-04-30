@@ -192,7 +192,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #region OHLC
     this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
     this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
-    this.ohlcChart.ohlcAxisRectLeft = this.ohlcAxisRectLeft.nativeElement;
+    this.ohlcChart.ohlcAxisRectLeft = select( this.ohlcAxisRectLeft.nativeElement);
 
     this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
@@ -203,6 +203,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.gOhlcSectionContent = this.gOhlcSectionContent.nativeElement;
     this.ohlcChart.rOhlcSectionContent = select( this.rOhlcSectionContent.nativeElement);
     // #endregion OHLC
+
     // #region VOLUME
     this.volumeChart.volumeSection = this.volumeSection.nativeElement;
     this.volumeChart.volumeSectionRect = this.volumeSectionRect.nativeElement;
