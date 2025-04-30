@@ -205,17 +205,17 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeChart.volumeSection = this.volumeSection.nativeElement;
-    this.volumeChart.rVolumeSection = this.rVolumeSection.nativeElement;
-    this.volumeChart.volumeContent = this.volumeContent.nativeElement;
-    this.volumeChart.volumeContentRect = this.volumeContentRect.nativeElement;
+    this.volumeChart.gVolumeSection = select(this.volumeSection.nativeElement);
+    this.volumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
+    this.volumeChart.gVolumeSectionContent = select(this.volumeContent.nativeElement);
+    this.volumeChart.rVolumeSectionContent = select(this.volumeContentRect.nativeElement);
     this.volumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
-    this.volumeChart.gVolumeAxisLeft_grp = this.gVolumeAxisLeft_grp.nativeElement;
-    this.volumeChart.volumeAxisRectLeft = this.volumeAxisRectLeft.nativeElement;
+    this.volumeChart.gVolumeAxisLeft_grp = select(this.gVolumeAxisLeft_grp.nativeElement);
+    this.volumeChart.volumeAxisRectLeft = select(this.volumeAxisRectLeft.nativeElement);
     this.volumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
-    this.volumeChart.gVolumeAxisRight_grp = this.gVolumeAxisRight_grp.nativeElement;
-    this.volumeChart.volumeAxisRectRight = this.volumeAxisRectRight.nativeElement;
-    this.volumeChart.rVolumeSection = this.rVolumeSection.nativeElement;
+    this.volumeChart.gVolumeAxisRight_grp = select(this.gVolumeAxisRight_grp.nativeElement);
+    this.volumeChart.volumeAxisRectRight = select(this.volumeAxisRectRight.nativeElement);
+    this.volumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
     // #endregion VOLUME
 
     // #region MACD

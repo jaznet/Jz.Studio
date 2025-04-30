@@ -1,7 +1,7 @@
 
 import { Injectable } from '@angular/core';
 import { ChartDataService } from '../chart-data.service';
-import { select } from 'd3-selection';
+import { Selection, select } from 'd3-selection';
 import { ScalesService } from '../scales.service';
 import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
@@ -17,10 +17,10 @@ export class VolumeChartService {
 
   volumeYscale: any;
 
-  volumeSection!: SVGGElement;
-  rVolumeSection!: SVGRectElement;
-  volumeContent!: SVGGElement;
-  volumeContentRect!: SVGRectElement;
+  gVolumeSection!: Selection<SVGGElement, unknown, null, undefined>;
+  rVolumeSection!: Selection<SVGRectElement, unknown, null, undefined>;
+  gVolumeSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
+  rVolumeSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
 
   gVolumeAxisLeft: any;
   gVolumeAxisLeft_grp: any;

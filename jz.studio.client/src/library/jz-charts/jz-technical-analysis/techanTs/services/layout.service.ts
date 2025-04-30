@@ -147,14 +147,16 @@ export class LayoutService {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeChart.rVolumeSection.setAttribute('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.volumeChart.rVolumeSection.setAttribute('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
-    this.scaffold.sections[1].width = this.volumeChart.rVolumeSection.getBBox().width;
-    this.scaffold.sections[1].height = this.volumeChart.rVolumeSection.getBBox().height;
-    this.volumeChart.volumeAxisRectLeft.setAttribute('width', `${this.scaffold.sections[1].margins.left}`);
-    this.volumeChart.volumeAxisRectLeft.setAttribute('height', `${this.scaffold.sections[1].height}`);
-    this.volumeChart.volumeAxisRectRight.setAttribute('width', `${this.scaffold.sections[1].margins.right}`);
-    this.volumeChart.volumeAxisRectRight.setAttribute('height', `${this.scaffold.sections[1].height}`);
+    this.volumeChart.rVolumeSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.volumeChart.rVolumeSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
+
+    this.scaffold.sections[1].width = this.volumeChart.rVolumeSection.node()!.width.baseVal.value;
+    this.scaffold.sections[1].height = this.volumeChart.rVolumeSection.node()!.height.baseVal.value;
+
+    this.volumeChart.volumeAxisRectLeft.attr('width', `${this.scaffold.sections[1].margins.left}`);
+    this.volumeChart.volumeAxisRectLeft.attr('height', `${this.scaffold.sections[1].height}`);
+    this.volumeChart.volumeAxisRectRight.attr('width', `${this.scaffold.sections[1].margins.right}`);
+    this.volumeChart.volumeAxisRectRight.attr('height', `${this.scaffold.sections[1].height}`);
     // #endregion VOLUME
 
     // #region MACD
@@ -222,12 +224,12 @@ export class LayoutService {
     //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
     this.ohlcChart.gOhlcAxisRectRight.attr('transform', `translate(${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.right},${this.scaffold.sections[0].margins.top})`);
 
-    this.volumeChart.volumeSection.setAttribute('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
-    this.volumeChart.volumeContent.setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);
+    this.volumeChart.gVolumeSection.attr('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
+    this.volumeChart.gVolumeSectionContent.attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);
     this.volumeChart.gVolumeAxisLeft
       .attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`)
     /*  .setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);*/
-    this.volumeChart.gVolumeAxisRight_grp.setAttribute('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
+    this.volumeChart.gVolumeAxisRight_grp.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
 
     this.rsiChart.gRsiSection.attr('transform', `translate(
       0,
