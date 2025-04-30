@@ -56,7 +56,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('ohlc_yAxisL_grp', { static: true }) ohlc_yAxisL_grp!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcAxisGroupLeft', { static: true }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('ohlcAxisRectLeft', { static: true }) ohlcAxisRectLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcAxisLeft', { static: true }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
 
@@ -191,7 +191,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     // #region OHLC
     this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
-    this.ohlcChart.ohlc_yAxisL_grp = this.ohlc_yAxisL_grp.nativeElement;
+    this.ohlcChart.gOhlcAxisGroupLeft = this.gOhlcAxisGroupLeft.nativeElement;
     this.ohlcChart.ohlcAxisRectLeft = select( this.ohlcAxisRectLeft.nativeElement);
 
     this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
