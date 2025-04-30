@@ -57,12 +57,12 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
 
   @ViewChild('gOhlcAxisGroupLeft', { static: true }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('ohlcAxisRectLeft', { static: true }) ohlcAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcAxisRectLeft', { static: true }) gOhlcAxisRectLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcAxisLeft', { static: true }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
 
   @ViewChild('ohlc_yAxisR_grp', { static: true }) ohlc_yAxisR_grp!: ElementRef<SVGGElement>;
   @ViewChild('gOhlcAxisRight', { static: true }) gOhlcAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('ohlcAxisRectRight', { static: true }) ohlcAxisRectRight!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcAxisRectRight', { static: true }) gOhlcAxisRectRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
   // #region VOLUME GROUP
@@ -192,11 +192,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #region OHLC
     this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
     this.ohlcChart.gOhlcAxisGroupLeft = this.gOhlcAxisGroupLeft.nativeElement;
-    this.ohlcChart.ohlcAxisRectLeft = select( this.ohlcAxisRectLeft.nativeElement);
+    this.ohlcChart.gOhlcAxisRectLeft = select( this.gOhlcAxisRectLeft.nativeElement);
 
     this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
     this.ohlcChart.ohlc_yAxisR_grp = this.ohlc_yAxisR_grp.nativeElement;
-    this.ohlcChart.ohlcAxisRectRight = this.ohlcAxisRectRight.nativeElement;
+    this.ohlcChart.gOhlcAxisRectRight = select(this.gOhlcAxisRectRight.nativeElement);
 
     this.ohlcChart.gOhlcSection = this.gOhlcSection.nativeElement;
     this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);
