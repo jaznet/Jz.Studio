@@ -14,7 +14,7 @@ export class ChartOhlcService {
   // #region PROPERTIES
   gOhlcSection!: SVGGElement;
   rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;
-  gOhlcSectionContent!: SVGGElement;
+  gOhlcSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
   rOhlcSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
 
   ohlcYscale: any;
