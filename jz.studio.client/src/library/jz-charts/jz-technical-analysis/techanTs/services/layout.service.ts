@@ -132,13 +132,12 @@ export class LayoutService {
 
     // #region OHLC
     this.ohlcChart.rOhlcSection.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.ohlcChart.rOhlcSection.attr('height', `${(this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[0].pct) - this.spacerAdjusted}`);
-    console.log(this.scaffold.sections[0].width - this.scaffold.sections[0].margins.left - this.scaffold.sections[0].margins.right);
+    this.ohlcChart.rOhlcSection.attr('height', `${((this.sectionsContainerRect.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[0].pct) }`);
     this.ohlcChart.rOhlcSectionContent.attr('width', `${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.left - this.scaffold.sections[0].margins.right}`);
 
     console.log(this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
     this.scaffold.sections[0].width = this.ohlcChart.rOhlcSection.node()!.width.baseVal.value;
-    this.scaffold.sections[0].height = (this.ohlcChart.rOhlcSection.node()!.height.baseVal.value) - (5 * this.spacer);
+    this.scaffold.sections[0].height = (this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
 
     this.ohlcChart.rOhlcSectionContent.attr('height', `${this.scaffold.sections[0].height}`);
     this.ohlcChart.ohlcAxisRectLeft.setAttribute('width', `${this.scaffold.sections[0].margins.right}`);
