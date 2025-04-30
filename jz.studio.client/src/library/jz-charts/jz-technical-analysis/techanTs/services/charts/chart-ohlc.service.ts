@@ -27,7 +27,7 @@ export class ChartOhlcService {
   gOhlcAxisRectLeft!: any;
 
   gOhlcAxisRight: any;
-  ohlc_yAxisR_grp: any;
+  gOhlcAxisGroupRight: any;
   gOhlcAxisRectRight: any;
 
   private _xScale: any;

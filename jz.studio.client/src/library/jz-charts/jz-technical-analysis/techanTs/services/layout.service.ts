@@ -96,7 +96,7 @@ export class LayoutService {
   sizeSections(): void {
     this.spacer = 8;
 
-    this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder*2);
+    this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder * 2);
     this.scaffold.height = this.divSvgContainer.node()!.clientHeight - (this.svgBorder * 2);
 
     // #region MAIN
@@ -220,7 +220,7 @@ export class LayoutService {
     this.ohlcChart.gOhlcSectionContent.setAttribute('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
 
     //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
-    this.ohlcChart.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.right},${this.scaffold.sections[0].margins.top})`);
+    this.ohlcChart.gOhlcAxisRectRight.setAttribute('transform', `translate(${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.right},${this.scaffold.sections[0].margins.top})`);
 
     this.volumeChart.volumeSection.setAttribute('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
     this.volumeChart.volumeContent.setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);
