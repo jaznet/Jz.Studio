@@ -27,7 +27,7 @@ export class LayoutService {
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
 
   sectionsContainer!: SVGGElement;
-  sectionsContainerRect!: SVGRectElement;
+  rSectionsContainer!: SVGRectElement;
   spacer=0;
   spacerAdjusted = 0;
 
@@ -116,23 +116,23 @@ export class LayoutService {
 
     // SECTIONS
     this.spacerAdjusted = this.spacer * (1 + (1 / this.scaffold.sections.length));
-    this.sectionsContainerRect.setAttribute('width', `${this.scaffold.width}`);
-    this.sectionsContainerRect.setAttribute('height', `${this.scaffold.height - this.scaffold.xAxisTop - this.scaffold.xAxisBottom}`);
-    console.log(this.sectionsContainerRect);
-    this.scaffold.sections[0].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[0].pct;
-    this.scaffold.sections[1].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[1].pct;
-    this.scaffold.sections[2].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[2].pct;
-    this.scaffold.sections[3].height = (this.sectionsContainerRect.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[3].pct;
+    this.rSectionsContainer.setAttribute('width', `${this.scaffold.width}`);
+    this.rSectionsContainer.setAttribute('height', `${this.scaffold.height - this.scaffold.xAxisTop - this.scaffold.xAxisBottom}`);
+    console.log(this.rSectionsContainer);
+    this.scaffold.sections[0].height = (this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[0].pct;
+    this.scaffold.sections[1].height = (this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[1].pct;
+    this.scaffold.sections[2].height = (this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[2].pct;
+    this.scaffold.sections[3].height = (this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[3].pct;
 
-    this.scaffold.sections[0].width = this.sectionsContainerRect.width.baseVal.value;
-    this.scaffold.sections[1].width = this.sectionsContainerRect.width.baseVal.value;
-    this.scaffold.sections[2].width = this.sectionsContainerRect.width.baseVal.value;
-    this.scaffold.sections[3].width = this.sectionsContainerRect.width.baseVal.value;
+    this.scaffold.sections[0].width = this.rSectionsContainer.width.baseVal.value;
+    this.scaffold.sections[1].width = this.rSectionsContainer.width.baseVal.value;
+    this.scaffold.sections[2].width = this.rSectionsContainer.width.baseVal.value;
+    this.scaffold.sections[3].width = this.rSectionsContainer.width.baseVal.value;
     // #endregion MAIN
 
     // #region OHLC
-    this.ohlcChart.rOhlcSection.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.ohlcChart.rOhlcSection.attr('height', `${((this.sectionsContainerRect.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[0].pct) }`);
+    this.ohlcChart.rOhlcSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.ohlcChart.rOhlcSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[0].pct) }`);
     this.ohlcChart.rOhlcSectionContent.attr('width', `${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.left - this.scaffold.sections[0].margins.right}`);
 
     console.log(this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
@@ -149,8 +149,8 @@ export class LayoutService {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeChart.volumeSectionRect.setAttribute('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.volumeChart.volumeSectionRect.setAttribute('height', `${(this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
+    this.volumeChart.volumeSectionRect.setAttribute('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.volumeChart.volumeSectionRect.setAttribute('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[1].pct) - this.spacerAdjusted}`);
     this.scaffold.sections[1].width = this.volumeChart.volumeSectionRect.getBBox().width;
     this.scaffold.sections[1].height = this.volumeChart.volumeSectionRect.getBBox().height;
     this.volumeChart.volumeAxisRectLeft.setAttribute('width', `${this.scaffold.sections[1].margins.left}`);
@@ -160,8 +160,8 @@ export class LayoutService {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdChart.rMacdSectionRect.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.macdChart.rMacdSectionRect.attr('height', `${(this.sectionsContainerRect.height.baseVal.value * this.scaffold.sections[2].pct) - this.spacerAdjusted}`);
+    this.macdChart.rMacdSectionRect.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.macdChart.rMacdSectionRect.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[2].pct) - this.spacerAdjusted}`);
     this.scaffold.sections[2].width = this.macdChart.rMacdSectionRect.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[2].height = this.macdChart.rMacdSectionRect.node()?.height.baseVal.value ?? 0;
 
@@ -180,8 +180,8 @@ export class LayoutService {
     // #endregion MACD
 
     // #region RSI
-    this.rsiChart.rRsiSectionRect.attr('width', `${this.sectionsContainerRect.width.baseVal.value}`);
-    this.rsiChart.rRsiSectionRect.attr('height', `${((this.sectionsContainerRect.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
+    this.rsiChart.rRsiSectionRect.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.rsiChart.rRsiSectionRect.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
     this.scaffold.sections[3].width = this.rsiChart.rRsiSectionRect.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[3].height = this.rsiChart.rRsiSectionRect.node()?.height.baseVal.value ?? 0;
     this.rsiChart.rRsiSectionContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
