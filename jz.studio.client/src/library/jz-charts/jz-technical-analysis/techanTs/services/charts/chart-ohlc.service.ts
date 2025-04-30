@@ -12,9 +12,9 @@ import { scaleLinear } from 'd3-scale';
 })
 export class ChartOhlcService {
   // #region PROPERTIES
-  ohlcSection!: SVGGElement;
+  gOhlcSection!: SVGGElement;
   rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;
-  ohlcSectionContent!: SVGGElement;
+  gOhlcSectionContent!: SVGGElement;
   rOhlcSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
 
   ohlcYscale: any;

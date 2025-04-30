@@ -218,8 +218,8 @@ export class LayoutService {
 
     this.sectionsContainer.setAttribute('transform', `translate(0,${this.scaffold.xAxisTop})`)
 
-    this.ohlcChart.ohlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
-    this.ohlcChart.ohlcSectionContent.setAttribute('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
+    this.ohlcChart.gOhlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
+    this.ohlcChart.gOhlcSectionContent.setAttribute('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
 
     //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
     this.ohlcChart.ohlc_yAxisR_grp.setAttribute('transform', `translate(${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.right},${this.scaffold.sections[0].margins.top})`);
