@@ -15,7 +15,7 @@ export class ChartRsiIndic {
   gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
   gRsiSectionContent: any;
   rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
-  rsiGroup: any;
+  gRsiGroup: any;
   rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 

@@ -117,7 +117,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
 
   // RSIGROUP
-  @ViewChild('rsiGroup', { static: true }) rsiGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiGroup', { static: true }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
@@ -239,7 +239,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsi.gRsiSection = select(this.gRsiSection.nativeElement);
     this.rsi.gRsiSectionContent = select(this.gRsiSectionContent.nativeElement)
     this.rsi.rRsiSectionContent = select( this.rRsiSectionContent.nativeElement);
-    this.rsi.rsiGroup = this.rsiGroupRef.nativeElement;
+    this.rsi.gRsiGroup = this.gRsiGroupRef.nativeElement;
 
    this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
@@ -337,7 +337,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.rsi
       .xScale(this.scales.dateScaleX)
      /* .yScale(this.scales.rsiYscale)*/
-      .setTargetGroup(this.rsi.rsiGroup) // Define a <g> for RSI
+      .setTargetGroup(this.rsi.gRsiGroup) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .drawAxes(this.layout.scaffold)
       .draw();
