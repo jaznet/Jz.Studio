@@ -237,5 +237,6 @@ export class LayoutService {
       ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + this.scaffold.sections[2].height) + (this.spacer * 4)})`);
     this.rsiChart.rsiAxisGroupRight.setAttribute('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);
     this.rsiChart.gRsiAxisLeft.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
+    this.rsiChart.gRsiSectionContent.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
   }
 }

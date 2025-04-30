@@ -97,10 +97,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 /*  #region*/
   @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiSectionContent', { static: true }) gRsiSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisLeftGroupC', { static: true }) yAxisLeftGroupC!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisGroupLeft', { static: true }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
   @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectC!: ElementRef<SVGRectElement>;
 
@@ -234,7 +235,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
     this.rsi.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
-    this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
+    this.rsi.gRsiSection = select(this.gRsiSection.nativeElement);
+    this.rsi.gRsiSectionContent = select(this.gRsiSectionContent.nativeElement)
     this.rsi.rRsiSectionContent = select( this.rRsiSectionContent.nativeElement);
     this.rsi.rsiGroup = this.rsiGroupRef.nativeElement;
 
@@ -251,7 +253,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
     this.rsi.gRsiAxisLeft = select(this.gRsiAxisLeft.nativeElement);
-    this.rsi.yAxisLeftGroupC = this.yAxisLeftGroupC.nativeElement;;
+    this.rsi.gRsiAxisGroupLeft = select(this.gRsiAxisGroupLeft.nativeElement);
     this.rsi.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
 
     this.rsi.gRsiAxisRight = select(this.gRsiAxisRight.nativeElement);

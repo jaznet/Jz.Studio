@@ -13,12 +13,13 @@ import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 export class ChartRsiIndic {
  
   gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rRsiSectionContentElement: any;
+  gRsiSectionContent: any;
   rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
   rsiGroup: any;
   rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 
+  gRsiAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
   gRsiAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   rsi_yAxisL_grp: any;
   rsiAxisRectLeft: any;
@@ -27,7 +28,7 @@ export class ChartRsiIndic {
   rsi_yAxisR_grp: any;
   rsiAxisRectRight: any;
 
-  yAxisLeftGroupC!: SVGGElement;
+
   yAxisLeftRectC!: SVGRectElement;
 
   rsiAxisGroupRight!: SVGGElement;
