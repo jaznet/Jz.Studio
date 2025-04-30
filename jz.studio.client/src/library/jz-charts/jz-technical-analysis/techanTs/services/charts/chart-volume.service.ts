@@ -24,11 +24,11 @@ export class VolumeChartService {
 
   gVolumeAxisLeft: any;
   gVolumeAxisLeft_grp: any;
-  volumeAxisRectLeft: any;
+  rVolumeAxisLeft: any;
 
   gVolumeAxisRight: any;
   gVolumeAxisRight_grp: any;
-  volumeAxisRectRight: any;
+  rVolumeAxisRight: any;
 
   axisLeft!: Axis<AxisDomain>;
   axisRight!: Axis<AxisDomain>;

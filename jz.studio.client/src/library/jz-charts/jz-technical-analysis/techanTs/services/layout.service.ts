@@ -153,10 +153,10 @@ export class LayoutService {
     this.scaffold.sections[1].width = this.volumeChart.rVolumeSection.node()!.width.baseVal.value;
     this.scaffold.sections[1].height = this.volumeChart.rVolumeSection.node()!.height.baseVal.value;
 
-    this.volumeChart.volumeAxisRectLeft.attr('width', `${this.scaffold.sections[1].margins.left}`);
-    this.volumeChart.volumeAxisRectLeft.attr('height', `${this.scaffold.sections[1].height}`);
-    this.volumeChart.volumeAxisRectRight.attr('width', `${this.scaffold.sections[1].margins.right}`);
-    this.volumeChart.volumeAxisRectRight.attr('height', `${this.scaffold.sections[1].height}`);
+    this.volumeChart.rVolumeAxisLeft.attr('width', `${this.scaffold.sections[1].margins.left}`);
+    this.volumeChart.rVolumeAxisLeft.attr('height', `${this.scaffold.sections[1].height}`);
+    this.volumeChart.rVolumeAxisRight.attr('width', `${this.scaffold.sections[1].margins.right}`);
+    this.volumeChart.rVolumeAxisRight.attr('height', `${this.scaffold.sections[1].height}`);
     // #endregion VOLUME
 
     // #region MACD

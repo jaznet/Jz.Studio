@@ -74,11 +74,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gVolumeAxisLeft', { static: true }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
   @ViewChild('gVolumeAxisLeft_grp', { static: true }) gVolumeAxisLeft_grp!: ElementRef<SVGGElement>;
-  @ViewChild('volumeAxisRectLeft', { static: true }) volumeAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rVolumeAxisLeft', { static: true }) rVolumeAxisLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('gVolumeAxisRight', { static: true }) gVolumeAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('gVolumeAxisRight_grp', { static: true }) gVolumeAxisRight_grp!: ElementRef<SVGGElement>;
-  @ViewChild('volumeAxisRectRight', { static: true }) volumeAxisRectRight!: ElementRef<SVGRectElement>;
+  @ViewChild('rVolumeAxisRight', { static: true }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP
   
   @ViewChild('gMacdSection', { static: true }) gMacdSection!: ElementRef<SVGGElement>;
@@ -211,10 +211,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.volumeChart.rVolumeSectionContent = select(this.volumeContentRect.nativeElement);
     this.volumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
     this.volumeChart.gVolumeAxisLeft_grp = select(this.gVolumeAxisLeft_grp.nativeElement);
-    this.volumeChart.volumeAxisRectLeft = select(this.volumeAxisRectLeft.nativeElement);
+    this.volumeChart.rVolumeAxisLeft = select(this.rVolumeAxisLeft.nativeElement);
     this.volumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
     this.volumeChart.gVolumeAxisRight_grp = select(this.gVolumeAxisRight_grp.nativeElement);
-    this.volumeChart.volumeAxisRectRight = select(this.volumeAxisRectRight.nativeElement);
+    this.volumeChart.rVolumeAxisRight = select(this.rVolumeAxisRight.nativeElement);
     this.volumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
     // #endregion VOLUME
 
