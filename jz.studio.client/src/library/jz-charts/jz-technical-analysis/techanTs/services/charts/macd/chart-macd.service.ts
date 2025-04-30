@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { Selection, select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
-import { ScalesService } from '../scales.service';
-import { ChartDataService } from '../chart-data.service';
-import { LayoutService } from '../layout.service';
 import { axisLeft, axisRight } from 'd3-axis';
-import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
+import { ScalesService } from '../../scales.service';
+import { ChartDataService } from '../../chart-data.service';
+import { scaffold } from '../../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',

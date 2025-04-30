@@ -16,8 +16,8 @@ import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/chart-volume.service';
 import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
 import { SmaChartService } from '../services/charts/chart-sma.service';
-import { ChartMacdService } from '../services/charts/chart-macd.service';
 import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
+import { ChartMacdService } from '../services/charts/macd/chart-macd.service';
 
 @Component({
   selector: 'techanTs',

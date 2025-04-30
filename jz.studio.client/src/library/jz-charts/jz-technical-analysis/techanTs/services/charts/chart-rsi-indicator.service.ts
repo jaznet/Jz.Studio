@@ -28,7 +28,6 @@ export class ChartRsiIndic {
   rsi_yAxisR_grp: any;
   rsiAxisRectRight: any;
 
-
   yAxisLeftRectC!: SVGRectElement;
 
   rsiAxisGroupRight!: SVGGElement;

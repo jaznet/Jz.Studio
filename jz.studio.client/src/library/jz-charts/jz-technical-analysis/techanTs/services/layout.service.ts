@@ -2,9 +2,9 @@ import { ElementRef, Injectable } from '@angular/core';
 import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { VolumeChartService } from './charts/chart-volume.service';
-import { ChartMacdService } from './charts/chart-macd.service';
 import { ChartRsiIndic } from './charts/chart-rsi-indicator.service';
 import { Selection } from 'd3-selection';
+import { ChartMacdService } from './charts/macd/chart-macd.service';
 
 @Injectable({
   providedIn: 'root'
