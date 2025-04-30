@@ -186,7 +186,7 @@ export class LayoutService {
     this.scaffold.sections[3].width = this.rsiChart.rRsiSectionRect.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[3].height = this.rsiChart.rRsiSectionRect.node()?.height.baseVal.value ?? 0;
     this.rsiChart.rRsiSectionContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.rRsiSectionContent.attr('height', `${this.scaffold.sections[3].height-this.spacer}`);
+    this.rsiChart.rRsiSectionContent.attr('height', `${this.scaffold.sections[3].height}`);
 
     /* LEFT  B*/
     this.rsiChart.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
