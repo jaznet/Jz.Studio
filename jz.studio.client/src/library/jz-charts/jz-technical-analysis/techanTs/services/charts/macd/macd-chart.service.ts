@@ -6,25 +6,26 @@ import { axisLeft, axisRight } from 'd3-axis';
 import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
+import { MacdChartLayoutService } from './macd-chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChartMacdService {
+export class MacdChartService {
   gMacdChart: any;
   gMacdSection!: any;
   rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
   gMacdContent!: any;
-  rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined> ;
+  rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
   macdYscale: any;
 
-  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
+  //  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   gMacdAxisGroupLeft: any;
   rMacdAxisRectLeft: any;
 
-  gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
+  // gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
   gMacdAxisGroupRight: any;
   rMacdAxisRectRight: any;
 
@@ -32,7 +33,7 @@ export class ChartMacdService {
   axisRight: any;
 
   private _xScale: any;
-/*  private _yScale: any;*/
+  /*  private _yScale: any;*/
   private gMacd: any;
   private fastPeriod: number = 12; // Default fast EMA period
   private slowPeriod: number = 26; // Default slow EMA period
@@ -40,7 +41,8 @@ export class ChartMacdService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private macd: MacdChartLayoutService
   ) { }
 
   public xScale(scale: any): this {
@@ -49,7 +51,7 @@ export class ChartMacdService {
   }
 
   public setTargetGroup(gTargetRef: any): this {
-    this.gMacd=gTargetRef;
+    this.gMacd = gTargetRef;
     return this;
   }
 
@@ -101,7 +103,7 @@ export class ChartMacdService {
   public drawAxes(scaffold: scaffold) {
     // Calculate the min and max values from MACD data
     const allValues = this.data.macdData.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
-        return [d.macd, d.signal, d.histogram];
+      return [d.macd, d.signal, d.histogram];
     });
     const min = Math.min(...allValues);
     const max = Math.max(...allValues);
@@ -114,14 +116,14 @@ export class ChartMacdService {
     this.axisLeft = axisLeft(this.macdYscale);
     this.axisRight = axisRight(this.macdYscale);
 
-    this.gMacdAxisLeft.call(this.axisLeft);
-    this.gMacdAxisRight.call(this.axisRight);
+    this.macd.gMacdAxisLeft.call(this.axisLeft);
+    this.macd.gMacdAxisRight.call(this.axisRight);
 
     return this;
   }
 
   public draw(): void {
- //   this.data.macdData = this.calculateMacd(this.data.parsedData);
+    //   this.data.macdData = this.calculateMacd(this.data.parsedData);
 
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()

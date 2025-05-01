@@ -4,7 +4,8 @@ import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { VolumeChartService } from './charts/chart-volume.service';
 import { ChartRsiIndic } from './charts/chart-rsi-indicator.service';
 import { Selection } from 'd3-selection';
-import { ChartMacdService } from './charts/macd/chart-macd.service';
+import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service';
+import { MacdChartService } from './charts/macd/macd-chart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +53,8 @@ export class LayoutService {
   constructor(
     private ohlcChart: ChartOhlcService,
     private volumeChart: VolumeChartService,
-    private macdChart: ChartMacdService,
+    private macdChart: MacdChartService,
+    private macdLayout: MacdChartLayoutService,
     private rsiChart: ChartRsiIndic
   ) { }
 
@@ -160,23 +162,23 @@ export class LayoutService {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdChart.rMacdSectionRect.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.macdChart.rMacdSectionRect.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[2].pct) - this.spacerAdjusted}`);
-    this.scaffold.sections[2].width = this.macdChart.rMacdSectionRect.node()?.width.baseVal.value ?? 0;
-    this.scaffold.sections[2].height = this.macdChart.rMacdSectionRect.node()?.height.baseVal.value ?? 0;
+    this.macdLayout.rMacdSectionRect.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.macdLayout.rMacdSectionRect.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[2].pct) - this.spacerAdjusted}`);
+    this.scaffold.sections[2].width = this.macdLayout.rMacdSectionRect.node()?.width.baseVal.value ?? 0;
+    this.scaffold.sections[2].height = this.macdLayout.rMacdSectionRect.node()?.height.baseVal.value ?? 0;
 
-    this.macdChart.rMacdAxisRectLeft.attr('width', `${this.scaffold.sections[2].margins.right}`);
-    this.macdChart.rMacdAxisRectLeft.attr('height', `${this.scaffold.sections[2].height}`);
+    this.macdLayout.rMacdAxisRectLeft.attr('width', `${this.scaffold.sections[2].margins.right}`);
+    this.macdLayout.rMacdAxisRectLeft.attr('height', `${this.scaffold.sections[2].height}`);
 
-    this.macdChart.rMacdAxisRectRight.attr('width', `${this.scaffold.sections[2].margins.right}`);
-    this.macdChart.rMacdAxisRectRight.attr('height', `${this.scaffold.sections[2].height}`);
-    this.macdChart.gMacdSection.attr('transform', `translate(0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + (this.spacer * 3))})`);
-    this.macdChart.gMacdAxisLeft.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
-    //  this.macdChart.gMacdAxisRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},${this.scaffold.sections[2].margins.top})`);
-    this.macdChart.gMacdAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},0)`);
-    this.macdChart.rMacdContentRect.attr('width', `${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.left - this.scaffold.sections[2].margins.right}`);
-    this.macdChart.rMacdContentRect.attr('height', `${this.scaffold.sections[2].height}`);
-    this.macdChart.gMacdContent.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
+    this.macdLayout.rMacdAxisRectRight.attr('width', `${this.scaffold.sections[2].margins.right}`);
+    this.macdLayout.rMacdAxisRectRight.attr('height', `${this.scaffold.sections[2].height}`);
+    this.macdLayout.gMacdSection.attr('transform', `translate(0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + (this.spacer * 3))})`);
+    this.macdLayout.gMacdAxisLeft.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
+    //  this.macdLayout.gMacdAxisRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},${this.scaffold.sections[2].margins.top})`);
+    this.macdLayout.gMacdAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},0)`);
+    this.macdLayout.rMacdContentRect.attr('width', `${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.left - this.scaffold.sections[2].margins.right}`);
+    this.macdLayout.rMacdContentRect.attr('height', `${this.scaffold.sections[2].height}`);
+    this.macdLayout.gMacdContent.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
     // #endregion MACD
 
     // #region RSI

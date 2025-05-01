@@ -17,7 +17,8 @@ import { VolumeChartService } from '../services/charts/chart-volume.service';
 import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
 import { SmaChartService } from '../services/charts/chart-sma.service';
 import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
-import { ChartMacdService } from '../services/charts/macd/chart-macd.service';
+import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
+import { MacdChartService } from '../services/charts/macd/macd-chart.service';
 
 @Component({
   selector: 'techanTs',
@@ -134,7 +135,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private ohlcChart: ChartOhlcService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
-    private macdChart: ChartMacdService,
+    private macdChart: MacdChartService,
+    private macdLayout: MacdChartLayoutService,
     private rsi: ChartRsiIndic
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '111111');
@@ -219,19 +221,34 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdChart.gMacdSection = select(this.gMacdSection.nativeElement);
-    this.macdChart.rMacdSectionRect = select(this.rMacdSectionRect.nativeElement);
-    this.macdChart.gMacdContent = select(this.gMacdContent.nativeElement);
-    this.macdChart.rMacdContentRect = select(this.rMacdContentRect.nativeElement);
-    this.macdChart.gMacdChart = select(this.gMacdChart.nativeElement);
+    this.macdLayout.initializeSelections({
+      gMacdSection: this.gMacdSection,
+      rMacdSectionRect: this.rMacdSectionRect,
+      gMacdContent: this.gMacdContent,
+      rMacdContentRect: this.rMacdContentRect,
+      gMacdChart: this.gMacdChart,
 
-    this.macdChart.gMacdAxisLeft = select(this.gMacdAxisLeft.nativeElement);
-    this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
-    this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
+      gMacdAxisLeft: this.gMacdAxisLeft,
+      gMacdAxisGroupLeft: this.gMacdAxisGroupLeft,
+      rMacdAxisRectLeft: this.rMacdAxisRectLeft,
 
-    this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
-    this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
+      gMacdAxisRight: this.gMacdAxisRight,
+      gMacdAxisGroupRight: this.gMacdAxisGroupRight,
+      rMacdAxisRectRight: this.rMacdAxisRectRight
+    });
+    //this.macdChart.gMacdSection = select(this.gMacdSection.nativeElement);
+    //this.macdChart.rMacdSectionRect = select(this.rMacdSectionRect.nativeElement);
+    //this.macdChart.gMacdContent = select(this.gMacdContent.nativeElement);
+    //this.macdChart.rMacdContentRect = select(this.rMacdContentRect.nativeElement);
+    //this.macdChart.gMacdChart = select(this.gMacdChart.nativeElement);
+
+    //this.macdChart.gMacdAxisLeft = select(this.gMacdAxisLeft.nativeElement);
+    //this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
+    //this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
+
+    //this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
+    //this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
+    //this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
     this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
@@ -327,7 +344,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawMacd():void {
     this.macdChart
       .xScale(this.scales.dateScaleX)
-      .setTargetGroup(this.macdChart.gMacdChart)
+      .setTargetGroup(this.macdLayout.gMacdChart)
       .setPeriods(12, 26, 9) // Typical MACD periods
       .drawAxes(this.layout.scaffold)
       .draw();
