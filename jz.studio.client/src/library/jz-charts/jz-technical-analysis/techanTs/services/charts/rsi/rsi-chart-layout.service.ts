@@ -1,6 +1,6 @@
 import { ElementRef, Injectable } from "@angular/core";
 import { BaseChartLayoutService } from "../base-chart-layout-service";
-import { select } from "d3";
+import { Selection, select } from 'd3-selection';
 
 @Injectable({ providedIn: 'root' })
 export class RsiChartLayoutService extends BaseChartLayoutService {
