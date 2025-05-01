@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { line } from 'd3-shape';
 import { Selection, select } from 'd3-selection';
-import { ChartDataService } from '../chart-data.service';
-import { ScalesService } from '../scales.service';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
-import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
+import { ScalesService } from '../../scales.service';
+import { ChartDataService } from '../../chart-data.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChartRsiIndic {
+export class RsiChart {
  
   gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
   gRsiSectionContent: any;

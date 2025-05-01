@@ -12,22 +12,22 @@ import { MacdChartLayoutService } from './macd-chart-layout.service';
   providedIn: 'root',
 })
 export class MacdChartService {
-  gMacdChart: any;
-  gMacdSection!: any;
-  rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
+  //gMacdChart: any;
+  //gMacdSection!: any;
+  //rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
-  gMacdContent!: any;
-  rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
+  //gMacdContent!: any;
+  //rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
   macdYscale: any;
 
   //  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  gMacdAxisGroupLeft: any;
-  rMacdAxisRectLeft: any;
+  //gMacdAxisGroupLeft: any;
+  //rMacdAxisRectLeft: any;
 
-  // gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
-  gMacdAxisGroupRight: any;
-  rMacdAxisRectRight: any;
+  //// gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
+  //gMacdAxisGroupRight: any;
+  //rMacdAxisRectRight: any;
 
   axisLeft: any;
   axisRight: any;

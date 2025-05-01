@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChartRsiIndic } from './chart-rsi-indicator.service';
+import { RsiChart } from './rsi-chart.service';
 
 describe('ChartRsiIndic', () => {
-  let service: ChartRsiIndic;
+  let service: RsiChart;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ChartRsiIndic);
+    service = TestBed.inject(RsiChart);
   });
 
   it('should be created', () => {
