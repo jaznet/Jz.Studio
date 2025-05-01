@@ -2,10 +2,10 @@ import { ElementRef, Injectable } from '@angular/core';
 import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { VolumeChartService } from './charts/chart-volume.service';
-import { ChartRsiIndic } from './charts/chart-rsi-indicator.service';
 import { Selection } from 'd3-selection';
 import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service';
 import { MacdChartService } from './charts/macd/macd-chart.service';
+import { RsiChart } from './charts/rsi/rsi-chart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class LayoutService {
     private volumeChart: VolumeChartService,
     private macdChart: MacdChartService,
     private macdLayout: MacdChartLayoutService,
-    private rsiChart: ChartRsiIndic
+    private rsiChart: RsiChart
   ) { }
 
   createScaffolding() {

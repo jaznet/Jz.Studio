@@ -5,6 +5,7 @@ import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
 import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
+import { scaffold } from '../../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',

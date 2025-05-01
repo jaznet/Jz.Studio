@@ -16,9 +16,9 @@ import { select, selection, selectAll } from 'd3-selection';
 import { VolumeChartService } from '../services/charts/chart-volume.service';
 import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
 import { SmaChartService } from '../services/charts/chart-sma.service';
-import { ChartRsiIndic } from '../services/charts/chart-rsi-indicator.service';
 import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
 import { MacdChartService } from '../services/charts/macd/macd-chart.service';
+import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
 
 @Component({
   selector: 'techanTs',
@@ -137,7 +137,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private smaChart: SmaChartService,
     private macdChart: MacdChartService,
     private macdLayout: MacdChartLayoutService,
-    private rsi: ChartRsiIndic
+    private rsi: RsiChart
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '111111');
     document.documentElement.style.setProperty('--plt-chart-2', '#212922');
