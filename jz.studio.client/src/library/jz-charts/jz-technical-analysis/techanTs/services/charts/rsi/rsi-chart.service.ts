@@ -108,8 +108,6 @@ export class RsiChart {
   public drawAxes(scaffold: scaffold) {
     this.rsiYscale = scaleLinear().domain([0, 100]).range([scaffold.sections[3].height, 0]);
 
-    //this.gRsiAxisLeft = scaffold.sections[3].margins.left;
-    //this.gRsiAxisRight = scaffold.sections[3].margins.right;
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 

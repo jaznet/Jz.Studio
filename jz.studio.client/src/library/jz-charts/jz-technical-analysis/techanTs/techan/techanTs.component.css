@@ -43,14 +43,11 @@ text {
     font-size: 12px;
   }
 
-
-
 .title-text {
   fill: lightgray;
 }
 
-.ohlcRect {
-  fill: var(--plt-chart-1);
+.chart-title{
+    font-size:18px;
+    fill: darkgray;
 }
-
-
