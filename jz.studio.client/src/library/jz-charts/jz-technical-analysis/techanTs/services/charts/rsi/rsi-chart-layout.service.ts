@@ -29,9 +29,9 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
   }): void {
     // Shared assignments
     this.gSection = select(refs.gSection.nativeElement);
-    this.rSectionRect = select(refs.rSectionRect.nativeElement);
+    this.rSection = select(refs.rSectionRect.nativeElement);
     this.gContent = select(refs.gContent.nativeElement);
-    this.rContentRect = select(refs.rContentRect.nativeElement);
+    this.rContent = select(refs.rContentRect.nativeElement);
     this.gChart = select(refs.gChart.nativeElement);
 
     this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
@@ -43,7 +43,7 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
     this.rAxisRectRight = select(refs.rAxisRectRight.nativeElement);
 
     // RSI-specific assignments
-    this.gGroup = refs.gGroup.nativeElement;
+ //   this.gGroup = refs.gGroup.nativeElement;
     this.yAxisLeftRectC = refs.yAxisLeftRectC.nativeElement;
     this.yAxisRightRectC = refs.yAxisRightRectC.nativeElement;
   }

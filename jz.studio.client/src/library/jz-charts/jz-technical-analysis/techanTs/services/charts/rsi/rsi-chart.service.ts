@@ -6,27 +6,28 @@ import { scaleLinear } from 'd3-scale'
 import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
+import { RsiChartLayoutService } from './rsi-chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RsiChart {
  
-  gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
-  gRsiSectionContent: any;
-  rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
-  gRsiGroup: any;
-  rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
+  //gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
+  //gRsiSectionContent: any;
+  //rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
+  //gRsiGroup: any;
+  //rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 
-  gRsiAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  gRsiAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  rsi_yAxisL_grp: any;
-  rsiAxisRectLeft: any;
+  //gRsiAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
+  //gRsiAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
+  //rsi_yAxisL_grp: any;
+  //rsiAxisRectLeft: any;
 
-  gRsiAxisRight: any;
-  rsi_yAxisR_grp: any;
-  rsiAxisRectRight: any;
+  //gRsiAxisRight: any;
+  //rsi_yAxisR_grp: any;
+  //rsiAxisRectRight: any;
 
   yAxisLeftRectC!: SVGRectElement;
 
@@ -43,7 +44,8 @@ export class RsiChart {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private rsiLayout: RsiChartLayoutService
   ) { }
 
   public xScale(scale: any): this {
@@ -57,7 +59,7 @@ export class RsiChart {
   }
 
   public setTargetGroup(gTargetRef: any): this {
-    this.gRsi = select(gTargetRef).attr('class', 'rsi-chart');
+    this.gRsi = gTargetRef.attr('class', 'rsi-chart');
     return this;
   }
 
@@ -111,8 +113,8 @@ export class RsiChart {
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
-    this.gRsiAxisLeft.call(this.chartYaxisLeft);
-    this.gRsiAxisRight.call(this.chartYaxisRight);
+    this.rsiLayout.gAxisLeft.call(this.chartYaxisLeft);
+    this.rsiLayout.gAxisRight.call(this.chartYaxisRight);
 
     return this;
   }

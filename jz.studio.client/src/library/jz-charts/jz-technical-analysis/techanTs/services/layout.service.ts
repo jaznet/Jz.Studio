@@ -6,6 +6,7 @@ import { Selection } from 'd3-selection';
 import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service';
 import { MacdChartService } from './charts/macd/macd-chart.service';
 import { RsiChart } from './charts/rsi/rsi-chart.service';
+import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class LayoutService {
     private volumeChart: VolumeChartService,
     private macdChart: MacdChartService,
     private macdLayout: MacdChartLayoutService,
-    private rsiChart: RsiChart
+    private rsiLayout: RsiChartLayoutService
   ) { }
 
   createScaffolding() {
@@ -182,32 +183,32 @@ export class LayoutService {
     // #endregion MACD
 
     // #region RSI
-    this.rsiChart.rRsiSectionRect.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.rsiChart.rRsiSectionRect.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
-    this.scaffold.sections[3].width = this.rsiChart.rRsiSectionRect.node()?.width.baseVal.value ?? 0;
-    this.scaffold.sections[3].height = this.rsiChart.rRsiSectionRect.node()?.height.baseVal.value ?? 0;
-    this.rsiChart.rRsiSectionContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.rRsiSectionContent.attr('height', `${this.scaffold.sections[3].height}`);
+    this.rsiLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.rsiLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
+    this.scaffold.sections[3].width = this.rsiLayout.rSection.node()?.width.baseVal.value ?? 0;
+    this.scaffold.sections[3].height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
+    this.rsiLayout.rSection.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
+    this.rsiLayout.rSection.attr('height', `${this.scaffold.sections[3].height}`);
 
     /* LEFT  B*/
-    this.rsiChart.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiChart.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiLayout.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    this.rsiLayout.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    this.rsiLayout.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /*  RIGHT B */
-    this.rsiChart.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiChart.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  C*/
-    this.rsiChart.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiChart.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
-    /*  RIGHT C */
-    this.rsiChart.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiChart.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiChart.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    ///*  RIGHT C */
+    //this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    //this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    //this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
     // #endregion RSI
   }
 
@@ -233,11 +234,9 @@ export class LayoutService {
     /*  .setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);*/
     this.volumeChart.gVolumeAxisRight_grp.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
 
-    this.rsiChart.gRsiSection.attr('transform', `translate(
-      0,
-      ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + this.scaffold.sections[2].height) + (this.spacer * 4)})`);
-    this.rsiChart.rsiAxisGroupRight.setAttribute('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);
-    this.rsiChart.gRsiAxisLeft.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
-    this.rsiChart.gRsiSectionContent.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
+    this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + this.scaffold.sections[2].height) + (this.spacer * 4)})`);
+    this.rsiLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);
+    this.rsiLayout.gAxisLeft.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
+/*    this.rsiLayout.gSection.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);*/
   }
 }

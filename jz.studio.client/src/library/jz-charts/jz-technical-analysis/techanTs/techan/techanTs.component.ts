@@ -19,6 +19,7 @@ import { SmaChartService } from '../services/charts/chart-sma.service';
 import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
 import { MacdChartService } from '../services/charts/macd/macd-chart.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
+import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
 
 @Component({
   selector: 'techanTs',
@@ -101,6 +102,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gRsiSectionContent', { static: true }) gRsiSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
   @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
+  @ViewChild('gRsiChart', { static: true }) gRsiChart!: ElementRef<SVGGElement>;
 
   @ViewChild('gRsiAxisGroupLeft', { static: true }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
@@ -137,7 +139,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private smaChart: SmaChartService,
     private macdChart: MacdChartService,
     private macdLayout: MacdChartLayoutService,
-    private rsi: RsiChart
+    private rsiChart: RsiChart,
+    private rsiLayout: RsiChartLayoutService
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '111111');
     document.documentElement.style.setProperty('--plt-chart-2', '#212922');
@@ -236,27 +239,31 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       gMacdAxisGroupRight: this.gMacdAxisGroupRight,
       rMacdAxisRectRight: this.rMacdAxisRectRight
     });
-    //this.macdChart.gMacdSection = select(this.gMacdSection.nativeElement);
-    //this.macdChart.rMacdSectionRect = select(this.rMacdSectionRect.nativeElement);
-    //this.macdChart.gMacdContent = select(this.gMacdContent.nativeElement);
-    //this.macdChart.rMacdContentRect = select(this.rMacdContentRect.nativeElement);
-    //this.macdChart.gMacdChart = select(this.gMacdChart.nativeElement);
-
-    //this.macdChart.gMacdAxisLeft = select(this.gMacdAxisLeft.nativeElement);
-    //this.macdChart.gMacdAxisGroupLeft = select(this.gMacdAxisGroupLeft.nativeElement);
-    //this.macdChart.rMacdAxisRectLeft = select(this.rMacdAxisRectLeft.nativeElement);
-
-    //this.macdChart.gMacdAxisRight = select(this.gMacdAxisRight.nativeElement);
-    //this.macdChart.gMacdAxisGroupRight = select( this.gMacdAxisGroupRight.nativeElement);
-    //this.macdChart.rMacdAxisRectRight = select( this.rMacdAxisRectRight.nativeElement);
     // #rendegion MACD
 
-    this.rsi.gRsiSection = select( this.gRsiSection.nativeElement);
-    this.rsi.rRsiSectionRect = select(this.rRsiSectionRect.nativeElement);
-    this.rsi.gRsiSection = select(this.gRsiSection.nativeElement);
-    this.rsi.gRsiSectionContent = select(this.gRsiSectionContent.nativeElement)
-    this.rsi.rRsiSectionContent = select( this.rRsiSectionContent.nativeElement);
-    this.rsi.gRsiGroup = this.gRsiGroupRef.nativeElement;
+    //#region RSI
+    this.rsiLayout.initializeSelections({
+      gSection: this.gRsiSection,
+      rSectionRect: this.rRsiSectionRect,
+      gContent: this.gRsiSectionContent,
+      rContentRect: this.rRsiSectionContent,
+      gChart: this.gRsiChart, // if used as the chart base
+
+      gAxisLeft: this.gRsiAxisLeft,
+      gAxisGroupLeft: this.gRsiAxisGroupLeft,
+      rAxisRectLeft: this.yAxisLeftRectC,
+
+      gAxisRight: this.gRsiAxisRight,
+      gAxisGroupRight: this.rsiAxisGroupRight,
+      rAxisRectRight: this.yAxisRightRectC,
+
+      gGroup: this.gRsiGroupRef,
+      yAxisLeftRectC: this.yAxisLeftRectC,
+      yAxisRightRectC: this.yAxisRightRectC
+    });
+    //#endregion RSI
+
+
 
    this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
@@ -270,13 +277,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
 
-    this.rsi.gRsiAxisLeft = select(this.gRsiAxisLeft.nativeElement);
-    this.rsi.gRsiAxisGroupLeft = select(this.gRsiAxisGroupLeft.nativeElement);
-    this.rsi.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
+    //this.rsiLayout.gAxisLeft = select(this.gRsiAxisLeft.nativeElement);
+    //this.rsiLayout.gAxisGroupLeft = select(this.gRsiAxisGroupLeft.nativeElement);
+    //this.rsiLayout.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
 
-    this.rsi.gRsiAxisRight = select(this.gRsiAxisRight.nativeElement);
-    this.rsi.rsiAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
-    this.rsi.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
+    //this.rsiLayout.gAxisRight = select(this.gRsiAxisRight.nativeElement);
+    //this.rsiLayout.gAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
+    //this.rsiLayout.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
   }
 
   constructChart(): void {
@@ -351,10 +358,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawRsi(): void {
-    this.rsi
+    this.rsiChart
       .xScale(this.scales.dateScaleX)
-     /* .yScale(this.scales.rsiYscale)*/
-      .setTargetGroup(this.rsi.gRsiGroup) // Define a <g> for RSI
+      /* .yScale(this.scales.rsiYscale)*/
+      .setTargetGroup(this.rsiLayout.gChart) // Define a <g> for RSI
       .setRollingPeriod(14) // Optional: Change the period
       .drawAxes(this.layout.scaffold)
       .draw();
