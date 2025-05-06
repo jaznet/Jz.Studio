@@ -17,7 +17,7 @@
 
           <!-- #region OHLC SECTION -->
           <g #gOhlcSection id="gOhlcSection" class="rsiSectionontainer">
-            <rect #rOhlcSection id="rOhlcSection" x="0" y="0" width="0" height="0"></rect>
+            <rect #rOhlcSection id="rOhlcSection" x="0" y="0" width="0" height="0" class="chart-section"></rect>
 
             <!-- OHLC LEFT AXIS-->
             <g #gOhlcAxisGroupLeft id="gOhlcAxisGroupLeft">
@@ -52,7 +52,7 @@
 
           <!-- #region VOLUME-->
           <g #volumeSection id="volumeSection">
-            <rect #rVolumeSection id="rVolumeSection" fill="var(--plt-chart-1)" width="0" height="0"></rect>
+            <rect #rVolumeSection id="rVolumeSection" fill="var(--plt-chart-1)" width="0" height="0" class="chart-section"></rect>
             <!-- Section Volume Chart -->
             <!-- Volume LEFT AXIS-->
             <g #gVolumeAxisLeft_grp id="gVolumeAxisLeft_grp">
@@ -78,8 +78,7 @@
 
           <!-- #region SECTION MACD -->
           <g #gMacdSection id="gMacdSection">
-          
-            <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0" fill="var(--plt-clr-1)"></rect>
+            <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0"  class="chart-section"></rect>
 
             <!-- LEFT AXIS MACD  -->
             <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
@@ -104,7 +103,7 @@
           <!-- #region SECTION RSI -->
           <g #gRsiSection id="gRsiSection">
             <text x="20" y="0" text-anchor="start" dominant-baseline="hanging"  class="chart-title">RSI</text>
-            <rect #rRsiSectionRect id="rRsiSectionRect" x="0" y="0" width="0" height="0"></rect>
+            <rect #rRsiSectionRect id="rRsiSectionRect" x="0" y="0" width="0" height="0" class="chart-section"></rect>
             <!-- LEFT AXIS-->
             <g #gRsiAxisGroupLeft id="gRsiAxisGroupLeft">
               <rect #yAxisLeftRectC width="0" height="0" class="axis y-axis "></rect>
@@ -118,9 +117,10 @@
             </g>
 
             <g #gRsiSectionContent id="gRsiSectionContent">
+              <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">RSI</text>
               <rect #rRsiSectionContent id="rRsiSectionContent" fill="var(--plt-chart-1)" width="0" height="0"></rect>
               <g #gRsiChart id="gRsiChart">
-                <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">RSI</text>
+
               </g>
             </g>
            
