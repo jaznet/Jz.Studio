@@ -1,12 +1,12 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartOhlcService } from './charts/chart-ohlc.service';
-import { VolumeChartService } from './charts/chart-volume.service';
 import { Selection } from 'd3-selection';
 import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service';
 import { MacdChartService } from './charts/macd/macd-chart.service';
 import { RsiChart } from './charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
+import { VolumeChartService } from './charts/volume/chart-volume.service';
 
 @Injectable({
   providedIn: 'root'

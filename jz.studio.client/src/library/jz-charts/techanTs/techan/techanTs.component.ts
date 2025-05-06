@@ -3,23 +3,23 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, O
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
-import { PopoverHttpErrorComponent } from '../../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
-import { PopOverLoadingComponent } from '../../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { ohlcData, SectionAttributes } from '../interfaces/techan-interfaces';
-import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
-import { JzPopOversService } from '../../../../jz-pop-overs/jz-pop-overs.service';
 import { ChartDataService } from '../services/chart-data.service';
 import { LayoutService } from '../services/layout.service';
 import { PartsAxesService } from '../services/parts-axes.service';
 import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
-import { VolumeChartService } from '../services/charts/chart-volume.service';
 import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
 import { SmaChartService } from '../services/charts/chart-sma.service';
 import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
 import { MacdChartService } from '../services/charts/macd/macd-chart.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
+import { PopoverHttpErrorComponent } from '../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
+import { StockPriceHistory } from '../../../../models/stock-price-history.model';
+import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
+import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { VolumeChartService } from '../services/charts/volume/chart-volume.service';
 
 @Component({
   selector: 'techanTs',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { max, min, extent } from 'd3-array';
-import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
+import { StockPriceHistory } from '../../../../models/stock-price-history.model';
 import { ohlcData } from '../interfaces/techan-interfaces';
 
 @Injectable({
