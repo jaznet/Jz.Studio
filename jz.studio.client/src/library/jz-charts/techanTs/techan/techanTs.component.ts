@@ -255,11 +255,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
       gAxisRight: this.gRsiAxisRight,
       gAxisGroupRight: this.rsiAxisGroupRight,
-      rAxisRectRight: this.yAxisRightRectC,
+      rAxisRectRight: this.yAxisRightRectC
 
-      gGroup: this.gRsiGroupRef,
-      yAxisLeftRectC: this.yAxisLeftRectC,
-      yAxisRightRectC: this.yAxisRightRectC
+
     });
     //#endregion RSI
 

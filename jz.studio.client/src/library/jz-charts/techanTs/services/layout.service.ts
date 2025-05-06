@@ -190,15 +190,15 @@ export class LayoutService {
     this.rsiLayout.rSection.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
     this.rsiLayout.rSection.attr('height', `${this.scaffold.sections[3].height}`);
 
-    /* LEFT  B*/
-    this.rsiLayout.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiLayout.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiLayout.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    ///* LEFT  B*/
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    //this.rsiLayout.yAxisLeftRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
-    /*  RIGHT B */
-    this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
+    ///*  RIGHT B */
+    //this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
+    //this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
+    //this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
 
     /* LEFT  C*/
     //this.rsiLayout.yAxisLeftRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);

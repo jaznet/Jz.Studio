@@ -4,9 +4,9 @@ import { Selection, select } from 'd3-selection';
 
 @Injectable({ providedIn: 'root' })
 export class RsiChartLayoutService extends BaseChartLayoutService {
-  gGroup!: SVGGElement;
-  yAxisLeftRectC!: SVGRectElement;
-  yAxisRightRectC!: SVGRectElement;
+  //gGroup!: SVGGElement;
+  //yAxisLeftRectC!: SVGRectElement;
+  //yAxisRightRectC!: SVGRectElement;
 
   initializeSelections(refs: {
     gSection: ElementRef<SVGGElement>;
@@ -23,9 +23,9 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
     gAxisGroupRight: ElementRef<SVGGElement>;
     rAxisRectRight: ElementRef<SVGRectElement>;
 
-    gGroup: ElementRef<SVGGElement>;
-    yAxisLeftRectC: ElementRef<SVGRectElement>;
-    yAxisRightRectC: ElementRef<SVGRectElement>;
+    //gGroup: ElementRef<SVGGElement>;
+    //yAxisLeftRectC: ElementRef<SVGRectElement>;
+    //yAxisRightRectC: ElementRef<SVGRectElement>;
   }): void {
     // Shared assignments
     this.gSection = select(refs.gSection.nativeElement);
@@ -44,7 +44,7 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
 
     // RSI-specific assignments
  //   this.gGroup = refs.gGroup.nativeElement;
-    this.yAxisLeftRectC = refs.yAxisLeftRectC.nativeElement;
-    this.yAxisRightRectC = refs.yAxisRightRectC.nativeElement;
+    //this.yAxisLeftRectC = refs.yAxisLeftRectC.nativeElement;
+    //this.yAxisRightRectC = refs.yAxisRightRectC.nativeElement;
   }
 }

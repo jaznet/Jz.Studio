@@ -33,10 +33,9 @@
 
             <!-- OHLC GROUP-->
             <g #gOhlcSectionContent id="gOhlcSectionContent" class="rsiSectionontainer">
-              <rect #rOhlcSectionContent class="rOhlcSectionContent" id="rOhlcSectionContent"
+              <rect #rOhlcSectionContent class="chart-section" id="rOhlcSectionContent"
                     x="0" y="0"
                     width="0" height="0"
-                    fill="transparent"
                     [attr.width]="0"
                     [attr.height]="0">
               </rect>
@@ -67,7 +66,7 @@
             </g>
 
             <g #volumeContent id="volumeContent">
-              <rect #volumeContentRect id="volumeContentRect" width="0" height="0" fill="transparent"></rect>
+              <rect #volumeContentRect id="volumeContentRect" width="0" height="0" class="chart-section"></rect>
               <g #volumeChart id="volumeChart"></g>
 
               <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="chart-title" font-size="12" fill="yellow">VOL</text>
@@ -102,7 +101,7 @@
 
           <!-- #region SECTION RSI -->
           <g #gRsiSection id="gRsiSection">
-            <text x="20" y="0" text-anchor="start" dominant-baseline="hanging"  class="chart-title">RSI</text>
+            <text x="20" y="0" text-anchor="start" dominant-baseline="hanging"  class="chart-section">RSI</text>
             <rect #rRsiSectionRect id="rRsiSectionRect" x="0" y="0" width="0" height="0" class="chart-section"></rect>
             <!-- LEFT AXIS-->
             <g #gRsiAxisGroupLeft id="gRsiAxisGroupLeft">
