@@ -1,6 +1,6 @@
 
 .svg-container {
-/*  margin: 8px;*/
+  /*  margin: 8px;*/
   /*  background-color: var(--plt-clr-1);*/
 }
 
@@ -8,21 +8,40 @@
   fill: var(--plt-chart-1);
 }
 
+.chart-title {
+  font-size: 18px;
+  fill: darkgray;
+}
+
 .axis {
   fill: var(--plt-chart-2);
 }
 
 .tick text {
-  fill: white;
+  fill: #B0BEC5;
 }
 
 text {
   fill: yellow;
-} 
+}
+
+.domain {
+  stroke: var(--plt-chart-2);
+}
 
 .x-axis {
   fill: var(--plt-chart-1);
 }
+
+  .x-axis .tick line {
+    stroke: var(--plt-chart-2);
+    stroke-width: 1;
+  }
+
+  .x-axis > path {
+    stroke: var(--plt-chart-2);
+    stroke-width: 1;
+  }
 
 .y-axis {
   fill: var(--plt-chart-1);
@@ -30,7 +49,7 @@ text {
 
   .y-axis path {
     stroke: yellow;
-    stroke-width: 2;
+    stroke-width: 1;
   }
 
   .y-axis .tick line {
@@ -45,9 +64,4 @@ text {
 
 .title-text {
   fill: lightgray;
-}
-
-.chart-title{
-    font-size:18px;
-    fill: darkgray;
 }

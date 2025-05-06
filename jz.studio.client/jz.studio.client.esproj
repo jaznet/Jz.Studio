@@ -11,6 +11,7 @@
     <Folder Include="src\app-view-models\dataviz\components\" />
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\assets\css\" />
+    <Folder Include="src\library\jz-charts\techanTs\styles\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include=".backup\jz-spirograph\jz-spirograph\" />

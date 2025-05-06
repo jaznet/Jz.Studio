@@ -141,8 +141,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private rsiChart: RsiChart,
     private rsiLayout: RsiChartLayoutService
   ) {
-    document.documentElement.style.setProperty('--plt-chart-1', '111111');
-    document.documentElement.style.setProperty('--plt-chart-2', '#212922');
+    document.documentElement.style.setProperty('--plt-chart-1', '#0d0d0d');
+    document.documentElement.style.setProperty('--plt-chart-2', '#B0BEC5');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
