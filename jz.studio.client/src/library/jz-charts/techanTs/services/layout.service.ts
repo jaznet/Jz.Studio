@@ -6,7 +6,7 @@ import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service'
 import { MacdChartService } from './charts/macd/macd-chart.service';
 import { RsiChart } from './charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
-import { VolumeChartService } from './charts/volume/chart-volume.service';
+import { VolumeChartService } from './charts/volume/volume-chart.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StockPriceHistory } from '../../../../../models/stock-price-history.model';
+import { StockPriceHistory } from '../../../../models/stock-price-history.model';
 
 @Injectable({
   providedIn: 'root'

@@ -19,7 +19,7 @@ import { PopoverHttpErrorComponent } from '../../../jz-pop-overs/pop-over-http-e
 import { StockPriceHistory } from '../../../../models/stock-price-history.model';
 import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { VolumeChartService } from '../services/charts/volume/chart-volume.service';
+import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 
 @Component({
   selector: 'techanTs',
