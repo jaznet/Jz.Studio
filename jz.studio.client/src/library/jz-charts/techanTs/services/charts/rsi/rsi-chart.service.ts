@@ -29,7 +29,7 @@ export class RsiChart {
   //rsi_yAxisR_grp: any;
   //rsiAxisRectRight: any;
 
-  yAxisLeftRectC!: SVGRectElement;
+  rVolumeAxisLeft!: SVGRectElement;
 
   rsiAxisGroupRight!: SVGGElement;
   yAxisRightRectC!: SVGRectElement;

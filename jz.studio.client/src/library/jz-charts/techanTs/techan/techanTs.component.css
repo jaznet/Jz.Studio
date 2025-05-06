@@ -5,7 +5,7 @@
 }
 
 .chart-section {
-    fill: #0d0d0d
+  fill: var(--plt-chart-1);
 }
 
 .axis {
@@ -21,11 +21,11 @@ text {
 } 
 
 .x-axis {
-  fill: var(--plt-chart-2);
+  fill: var(--plt-chart-1);
 }
 
 .y-axis {
-  fill: var(--plt-chart-2);
+  fill: var(--plt-chart-1);
 }
 
   .y-axis path {

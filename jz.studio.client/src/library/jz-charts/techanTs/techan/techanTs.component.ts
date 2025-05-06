@@ -106,7 +106,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gRsiAxisGroupLeft', { static: true }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisLeftRectC', { static: true }) yAxisLeftRectC!: ElementRef<SVGRectElement>;
 
   @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('gRsiAxisRight', { static: true }) gRsiAxisRight!: ElementRef<SVGGElement>;
@@ -251,7 +250,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
       gAxisLeft: this.gRsiAxisLeft,
       gAxisGroupLeft: this.gRsiAxisGroupLeft,
-      rAxisRectLeft: this.yAxisLeftRectC,
+      rAxisRectLeft: this.rVolumeAxisLeft,
 
       gAxisRight: this.gRsiAxisRight,
       gAxisGroupRight: this.rsiAxisGroupRight,
@@ -277,7 +276,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
     //this.rsiLayout.gAxisLeft = select(this.gRsiAxisLeft.nativeElement);
     //this.rsiLayout.gAxisGroupLeft = select(this.gRsiAxisGroupLeft.nativeElement);
-    //this.rsiLayout.yAxisLeftRectC = this.yAxisLeftRectC.nativeElement;
+    //this.rsiLayout.rVolumeAxisLeft = this.rVolumeAxisLeft.nativeElement;
 
     //this.rsiLayout.gAxisRight = select(this.gRsiAxisRight.nativeElement);
     //this.rsiLayout.gAxisGroupRight = this.rsiAxisGroupRight.nativeElement;

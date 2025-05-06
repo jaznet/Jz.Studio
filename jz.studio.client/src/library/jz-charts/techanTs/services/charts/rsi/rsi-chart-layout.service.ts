@@ -5,7 +5,7 @@ import { Selection, select } from 'd3-selection';
 @Injectable({ providedIn: 'root' })
 export class RsiChartLayoutService extends BaseChartLayoutService {
   //gGroup!: SVGGElement;
-  //yAxisLeftRectC!: SVGRectElement;
+  //rVolumeAxisLeft!: SVGRectElement;
   //yAxisRightRectC!: SVGRectElement;
 
   initializeSelections(refs: {
@@ -24,7 +24,7 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
     rAxisRectRight: ElementRef<SVGRectElement>;
 
     //gGroup: ElementRef<SVGGElement>;
-    //yAxisLeftRectC: ElementRef<SVGRectElement>;
+    //rVolumeAxisLeft: ElementRef<SVGRectElement>;
     //yAxisRightRectC: ElementRef<SVGRectElement>;
   }): void {
     // Shared assignments
@@ -44,7 +44,7 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
 
     // RSI-specific assignments
  //   this.gGroup = refs.gGroup.nativeElement;
-    //this.yAxisLeftRectC = refs.yAxisLeftRectC.nativeElement;
+    //this.rVolumeAxisLeft = refs.rVolumeAxisLeft.nativeElement;
     //this.yAxisRightRectC = refs.yAxisRightRectC.nativeElement;
   }
 }
