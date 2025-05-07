@@ -1,5 +1,5 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
@@ -21,10 +21,12 @@ import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 
+
 @Component({
   selector: 'techanTs',
   templateUrl: './techanTs.component.html',
-  styleUrls: ['./techanTs.component.css'] 
+  styleUrls: ['./techanTs.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';

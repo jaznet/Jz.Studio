@@ -1,0 +1,64 @@
+
+.svg-container {
+  /*  margin: 8px;*/
+  /*  background-color: var(--plt-clr-1);*/
+}
+
+.chart-section {
+  fill: var(--plt-chart-1);
+}
+
+.chart-title {
+  font-size: 18px;
+  fill: darkgray;
+}
+
+.x-axis-group {
+  fill: var(--plt-chart-1);
+}
+
+::ng-deep .tick {
+  color: orange;
+  stroke: var(--plt-chart-3);
+  stroke-width: 1;
+}
+
+.domain {
+  stroke: var(--plt-chart-2);
+}
+
+.x-axis {
+/*  color: var(--plt-chart-2);
+  stroke-width: 1;*/
+}
+
+.x-axis > .tick {
+  color: var(--plt-chart-2);
+  stroke-width: 1;
+}
+
+  .x-axis > .domain {
+    color: red;
+    stroke: var(--plt-chart-2);
+    stroke-width: 1;
+  }
+
+.y-axis {
+  /*  color: var(--plt-chart-2);
+  stroke-width: 1;*/
+}
+
+.y-axis > .tick {
+  color: var(--plt-chart-2);
+  stroke-width: 1;
+}
+
+.y-axis > .domain {
+  color: red;
+  stroke: var(--plt-chart-2);
+  stroke-width: 1;
+}
+
+.title-text {
+  fill: lightgray;
+}

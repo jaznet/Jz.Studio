@@ -7,8 +7,8 @@
       <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0"></rect>
      
         <!-- X AXIS TOP -->
-        <g #xAxisTopGroup id="xAxisTopGroup">
-          <rect #xAxisTopRect id="xAxisTopRect" class="axis x-axis" width="0" height="0"></rect>
+        <g #xAxisTopGroup id="xAxisTopGroup" class="x-axis-group" >
+          <rect #xAxisTopRect id="xAxisTopRect" width="0" height="0"></rect>
           <g #xAxisMonthsTop id="xAxisMonthsTop" class="x-axis"></g>
         </g>
 
@@ -69,7 +69,7 @@
               <rect #volumeContentRect id="volumeContentRect" width="0" height="0" class="chart-section"></rect>
               <g #volumeChart id="volumeChart"></g>
 
-              <text x="28" y="8" text-anchor="start" dominant-baseline="hanging" class="chart-title" font-size="12" fill="yellow">VOL</text>
+              <text x="20" y="8" text-anchor="start" dominant-baseline="hanging" class="chart-title" font-size="12" fill="yellow">VOL</text>
 
             </g>
           </g>
@@ -93,7 +93,7 @@
 
             <g #gMacdContent id="gMacdContent">
               <rect #rMacdContentRect id="rMacdContentRect" width="0" height="0"></rect>
-              <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">MCAD</text>
+              <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">MACD</text>
               <g #gMacdChart id="gMacdChart"></g>
             </g>
           </g>
@@ -129,7 +129,7 @@
         </g>
 
         <!-- X AXIS BOTTOM -->
-        <g #xAxisBottomGroup id="xAxisBottomGroup">
+        <g #xAxisBottomGroup id="xAxisBottomGroup" class="x-axis-group">
           <rect #xAxisBottomRect id="xAxisBottomRect" width="0" height="0" x="0" y="0" class="axis"></rect>
           <g #xAxisMonthsBottom id="xAxisMonthsBottom" class="x-axis"></g>
         </g>
