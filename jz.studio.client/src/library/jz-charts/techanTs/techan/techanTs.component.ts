@@ -21,7 +21,6 @@ import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 
-
 @Component({
   selector: 'techanTs',
   templateUrl: './techanTs.component.html',
@@ -64,9 +63,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gOhlcAxisRectLeft', { static: true }) gOhlcAxisRectLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcAxisLeft', { static: true }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
 
-  @ViewChild('gOhlcAxisRectRight', { static: true }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcAxisGroupRight', { static: true }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('gOhlcAxisRight', { static: true }) gOhlcAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('gOhlcAxisRectRight', { static: true }) gOhlcAxisRectRight!: ElementRef<SVGRectElement>;
+  @ViewChild('rOhlcAxisRight', { static: true }) rOhlcAxisRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
   // #region VOLUME GROUP
@@ -143,8 +142,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private rsiChart: RsiChart,
     private rsiLayout: RsiChartLayoutService
   ) {
-    document.documentElement.style.setProperty('--plt-chart-1', '#0d0d0d');
-    document.documentElement.style.setProperty('--plt-chart-2', '#B0BEC5');
+    document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
+    document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
@@ -200,9 +199,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart.gOhlcAxisGroupLeft = select(this.gOhlcAxisGroupLeft.nativeElement);
     this.ohlcChart.gOhlcAxisRectLeft = select( this.gOhlcAxisRectLeft.nativeElement);
 
+    this.ohlcChart.gOhlcAxisGroupRight = select(this.gOhlcAxisGroupRight.nativeElement);
     this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
-    this.ohlcChart.gOhlcAxisRectRight = select(this.gOhlcAxisRectRight.nativeElement);
-    this.ohlcChart.gOhlcAxisRectRight = select(this.gOhlcAxisRectRight.nativeElement);
+    this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
+    this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
 
     this.ohlcChart.gOhlcSection = this.gOhlcSection.nativeElement;
     this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);

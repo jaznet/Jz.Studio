@@ -13,26 +13,11 @@ import { RsiChartLayoutService } from './rsi-chart-layout.service';
 })
 export class RsiChart {
  
-  //gRsiSection!: Selection<SVGGElement, unknown, null, undefined>;
-  //gRsiSectionContent: any;
-  //rRsiSectionContent!: Selection<SVGRectElement, unknown, null, undefined>
-  //gRsiGroup: any;
-  //rRsiSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   rsiYscale: any;
 
-  //gRsiAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  //gRsiAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  //rsi_yAxisL_grp: any;
-  //rsiAxisRectLeft: any;
 
-  //gRsiAxisRight: any;
-  //rsi_yAxisR_grp: any;
-  //rsiAxisRectRight: any;
 
-  rVolumeAxisLeft!: SVGRectElement;
 
-  rsiAxisGroupRight!: SVGGElement;
-  yAxisRightRectC!: SVGRectElement;
 
   chartYaxisLeft: any;
   chartYaxisRight: any;

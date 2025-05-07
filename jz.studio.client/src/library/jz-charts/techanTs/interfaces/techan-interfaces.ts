@@ -13,6 +13,18 @@ export interface Margins {
   left: number;
 }
 
+export interface SectionAttributes {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  margins: Margins;
+  content: RectDimensions;
+  fill?: string;
+  spacer: number;
+  pct: number;
+}
+
 export interface scaffold {
   height: number;
   width: number;
@@ -30,17 +42,7 @@ export interface SvgAttributes {
   width: number;
 }
 
-export interface SectionAttributes {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  margins: Margins;
-  content: RectDimensions;
-  fill?: string;
-  spacer: number;
-  pct: number;
-}
+
 
 export interface ohlcData {
   timestamp: Date;

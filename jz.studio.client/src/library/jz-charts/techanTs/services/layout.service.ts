@@ -145,8 +145,8 @@ export class LayoutService {
     this.ohlcChart.rOhlcSectionContent.attr('height', `${this.scaffold.sections[0].height}`);
     this.ohlcChart.gOhlcAxisRectLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
     this.ohlcChart.gOhlcAxisRectLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
-    this.ohlcChart.gOhlcAxisRectRight.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcChart.gOhlcAxisRectRight.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcChart.rOhlcAxisRight.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcChart.rOhlcAxisRight.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
     // #endregion OHLC
 
     // #region VOLUME
@@ -187,29 +187,10 @@ export class LayoutService {
     this.rsiLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer*5)) * this.scaffold.sections[3].pct) }`);
     this.scaffold.sections[3].width = this.rsiLayout.rSection.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[3].height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
-    this.rsiLayout.rSection.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
-    this.rsiLayout.rSection.attr('height', `${this.scaffold.sections[3].height}`);
+    this.rsiLayout.rContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
+    this.rsiLayout.rContent.attr('height', `${this.scaffold.sections[3].height}`);
 
-    ///* LEFT  B*/
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('fill', 'var(--plt-clr-2)');
 
-    ///*  RIGHT B */
-    //this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    //this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    //this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
-
-    /* LEFT  C*/
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    //this.rsiLayout.rVolumeAxisLeft.setAttribute('fill', 'var(--plt-clr-2)');
-
-    ///*  RIGHT C */
-    //this.rsiLayout.yAxisRightRectC.setAttribute('width', `${this.scaffold.sections[3].margins.right}`);
-    //this.rsiLayout.yAxisRightRectC.setAttribute('height', `${this.scaffold.sections[3].height}`);
-    //this.rsiLayout.yAxisRightRectC.setAttribute('fill', 'var(--plt-clr-2)');
-    // #endregion RSI
   }
 
   alignChartsToScaffold(): void {
@@ -223,9 +204,7 @@ export class LayoutService {
 
     this.ohlcChart.gOhlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
     this.ohlcChart.gOhlcSectionContent.attr('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
-
-    //this.ohlcChart.gOhlcAxisLeft.setAttribute('transform', `translate(40,0)`);
-    this.ohlcChart.gOhlcAxisRectRight.attr('transform', `translate(${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.right},${this.scaffold.sections[0].margins.top})`);
+    this.ohlcChart.gOhlcAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[0].margins.left + this.scaffold.sections[0].content.width},0)`);
 
     this.volumeChart.gVolumeSection.attr('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
     this.volumeChart.gVolumeSectionContent.attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);
