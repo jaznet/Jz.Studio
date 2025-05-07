@@ -141,7 +141,8 @@ export class LayoutService {
     console.log(this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
     this.scaffold.sections[0].width = this.ohlcChart.rOhlcSection.node()!.width.baseVal.value;
     this.scaffold.sections[0].height = (this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
-
+    this.scaffold.sections[0].content.width = (this.ohlcChart.rOhlcSectionContent.node()!.width.baseVal.value);
+    this.scaffold.sections[0].content.height = (this.ohlcChart.rOhlcSectionContent.node()!.height.baseVal.value);
     this.ohlcChart.rOhlcSectionContent.attr('height', `${this.scaffold.sections[0].height}`);
     this.ohlcChart.gOhlcAxisRectLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
     this.ohlcChart.gOhlcAxisRectLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
