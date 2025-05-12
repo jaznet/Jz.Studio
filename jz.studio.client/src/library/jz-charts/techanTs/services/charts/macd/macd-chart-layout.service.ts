@@ -1,49 +1,38 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { select, Selection } from 'd3-selection';
+import { BaseChartLayoutService } from '../base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
-export class MacdChartLayoutService {
-  gMacdSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
-  gMacdContent!: Selection<SVGGElement, unknown, null, undefined>;
-  rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
-  gMacdChart!: Selection<SVGGElement, unknown, null, undefined>;
+export class MacdChartLayoutService extends BaseChartLayoutService {
 
-  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  gMacdAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  rMacdAxisRectLeft!: Selection<SVGRectElement, unknown, null, undefined>;
-
-  gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
-  gMacdAxisGroupRight!: Selection<SVGGElement, unknown, null, undefined>;
-  rMacdAxisRectRight!: Selection<SVGRectElement, unknown, null, undefined>;
 
   initializeSelections(refs: {
-    gMacdSection: ElementRef<SVGGElement>;
-    rMacdSectionRect: ElementRef<SVGRectElement>;
-    gMacdContent: ElementRef<SVGGElement>;
-    rMacdContentRect: ElementRef<SVGRectElement>;
-    gMacdChart: ElementRef<SVGGElement>;
+    gSection: ElementRef<SVGGElement>;
+    rSectionRect: ElementRef<SVGRectElement>;
+    gContent: ElementRef<SVGGElement>;
+    rContentRect: ElementRef<SVGRectElement>;
+    gChart: ElementRef<SVGGElement>;
 
-    gMacdAxisLeft: ElementRef<SVGGElement>;
-    gMacdAxisGroupLeft: ElementRef<SVGGElement>;
-    rMacdAxisRectLeft: ElementRef<SVGRectElement>;
+    gAxisLeft: ElementRef<SVGGElement>;
+    gAxisGroupLeft: ElementRef<SVGGElement>;
+    rAxisRectLeft: ElementRef<SVGRectElement>;
 
-    gMacdAxisRight: ElementRef<SVGGElement>;
-    gMacdAxisGroupRight: ElementRef<SVGGElement>;
-    rMacdAxisRectRight: ElementRef<SVGRectElement>;
+    gAxisRight: ElementRef<SVGGElement>;
+    gAxisGroupRight: ElementRef<SVGGElement>;
+    rAxisRectRight: ElementRef<SVGRectElement>;
   }): void {
-    this.gMacdSection = select(refs.gMacdSection.nativeElement);
-    this.rMacdSectionRect = select(refs.rMacdSectionRect.nativeElement);
-    this.gMacdContent = select(refs.gMacdContent.nativeElement);
-    this.rMacdContentRect = select(refs.rMacdContentRect.nativeElement);
-    this.gMacdChart = select(refs.gMacdChart.nativeElement);
+    this.gSection = select(refs.gSection.nativeElement);
+    this.rSection = select(refs.rSectionRect.nativeElement);
+    this.gContent = select(refs.gContent.nativeElement);
+    this.rContent = select(refs.rContentRect.nativeElement);
+    this.gChart = select(refs.gChart.nativeElement);
 
-    this.gMacdAxisLeft = select(refs.gMacdAxisLeft.nativeElement);
-    this.gMacdAxisGroupLeft = select(refs.gMacdAxisGroupLeft.nativeElement);
-    this.rMacdAxisRectLeft = select(refs.rMacdAxisRectLeft.nativeElement);
+    this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
+    this.gAxisGroupLeft = select(refs.gAxisGroupLeft.nativeElement);
+    this.rAxisLeft = select(refs.rAxisRectLeft.nativeElement);
 
-    this.gMacdAxisRight = select(refs.gMacdAxisRight.nativeElement);
-    this.gMacdAxisGroupRight = select(refs.gMacdAxisGroupRight.nativeElement);
-    this.rMacdAxisRectRight = select(refs.rMacdAxisRectRight.nativeElement);
+    this.gAxisRight = select(refs.gAxisRight.nativeElement);
+    this.gAxisGroupRight = select(refs.gAxisGroupRight.nativeElement);
+    this.rAxisRight = select(refs.rAxisRectRight.nativeElement);
   }
 }

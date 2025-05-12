@@ -36,11 +36,11 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
 
     this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
     this.gAxisGroupLeft = select(refs.gAxisGroupLeft.nativeElement);
-    this.rAxisRectLeft = select(refs.rAxisRectLeft.nativeElement);
+    this.rAxisLeft = select(refs.rAxisRectLeft.nativeElement);
 
     this.gAxisRight = select(refs.gAxisRight.nativeElement);
     this.gAxisGroupRight = select(refs.gAxisGroupRight.nativeElement);
-    this.rAxisRectRight = select(refs.rAxisRectRight.nativeElement);
+    this.rAxisRight = select(refs.rAxisRectRight.nativeElement);
 
     // RSI-specific assignments
  //   this.gGroup = refs.gGroup.nativeElement;

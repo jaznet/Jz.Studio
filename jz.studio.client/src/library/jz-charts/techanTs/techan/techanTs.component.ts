@@ -20,6 +20,7 @@ import { StockPriceHistory } from '../../../../models/stock-price-history.model'
 import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
+import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 
 @Component({
   selector: 'techanTs',
@@ -69,20 +70,20 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #endregion ohlc
 
   // #region VOLUME GROUP
-  @ViewChild('volumeSection', { static: true }) volumeSection!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeSection', { static: true }) gVolumeSection!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeSection', { static: true }) rVolumeSection!: ElementRef<SVGRectElement>;
-  @ViewChild('volumeContent', { static: true }) volumeContent!: ElementRef<SVGGElement>;
-  @ViewChild('volumeContentRect', { static: true }) volumeContentRect!: ElementRef<SVGRectElement>;
-  @ViewChild('volumeChart', { static: true }) volumeChartRef!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeContent', { static: true }) gVolumeContent!: ElementRef<SVGGElement>;
+  @ViewChild('rVolumeContent', { static: true }) rVolumeContent!: ElementRef<SVGRectElement>;
+  @ViewChild('gVolumeChart', { static: true }) gVolumeChart!: ElementRef<SVGGElement>;
 
   @ViewChild('gVolumeAxisLeft', { static: true }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisLeft_grp', { static: true }) gVolumeAxisLeft_grp!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisGroupLeft', { static: true }) gVolumeAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeAxisLeft', { static: true }) rVolumeAxisLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('gVolumeAxisRight', { static: true }) gVolumeAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisRight_grp', { static: true }) gVolumeAxisRight_grp!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisGroupRight', { static: true }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeAxisRight', { static: true }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
-  // #endregion VOLUME GROUP
+  // #endregion VOLUME GROUP gVolumeChart
   
   @ViewChild('gMacdSection', { static: true }) gMacdSection!: ElementRef<SVGGElement>;
   @ViewChild('gMacdContent', { static: true }) gMacdContent!: ElementRef<SVGGElement>;
@@ -140,7 +141,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private macdChart: MacdChartService,
     private macdLayout: MacdChartLayoutService,
     private rsiChart: RsiChart,
-    private rsiLayout: RsiChartLayoutService
+    private rsiLayout: RsiChartLayoutService,
+    private volumeLayout: VolumeChartLayoutService
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
@@ -211,34 +213,51 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion OHLC
 
     // #region VOLUME
-    this.volumeChart.gVolumeSection = select(this.volumeSection.nativeElement);
-    this.volumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
-    this.volumeChart.gVolumeSectionContent = select(this.volumeContent.nativeElement);
-    this.volumeChart.rVolumeSectionContent = select(this.volumeContentRect.nativeElement);
-    this.volumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
-    this.volumeChart.gVolumeAxisLeft_grp = select(this.gVolumeAxisLeft_grp.nativeElement);
-    this.volumeChart.rVolumeAxisLeft = select(this.rVolumeAxisLeft.nativeElement);
-    this.volumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
-    this.volumeChart.gVolumeAxisRight_grp = select(this.gVolumeAxisRight_grp.nativeElement);
-    this.volumeChart.rVolumeAxisRight = select(this.rVolumeAxisRight.nativeElement);
-    this.volumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
+    //this.gVolumeChart.gVolumeSection = select(this.gVolumeSection.nativeElement);
+    //this.gVolumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
+    //this.gVolumeChart.gVolumeSectionContent = select(this.gVolumeContent.nativeElement);
+    //this.gVolumeChart.rVolumeSectionContent = select(this.rVolumeContent.nativeElement);
+    //this.gVolumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
+    //this.gVolumeChart.gVolumeAxisGroupLeft = select(this.gVolumeAxisGroupLeft.nativeElement);
+    //this.gVolumeChart.rVolumeAxisLeft = select(this.rVolumeAxisLeft.nativeElement);
+    //this.gVolumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
+    //this.gVolumeChart.gVolumeAxisGroupRight = select(this.gVolumeAxisGroupRight.nativeElement);
+    //this.gVolumeChart.rVolumeAxisRight = select(this.rVolumeAxisRight.nativeElement);
+    //this.gVolumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
+
+    this.volumeLayout.initializeSelections({
+      gSection: this.gVolumeSection,
+      rSection: this.rVolumeSection,
+      gContent: this.gVolumeContent,
+      rContent: this.rVolumeContent,
+      gChart: this.gVolumeChart,
+
+      gAxisLeft: this.gVolumeAxisLeft,
+      gAxisGroupLeft: this.gVolumeAxisGroupLeft,
+      rAxisRectLeft: this.rVolumeAxisLeft,
+
+      gAxisRight: this.gVolumeAxisRight,
+      gAxisGroupRight: this.gVolumeAxisGroupRight,
+      rAxisRectRight: this.rVolumeAxisRight
+    });
+
     // #endregion VOLUME
 
     // #region MACD
     this.macdLayout.initializeSelections({
-      gMacdSection: this.gMacdSection,
-      rMacdSectionRect: this.rMacdSectionRect,
-      gMacdContent: this.gMacdContent,
-      rMacdContentRect: this.rMacdContentRect,
-      gMacdChart: this.gMacdChart,
+      gSection: this.gMacdSection,
+      rSectionRect: this.rMacdSectionRect,
+      gContent: this.gMacdContent,
+      rContentRect: this.rMacdContentRect,
+      gChart: this.gMacdChart,
 
-      gMacdAxisLeft: this.gMacdAxisLeft,
-      gMacdAxisGroupLeft: this.gMacdAxisGroupLeft,
-      rMacdAxisRectLeft: this.rMacdAxisRectLeft,
+      gAxisLeft: this.gMacdAxisLeft,
+      gAxisGroupLeft: this.gMacdAxisGroupLeft,
+      rAxisRectLeft: this.rMacdAxisRectLeft,
 
-      gMacdAxisRight: this.gMacdAxisRight,
-      gMacdAxisGroupRight: this.gMacdAxisGroupRight,
-      rMacdAxisRectRight: this.rMacdAxisRectRight
+      gAxisRight: this.gMacdAxisRight,
+      gAxisGroupRight: this.gMacdAxisGroupRight,
+      rAxisRectRight: this.rMacdAxisRectRight
     });
     // #rendegion MACD
 
@@ -310,9 +329,18 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   drawVolume(): void {
     this.volumeChart
       .xScale(this.scales.dateScaleX)
-  /*    .yScale(this.volumeChart.volumeYscale)*/
-      .setTargetGroup(this.volumeContent.nativeElement)
+  /*    .yScale(this.gVolumeChart.volumeYscale)*/
+      .setTargetGroup(this.gVolumeContent.nativeElement)
       .setBarWidth()
+      .drawAxes(this.layout.scaffold)
+      .draw();
+  }
+
+  drawMacd(): void {
+    this.macdChart
+      .xScale(this.scales.dateScaleX)
+      .setTargetGroup(this.macdLayout.gChart)
+      .setPeriods(12, 26, 9) // Typical MACD periods
       .drawAxes(this.layout.scaffold)
       .draw();
   }
@@ -347,14 +375,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .draw();
   }
 
-  drawMacd():void {
-    this.macdChart
-      .xScale(this.scales.dateScaleX)
-      .setTargetGroup(this.macdLayout.gMacdChart)
-      .setPeriods(12, 26, 9) // Typical MACD periods
-      .drawAxes(this.layout.scaffold)
-      .draw();
-  }
+
 
   drawRsi(): void {
     this.rsiChart

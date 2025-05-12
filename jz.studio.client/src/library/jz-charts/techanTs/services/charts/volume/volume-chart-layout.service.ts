@@ -1,34 +1,38 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { select, Selection } from 'd3-selection';
+import { BaseChartLayoutService } from '../base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
-export class VolumeChartLayoutService {
-  // High-level sections
-  gSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
+export class VolumeChartLayoutService extends BaseChartLayoutService {
 
-  // Chart-specific content groupings
-  gContent!: Selection<SVGGElement, unknown, null, undefined>;
-  rContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
-  // Axis containers
-  gXAxis!: Selection<SVGGElement, unknown, null, undefined>;
+  initializeSelections(refs: {
+    gSection: ElementRef<SVGGElement>;
+    rSection: ElementRef<SVGRectElement>;
+    gContent: ElementRef<SVGGElement>;
+    rContent: ElementRef<SVGRectElement>;
+    gChart: ElementRef<SVGGElement>;
 
-  /**
-   * Initializes required SVG D3 selections.
-   * @param selections - Object with keys for section, content, and axis.
-   */
-  initializeSelections(selections: {
-    gSection: SVGGElement;
-    rSectionRect: SVGRectElement;
-    gContent: SVGGElement;
-    rContentRect: SVGRectElement;
-    gXAxis: SVGGElement;
+    gAxisLeft: ElementRef<SVGGElement>;
+    gAxisGroupLeft: ElementRef<SVGGElement>;
+    rAxisRectLeft: ElementRef<SVGRectElement>;
+
+    gAxisRight: ElementRef<SVGGElement>;
+    gAxisGroupRight: ElementRef<SVGGElement>;
+    rAxisRectRight: ElementRef<SVGRectElement>;
   }): void {
-    this.gSection = select(selections.gSection);
-    this.rSectionRect = select(selections.rSectionRect);
-    this.gContent = select(selections.gContent);
-    this.rContentRect = select(selections.rContentRect);
-    this.gXAxis = select(selections.gXAxis);
+    this.gSection = select(refs.gSection.nativeElement);
+    this.rSection = select(refs.rSection.nativeElement);
+    this.gContent = select(refs.gContent.nativeElement);
+    this.rContent = select(refs.rContent.nativeElement);
+    this.gChart = select(refs.gChart.nativeElement);
+
+    this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
+    this.gAxisGroupLeft = select(refs.gAxisGroupLeft.nativeElement);
+    this.rAxisLeft = select(refs.rAxisRectLeft.nativeElement);
+
+    this.gAxisRight = select(refs.gAxisRight.nativeElement);
+    this.gAxisGroupRight = select(refs.gAxisGroupRight.nativeElement);
+    this.rAxisRight = select(refs.rAxisRectRight.nativeElement);
   }
 }

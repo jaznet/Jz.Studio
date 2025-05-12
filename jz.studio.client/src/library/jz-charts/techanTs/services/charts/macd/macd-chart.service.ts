@@ -116,8 +116,8 @@ export class MacdChartService {
     this.axisLeft = axisLeft(this.macdYscale);
     this.axisRight = axisRight(this.macdYscale);
 
-    this.macd.gMacdAxisLeft.call(this.axisLeft);
-    this.macd.gMacdAxisRight.call(this.axisRight);
+    this.macd.gAxisLeft.call(this.axisLeft);
+    this.macd.gAxisRight.call(this.axisRight);
 
     return this;
   }

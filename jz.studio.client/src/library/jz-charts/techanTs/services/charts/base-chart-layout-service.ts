@@ -10,9 +10,9 @@ export abstract class BaseChartLayoutService {
 
   gAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   gAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  rAxisRectLeft!: Selection<SVGRectElement, unknown, null, undefined>;
+  rAxisLeft!: Selection<SVGRectElement, unknown, null, undefined>;
 
   gAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
   gAxisGroupRight!: Selection<SVGGElement, unknown, null, undefined>;
-  rAxisRectRight!: Selection<SVGRectElement, unknown, null, undefined>;
+  rAxisRight!: Selection<SVGRectElement, unknown, null, undefined>;
 }
