@@ -21,7 +21,7 @@
 
             <!-- OHLC LEFT AXIS-->
             <g #gOhlcAxisGroupLeft id="gOhlcAxisGroupLeft">
-              <rect #gOhlcAxisRectLeft id="gOhlcAxisRectLeft" width="0" height="0" class="axis y-axis"></rect>
+              <rect #rOhlcAxisLeft id="rOhlcAxisLeft" width="0" height="0" class="axis y-axis"></rect>
               <g #gOhlcAxisLeft id="gOhlcAxisLeft" class="y-axis"></g>
             </g>
 
@@ -31,16 +31,12 @@
               <g #gOhlcAxisRight id="gOhlcAxisRight" class="y-axis"></g>
             </g>
 
-            <!-- OHLC GROUP-->
-            <g #gOhlcSectionContent id="gOhlcSectionContent" class="rsiSectionontainer">
-              <rect #rOhlcSectionContent class="chart-section" id="rOhlcSectionContent"
-                    x="0" y="0"
-                    width="0" height="0"
-                    [attr.width]="0"
-                    [attr.height]="0">
+            <!-- OHLC CONTENT-->
+            <g #gOhlcContent id="gOhlcContent" class="rsiSectionontainer">
+              <rect #rOhlcContent class="chart-section" id="rOhlcContent"  x="0" y="0"  width="0" height="0"  [attr.width]="0" [attr.height]="0">
               </rect>
               <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">OHLC</text>
-              <g #ohlc id="ohlc"></g>r
+              <g #gOhlcChart id="gOhlcChart"></g>r
               <g #sma1 id="sma1"></g>
               <g #sma2 id="sma2"></g>
               <g #sma3 id="sma3"></g>

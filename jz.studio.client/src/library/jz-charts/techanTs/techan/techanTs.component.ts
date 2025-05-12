@@ -21,6 +21,7 @@ import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
+import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
 
 @Component({
   selector: 'techanTs',
@@ -55,13 +56,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   // #region ohlc
   @ViewChild('gOhlcSection', { static: true }) gOhlcSection!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcSection', { static: true }) rOhlcSection!: ElementRef<SVGRectElement>;
-  @ViewChild('gOhlcSectionContent', { static: true }) gOhlcSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSectionContent', { static: true }) rOhlcSectionContent!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcContent', { static: true }) gOhlcContent!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcContent', { static: true }) rOhlcContent!: ElementRef<SVGRectElement>;
 
-  @ViewChild('ohlc', { static: true }) ohlcRef!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcChart', { static: true }) gOhlcChart!: ElementRef<SVGGElement>;
 
   @ViewChild('gOhlcAxisGroupLeft', { static: true }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('gOhlcAxisRectLeft', { static: true }) gOhlcAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rOhlcAxisLeft', { static: true }) rOhlcAxisLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcAxisLeft', { static: true }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
 
   @ViewChild('gOhlcAxisGroupRight', { static: true }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
@@ -136,6 +137,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private scales:ScalesService,
     private popOverService: JzPopOversService,
     private ohlcChart: OhlcChartService,
+    private ohlcLayout: OhlcChartLayoutService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
     private macdChart: MacdChartService,
@@ -197,19 +199,35 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rSectionsContainer = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
-    this.ohlcChart.gOhlcAxisGroupLeft = select(this.gOhlcAxisGroupLeft.nativeElement);
-    this.ohlcChart.gOhlcAxisRectLeft = select( this.gOhlcAxisRectLeft.nativeElement);
+    //this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
+    //this.ohlcChart.gOhlcAxisGroupLeft = select(this.gOhlcAxisGroupLeft.nativeElement);
+    //this.ohlcChart.rOhlcAxisLeft = select( this.rOhlcAxisLeft.nativeElement);
 
-    this.ohlcChart.gOhlcAxisGroupRight = select(this.gOhlcAxisGroupRight.nativeElement);
-    this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
-    this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
-    this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
+    //this.ohlcChart.gOhlcAxisGroupRight = select(this.gOhlcAxisGroupRight.nativeElement);
+    //this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
+    //this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
+    //this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
 
-    this.ohlcChart.gOhlcSection = this.gOhlcSection.nativeElement;
-    this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);
-    this.ohlcChart.gOhlcSectionContent = select(this.gOhlcSectionContent.nativeElement);
-    this.ohlcChart.rOhlcSectionContent = select( this.rOhlcSectionContent.nativeElement);
+    //this.ohlcChart.gOhlcSection = this.gOhlcSection.nativeElement;
+    //this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);
+    //this.ohlcChart.gOhlcContent = select(this.gOhlcContent.nativeElement);
+    //this.ohlcChart.rOhlcContent = select( this.rOhlcContent.nativeElement);
+    this.ohlcLayout.initializeSelections({
+      gSection: this.gOhlcSection,
+      rSection: this.rOhlcSection,
+      gContent: this.gOhlcContent,
+      rContent: this.rOhlcContent,
+      gChart: this.gOhlcChart,
+
+      gAxisLeft: this.gOhlcAxisLeft,
+      gAxisGroupLeft: this.gOhlcAxisGroupLeft,
+      rAxisRectLeft: this.rOhlcAxisLeft,
+
+      gAxisRight: this.gOhlcAxisRight,
+      gAxisGroupRight: this.gOhlcAxisGroupRight,
+      rAxisRectRight: this.rOhlcAxisRight
+    });
+
     // #endregion OHLC
 
     // #region VOLUME
@@ -297,7 +315,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.ohlcChart
       .xScale(this.scales.dateScaleX)
 /*      .yScale(this.ohlcChart.ohlcYscale)*/
-      .setTargetGroup(this.ohlcRef.nativeElement)
+      .setTargetGroup(this.gOhlcChart.nativeElement)
       .setCandleWidth()
       .drawAxes(this.layout.scaffold)
       .draw();

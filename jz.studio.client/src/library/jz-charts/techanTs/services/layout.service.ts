@@ -8,6 +8,7 @@ import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
 import { VolumeChartService } from './charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from './charts/volume/volume-chart-layout.service';
 import { OhlcChartService } from './charts/ohlc/ohlc-chart.service';
+import { OhlcChartLayoutService } from './charts/ohlc/ohlc-chart-layout.service';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,7 @@ export class LayoutService {
 
   constructor(
     private ohlcChart: OhlcChartService,
+    private ohlcLayout: OhlcChartLayoutService,
     private gVolumeChart: VolumeChartService,
     private volumeLayout: VolumeChartLayoutService,
     private macdChart: MacdChartService,
@@ -136,20 +138,20 @@ export class LayoutService {
     // #endregion MAIN
 
     // #region OHLC
-    this.ohlcChart.rOhlcSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.ohlcChart.rOhlcSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[0].pct) }`);
-    this.ohlcChart.rOhlcSectionContent.attr('width', `${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.left - this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.ohlcLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[0].pct) }`);
+    this.ohlcLayout.rContent.attr('width', `${this.scaffold.sections[0].width - this.scaffold.sections[0].margins.left - this.scaffold.sections[0].margins.right}`);
 
-    console.log(this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
-    this.scaffold.sections[0].width = this.ohlcChart.rOhlcSection.node()!.width.baseVal.value;
-    this.scaffold.sections[0].height = (this.ohlcChart.rOhlcSection.node()!.height.baseVal.value);
-    this.scaffold.sections[0].content.width = (this.ohlcChart.rOhlcSectionContent.node()!.width.baseVal.value);
-    this.scaffold.sections[0].content.height = (this.ohlcChart.rOhlcSectionContent.node()!.height.baseVal.value);
-    this.ohlcChart.rOhlcSectionContent.attr('height', `${this.scaffold.sections[0].height}`);
-    this.ohlcChart.gOhlcAxisRectLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcChart.gOhlcAxisRectLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
-    this.ohlcChart.rOhlcAxisRight.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcChart.rOhlcAxisRight.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    console.log(this.ohlcLayout.rSection.node()!.height.baseVal.value);
+    this.scaffold.sections[0].width = this.ohlcLayout.rSection.node()!.width.baseVal.value;
+    this.scaffold.sections[0].height = (this.ohlcLayout.rSection.node()!.height.baseVal.value);
+    this.scaffold.sections[0].content.width = (this.ohlcLayout.rContent.node()!.width.baseVal.value);
+    this.scaffold.sections[0].content.height = (this.ohlcLayout.rContent.node()!.height.baseVal.value);
+    this.ohlcLayout.rContent.attr('height', `${this.scaffold.sections[0].height}`);
+    this.ohlcLayout.rAxisLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.rAxisLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcLayout.rAxisRight.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.rAxisRight.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
     // #endregion OHLC
 
     // #region VOLUME
@@ -203,9 +205,9 @@ export class LayoutService {
 
     this.sectionsContainer.setAttribute('transform', `translate(0,${this.scaffold.xAxisTop})`)
 
-    this.ohlcChart.gOhlcSection.setAttribute('transform', `translate(0,${this.spacer})`);
-    this.ohlcChart.gOhlcSectionContent.attr('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
-    this.ohlcChart.gOhlcAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[0].margins.left + this.scaffold.sections[0].content.width},0)`);
+    this.ohlcLayout.gSection.attr('transform', `translate(0,${this.spacer})`);
+    this.ohlcLayout.gContent.attr('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
+    this.ohlcLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[0].margins.left + this.scaffold.sections[0].content.width},0)`);
 
     this.volumeLayout.gSection.attr('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
     this.volumeLayout.gContent.attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);

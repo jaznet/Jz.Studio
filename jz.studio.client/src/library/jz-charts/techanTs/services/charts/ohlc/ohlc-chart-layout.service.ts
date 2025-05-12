@@ -1,8 +1,9 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { select, Selection } from 'd3-selection';
+import { BaseChartLayoutService } from '../base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
-export class OhlcChartLayoutService {
+export class OhlcChartLayoutService extends BaseChartLayoutService  {
   gOhlcSection!: Selection<SVGGElement, unknown, null, undefined>;
   rOhlcSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
   gOhlcContent!: Selection<SVGGElement, unknown, null, undefined>;
@@ -18,32 +19,32 @@ export class OhlcChartLayoutService {
   rOhlcAxisRectRight!: Selection<SVGRectElement, unknown, null, undefined>;
 
   initializeSelections(refs: {
-    gOhlcSection: ElementRef<SVGGElement>;
-    rOhlcSectionRect: ElementRef<SVGRectElement>;
-    gOhlcContent: ElementRef<SVGGElement>;
-    rOhlcContentRect: ElementRef<SVGRectElement>;
-    gOhlcChart: ElementRef<SVGGElement>;
+    gSection: ElementRef<SVGGElement>;
+    rSection: ElementRef<SVGRectElement>;
+    gContent: ElementRef<SVGGElement>;
+    rContent: ElementRef<SVGRectElement>;
+    gChart: ElementRef<SVGGElement>;
 
-    gOhlcAxisLeft: ElementRef<SVGGElement>;
-    gOhlcAxisGroupLeft: ElementRef<SVGGElement>;
-    rOhlcAxisRectLeft: ElementRef<SVGRectElement>;
+    gAxisLeft: ElementRef<SVGGElement>;
+    gAxisGroupLeft: ElementRef<SVGGElement>;
+    rAxisRectLeft: ElementRef<SVGRectElement>;
 
-    gOhlcAxisRight: ElementRef<SVGGElement>;
-    gOhlcAxisGroupRight: ElementRef<SVGGElement>;
-    rOhlcAxisRectRight: ElementRef<SVGRectElement>;
+    gAxisRight: ElementRef<SVGGElement>;
+    gAxisGroupRight: ElementRef<SVGGElement>;
+    rAxisRectRight: ElementRef<SVGRectElement>;
   }): void {
-    this.gOhlcSection = select(refs.gOhlcSection.nativeElement);
-    this.rOhlcSectionRect = select(refs.rOhlcSectionRect.nativeElement);
-    this.gOhlcContent = select(refs.gOhlcContent.nativeElement);
-    this.rOhlcContentRect = select(refs.rOhlcContentRect.nativeElement);
-    this.gOhlcChart = select(refs.gOhlcChart.nativeElement);
+    this.gSection = select(refs.gSection.nativeElement);
+    this.rSection = select(refs.rSection.nativeElement);
+    this.gContent = select(refs.gContent.nativeElement);
+    this.rContent = select(refs.rContent.nativeElement);
+    this.gChart = select(refs.gChart.nativeElement);
 
-    this.gOhlcAxisLeft = select(refs.gOhlcAxisLeft.nativeElement);
-    this.gOhlcAxisGroupLeft = select(refs.gOhlcAxisGroupLeft.nativeElement);
-    this.rOhlcAxisRectLeft = select(refs.rOhlcAxisRectLeft.nativeElement);
+    this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
+    this.gAxisGroupLeft = select(refs.gAxisGroupLeft.nativeElement);
+    this.rAxisLeft = select(refs.rAxisRectLeft.nativeElement);
 
-    this.gOhlcAxisRight = select(refs.gOhlcAxisRight.nativeElement);
-    this.gOhlcAxisGroupRight = select(refs.gOhlcAxisGroupRight.nativeElement);
-    this.rOhlcAxisRectRight = select(refs.rOhlcAxisRectRight.nativeElement);
+    this.gAxisRight = select(refs.gAxisRight.nativeElement);
+    this.gAxisGroupRight = select(refs.gAxisGroupRight.nativeElement);
+    this.rAxisRight = select(refs.rAxisRectRight.nativeElement);
   }
 }

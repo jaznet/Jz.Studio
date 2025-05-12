@@ -6,29 +6,19 @@ import { scaleLinear } from 'd3-scale';
 import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
+import { OhlcChartLayoutService } from './ohlc-chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OhlcChartService {
   // #region PROPERTIES
-  gOhlcSection!: SVGGElement;
-  rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;
-  gOhlcSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
+
 
   ohlcYscale: any;
 
   axisLeft: any;
   axisRight: any;
-
-  gOhlcAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  gOhlcAxisGroupLeft: any;
-  gOhlcAxisRectLeft!: any;
-
-  gOhlcAxisRight: any;
-  gOhlcAxisGroupRight: any;
-  rOhlcAxisRight: any;
 
   private _xScale: any;
   private _yScale: any;
@@ -39,7 +29,8 @@ export class OhlcChartService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private OhlcLayout: OhlcChartLayoutService
   ) { }
 
   public xScale(scale: any) {
@@ -71,12 +62,12 @@ export class OhlcChartService {
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
-    this.gOhlcAxisLeft.call(this.axisLeft);
-    this.gOhlcAxisLeft
+    this.OhlcLayout.gAxisLeft.call(this.axisLeft);
+    this.OhlcLayout.gAxisLeft
       .attr('transform', `translate(${scaffold.sections[0].margins.left}, 0)`);
 
-    this.gOhlcAxisRight.call(this.axisRight);
-    this.gOhlcAxisRight
+    this.OhlcLayout.gAxisRight.call(this.axisRight);
+    this.OhlcLayout.gAxisRight
       .attr('transform', `translate(${scaffold.sections[0].margins.left + scaffold.sections[0].content.width - scaffold.sections[0].margins.right}, 0)`);
 
     return this;
