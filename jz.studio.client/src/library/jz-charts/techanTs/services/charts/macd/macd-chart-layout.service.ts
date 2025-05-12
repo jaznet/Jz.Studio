@@ -5,7 +5,6 @@ import { BaseChartLayoutService } from '../base-chart-layout-service';
 @Injectable({ providedIn: 'root' })
 export class MacdChartLayoutService extends BaseChartLayoutService {
 
-
   initializeSelections(refs: {
     gSection: ElementRef<SVGGElement>;
     rSectionRect: ElementRef<SVGRectElement>;

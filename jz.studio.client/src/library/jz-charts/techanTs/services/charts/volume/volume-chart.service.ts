@@ -6,6 +6,7 @@ import { scaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { ScalesService } from '../../scales.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
+import { VolumeChartLayoutService } from './volume-chart-layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +23,11 @@ export class VolumeChartService {
   //gVolumeSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
   //rVolumeSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
 
-  gVolumeAxisLeft: any;
+  //VolumeAxisLeft: any;
   //gVolumeAxisGroupLeft: any;
   //rVolumeAxisLeft: any;
 
-  gVolumeAxisRight: any;
+  //gVolumeAxisRight: any;
   //gVolumeAxisGroupRight: any;
   //rVolumeAxisRight: any;
 
@@ -35,7 +36,8 @@ export class VolumeChartService {
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService
+    private data: ChartDataService,
+    private volume: VolumeChartLayoutService
   ) { }
 
   public xScale(scale: any): this {
@@ -67,8 +69,8 @@ export class VolumeChartService {
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([scaffold.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
 
-    this.gVolumeAxisLeft = select(this.gVolumeAxisLeft);
-    this.gVolumeAxisRight = select(this.gVolumeAxisRight);
+    //this.gAxisLeft = select(this.gAxisLeft);
+    //this.gVolumeAxisRight = select(this.gVolumeAxisRight);
 
     this.axisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
@@ -76,8 +78,8 @@ export class VolumeChartService {
     this.axisRight = axisRight(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
-    this.gVolumeAxisLeft.call(this.axisLeft);
-    this.gVolumeAxisRight.call(this.axisRight);
+    this.volume.gAxisLeft.call(this.axisLeft);
+    this.volume.gAxisRight.call(this.axisRight);
 
     return this;
   }
