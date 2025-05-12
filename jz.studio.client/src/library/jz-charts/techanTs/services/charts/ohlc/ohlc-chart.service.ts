@@ -1,16 +1,16 @@
 
 import { ElementRef, Injectable } from '@angular/core';
-import { ChartDataService } from '../chart-data.service';
 import { Selection, select } from 'd3-selection';
-import { ScalesService } from '../scales.service';
-import { scaffold, ohlcData } from '../../interfaces/techan-interfaces';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
+import { ScalesService } from '../../scales.service';
+import { ChartDataService } from '../../chart-data.service';
+import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ChartOhlcService {
+export class OhlcChartService {
   // #region PROPERTIES
   gOhlcSection!: SVGGElement;
   rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;

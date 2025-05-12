@@ -1,6 +1,5 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
-import { ChartOhlcService } from './charts/chart-ohlc.service';
 import { Selection } from 'd3-selection';
 import { MacdChartLayoutService } from './charts/macd/macd-chart-layout.service';
 import { MacdChartService } from './charts/macd/macd-chart.service';
@@ -8,6 +7,7 @@ import { RsiChart } from './charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
 import { VolumeChartService } from './charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from './charts/volume/volume-chart-layout.service';
+import { OhlcChartService } from './charts/ohlc/ohlc-chart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,7 @@ export class LayoutService {
   // #endregion
 
   constructor(
-    private ohlcChart: ChartOhlcService,
+    private ohlcChart: OhlcChartService,
     private gVolumeChart: VolumeChartService,
     private volumeLayout: VolumeChartLayoutService,
     private macdChart: MacdChartService,
@@ -192,8 +192,6 @@ export class LayoutService {
     this.scaffold.sections[3].height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
     this.rsiLayout.rContent.attr('width', `${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.left - this.scaffold.sections[3].margins.right}`);
     this.rsiLayout.rContent.attr('height', `${this.scaffold.sections[3].height}`);
-
-
   }
 
   alignChartsToScaffold(): void {
@@ -214,7 +212,8 @@ export class LayoutService {
     this.volumeLayout.gAxisLeft
       .attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`)
     /*  .setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);*/
-    this.volumeLayout.gAxisGroupLeft.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
+    this.volumeLayout.gAxisGroupLeft.attr('transform', `translate(0)`);
+    this.volumeLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
 
     this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + this.scaffold.sections[2].height) + (this.spacer * 4)})`);
     this.rsiLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);

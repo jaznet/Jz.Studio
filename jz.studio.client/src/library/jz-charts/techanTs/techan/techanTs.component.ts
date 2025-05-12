@@ -9,7 +9,6 @@ import { LayoutService } from '../services/layout.service';
 import { PartsAxesService } from '../services/parts-axes.service';
 import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
-import { ChartOhlcService } from '../services/charts/chart-ohlc.service';
 import { SmaChartService } from '../services/charts/chart-sma.service';
 import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
 import { MacdChartService } from '../services/charts/macd/macd-chart.service';
@@ -21,6 +20,7 @@ import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
+import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
 
 @Component({
   selector: 'techanTs',
@@ -135,7 +135,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private axes: PartsAxesService,
     private scales:ScalesService,
     private popOverService: JzPopOversService,
-    private ohlcChart: ChartOhlcService,
+    private ohlcChart: OhlcChartService,
     private volumeChart: VolumeChartService,
     private smaChart: SmaChartService,
     private macdChart: MacdChartService,
@@ -276,12 +276,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       gAxisRight: this.gRsiAxisRight,
       gAxisGroupRight: this.rsiAxisGroupRight,
       rAxisRectRight: this.yAxisRightRectC
-
-
     });
     //#endregion RSI
-
-
 
    this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
@@ -294,14 +290,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
-
-    //this.rsiLayout.gAxisLeft = select(this.gRsiAxisLeft.nativeElement);
-    //this.rsiLayout.gAxisGroupLeft = select(this.gRsiAxisGroupLeft.nativeElement);
-    //this.rsiLayout.rVolumeAxisLeft = this.rVolumeAxisLeft.nativeElement;
-
-    //this.rsiLayout.gAxisRight = select(this.gRsiAxisRight.nativeElement);
-    //this.rsiLayout.gAxisGroupRight = this.rsiAxisGroupRight.nativeElement;
-    //this.rsiLayout.yAxisRightRectC = this.yAxisRightRectC.nativeElement;
   }
 
   constructChart(): void {
@@ -374,8 +362,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       .setColor('#ff3a20')
       .draw();
   }
-
-
 
   drawRsi(): void {
     this.rsiChart

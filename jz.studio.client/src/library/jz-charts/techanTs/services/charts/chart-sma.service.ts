@@ -4,7 +4,7 @@ import { line } from 'd3-shape';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
 import { ScalesService } from '../scales.service';
-import { ChartOhlcService } from './chart-ohlc.service';
+import { OhlcChartService } from './ohlc/ohlc-chart.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class SmaChartService {
     private scales: ScalesService,
     private data: ChartDataService,
     private layout: LayoutService,
-    private ohlc: ChartOhlcService
+    private ohlc: OhlcChartService
   ) { }
 
   public xScale(scale: any): this {

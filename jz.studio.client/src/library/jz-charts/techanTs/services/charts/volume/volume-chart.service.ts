@@ -18,19 +18,6 @@ export class VolumeChartService {
 
   volumeYscale: any;
 
-  //gVolumeSection!: Selection<SVGGElement, unknown, null, undefined>;
-  //rVolumeSection!: Selection<SVGRectElement, unknown, null, undefined>;
-  //gVolumeSectionContent!: Selection<SVGGElement, unknown, null, undefined>;
-  //rVolumeSectionContent!: Selection<SVGRectElement, unknown, null, undefined>;
-
-  //VolumeAxisLeft: any;
-  //gVolumeAxisGroupLeft: any;
-  //rVolumeAxisLeft: any;
-
-  //gVolumeAxisRight: any;
-  //gVolumeAxisGroupRight: any;
-  //rVolumeAxisRight: any;
-
   axisLeft!: Axis<AxisDomain>;
   axisRight!: Axis<AxisDomain>;
 
@@ -68,9 +55,6 @@ export class VolumeChartService {
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([scaffold.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
-
-    //this.gAxisLeft = select(this.gAxisLeft);
-    //this.gVolumeAxisRight = select(this.gVolumeAxisRight);
 
     this.axisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal
