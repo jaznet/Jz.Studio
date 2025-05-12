@@ -213,17 +213,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion OHLC
 
     // #region VOLUME
-    //this.gVolumeChart.gVolumeSection = select(this.gVolumeSection.nativeElement);
-    //this.gVolumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
-    //this.gVolumeChart.gVolumeSectionContent = select(this.gVolumeContent.nativeElement);
-    //this.gVolumeChart.rVolumeSectionContent = select(this.rVolumeContent.nativeElement);
-    //this.gVolumeChart.gVolumeAxisLeft = select( this.gVolumeAxisLeft.nativeElement);
-    //this.gVolumeChart.gVolumeAxisGroupLeft = select(this.gVolumeAxisGroupLeft.nativeElement);
-    //this.gVolumeChart.rVolumeAxisLeft = select(this.rVolumeAxisLeft.nativeElement);
-    //this.gVolumeChart.gVolumeAxisRight = select(this.gVolumeAxisRight.nativeElement);
-    //this.gVolumeChart.gVolumeAxisGroupRight = select(this.gVolumeAxisGroupRight.nativeElement);
-    //this.gVolumeChart.rVolumeAxisRight = select(this.rVolumeAxisRight.nativeElement);
-    //this.gVolumeChart.rVolumeSection = select(this.rVolumeSection.nativeElement);
 
     this.volumeLayout.initializeSelections({
       gSection: this.gVolumeSection,
