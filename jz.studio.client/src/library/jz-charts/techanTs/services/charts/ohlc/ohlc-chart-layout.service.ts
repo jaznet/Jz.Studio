@@ -4,19 +4,6 @@ import { BaseChartLayoutService } from '../base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
 export class OhlcChartLayoutService extends BaseChartLayoutService  {
-  gOhlcSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
-  gOhlcContent!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
-  gOhlcChart!: Selection<SVGGElement, unknown, null, undefined>;
-
-  gOhlcAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  gOhlcAxisGroupLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcAxisRectLeft!: Selection<SVGRectElement, unknown, null, undefined>;
-
-  gOhlcAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
-  gOhlcAxisGroupRight!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcAxisRectRight!: Selection<SVGRectElement, unknown, null, undefined>;
 
   initializeSelections(refs: {
     gSection: ElementRef<SVGGElement>;
