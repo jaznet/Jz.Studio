@@ -62,8 +62,8 @@ export class VolumeChartService {
     this.axisRight = axisRight(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0));
 
-    this.volume.gAxisLeft.call(this.axisLeft);
-    this.volume.gAxisRight.call(this.axisRight);
+    this.volume.axisLeft.gAxis.call(this.axisLeft);
+    this.volume.axisRight.gAxis.call(this.axisRight);
 
     return this;
   }

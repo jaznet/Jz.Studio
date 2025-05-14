@@ -15,10 +15,6 @@ export class RsiChart {
  
   rsiYscale: any;
 
-
-
-
-
   chartYaxisLeft: any;
   chartYaxisRight: any;
 
@@ -96,8 +92,8 @@ export class RsiChart {
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);
 
-    this.rsiLayout.gAxisLeft.call(this.chartYaxisLeft);
-    this.rsiLayout.gAxisRight.call(this.chartYaxisRight);
+    this.rsiLayout.axisLeft.gAxis.call(this.chartYaxisLeft);
+    this.rsiLayout.axisRight.gAxis.call(this.chartYaxisRight);
 
     return this;
   }

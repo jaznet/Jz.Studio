@@ -148,10 +148,10 @@ export class LayoutService {
     this.scaffold.sections[0].content.width = (this.ohlcLayout.rContent.node()!.width.baseVal.value);
     this.scaffold.sections[0].content.height = (this.ohlcLayout.rContent.node()!.height.baseVal.value);
     this.ohlcLayout.rContent.attr('height', `${this.scaffold.sections[0].height}`);
-    this.ohlcLayout.rAxisLeft.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcLayout.rAxisLeft.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
-    this.ohlcLayout.rAxisRight.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcLayout.rAxisRight.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcLayout.axisLeft.gAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.axisLeft.gAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcLayout.axisRight.gAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.axisRight.gAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
     // #endregion OHLC
 
     // #region VOLUME
@@ -161,10 +161,10 @@ export class LayoutService {
     this.scaffold.sections[1].width = this.volumeLayout.rSection.node()!.width.baseVal.value;
     this.scaffold.sections[1].height = this.volumeLayout.rSection.node()!.height.baseVal.value;
 
-    this.volumeLayout.rAxisLeft.attr('width', `${this.scaffold.sections[1].margins.left}`);
-    this.volumeLayout.rAxisLeft.attr('height', `${this.scaffold.sections[1].height}`);
-    this.volumeLayout.rAxisRight.attr('width', `${this.scaffold.sections[1].margins.right}`);
-    this.volumeLayout.rAxisRight.attr('height', `${this.scaffold.sections[1].height}`);
+    this.volumeLayout.axisLeft.gAxis.attr('width', `${this.scaffold.sections[1].margins.left}`);
+    this.volumeLayout.axisLeft.gAxis.attr('height', `${this.scaffold.sections[1].height}`);
+    this.volumeLayout.axisRight.gAxis.attr('width', `${this.scaffold.sections[1].margins.right}`);
+    this.volumeLayout.axisRight.gAxis.attr('height', `${this.scaffold.sections[1].height}`);
     // #endregion VOLUME
 
     // #region MACD
@@ -173,18 +173,18 @@ export class LayoutService {
     this.scaffold.sections[2].width = this.macdLayout.rSection.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[2].height = this.macdLayout.rSection.node()?.height.baseVal.value ?? 0;
 
-    this.macdLayout.rAxisLeft.attr('width', `${this.scaffold.sections[2].margins.right}`);
-    this.macdLayout.rAxisLeft.attr('height', `${this.scaffold.sections[2].height}`);
+    this.macdLayout.axisLeft.gAxis.attr('width', `${this.scaffold.sections[2].margins.right}`);
+    this.macdLayout.axisLeft.gAxis.attr('height', `${this.scaffold.sections[2].height}`);
 
-    this.macdLayout.rAxisRight.attr('width', `${this.scaffold.sections[2].margins.right}`);
-    this.macdLayout.rAxisRight.attr('height', `${this.scaffold.sections[2].height}`);
-    this.macdLayout.gSection.attr('transform', `translate(0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + (this.spacer * 3))})`);
-    this.macdLayout.gAxisLeft.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
+    this.macdLayout.axisRight.gAxis.attr('width', `${this.scaffold.sections[2].margins.right}`);
+    this.macdLayout.axisRight.gAxis.attr('height', `${this.scaffold.sections[2].height}`);
+
+    this.macdLayout.axisLeft.gAxis.attr('transform', `translate(0,0)`);
     //  this.macdLayout.gMacdAxisRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},${this.scaffold.sections[2].margins.top})`);
-    this.macdLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},0)`);
+
     this.macdLayout.rContent.attr('width', `${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.left - this.scaffold.sections[2].margins.right}`);
     this.macdLayout.rContent.attr('height', `${this.scaffold.sections[2].height}`);
-    this.macdLayout.gContent.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
+ 
     // #endregion MACD
 
     // #region RSI
@@ -207,19 +207,21 @@ export class LayoutService {
 
     this.ohlcLayout.gSection.attr('transform', `translate(0,${this.spacer})`);
     this.ohlcLayout.gContent.attr('transform', `translate(${this.scaffold.sections[0].margins.left},0)`);
-    this.ohlcLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[0].margins.left + this.scaffold.sections[0].content.width},0)`);
+    this.ohlcLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[0].margins.left + this.scaffold.sections[0].content.width},0)`);
 
     this.volumeLayout.gSection.attr('transform', `translate(0,${this.scaffold.sections[0].height + this.spacer + this.spacer})`);
     this.volumeLayout.gContent.attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);
-    this.volumeLayout.gAxisLeft
-      .attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`)
-    /*  .setAttribute('transform', `translate(${this.scaffold.sections[1].margins.left},0)`);*/
-    this.volumeLayout.gAxisGroupLeft.attr('transform', `translate(0)`);
-    this.volumeLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
+    this.volumeLayout.axisLeft.gAxis.attr('transform', `translate(${this.scaffold.sections[1].margins.left},0)`)
+    this.volumeLayout.axisLeft.gAxisGroup.attr('transform', `translate(0)`);
+    this.volumeLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[1].width - this.scaffold.sections[1].margins.right})`);
+
+    this.macdLayout.gSection.attr('transform', `translate(0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + (this.spacer * 3))})`);
+    this.macdLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[2].width - this.scaffold.sections[2].margins.right},0)`);
+    this.macdLayout.gContent.attr('transform', `translate(${this.scaffold.sections[2].margins.left},0)`);
 
     this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[0].height + this.scaffold.sections[1].height + this.scaffold.sections[2].height) + (this.spacer * 4)})`);
-    this.rsiLayout.gAxisGroupRight.attr('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);
-    this.rsiLayout.gAxisLeft.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
+    this.rsiLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[3].width - this.scaffold.sections[3].margins.right},${this.scaffold.sections[3].margins.top})`);
+    this.rsiLayout.axisLeft.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
     this.rsiLayout.gContent.attr('transform', `translate(${this.scaffold.sections[3].margins.left},0)`);
   }
 }

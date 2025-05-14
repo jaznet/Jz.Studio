@@ -62,12 +62,12 @@ export class OhlcChartService {
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
-    this.OhlcLayout.gAxisLeft.call(this.axisLeft);
-    this.OhlcLayout.gAxisLeft
+    this.OhlcLayout.axisLeft.call(this.axisLeft);
+    this.OhlcLayout.axisLeft.gAxis
       .attr('transform', `translate(${scaffold.sections[0].margins.left}, 0)`);
 
-    this.OhlcLayout.gAxisRight.call(this.axisRight);
-    this.OhlcLayout.gAxisRight
+    this.OhlcLayout.axisRight.call(this.axisRight);
+    this.OhlcLayout.axisRight.gAxis
       .attr('transform', `translate(${scaffold.sections[0].margins.left + scaffold.sections[0].content.width - scaffold.sections[0].margins.right}, 0)`);
 
     return this;

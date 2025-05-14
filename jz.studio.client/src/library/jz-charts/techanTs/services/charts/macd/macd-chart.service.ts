@@ -23,11 +23,11 @@ export class MacdChartService {
 
   //  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
   //gMacdAxisGroupLeft: any;
-  //rMacdAxisRectLeft: any;
+  //rMacdAxisLeft: any;
 
   //// gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
   //gMacdAxisGroupRight: any;
-  //rMacdAxisRectRight: any;
+  //rMacdAxisRight: any;
 
   axisLeft: any;
   axisRight: any;
@@ -116,8 +116,8 @@ export class MacdChartService {
     this.axisLeft = axisLeft(this.macdYscale);
     this.axisRight = axisRight(this.macdYscale);
 
-    this.macd.gAxisLeft.call(this.axisLeft);
-    this.macd.gAxisRight.call(this.axisRight);
+    this.macd.axisLeft.gAxis.call(this.axisLeft);
+    this.macd.axisRight.gAxis.call(this.axisRight);
 
     return this;
   }

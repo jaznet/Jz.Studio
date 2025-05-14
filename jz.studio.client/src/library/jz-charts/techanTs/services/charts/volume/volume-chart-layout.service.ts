@@ -1,10 +1,12 @@
-import { ElementRef, Injectable } from '@angular/core';
-import { select, Selection } from 'd3-selection';
+
+import { Injectable, ElementRef } from '@angular/core';
 import { BaseChartLayoutService } from '../base-chart-layout-service';
+import { AxisLayoutRefs } from '../../parts/axis-layout';
 
 @Injectable({ providedIn: 'root' })
 export class VolumeChartLayoutService extends BaseChartLayoutService {
-
+  //axisLeft = new AxisLayout();
+  //axisRight = new AxisLayout();
 
   initializeSelections(refs: {
     gSection: ElementRef<SVGGElement>;
@@ -13,26 +15,11 @@ export class VolumeChartLayoutService extends BaseChartLayoutService {
     rContent: ElementRef<SVGRectElement>;
     gChart: ElementRef<SVGGElement>;
 
-    gAxisLeft: ElementRef<SVGGElement>;
-    gAxisGroupLeft: ElementRef<SVGGElement>;
-    rAxisRectLeft: ElementRef<SVGRectElement>;
-
-    gAxisRight: ElementRef<SVGGElement>;
-    gAxisGroupRight: ElementRef<SVGGElement>;
-    rAxisRectRight: ElementRef<SVGRectElement>;
+    axisLeft: AxisLayoutRefs;
+    axisRight: AxisLayoutRefs;
   }): void {
-    this.gSection = select(refs.gSection.nativeElement);
-    this.rSection = select(refs.rSection.nativeElement);
-    this.gContent = select(refs.gContent.nativeElement);
-    this.rContent = select(refs.rContent.nativeElement);
-    this.gChart = select(refs.gChart.nativeElement);
-
-    this.gAxisLeft = select(refs.gAxisLeft.nativeElement);
-    this.gAxisGroupLeft = select(refs.gAxisGroupLeft.nativeElement);
-    this.rAxisLeft = select(refs.rAxisRectLeft.nativeElement);
-
-    this.gAxisRight = select(refs.gAxisRight.nativeElement);
-    this.gAxisGroupRight = select(refs.gAxisGroupRight.nativeElement);
-    this.rAxisRight = select(refs.rAxisRectRight.nativeElement);
+    this.initializeBase(refs);
+    this.axisLeft.initialize(refs.axisLeft);
+    this.axisRight.initialize(refs.axisRight);
   }
 }

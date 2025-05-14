@@ -93,11 +93,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gMacdAxisGroupLeft', { static: true }) gMacdAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('gMacdAxisLeft', { static: true }) gMacdAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rMacdAxisRectLeft', { static: true }) rMacdAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rMacdAxisLeft', { static: true }) rMacdAxisLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('gMacdAxisGroupRight', { static: true }) gMacdAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('gMacdAxisRight', { static: true }) gMacdAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('rMacdAxisRectRight', { static: true }) rMacdAxisRectRight!: ElementRef<SVGRectElement>;
+  @ViewChild('rMacdAxisRight', { static: true }) rMacdAxisRight!: ElementRef<SVGRectElement>;
 
   @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
 /*  #region*/
@@ -199,19 +199,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.layout.rSectionsContainer = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    //this.ohlcChart.gOhlcAxisLeft = select(this.gOhlcAxisLeft.nativeElement);
-    //this.ohlcChart.gOhlcAxisGroupLeft = select(this.gOhlcAxisGroupLeft.nativeElement);
-    //this.ohlcChart.rOhlcAxisLeft = select( this.rOhlcAxisLeft.nativeElement);
-
-    //this.ohlcChart.gOhlcAxisGroupRight = select(this.gOhlcAxisGroupRight.nativeElement);
-    //this.ohlcChart.gOhlcAxisRight =select( this.gOhlcAxisRight.nativeElement);
-    //this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
-    //this.ohlcChart.rOhlcAxisRight = select(this.rOhlcAxisRight.nativeElement);
-
-    //this.ohlcChart.gOhlcSection = this.gOhlcSection.nativeElement;
-    //this.ohlcChart.rOhlcSection = select( this.rOhlcSection.nativeElement);
-    //this.ohlcChart.gOhlcContent = select(this.gOhlcContent.nativeElement);
-    //this.ohlcChart.rOhlcContent = select( this.rOhlcContent.nativeElement);
     this.ohlcLayout.initializeSelections({
       gSection: this.gOhlcSection,
       rSection: this.rOhlcSection,
@@ -219,14 +206,18 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       rContent: this.rOhlcContent,
       gChart: this.gOhlcChart,
 
-      gAxisLeft: this.gOhlcAxisLeft,
-      gAxisGroupLeft: this.gOhlcAxisGroupLeft,
-      rAxisRectLeft: this.rOhlcAxisLeft,
-
-      gAxisRight: this.gOhlcAxisRight,
-      gAxisGroupRight: this.gOhlcAxisGroupRight,
-      rAxisRectRight: this.rOhlcAxisRight
+      axisLeft: {
+        gAxis: this.gOhlcAxisLeft,
+        gAxisGroup: this.gOhlcAxisGroupLeft,
+        rAxis: this.rOhlcAxisLeft
+      },
+      axisRight: {
+        gAxis: this.gOhlcAxisRight,
+        gAxisGroup: this.gOhlcAxisGroupRight,
+        rAxis: this.rOhlcAxisRight
+      }
     });
+
 
     // #endregion OHLC
 
@@ -239,13 +230,16 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       rContent: this.rVolumeContent,
       gChart: this.gVolumeChart,
 
-      gAxisLeft: this.gVolumeAxisLeft,
-      gAxisGroupLeft: this.gVolumeAxisGroupLeft,
-      rAxisRectLeft: this.rVolumeAxisLeft,
-
-      gAxisRight: this.gVolumeAxisRight,
-      gAxisGroupRight: this.gVolumeAxisGroupRight,
-      rAxisRectRight: this.rVolumeAxisRight
+      axisLeft: {
+        gAxis: this.gVolumeAxisLeft,
+        gAxisGroup: this.gVolumeAxisGroupLeft,
+        rAxis: this.rVolumeAxisLeft
+      },
+      axisRight: {
+        gAxis: this.gVolumeAxisRight,
+        gAxisGroup: this.gVolumeAxisGroupRight,
+        rAxis: this.rVolumeAxisRight
+      }
     });
 
     // #endregion VOLUME
@@ -253,36 +247,42 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #region MACD
     this.macdLayout.initializeSelections({
       gSection: this.gMacdSection,
-      rSectionRect: this.rMacdSectionRect,
+      rSection: this.rMacdSectionRect,
       gContent: this.gMacdContent,
-      rContentRect: this.rMacdContentRect,
+      rContent: this.rMacdContentRect,
       gChart: this.gMacdChart,
 
-      gAxisLeft: this.gMacdAxisLeft,
-      gAxisGroupLeft: this.gMacdAxisGroupLeft,
-      rAxisRectLeft: this.rMacdAxisRectLeft,
-
-      gAxisRight: this.gMacdAxisRight,
-      gAxisGroupRight: this.gMacdAxisGroupRight,
-      rAxisRectRight: this.rMacdAxisRectRight
+      axisLeft: {
+        gAxis: this.gMacdAxisLeft,
+        gAxisGroup: this.gMacdAxisGroupLeft,
+        rAxis: this.rMacdAxisLeft
+      },
+      axisRight: {
+        gAxis: this.gMacdAxisRight,
+        gAxisGroup: this.gMacdAxisGroupRight,
+        rAxis: this.rMacdAxisRight
+      }
     });
     // #rendegion MACD
 
     //#region RSI
     this.rsiLayout.initializeSelections({
       gSection: this.gRsiSection,
-      rSectionRect: this.rRsiSectionRect,
+      rSection: this.rRsiSectionRect,
       gContent: this.gRsiSectionContent,
-      rContentRect: this.rRsiSectionContent,
+      rContent: this.rRsiSectionContent,
       gChart: this.gRsiChart, // if used as the chart base
 
-      gAxisLeft: this.gRsiAxisLeft,
-      gAxisGroupLeft: this.gRsiAxisGroupLeft,
-      rAxisRectLeft: this.rVolumeAxisLeft,
-
-      gAxisRight: this.gRsiAxisRight,
-      gAxisGroupRight: this.rsiAxisGroupRight,
-      rAxisRectRight: this.yAxisRightRectC
+      axisLeft: {
+        gAxis: this.gMacdAxisLeft,
+        gAxisGroup: this.gMacdAxisGroupLeft,
+        rAxis: this.rMacdAxisLeft
+      },
+      axisRight: {
+        gAxis: this.gMacdAxisRight,
+        gAxisGroup: this.gMacdAxisGroupRight,
+        rAxis: this.rMacdAxisRight
+      }
     });
     //#endregion RSI
 
