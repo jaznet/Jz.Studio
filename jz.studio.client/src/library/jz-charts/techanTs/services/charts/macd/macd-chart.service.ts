@@ -112,7 +112,6 @@ export class MacdChartService {
 
   public draw(): void {
 
-
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
       .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
