@@ -217,7 +217,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
         rAxis: this.rOhlcAxisRight
       }
     });
-
+    console.log('techan',this.ohlcLayout.axisLeft, this.ohlcLayout.axisRight);
 
     // #endregion OHLC
 
