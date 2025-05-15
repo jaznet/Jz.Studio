@@ -148,10 +148,10 @@ export class LayoutService {
     this.scaffold.sections[0].content.width = (this.ohlcLayout.rContent.node()!.width.baseVal.value);
     this.scaffold.sections[0].content.height = (this.ohlcLayout.rContent.node()!.height.baseVal.value);
     this.ohlcLayout.rContent.attr('height', `${this.scaffold.sections[0].height}`);
-    this.ohlcLayout.axisLeft.gAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcLayout.axisLeft.gAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
-    this.ohlcLayout.axisRight.gAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
-    this.ohlcLayout.axisRight.gAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcLayout.axisLeft.rAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.axisLeft.rAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
+    this.ohlcLayout.axisRight.rAxis.attr('width', `${this.scaffold.sections[0].margins.right}`);
+    this.ohlcLayout.axisRight.rAxis.attr('height', `${this.scaffold.sections[0].height - this.scaffold.sections[0].margins.top}`);
     // #endregion OHLC
 
     // #region VOLUME

@@ -6,9 +6,6 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 @Injectable({ providedIn: 'root' })
 export class OhlcChartLayoutService extends BaseChartLayoutService {
 
-  //axisLeft = new AxisLayout();
-  //axisRight = new AxisLayout();
-
   initializeSelections(refs: ChartElementRefs): void {
     this.initializeBase(refs);
   }

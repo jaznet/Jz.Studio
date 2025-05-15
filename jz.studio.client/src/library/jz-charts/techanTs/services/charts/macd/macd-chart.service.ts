@@ -12,28 +12,16 @@ import { MacdChartLayoutService } from './macd-chart-layout.service';
   providedIn: 'root',
 })
 export class MacdChartService {
-  //gMacdChart: any;
-  //gMacdSection!: any;
-  //rMacdSectionRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
-  //gMacdContent!: any;
-  //rMacdContentRect!: Selection<SVGRectElement, unknown, null, undefined>;
 
   macdYscale: any;
 
-  //  gMacdAxisLeft!: Selection<SVGGElement, unknown, null, undefined>;
-  //gMacdAxisGroupLeft: any;
-  //rMacdAxisLeft: any;
 
-  //// gMacdAxisRight!: Selection<SVGGElement, unknown, null, undefined>;
-  //gMacdAxisGroupRight: any;
-  //rMacdAxisRight: any;
 
   axisLeft: any;
   axisRight: any;
 
   private _xScale: any;
-  /*  private _yScale: any;*/
   private gMacd: any;
   private fastPeriod: number = 12; // Default fast EMA period
   private slowPeriod: number = 26; // Default slow EMA period
@@ -123,7 +111,7 @@ export class MacdChartService {
   }
 
   public draw(): void {
-    //   this.data.macdData = this.calculateMacd(this.data.parsedData);
+
 
     // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
