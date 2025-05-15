@@ -108,11 +108,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gRsiChart', { static: true }) gRsiChart!: ElementRef<SVGGElement>;
 
   @ViewChild('gRsiAxisGroupLeft', { static: true }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rRsiAxisGroupLeft', { static: true }) rRsiAxisGroupLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
 
-  @ViewChild('rsiAxisGroupRight', { static: true }) rsiAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisGroupRight', { static: true }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('rRsiAxisGroupRight', { static: true }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
   @ViewChild('gRsiAxisRight', { static: true }) gRsiAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('yAxisRightRectC', { static: true }) yAxisRightRectC!: ElementRef<SVGRectElement>;
+
 
   // #endregion Rsi
 
@@ -274,14 +276,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       gChart: this.gRsiChart, // if used as the chart base
 
       axisLeft: {
-        gAxis: this.gMacdAxisLeft,
-        gAxisGroup: this.gMacdAxisGroupLeft,
-        rAxis: this.rMacdAxisLeft
+        gAxis: this.gRsiAxisLeft,
+        gAxisGroup: this.gRsiAxisGroupLeft,
+        rAxis: this.rRsiAxisGroupLeft
       },
       axisRight: {
-        gAxis: this.gMacdAxisRight,
-        gAxisGroup: this.gMacdAxisGroupRight,
-        rAxis: this.rMacdAxisRight
+        gAxis: this.gRsiAxisRight,
+        gAxisGroup: this.gRsiAxisGroupRight,
+        rAxis: this.rRsiAxisGroupRight
       }
     });
     //#endregion RSI
