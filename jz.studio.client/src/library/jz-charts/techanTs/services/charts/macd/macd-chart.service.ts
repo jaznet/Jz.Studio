@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { AfterViewInit, Injectable } from '@angular/core';
 import { Selection, select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
@@ -7,17 +7,14 @@ import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { MacdChartLayoutService } from './macd-chart-layout.service';
+import { BaseChartComponent } from '../base/base-chart-component.directive';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MacdChartService {
-
+export class MacdChartService extends BaseChartComponent implements AfterViewInit {
 
   macdYscale: any;
-
-
-
   axisLeft: any;
   axisRight: any;
 
@@ -28,10 +25,13 @@ export class MacdChartService {
   private signalPeriod: number = 9; // Default signal line period
 
   constructor(
-    private scales: ScalesService,
     private data: ChartDataService,
     private macd: MacdChartLayoutService
-  ) { }
+  ) { super() }
+
+    ngAfterViewInit(): void {
+      this.macd.initializeSelections(this.buildRefs());
+    }
 
   public xScale(scale: any): this {
     this._xScale = scale;
