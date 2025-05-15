@@ -1,7 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { BaseChartLayoutService } from '../base-chart-layout-service';
 import { AxisLayoutRefs } from '../../parts/axis-layout';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
+import { BaseChartLayoutService } from '../base/base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
 export class RsiChartLayoutService extends BaseChartLayoutService {

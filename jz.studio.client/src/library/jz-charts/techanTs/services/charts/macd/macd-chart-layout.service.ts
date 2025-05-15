@@ -1,6 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
-import { BaseChartLayoutService } from '../base-chart-layout-service';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
+import { BaseChartLayoutService } from '../base/base-chart-layout-service';
 
 @Injectable({ providedIn: 'root' })
 export class MacdChartLayoutService extends BaseChartLayoutService {

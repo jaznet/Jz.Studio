@@ -1,7 +1,7 @@
 
 import { ElementRef } from '@angular/core';
 import { select, Selection } from 'd3-selection';
-import { AxisLayout, AxisLayoutRefs } from '../parts/axis-layout';
+import { AxisLayout, AxisLayoutRefs } from '../../parts/axis-layout';
 
 export abstract class BaseChartLayoutService {
   gSection!: Selection<SVGGElement, unknown, null, undefined>;
