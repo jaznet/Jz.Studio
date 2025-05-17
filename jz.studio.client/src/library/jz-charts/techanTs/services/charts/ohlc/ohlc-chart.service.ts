@@ -1,5 +1,5 @@
 
-import { ElementRef, Injectable } from '@angular/core';
+import { AfterViewInit, ElementRef, Injectable } from '@angular/core';
 import { Selection, select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
@@ -7,11 +7,12 @@ import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
 import { OhlcChartLayoutService } from './ohlc-chart-layout.service';
+import { BaseChartComponent } from '../base/base-chart-component.directive';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OhlcChartService {
+export class OhlcChartService extends BaseChartComponent implements AfterViewInit {
   // #region PROPERTIES
 
 
@@ -31,7 +32,10 @@ export class OhlcChartService {
     private scales: ScalesService,
     private data: ChartDataService,
     private OhlcLayout: OhlcChartLayoutService
-  ) { }
+  ) { super()}
+  ngAfterViewInit(): void {
+    this.OhlcLayout.initializeSelections(this.buildRefs());
+    }
 
   public xScale(scale: any) {
     this._xScale = scale;

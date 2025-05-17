@@ -1,17 +1,18 @@
 
-import { Injectable } from '@angular/core';
+import { AfterViewInit, Injectable } from '@angular/core';
 import { Selection, select } from 'd3-selection';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { ScalesService } from '../../scales.service';
-import { scaffold } from '../../../interfaces/techan-interfaces';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
+import { scaffold } from '../../../interfaces/techan-interfaces';
+import { BaseChartComponent } from '../base/base-chart-component.directive';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VolumeChartService {
+export class VolumeChartService extends BaseChartComponent implements AfterViewInit {
   private _xScale: any;
   private _barWidth: number = 0;
   private gVolume: any;
@@ -25,7 +26,11 @@ export class VolumeChartService {
     private scales: ScalesService,
     private data: ChartDataService,
     private volume: VolumeChartLayoutService
-  ) { }
+  ) { super() }
+
+  ngAfterViewInit(): void {
+    this.volume.initializeSelections(this.buildRefs());
+    }
 
   public xScale(scale: any): this {
     this._xScale = scale;

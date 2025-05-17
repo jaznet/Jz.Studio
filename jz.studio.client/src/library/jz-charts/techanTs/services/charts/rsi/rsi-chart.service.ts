@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { AfterViewInit, Injectable } from '@angular/core';
 import { line } from 'd3-shape';
 import { Selection, select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
@@ -7,11 +7,12 @@ import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
+import { BaseChartComponent } from '../base/base-chart-component.directive';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RsiChart {
+export class RsiChart extends BaseChartComponent implements AfterViewInit {
  
   rsiYscale: any;
 
@@ -24,10 +25,14 @@ export class RsiChart {
   private rollingPeriod: number = 14; // Default RSI period
 
   constructor(
-    private scales: ScalesService,
     private data: ChartDataService,
     private rsiLayout: RsiChartLayoutService
-  ) { }
+  ) {
+    super()
+  }
+    ngAfterViewInit(): void {
+      this.rsiLayout.initializeSelections(this.buildRefs());
+    }
 
   public xScale(scale: any): this {
     this._xScale = scale;
