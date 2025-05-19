@@ -6,7 +6,7 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 export abstract class BaseChartComponent {
   // SECTION + CONTENT + CHART elements
   @ViewChild('gSection', { static: true }) gSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionRect', { static: true }) rSectionRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rSectionRect', { static: true }) rSectionRef!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: true }) gContentRef!: ElementRef<SVGGElement>;
   @ViewChild('rContentRect', { static: true }) rContentRectRef!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: true }) gChartRef!: ElementRef<SVGGElement>;
@@ -25,7 +25,7 @@ export abstract class BaseChartComponent {
   protected buildRefs(): ChartElementRefs {
     return {
       gSection: this.gSectionRef,
-      rSection: this.rSectionRectRef,
+      rSection: this.rSectionRef,
       gContent: this.gContentRef,
       rContent: this.rContentRectRef,
       gChart: this.gChartRef,
