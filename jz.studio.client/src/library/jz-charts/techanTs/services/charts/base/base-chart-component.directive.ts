@@ -8,7 +8,7 @@ export abstract class BaseChartComponent {
   @ViewChild('gSection', { static: true }) gSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rSectionRect', { static: true }) rSectionRef!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: true }) gContentRef!: ElementRef<SVGGElement>;
-  @ViewChild('rContentRect', { static: true }) rContentRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rContentRect', { static: true }) rContentRef!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: true }) gChartRef!: ElementRef<SVGGElement>;
 
   // LEFT AXIS
@@ -27,7 +27,7 @@ export abstract class BaseChartComponent {
       gSection: this.gSectionRef,
       rSection: this.rSectionRef,
       gContent: this.gContentRef,
-      rContent: this.rContentRectRef,
+      rContent: this.rContentRef,
       gChart: this.gChartRef,
 
       axisLeft: {

@@ -17,7 +17,7 @@ export abstract class BaseChartLayoutService {
     gSection: ElementRef<SVGGElement>;
     rSection: ElementRef<SVGRectElement>;
     gContent: ElementRef<SVGGElement>;
-    rContent: ElementRef<SVGRectElement>;
+    c: ElementRef<SVGRectElement>;
     gChart: ElementRef<SVGGElement>;
 
     axisLeft: AxisLayoutRefs;
