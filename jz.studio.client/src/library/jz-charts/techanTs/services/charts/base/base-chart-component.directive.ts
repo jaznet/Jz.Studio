@@ -6,9 +6,9 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 export abstract class BaseChartComponent {
   // SECTION + CONTENT + CHART elements
   @ViewChild('gSection', { static: true }) gSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionRect', { static: true }) rSectionRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rSection', { static: true }) rSectionRef!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: true }) gContentRef!: ElementRef<SVGGElement>;
-  @ViewChild('rContentRect', { static: true }) rContentRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rContent', { static: true }) rContentRef!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: true }) gChartRef!: ElementRef<SVGGElement>;
 
   // LEFT AXIS
