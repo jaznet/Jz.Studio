@@ -133,10 +133,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   constructor(
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
-    private data: ChartDataService,
-    private layout: LayoutService,
+    public data: ChartDataService,
+    public layout: LayoutService,
     private axes: PartsAxesService,
-    private scales:ScalesService,
+    public scales:ScalesService,
     private popOverService: JzPopOversService,
     private ohlcChart: OhlcChartService,
     private ohlcLayout: OhlcChartLayoutService,
@@ -307,7 +307,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawSma1(5);
     this.drawSma2(50);
     this.drawSma3(100);
-    this.drawMacd();
+   this.drawMacd();
    this.drawRsi();
   }
 
