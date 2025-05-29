@@ -85,11 +85,20 @@
           <g #gMacdAxisRight id="gMacdAxisRight" class="y-axis"></g>
         </g>
 
-        <g #gMacdContent id="gMacdContent">
-          <rect #rMacdContentRect id="rMacdContentRect" width="0" height="0"></rect>
-          <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">MACD</text>
-          <g #gMacdChart id="gMacdChart"></g>
+        <!-- Inside your master SVG -->
+        <g id="gMacdContent" [attr.transform]="'translate(40,0)'">
+          <rect id="rMacdContentRect" width="0" height="0"></rect>
+          <text>MACD</text>
+          <g *ngIf="layoutService?.scaffold?.sections?.[ChartType.MACD]!" id="gMacdChart">
+            <foreignObject width="1" height="1"  [attr.width]="layout.scaffold.sections[ChartType.MACD]!.width" [attr.height]="layout.scaffold.sections[ChartType.MACD]!.height">
+              <macd-chart [xScale]="scales.dateScaleX"
+                          [scaffold]="layout.scaffold"
+                          [data]="data.macdData">
+              </macd-chart>
+            </foreignObject>
+          </g>
         </g>
+
       </g>
       <!-- #endregion SECTION MACD -->
       <!-- #region SECTION RSI -->
@@ -131,9 +140,11 @@
 
 </div>
 
-<macd-chart [xScale]="scales.dateScaleX"
+<!--<macd-chart *ngIf="data?.macdData?.length"
+            [xScale]="scales.dateScaleX"
             [scaffold]="layout.scaffold"
-            [data]="data.macdData"></macd-chart>
+            [data]="data.macdData">
+</macd-chart>-->
 <!--<ohlc-chart></ohlc-chart>
 <volume-chart></volume-chart>
 <rsi-chart></rsi-chart>-->

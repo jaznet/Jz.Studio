@@ -3,14 +3,14 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, O
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
-import { ohlcData, SectionAttributes } from '../interfaces/techan-interfaces';
+import { ohlcData, scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartDataService } from '../services/chart-data.service';
+import { ChartType } from '../enums/chart-type'; // adjust the path as needed
 import { LayoutService } from '../services/layout.service';
 import { PartsAxesService } from '../services/parts-axes.service';
 import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { SmaChartService } from '../services/charts/chart-sma.service';
-import { MacdChartLayoutService } from '../services/charts/macd/macd-chart-layout.service';
 import { MacdChartService } from '../services/charts/macd/macd-chart.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
@@ -22,6 +22,7 @@ import { VolumeChartService } from '../services/charts/volume/volume-chart.servi
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
+import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
 
 @Component({
   selector: 'techanTs',
@@ -31,6 +32,9 @@ import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layou
 })
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
+
+  layout!: LayoutService; // or the actual layout object if you're not using the service
+  ChartType = ChartType; // expose enum to template
 
   // #region @ViewChild List
   @ViewChild('divSvgContainer', { static: true }) divSvgContainer!: ElementRef<HTMLDivElement>;
@@ -85,22 +89,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('gVolumeAxisGroupRight', { static: true }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeAxisRight', { static: true }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP gVolumeChart
-  
-  @ViewChild('gMacdSection', { static: true }) gMacdSection!: ElementRef<SVGGElement>;
-  @ViewChild('gMacdContent', { static: true }) gMacdContent!: ElementRef<SVGGElement>;
-  @ViewChild('rMacdContentRect', { static: true }) rMacdContentRect!: ElementRef<SVGRectElement>;
-  @ViewChild('rMacdSectionRect', { static: true }) rMacdSectionRect!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gMacdAxisGroupLeft', { static: true }) gMacdAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('gMacdAxisLeft', { static: true }) gMacdAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rMacdAxisLeft', { static: true }) rMacdAxisLeft!: ElementRef<SVGRectElement>;
-
-  @ViewChild('gMacdAxisGroupRight', { static: true }) gMacdAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('gMacdAxisRight', { static: true }) gMacdAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('rMacdAxisRight', { static: true }) rMacdAxisRight!: ElementRef<SVGRectElement>;
-
-  @ViewChild('gMacdChart', { static: true }) gMacdChart!: ElementRef<SVGRectElement>;
-/*  #region*/
+  /*  #region*/
   @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
   @ViewChild('gRsiSectionContent', { static: true }) gRsiSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
@@ -134,19 +124,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     public data: ChartDataService,
-    public layout: LayoutService,
+    public layoutService: LayoutService,
     private axes: PartsAxesService,
-    public scales:ScalesService,
+    public scales: ScalesService,
     private popOverService: JzPopOversService,
-    private ohlcChart: OhlcChartService,
     private ohlcLayout: OhlcChartLayoutService,
-    private volumeChart: VolumeChartService,
-    private smaChart: SmaChartService,
-    private macdChart: MacdChartService,
-    private macdLayout: MacdChartLayoutService,
-    private rsiChart: RsiChart,
+    private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
-    private volumeLayout: VolumeChartLayoutService
+    private smaService: SmaChartService
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
@@ -155,7 +140,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     this.popover_loading.show();
@@ -183,22 +168,22 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     );
   }
 
-  createChart(): void {  
+  createChart(): void {
     this.createChartFramework();
-    this.layout.createScaffolding();
+    this.layoutService.createScaffolding();
     this.data.scrubData();
-    this.scales.createScales(this.layout.scaffold);
+    this.scales.createScales(this.layoutService.scaffold);
     this.axes.drawAxes();
     this.constructChart();
   }
 
   createChartFramework() {
-    this.layout.divSvgContainer = select(this.divSvgContainer.nativeElement);
-    this.layout.svgElement = select( this.svgElement.nativeElement);
-    this.layout.rSvgElement =select(this.rSvgElementRef.nativeElement);
+    this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
+    this.layoutService.svgElement = select(this.svgElement.nativeElement);
+    this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
-    this.layout.sectionsContainer = this.gSectionsContainer.nativeElement;
-    this.layout.rSectionsContainer = this.sectionsRectRef.nativeElement;
+    this.layoutService.sectionsContainer = this.gSectionsContainer.nativeElement;
+    this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
     this.ohlcLayout.initializeSelections({
@@ -219,7 +204,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
         rAxis: this.rOhlcAxisRight
       }
     });
-    console.log('techan',this.ohlcLayout.axisLeft, this.ohlcLayout.axisRight);
+    console.log('techan', this.ohlcLayout.axisLeft, this.ohlcLayout.axisRight);
 
     // #endregion OHLC
 
@@ -247,24 +232,26 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdLayout.initializeSelections({
-      gSection: this.gMacdSection,
-      rSection: this.rMacdSectionRect,
-      gContent: this.gMacdContent,
-      rContent: this.rMacdContentRect,
-      gChart: this.gMacdChart,
+    this.layout.sizeChartSection(ChartType.MACD);
+ 
+    //this.macdLayout.initializeSelections({
+    //  gSection: this.gMacdSection,
+    //  rSection: this.rMacdSectionRect,
+    //  gContent: this.gMacdContent,
+    //  rContent: this.rMacdContentRect,
+    //  gChart: this.gMacdChart,
 
-      axisLeft: {
-        gAxis: this.gMacdAxisLeft,
-        gAxisGroup: this.gMacdAxisGroupLeft,
-        rAxis: this.rMacdAxisLeft
-      },
-      axisRight: {
-        gAxis: this.gMacdAxisRight,
-        gAxisGroup: this.gMacdAxisGroupRight,
-        rAxis: this.rMacdAxisRight
-      }
-    });
+    //  axisLeft: {
+    //    gAxis: this.gMacdAxisLeft,
+    //    gAxisGroup: this.gMacdAxisGroupLeft,
+    //    rAxis: this.rMacdAxisLeft
+    //  },
+    //  axisRight: {
+    //    gAxis: this.gMacdAxisRight,
+    //    gAxisGroup: this.gMacdAxisGroupRight,
+    //    rAxis: this.rMacdAxisRight
+    //  }
+    //});
     // #rendegion MACD
 
     //#region RSI
@@ -288,7 +275,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     });
     //#endregion RSI
 
-   this.layout.sma1 = this.sma1Ref.nativeElement;
+    this.layout.sma1 = this.sma1Ref.nativeElement;
     this.layout.sma2 = this.sma2Ref.nativeElement;
     this.layout.sma3 = this.sma3Ref.nativeElement;
 
@@ -307,43 +294,43 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.drawSma1(5);
     this.drawSma2(50);
     this.drawSma3(100);
-   this.drawMacd();
-   this.drawRsi();
+    //  this.drawMacd();
+    this.drawRsi();
   }
 
   // #region DRAW
 
   drawCandlestick(): void {
-    this.ohlcChart
-      .xScale(this.scales.dateScaleX)
-/*      .yScale(this.ohlcChart.ohlcYscale)*/
-      .setTargetGroup(this.gOhlcChart.nativeElement)
-      .setCandleWidth()
-      .drawAxes(this.layout.scaffold)
-      .draw();
-  }  
+   // this.ohlcChart
+      //.xScale(this.scales.dateScaleX)
+      ///*      .yScale(this.ohlcChart.ohlcYscale)*/
+      //.setTargetGroup(this.gOhlcChart.nativeElement)
+      //.setCandleWidth()
+      //.drawAxes(this.layout.scaffold)
+      //.draw();
+  }
 
   drawVolume(): void {
-    this.volumeChart
-      .xScale(this.scales.dateScaleX)
-  /*    .yScale(this.gVolumeChart.volumeYscale)*/
-      .setTargetGroup(this.gVolumeContent.nativeElement)
-      .setBarWidth()
-      .drawAxes(this.layout.scaffold)
-      .draw();
+    //this.volumeChart
+    //  .xScale(this.scales.dateScaleX)
+    //  /*    .yScale(this.gVolumeChart.volumeYscale)*/
+    //  .setTargetGroup(this.gVolumeContent.nativeElement)
+    //  .setBarWidth()
+    //  .drawAxes(this.layout.scaffold)
+    //  .draw();
   }
 
-  drawMacd(): void {
-    this.macdChart
-      .xScale(this.scales.dateScaleX)
-      .setTargetGroup(this.macdLayout.gChart)
-      .setPeriods(12, 26, 9) // Typical MACD periods
-      .drawAxes(this.layout.scaffold)
-      .draw();
-  }
+  //drawMacd(): void {
+  //  this.macdChart
+  //    .xScale(this.scales.dateScaleX)
+  //    .setTargetGroup(this.macdLayout.gChart)
+  //    .setPeriods(12, 26, 9) // Typical MACD periods
+  //    .drawAxes(this.layout.scaffold)
+  //    .draw();
+  //}
 
-  drawSma1(period:number): void {
-    this.smaChart
+  drawSma1(period: number): void {
+    this.smaService
       .xScale(this.scales.dateScaleX)
       /*.yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma1) // Specify target group
@@ -353,9 +340,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawSma2(period: number): void {
-    this.smaChart
+    this.smaService
       .xScale(this.scales.dateScaleX)
-   /*   .yScale(this.layout.scaffold)*/
+      /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#F1FEC6')
@@ -363,9 +350,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawSma3(period: number): void {
-    this.smaChart
+    this.smaService
       .xScale(this.scales.dateScaleX)
-   /*   .yScale(this.layout.scaffold)*/
+      /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layout.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')
@@ -373,13 +360,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   drawRsi(): void {
-    this.rsiChart
-      .xScale(this.scales.dateScaleX)
-      /* .yScale(this.scales.rsiYscale)*/
-      .setTargetGroup(this.rsiLayout.gChart) // Define a <g> for RSI
-      .setRollingPeriod(14) // Optional: Change the period
-      .drawAxes(this.layout.scaffold)
-      .draw();
+  //  this.rsiChart
+  //    .xScale(this.scales.dateScaleX)
+  //    /* .yScale(this.scales.rsiYscale)*/
+  //    .setTargetGroup(this.rsiLayout.gChart) // Define a <g> for RSI
+  //    .setRollingPeriod(14) // Optional: Change the period
+  //    .drawAxes(this.layout.scaffold)
+  //    .draw();
   }
   // #endregion DRAW
 }

@@ -6,6 +6,6 @@ import { BaseChartLayoutService } from '../base/base-chart-layout-service';
 @Injectable({ providedIn: 'root' })
 export class RsiChartLayoutService extends BaseChartLayoutService {
   initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs);
+    this.initializeBase(refs,'RSI');
   }
 }

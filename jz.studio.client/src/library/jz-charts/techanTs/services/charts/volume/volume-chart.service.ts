@@ -8,6 +8,7 @@ import { ScalesService } from '../../scales.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
+import { ChartType } from '../../../enums/chart-type';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,7 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
   public drawAxes(scaffold:scaffold) {
     this.volumeYscale = scaleLinear()
       .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
-      .range([scaffold.sections[1].height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([scaffold.sections[ChartType.VOLUME]!.height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.axisLeft = axisLeft(this.volumeYscale)
       .tickFormat((d) => (d as number / 1_000_000).toFixed(0)); // or toFixed(1) for 1 decimal

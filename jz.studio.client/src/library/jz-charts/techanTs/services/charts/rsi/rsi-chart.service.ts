@@ -8,6 +8,7 @@ import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
+import { ChartType } from '../../../enums/chart-type';
 
 @Injectable({
   providedIn: 'root',
@@ -92,7 +93,7 @@ export class RsiChart extends BaseChartComponent implements AfterViewInit {
   }
 
   public drawAxes(scaffold: scaffold) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([scaffold.sections[3].height, 0]);
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([scaffold.sections[ChartType.RSI]!.height, 0]);
 
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);

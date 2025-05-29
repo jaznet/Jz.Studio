@@ -1,3 +1,4 @@
+import { ChartType } from "../enums/chart-type";
 
 export interface RectDimensions {
   x: number;
@@ -34,16 +35,15 @@ export interface scaffold {
   yAxisLeft: number;
   yAxisRight: number;
   sectionsContainer: any;
-  sections: SectionAttributes[];
+  sections: { [key in ChartType]?: SectionAttributes };
+
+/*  sections: SectionAttributes[];*/
 }
 
 export interface SvgAttributes {
   height: number;
   width: number;
 }
-
-
-
 export interface ohlcData {
   timestamp: Date;
   ticker: string;

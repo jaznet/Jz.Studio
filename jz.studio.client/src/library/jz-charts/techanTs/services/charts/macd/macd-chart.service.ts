@@ -4,42 +4,57 @@ import { line } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { ScalesService } from '../../scales.service';
-import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
-import { MacdChartLayoutService } from './macd-chart-layout.service';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
+import { ChartType } from '../../../enums/chart-type';
+import { BaseChartLayoutService } from '../base/base-chart-layout-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MacdChartService extends BaseChartComponent implements AfterViewInit {
+export class MacdChartService extends BaseChartLayoutService implements AfterViewInit {
 
   macdYscale: any;
-  axisLeft: any;
-  axisRight: any;
+  //axisLeft: any;
+  //axisRight: any;
 
   private _xScale: any;
-  private gMacd: any;
+  private gMacd!: Selection<SVGGElement, unknown, null, undefined>;
   private fastPeriod: number = 12; // Default fast EMA period
   private slowPeriod: number = 26; // Default slow EMA period
   private signalPeriod: number = 9; // Default signal line period
 
   constructor(
-    private data: ChartDataService,
-    private macd: MacdChartLayoutService
-  ) { super() }
+   // private macd: MacdChartLayoutService
+  ) {super() }
 
     ngAfterViewInit(): void {
-      this.macd.initializeSelections(this.buildRefs());
-    }
+   
+  }
+
+  private _data: any[] = [];
+
+  public setData(data: any[]): this {
+    this._data = data;
+    return this;
+  }
 
   public xScale(scale: any): this {
     this._xScale = scale;
     return this;
   }
 
-  public setTargetGroup(gTargetRef: any): this {
-    this.gMacd = gTargetRef;
+  public setTargetGroup(gTargetRef: SVGGElement): this {
+  
+    this.gMacd = select(gTargetRef); // ✅ now it's a D3 selection
+    console.log('gMacd selection:', this.gMacd);
+    this.gMacd
+      .append('circle')
+      .attr('cx', 50)
+      .attr('cy', 50)
+      .attr('r', 10)
+      .attr('fill', 'orange');
+
     return this;
   }
 
@@ -90,7 +105,7 @@ export class MacdChartService extends BaseChartComponent implements AfterViewIni
 
   public drawAxes(scaffold: scaffold) {
     // Calculate the min and max values from MACD data
-    const allValues = this.data.macdData.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
+    const allValues = this._data.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
       return [d.macd, d.signal, d.histogram];
     });
     const min = Math.min(...allValues);
@@ -99,46 +114,47 @@ export class MacdChartService extends BaseChartComponent implements AfterViewIni
     // Create the y-scale
     this.macdYscale = scaleLinear()
       .domain([min, max]) // Domain based on MACD values
-      .range([scaffold.sections[2].height, 0]); // Range based on the chart height
+      .range([scaffold.sections[ChartType.MACD]!.height, 0]); // Range based on the chart height
 
-    this.axisLeft = axisLeft(this.macdYscale);
-    this.axisRight = axisRight(this.macdYscale);
+    this.axisLeft.gAxis.call(axisLeft(this.macdYscale));
+    this.axisRight.gAxis.call(axisRight(this.macdYscale));
 
-    this.macd.axisLeft.gAxis.call(this.axisLeft);
-    this.macd.axisRight.gAxis.call(this.axisRight);
 
     return this;
   }
 
   public draw(): void {
+    this.gMacd
+      .append('circle')
+      .attr('cx', 50)
+      .attr('cy', 50)
+      .attr('r', 10)
+      .attr('fill', 'red');
 
-    // Line generator for MACD and Signal lines
     const lineGenerator = line<{ date: Date; macd: number }>()
-      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
-      .y((d) => this.macdYscale(d.macd));
+      .x(d => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2)
+      .y(d => this.macdYscale(d.macd));
 
     const signalLineGenerator = line<{ date: Date; signal: number }>()
-      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Fix here
-      .y((d) => this.macdYscale(d.signal));
+      .x(d => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2)
+      .y(d => this.macdYscale(d.signal));
 
-    // Draw Divergence as bars
-    const bars = this.gMacd.selectAll('.histogram-bar').data(this.data.macdData);
+    console.log('MACD data in draw():', this._data);
 
+    const bars = this.gMacd.selectAll<SVGRectElement, any>('.histogram-bar').data(this._data);
     bars
       .enter()
       .append('rect')
       .attr('class', 'histogram-bar')
       .merge(bars)
-      .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2 - 2)
+      .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2 - 2)
       .attr('y', (d: { histogram: any; }) => isNaN(this.macdYscale(d.histogram)) ? 0 : this.macdYscale(d.histogram))
-      .attr('width', 4) // Width of each bar
-      .attr('height', (d: { histogram: any }) => Math.abs(this.macdYscale(d.histogram) - this.macdYscale(0)))
-      .attr('fill', (d: { histogram: number }) => (d.histogram > 0 ? 'green' : 'red')); // Color based on positive or negative histogram value
-
+      .attr('width', 4)
+      .attr('height', (d: { histogram: any; }) => Math.abs(this.macdYscale(d.histogram) - this.macdYscale(0)))
+      .attr('fill', (d: { histogram: number; }) => d.histogram > 0 ? 'green' : 'red');
     bars.exit().remove();
 
-    // Draw MACD line
-    const macdLine = this.gMacd.selectAll('.macd-line').data([this.data.macdData]);
+    const macdLine = this.gMacd.selectAll<SVGPathElement, any>('.macd-line').data([this._data]);
     macdLine
       .enter()
       .append('path')
@@ -148,11 +164,9 @@ export class MacdChartService extends BaseChartComponent implements AfterViewIni
       .attr('stroke', '#f8f32b')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
-
     macdLine.exit().remove();
 
-    // Draw Signal line
-    const signalLine = this.gMacd.selectAll('.signal-line').data([this.data.macdData]);
+    const signalLine = this.gMacd.selectAll<SVGPathElement, any>('.signal-line').data([this._data]);
     signalLine
       .enter()
       .append('path')
@@ -162,7 +176,7 @@ export class MacdChartService extends BaseChartComponent implements AfterViewIni
       .attr('stroke', 'red')
       .attr('stroke-width', 2)
       .attr('fill', 'none');
-
     signalLine.exit().remove();
   }
+
 }

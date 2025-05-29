@@ -1,8 +1,9 @@
-import { Component, AfterViewInit, Input } from "@angular/core";
-import { scaffold } from "../../interfaces/techan-interfaces";
-import { BaseChartComponent } from "../../services/charts/base/base-chart-component.directive";
-import { MacdChartLayoutService } from "../../services/charts/macd/macd-chart-layout.service";
-import { MacdChartService } from "../../services/charts/macd/macd-chart.service";
+import { Component, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { scaffold } from '../../interfaces/techan-interfaces';
+import { MacdChartService } from '../../services/charts/macd/macd-chart.service';
+import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
+import { LayoutService } from '../../services/layout.service';
+import { BaseChartLayoutService } from '../../services/charts/base/base-chart-layout-service';
 
 @Component({
   selector: 'macd-chart',
@@ -11,20 +12,23 @@ import { MacdChartService } from "../../services/charts/macd/macd-chart.service"
 })
 export class MacdChartComponent extends BaseChartComponent implements AfterViewInit {
   @Input() xScale!: any;
-  @Input() scaffold!: scaffold;  // 👈 comes from parent layout
-  @Input() data!: any[];         // optional: pass parsed macdData
+  @Input() scaffold!: scaffold;
+  @Input() data!: any[];
 
   constructor(
-    private macdLayout: MacdChartLayoutService,
-    private macdChart: MacdChartService
-  ) { super(); }
+    private macdChart: MacdChartService,
+    private layout: BaseChartLayoutService
+  ) {
+    super();
+  }
 
   ngAfterViewInit(): void {
-    this.macdLayout.initializeSelections(this.buildRefs());
-
+    const refs = this.buildRefs();
+    this.layout.initializeBase(refs, 'macd'); // or inline the logic here
     this.macdChart
-      .xScale(this.xScale)
       .setTargetGroup(this.gChartRef.nativeElement)
+      .setData(this.data)
+      .xScale(this.xScale)
       .setPeriods(12, 26, 9)
       .drawAxes(this.scaffold)
       .draw();

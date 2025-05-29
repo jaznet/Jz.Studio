@@ -7,6 +7,6 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 @Injectable({ providedIn: 'root' })
 export class VolumeChartLayoutService extends BaseChartLayoutService {
   initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs);
+    this.initializeBase(refs,'volume');
   }
 }

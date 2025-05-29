@@ -13,7 +13,7 @@ export class ChartDataService {
   maxPrice: number | undefined;
   maxVolume: number | undefined;
   parsedData!: any[];
-  macdData!: any;
+  macdData!: any[];
 
   constructor() { }
 

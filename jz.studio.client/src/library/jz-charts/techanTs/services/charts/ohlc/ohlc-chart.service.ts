@@ -8,6 +8,7 @@ import { ChartDataService } from '../../chart-data.service';
 import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
 import { OhlcChartLayoutService } from './ohlc-chart-layout.service';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
+import { ChartType } from '../../../enums/chart-type';
 
 @Injectable({
   providedIn: 'root',
@@ -61,18 +62,18 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
 
     this.ohlcYscale = scaleLinear()
       .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
-      .range([scaffold.sections[0].height, 0]); // Invert the range for correct orientation (top to bottom)
+      .range([scaffold.sections[ChartType.OHLC]!.height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
     this.OhlcLayout.axisLeft.call(this.axisLeft);
     this.OhlcLayout.axisLeft.gAxis
-      .attr('transform', `translate(${scaffold.sections[0].margins.left}, 0)`);
+      .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left}, 0)`);
 
     this.OhlcLayout.axisRight.call(this.axisRight);
     this.OhlcLayout.axisRight.gAxis
-      .attr('transform', `translate(${scaffold.sections[0].margins.left + scaffold.sections[0].content.width - scaffold.sections[0].margins.right}, 0)`);
+      .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left + scaffold.sections[ChartType.OHLC]!.content.width - scaffold.sections[ChartType.OHLC]!.margins.right}, 0)`);
 
     return this;
   }

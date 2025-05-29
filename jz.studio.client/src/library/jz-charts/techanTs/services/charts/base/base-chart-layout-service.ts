@@ -4,14 +4,15 @@ import { select, Selection } from 'd3-selection';
 import { AxisLayout, AxisLayoutRefs } from '../../parts/axis-layout';
 
 export abstract class BaseChartLayoutService {
-  gSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rSection!: Selection<SVGRectElement, unknown, null, undefined>;
-  gContent!: Selection<SVGGElement, unknown, null, undefined>;
-  rContent!: Selection<SVGRectElement, unknown, null, undefined>;
-  gChart!: Selection<SVGGElement, unknown, null, undefined>;
 
-  axisLeft = new AxisLayout();
-  axisRight = new AxisLayout();
+  public gSection!: Selection<SVGGElement, unknown, null, undefined>;
+  public rSection!: Selection<SVGRectElement, unknown, null, undefined>;
+  public gContent!: Selection<SVGGElement, unknown, null, undefined>;
+  public rContent!: Selection<SVGRectElement, unknown, null, undefined>;
+  public gChart!: Selection<SVGGElement, unknown, null, undefined>;
+
+  public axisLeft = new AxisLayout();
+  public axisRight = new AxisLayout();
 
   initializeBase(refs: {
     gSection: ElementRef<SVGGElement>;
@@ -22,7 +23,7 @@ export abstract class BaseChartLayoutService {
 
     axisLeft: AxisLayoutRefs;
     axisRight: AxisLayoutRefs;
-  }): void {
+  }, chartName: string): void {
     this.gSection = select(refs.gSection.nativeElement);
     this.rSection = select(refs.rSection.nativeElement);
     this.gContent = select(refs.gContent.nativeElement);

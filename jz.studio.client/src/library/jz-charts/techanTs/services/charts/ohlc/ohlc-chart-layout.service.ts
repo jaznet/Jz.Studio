@@ -8,6 +8,6 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 export class OhlcChartLayoutService extends BaseChartLayoutService {
 
   initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs);
+    this.initializeBase(refs,'ohlc');
   }
 }

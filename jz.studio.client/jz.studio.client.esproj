@@ -12,6 +12,7 @@
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\library\jz-charts\techanTs\components\" />
+    <Folder Include="src\library\jz-charts\techanTs\enums\" />
     <Folder Include="src\library\jz-charts\techanTs\services\parts\" />
     <Folder Include="src\library\jz-charts\techanTs\styles\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
