@@ -32,7 +32,7 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
    
   }
 
-  private _data: any[] = [];
+  private _data : any[] = [];
 
   public setData(data: any[]): this {
     this._data = data;

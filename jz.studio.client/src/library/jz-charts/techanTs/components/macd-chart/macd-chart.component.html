@@ -1,10 +1,18 @@
 
 <svg:svg>
-  <svg:g #gSection>
-    <svg:rect #rSection></svg:rect>
-    <svg:g #gContent>
-      <svg:rect #rContent></svg:rect>
-      <svg:g #gChart></svg:g>
-    </svg:g>
-  </svg:g>
+  <g #gSection>
+    <rect #rSection width="0" height="0"></rect>
+    <g #gAxisGroupLeft>
+      <rect #rAxisRectLeft width="0" height="0"></rect>
+      <g #gAxisLeft></g>
+    </g>
+    <g #gContent>
+      <rect #rContent width="0" height="0"></rect>
+      <g #gChart></g>
+    </g>
+    <g #gAxisGroupRight>
+      <rect #rAxisRectRight width="0" height="0"></rect>
+      <g #gAxisRight></g>
+    </g>
+  </g>
 </svg:svg>

@@ -4,6 +4,7 @@ import { MacdChartService } from '../../services/charts/macd/macd-chart.service'
 import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
 import { LayoutService } from '../../services/layout.service';
 import { BaseChartLayoutService } from '../../services/charts/base/base-chart-layout-service';
+import { MacdLayoutService } from '../../services/charts/macd/macd-layout.service';
 
 @Component({
   selector: 'macd-chart',
@@ -17,7 +18,7 @@ export class MacdChartComponent extends BaseChartComponent implements AfterViewI
 
   constructor(
     private macdChart: MacdChartService,
-    private layout: BaseChartLayoutService
+    private layout: MacdLayoutService
   ) {
     super();
   }

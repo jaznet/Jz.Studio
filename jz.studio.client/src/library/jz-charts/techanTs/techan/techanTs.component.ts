@@ -33,7 +33,7 @@ import { MacdChartComponent } from '../components/macd-chart/macd-chart.componen
 export class TechanTsComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  layout!: LayoutService; // or the actual layout object if you're not using the service
+ // layout!: LayoutService; // or the actual layout object if you're not using the service
   ChartType = ChartType; // expose enum to template
 
   // #region @ViewChild List
@@ -232,7 +232,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    this.layout.sizeChartSection(ChartType.MACD);
+    this.layoutService.sizeChartSection(ChartType.MACD);
  
     //this.macdLayout.initializeSelections({
     //  gSection: this.gMacdSection,
@@ -275,17 +275,17 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     });
     //#endregion RSI
 
-    this.layout.sma1 = this.sma1Ref.nativeElement;
-    this.layout.sma2 = this.sma2Ref.nativeElement;
-    this.layout.sma3 = this.sma3Ref.nativeElement;
+    this.layoutService.sma1 = this.sma1Ref.nativeElement;
+    this.layoutService.sma2 = this.sma2Ref.nativeElement;
+    this.layoutService.sma3 = this.sma3Ref.nativeElement;
 
-    this.layout.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
-    this.layout.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
-    this.layout.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
+    this.layoutService.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
+    this.layoutService.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
+    this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
 
-    this.layout.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
-    this.layout.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
-    this.layout.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
+    this.layoutService.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
+    this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
+    this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
   }
 
   constructChart(): void {
@@ -333,7 +333,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.smaService
       .xScale(this.scales.dateScaleX)
       /*.yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layout.sma1) // Specify target group
+      .setTargetGroup(this.layoutService.sma1) // Specify target group
       .setRollingPeriod(period)
       .setColor('#4E59D0')
       .draw();
@@ -343,7 +343,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.smaService
       .xScale(this.scales.dateScaleX)
       /*   .yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layout.sma2) // Specify target group
+      .setTargetGroup(this.layoutService.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#F1FEC6')
       .draw();
@@ -353,7 +353,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.smaService
       .xScale(this.scales.dateScaleX)
       /*   .yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layout.sma3) // Specify target group
+      .setTargetGroup(this.layoutService.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
       .setColor('#ff3a20')
       .draw();

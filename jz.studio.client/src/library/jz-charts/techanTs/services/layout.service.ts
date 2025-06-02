@@ -13,6 +13,7 @@ import { BaseChartComponent } from './charts/base/base-chart-component.directive
 /*import chart from 'devextreme/viz/chart';*/
 import { ChartType } from '../enums/chart-type';
 import { BaseChartLayoutService } from './charts/base/base-chart-layout-service';
+import { MacdLayoutService } from './charts/macd/macd-layout.service';
 
 @Injectable({
   providedIn: 'root'
@@ -71,9 +72,8 @@ export class LayoutService {
     private ohlcLayout: OhlcChartLayoutService,
     private gVolumeChart: VolumeChartService,
     private volumeLayout: VolumeChartLayoutService,
-    private macdChart: MacdChartComponent,
-
     private macdService: MacdChartService,
+    private macdLayout: MacdLayoutService,
     private rsiLayout: RsiChartLayoutService
   ) { }
 
@@ -119,7 +119,7 @@ export class LayoutService {
   getLayoutByChartType(chartType: ChartType): BaseChartLayoutService | undefined {
     switch (chartType) {
       case ChartType.MACD:
-        return this.macdService;
+        return this.macdLayout;
       case ChartType.VOLUME:
         return this.volumeLayout;
       case ChartType.OHLC:
@@ -236,8 +236,8 @@ export class LayoutService {
     // #endregion VOLUME
 
     // #region MACD
-    this.macdService.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.macdService.rSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[ChartType.MACD]!.pct) - this.spacerAdjusted}`);
+    this.macdLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    this.macdLayout.rSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[ChartType.MACD]!.pct) - this.spacerAdjusted}`);
     this.scaffold.sections[ChartType.MACD]!.width = this.macdService.rSection.node()?.width.baseVal.value ?? 0;
     this.scaffold.sections[ChartType.MACD]!.height = this.macdService.rSection.node()?.height.baseVal.value ?? 0;
 
