@@ -31,10 +31,11 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
+     dataService: ChartDataService,
     private OhlcLayout: OhlcChartLayoutService
-  ) { super()}
-  ngAfterViewInit(): void {
+  ) { super(dataService) }
+
+  override ngAfterViewInit(): void {
     this.OhlcLayout.initializeSelections(this.buildRefs());
     }
 
@@ -50,7 +51,7 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
   }
 
   public setCandleWidth() {
-    const uniqueDates = this.data.parsedData.map(d => d.date.toISOString());
+    const uniqueDates = this.dataService.parsedData.map(d => d.date.toISOString());
 
     // Use bandWidth() for `scaleBand()` instead of manual calculations
     this._candleWidth = this.scales.dateScaleX.bandwidth();
@@ -61,7 +62,7 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
   public drawAxes(scaffold: scaffold) {
 
     this.ohlcYscale = scaleLinear()
-      .domain([this.data.minPrice ?? 0, this.data.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
+      .domain([this.dataService.minPrice ?? 0, this.dataService.maxPrice ?? 100]) // Using minPrice and maxPrice to define the domain
       .range([scaffold.sections[ChartType.OHLC]!.height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.axisLeft = axisLeft(this.ohlcYscale);
@@ -79,7 +80,7 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
   }
 
   public draw(): void {
-    const parsedData = this.data.parsedData;
+    const parsedData = this.dataService.parsedData;
 
     const wicks = this.gCandlestick.selectAll('.wick').data(parsedData);
 

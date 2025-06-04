@@ -91,9 +91,9 @@
           <text>MACD</text>
           <g *ngIf="layoutService?.scaffold?.sections?.[ChartType.MACD]!" id="gMacdChart">
             <foreignObject width="1" height="1"  [attr.width]="layoutService.scaffold.sections[ChartType.MACD]!.width" [attr.height]="layoutService.scaffold.sections[ChartType.MACD]!.height">
-              <macd-chart [xScale]="scales.dateScaleX"
-                          [scaffold]="layoutService.scaffold"
-                          [data]="data.macdData">
+              <macd-chart
+                          [xScale]="scales.dateScaleX"
+                          [scaffold]="layoutService.scaffold">
               </macd-chart>
             </foreignObject>
           </g>

@@ -4,6 +4,7 @@ import { select, Selection } from 'd3-selection';
 import { AxisLayout, AxisLayoutRefs } from '../../parts/axis-layout';
 
 export abstract class BaseChartLayoutService {
+  protected data: any[] = [];
 
   public gSection!: Selection<SVGGElement, unknown, null, undefined>;
   public rSection!: Selection<SVGRectElement, unknown, null, undefined>;

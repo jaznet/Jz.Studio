@@ -26,12 +26,13 @@ export class RsiChart extends BaseChartComponent implements AfterViewInit {
   private rollingPeriod: number = 14; // Default RSI period
 
   constructor(
-    private data: ChartDataService,
+    dataService: ChartDataService,
     private rsiLayout: RsiChartLayoutService
   ) {
-    super()
+    super(dataService)
   }
-    ngAfterViewInit(): void {
+
+  override  ngAfterViewInit(): void {
       this.rsiLayout.initializeSelections(this.buildRefs());
     }
 
@@ -106,7 +107,7 @@ export class RsiChart extends BaseChartComponent implements AfterViewInit {
 
   public draw(): void {
     // Calculate RSI data
-    const rsiData = this.calculateRsi(this.data.parsedData);
+    const rsiData = this.calculateRsi(this.dataService.parsedData);
 
     // Define the RSI line generator
     const rsiLine = line<{ date: Date; rsi: number }>()

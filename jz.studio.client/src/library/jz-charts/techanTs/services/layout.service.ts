@@ -1,7 +1,7 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
 import { Selection } from 'd3-selection';
-import { MacdChartService } from './charts/macd/macd-chart.service';
+import { MacdDrawService } from './charts/macd/macd-draw.service';
 import { RsiChart } from './charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
 import { VolumeChartService } from './charts/volume/volume-chart.service';
@@ -72,7 +72,7 @@ export class LayoutService {
     private ohlcLayout: OhlcChartLayoutService,
     private gVolumeChart: VolumeChartService,
     private volumeLayout: VolumeChartLayoutService,
-    private macdService: MacdChartService,
+    private macdService: MacdDrawService,
     private macdLayout: MacdLayoutService,
     private rsiLayout: RsiChartLayoutService
   ) { }

@@ -3,16 +3,15 @@ import { Selection, select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
-import { ScalesService } from '../../scales.service';
-import { scaffold } from '../../../interfaces/techan-interfaces';
-import { BaseChartComponent } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
 import { BaseChartLayoutService } from '../base/base-chart-layout-service';
+import { scaffold } from '../../../interfaces/techan-interfaces';
+
 
 @Injectable({
   providedIn: 'root',
 })
-export class MacdChartService extends BaseChartLayoutService implements AfterViewInit {
+export class MacdDrawService extends BaseChartLayoutService implements AfterViewInit {
 
   macdYscale: any;
   //axisLeft: any;
@@ -32,12 +31,12 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
    
   }
 
-  private _data : any[] = [];
+/*  private _data: any[] = [];*/
 
-  public setData(data: any[]): this {
-    this._data = data;
-    return this;
-  }
+  //public setData(data: any[]): this {
+  //  this._data = data;
+  //  return this;
+  //}
 
   public xScale(scale: any): this {
     this._xScale = scale;
@@ -105,7 +104,7 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
 
   public drawAxes(scaffold: scaffold) {
     // Calculate the min and max values from MACD data
-    const allValues = this._data.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
+    const allValues = this.data.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
       return [d.macd, d.signal, d.histogram];
     });
     const min = Math.min(...allValues);
@@ -139,9 +138,9 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
       .x(d => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2)
       .y(d => this.macdYscale(d.signal));
 
-    console.log('MACD data in draw():', this._data);
+    console.log('MACD data in draw():', this.data);
 
-    const bars = this.gMacd.selectAll<SVGRectElement, any>('.histogram-bar').data(this._data);
+    const bars = this.gMacd.selectAll<SVGRectElement, any>('.histogram-bar').data(this.data);
     bars
       .enter()
       .append('rect')
@@ -154,7 +153,7 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
       .attr('fill', (d: { histogram: number; }) => d.histogram > 0 ? 'green' : 'red');
     bars.exit().remove();
 
-    const macdLine = this.gMacd.selectAll<SVGPathElement, any>('.macd-line').data([this._data]);
+    const macdLine = this.gMacd.selectAll<SVGPathElement, any>('.macd-line').data([this.data]);
     macdLine
       .enter()
       .append('path')
@@ -166,7 +165,7 @@ export class MacdChartService extends BaseChartLayoutService implements AfterVie
       .attr('fill', 'none');
     macdLine.exit().remove();
 
-    const signalLine = this.gMacd.selectAll<SVGPathElement, any>('.signal-line').data([this._data]);
+    const signalLine = this.gMacd.selectAll<SVGPathElement, any>('.signal-line').data([this.data]);
     signalLine
       .enter()
       .append('path')

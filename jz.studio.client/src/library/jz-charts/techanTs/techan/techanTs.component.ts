@@ -11,7 +11,7 @@ import { PartsAxesService } from '../services/parts-axes.service';
 import { ScalesService } from '../services/scales.service';
 import { select, selection, selectAll } from 'd3-selection';
 import { SmaChartService } from '../services/charts/chart-sma.service';
-import { MacdChartService } from '../services/charts/macd/macd-chart.service';
+import { MacdDrawService } from '../services/charts/macd/macd-draw.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
 import { PopoverHttpErrorComponent } from '../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
@@ -23,6 +23,8 @@ import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart
 import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
 import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
+import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
+import { BaseChartLayoutService } from '../services/charts/base/base-chart-layout-service';
 
 @Component({
   selector: 'techanTs',
@@ -132,6 +134,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
     private smaService: SmaChartService
+   /* private baseLayout: BaseChartLayoutService*/
+    
   ) {
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
@@ -140,42 +144,58 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.fetchData();
+  }
 
+  dataReady = false;
+  viewReady = false;
+   ticker = 'NVDA';
   ngAfterViewInit() {
+
     this.popover_loading.show();
     const ticker = 'NVDA';
+    this.viewReady = true;
+    this.tryCreateChart();
+  }
 
-    this.stockPriceService.getStockPrices(ticker).subscribe(
-      (data: StockPriceHistory[]) => {
-        this.popover_loading.hide();
-        this.data.stockPriceHistoryData = data;
-        this.createChart();
-      },
-      (error) => {
-        this.popover_loading.hide();
-        this.popover_httperror.error = error.error;
-        this.popover_httperror.headers = error.headers;
-        this.popover_httperror.message = error.message;
-        this.popover_httperror.name = error.name;
-        this.popover_httperror.ok = error.ok;
-        this.popover_httperror.status = error.status;
-        this.popover_httperror.statusText = error.statusText;
-        this.popover_httperror.url = error.url;
-        this.popover_httperror.show();
-        console.error("Error fetching stock prices:", error);
-      }
-    );
+  fetchData(): void {
+    this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
+      this.data.stockPriceHistoryData = data;
+      this.dataReady = true;
+      this.tryCreateChart();
+    });
+  }
+  
+
+  showError(error: any) {
+    this.popover_httperror.error = error.error;
+    this.popover_httperror.headers = error.headers;
+    this.popover_httperror.message = error.message;
+    this.popover_httperror.name = error.name;
+    this.popover_httperror.ok = error.ok;
+    this.popover_httperror.status = error.status;
+    this.popover_httperror.statusText = error.statusText;
+    this.popover_httperror.url = error.url;
+  }
+
+  tryCreateChart():void {
+    if (this.dataReady && this.viewReady) {
+      this.createChart();
+    }
   }
 
   createChart(): void {
     this.createChartFramework();
-    this.layoutService.createScaffolding();
-    this.data.scrubData();
-    this.scales.createScales(this.layoutService.scaffold);
-    this.axes.drawAxes();
-    this.constructChart();
+    setTimeout(() => {
+      this.layoutService.createScaffolding(); // ✅ all views initialized now
+      this.data.scrubData();
+      this.scales.createScales(this.layoutService.scaffold);
+      this.axes.drawAxes();
+      this.constructChart();
+    });
   }
+
 
   createChartFramework() {
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
@@ -232,15 +252,14 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    this.layoutService.sizeChartSection(ChartType.MACD);
+    //this.layoutService.sizeChartSection(ChartType.MACD);
  
-    //this.macdLayout.initializeSelections({
+    //this.baseLayout.initializeBase({
     //  gSection: this.gMacdSection,
     //  rSection: this.rMacdSectionRect,
     //  gContent: this.gMacdContent,
     //  rContent: this.rMacdContentRect,
     //  gChart: this.gMacdChart,
-
     //  axisLeft: {
     //    gAxis: this.gMacdAxisLeft,
     //    gAxisGroup: this.gMacdAxisGroupLeft,
@@ -251,7 +270,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     //    gAxisGroup: this.gMacdAxisGroupRight,
     //    rAxis: this.rMacdAxisRight
     //  }
-    //});
+    //}, 'macd');
+
     // #rendegion MACD
 
     //#region RSI

@@ -1,37 +1,49 @@
-import { Component, AfterViewInit, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { scaffold } from '../../interfaces/techan-interfaces';
-import { MacdChartService } from '../../services/charts/macd/macd-chart.service';
+import { MacdDrawService } from '../../services/charts/macd/macd-draw.service';
 import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
-import { LayoutService } from '../../services/layout.service';
-import { BaseChartLayoutService } from '../../services/charts/base/base-chart-layout-service';
 import { MacdLayoutService } from '../../services/charts/macd/macd-layout.service';
+import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
   selector: 'macd-chart',
   templateUrl: './macd-chart.component.html',
   styleUrls: ['./macd-chart.component.scss']
 })
-export class MacdChartComponent extends BaseChartComponent implements AfterViewInit {
+export class MacdChartComponent extends BaseChartComponent {
   @Input() xScale!: any;
   @Input() scaffold!: scaffold;
-  @Input() data!: any[];
+
+
+  private chartReady: boolean = false;
 
   constructor(
-    private macdChart: MacdChartService,
-    private layout: MacdLayoutService
+    private macdDraw: MacdDrawService,
+    private macdLayout: MacdLayoutService,
+      dataService: ChartDataService
   ) {
-    super();
+    super(dataService);
   }
 
-  ngAfterViewInit(): void {
+  override ngAfterViewInit(): void {
     const refs = this.buildRefs();
-    this.layout.initializeBase(refs, 'macd'); // or inline the logic here
-    this.macdChart
+    this.macdLayout.initializeBase(refs, 'macd');
+    super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic
+  }
+
+
+  override tryDrawChart(): void {
+    if (!this.viewReady || !this.dataService || !this.scaffold || !this.xScale) return;
+
+    this.macdDraw
       .setTargetGroup(this.gChartRef.nativeElement)
-      .setData(this.data)
       .xScale(this.xScale)
       .setPeriods(12, 26, 9)
       .drawAxes(this.scaffold)
       .draw();
+
+    this.chartReady = true;
   }
+
+  // Optional: add setter methods if you want runtime changes to re-trigger rendering
 }

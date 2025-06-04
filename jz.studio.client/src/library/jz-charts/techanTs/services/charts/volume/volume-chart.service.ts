@@ -25,11 +25,11 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
 
   constructor(
     private scales: ScalesService,
-    private data: ChartDataService,
+    dataService: ChartDataService,
     private volume: VolumeChartLayoutService
-  ) { super() }
+  ) { super(dataService) }
 
-  ngAfterViewInit(): void {
+ override ngAfterViewInit(): void {
     this.volume.initializeSelections(this.buildRefs());
     }
 
@@ -46,20 +46,20 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
 
   public setBarWidth(): this {
     // Calculate the width of each volume bar
-    const timeDiff = this.data.parsedData.length > 1
-      ? this.data.parsedData[1].date.getTime() - this.data.parsedData[0].date.getTime()
+    const timeDiff = this.dataService.parsedData.length > 1
+      ? this.dataService.parsedData[1].date.getTime() - this.dataService.parsedData[0].date.getTime()
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
 
     this._barWidth =
-      this.scales.dateScaleX(new Date(this.data.parsedData[0].date.getTime() + timeDiff)) -
-      this.scales.dateScaleX(this.data.parsedData[0].date);
+      this.scales.dateScaleX(new Date(this.dataService.parsedData[0].date.getTime() + timeDiff)) -
+    this.scales.dateScaleX(this.dataService.parsedData[0].date);
 
     return this; // Enables method chaining
   }
 
   public drawAxes(scaffold:scaffold) {
     this.volumeYscale = scaleLinear()
-      .domain([0, this.data.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
+      .domain([0, this.dataService.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([scaffold.sections[ChartType.VOLUME]!.height, 0]); // Invert the range for correct orientation (top to bottom)
 
     this.axisLeft = axisLeft(this.volumeYscale)
@@ -75,7 +75,7 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
   }
 
   public draw(): void {
-    const parsedData = this.data.parsedData;
+    const parsedData = this.dataService.parsedData;
 
     const volumeBars = this.gVolume.selectAll('.volume-bar').data(parsedData);
 

@@ -6,8 +6,5 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
   providedIn: 'root'
 })
 export class MacdLayoutService extends BaseChartLayoutService {
-
-  initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs, 'MACD');
-  }
+  // Optional future customization
 }
