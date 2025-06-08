@@ -8,20 +8,20 @@ export abstract class BaseChartComponent implements AfterViewInit {
   protected dataReady = false;
   protected viewReady = false;
 
-  @ViewChild('gSection', { static: true }) gSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rSection', { static: true }) rSectionRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gSection', { static: false }) gSectionRef!: ElementRef<SVGGElement>;
+  @ViewChild('rSection', { static: false }) rSectionRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gContent', { static: true }) gContentRef!: ElementRef<SVGGElement>;
-  @ViewChild('rContent', { static: true }) rContentRef!: ElementRef<SVGRectElement>;
-  @ViewChild('gChart', { static: true }) gChartRef!: ElementRef<SVGGElement>;
+  @ViewChild('gContent', { static: false }) gContentRef!: ElementRef<SVGGElement>;
+  @ViewChild('rContent', { static: false }) rContentRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gAxisLeft', { static: true }) gAxisLeftRef!: ElementRef<SVGGElement>;
-  @ViewChild('gAxisGroupLeft', { static: true }) gAxisGroupLeftRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisRectLeft', { static: true }) rAxisRectLeftRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisLeft', { static: false }) gAxisLeftRef!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeftRef!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRectLeft', { static: false }) rAxisRectLeftRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gAxisRight', { static: true }) gAxisRightRef!: ElementRef<SVGGElement>;
-  @ViewChild('gAxisGroupRight', { static: true }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisRectRight', { static: true }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisRight', { static: false }) gAxisRightRef!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRectRight', { static: false }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
 
   constructor(protected dataService: ChartDataService) { }
 
@@ -42,7 +42,7 @@ export abstract class BaseChartComponent implements AfterViewInit {
   //}
 
   // Utility to collect references into a single object
-  protected buildRefs(): ChartElementRefs {
+  public buildRefs(): ChartElementRefs {
     return {
       gSection: this.gSectionRef,
       rSection: this.rSectionRef,

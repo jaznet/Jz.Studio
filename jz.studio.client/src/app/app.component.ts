@@ -57,7 +57,6 @@ export class AppComponent implements OnInit {
 
     this.appService.toggleHeaderEvent.subscribe((e) => {
       this.header.visibility = e === 'hide' ? 'collapse' : 'visible';
-      console.log(e);
     })
 
     //this.popupsService.popUpEvent.subscribe((event: any) => {

@@ -10,7 +10,7 @@ import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 })
 export class PopoverBaseComponent implements AfterViewChecked {
   @ViewChild(DxPopoverComponent) popover!: DxPopoverComponent;
-//  isPopupVisible = false;
+  isPopupVisible = false;
   title = 'Shared Popover';
   target: string = '';
   data: any;

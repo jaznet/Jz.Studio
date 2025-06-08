@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { scaffold } from '../../interfaces/techan-interfaces';
 import { MacdDrawService } from '../../services/charts/macd/macd-draw.service';
 import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
@@ -10,23 +10,25 @@ import { ChartDataService } from '../../services/chart-data.service';
   templateUrl: './macd-chart.component.html',
   styleUrls: ['./macd-chart.component.scss']
 })
-export class MacdChartComponent extends BaseChartComponent {
+export class MacdChartComp extends BaseChartComponent implements AfterViewInit {
   @Input() xScale!: any;
   @Input() scaffold!: scaffold;
 
-
+  isViewInitialized = false;
   private chartReady: boolean = false;
 
   constructor(
     private macdDraw: MacdDrawService,
     private macdLayout: MacdLayoutService,
-      dataService: ChartDataService
+    dataService: ChartDataService
   ) {
     super(dataService);
   }
 
   override ngAfterViewInit(): void {
+    this.isViewInitialized = true;
     const refs = this.buildRefs();
+    console.log('%c\u1F4A1INITIALIZE BASE','color:skyblue');
     this.macdLayout.initializeBase(refs, 'macd');
     super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic
   }

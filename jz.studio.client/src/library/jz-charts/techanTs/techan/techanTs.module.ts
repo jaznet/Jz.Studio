@@ -5,15 +5,16 @@ import { RouterModule } from '@angular/router';
 import { TechanTsComponent } from './techanTs.component';
 import { TechanTsRoutingModule } from './techanTs-routing.module';
 import { JzPopOversModule } from '../../../jz-pop-overs/jz-pop-overs.module';
-import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
+import { ChartComponentsModule } from '../components/chart-components.module';
+/*import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';*/
 
 @NgModule({
-  declarations: [TechanTsComponent,
-    MacdChartComponent],
+  declarations: [TechanTsComponent],
   imports: [
     CommonModule,
     RouterModule,
     TechanTsRoutingModule,
+    ChartComponentsModule,
     JzPopOversModule,
   ],
   exports: [TechanTsComponent]

@@ -1,5 +1,6 @@
 
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { take } from 'rxjs/operators'; // ✅ add this
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
@@ -22,7 +23,7 @@ import { VolumeChartService } from '../services/charts/volume/volume-chart.servi
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
-import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
+import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { BaseChartLayoutService } from '../services/charts/base/base-chart-layout-service';
 
@@ -39,90 +40,100 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ChartType = ChartType; // expose enum to template
 
   // #region @ViewChild List
-  @ViewChild('divSvgContainer', { static: true }) divSvgContainer!: ElementRef<HTMLDivElement>;
-  @ViewChild('svgElement', { static: true }) svgElement!: ElementRef<SVGElement>;
-  @ViewChild('rSvgElement', { static: true }) rSvgElementRef!: ElementRef<SVGRectElement>;
+  @ViewChild('divSvgContainer', { static: false }) divSvgContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGElement>;
+  @ViewChild('rSvgElement', { static: false }) rSvgElementRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('xAxisTopGroup', { static: true }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisTopRect', { static: true }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsTop', { static: true }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisDays', { static: true }) xAxisDaysRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisTopGroup', { static: false }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisTopRect', { static: false }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('xAxisBottomGroup', { static: true }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottomRect', { static: true }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsBottom', { static: true }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottom', { static: true }) xAxisBottomRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisGroupBottom', { static: true }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottomGroup', { static: false }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottomRect', { static: false }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisMonthsBottom', { static: false }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gSectionsContainer', { static: true }) gSectionsContainer!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionsContainer', { static: true }) sectionsRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rSectionsContainer', { static: false }) sectionsRectRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('yAxisGroupLeft', { static: true }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
+  @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   // #region ohlc
-  @ViewChild('gOhlcSection', { static: true }) gOhlcSection!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSection', { static: true }) rOhlcSection!: ElementRef<SVGRectElement>;
-  @ViewChild('gOhlcContent', { static: true }) gOhlcContent!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcContent', { static: true }) rOhlcContent!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcSection', { static: false }) gOhlcSection!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcSection', { static: false }) rOhlcSection!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcContent', { static: false }) rOhlcContent!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gOhlcChart', { static: true }) gOhlcChart!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcChart', { static: false }) gOhlcChart!: ElementRef<SVGGElement>;
 
-  @ViewChild('gOhlcAxisGroupLeft', { static: true }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcAxisLeft', { static: true }) rOhlcAxisLeft!: ElementRef<SVGRectElement>;
-  @ViewChild('gOhlcAxisLeft', { static: true }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcAxisGroupLeft', { static: false }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcAxisLeft', { static: false }) rOhlcAxisLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcAxisLeft', { static: false }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
 
-  @ViewChild('gOhlcAxisGroupRight', { static: true }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('gOhlcAxisRight', { static: true }) gOhlcAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcAxisRight', { static: true }) rOhlcAxisRight!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcAxisGroupRight', { static: false }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('gOhlcAxisRight', { static: false }) gOhlcAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcAxisRight', { static: false }) rOhlcAxisRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
   // #region VOLUME GROUP
-  @ViewChild('gVolumeSection', { static: true }) gVolumeSection!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeSection', { static: true }) rVolumeSection!: ElementRef<SVGRectElement>;
-  @ViewChild('gVolumeContent', { static: true }) gVolumeContent!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeContent', { static: true }) rVolumeContent!: ElementRef<SVGRectElement>;
-  @ViewChild('gVolumeChart', { static: true }) gVolumeChart!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeSection', { static: false }) gVolumeSection!: ElementRef<SVGGElement>;
+  @ViewChild('rVolumeSection', { static: false }) rVolumeSection!: ElementRef<SVGRectElement>;
+  @ViewChild('gVolumeContent', { static: false }) gVolumeContent!: ElementRef<SVGGElement>;
+  @ViewChild('rVolumeContent', { static: false }) rVolumeContent!: ElementRef<SVGRectElement>;
+  @ViewChild('gVolumeChart', { static: false }) gVolumeChart!: ElementRef<SVGGElement>;
 
-  @ViewChild('gVolumeAxisLeft', { static: true }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisGroupLeft', { static: true }) gVolumeAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeAxisLeft', { static: true }) rVolumeAxisLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gVolumeAxisLeft', { static: false }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisGroupLeft', { static: false }) gVolumeAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rVolumeAxisLeft', { static: false }) rVolumeAxisLeft!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gVolumeAxisRight', { static: true }) gVolumeAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisGroupRight', { static: true }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeAxisRight', { static: true }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
+  @ViewChild('gVolumeAxisRight', { static: false }) gVolumeAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('gVolumeAxisGroupRight', { static: false }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('rVolumeAxisRight', { static: false }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP gVolumeChart
 
   /*  #region*/
-  @ViewChild('gRsiSection', { static: true }) gRsiSection!: ElementRef<SVGGElement>;
-  @ViewChild('gRsiSectionContent', { static: true }) gRsiSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiSectionContent', { static: true }) rRsiSectionContent!: ElementRef<SVGRectElement>;
-  @ViewChild('rRsiSectionRect', { static: true }) rRsiSectionRect!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiChart', { static: true }) gRsiChart!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiSection', { static: false }) gRsiSection!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiSectionContent', { static: false }) gRsiSectionContent!: ElementRef<SVGGElement>;
+  @ViewChild('rRsiSectionContent', { static: false }) rRsiSectionContent!: ElementRef<SVGRectElement>;
+  @ViewChild('rRsiSectionRect', { static: false }) rRsiSectionRect!: ElementRef<SVGRectElement>;
+  @ViewChild('gRsiChart', { static: false }) gRsiChart!: ElementRef<SVGGElement>;
 
-  @ViewChild('gRsiAxisGroupLeft', { static: true }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiAxisGroupLeft', { static: true }) rRsiAxisGroupLeft!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiAxisLeft', { static: true }) gRsiAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisGroupLeft', { static: false }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rRsiAxisGroupLeft', { static: false }) rRsiAxisGroupLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gRsiAxisLeft', { static: false }) gRsiAxisLeft!: ElementRef<SVGGElement>;
 
-  @ViewChild('gRsiAxisGroupRight', { static: true }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiAxisGroupRight', { static: true }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiAxisRight', { static: true }) gRsiAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiAxisGroupRight', { static: false }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('rRsiAxisGroupRight', { static: false }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
+  @ViewChild('gRsiAxisRight', { static: false }) gRsiAxisRight!: ElementRef<SVGGElement>;
 
 
   // #endregion Rsi
 
   // #region @VIEWCHILD lIST
-  @ViewChild('sma1', { static: true }) sma1Ref!: ElementRef<SVGGElement>;
-  @ViewChild('sma2', { static: true }) sma2Ref!: ElementRef<SVGGElement>;
-  @ViewChild('sma3', { static: true }) sma3Ref!: ElementRef<SVGGElement>;
+  @ViewChild('sma1', { static: false }) sma1Ref!: ElementRef<SVGGElement>;
+  @ViewChild('sma2', { static: false }) sma2Ref!: ElementRef<SVGGElement>;
+  @ViewChild('sma3', { static: false }) sma3Ref!: ElementRef<SVGGElement>;
 
   // RSIGROUP
-  @ViewChild('gRsiGroup', { static: true }) gRsiGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('gRsiGroup', { static: false }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('popover_httperror', { static: true }) popover_httperror!: PopoverHttpErrorComponent;
-  @ViewChild('popover_loading', { static: true }) popover_loading!: PopOverLoadingComponent;
+  @ViewChild('popover_httperror', { static: false }) popover_httperror!: PopoverHttpErrorComponent;
+  @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
+  dataReady = false;
+  viewReady = false;
+  hydrated = false; // Optional safety to prevent double-draw
+  ticker = 'NVDA';
+
+  @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
+
+ 
+
   constructor(
+    private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     public data: ChartDataService,
@@ -133,7 +144,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
-    private smaService: SmaChartService
+    private smaService: SmaChartService,
+/*    private macdChart: MacdChartComponent,*/
+    private macdLayout: MacdLayoutService,
+    private macdDraw: MacdDrawService
    /* private baseLayout: BaseChartLayoutService*/
     
   ) {
@@ -148,23 +162,27 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.fetchData();
   }
 
-  dataReady = false;
-  viewReady = false;
-   ticker = 'NVDA';
+ 
   ngAfterViewInit() {
 
     this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
-    this.tryCreateChart();
+    // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
+    setTimeout(() => this.tryCreateChart());
   }
 
   fetchData(): void {
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
+      console.log('%c\u2705DATA FETCHED','color:yellow');
       this.tryCreateChart();
-    });
+    },
+      (error) => {
+        this.showError(error);
+      }
+    );
   }
   
 
@@ -177,24 +195,77 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.popover_httperror.status = error.status;
     this.popover_httperror.statusText = error.statusText;
     this.popover_httperror.url = error.url;
+    this.popover_httperror.isPopupVisible = true;
   }
 
-  tryCreateChart():void {
-    if (this.dataReady && this.viewReady) {
-      this.createChart();
+  tryCreateChart(): void {
+    if (this.viewReady && this.dataReady && !this.hydrated) {
+      this.hydrated = true;
+      this.changeDetector.detectChanges(); // Push any binding updates
+      this.initializeChartWhenReady();     // ✅ Start safe chart initialization
     }
   }
 
-  createChart(): void {
-    this.createChartFramework();
-    setTimeout(() => {
-      this.layoutService.createScaffolding(); // ✅ all views initialized now
+
+  initializeChartWhenReady(attempt = 0): void {
+    if (!this.viewReady || !this.dataReady) return;
+
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
+      if (!this.macdChart) {
+        if (attempt < 10) {
+          console.warn(`⏳ Waiting for macdChart to be created... (attempt ${attempt})`);
+          setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
+        } else {
+          console.error('❌ macdChart still not available after 10 attempts.');
+        }
+        return;
+      }
+
+      if (!this.macdChart.isViewInitialized) {
+        console.warn('⚠️ macdChart is not fully initialized yet. Retrying...');
+        setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
+        return;
+      }
+
+      // ✅ All good — proceed
+      this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
+      this.layoutService.createScaffolding();
       this.data.scrubData();
       this.scales.createScales(this.layoutService.scaffold);
       this.axes.drawAxes();
       this.constructChart();
     });
   }
+
+
+
+  createChart(): void {
+    this.createChartFramework();
+    this.changeDetector.detectChanges();
+
+
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
+      if (!this.macdChart) {
+        console.error('❌ macdChart not available');
+        return;
+      }
+
+      if (!this.macdChart.isViewInitialized) {
+        console.warn('⚠️ macdChart is not fully initialized yet. Delaying...');
+        setTimeout(() => this.createChart(), 0); // try again after next tick
+        return;
+      }
+
+      // ✅ Safe to call now
+      this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
+      this.layoutService.createScaffolding();
+      this.data.scrubData();
+      this.scales.createScales(this.layoutService.scaffold);
+      this.axes.drawAxes();
+      this.constructChart();
+    });
+  }
+
 
 
   createChartFramework() {
@@ -224,7 +295,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
         rAxis: this.rOhlcAxisRight
       }
     });
-    console.log('techan', this.ohlcLayout.axisLeft, this.ohlcLayout.axisRight);
 
     // #endregion OHLC
 
