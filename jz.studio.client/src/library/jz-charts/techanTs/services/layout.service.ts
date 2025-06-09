@@ -167,7 +167,6 @@ export class LayoutService {
 
   }
 
-
   sizeSections(): void {
     this.spacer = 8;
 
@@ -238,20 +237,20 @@ export class LayoutService {
     try {
       this.macdLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
       this.macdLayout.rSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[ChartType.MACD]!.pct) - this.spacerAdjusted}`);
-      this.scaffold.sections[ChartType.MACD]!.width = this.macdService.rSection.node()?.width.baseVal.value ?? 0;
-      this.scaffold.sections[ChartType.MACD]!.height = this.macdService.rSection.node()?.height.baseVal.value ?? 0;
+      this.scaffold.sections[ChartType.MACD]!.width = this.macdLayout.rSection.node()?.width.baseVal.value ?? 0;
+      this.scaffold.sections[ChartType.MACD]!.height = this.macdLayout.rSection.node()?.height.baseVal.value ?? 0;
 
-      this.macdService.axisLeft.gAxis.attr('width', `${this.scaffold.sections[ChartType.MACD]!.margins.right}`);
-      this.macdService.axisLeft.gAxis.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
+      this.macdLayout.axisLeft.gAxis.attr('width', `${this.scaffold.sections[ChartType.MACD]!.margins.right}`);
+      this.macdLayout.axisLeft.gAxis.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
 
-      this.macdService.axisRight.gAxis.attr('width', `${this.scaffold.sections[ChartType.MACD]!.margins.right}`);
-      this.macdService.axisRight.gAxis.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
+      this.macdLayout.axisRight.gAxis.attr('width', `${this.scaffold.sections[ChartType.MACD]!.margins.right}`);
+      this.macdLayout.axisRight.gAxis.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
 
-      this.macdService.axisLeft.gAxis.attr('transform', `translate(0,0)`);
+      this.macdLayout.axisLeft.gAxis.attr('transform', `translate(0,0)`);
       //  this.macdChart.gMacdAxisRight.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},${this.scaffold.sections[ChartType.MACD]!.margins.top})`);
 
-      this.macdService.rContent.attr('width', `${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.left - this.scaffold.sections[ChartType.MACD]!.margins.right}`);
-      this.macdService.rContent.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
+      this.macdLayout.rContent.attr('width', `${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.left - this.scaffold.sections[ChartType.MACD]!.margins.right}`);
+      this.macdLayout.rContent.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
     }
     catch (error: any) {
       console.error('❌ An error occurred:', error.message);
@@ -284,7 +283,6 @@ export class LayoutService {
     this.ohlcLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.OHLC]!.margins.left},0)`);
     this.ohlcLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.OHLC]!.margins.left + this.scaffold.sections[ChartType.OHLC]!.content.width},0)`);
     this.ohlcLayout.axisRight.gAxis.attr('transform', 'translate(0)');
-    console.log('layout',this.ohlcLayout.axisLeft, this.ohlcLayout.axisRight);
 
     this.volumeLayout.gSection.attr('transform', `translate(0,${this.scaffold.sections[ChartType.VOLUME]!.height + this.spacer + this.spacer})`);
     this.volumeLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.VOLUME]!.margins.left},0)`);
@@ -293,17 +291,13 @@ export class LayoutService {
     this.volumeLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.VOLUME]!.width - this.scaffold.sections[ChartType.VOLUME]!.margins.right})`);
 
     try {
-      this.macdService.gSection.attr('transform', `translate(0,  ${(this.scaffold.sections[ChartType.MACD]!.height + this.scaffold.sections[ChartType.MACD]!.height + (this.spacer * 3))})`);
-      this.macdService.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
-      this.macdService.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},0)`);
-      this.macdService.axisLeft.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
+      this.macdLayout.gSection.attr('transform', `translate(0,  ${(this.scaffold.sections[ChartType.MACD]!.height + this.scaffold.sections[ChartType.MACD]!.height + (this.spacer * 3))})`);
+      this.macdLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
+      this.macdLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},0)`);
+      this.macdLayout.axisLeft.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
     } catch (error: any) {
       console.error('❌ An error occurred:', error.message);
-    //  console.error('Type:', error.name);
-    //  console.error('Stack trace:', error.stack);
     }
-
-
     
     this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[ChartType.OHLC]!.height + this.scaffold.sections[ChartType.VOLUME]!.height + this.scaffold.sections[ChartType.MACD]!.height) + (this.spacer * 4)})`);
     this.rsiLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},${this.scaffold.sections[ChartType.MACD]!.margins.top})`);

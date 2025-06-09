@@ -64,6 +64,7 @@ export class SmaChartService {
   }
 
   public draw(): void {
+    if (!this.ohlc.ohlcYscale) return;
     // Calculate the SMA data
     const smaData = this.calculateSma(this.data.parsedData);
 

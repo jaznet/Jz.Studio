@@ -108,7 +108,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rRsiAxisGroupRight', { static: false }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
   @ViewChild('gRsiAxisRight', { static: false }) gRsiAxisRight!: ElementRef<SVGGElement>;
 
-
   // #endregion Rsi
 
   // #region @VIEWCHILD lIST
@@ -129,8 +128,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ticker = 'NVDA';
 
   @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
-
- 
 
   constructor(
     private ngZone: NgZone,
@@ -161,10 +158,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.fetchData();
   }
-
  
   ngAfterViewInit() {
-
     this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
@@ -184,7 +179,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  
 
   showError(error: any) {
     this.popover_httperror.error = error.error;
@@ -201,11 +195,11 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
+      this.createChartFramework();             // Build framework refs immediately
       this.changeDetector.detectChanges(); // Push any binding updates
       this.initializeChartWhenReady();     // ✅ Start safe chart initialization
     }
   }
-
 
   initializeChartWhenReady(attempt = 0): void {
     if (!this.viewReady || !this.dataReady) return;
@@ -237,12 +231,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
   createChart(): void {
     this.createChartFramework();
     this.changeDetector.detectChanges();
-
 
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       if (!this.macdChart) {
@@ -265,8 +256,6 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
       this.constructChart();
     });
   }
-
-
 
   createChartFramework() {
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
