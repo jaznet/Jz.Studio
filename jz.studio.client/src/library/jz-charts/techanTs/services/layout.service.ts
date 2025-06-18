@@ -1,20 +1,4 @@
-//import { ElementRef, Injectable, NgZone } from '@angular/core';
-//import { scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
-//import { Selection } from 'd3-selection';
-//import { MacdDrawService } from './charts/macd/macd-draw.service';
-//import { RsiChart } from './charts/rsi/rsi-chart.service';
-//import { RsiChartLayoutService } from './charts/rsi/rsi-chart-layout.service';
-///*import { VolumeChartService } from './charts/volume/volume-chart.service';*/
-//import { VolumeChartLayoutService } from './charts/volume/volume-chart-layout.service';
-//import { OhlcChartService } from './charts/ohlc/ohlc-chart.service';
-//import { OhlcChartLayoutService } from './charts/ohlc/ohlc-chart-layout.service';
-//import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
-//import { BaseChartComponent } from './charts/base/base-chart-component.directive';
-///*import chart from 'devextreme/viz/chart';*/
-//import { ChartType } from '../enums/chart-type';
-//import { BaseChartLayoutService } from './charts/base/base-chart-layout-service';
-////import { MacdLayoutService } from './charts/macd/macd-chart.compo';
-//import { take, ReplaySubject } from 'rxjs';
+
 
 import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
@@ -96,12 +80,12 @@ export class LayoutService {
   // #endregion
 
   constructor(
-    private ngZone: NgZone,
- /*   private ohlcChart: OhlcChartService,*/
-    private ohlcLayout: OhlcChartLayoutService,
-    private volumeLayout: VolumeChartLayoutService,
-    private macdLayout: MacdLayoutService,
-    private rsiLayout: RsiChartLayoutService
+ //   private ngZone: NgZone,
+ ///*   private ohlcChart: OhlcChartService,*/
+ //   private ohlcLayout: OhlcChartLayoutService,
+ //   private volumeLayout: VolumeChartLayoutService,
+ //   private macdLayout: MacdLayoutService,
+ //   private rsiLayout: RsiChartLayoutService
   ) { }
 
   createScaffolding() {
@@ -147,13 +131,13 @@ export class LayoutService {
   getLayoutByChartType(chartType: ChartType): BaseChartLayoutService | undefined {
     switch (chartType) {
       case ChartType.MACD:
-        return this.macdLayout;
-      case ChartType.VOLUME:
-        return this.volumeLayout;
-      //case ChartType.OHLC:
-      //  return this.ohlcLayout;
-      case ChartType.RSI:
-        return this.rsiLayout;
+      //  return this.macdLayout;
+      //case ChartType.VOLUME:
+      //  return this.volumeLayout;
+      ////case ChartType.OHLC:
+      ////  return this.ohlcLayout;
+      //case ChartType.RSI:
+      //  return this.rsiLayout;
       default:
         console.warn(`Layout service not found for chart type: ${chartType}`);
         return undefined;
@@ -313,12 +297,12 @@ export class LayoutService {
     // #endregion MACD
 
     // #region RSI
-    this.rsiLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    this.rsiLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct)}`);
-    this.scaffold.sections[ChartType.MACD]!.width = this.rsiLayout.rSection.node()?.width.baseVal.value ?? 0;
-    this.scaffold.sections[ChartType.MACD]!.height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
-    this.rsiLayout.rContent.attr('width', `${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.left - this.scaffold.sections[ChartType.MACD]!.margins.right}`);
-    this.rsiLayout.rContent.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
+    //this.rsiLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
+    //this.rsiLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct)}`);
+    //this.scaffold.sections[ChartType.MACD]!.width = this.rsiLayout.rSection.node()?.width.baseVal.value ?? 0;
+    //this.scaffold.sections[ChartType.MACD]!.height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
+    //this.rsiLayout.rContent.attr('width', `${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.left - this.scaffold.sections[ChartType.MACD]!.margins.right}`);
+    //this.rsiLayout.rContent.attr('height', `${this.scaffold.sections[ChartType.MACD]!.height}`);
   }
 
   alignChartsToScaffold(): void {
@@ -350,9 +334,9 @@ export class LayoutService {
     //  console.error('❌ An error occurred:', error.message);
     //}
 
-    this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[ChartType.OHLC]!.height + this.scaffold.sections[ChartType.VOLUME]!.height + this.scaffold.sections[ChartType.MACD]!.height) + (this.spacer * 4)})`);
-    this.rsiLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},${this.scaffold.sections[ChartType.MACD]!.margins.top})`);
-    this.rsiLayout.axisLeft.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
-    this.rsiLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
+    //this.rsiLayout.gSection.attr('transform', `translate( 0,  ${(this.scaffold.sections[ChartType.OHLC]!.height + this.scaffold.sections[ChartType.VOLUME]!.height + this.scaffold.sections[ChartType.MACD]!.height) + (this.spacer * 4)})`);
+    //this.rsiLayout.axisRight.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.right},${this.scaffold.sections[ChartType.MACD]!.margins.top})`);
+    //this.rsiLayout.axisLeft.gAxisGroup.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
+    //this.rsiLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.MACD]!.margins.left},0)`);
   }
 }

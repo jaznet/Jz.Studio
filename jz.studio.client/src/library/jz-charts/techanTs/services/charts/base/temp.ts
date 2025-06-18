@@ -1,10 +1,14 @@
+
+//import { AfterViewInit, ElementRef, Injectable } from '@angular/core';
+
+
 import { Injectable, AfterViewInit, ElementRef } from "@angular/core";
 import { select, Selection } from "d3-selection";
-import { AxisLayout, AxisLayoutRefs } from "../../parts/axis-layout";
+import { take, ReplaySubject } from "rxjs";
 import { ChartType } from "../../../enums/chart-type";
-import { ReplaySubject, take } from "rxjs";
 import { ChartDataService } from "../../chart-data.service";
 import { LayoutService } from "../../layout.service";
+import { AxisLayout, AxisLayoutRefs } from "../../parts/axis-layout";
 
 @Injectable()
 export abstract class BaseChartLayoutService implements AfterViewInit {

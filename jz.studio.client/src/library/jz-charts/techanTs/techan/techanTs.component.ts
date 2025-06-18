@@ -167,13 +167,14 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
   }
 
   override ngAfterViewInit() {
-    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:yellow');
-    this.popover_loading.show();
+    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:seagreen');
+  //  this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
    
     // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
-    setTimeout(() => this.tryCreateChart());
+      setTimeout(() => this.tryCreateChart());
+    //this.createChartFramework();
   }
 
   fetchData(): void {
@@ -181,7 +182,7 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
       console.log('%c✅ DATA FETCHED 💡', 'color:yellow');
-      this.popover_loading.hide();
+  //    this.popover_loading.hide();
       this.tryCreateChart();
     },
       (error) => {
@@ -250,10 +251,10 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
     this.layoutService.sectionsContainer = this.gSectionsContainer.nativeElement;
-    this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
+ //  this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.ohlcLayout.initializeSelections({
+    this.  ohlcLayout.initializeSelections({
       gSection: this.gOhlcSection,
       rSection: this.rOhlcSection,
       gContent: this.gOhlcContent,
