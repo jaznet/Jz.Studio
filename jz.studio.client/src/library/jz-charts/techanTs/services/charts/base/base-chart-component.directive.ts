@@ -1,12 +1,15 @@
 import { ElementRef, ViewChild, Directive, AfterViewInit } from '@angular/core';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 import { ChartDataService } from '../../chart-data.service';
+import { LayoutService } from '../../layout.service';
+import { take } from 'rxjs';
 
 @Directive()
 export abstract class BaseChartComponent implements AfterViewInit {
   // View readiness flag for async coordination
   protected dataReady = false;
   protected viewReady = false;
+  public isViewInitialized = false;
 
   @ViewChild('gSection', { static: false }) gSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rSection', { static: false }) rSectionRef!: ElementRef<SVGRectElement>;
@@ -23,11 +26,32 @@ export abstract class BaseChartComponent implements AfterViewInit {
   @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisRectRight', { static: false }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
 
-  constructor(protected dataService: ChartDataService) { }
+  constructor(
+    protected dataService: ChartDataService,
+    protected layoutService: LayoutService
+  ) { }
 
   ngAfterViewInit(): void {
+    this.layoutService.macdSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
+      this.setSize(width, height);
+    });
+   // console.log('%c🧱 MacdChartComp constructor', 'color:#b68f40');
     this.viewReady = true;
     this.tryDrawChart();
+  }
+
+  setSize(width: number, height: number): void {
+    console.log('%csetSize', 'color:blue')
+    this.rSectionRef.nativeElement.setAttribute('width', width.toString());
+    this.rSectionRef.nativeElement.setAttribute('height', height.toString());
+
+    this.rContentRef.nativeElement.setAttribute('width', width.toString());
+    this.rContentRef.nativeElement.setAttribute('height', height.toString());
+
+    this.gAxisRightRef.nativeElement.setAttribute(
+      'transform',
+      `translate(${width}, 0)`
+    );
   }
 
   // Concrete subclasses should override this if they need to draw

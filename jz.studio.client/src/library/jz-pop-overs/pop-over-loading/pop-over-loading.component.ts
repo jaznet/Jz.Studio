@@ -17,9 +17,4 @@ export class PopOverLoadingComponent extends PopoverBaseComponent implements OnI
     this.title = 'Loading';  // Change the title as needed
    
   }
-
-
-
-
-
 }

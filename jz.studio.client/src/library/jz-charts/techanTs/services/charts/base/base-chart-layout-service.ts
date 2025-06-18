@@ -1,9 +1,22 @@
 
-import { ElementRef } from '@angular/core';
-import { select, Selection } from 'd3-selection';
-import { AxisLayout, AxisLayoutRefs } from '../../parts/axis-layout';
+//import { AfterViewInit, ElementRef, Injectable } from '@angular/core';
+//import { select, Selection } from 'd3-selection';
+//import { AxisLayout, AxisLayoutRefs } from '../../parts/axis-layout';
+//import { ChartType } from '../../../enums/chart-type';
+//import { LayoutService } from '../../layout.service';
+//import { take, ReplaySubject } from 'rxjs';
+//import { ChartDataService } from '../../chart-data.service';
 
-export abstract class BaseChartLayoutService {
+import { Injectable, AfterViewInit, ElementRef } from "@angular/core";
+import { select, Selection } from "d3-selection";
+import { take, ReplaySubject } from "rxjs";
+import { ChartType } from "../../../enums/chart-type";
+import { ChartDataService } from "../../chart-data.service";
+import { LayoutService } from "../../layout.service";
+import { AxisLayout, AxisLayoutRefs } from "../../parts/axis-layout";
+
+@Injectable()
+export abstract class BaseChartLayoutService implements AfterViewInit {
   protected data: any[] = [];
 
   public gSection!: Selection<SVGGElement, unknown, null, undefined>;
@@ -14,6 +27,29 @@ export abstract class BaseChartLayoutService {
 
   public axisLeft = new AxisLayout();
   public axisRight = new AxisLayout();
+
+  protected abstract chartType: ChartType;
+  protected abstract setSize(width: number, height: number): void;
+
+  constructor(protected layoutService: LayoutService,
+    protected dataService: ChartDataService) { }
+
+  ngAfterViewInit(): void {
+    const sizeStream = this.getSizeStreamForChartType(this.chartType);
+    sizeStream?.pipe(take(1)).subscribe(({ width, height }) => {
+      this.setSize(width, height);
+    });
+  }
+
+  protected getSizeStreamForChartType(chartType: ChartType): ReplaySubject<{ width: number; height: number }> | undefined {
+    switch (chartType) {
+      case ChartType.MACD: return this.layoutService.macdSizeReady$;
+      case ChartType.RSI: return this.layoutService.rsiSizeReady$;
+      case ChartType.VOLUME: return this.layoutService.volumeSizeReady$;
+      case ChartType.OHLC: return this.layoutService.ohlcSizeReady$;
+      default: return undefined;
+    }
+  }
 
   initializeBase(refs: {
     gSection: ElementRef<SVGGElement>;

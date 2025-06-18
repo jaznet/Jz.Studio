@@ -102,7 +102,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   }
 
   onTabClicked() {
-    console.log('TAB', this.menuType, this.palette);
+  //  console.log('TAB', this.menuType, this.palette);
   
     this.menuService.tabSelected(this);
     if (this.route === 'sandbox/choro-dash-loader') {

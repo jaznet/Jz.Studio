@@ -7,8 +7,9 @@ import { ChartDataService } from '../../chart-data.service';
 import { ScalesService } from '../../scales.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
-import { BaseChartComponent } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
+import { LayoutService } from '../../layout.service';
+import { BaseChartComponent } from '../base/base-chart-component.directive';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +27,9 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
   constructor(
     private scales: ScalesService,
     dataService: ChartDataService,
+    layoutService:LayoutService,
     private volume: VolumeChartLayoutService
-  ) { super(dataService) }
+  ) { super(dataService, layoutService) }
 
  override ngAfterViewInit(): void {
     this.volume.initializeSelections(this.buildRefs());

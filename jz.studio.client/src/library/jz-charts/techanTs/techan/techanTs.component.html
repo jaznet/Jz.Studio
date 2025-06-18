@@ -33,17 +33,21 @@
 
         <!-- OHLC CONTENT-->
         <g #gOhlcContent id="gOhlcContent" class="rsiSectionontainer">
-          <rect #rOhlcContent class="chart-section" id="rOhlcContent" x="0" y="0" width="0" height="0" [attr.width]="0" [attr.height]="0">
-          </rect>
-          <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-title">OHLC</text>
-          <g #gOhlcChart id="gOhlcChart"></g>r
-          <g #sma1 id="sma1"></g>
-          <g #sma2 id="sma2"></g>
-          <g #sma3 id="sma3"></g>
-        </g>
+          <rect #rOhlcContent id="rOhlcContent" width="0" height="0"></rect>
+          <text>MACD</text>
+          <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
+            <ohlc-chart #ohlcChart
+                        [xScale]="scales.dateScaleX"
+                        [scaffold]="layoutService.scaffold">
+            </ohlc-chart>
 
-      </g>
+          </g>
+          <!--<g #sma1 id="sma1"></g>
+  <g #sma2 id="sma2"></g>
+  <g #sma3 id="sma3"></g>-->
+        </g>
       <!-- #endregion -->
+
       <!-- #region VOLUME-->
       <g #gVolumeSection id="gVolumeSection">
         <rect #rVolumeSection id="rVolumeSection" width="0" height="0" class="chart-section"></rect>
@@ -69,9 +73,10 @@
         </g>
       </g>
       <!-- #endregion -->
+
       <!-- #region SECTION MACD -->
       <g #gMacdSection id="gMacdSection">
-        <rect #rMacdSectionRect id="rMacdSectionRect" x="0" y="0" width="0" height="0" class="chart-section"></rect>
+        <rect #rMacdSection id="rMacdSection" x="0" y="0" width="0" height="0" class="chart-section"></rect>
 
         <!-- LEFT AXIS MACD  -->
         <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
@@ -87,20 +92,19 @@
 
         <!-- Inside your master SVG -->
         <g id="gMacdContent" [attr.transform]="'translate(40,0)'">
-          <rect id="rMacdContentRect" width="0" height="0"></rect>
+          <rect #rMacdContent id="rMacdContent" width="0" height="0"></rect>
           <text>MACD</text>
           <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
-            <!--<foreignObject width="1" height="1" [attr.width]="layoutService.scaffold.sections[ChartType.MACD]!.width" [attr.height]="layoutService.scaffold.sections[ChartType.MACD]!.height">-->
             <macd-chart #macdChart
                         [xScale]="scales.dateScaleX"
                         [scaffold]="layoutService.scaffold">
             </macd-chart>
-            <!--</foreignObject>-->
           </g>
         </g>
 
       </g>
       <!-- #endregion SECTION MACD -->
+
       <!-- #region SECTION RSI -->
       <g #gRsiSection id="gRsiSection">
         <text x="20" y="0" text-anchor="start" dominant-baseline="hanging" class="chart-section">RSI</text>

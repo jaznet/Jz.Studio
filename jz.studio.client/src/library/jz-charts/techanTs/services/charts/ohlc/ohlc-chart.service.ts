@@ -9,18 +9,26 @@ import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
 import { OhlcChartLayoutService } from './ohlc-chart-layout.service';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
+import { LayoutService } from '../../layout.service';
+import { BaseChartLayoutService } from '../base/base-chart-layout-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class OhlcChartService extends BaseChartComponent implements AfterViewInit {
+export class OhlcChartService extends BaseChartLayoutService implements AfterViewInit {
+
+  protected override chartType!: ChartType;
+  protected override setSize(width: number, height: number): void {
+    throw new Error('Method not implemented.');
+  }
+  // Optional future customization
   // #region PROPERTIES
 
 
   ohlcYscale: any;
 
-  axisLeft: any;
-  axisRight: any;
+  override axisLeft: any;
+  override axisRight: any;
 
   private _xScale: any;
   private _yScale: any;
@@ -31,12 +39,13 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
 
   constructor(
     private scales: ScalesService,
-     dataService: ChartDataService,
+    dataService: ChartDataService,
+    layoutService: LayoutService,
     private OhlcLayout: OhlcChartLayoutService
-  ) { super(dataService) }
+  ) { super(layoutService, dataService) }
 
   override ngAfterViewInit(): void {
-    this.OhlcLayout.initializeSelections(this.buildRefs());
+ //   this.OhlcLayout.initializeSelections(this.buildRefs());
     }
 
   public xScale(scale: any) {
@@ -68,13 +77,13 @@ export class OhlcChartService extends BaseChartComponent implements AfterViewIni
     this.axisLeft = axisLeft(this.ohlcYscale);
     this.axisRight = axisRight(this.ohlcYscale);
 
-    this.OhlcLayout.axisLeft.call(this.axisLeft);
-    this.OhlcLayout.axisLeft.gAxis
-      .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left}, 0)`);
+    //this.OhlcLayout.axisLeft.call(this.axisLeft);
+    //this.OhlcLayout.axisLeft.gAxis
+    //  .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left}, 0)`);
 
-    this.OhlcLayout.axisRight.call(this.axisRight);
-    this.OhlcLayout.axisRight.gAxis
-      .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left + scaffold.sections[ChartType.OHLC]!.content.width - scaffold.sections[ChartType.OHLC]!.margins.right}, 0)`);
+    //this.OhlcLayout.axisRight.call(this.axisRight);
+    //this.OhlcLayout.axisRight.gAxis
+    //  .attr('transform', `translate(${scaffold.sections[ChartType.OHLC]!.margins.left + scaffold.sections[ChartType.OHLC]!.content.width - scaffold.sections[ChartType.OHLC]!.margins.right}, 0)`);
 
     return this;
   }

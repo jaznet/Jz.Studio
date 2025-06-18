@@ -13,6 +13,8 @@ import { scaffold } from '../../../interfaces/techan-interfaces';
 })
 export class MacdDrawService extends BaseChartLayoutService implements AfterViewInit {
 
+  protected chartType: ChartType = ChartType.MACD;
+
   macdYscale: any;
   //axisLeft: any;
   //axisRight: any;
@@ -23,20 +25,22 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
   private slowPeriod: number = 26; // Default slow EMA period
   private signalPeriod: number = 9; // Default signal line period
 
-  constructor(
-   // private macd: MacdChartLayoutService
-  ) {super() }
+  //constructor(
+  // // private macd: MacdChartLayoutService
+  //) {super() }
 
-    ngAfterViewInit(): void {
-   
+  override  ngAfterViewInit(): void {  }
+
+  protected setSize(width: number, height: number): void {
+    // You can store or apply width/height here
+    console.log('📏 MacdDrawService.setSize()', width, height);
+
+    // Optional: update SVG elements or internal state
+    this.rSection.attr('width', width);
+    this.rSection.attr('height', height);
+    this.rContent.attr('width', width);
+    this.rContent.attr('height', height);
   }
-
-/*  private _data: any[] = [];*/
-
-  //public setData(data: any[]): this {
-  //  this._data = data;
-  //  return this;
-  //}
 
   public xScale(scale: any): this {
     this._xScale = scale;
@@ -115,8 +119,8 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
       .domain([min, max]) // Domain based on MACD values
       .range([scaffold.sections[ChartType.MACD]!.height, 0]); // Range based on the chart height
 
-    this.axisLeft.gAxis.call(axisLeft(this.macdYscale));
-    this.axisRight.gAxis.call(axisRight(this.macdYscale));
+    //this.axisLeft.gAxis.call(axisLeft(this.macdYscale));
+    //this.axisRight.gAxis.call(axisRight(this.macdYscale));
 
 
     return this;

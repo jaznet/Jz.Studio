@@ -9,6 +9,7 @@ import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { BaseChartComponent } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
+import { LayoutService } from '../../layout.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,9 +28,10 @@ export class RsiChart extends BaseChartComponent implements AfterViewInit {
 
   constructor(
     dataService: ChartDataService,
-    private rsiLayout: RsiChartLayoutService
+    private rsiLayout: RsiChartLayoutService,
+    layoutService: LayoutService
   ) {
-    super(dataService)
+    super(dataService, layoutService)
   }
 
   override  ngAfterViewInit(): void {

@@ -26,6 +26,7 @@ import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layou
 import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { BaseChartLayoutService } from '../services/charts/base/base-chart-layout-service';
+import { BaseChartComponent } from '../services/charts/base/base-chart-component.directive';
 
 @Component({
   selector: 'techanTs',
@@ -33,7 +34,7 @@ import { BaseChartLayoutService } from '../services/charts/base/base-chart-layou
   styleUrls: ['./techanTs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TechanTsComponent implements OnInit, AfterViewInit {
+export class TechanTsComponent extends BaseChartComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
  // layout!: LayoutService; // or the actual layout object if you're not using the service
@@ -93,6 +94,10 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('rVolumeAxisRight', { static: false }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME GROUP gVolumeChart
 
+  // #region MACD
+  //@ViewChild('rMacdContent', { static: false }) rMacdContent!: ElementRef<SVGRectElement>;
+  // #endregion MACD
+
   /*  #region*/
   @ViewChild('gRsiSection', { static: false }) gRsiSection!: ElementRef<SVGGElement>;
   @ViewChild('gRsiSectionContent', { static: false }) gRsiSectionContent!: ElementRef<SVGGElement>;
@@ -122,8 +127,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
-  dataReady = false;
-  viewReady = false;
+  override dataReady = false;
+  override viewReady = false;
   hydrated = false; // Optional safety to prevent double-draw
   ticker = 'NVDA';
 
@@ -134,7 +139,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     public data: ChartDataService,
-    public layoutService: LayoutService,
+    public override layoutService: LayoutService,
     private axes: PartsAxesService,
     public scales: ScalesService,
     private popOverService: JzPopOversService,
@@ -148,6 +153,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
    /* private baseLayout: BaseChartLayoutService*/
     
   ) {
+    super(data, layoutService);
+    console.log('CONSTRUCTOR');
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
@@ -158,11 +165,13 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.fetchData();
   }
- 
-  ngAfterViewInit() {
+
+  override ngAfterViewInit() {
+    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:yellow');
     this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
+   
     // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
     setTimeout(() => this.tryCreateChart());
   }
@@ -171,7 +180,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
-      console.log('%c\u2705DATA FETCHED','color:yellow');
+      console.log('%c✅ DATA FETCHED 💡', 'color:yellow');
+      this.popover_loading.hide();
       this.tryCreateChart();
     },
       (error) => {
@@ -181,6 +191,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   showError(error: any) {
+    this.popover_loading.hide();
     this.popover_httperror.error = error.error;
     this.popover_httperror.headers = error.headers;
     this.popover_httperror.message = error.message;
@@ -189,7 +200,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     this.popover_httperror.status = error.status;
     this.popover_httperror.statusText = error.statusText;
     this.popover_httperror.url = error.url;
-    this.popover_httperror.isPopupVisible = true;
+    this.popover_httperror.show();
   }
 
   tryCreateChart(): void {
@@ -202,6 +213,7 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
   }
 
   initializeChartWhenReady(attempt = 0): void {
+
     if (!this.viewReady || !this.dataReady) return;
 
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
@@ -231,33 +243,8 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  createChart(): void {
-    this.createChartFramework();
-    this.changeDetector.detectChanges();
-
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      if (!this.macdChart) {
-        console.error('❌ macdChart not available');
-        return;
-      }
-
-      if (!this.macdChart.isViewInitialized) {
-        console.warn('⚠️ macdChart is not fully initialized yet. Delaying...');
-        setTimeout(() => this.createChart(), 0); // try again after next tick
-        return;
-      }
-
-      // ✅ Safe to call now
-      this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
-      this.layoutService.createScaffolding();
-      this.data.scrubData();
-      this.scales.createScales(this.layoutService.scaffold);
-      this.axes.drawAxes();
-      this.constructChart();
-    });
-  }
-
   createChartFramework() {
+    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:yellow');
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
@@ -311,7 +298,9 @@ export class TechanTsComponent implements OnInit, AfterViewInit {
     // #endregion VOLUME
 
     // #region MACD
-    //this.layoutService.sizeChartSection(ChartType.MACD);
+   // this.layoutService.rMacdContent = this.rMacdContent.nativeElement;
+    console.log('%csetSize', this.layoutService.scaffold.sections[ChartType.MACD]?.width);
+ //   this.macdChart.setSize(this.layoutService.scaffold.sections[ChartType.MACD]?.width ?? 0, this.layoutService.scaffold.sections[ChartType.MACD]?.height ?? 0)
  
     //this.baseLayout.initializeBase({
     //  gSection: this.gMacdSection,
