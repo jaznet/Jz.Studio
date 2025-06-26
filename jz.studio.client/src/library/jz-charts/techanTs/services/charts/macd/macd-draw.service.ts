@@ -36,8 +36,8 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
     console.log('📏 MacdDrawService.setSize()', width, height);
 
     // Optional: update SVG elements or internal state
-    this.rSection.attr('width', width);
-    this.rSection.attr('height', height);
+//    this.rSection.attr('width', width);
+//    this.rSection.attr('height', height);
     this.rContent.attr('width', width);
     this.rContent.attr('height', height);
   }

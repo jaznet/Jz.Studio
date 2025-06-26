@@ -26,7 +26,7 @@ import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layou
 import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { BaseChartLayoutService } from '../services/charts/base/base-chart-layout-service';
-import { BaseChartComponent } from '../services/charts/base/base-chart-component.directive';
+import { BaseChartComponentDirective } from '../services/charts/base/base-chart-component.directive';
 
 @Component({
   selector: 'techanTs',
@@ -34,7 +34,7 @@ import { BaseChartComponent } from '../services/charts/base/base-chart-component
   styleUrls: ['./techanTs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TechanTsComponent extends BaseChartComponent implements OnInit, AfterViewInit {
+export class TechanTsComponent extends BaseChartComponentDirective implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
  // layout!: LayoutService; // or the actual layout object if you're not using the service
@@ -235,7 +235,7 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
       }
 
       // ✅ All good — proceed
-      this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
+  //    this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
       this.layoutService.createScaffolding();
       this.data.scrubData();
       this.scales.createScales(this.layoutService.scaffold);
@@ -251,37 +251,37 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
     this.layoutService.sectionsContainer = this.gSectionsContainer.nativeElement;
- //  this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
+    this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
 
     // #region OHLC
-    this.  ohlcLayout.initializeSelections({
-      gSection: this.gOhlcSection,
-      rSection: this.rOhlcSection,
-      gContent: this.gOhlcContent,
-      rContent: this.rOhlcContent,
-      gChart: this.gOhlcChart,
+    //this.  ohlcLayout.initializeSelections({
+    //  gChartContainer: this.gOhlcSection,
+    //  rSection: this.rOhlcSection,
+    //  gContent: this.gOhlcContent,
+    //  rContent: this.rOhlcContent,
+    //  gChart: this.gOhlcChart,
 
-      axisLeft: {
-        gAxis: this.gOhlcAxisLeft,
-        gAxisGroup: this.gOhlcAxisGroupLeft,
-        rAxis: this.rOhlcAxisLeft
-      },
-      axisRight: {
-        gAxis: this.gOhlcAxisRight,
-        gAxisGroup: this.gOhlcAxisGroupRight,
-        rAxis: this.rOhlcAxisRight
-      }
-    });
+    //  axisLeft: {
+    //    gAxis: this.gOhlcAxisLeft,
+    //    gAxisGroup: this.gOhlcAxisGroupLeft,
+    //    rAxis: this.rOhlcAxisLeft
+    //  },
+    //  axisRight: {
+    //    gAxis: this.gOhlcAxisRight,
+    //    gAxisGroup: this.gOhlcAxisGroupRight,
+    //    rAxis: this.rOhlcAxisRight
+    //  }
+    //});
 
     // #endregion OHLC
 
     // #region VOLUME
 
     this.volumeLayout.initializeSelections({
-      gSection: this.gVolumeSection,
-      rSection: this.rVolumeSection,
-      gContent: this.gVolumeContent,
-      rContent: this.rVolumeContent,
+      gContainer: this.gVolumeSection,
+      rContainer: this.rVolumeSection,
+      //gContent: this.gVolumeContent,
+      //rContent: this.rVolumeContent,
       gChart: this.gVolumeChart,
 
       axisLeft: {
@@ -325,10 +325,9 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
 
     //#region RSI
     this.rsiLayout.initializeSelections({
-      gSection: this.gRsiSection,
-      rSection: this.rRsiSectionRect,
-      gContent: this.gRsiSectionContent,
-      rContent: this.rRsiSectionContent,
+      gContainer: this.gRsiSection,
+      rContainer: this.rRsiSectionRect,
+    
       gChart: this.gRsiChart, // if used as the chart base
 
       axisLeft: {
@@ -344,9 +343,9 @@ export class TechanTsComponent extends BaseChartComponent implements OnInit, Aft
     });
     //#endregion RSI
 
-    this.layoutService.sma1 = this.sma1Ref.nativeElement;
-    this.layoutService.sma2 = this.sma2Ref.nativeElement;
-    this.layoutService.sma3 = this.sma3Ref.nativeElement;
+    //this.layoutService.sma1 = this.sma1Ref.nativeElement;
+    //this.layoutService.sma2 = this.sma2Ref.nativeElement;
+    //this.layoutService.sma3 = this.sma3Ref.nativeElement;
 
     this.layoutService.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
     this.layoutService.xAxisTopRect = this.xAxisTopRectRef.nativeElement;

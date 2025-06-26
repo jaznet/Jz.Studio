@@ -7,14 +7,14 @@ import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
-import { BaseChartComponent } from '../base/base-chart-component.directive';
+import { BaseChartComponentDirective } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RsiChart extends BaseChartComponent implements AfterViewInit {
+export class RsiChart extends BaseChartComponentDirective implements AfterViewInit {
  
   rsiYscale: any;
 

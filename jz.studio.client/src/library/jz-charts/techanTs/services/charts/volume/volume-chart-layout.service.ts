@@ -13,6 +13,6 @@ export class VolumeChartLayoutService extends BaseChartLayoutService {
   }
 
   initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs,'volume');
+//    this.initializeBase(refs,'volume');
   }
 }

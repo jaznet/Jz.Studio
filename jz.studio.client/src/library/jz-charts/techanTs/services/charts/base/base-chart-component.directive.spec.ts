@@ -1,5 +1,5 @@
 
-import { BaseChartComponent } from './base-chart-component.directive';
+import { BaseChartComponentDirective } from './base-chart-component.directive';
 
 describe('BaseChartComponentDirective', () => {
   it('should create an instance', () => {

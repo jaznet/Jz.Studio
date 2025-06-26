@@ -5,7 +5,7 @@ import { LayoutService } from '../../layout.service';
 import { take } from 'rxjs';
 
 @Directive()
-export abstract class BaseChartComponent implements AfterViewInit {
+export abstract class BaseChartComponentDirective implements AfterViewInit {
   // View readiness flag for async coordination
   protected dataReady = false;
   protected viewReady = false;
@@ -68,10 +68,8 @@ export abstract class BaseChartComponent implements AfterViewInit {
   // Utility to collect references into a single object
   public buildRefs(): ChartElementRefs {
     return {
-      gSection: this.gSectionRef,
-      rSection: this.rSectionRef,
-      gContent: this.gContentRef,
-      rContent: this.rContentRef,
+      gContainer: this.gContentRef,
+      rContainer: this.rContentRef,
       gChart: this.gChartRef,
       axisLeft: {
         gAxis: this.gAxisLeftRef,

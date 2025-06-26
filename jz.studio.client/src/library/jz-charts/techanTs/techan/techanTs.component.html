@@ -10,21 +10,20 @@
     </g>
 
     <g #gSectionsContainer id="gSectionsContainer">
-      <rect gSectionsContainer id="gSectionsContainer" x="0" y="0" width="0" height="0" class="chart-section"></rect>
+      <rect #rSectionsContainer id="rSectionsContainer" x="0" y="0" width="0" height="0" class="chart-section"></rect>
 
       <!-- OHLC LEFT AXIS-->
-      <g #gOhlcAxisGroupLeft id="gOhlcAxisGroupLeft">
-        <rect #rOhlcAxisLeft id="rOhlcAxisLeft" width="0" height="0" class="axis y-axis"></rect>
-      </g>
+      <!--<g #gOhlcAxisGroupLeft id="gOhlcAxisGroupLeft">
+      <rect #rOhlcAxisLeft id="rOhlcAxisLeft" width="0" height="0" class="axis y-axis"></rect>
+    </g>-->
       <!-- OHLC RIGHT AXIS-->
-      <g #gOhlcAxisGroupRight id="gOhlcAxisGroupRight">
-        <rect #rOhlcAxisRight id="rOhlcAxisRight" width="0" height="0" class="axis y-axis "></rect>
-        <g #gOhlcAxisRight id="gOhlcAxisRight" class="y-axis" style="transform:translate(0)"></g>
-      </g>
-
+      <!--<g #gOhlcAxisGroupRight id="gOhlcAxisGroupRight">
+      <rect #rOhlcAxisRight id="rOhlcAxisRight" width="0" height="0" class="axis y-axis "></rect>
+      <g #gOhlcAxisRight id="gOhlcAxisRight" class="y-axis" style="transform:translate(0)"></g>
+    </g>-->
       <!-- #region OHLC CONTENT-->
-      <g #gOhlcContent id="gOhlcContent" class="rsiSectionontainer">
-        <rect #rOhlcContent id="rOhlcContent" width="0" height="0"></rect>
+      <g #gOhlcSection id="gOhlcSection" class="ohlcSectionontainer">
+        <rect #rOhlcSection id="rOhlcSection" width="0" height="0"></rect>
         <text>OHLC</text>
         <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.OHLC]">
 
@@ -33,10 +32,50 @@
 
         </g>
         <!--<g #sma1 id="sma1"></g>
-            <g #sma2 id="sma2"></g>
-            <g #sma3 id="sma3"></g>-->
+      <g #sma2 id="sma2"></g>
+      <g #sma3 id="sma3"></g>-->
       </g>
       <!-- #endregion OHLC CONTENT-->
+      <!-- #region SECTION MACD -->
+      <g #gMacdSection id="gMacdSection">
+        <rect #rMacdSection id="rMacdSection" x="0" y="0" width="0" height="0" class="chart-section"></rect>
+
+        <!-- LEFT AXIS MACD  -->
+        <g #gMacdAxisGroupLeft id="gMacdAxisGroupLeft">
+          <rect #rMacdAxisLeft id="rMacdAxisLeft" width="0" height="0" class="axis y-axis "></rect>
+          <g #gMacdAxisLeft id="gMacdAxisLeft" class="y-axis"></g>
+        </g>
+
+        <!-- RIGHT AXIS MACD -->
+        <g #gMacdAxisGroupRight id="gMacdAxisGroupRight">
+          <rect #rMacdAxisRight id="rMacdAxisRight" width="0" height="0" class="axis y-axis "></rect>
+          <g #gMacdAxisRight id="gMacdAxisRight" class="y-axis"></g>
+        </g>
+
+        <!-- Inside your master SVG -->
+        <g id="gMacdContent" [attr.transform]="'translate(40,0)'">
+          <rect #rMacdContent id="rMacdContent" width="0" height="0"></rect>
+          <text>MACD</text>
+          <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
+            <macd-chart #macdChart
+                        [xScale]="scales.dateScaleX"
+                        [scaffold]="layoutService.scaffold">
+            </macd-chart>
+          </g>
+        </g>
+
+      </g>
+      <!-- #endregion SECTION MACD -->
     </g>
-</svg>
+
+    <!-- X AXIS BOTTOM -->
+    <g #xAxisBottomGroup id="xAxisBottomGroup" class="x-axis-group">
+      <rect #xAxisBottomRect id="xAxisBottomRect" width="0" height="0"></rect>
+      <g #xAxisMonthsBottom id="xAxisMonthsBottom" class="x-axis"></g>
+    </g>
+
+  </svg>
 </div>
+
+<pop-over-loading #popover_loading id="popover_loading"></pop-over-loading>
+<popover-http-error #popover_httperror></popover-http-error>

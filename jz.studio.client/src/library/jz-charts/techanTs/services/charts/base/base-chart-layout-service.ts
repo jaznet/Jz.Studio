@@ -10,19 +10,18 @@ import { LayoutService } from "../../layout.service";
 export abstract class BaseChartLayoutService implements AfterViewInit {
   protected data: any[] = [];
 
-  public gSection!: Selection<SVGGElement, unknown, null, undefined>;
-  public rSection!: Selection<SVGRectElement, unknown, null, undefined>;
+
   public gContent!: Selection<SVGGElement, unknown, null, undefined>;
   public rContent!: Selection<SVGRectElement, unknown, null, undefined>;
   public gChart!: Selection<SVGGElement, unknown, null, undefined>;
-
   public axisLeft = new AxisLayout();
   public axisRight = new AxisLayout();
 
   protected abstract chartType: ChartType;
   protected abstract setSize(width: number, height: number): void;
 
-  constructor(protected layoutService: LayoutService,
+  constructor(
+    protected layoutService: LayoutService,
     protected dataService: ChartDataService) { }
 
   ngAfterViewInit(): void {
@@ -42,23 +41,4 @@ export abstract class BaseChartLayoutService implements AfterViewInit {
     }
   }
 
-  initializeBase(refs: {
-    gSection: ElementRef<SVGGElement>;
-    rSection: ElementRef<SVGRectElement>;
-    gContent: ElementRef<SVGGElement>;
-    rContent: ElementRef<SVGRectElement>;
-    gChart: ElementRef<SVGGElement>;
-
-    axisLeft: AxisLayoutRefs;
-    axisRight: AxisLayoutRefs;
-  }, chartName: string): void {
-    this.gSection = select(refs.gSection.nativeElement);
-    this.rSection = select(refs.rSection.nativeElement);
-    this.gContent = select(refs.gContent.nativeElement);
-    this.rContent = select(refs.rContent.nativeElement);
-    this.gChart = select(refs.gChart.nativeElement);
-
-    this.axisLeft.initialize(refs.axisLeft);
-    this.axisRight.initialize(refs.axisRight);
-  }
 }

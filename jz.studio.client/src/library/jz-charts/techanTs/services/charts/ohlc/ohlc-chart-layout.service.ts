@@ -12,15 +12,15 @@ export class OhlcChartLayoutService extends BaseChartLayoutService {
   protected setSize(width: number, height: number): void {
     console.log('📐 OhlcChartLayoutService.setSize()', width, height);
 
-    this.rSection.attr('width', width);
-    this.rSection.attr('height', height);
+ //   this.rSection.attr('width', width);
+ //   this.rSection.attr('height', height);
     this.rContent.attr('width', width);
     this.rContent.attr('height', height);
 
     // Optionally adjust axis layout or internal elements
   }
 
-  initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs, 'OHLC');
-  }
+    
+
+
 }

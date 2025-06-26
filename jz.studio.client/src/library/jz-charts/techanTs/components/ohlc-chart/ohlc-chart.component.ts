@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { ChartDataService } from '../../services/chart-data.service';
-import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
 import { LayoutService } from '../../services/layout.service';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 
 @Component({
   selector: 'ohlc-chart',
@@ -21,7 +21,7 @@ export class OhlcChartComponent extends BaseChartComponent {
     super(chartDataService, layoutService);
   }
 
-  protected override tryDrawChart(): void {
+  protected  tryDrawChart(): void {
     // TODO: draw OHLC chart once size and view are ready
     console.log('🟫 Drawing OHLC chart');
   }

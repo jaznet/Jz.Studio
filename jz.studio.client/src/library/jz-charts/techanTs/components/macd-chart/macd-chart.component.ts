@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { scaffold } from '../../interfaces/techan-interfaces';
 import { MacdDrawService } from '../../services/charts/macd/macd-draw.service';
-import { BaseChartComponent } from '../../services/charts/base/base-chart-component.directive';
 import { MacdLayoutService } from '../../services/charts/macd/macd-layout.service';
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 /*import { interpolateBlues } from 'd3';*/
 
 @Component({
@@ -41,11 +41,11 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
     super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic
   }
 
-  override tryDrawChart(): void {
-    if (!this.viewReady || !this.dataService || !this.scaffold || !this.xScale) return;
+   tryDrawChart(): void {
+     if (!this.viewReady || !this.chartDataService || !this.scaffold || !this.xScale) return;
 
     this.macdDraw
-      .setTargetGroup(this.gChartRef.nativeElement)
+      .setTargetGroup(this.gChartContainerRef.nativeElement)
       .xScale(this.xScale)
       .setPeriods(12, 26, 9)
       .drawAxes(this.scaffold)

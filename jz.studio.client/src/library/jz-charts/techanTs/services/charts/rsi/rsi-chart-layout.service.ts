@@ -11,6 +11,6 @@ export class RsiChartLayoutService extends BaseChartLayoutService {
     throw new Error('Method not implemented.');
   }
   initializeSelections(refs: ChartElementRefs): void {
-    this.initializeBase(refs,'RSI');
+//    this.initializeBase(refs,'RSI');
   }
 }

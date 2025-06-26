@@ -61,7 +61,7 @@ export class LayoutService {
   spacerAdjusted = 0;
 
   sma1!: SVGElement;
-  sma2!: SVGElement;
+  sma2!: SVGElement; 
   sma3!: SVGElement;
 
   // #region Axes
@@ -162,8 +162,8 @@ export class LayoutService {
     const width = this.rSectionsContainer!.width.baseVal.value;
     const height = this.rSectionsContainer!.height.baseVal.value;
 
-    layout.rSection.attr('width', `${width}`);
-    layout.rSection.attr('height', `${height}`);
+    //layout.rSection.attr('width', `${width}`);
+    //layout.rSection.attr('height', `${height}`);
 
     //scaffoldSection!.width = width;
     //scaffoldSection!.height = height;
