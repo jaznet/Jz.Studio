@@ -28,6 +28,7 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
  dataService: ChartDataService
   ) {
     super(dataService, layoutService);
+    console.log('%cCONSTRUCTOR', 'color: #858ae3');
   }
 
   //ngOnInit(): void {
@@ -35,7 +36,7 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
   //}
 
   override ngAfterViewInit(): void {
-    console.log('%c✅ MacdChartComp ngAfterViewInit 💡', 'color:yellow');
+    console.log('%c   ✅ MacdChartComp ngAfterViewInit 💡', 'color:#85B79D');
     this.isViewInitialized = true;
     // Set width and height on root rect
     super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic

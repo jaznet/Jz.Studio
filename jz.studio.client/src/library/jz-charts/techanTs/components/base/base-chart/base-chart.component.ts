@@ -21,8 +21,15 @@ export class BaseChartComponent implements AfterViewInit {
   @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisRectRight', { static: false }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
 
+  chartType: any;
    isViewInitialized = false;
-   viewReady = false;
+  viewReady = false;
+  gContainer!: ElementRef<SVGGElement>;
+  rContainer!: ElementRef<SVGRectElement>;
+  gChart!: ElementRef<SVGGElement>;
+  gAxisGroup: any;
+  rAxis: any;
+
   constructor(
      public chartDataService: ChartDataService,
      public layoutService: LayoutService
@@ -31,14 +38,9 @@ export class BaseChartComponent implements AfterViewInit {
   }
 
     ngAfterViewInit(): void {
-      console.log('base:', this .gChartContainerRef);
+      console.log('%c   base:','color:#D6D1B1', this .chartType);
   }
 
-  gContainer!: ElementRef<SVGGElement>;
-  rContainer!: ElementRef<SVGRectElement>;
-  gChart!: ElementRef<SVGGElement>;
-  gAxisGroup: any;
-  rAxis: any;
 
   public buildRefs(): void {
  

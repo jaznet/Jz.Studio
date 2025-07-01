@@ -57,13 +57,13 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
   @ViewChild('gSectionsContainer', { static: false }) gSectionsContainer!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionsContainer', { static: false }) sectionsRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rSectionsContainer', { static: false }) rSectionsContainerRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   // #region ohlc
-  @ViewChild('gOhlcSection', { static: false }) gOhlcSection!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSection', { static: false }) rOhlcSection!: ElementRef<SVGRectElement>;
+  @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
+  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcContent', { static: false }) rOhlcContent!: ElementRef<SVGRectElement>;
 
@@ -154,7 +154,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
     
   ) {
     super(data, layoutService);
-    console.log('CONSTRUCTOR');
+    console.log('%cCONSTRUCTOR', 'color: #858ae3');
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
@@ -163,11 +163,12 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   }
 
   ngOnInit(): void {
-    this.fetchData();
+  
   }
 
   override ngAfterViewInit() {
-    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:seagreen');
+    this.fetchData();
+    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:#858ae3');
   //  this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
@@ -178,11 +179,12 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   }
 
   fetchData(): void {
+    this.popover_loading.show();
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
       console.log('%c✅ DATA FETCHED 💡', 'color:yellow');
-  //    this.popover_loading.hide();
+      this.popover_loading.hide();
       this.tryCreateChart();
     },
       (error) => {
@@ -207,7 +209,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
-      this.createChartFramework();             // Build framework refs immediately
+      this.createChartFramework();             // Build framework refs immediatelyfetch
       this.changeDetector.detectChanges(); // Push any binding updates
       this.initializeChartWhenReady();     // ✅ Start safe chart initialization
     }
@@ -245,14 +247,16 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   }
 
   createChartFramework() {
-    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:yellow');
+    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:#858ae3');
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
-    this.layoutService.sectionsContainer = this.gSectionsContainer.nativeElement;
-    this.layoutService.rSectionsContainer = this.sectionsRectRef.nativeElement;
+    this.layoutService.rSectionsContainer = select(this.rSectionsContainerRef.nativeElement);
+  //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
+    this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
+ 
     // #region OHLC
     //this.  ohlcLayout.initializeSelections({
     //  gChartContainer: this.gOhlcSection,
@@ -300,7 +304,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
 
     // #region MACD
    // this.layoutService.rMacdContent = this.rMacdContent.nativeElement;
-    console.log('%csetSize', this.layoutService.scaffold.sections[ChartType.MACD]?.width);
+//    console.log('%csetSize', this.layoutService.scaffold.sections[ChartType.MACD]?.width);
  //   this.macdChart.setSize(this.layoutService.scaffold.sections[ChartType.MACD]?.width ?? 0, this.layoutService.scaffold.sections[ChartType.MACD]?.height ?? 0)
  
     //this.baseLayout.initializeBase({

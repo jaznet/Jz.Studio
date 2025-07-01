@@ -105,6 +105,53 @@ export class PaletteMgrService {
 
         break;
 
+
+      case 'tuatara':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#40403F');
+        document.documentElement.style.setProperty('--plt-clr-2', '#222121');
+        document.documentElement.style.setProperty('--plt-clr-3', '#5A5958');
+        document.documentElement.style.setProperty('--plt-clr-4', '#747272');
+        document.documentElement.style.setProperty('--plt-clr-5', '#929191');
+        document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
+
+        document.documentElement.style.setProperty('--plt-txt-1', 'white');
+        document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
+        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-4', 'black');
+        document.documentElement.style.setProperty('--plt-txt-5', 'white');
+
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
+
+        document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
+        document.documentElement.style.setProperty('--popup-color-2', '#679267');
+        document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
+
+        break;
+
+      case 'dune':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#241F1E');
+        document.documentElement.style.setProperty('--plt-clr-2', '#433E3C');
+        document.documentElement.style.setProperty('--plt-clr-3', '#605552');
+        document.documentElement.style.setProperty('--plt-clr-4', '#7A706B');
+        document.documentElement.style.setProperty('--plt-clr-5', '#988F8B');
+        document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
+
+        document.documentElement.style.setProperty('--plt-txt-1', 'white');
+        document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
+        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-4', 'black');
+        document.documentElement.style.setProperty('--plt-txt-5', 'white');
+
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
+
+        document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
+        document.documentElement.style.setProperty('--popup-color-2', '#679267');
+        document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
+
+        break;
+
       case 'gold':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#12100e');
