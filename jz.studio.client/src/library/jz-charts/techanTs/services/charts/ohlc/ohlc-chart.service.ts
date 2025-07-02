@@ -7,7 +7,6 @@ import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { ohlcData, scaffold } from '../../../interfaces/techan-interfaces';
 import { OhlcChartLayoutService } from './ohlc-chart-layout.service';
-import { BaseChartComponentDirective } from '../base/base-chart-component.directive';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
 import { BaseChartLayoutService } from '../base/base-chart-layout-service';
