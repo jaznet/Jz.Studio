@@ -56,7 +56,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainerRef!: ElementRef<SVGGElement>;
   @ViewChild('rSectionsContainer', { static: false }) rSectionsContainerRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
@@ -98,7 +98,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   //@ViewChild('rMacdContent', { static: false }) rMacdContent!: ElementRef<SVGRectElement>;
   // #endregion MACD
 
-  /*  #region*/
+  // #region RSI
   @ViewChild('gRsiSection', { static: false }) gRsiSection!: ElementRef<SVGGElement>;
   @ViewChild('gRsiSectionContent', { static: false }) gRsiSectionContent!: ElementRef<SVGGElement>;
   @ViewChild('rRsiSectionContent', { static: false }) rRsiSectionContent!: ElementRef<SVGRectElement>;
@@ -112,7 +112,6 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   @ViewChild('gRsiAxisGroupRight', { static: false }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('rRsiAxisGroupRight', { static: false }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
   @ViewChild('gRsiAxisRight', { static: false }) gRsiAxisRight!: ElementRef<SVGGElement>;
-
   // #endregion Rsi
 
   // #region @VIEWCHILD lIST
@@ -252,10 +251,12 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
+    this.layoutService.gSectionsContainer = select(this.gSectionsContainerRef.nativeElement);
     this.layoutService.rSectionsContainer = select(this.rSectionsContainerRef.nativeElement);
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
     this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
+ //   this.layoutService.rMacdSection = select(this.rMacd)
  
     // #region OHLC
     //this.  ohlcLayout.initializeSelections({
