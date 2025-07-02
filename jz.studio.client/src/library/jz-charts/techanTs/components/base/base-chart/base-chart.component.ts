@@ -1,80 +1,71 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { ChartDataService } from '../../../services/chart-data.service';
-import { LayoutService } from '../../../services/layout.service';
+
+import { ElementRef, ViewChild, Component, AfterViewInit } from '@angular/core';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
+import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-base-chart',
+  selector: 'base-chart',
   templateUrl: './base-chart.component.html',
-  styleUrl: './base-chart.component.css'
+  styleUrls: ['./base-chart.component.scss']
 })
 export class BaseChartComponent implements AfterViewInit {
+  protected dataReady = false;
+  protected viewReady = false;
+  public isViewInitialized = false;
 
-  @ViewChild('gChartContainer', { static: false }) gChartContainerRef!: ElementRef<SVGGElement>;
+  @ViewChild('gChartContainer', { static: false }) gSectionRef!: ElementRef<SVGGElement>;
+  @ViewChild('rChartContainer', { static: false }) rSectionRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('gContent', { static: false }) gContentRef!: ElementRef<SVGGElement>;
   @ViewChild('rContent', { static: false }) rContentRef!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
+
   @ViewChild('gAxisLeft', { static: false }) gAxisLeftRef!: ElementRef<SVGGElement>;
   @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeftRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisRectLeft', { static: false }) rAxisRectLeftRef!: ElementRef<SVGRectElement>;
+
   @ViewChild('gAxisRight', { static: false }) gAxisRightRef!: ElementRef<SVGGElement>;
   @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisRectRight', { static: false }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
 
-  chartType: any;
-   isViewInitialized = false;
-  viewReady = false;
-  gContainer!: ElementRef<SVGGElement>;
-  rContainer!: ElementRef<SVGRectElement>;
-  gChart!: ElementRef<SVGGElement>;
-  gAxisGroup: any;
-  rAxis: any;
-
   constructor(
-     public chartDataService: ChartDataService,
-     public layoutService: LayoutService
-  ) {
-   
+    protected dataService: ChartDataService,
+    protected layoutService: LayoutService
+  ) { }
+
+  ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.isViewInitialized = true;
+    this.tryDrawChart();
   }
 
-    ngAfterViewInit(): void {
-      console.log('%c   base:','color:#D6D1B1', this .chartType);
+  setSize(width: number, height: number): void {
+    this.rSectionRef.nativeElement.setAttribute('width', width.toString());
+    this.rSectionRef.nativeElement.setAttribute('height', height.toString());
+    this.rContentRef.nativeElement.setAttribute('width', width.toString());
+    this.rContentRef.nativeElement.setAttribute('height', height.toString());
+    this.gAxisRightRef.nativeElement.setAttribute('transform', `translate(${width}, 0)`);
   }
 
-
-  public buildRefs(): void {
- 
-    this.gContainer = this.gContentRef;
-    this.rContainer = this.rContentRef;
-    this.gChart = this.gChartRef;
-      //axisLeft: {
-      //  gAxis: this.gAxisLeftRef,
-      //  this.gAxisGroup: this.gAxisGroupLeftRef,
-      //  this.rAxis: this.rAxisRectLeftRef,
-      //},
-      //axisRight: {
-      //  gAxis: this.gAxisRightRef,
-      //  this.gAxisGroup: this.gAxisGroupRightRef,
-      //  this.rAxis: this.rAxisRectRightRef,
-      //}
- 
+  public buildRefs(): ChartElementRefs {
+    return {
+      gContainer: this.gContentRef,
+      rContainer: this.rContentRef,
+      gChart: this.gChartRef,
+      axisLeft: {
+        gAxis: this.gAxisLeftRef,
+        gAxisGroup: this.gAxisGroupLeftRef,
+        rAxis: this.rAxisRectLeftRef,
+      },
+      axisRight: {
+        gAxis: this.gAxisRightRef,
+        gAxisGroup: this.gAxisGroupRightRef,
+        rAxis: this.rAxisRectRightRef,
+      }
+    };
   }
 
-  //public buildRefs(): ChartElementRefs {
-  //  return {
-  //    gContainer: this.gContentRef,
-  //    rContainer: this.rContentRef,
-  //    gChart: this.gChartRef,
-  //    axisLeft: {
-  //      gAxis: this.gAxisLeftRef,
-  //      gAxisGroup: this.gAxisGroupLeftRef,
-  //      rAxis: this.rAxisRectLeftRef,
-  //    },
-  //    axisRight: {
-  //      gAxis: this.gAxisRightRef,
-  //      gAxisGroup: this.gAxisGroupRightRef,
-  //      rAxis: this.rAxisRectRightRef,
-  //    }
-  //  };
-  //}
+  protected tryDrawChart(): void {
+    // Intentionally blank — override in child
+  }
 }

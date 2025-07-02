@@ -1,34 +1,37 @@
-import { Component, ChangeDetectionStrategy, ViewEncapsulation, AfterViewInit } from '@angular/core';
-import { ChartType } from '../../enums/chart-type';
+
+import { Component } from '@angular/core';
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
+import { take } from 'rxjs';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 
 @Component({
   selector: 'ohlc-chart',
-  templateUrl: './ohlc-chart.component.html',
-  styleUrls: ['./ohlc-chart.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None // ⬅️ important
+  templateUrl: '../../base/base-chart.component.html', // 🔥 Shared base template
+  styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements AfterViewInit {
+export class OhlcChartComponent extends BaseChartComponent {
 
   constructor(
-    chartDataService: ChartDataService,
-    layoutService: LayoutService
+    protected override dataService: ChartDataService,
+    protected override layoutService: LayoutService
   ) {
-  
-    super(chartDataService, layoutService);
-    this.chartType;
-    console.log('%cCONSTRUCTOR', 'color: #858ae3');
+    super(dataService, layoutService);
   }
 
   override ngAfterViewInit(): void {
-    console.log('%c   ✅ OhlcChartComponent ngAfterViewInit 💡', 'color:#EEF5DB',this.chartDataService);
+    this.layoutService.ohlcSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
+      this.setSize(width, height);
+    });
+    this.viewReady = true;
+    this.tryDrawChart();
   }
 
-  protected  tryDrawChart(): void {
-    // TODO: draw OHLC chart once size and view are ready
-    console.log('%c   🟫 Drawing OHLC chart', 'color: #EEF5DB');
+  protected override tryDrawChart(): void {
+    if (!this.viewReady || !this.dataService.stockPriceHistoryData?.length) return;
+
+    console.log('%c🕯️ Drawing OHLC Chart', 'color:orange');
+    // You can insert D3 logic here targeting:
+    // this.gChartRef.nativeElement
   }
 }
