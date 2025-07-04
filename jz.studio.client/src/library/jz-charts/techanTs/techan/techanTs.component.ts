@@ -21,12 +21,10 @@ import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
-import { OhlcChartService } from '../services/charts/ohlc/ohlc-chart.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
 import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
-import { BaseChartLayoutService } from '../services/charts/base/base-chart-layout-service';
-import { BaseChartComponentDirective } from '../services/charts/base/base-chart-component.directive';
+import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
 
 @Component({
   selector: 'techanTs',
@@ -34,7 +32,7 @@ import { BaseChartComponentDirective } from '../services/charts/base/base-chart-
   styleUrls: ['./techanTs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TechanTsComponent extends BaseChartComponentDirective implements OnInit, AfterViewInit {
+export class TechanTsComponent  implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
  // layout!: LayoutService; // or the actual layout object if you're not using the service
@@ -126,8 +124,8 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
-  override dataReady = false;
-  override viewReady = false;
+  dataReady = false;
+  viewReady = false;
   hydrated = false; // Optional safety to prevent double-draw
   ticker = 'NVDA';
 
@@ -138,7 +136,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     public data: ChartDataService,
-    public override layoutService: LayoutService,
+    public  layoutService: LayoutService,
     private axes: PartsAxesService,
     public scales: ScalesService,
     private popOverService: JzPopOversService,
@@ -152,7 +150,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
    /* private baseLayout: BaseChartLayoutService*/
     
   ) {
-    super(data, layoutService);
+  
     console.log('%cCONSTRUCTOR', 'color: #858ae3');
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
@@ -161,11 +159,9 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
-  ngOnInit(): void {
-  
-  }
+  ngOnInit(): void { }
 
-  override ngAfterViewInit() {
+   ngAfterViewInit() {
     this.fetchData();
     console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:#858ae3');
   //  this.popover_loading.show();
@@ -175,6 +171,18 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
     // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
       setTimeout(() => this.tryCreateChart());
     //this.createChartFramework();
+  }
+
+  @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
+
+  drawOhlc(): void {
+    //this.ohlcChartRef
+    //  .xScale(this.scales.dateScaleX)
+    //        .yScale(this.ohlcChart.ohlcYscale)
+    //  .setTargetGroup(this.gOhlcChart.nativeElement)
+    //  .setCandleWidth()
+    //  .drawAxes(this.layoutService.scaffold)
+    //  .draw();
   }
 
   fetchData(): void {
@@ -362,7 +370,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
   }
 
   constructChart(): void {
-    this.drawCandlestick();
+    this.drawOhlc();
     this.drawVolume();
     this.drawSma1(5);
     this.drawSma2(50);
@@ -373,15 +381,7 @@ export class TechanTsComponent extends BaseChartComponentDirective implements On
 
   // #region DRAW
 
-  drawCandlestick(): void {
-   // this.ohlcChart
-      //.xScale(this.scales.dateScaleX)
-      ///*      .yScale(this.ohlcChart.ohlcYscale)*/
-      //.setTargetGroup(this.gOhlcChart.nativeElement)
-      //.setCandleWidth()
-      //.drawAxes(this.layout.scaffold)
-      //.draw();
-  }
+
 
   drawVolume(): void {
     //this.volumeChart

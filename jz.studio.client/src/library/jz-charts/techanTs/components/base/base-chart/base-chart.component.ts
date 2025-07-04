@@ -2,6 +2,8 @@
 import { ElementRef, ViewChild, Component, AfterViewInit } from '@angular/core';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 import { take } from 'rxjs';
+import { ChartDataService } from '../../../services/chart-data.service';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'base-chart',

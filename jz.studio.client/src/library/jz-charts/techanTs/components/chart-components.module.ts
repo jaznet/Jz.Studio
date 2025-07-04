@@ -4,13 +4,12 @@ import { MacdChartComp } from './macd-chart/macd-chart.component';
 import { OhlcChartComponent } from './ohlc-chart/ohlc-chart.component';
 import { BaseChartComponent } from './base/base-chart/base-chart.component';
 
-
-
 @NgModule({
-  declarations: [MacdChartComp, OhlcChartComponent, BaseChartComponent, BaseChartComponent],
+  declarations: [MacdChartComp, BaseChartComponent, OhlcChartComponent],
   schemas: [NO_ERRORS_SCHEMA],
   exports: [
-    MacdChartComp, OhlcChartComponent
+    MacdChartComp,
+    OhlcChartComponent
   ]
 })
 export class ChartComponentsModule { }

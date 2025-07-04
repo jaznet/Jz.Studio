@@ -27,15 +27,15 @@ export class RsiChart  implements AfterViewInit {
   private rollingPeriod: number = 14; // Default RSI period
 
   constructor(
-    dataService: ChartDataService,
+    private dataService: ChartDataService,
     private rsiLayout: RsiChartLayoutService,
     layoutService: LayoutService
   ) {
-    super(dataService, layoutService)
+  //  super(dataService, layoutService)
   }
 
-  override  ngAfterViewInit(): void {
-      this.rsiLayout.initializeSelections(this.buildRefs());
+    ngAfterViewInit(): void {
+   //   this.rsiLayout.initializeSelections(this.buildRefs());
     }
 
   public xScale(scale: any): this {

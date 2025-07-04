@@ -24,8 +24,8 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
   constructor(
     private macdDraw: MacdDrawService,
     private macdLayout: MacdLayoutService,
-     layoutService: LayoutService,
- dataService: ChartDataService
+    layoutService: LayoutService,
+    dataService: ChartDataService
   ) {
     super(dataService, layoutService);
     console.log('%cCONSTRUCTOR', 'color: #858ae3');
@@ -42,11 +42,11 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
     super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic
   }
 
-   tryDrawChart(): void {
-     if (!this.viewReady || !this.chartDataService || !this.scaffold || !this.xScale) return;
+  override tryDrawChart(): void {
+    if (!this.viewReady || !this.dataService || !this.scaffold || !this.xScale) return;
 
     this.macdDraw
-      .setTargetGroup(this.gChartContainerRef.nativeElement)
+   //   .setTargetGroup(this.gChartContainerRef.nativeElement)
       .xScale(this.xScale)
       .setPeriods(12, 26, 9)
       .drawAxes(this.scaffold)

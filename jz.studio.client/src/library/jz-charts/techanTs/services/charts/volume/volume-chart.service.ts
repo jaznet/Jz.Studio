@@ -9,12 +9,12 @@ import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
-import { BaseChartComponentDirective } from '../base/base-chart-component.directive';
+import { BaseChartComponent } from '../../../components/base/base-chart/base-chart.component';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VolumeChartService extends BaseChartComponentDirective implements AfterViewInit {
+export class VolumeChartService extends BaseChartComponent implements AfterViewInit {
   private _xScale: any;
   private _barWidth: number = 0;
   private gVolume: any;

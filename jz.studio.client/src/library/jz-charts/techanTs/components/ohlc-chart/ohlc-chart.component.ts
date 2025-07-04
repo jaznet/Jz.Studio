@@ -7,7 +7,7 @@ import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 
 @Component({
   selector: 'ohlc-chart',
-  templateUrl: '../../base/base-chart.component.html', // 🔥 Shared base template
+  templateUrl: './ohlc-chart.component.html', // 🔥 Shared base template
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent {
