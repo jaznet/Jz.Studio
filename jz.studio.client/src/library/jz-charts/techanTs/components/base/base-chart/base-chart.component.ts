@@ -4,6 +4,7 @@ import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 import { take } from 'rxjs';
 import { ChartDataService } from '../../../services/chart-data.service';
 import { LayoutService } from '../../../services/layout.service';
+import { ScalesService } from '../../../services/scales.service';
 
 @Component({
   selector: 'base-chart',
@@ -14,6 +15,9 @@ export class BaseChartComponent implements AfterViewInit {
   protected dataReady = false;
   protected viewReady = false;
   public isViewInitialized = false;
+
+  protected axisLeft: any;
+  protected axisRight: any;
 
   @ViewChild('gChartContainer', { static: false }) gSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rChartContainer', { static: false }) rSectionRef!: ElementRef<SVGRectElement>;
@@ -32,7 +36,8 @@ export class BaseChartComponent implements AfterViewInit {
 
   constructor(
     protected dataService: ChartDataService,
-    protected layoutService: LayoutService
+    protected layoutService: LayoutService,
+    protected scales: ScalesService
   ) { }
 
   ngAfterViewInit(): void {

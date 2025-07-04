@@ -64,14 +64,14 @@ export class SmaChartService {
   }
 
   public draw(): void {
-    if (!this.ohlc.ohlcYscale) return;
+ //   if (!this.ohlc.ohlcYscale) return;
     // Calculate the SMA data
     const smaData = this.calculateSma(this.data.parsedData);
 
     // Define the line generator
     const smaLine = line<{ date: Date; value: number }>()
-      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2) // Convert Date to string
-      .y((d) => this.ohlc.ohlcYscale(d.value));
+      .x((d) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2); // Convert Date to string
+    /*  .y((d) => this.ohlc.ohlcYscale(d.value));*/
 
     // Append or update the SMA path
     const smaPath = this.gSma.selectAll('.sma-line').data([smaData]);

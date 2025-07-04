@@ -14,7 +14,7 @@ import { BaseChartComponent } from '../../../components/base/base-chart/base-cha
 @Injectable({
   providedIn: 'root',
 })
-export class VolumeChartService extends BaseChartComponent implements AfterViewInit {
+export class VolumeChartService  implements AfterViewInit {
   private _xScale: any;
   private _barWidth: number = 0;
   private gVolume: any;
@@ -26,13 +26,13 @@ export class VolumeChartService extends BaseChartComponent implements AfterViewI
 
   constructor(
     private scales: ScalesService,
-    dataService: ChartDataService,
-    layoutService:LayoutService,
+   private  dataService: ChartDataService,
+   private layoutService:LayoutService,
     private volume: VolumeChartLayoutService
-  ) { super(dataService, layoutService) }
+  ) { }
 
- override ngAfterViewInit(): void {
-    this.volume.initializeSelections(this.buildRefs());
+  ngAfterViewInit(): void {
+//    this.volume.initializeSelections(this.buildRefs());
     }
 
   public xScale(scale: any): this {

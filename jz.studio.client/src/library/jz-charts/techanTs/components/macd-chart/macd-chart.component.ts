@@ -5,6 +5,7 @@ import { MacdLayoutService } from '../../services/charts/macd/macd-layout.servic
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { ScalesService } from '../../services/scales.service';
 /*import { interpolateBlues } from 'd3';*/
 
 @Component({
@@ -17,23 +18,18 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
   @Input() xScale!: any;
   @Input() scaffold!: scaffold;
 
-/*  @ViewChild('rMacdContent', { static: false }) rMacdContent!: ElementRef<SVGRectElement>;*/
-
   private chartReady: boolean = false;
 
   constructor(
     private macdDraw: MacdDrawService,
     private macdLayout: MacdLayoutService,
     layoutService: LayoutService,
-    dataService: ChartDataService
+    dataService: ChartDataService,
+    scales: ScalesService
   ) {
-    super(dataService, layoutService);
+    super(dataService, layoutService, scales);
     console.log('%cCONSTRUCTOR', 'color: #858ae3');
   }
-
-  //ngOnInit(): void {
-  ////  console.log('🔧 MacdChartComp ngOnInit');
-  //}
 
   override ngAfterViewInit(): void {
     console.log('%c   ✅ MacdChartComp ngAfterViewInit 💡', 'color:#85B79D');
