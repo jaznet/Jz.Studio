@@ -1,10 +1,11 @@
 
-import { ElementRef, ViewChild, Component, AfterViewInit } from '@angular/core';
+import { ElementRef, ViewChild, Component, AfterViewInit, Input } from '@angular/core';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 import { take } from 'rxjs';
 import { ChartDataService } from '../../../services/chart-data.service';
 import { LayoutService } from '../../../services/layout.service';
 import { ScalesService } from '../../../services/scales.service';
+import { scaffold } from '../../../interfaces/techan-interfaces';
 
 @Component({
   selector: 'base-chart',
@@ -12,6 +13,10 @@ import { ScalesService } from '../../../services/scales.service';
   styleUrls: ['./base-chart.component.scss']
 })
 export class BaseChartComponent implements AfterViewInit {
+  @Input() xScale!: any;
+  @Input() data!: any[];
+  @Input() scaffold!: scaffold;
+
   protected dataReady = false;
   protected viewReady = false;
   public isViewInitialized = false;
@@ -37,7 +42,7 @@ export class BaseChartComponent implements AfterViewInit {
   constructor(
     protected dataService: ChartDataService,
     protected layoutService: LayoutService,
-    protected scales: ScalesService
+    protected scales:ScalesService
   ) { }
 
   ngAfterViewInit(): void {

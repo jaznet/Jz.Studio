@@ -15,8 +15,7 @@ import { ScalesService } from '../../services/scales.service';
 })
 export class MacdChartComp extends BaseChartComponent implements  AfterViewInit {
 
-  @Input() xScale!: any;
-  @Input() scaffold!: scaffold;
+
 
   private chartReady: boolean = false;
 

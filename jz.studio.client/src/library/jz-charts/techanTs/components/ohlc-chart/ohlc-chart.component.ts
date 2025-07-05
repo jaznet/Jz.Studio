@@ -1,5 +1,5 @@
 
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
 import { take } from 'rxjs';
@@ -17,6 +17,9 @@ import { axisLeft, axisRight } from 'd3-axis';
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent {
+
+
+
 
   constructor(
     protected override dataService: ChartDataService,
@@ -51,10 +54,10 @@ export class OhlcChartComponent extends BaseChartComponent {
   private _candleWidth: number = 0;
   gCandlestick: any;
 
-  public xScale(scale: any) {
-    this._xScale = scale;
-    return this; // Allows method chaining
-  }
+  //public xScale(scale: any) {
+  //  this._xScale = scale;
+  //  return this; // Allows method chaining
+  //}
 
   public setTargetGroup(gTargetRef: any) {
     this.gCandlestick = select(gTargetRef)
