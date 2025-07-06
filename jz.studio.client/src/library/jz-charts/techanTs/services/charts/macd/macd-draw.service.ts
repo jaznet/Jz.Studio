@@ -106,6 +106,8 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
     }));
   }
 
+  public draw() { }
+   
   public drawAxes(scaffold: scaffold) {
     // Calculate the min and max values from MACD data
     const allValues = this.data.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
@@ -126,60 +128,61 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
     return this;
   }
 
-  public draw(): void {
-    this.gMacd
-      .append('circle')
-      .attr('cx', 50)
-      .attr('cy', 50)
-      .attr('r', 10)
-      .attr('fill', 'red');
+  //public draw(): void {
+  //  this.gMacd
+  //    .append('circle')
+  //    .attr('cx', 50)
+  //    .attr('cy', 50)
+  //    .attr('r', 10)
+  //    .attr('fill', 'red');
 
-    const lineGenerator = line<{ date: Date; macd: number }>()
+     lineGenerator = line<{ date: Date; macd: number }>()
       .x(d => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2)
       .y(d => this.macdYscale(d.macd));
 
-    const signalLineGenerator = line<{ date: Date; signal: number }>()
+     signalLineGenerator = line<{ date: Date; signal: number }>()
       .x(d => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2)
       .y(d => this.macdYscale(d.signal));
 
-    console.log('MACD data in draw():', this.data);
+//    console.log('MACD data in draw():', this.data);
 
-    const bars = this.gMacd.selectAll<SVGRectElement, any>('.histogram-bar').data(this.data);
-    bars
-      .enter()
-      .append('rect')
-      .attr('class', 'histogram-bar')
-      .merge(bars)
-      .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2 - 2)
-      .attr('y', (d: { histogram: any; }) => isNaN(this.macdYscale(d.histogram)) ? 0 : this.macdYscale(d.histogram))
-      .attr('width', 4)
-      .attr('height', (d: { histogram: any; }) => Math.abs(this.macdYscale(d.histogram) - this.macdYscale(0)))
-      .attr('fill', (d: { histogram: number; }) => d.histogram > 0 ? 'green' : 'red');
-    bars.exit().remove();
+  // bars: Selection<SVGRectElement, any, SVGElement, unknown> = this.gMacd.selectAll<SVGRectElement, any>('.histogram-bar').data(this.data);
+    //bars
+    //  .enter()
+    //  .append('rect')
+    //  .attr('class', 'histogram-bar')
+    //  .merge(bars)
+    //  .attr('x', (d: { date: { toISOString: () => any; }; }) => this._xScale(d.date.toISOString()) + this._xScale.bandwidth() / 2 - 2)
+    //  .attr('y', (d: { histogram: any; }) => isNaN(this.macdYscale(d.histogram)) ? 0 : this.macdYscale(d.histogram))
+    //  .attr('width', 4)
+    //  .attr('height', (d: { histogram: any; }) => Math.abs(this.macdYscale(d.histogram) - this.macdYscale(0)))
+    //  .attr('fill', (d: { histogram: number; }) => d.histogram > 0 ? 'green' : 'red');
+    //bars.exit().remove();
 
-    const macdLine = this.gMacd.selectAll<SVGPathElement, any>('.macd-line').data([this.data]);
-    macdLine
-      .enter()
-      .append('path')
-      .attr('class', 'macd-line')
-      .merge(macdLine)
-      .attr('d', lineGenerator)
-      .attr('stroke', '#f8f32b')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none');
-    macdLine.exit().remove();
+  //   macdLine = this.gMacd.selectAll<SVGPathElement, any>('.macd-line').data([this.data]);
+    //macdLine
+    //  .enter()
+    //  .append('path')
+    //  .attr('class', 'macd-line')
+    //  .merge(macdLine)
+    //  .attr('d', lineGenerator)
+    //  .attr('stroke', '#f8f32b')
+    //  .attr('stroke-width', 2)
+    //  .attr('fill', 'none');
+    //macdLine.exit().remove();
 
-    const signalLine = this.gMacd.selectAll<SVGPathElement, any>('.signal-line').data([this.data]);
-    signalLine
-      .enter()
-      .append('path')
-      .attr('class', 'signal-line')
-      .merge(signalLine)
-      .attr('d', signalLineGenerator)
-      .attr('stroke', 'red')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none');
-    signalLine.exit().remove();
+ //    signalLine = this.gMacd.selectAll<SVGPathElement, any>('.signal-line').data([this.data]);
+    //signalLine
+    //  .enter()
+    //  .append('path')
+    //  .attr('class', 'signal-line')
+    //  .merge(signalLine)
+    //  .attr('d', signalLineGenerator)
+    //  .attr('stroke', 'red')
+    //  .attr('stroke-width', 2)
+    //  .attr('fill', 'none');
+  //signalLine.exit().remove();
+
   }
 
-}
+

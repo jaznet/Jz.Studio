@@ -18,15 +18,13 @@ import { axisLeft, axisRight } from 'd3-axis';
 })
 export class OhlcChartComponent extends BaseChartComponent {
 
-
-
-
   constructor(
     protected override dataService: ChartDataService,
     protected override layoutService: LayoutService,
     protected override scales: ScalesService
   ) {
-    super(dataService, layoutService,scales);
+    super(dataService, layoutService, scales);
+    console.log('%cCONSTRUCTOR OhlcChartComponent', 'color:#F4E8C1');
   }
 
   override ngAfterViewInit(): void {
@@ -40,7 +38,7 @@ export class OhlcChartComponent extends BaseChartComponent {
   protected override tryDrawChart(): void {
     if (!this.viewReady || !this.dataService.stockPriceHistoryData?.length) return;
 
-    console.log('%c🕯️ Drawing OHLC Chart', 'color:orange');
+    console.log('%c🕯️ Drawing OHLC Chart', 'color:#F4E8C1');
     // You can insert D3 logic here targeting:
     // this.gChartRef.nativeElement
   }

@@ -254,16 +254,18 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   createChartFramework() {
-    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:#858ae3');
+ 
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
     this.layoutService.gSectionsContainer = select(this.gSectionsContainerRef.nativeElement);
     this.layoutService.rSectionsContainer = select(this.rSectionsContainerRef.nativeElement);
+
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
     this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
+    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:#858ae3');
  //   this.layoutService.rMacdSection = select(this.rMacd)
  
     // #region OHLC
