@@ -1,23 +1,26 @@
 
-import { ElementRef, ViewChild, Component, AfterViewInit, Input } from '@angular/core';
+import { ElementRef, ViewChild, Component, AfterViewInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartElementRefs } from '../../../interfaces/chart-element-refs';
 import { take } from 'rxjs';
 import { ChartDataService } from '../../../services/chart-data.service';
 import { LayoutService } from '../../../services/layout.service';
 import { ScalesService } from '../../../services/scales.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
+import { ChartType } from '../../../enums/chart-type';
 
 @Component({
   selector: 'base-chart',
   templateUrl: './base-chart.component.html',
   styleUrls: ['./base-chart.component.scss']
 })
-export class BaseChartComponent implements AfterViewInit {
+export class BaseChartComponent implements AfterViewInit, OnChanges {
   @Input() xScale!: any;
   @Input() data!: any[];
   @Input() scaffold!: scaffold;
 
-  protected dataReady = false;
+  protected chartType!: ChartType;
+
+
   protected viewReady = false;
   public isViewInitialized = false;
 
@@ -43,12 +46,49 @@ export class BaseChartComponent implements AfterViewInit {
     protected dataService: ChartDataService,
     protected layoutService: LayoutService,
     protected scales:ScalesService
-  ) { }
+  ) {
+    console.log('c% BASE', 'color:red', this.chartType);
+  }
 
   ngAfterViewInit(): void {
     this.viewReady = true;
     this.isViewInitialized = true;
     this.tryDrawChart();
+  }
+
+  private xScaleReady = false;
+  private dataReady = false;
+  private scaffoldReady = false;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['xScale'] && this.xScale) this.xScaleReady = true;
+    if (changes['data'] && Array.isArray(this.data) && this.data.length > 0) this.dataReady = true;
+    if (changes['scaffold'] && this.scaffold) this.scaffoldReady = true;
+
+ 
+    console.log('ngOnChanges', {
+      viewReady: this.viewReady,
+      xScaleReady: this.xScaleReady,
+      dataReady: this.dataReady,
+      scaffoldReady: this.scaffoldReady,
+      data: this.data,
+      xScale: this.xScale,
+      scaffold: this.scaffold
+    });
+    if (this.viewReady && this.xScaleReady && this.dataReady && this.scaffoldReady) {
+      this.tryDrawChart();
+    }
+  }
+
+
+  protected tryDrawChart(): void {
+    if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;
+
+    this.drawChart();
+  }
+
+  protected drawChart(): void {
+    console.warn('drawChart() not implemented in derived class.');
   }
 
   setSize(width: number, height: number): void {
@@ -77,7 +117,5 @@ export class BaseChartComponent implements AfterViewInit {
     };
   }
 
-  protected tryDrawChart(): void {
-    // Intentionally blank — override in child
-  }
+
 }

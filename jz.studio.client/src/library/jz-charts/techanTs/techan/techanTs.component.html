@@ -21,7 +21,8 @@
       
           <ohlc-chart  #ohlcChart
                       [xScale]="scales.dateScaleX"
-                      [data]="data.stockPriceHistoryData">
+                      [data]="data.stockPriceHistoryData"
+                         [scaffold]="layoutService.scaffold">
           </ohlc-chart>
 
         </g>

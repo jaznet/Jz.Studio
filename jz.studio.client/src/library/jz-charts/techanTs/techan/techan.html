@@ -36,6 +36,7 @@
           <text>MACD</text>
           <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
             <ohlc-chart #ohlcChart
+                        [data]="dataService.stockPriceHistoryData"
                         [xScale]="scales.dateScaleX"
                         [scaffold]="layoutService.scaffold">
             </ohlc-chart>

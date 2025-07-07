@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { select, selection, selector } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
@@ -12,25 +12,30 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
   templateUrl: './ohlc-chart.component.html',
   styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
+export class OhlcChartComponent extends BaseChartComponent implements OnChanges, OnInit {
+
 
   ohlcYscale: any;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.viewReady && this.data?.length && this.xScale && this.scaffold) {
-      this.tryDrawChart();
-    }
+  //override ngOnChanges(changes: SimpleChanges): void {
+  //  if (this.viewReady && this.data?.length && this.xScale && this.scaffold) {
+  //    this.tryDrawChart();
+  //  }
+  //}
+
+  ngOnInit(): void {
+    this.chartType = ChartType.OHLC;
   }
 
-  override ngAfterViewInit(): void {
-    console.log('%c  ✅ OhlcChartComponent ngAfterViewInit', 'color:#F4E8C1');
+  //override ngAfterViewInit(): void {
+  //  console.log('%c  ✅ OhlcChartComponent ngAfterViewInit', 'color:#F4E8C1');
 
-    //this.layoutService.ohlcSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
-    //  this.setSize(width, height);
-    //  this.viewReady = true;
-    //  this.tryDrawChart();
-    //});
-  }
+  //  //this.layoutService.ohlcSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
+  //  //  this.setSize(width, height);
+  //  //  this.viewReady = true;
+  //  //  this.tryDrawChart();
+  //  //});
+  //}
 
   protected override tryDrawChart(): void {
     if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;
