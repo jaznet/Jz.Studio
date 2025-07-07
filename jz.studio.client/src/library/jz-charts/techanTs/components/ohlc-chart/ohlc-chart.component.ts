@@ -23,7 +23,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   override ngAfterViewInit(): void {
-    console.log('%c  OhlcChartComponent ngAfterViewInit', 'color:#F4E8C1');
+    console.log('%c  ✅ OhlcChartComponent ngAfterViewInit', 'color:#F4E8C1');
 
     //this.layoutService.ohlcSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
     //  this.setSize(width, height);
