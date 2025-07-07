@@ -23,9 +23,6 @@ export class OhlcChartService extends BaseChartLayoutService implements AfterVie
   // Optional future customization
   // #region PROPERTIES
 
-
-
-
   // #endregion PROPERTIES
 
   constructor(
