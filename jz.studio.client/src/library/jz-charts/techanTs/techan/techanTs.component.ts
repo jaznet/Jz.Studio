@@ -177,16 +177,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //this.createChartFramework();
   }
 
-  drawOhlc(): void {
-    this.ohlcChartRef.draw();
-    //this.ohlcChartRef
-    //  .xScale(this.scales.dateScaleX)
-    //        .yScale(this.ohlcChart.ohlcYscale)
-    //  .setTargetGroup(this.gOhlcChart.nativeElement)
-    //  .setCandleWidth()
-    //  .drawAxes(this.layoutService.scaffold)
-    //  .draw();
-  }
+ 
 
   fetchData(): void {
     this.popover_loading.show();
@@ -240,11 +231,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         return;
       }
 
-      if (!this.macdChart.isViewInitialized) {
-        console.warn('⚠️ macdChart is not fully initialized yet. Retrying...');
-        setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
-        return;
-      }
+      //if (!this.macdChart.isViewInitialized) {
+      //  console.warn('⚠️ macdChart is not fully initialized yet. Retrying...');
+      //  setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
+      //  return;
+      //}
 
       // ✅ All good — proceed
   //    this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
@@ -386,7 +377,17 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region DRAW
 
-
+  drawOhlc(): void {
+    this.ohlcChartRef.drawChart();
+    //   this.ohlcChartRef.draw();
+    //this.ohlcChartRef
+    //  .xScale(this.scales.dateScaleX)
+    //        .yScale(this.ohlcChart.ohlcYscale)
+    //  .setTargetGroup(this.gOhlcChart.nativeElement)
+    //  .setCandleWidth()
+    //  .drawAxes(this.layoutService.scaffold)
+    //  .draw();
+  }
 
   drawVolume(): void {
     //this.volumeChart

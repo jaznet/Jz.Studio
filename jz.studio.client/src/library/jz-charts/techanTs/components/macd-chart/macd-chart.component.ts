@@ -13,7 +13,7 @@ import { ScalesService } from '../../services/scales.service';
   templateUrl: './macd-chart.component.html',
   styleUrls: ['./macd-chart.component.scss']
 })
-export class MacdChartComp extends BaseChartComponent implements  AfterViewInit {
+export class MacdChartComp  implements  AfterViewInit {
 
 
 
@@ -26,26 +26,26 @@ export class MacdChartComp extends BaseChartComponent implements  AfterViewInit 
     dataService: ChartDataService,
     scales: ScalesService
   ) {
-    super(dataService, layoutService, scales);
+ 
     console.log('%cCONSTRUCTOR', 'color: #858ae3');
   }
 
-  override ngAfterViewInit(): void {
+   ngAfterViewInit(): void {
     console.log('%c   ✅ MacdChartComp ngAfterViewInit 💡', 'color:#85B79D');
-    this.isViewInitialized = true;
+  /*  this.isViewInitialized = true;*/
     // Set width and height on root rect
-    super.ngAfterViewInit(); // 👈 This explicitly runs the base class logic
+  
   }
 
-  override tryDrawChart(): void {
-    if (!this.viewReady || !this.dataService || !this.scaffold || !this.xScale) return;
+   tryDrawChart(): void {
+/*    if (!this.viewReady || !this.dataService || !this.scaffold || !this.xScale) return;*/
 
-    this.macdDraw
-   //   .setTargetGroup(this.gChartContainerRef.nativeElement)
-      .xScale(this.xScale)
-      .setPeriods(12, 26, 9)
-      .drawAxes(this.scaffold)
-      .draw();
+   // this.macdDraw
+   ////   .setTargetGroup(this.gChartContainerRef.nativeElement)
+   //   .xScale(this.xScale)
+   //   .setPeriods(12, 26, 9)
+   //   .drawAxes(this.scaffold)
+   //   .draw();
 
     this.chartReady = true;
   }

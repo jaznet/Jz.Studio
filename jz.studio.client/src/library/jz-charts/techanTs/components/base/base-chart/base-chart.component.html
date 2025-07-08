@@ -1,22 +1,21 @@
+<g id="gChartContainer">
+  <rect width="0" height="0" id="rChartContainer"></rect>
 
-<g #gChartContainer id="gChartContainer">
-  <rect #rChartContainer id="rChartContainer" width="0" height="0"></rect>
-
-  <g #gAxisGroupLeft id="gAxisGroupLeft">
-    <rect #rAxisRectLeft id="rAxisRectLeft" width="0" height="0"></rect>
-    <g #gAxisLeft id="gAxisLeft"></g>
+  <g id="gAxisGroupLeft">
+    <rect id="rAxisRectLeft" width="0" height="0"></rect>
+    <g id="gAxisLeft"></g>
   </g>
 
-  <g #gContent id="gContent">
-    <rect #rContent id="rContent" width="0" height="0"></rect>
+  <g id="gContent">
+    <rect id="rContent" width="0" height="0"></rect>
     <g #gChart id="gChart"></g>
-    <!-- 🔥 Slot for child-provided custom content -->
+
+    <!-- 👇 Derived charts go here -->
     <ng-content></ng-content>
   </g>
 
-  <g #gAxisGroupRight id="gAxisGroupRight">
-    <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0"></rect>
-    <g #gAxisRight id="gAxisRight"></g>
+  <g id="gAxisGroupRight">
+    <rect id="rAxisRectRight" width="0" height="0"></rect>
+    <g id="gAxisRight"></g>
   </g>
 </g>
-

@@ -52,9 +52,9 @@
           <rect #rMacdContent id="rMacdContent" width="0" height="0"></rect>
           <text>MACD</text>
           <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
-            <macd-chart #macdChart
-                        [xScale]="scales.dateScaleX"
-                        [scaffold]="layoutService.scaffold">
+            <macd-chart #macdChart>
+                        <!--[xScale]="scales.dateScaleX"
+                        [scaffold]="layoutService.scaffold">-->
             </macd-chart>
           </g>
         </g>

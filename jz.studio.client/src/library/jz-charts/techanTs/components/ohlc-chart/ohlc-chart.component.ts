@@ -1,9 +1,16 @@
-import { Component, ViewChild, ElementRef, Input, SimpleChanges, OnChanges, OnInit } from '@angular/core';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
-import { select, selection, selector } from 'd3-selection';
-import { axisLeft, axisRight } from 'd3-axis';
-import { scaleLinear } from 'd3-scale';
+
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges
+} from '@angular/core';
 import { scaffold } from '../../interfaces/techan-interfaces';
+import { scaleLinear } from 'd3-scale';
+import { select } from 'd3-selection';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 
@@ -12,75 +19,75 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
   templateUrl: './ohlc-chart.component.html',
   styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges, OnInit {
+export class OhlcChartComponent implements AfterViewInit, OnChanges {
 
-  ohlcYscale: any;
+  @Input() data!: ohlcData[];
+  @Input() xScale!: any;
+  @Input() scaffold!: scaffold;
 
-  //override ngOnChanges(changes: SimpleChanges): void {
-  //  if (this.viewReady && this.data?.length && this.xScale && this.scaffold) {
-  //    this.tryDrawChart();
-  //  }
-  //}
+  @ViewChild('gChart', { static: true }) gChartRef!: ElementRef<SVGGElement>;
 
-  ngOnInit(): void {
-    this.chartType = ChartType.OHLC;
+  private yScale: any;
+  viewReady= false;
+
+  ngAfterViewInit(): void {
+    this.viewReady = true;
+    this.tryDrawWhenReady();
   }
 
-  //override ngAfterViewInit(): void {
-  //  console.log('%c  ✅ OhlcChartComponent ngAfterViewInit', 'color:#F4E8C1');
-
-  //  //this.layoutService.ohlcSizeReady$.pipe(take(1)).subscribe(({ width, height }) => {
-  //  //  this.setSize(width, height);
-  //  //  this.viewReady = true;
-  //  //  this.tryDrawChart();
-  //  //});
-  //}
-
-  protected override tryDrawChart(): void {
-    if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;
-    console.log('%c🕯️ Drawing OHLC Chart', 'color:#F4E8C1');
-    this.draw();
+  ngOnChanges(changes: SimpleChanges): void {
+    this.tryDrawWhenReady();
   }
 
-  draw() {
+  private tryDrawWhenReady(): void {
+    if (
+      this.viewReady &&
+      this.data?.length &&
+      this.xScale &&
+      this.scaffold
+    ) {
+      this.drawChart();
+    }
+  }
+
+  public drawChart(): void {
+    if (!this.data?.length || !this.xScale || !this.scaffold) return;
+
+    const g = select(this.gChartRef.nativeElement);
     const section = this.scaffold.sections[ChartType.OHLC];
     const candleWidth = this.xScale.bandwidth();
 
-     this.ohlcYscale = scaleLinear()
-      .domain([Math.min(...this.data.map(d => d.low)), Math.max(...this.data.map(d => d.high))])
+    // 1. Y Scale
+    this.yScale = scaleLinear()
+      .domain([
+        Math.min(...this.data.map(d => d.low)),
+        Math.max(...this.data.map(d => d.high))
+      ])
       .range([section!.height, 0]);
 
-    const gChart = select(this.gChartRef.nativeElement);
-
-    // Draw wicks
-    const wicks = gChart.selectAll<SVGLineElement, ohlcData>('.wick').data(this.data);
-
-    wicks.enter()
-      .append('line')
+    // 2. Draw wicks
+    const wicks = g.selectAll<SVGLineElement, ohlcData>('.wick')
+      .data(this.data)
+      .join('line')
       .attr('class', 'wick')
-      .merge(wicks)
-      .attr('x1', (d: ohlcData) => this.xScale(d.date.toISOString()) + candleWidth / 2)
-      .attr('x2', (d: ohlcData) => this.xScale(d.date.toISOString()) + candleWidth / 2)
-      .attr('y1', (d: ohlcData) => this.ohlcYscale(d.high))
-      .attr('y2', (d: ohlcData) => this.ohlcYscale(d.low))
+      .attr('x1', d => this.xScale(d.date.toISOString()) + candleWidth / 2)
+      .attr('x2', d => this.xScale(d.date.toISOString()) + candleWidth / 2)
+      .attr('y1', d => this.yScale(d.high))
+      .attr('y2', d => this.yScale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
-    wicks.exit().remove();
-
-    // Draw candles
-    const candles = gChart.selectAll<SVGRectElement, ohlcData>('.candle').data(this.data);
-
-    candles.enter()
-      .append('rect')
-      .attr('class', 'candle')
-      .merge(candles)
-      .attr('x', (d: ohlcData) => this.xScale(d.date.toISOString()))
-      .attr('y', (d: ohlcData) => this.ohlcYscale(Math.max(d.open, d.close)))
+    // 3. Draw candlestick bodies (optional)
+    const bodies = g.selectAll<SVGRectElement, ohlcData>('.body')
+      .data(this.data)
+      .join('rect')
+      .attr('class', 'body')
+      .attr('x', d => this.xScale(d.date.toISOString()))
+      .attr('y', d => this.yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
-      .attr('height', (d: ohlcData) => Math.abs(this.ohlcYscale(d.open) - this.ohlcYscale(d.close)))
-      .attr('fill', (d: ohlcData) => (d.open > d.close ? '#bf211e' : 'seagreen'));
-
-    candles.exit().remove();
+      .attr('height', d =>
+        Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close)))
+      )
+      .attr('fill', d => d.close >= d.open ? '#5ec57e' : '#de4c4c');
   }
 }
