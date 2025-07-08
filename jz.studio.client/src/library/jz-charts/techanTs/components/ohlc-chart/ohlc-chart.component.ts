@@ -14,7 +14,6 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, OnInit {
 
-
   ohlcYscale: any;
 
   //override ngOnChanges(changes: SimpleChanges): void {
@@ -39,17 +38,19 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
 
   protected override tryDrawChart(): void {
     if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;
-
     console.log('%c🕯️ Drawing OHLC Chart', 'color:#F4E8C1');
+    this.draw();
+  }
 
-    const gChart = select(this.gChartRef.nativeElement);
-
+  draw() {
     const section = this.scaffold.sections[ChartType.OHLC];
     const candleWidth = this.xScale.bandwidth();
 
-    this.ohlcYscale = scaleLinear()
+     this.ohlcYscale = scaleLinear()
       .domain([Math.min(...this.data.map(d => d.low)), Math.max(...this.data.map(d => d.high))])
       .range([section!.height, 0]);
+
+    const gChart = select(this.gChartRef.nativeElement);
 
     // Draw wicks
     const wicks = gChart.selectAll<SVGLineElement, ohlcData>('.wick').data(this.data);

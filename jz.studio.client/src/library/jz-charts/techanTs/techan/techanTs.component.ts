@@ -147,7 +147,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
     private smaService: SmaChartService,
-/*    private macdChart: MacdChartComponent,*/
+/*    private ohlcChart: OhlcChartComponent,*/
     private macdLayout: MacdLayoutService,
     private macdDraw: MacdDrawService
    /* private baseLayout: BaseChartLayoutService*/
@@ -177,9 +177,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //this.createChartFramework();
   }
 
-  
-
   drawOhlc(): void {
+    this.ohlcChartRef.draw();
     //this.ohlcChartRef
     //  .xScale(this.scales.dateScaleX)
     //        .yScale(this.ohlcChart.ohlcYscale)

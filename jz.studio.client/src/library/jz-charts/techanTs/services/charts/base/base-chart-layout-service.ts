@@ -10,7 +10,6 @@ import { LayoutService } from "../../layout.service";
 export abstract class BaseChartLayoutService implements AfterViewInit {
   protected data: any[] = [];
 
-
   public gContent!: Selection<SVGGElement, unknown, null, undefined>;
   public rContent!: Selection<SVGRectElement, unknown, null, undefined>;
   public gChart!: Selection<SVGGElement, unknown, null, undefined>;

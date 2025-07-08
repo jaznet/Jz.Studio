@@ -20,7 +20,6 @@ export class BaseChartComponent implements AfterViewInit, OnChanges {
 
   protected chartType!: ChartType;
 
-
   protected viewReady = false;
   public isViewInitialized = false;
 
