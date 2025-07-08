@@ -60,6 +60,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
   // #region ohlc
+  @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
+  ohlcChartComponent!: OhlcChartComponent;
+
   @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
@@ -161,7 +164,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
-   ngAfterViewInit() {
+  ngAfterViewInit() {
+ 
     this.fetchData();
     console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:#858ae3');
   //  this.popover_loading.show();
@@ -173,7 +177,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //this.createChartFramework();
   }
 
-  @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
+  
 
   drawOhlc(): void {
     //this.ohlcChartRef

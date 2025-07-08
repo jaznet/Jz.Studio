@@ -47,7 +47,7 @@ export class BaseChartComponent implements AfterViewInit, OnChanges {
     protected layoutService: LayoutService,
     protected scales:ScalesService
   ) {
-    console.log('c% BASE', 'color:red', this.chartType);
+    console.log('%c BASE', 'color:red', this.chartType);
   }
 
   ngAfterViewInit(): void {
@@ -75,14 +75,15 @@ export class BaseChartComponent implements AfterViewInit, OnChanges {
       xScale: this.xScale,
       scaffold: this.scaffold
     });
+
     if (this.viewReady && this.xScaleReady && this.dataReady && this.scaffoldReady) {
+      console.log('%c🔥 Calling tryDrawChart()', 'color: orange');
       this.tryDrawChart();
     }
   }
 
-
   protected tryDrawChart(): void {
-    if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;
+/*    if (!this.viewReady || !this.data?.length || !this.xScale || !this.scaffold) return;*/
 
     this.drawChart();
   }
@@ -99,23 +100,22 @@ export class BaseChartComponent implements AfterViewInit, OnChanges {
     this.gAxisRightRef.nativeElement.setAttribute('transform', `translate(${width}, 0)`);
   }
 
-  public buildRefs(): ChartElementRefs {
-    return {
-      gContainer: this.gContentRef,
-      rContainer: this.rContentRef,
-      gChart: this.gChartRef,
-      axisLeft: {
-        gAxis: this.gAxisLeftRef,
-        gAxisGroup: this.gAxisGroupLeftRef,
-        rAxis: this.rAxisRectLeftRef,
-      },
-      axisRight: {
-        gAxis: this.gAxisRightRef,
-        gAxisGroup: this.gAxisGroupRightRef,
-        rAxis: this.rAxisRectRightRef,
-      }
-    };
-  }
-
+  //public buildRefs(): ChartElementRefs {
+  //  return {
+  //    gContainer: this.gContentRef,
+  //    rContainer: this.rContentRef,
+  //    gChart: this.gChartRef,
+  //    axisLeft: {
+  //      gAxis: this.gAxisLeftRef,
+  //      gAxisGroup: this.gAxisGroupLeftRef,
+  //      rAxis: this.rAxisRectLeftRef,
+  //    },
+  //    axisRight: {
+  //      gAxis: this.gAxisRightRef,
+  //      gAxisGroup: this.gAxisGroupRightRef,
+  //      rAxis: this.rAxisRectRightRef,
+  //    }
+  //  };
+  //}
 
 }

@@ -18,11 +18,10 @@
         <text>OHLC</text>
         <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.OHLC]">
 
-      
-          <ohlc-chart  #ohlcChart
+          <ohlc-chart #ohlcChart
                       [xScale]="scales.dateScaleX"
                       [data]="data.stockPriceHistoryData"
-                         [scaffold]="layoutService.scaffold">
+                      [scaffold]="layoutService.scaffold">
           </ohlc-chart>
 
         </g>
