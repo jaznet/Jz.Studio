@@ -1,12 +1,5 @@
-
-import {
-  Component,
-  ElementRef,
-  Input,
-  AfterViewInit,
-  ViewChild
-} from '@angular/core';
-import { scaffold } from '../../../interfaces/techan-interfaces';
+import { Component, AfterViewInit, Input, ViewChild, ElementRef } from "@angular/core";
+import { scaffold } from "../../../interfaces/techan-interfaces";
 
 @Component({
   selector: 'base-chart',
@@ -16,13 +9,27 @@ import { scaffold } from '../../../interfaces/techan-interfaces';
 export class BaseChartComponent implements AfterViewInit {
   @Input() scaffold!: scaffold;
 
-  @ViewChild('gChart') gChartRef!: ElementRef<SVGGElement>;
+  viewReady = false;
 
   ngAfterViewInit(): void {
-    // You can emit viewReady if needed via Output
+    this.viewReady = true;
+    this.tryDrawWhenReady();
   }
 
-  public getChartGroup(): SVGGElement {
-    return this.gChartRef.nativeElement;
+  public tryDrawWhenReady(): void {
+    // This becomes safe if overridden in child
+    if (this.viewReady) {
+      this.drawChart('base try');  // Optional no-op if not overridden
+    }
   }
+
+  protected drawChart(chartName:string): void {
+    // Default no-op; override in child
+  }
+
+  //public getChartGroup(): SVGGElement {
+  //  return this.gChartRef.nativeElement;
+  //}
 }
+
+

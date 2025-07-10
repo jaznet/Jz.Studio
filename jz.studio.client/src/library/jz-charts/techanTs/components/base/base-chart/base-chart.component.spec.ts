@@ -12,9 +12,9 @@ describe('BaseChartComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BaseChartComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    //fixture = TestBed.createComponent(BaseChartComponent);
+    //component = fixture.componentInstance;
+    //fixture.detectChanges();
   });
 
   it('should create', () => {

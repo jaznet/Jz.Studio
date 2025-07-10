@@ -366,7 +366,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   constructChart(): void {
-    this.drawOhlc();
+ //   this.drawOhlc();
     this.drawVolume();
     this.drawSma1(5);
     this.drawSma2(50);
@@ -377,17 +377,17 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region DRAW
 
-  drawOhlc(): void {
-    this.ohlcChartRef.drawChart();
-    //   this.ohlcChartRef.draw();
-    //this.ohlcChartRef
-    //  .xScale(this.scales.dateScaleX)
-    //        .yScale(this.ohlcChart.ohlcYscale)
-    //  .setTargetGroup(this.gOhlcChart.nativeElement)
-    //  .setCandleWidth()
-    //  .drawAxes(this.layoutService.scaffold)
-    //  .draw();
-  }
+  //drawOhlc(): void {
+  //  this.ohlcChartRef.tryDrawWhenReady();
+  //  //   this.ohlcChartRef.draw();
+  //  //this.ohlcChartRef
+  //  //  .xScale(this.scales.dateScaleX)
+  //  //        .yScale(this.ohlcChart.ohlcYscale)
+  //  //  .setTargetGroup(this.gOhlcChart.nativeElement)
+  //  //  .setCandleWidth()
+  //  //  .drawAxes(this.layoutService.scaffold)
+  //  //  .draw();
+  //}
 
   drawVolume(): void {
     //this.volumeChart
