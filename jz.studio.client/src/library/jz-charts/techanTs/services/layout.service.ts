@@ -92,7 +92,7 @@ export class LayoutService {
   ) { }
 
   createScaffolding() {
-    console.log('%c✅ LayoutService createScaffolding 💡', 'color:yellow');
+    console.log('%c   ✅ createScaffolding layout service 💡', 'color:#C9B498');
     this.loadSections();
     this.sizeSections();
     this.alignChartsToScaffold();
@@ -181,7 +181,7 @@ export class LayoutService {
   }
 
   sizeSections(): void {
-    console.log('%c✅ LAYOUT SERVICE sizeSections() 💡', 'color:#d2b48c');
+    console.log('%c   ✅ sizeSections layout service  💡', 'color:#C9B498');
     this.spacer = 8;
 
     this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder * 2);

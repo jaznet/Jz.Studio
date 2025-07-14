@@ -1,4 +1,6 @@
 
+/* techanTs.component.ts */
+
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { take } from 'rxjs/operators'; // ✅ add this
 import { range } from 'rxjs';
@@ -153,8 +155,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
    /* private baseLayout: BaseChartLayoutService*/
     
   ) {
-  
-    console.log('%cCONSTRUCTOR', 'color: #858ae3');
+    console.log('');
+    console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
@@ -167,7 +169,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   ngAfterViewInit() {
  
     this.fetchData();
-    console.log('%c✅ TechanTsComponent ngAfterViewInit() 💡', 'color:#858ae3');
+    console.log('%c 🔵 ngAfterViewInit TechanTsComponent 💡', 'color:#90BEE9');
   //  this.popover_loading.show();
     const ticker = 'NVDA';
     this.viewReady = true;
@@ -184,7 +186,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
-      console.log('%c✅ DATA FETCHED 💡', 'color:yellow');
+      console.log('%c   ✅ DATA FETCHED 💡', 'color:#90BEE9');
       this.popover_loading.hide();
       this.tryCreateChart();
     },
@@ -259,7 +261,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
     this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
-    console.log('%c✅ CREATE CHART FRAMEWORK', 'color:#858ae3');
+    console.log('%c   ✅ CREATE CHART FRAMEWORK', 'color:#90BEE9');
  //   this.layoutService.rMacdSection = select(this.rMacd)
  
     // #region OHLC

@@ -1,3 +1,4 @@
+<!--techanTs.component.html-->
 
 <div #divSvgContainer id="divSvgContainer" class="svg-container grid-rows">
   <svg #svgElement id="svgElement" style=" transform:translate(8px, 8px)">
@@ -26,11 +27,10 @@
 
         </g>
         <!--<g #sma1 id="sma1"></g>
-      <g #sma2 id="sma2"></g>
-      <g #sma3 id="sma3"></g>-->
+        <g #sma2 id="sma2"></g>
+        <g #sma3 id="sma3"></g>-->
       </g>
       <!-- #endregion OHLC CONTENT-->
-
       <!-- #region SECTION MACD -->
       <g #gMacdSection id="gMacdSection">
         <rect #rMacdSection id="rMacdSection" x="0" y="0" width="0" height="0" class="chart-section"></rect>
@@ -53,8 +53,8 @@
           <text>MACD</text>
           <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
             <macd-chart #macdChart>
-                        <!--[xScale]="scales.dateScaleX"
-                        [scaffold]="layoutService.scaffold">-->
+              <!--[xScale]="scales.dateScaleX"
+              [scaffold]="layoutService.scaffold">-->
             </macd-chart>
           </g>
         </g>

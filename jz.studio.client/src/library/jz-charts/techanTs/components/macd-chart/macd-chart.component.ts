@@ -15,8 +15,6 @@ import { ScalesService } from '../../services/scales.service';
 })
 export class MacdChartComp  implements  AfterViewInit {
 
-
-
   private chartReady: boolean = false;
 
   constructor(
@@ -26,15 +24,11 @@ export class MacdChartComp  implements  AfterViewInit {
     dataService: ChartDataService,
     scales: ScalesService
   ) {
- 
-    console.log('%cCONSTRUCTOR', 'color: #858ae3');
+    console.log('%c⛏️ XTOR MacdChartComp', 'color: #D07676');
   }
 
    ngAfterViewInit(): void {
-    console.log('%c   ✅ MacdChartComp ngAfterViewInit 💡', 'color:#85B79D');
-  /*  this.isViewInitialized = true;*/
-    // Set width and height on root rect
-  
+     console.log('%c 🟠 ngAfterViewInit MACD', 'color:#D07676');
   }
 
    tryDrawChart(): void {

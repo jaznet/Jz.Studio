@@ -3,7 +3,8 @@ import {
   Input,
   OnChanges,
   ViewChild,
-  ElementRef
+  ElementRef,
+  AfterViewInit
 } from '@angular/core';
 import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
@@ -16,28 +17,67 @@ import { BaseChartComponent } from '../base/base-chart/base-chart.component';
   templateUrl: './ohlc-chart.component.html',
   styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
+export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
   @Input() data!: ohlcData[];
   @Input() xScale!: any;
 
-  @ViewChild('gChart', { static: false }) public gChartRef!: ElementRef<SVGGElement>;
+  //@ViewChild('gChart', { static: false }) public gChartRef!: ElementRef<SVGGElement>;
+  //@ViewChild('rChart', { static: false }) public rChartRef!: ElementRef<SVGRectElement>;
 
   private yScale: any;
 
-  ngOnChanges(): void {
-    this.tryDrawWhenReady(); // override calls here
+  constructor() {
+    super();
+ 
+    console.log('⛏️ XTOR Ohlc');
+
+    this.chartType = ChartType.OHLC; // ✅ safe: hardcoded value
+  }
+
+
+  override ngOnChanges(): void {
+    const section = this.scaffold?.sections?.[ChartType.OHLC];
+
+    console.log('%c 🟡 ngOnChanges() ohlc ', 'color:#EAE2AB', this.inputsReady, this.data.length, this.xScale);
+    if (!this.inputsReady
+      && !!this.scaffold
+      && !!section
+      && section.width > 0
+      && section.height > 0
+      && this.data?.length
+      && this.xScale) {
+      this.markInputsReady();
+    }
+
+    this.tryDrawWhenReady();
   }
 
   public override tryDrawWhenReady(): void {
-    if (this.viewReady && this.data?.length && this.xScale && this.scaffold) {
+    const section = this.scaffold?.sections[ChartType.OHLC];
+
+    const isSized = !!section && section.width > 0 && section.height > 0;
+
+    if (this.viewReady && this.data?.length && this.xScale && isSized) {
       this.drawChart('tryDrawWhenReady');
+    }
+    else {
+      console.log('%c    ⌛  Waiting to draw: ready?','color:#EAE2AB', this.viewReady, 'sized?', isSized);
     }
   }
 
   protected override drawChart(caller: string): void {
-    if (!this.gChartRef) return;
+    if (!this.gChartRef) {
+      console.warn('gChartRef not yet available');
+      return;
+    }
+    const sel = select(this.gChartRef.nativeElement);
+
+
+    console.log('scaffold', this.scaffold);
 
     console.log('drawChart called from', caller);
+
+    const r = select(super.rContentRef.nativeElement);
 
     const g = select(this.gChartRef.nativeElement);
     const section = this.scaffold.sections[ChartType.OHLC];

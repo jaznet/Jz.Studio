@@ -5,7 +5,7 @@ import { OhlcChartComponent } from './ohlc-chart/ohlc-chart.component';
 import { BaseChartComponent } from './base/base-chart/base-chart.component';
 
 @NgModule({
-  declarations: [MacdChartComp, OhlcChartComponent, BaseChartComponent],
+  declarations: [MacdChartComp, OhlcChartComponent],
   schemas: [NO_ERRORS_SCHEMA],
   exports: [
     MacdChartComp,
