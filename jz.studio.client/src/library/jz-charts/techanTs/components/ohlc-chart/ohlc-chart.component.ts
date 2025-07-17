@@ -2,85 +2,52 @@ import {
   Component,
   Input,
   OnChanges,
-  ViewChild,
-  ElementRef,
-  AfterViewInit
+  SimpleChanges
 } from '@angular/core';
+
 import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
-import { ChartType } from '../../enums/chart-type';
-import { ohlcData } from '../../interfaces/techan-interfaces';
+import { ohlcData, scaffold } from '../../interfaces/techan-interfaces';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { ChartType } from '../../enums/chart-type';
 
 @Component({
   selector: 'ohlc-chart',
-  templateUrl: './ohlc-chart.component.html',
+  templateUrl: '../base/base-chart/base-chart.component.html',  // reuse base layout
   styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
+export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() xScale!: any;
-
-  //@ViewChild('gChart', { static: false }) public gChartRef!: ElementRef<SVGGElement>;
-  //@ViewChild('rChart', { static: false }) public rChartRef!: ElementRef<SVGRectElement>;
 
   private yScale: any;
 
   constructor() {
     super();
- 
-    console.log('⛏️ XTOR Ohlc');
-
-    this.chartType = ChartType.OHLC; // ✅ safe: hardcoded value
+    this.chartType = ChartType.OHLC;
+    console.log('%c⛏️ XTOR Ohlc', 'color:#A3C4BC');
   }
 
-
-  override ngOnChanges(): void {
+  override ngOnChanges(changes: SimpleChanges): void {
+    console.log('%c _changes ohlc', changes);
     const section = this.scaffold?.sections?.[ChartType.OHLC];
+    const inputsValid = !!this.scaffold && !!section && section.width > 0 && section.height > 0 && this.data?.length && this.xScale;
 
-    console.log('%c 🟡 ngOnChanges() ohlc ', 'color:#EAE2AB', this.inputsReady, this.data.length, this.xScale);
-    if (!this.inputsReady
-      && !!this.scaffold
-      && !!section
-      && section.width > 0
-      && section.height > 0
-      && this.data?.length
-      && this.xScale) {
+    if (!this.inputsReady && inputsValid) {
       this.markInputsReady();
     }
 
-    this.tryDrawWhenReady();
-  }
-
-  public override tryDrawWhenReady(): void {
-    const section = this.scaffold?.sections[ChartType.OHLC];
-
-    const isSized = !!section && section.width > 0 && section.height > 0;
-
-    if (this.viewReady && this.data?.length && this.xScale && isSized) {
-      this.drawChart('tryDrawWhenReady');
-    }
-    else {
-      console.log('%c    ⌛  Waiting to draw: ready?','color:#EAE2AB', this.viewReady, 'sized?', isSized);
-    }
+    this.tryDrawWhenReady('ngOnChanges');
   }
 
   protected override drawChart(caller: string): void {
-    if (!this.gChartRef) {
-      console.warn('gChartRef not yet available');
+    const section = this.scaffold?.sections?.[ChartType.OHLC];
+    if (!section || !this.gChartRef) {
+      console.warn(`${caller}: Missing section or gChartRef`);
       return;
     }
-    const sel = select(this.gChartRef.nativeElement);
-
-
-    console.log('scaffold', this.scaffold);
-
-    console.log('drawChart called from', caller);
-
-    const r = select(super.rContentRef.nativeElement);
 
     const g = select(this.gChartRef.nativeElement);
-    const section = this.scaffold.sections[ChartType.OHLC];
     const candleWidth = this.xScale.bandwidth();
 
     this.yScale = scaleLinear()
@@ -88,30 +55,31 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
         Math.min(...this.data.map(d => d.low)),
         Math.max(...this.data.map(d => d.high))
       ])
-      .range([section!.height, 0]);
+      .range([section.height, 0]);
 
-    g.selectAll<SVGLineElement, ohlcData>('.wick')
+    // Wick
+    g.selectAll('.wick')
       .data(this.data)
       .join('line')
       .attr('class', 'wick')
-      .attr('x1', d => this.xScale(new Date(d.date).toISOString()) + candleWidth / 2)
-      .attr('x2', d => this.xScale(new Date(d.date).toISOString()) + candleWidth / 2)
-
+      .attr('x1', d => this.xScale(new Date(d.date)) + candleWidth / 2)
+      .attr('x2', d => this.xScale(new Date(d.date)) + candleWidth / 2)
       .attr('y1', d => this.yScale(d.high))
       .attr('y2', d => this.yScale(d.low))
       .attr('stroke', '#52aa8a')
       .attr('stroke-width', 1);
 
-    g.selectAll<SVGRectElement, ohlcData>('.body')
+    // Body
+    g.selectAll('.body')
       .data(this.data)
       .join('rect')
       .attr('class', 'body')
-      .attr('x', d => this.xScale(new Date(d.date).toISOString()))
+      .attr('x', d => this.xScale(new Date(d.date)))
       .attr('y', d => this.yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
-      .attr('height', d =>
-        Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close)))
-      )
+      .attr('height', d => Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close))))
       .attr('fill', d => d.close >= d.open ? '#5ec57e' : '#de4c4c');
+
+    console.log(`✅ OHLC drawn (${caller})`);
   }
 }

@@ -92,7 +92,7 @@ export class LayoutService {
   ) { }
 
   createScaffolding() {
-    console.log('%c   ✅ createScaffolding layout service 💡', 'color:#C9B498');
+    console.log('%c    ✓ createScaffolding layout service', 'color:#C9B498');
     this.loadSections();
     this.sizeSections();
     this.alignChartsToScaffold();
@@ -181,7 +181,7 @@ export class LayoutService {
   }
 
   sizeSections(): void {
-    console.log('%c   ✅ sizeSections layout service  💡', 'color:#C9B498');
+    console.log('%c    ✓ sizeSections layout service  💡', 'color:#C9B498');
     this.spacer = 8;
 
     this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder * 2);
@@ -213,7 +213,7 @@ export class LayoutService {
     this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
-    console.log('%c   Sections', 'color:#BFEDC1', this.scaffold.sections[ChartType.OHLC]!.width, this.scaffold.sections[ChartType.OHLC]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections[ChartType.OHLC]!.width, this.scaffold.sections[ChartType.OHLC]!.height);
 
     this.scaffold.sections[ChartType.MACD]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct;
     this.scaffold.sections[ChartType.MACD]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
@@ -221,7 +221,7 @@ export class LayoutService {
     //this.rMacdSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     //this.rMacdSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
 
-    console.log('%c   Sections', 'color:#BFEDC1', this.scaffold.sections[ChartType.MACD]!.width, this.scaffold.sections[ChartType.MACD]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections[ChartType.MACD]!.width, this.scaffold.sections[ChartType.MACD]!.height);
 
     // #endregion MAIN
 

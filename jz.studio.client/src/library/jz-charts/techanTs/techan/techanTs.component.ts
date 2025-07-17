@@ -186,7 +186,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
-      console.log('%c   ✅ DATA FETCHED 💡', 'color:#90BEE9');
+      console.log('%c    ✔ Data Fetched', 'color:#90BEE9');
       this.popover_loading.hide();
       this.tryCreateChart();
     },
@@ -261,7 +261,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
     this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
-    console.log('%c   ✅ CREATE CHART FRAMEWORK', 'color:#90BEE9');
+    console.log('%c    ✔ Create Chart Framework', 'color:#90BEE9');
  //   this.layoutService.rMacdSection = select(this.rMacd)
  
     // #region OHLC

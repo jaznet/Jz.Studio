@@ -44,8 +44,8 @@ export class ChartDataService {
     // Calculate date extent
     this.dateExtent = extent(this.parsedData, (d: ohlcData) => d.date);
 
-    console.log('Date Extent:', this.dateExtent);
-    console.log('Maximum Volume:', this.maxVolume);
+    console.log(' %c    Date Extent:','color:#15795F', this.dateExtent);
+    console.log(' %c    Maximum Volume:','color:#15795F', this.maxVolume);
 
     const shortPeriod = 12;
     const longPeriod = 26;
