@@ -210,8 +210,8 @@ export class LayoutService {
     this.scaffold.sections[ChartType.OHLC]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.OHLC]!.pct;
     this.scaffold.sections[ChartType.OHLC]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
 
-    this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
-    this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
+    ////this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
+    ////this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
     console.log('%c     Sections', 'color:#15795F', this.scaffold.sections[ChartType.OHLC]!.width, this.scaffold.sections[ChartType.OHLC]!.height);
 

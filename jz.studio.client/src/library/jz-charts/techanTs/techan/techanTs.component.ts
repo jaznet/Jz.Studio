@@ -63,10 +63,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region ohlc
   @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
-  ohlcChartComponent!: OhlcChartComponent;
 
   @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>
+
   @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcContent', { static: false }) rOhlcContent!: ElementRef<SVGRectElement>;
 
@@ -167,19 +167,17 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit() {
- 
+    const ticker = 'NVDA';
     this.fetchData();
     console.log('%c 🔵 ngAfterViewInit TechanTsComponent 💡', 'color:#90BEE9');
   //  this.popover_loading.show();
-    const ticker = 'NVDA';
+  
     this.viewReady = true;
    
     // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
       setTimeout(() => this.tryCreateChart());
     //this.createChartFramework();
   }
-
- 
 
   fetchData(): void {
     this.popover_loading.show();
@@ -260,7 +258,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
-    this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
+  //  this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
     console.log('%c    ✔ Create Chart Framework', 'color:#90BEE9');
  //   this.layoutService.rMacdSection = select(this.rMacd)
  

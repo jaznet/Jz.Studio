@@ -71,5 +71,6 @@ export abstract class BaseChartComponent implements AfterViewInit {
     }
   }
 
+ 
   protected abstract drawChart(caller: string): void;
 }

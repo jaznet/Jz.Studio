@@ -1,8 +1,10 @@
 import {
   Component,
+  ElementRef,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  ViewChild
 } from '@angular/core';
 
 import { select } from 'd3-selection';
@@ -17,8 +19,12 @@ import { ChartType } from '../../enums/chart-type';
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
+  @Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
+
   @Input() data!: ohlcData[];
   @Input() xScale!: any;
+
+
 
   private yScale: any;
 
@@ -41,6 +47,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   protected override drawChart(caller: string): void {
+    console.log('%c    ✔ sizeChartContainer called by', 'color:goldenrod', this.rOhlcSectionRef);
     const section = this.scaffold?.sections?.[ChartType.OHLC];
     if (!section || !this.gChartRef) {
       console.warn(`${caller}: Missing section or gChartRef`);
