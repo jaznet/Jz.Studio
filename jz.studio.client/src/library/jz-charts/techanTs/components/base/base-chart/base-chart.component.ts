@@ -67,10 +67,11 @@ export abstract class BaseChartComponent implements AfterViewInit {
     //});
 
     if (ready && isSized) {
+      this.sizeChartContainer(caller);
       this.drawChart(caller);
     }
   }
 
- 
+  protected abstract sizeChartContainer(caller: string): void;
   protected abstract drawChart(caller: string): void;
 }

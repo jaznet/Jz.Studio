@@ -18,18 +18,17 @@
         <rect #rOhlcSection id="rOhlcSection" width="0" height="0" class="chart-section"></rect>
         <text>OHLC</text>
 
-          <ohlc-chart #ohlcChart
-                      [xScale]="scales.dateScaleX"
-                      [data]="data.stockPriceHistoryData"
-                      [scaffold]="layoutService.scaffold"
-                      [rOhlcSectionRef]="rOhlcSectionRef"
-                      >
-          </ohlc-chart>
+        <ohlc-chart #ohlcChart
+                    *ngIf="rOhlcSectionRef"
+                    [xScale]="scales.dateScaleX"
+                    [data]="data.stockPriceHistoryData"
+                    [scaffold]="layoutService.scaffold"
+                    [rOhlcSectionRef]="rOhlcSectionRef">
+           <!--<g #sma1 id="sma1"></g>
+           <g #sma2 id="sma2"></g>
+           <g #sma3 id="sma3"></g>-->
+        </ohlc-chart>
 
-        
-        <!--<g #sma1 id="sma1"></g>
-        <g #sma2 id="sma2"></g>
-        <g #sma3 id="sma3"></g>-->
       </g>
       <!-- #endregion OHLC CONTENT-->
       <!-- #region SECTION MACD -->

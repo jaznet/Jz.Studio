@@ -46,8 +46,13 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
     this.tryDrawWhenReady('ngOnChanges');
   }
 
-  protected override drawChart(caller: string): void {
+  protected override sizeChartContainer(caller: string): void {
     console.log('%c    ✔ sizeChartContainer called by', 'color:goldenrod', this.rOhlcSectionRef);
+    select(this.rOhlcSectionRef.nativeElement).attr('width', '400').attr('height','400');
+  }
+
+  protected override drawChart(caller: string): void {
+   
     const section = this.scaffold?.sections?.[ChartType.OHLC];
     if (!section || !this.gChartRef) {
       console.warn(`${caller}: Missing section or gChartRef`);
@@ -65,6 +70,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       .range([section.height, 0]);
 
     // Wick
+    console.log(this.data, this.xScale);
     g.selectAll('.wick')
       .data(this.data)
       .join('line')
