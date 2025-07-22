@@ -24,11 +24,11 @@ export class MacdChartComp  implements  AfterViewInit {
     dataService: ChartDataService,
     scales: ScalesService
   ) {
-    console.log('%c⛏️ XTOR MacdChartComp', 'color: #D07676');
+    console.log('%c⛏️ XTOR MacdChartComp', 'color: #85B79D');
   }
 
    ngAfterViewInit(): void {
-     console.log('%c 🟠 ngAfterViewInit MACD', 'color:#D07676');
+     console.log('%c  🟤 ngAfterViewInit MACD', 'color:#85B79D');
   }
 
    tryDrawChart(): void {

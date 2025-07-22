@@ -14,22 +14,24 @@
       <rect #rSectionsContainer id="rSectionsContainer" x="0" y="0" width="0" height="0" class="chart-section"></rect>
 
       <!-- #region OHLC SECTION-->
-      <g #gOhlcSection id="gOhlcSection" class="ohlcSectionontainer">
-        <rect #rOhlcSection id="rOhlcSection" width="0" height="0" class="chart-section"></rect>
+      <g #gOhlcSection id="gOhlcSection" class="ohlcSectionContainer">
+        <rect #rOhlcSection
+              id="rOhlcSection"
+              width="0"
+              height="0"
+              class="chart-section"></rect>
+
         <text>OHLC</text>
 
+        <!-- 👇 Template reference to chart and input bindings -->
         <ohlc-chart #ohlcChart
-                    *ngIf="rOhlcSectionRef"
+                   *ngIf="isReady"
                     [xScale]="scales.dateScaleX"
                     [data]="data.stockPriceHistoryData"
                     [scaffold]="layoutService.scaffold"
-                    [rOhlcSectionRef]="rOhlcSectionRef">
-           <!--<g #sma1 id="sma1"></g>
-           <g #sma2 id="sma2"></g>
-           <g #sma3 id="sma3"></g>-->
-        </ohlc-chart>
-
+                    [rOhlcSectionRef]="rOhlcSectionRef"></ohlc-chart>
       </g>
+
       <!-- #endregion OHLC CONTENT-->
       <!-- #region SECTION MACD -->
       <g #gMacdSection id="gMacdSection">
@@ -54,7 +56,7 @@
           <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
             <macd-chart #macdChart>
               <!--[xScale]="scales.dateScaleX"
-              [scaffold]="layoutService.scaffold">-->
+          [scaffold]="layoutService.scaffold">-->
             </macd-chart>
           </g>
         </g>

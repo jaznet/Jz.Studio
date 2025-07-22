@@ -1,41 +1,41 @@
 import {
   Component,
-  ElementRef,
   Input,
   OnChanges,
   SimpleChanges,
-  ViewChild
+  ElementRef,
+  AfterViewInit
 } from '@angular/core';
 
 import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
-import { ohlcData, scaffold } from '../../interfaces/techan-interfaces';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 
 @Component({
   selector: 'ohlc-chart',
-  templateUrl: '../base/base-chart/base-chart.component.html',  // reuse base layout
+  templateUrl: '../base/base-chart/base-chart.component.html',
   styleUrls: ['./ohlc-chart.component.scss']
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
+export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
   @Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
-
   @Input() data!: ohlcData[];
   @Input() xScale!: any;
 
-
+  // Set from TechanTsComponent manually AFTER ViewChild init
+/*  private rOhlcSectionRef?: ElementRef<SVGRectElement>;*/
 
   private yScale: any;
 
   constructor() {
     super();
     this.chartType = ChartType.OHLC;
-    console.log('%c⛏️ XTOR Ohlc', 'color:#A3C4BC');
+    console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
-    console.log('%c _changes ohlc', changes);
+    console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
     const section = this.scaffold?.sections?.[ChartType.OHLC];
     const inputsValid = !!this.scaffold && !!section && section.width > 0 && section.height > 0 && this.data?.length && this.xScale;
 
@@ -47,12 +47,22 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   protected override sizeChartContainer(caller: string): void {
-    console.log('%c    ✔ sizeChartContainer called by', 'color:goldenrod', this.rOhlcSectionRef);
-    select(this.rOhlcSectionRef.nativeElement).attr('width', '400').attr('height','400');
+    if (!this.rOhlcSectionRef) {
+      console.warn(`${caller}: rOhlcSectionRef is not set`);
+      return;
+    }
+
+    const { width, height } = this.rOhlcSectionRef.nativeElement.getBBox();
+    const section = this.scaffold?.sections?.[ChartType.OHLC];
+    if (section) {
+      section.width = width;
+      section.height = height;
+    }
+
+    console.log(`📐 ${caller}: sized section for OHLC — ${width} x ${height}`);
   }
 
   protected override drawChart(caller: string): void {
-   
     const section = this.scaffold?.sections?.[ChartType.OHLC];
     if (!section || !this.gChartRef) {
       console.warn(`${caller}: Missing section or gChartRef`);
@@ -69,13 +79,15 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       ])
       .range([section.height, 0]);
 
+    console.log('Wick data', this.data);
+    console.log('📏 xScale range:', this.xScale?.range?.());
+    console.log('📏 xScale domain:', this.xScale?.domain?.());
     // Wick
-    console.log(this.data, this.xScale);
     g.selectAll('.wick')
       .data(this.data)
       .join('line')
       .attr('class', 'wick')
-      .attr('x1', d => this.xScale(new Date(d.date)) + candleWidth / 2)
+      .attr('x1', d => this.dateScaleX(d.date.toISOString())! + candleWidth / 2)
       .attr('x2', d => this.xScale(new Date(d.date)) + candleWidth / 2)
       .attr('y1', d => this.yScale(d.high))
       .attr('y2', d => this.yScale(d.low))

@@ -137,6 +137,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
 
   constructor(
+    private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
@@ -166,10 +167,16 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
+  isReady!: boolean;
   ngAfterViewInit() {
+    // Force change detection once ElementRef is available
+    Promise.resolve().then(() => {
+      this.isReady = true;
+      this.cdRef.detectChanges(); // flush the change
+    });
     const ticker = 'NVDA';
     this.fetchData();
-    console.log('%c 🔵 ngAfterViewInit TechanTsComponent 💡', 'color:#90BEE9');
+    console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   //  this.popover_loading.show();
   
     this.viewReady = true;

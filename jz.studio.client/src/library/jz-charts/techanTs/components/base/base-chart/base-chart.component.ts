@@ -4,7 +4,8 @@ import {
   Input,
   ViewChild,
   AfterViewInit,
-  SimpleChanges
+  SimpleChanges,
+  OnChanges
 } from '@angular/core';
 
 import { scaffold } from '../../../interfaces/techan-interfaces';
@@ -15,7 +16,7 @@ import { ChartType } from '../../../enums/chart-type';
   templateUrl: './base-chart.component.html',
   styleUrls: ['./base-chart.component.scss']
 })
-export abstract class BaseChartComponent implements AfterViewInit {
+export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
   @Input() scaffold!: scaffold;
 
   protected inputsReady = false;
@@ -36,12 +37,14 @@ export abstract class BaseChartComponent implements AfterViewInit {
 
   @ViewChild('gContent') gContentRef!: ElementRef<SVGGElement>;
   @ViewChild('rContent') rContentRef!: ElementRef<SVGRectElement>;
-  @ViewChild('gChart') gChartRef!: ElementRef<SVGGElement>;
+  @ViewChild('gChart') gChartRef?: ElementRef<SVGGElement>;
 
   ngAfterViewInit(): void {
     this.viewReady = true;
+    // Log the ViewChild reference
+    console.log('%c🔍 gChartRef afterViewInit', 'color:orange', this.gChartRef);
     this.tryDrawWhenReady('ngAfterViewInit');
-  }
+  } 
 
   ngOnChanges(_changes: SimpleChanges): void {
     console.log('%c _changes base', _changes);
@@ -57,18 +60,14 @@ export abstract class BaseChartComponent implements AfterViewInit {
     const isSized = !!section && section.width > 0 && section.height > 0;
     const ready = this.inputsReady && this.viewReady && !!this.gChartRef;
 
-    console.log('%c    ✔ tryDrawWhenReady called by', 'color:orangered', caller);
-    console.log(`%c 🟡 ${caller}: ready=${ready}`, 'color:orange', 'gChartRef', this.gChartRef);
-    //  {
-    //  inputs: this.inputsReady,
-    //  view: this.viewReady,
-    //  sized: isSized,
-    //  gChartRef: !!this.gChartRef
-    //});
+    console.log('%c      ✔ tryDrawWhenReady called by', 'color:#DEA47E', caller);
+    console.log(`%c  🔴 ${caller}: ready=${ready}`, 'color:#DEA47E', 'gChartRef', this.gChartRef);
 
     if (ready && isSized) {
       this.sizeChartContainer(caller);
       this.drawChart(caller);
+    } else {
+      console.log("READY", ready);
     }
   }
 
