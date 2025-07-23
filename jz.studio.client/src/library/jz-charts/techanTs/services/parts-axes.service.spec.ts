@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PartsAxesService } from './parts-axes.service';
+import { _PartsAxesService } from './parts-axes.service';
 
 describe('PartsAxesService', () => {
-  let service: PartsAxesService;
+  let service: _PartsAxesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PartsAxesService);
+    service = TestBed.inject(_PartsAxesService);
   });
 
   it('should be created', () => {

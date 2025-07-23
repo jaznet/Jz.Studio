@@ -8,7 +8,7 @@ import { ChartType } from '../enums/chart-type';
 @Injectable({
   providedIn: 'root'
 })
-export class ScalesService {
+export class _ScalesService {
 
   dateScaleX!: any;
 
@@ -16,7 +16,7 @@ export class ScalesService {
     private data: ChartDataService) {
   }
 
-  createScales(scaffold:scaffold) {
+  _createScales(scaffold:scaffold) {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
       this.dateScaleX = scaleBand()
         .domain(this.data.parsedData.map(d => d.date.toISOString())) // Ensure only valid trading days

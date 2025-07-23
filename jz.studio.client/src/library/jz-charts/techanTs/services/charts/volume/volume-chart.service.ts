@@ -1,10 +1,9 @@
 
-import { AfterViewInit, Injectable } from '@angular/core';
+import { AfterViewInit, Injectable, Input } from '@angular/core';
 import { Selection, select } from 'd3-selection';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
-import { ScalesService } from '../../scales.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { ChartType } from '../../../enums/chart-type';
@@ -14,7 +13,8 @@ import { BaseChartComponent } from '../../../components/base/base-chart/base-cha
 @Injectable({
   providedIn: 'root',
 })
-export class VolumeChartService  implements AfterViewInit {
+export class VolumeChartService implements AfterViewInit {
+  @Input() dateScaleX!: any;
   private _xScale: any;
   private _barWidth: number = 0;
   private gVolume: any;
@@ -25,7 +25,6 @@ export class VolumeChartService  implements AfterViewInit {
   axisRight!: Axis<AxisDomain>;
 
   constructor(
-    private scales: ScalesService,
    private  dataService: ChartDataService,
    private layoutService:LayoutService,
     private volume: VolumeChartLayoutService
@@ -53,8 +52,8 @@ export class VolumeChartService  implements AfterViewInit {
       : 24 * 60 * 60 * 1000; // Default to one day in milliseconds
 
     this._barWidth =
-      this.scales.dateScaleX(new Date(this.dataService.parsedData[0].date.getTime() + timeDiff)) -
-    this.scales.dateScaleX(this.dataService.parsedData[0].date);
+      this.dateScaleX(new Date(this.dataService.parsedData[0].date.getTime() + timeDiff)) -
+    this.dateScaleX(this.dataService.parsedData[0].date);
 
     return this; // Enables method chaining
   }

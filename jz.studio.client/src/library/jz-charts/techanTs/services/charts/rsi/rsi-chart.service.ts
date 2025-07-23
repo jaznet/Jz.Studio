@@ -3,7 +3,6 @@ import { line } from 'd3-shape';
 import { Selection, select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
-import { ScalesService } from '../../scales.service';
 import { ChartDataService } from '../../chart-data.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';

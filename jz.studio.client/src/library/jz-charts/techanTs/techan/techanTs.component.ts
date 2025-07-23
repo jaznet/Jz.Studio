@@ -10,9 +10,7 @@ import { ohlcData, scaffold, SectionAttributes, SvgAttributes } from '../interfa
 import { ChartDataService } from '../services/chart-data.service';
 import { ChartType } from '../enums/chart-type'; // adjust the path as needed
 import { LayoutService } from '../services/layout.service';
-import { PartsAxesService } from '../services/parts-axes.service';
-import { ScalesService } from '../services/scales.service';
-import { select, selection, selectAll } from 'd3-selection';
+import { select, selection, selectAll, Selection } from 'd3-selection';
 import { SmaChartService } from '../services/charts/chart-sma.service';
 import { MacdDrawService } from '../services/charts/macd/macd-draw.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
@@ -27,6 +25,8 @@ import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layou
 import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
+import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
+import { timeFormat } from 'd3-time-format';
 
 @Component({
   selector: 'techanTs',
@@ -37,7 +37,6 @@ import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.componen
 export class TechanTsComponent  implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
- // layout!: LayoutService; // or the actual layout object if you're not using the service
   ChartType = ChartType; // expose enum to template
 
   // #region @ViewChild List
@@ -60,6 +59,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('rSectionsContainer', { static: false }) rSectionsContainerRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
+  // #endregion @ViewChild List
 
   // #region ohlc
   @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
@@ -133,6 +133,15 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   viewReady = false;
   hydrated = false; // Optional safety to prevent double-draw
   ticker = 'NVDA';
+  dateScaleX: any;
+
+  chartXaxisMonthsTop: any;
+  chartXaxisMonthsBottom: any;
+
+  xAxisMonthsTop!: Selection<SVGGElement, unknown, null, undefined>;
+  xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
+  xAxisDays!: any;
+  xAxisBottom: any;
 
   @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
 
@@ -143,8 +152,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private stockPriceService: TechanTsService,
     public data: ChartDataService,
     public  layoutService: LayoutService,
-    private axes: PartsAxesService,
-    public scales: ScalesService,
     private popOverService: JzPopOversService,
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
@@ -238,21 +245,36 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         return;
       }
 
-      //if (!this.macdChart.isViewInitialized) {
-      //  console.warn('⚠️ macdChart is not fully initialized yet. Retrying...');
-      //  setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
-      //  return;
-      //}
-
       // ✅ All good — proceed
-  //    this.macdLayout.initializeBase(this.macdChart.buildRefs(), 'macd');
       this.layoutService.createScaffolding();
       this.data.scrubData();
-      this.scales.createScales(this.layoutService.scaffold);
-      this.axes.drawAxes();
+      this.createScales(this.layoutService.scaffold);
+      this.drawAxes();
       this.constructChart();
     });
   }
+
+
+
+  createScales(scaffold: scaffold): void {
+    const section = scaffold.sections[ChartType.OHLC];
+    const width = section!.width - section!.margins.left - section!.margins.right;
+
+    if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
+      this.dateScaleX = scaleBand()
+        .domain(this.data.parsedData.map(d => d.date.toISOString()))
+        .range([0, width])
+        .padding(0.1);
+    } else {
+      this.dateScaleX = scaleBand()
+        .domain([])
+        .range([0, width]);
+    }
+    console.log('scale:', this.dateScaleX);
+    console.log('bandwidth fn?', typeof this.dateScaleX.bandwidth);
+    console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
+  }
+
 
   createChartFramework() {
  
@@ -382,6 +404,81 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.drawRsi();
   }
 
+  drawAxes(): void {
+
+    this.xAxisMonthsTop = select(this.xAxisMonthsTopRef.nativeElement);
+    this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
+    this.xAxisDays = select(this.xAxisDays);
+    this.xAxisBottom = select(this.xAxisBottom);
+
+    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
+    const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
+    const dateFormatterMinor = timeFormat("%d");    // Example: 1, 2, 3...
+
+    // CHART
+    let lastMonth = -1;
+    let lastYear = -1;
+
+    type CustomAxisDomain = string | number | Date | { valueOf(): number };
+
+    this.chartXaxisMonthsTop = axisTop(this.dateScaleX)
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return "";
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
+        } else {
+          return ""; // Skip redundant months
+        }
+      });
+
+    this.chartXaxisMonthsBottom = axisBottom(this.dateScaleX)
+      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+        let date: Date;
+        if (typeof domainValue === "string") {
+          date = new Date(domainValue);
+        } else if (domainValue instanceof Date) {
+          date = domainValue;
+        } else if (typeof domainValue === "number") {
+          date = new Date(domainValue);
+        } else {
+          return "";
+        }
+
+        const currentMonth = date.getMonth();
+        const currentYear = date.getFullYear();
+
+        if (currentMonth !== lastMonth || currentYear !== lastYear) {
+          lastMonth = currentMonth;
+          lastYear = currentYear;
+          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
+        } else {
+          return ""; // Skip redundant months
+        }
+      });
+
+    // Apply the tick values based on the domain of scaleBand
+    const tickValues = this.dateScaleX.domain(); // Get the domain values from scaleBand
+
+    /*DRAW*/
+    this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
+    this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
+  }
+
   // #region DRAW
 
   //drawOhlc(): void {
@@ -417,7 +514,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   drawSma1(period: number): void {
     this.smaService
-      .xScale(this.scales.dateScaleX)
+      .xScale(this.dateScaleX)
       /*.yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layoutService.sma1) // Specify target group
       .setRollingPeriod(period)
@@ -427,7 +524,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   drawSma2(period: number): void {
     this.smaService
-      .xScale(this.scales.dateScaleX)
+      .xScale(this.dateScaleX)
       /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layoutService.sma2) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
@@ -437,7 +534,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   drawSma3(period: number): void {
     this.smaService
-      .xScale(this.scales.dateScaleX)
+      .xScale(this.dateScaleX)
       /*   .yScale(this.layout.scaffold)*/
       .setTargetGroup(this.layoutService.sma3) // Specify target group
       .setRollingPeriod(period) // Set desired SMA window size
@@ -456,3 +553,5 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
   // #endregion DRAW
 }
+
+

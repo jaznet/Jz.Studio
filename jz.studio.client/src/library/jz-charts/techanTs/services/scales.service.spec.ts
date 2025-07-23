@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ScalesService } from './scales.service';
+import { _ScalesService } from './scales.service';
 
 describe('ScalesService', () => {
-  let service: ScalesService;
+  let service: _ScalesService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ScalesService);
+    service = TestBed.inject(_ScalesService);
   });
 
   it('should be created', () => {

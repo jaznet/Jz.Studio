@@ -39,6 +39,8 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
   @ViewChild('rContent') rContentRef!: ElementRef<SVGRectElement>;
   @ViewChild('gChart') gChartRef?: ElementRef<SVGGElement>;
 
+  constructor() { }
+
   ngAfterViewInit(): void {
     this.viewReady = true;
     // Log the ViewChild reference
@@ -64,10 +66,11 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
     console.log(`%c  🔴 ${caller}: ready=${ready}`, 'color:#DEA47E', 'gChartRef', this.gChartRef);
 
     if (ready && isSized) {
+      console.log("   ✅ READY", ready);
       this.sizeChartContainer(caller);
       this.drawChart(caller);
     } else {
-      console.log("READY", ready);
+     
     }
   }
 

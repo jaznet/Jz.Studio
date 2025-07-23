@@ -3,7 +3,6 @@ import { select } from 'd3-selection';
 import { line } from 'd3-shape';
 import { ChartDataService } from '../chart-data.service';
 import { LayoutService } from '../layout.service';
-import { ScalesService } from '../scales.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,6 @@ export class SmaChartService {
   private color = 'white';
 
   constructor(
-    private scales: ScalesService,
     private data: ChartDataService,
     private layout: LayoutService
   ) { }

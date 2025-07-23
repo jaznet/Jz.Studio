@@ -5,7 +5,6 @@ import { MacdLayoutService } from '../../services/charts/macd/macd-layout.servic
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
-import { ScalesService } from '../../services/scales.service';
 /*import { interpolateBlues } from 'd3';*/
 
 @Component({
@@ -21,8 +20,7 @@ export class MacdChartComp  implements  AfterViewInit {
     private macdDraw: MacdDrawService,
     private macdLayout: MacdLayoutService,
     layoutService: LayoutService,
-    dataService: ChartDataService,
-    scales: ScalesService
+    dataService: ChartDataService
   ) {
     console.log('%c⛏️ XTOR MacdChartComp', 'color: #85B79D');
   }

@@ -1,14 +1,14 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { ScalesService } from './scales.service';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { LayoutService } from './layout.service';
+import { _ScalesService } from './scales.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PartsAxesService {
+export class _PartsAxesService {
 
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
@@ -19,7 +19,7 @@ export class PartsAxesService {
   xAxisBottom: any;
 
   constructor(
-    private scales: ScalesService,
+    private scales: _ScalesService,
     private layout: LayoutService) { }
 
   drawAxes(): void {
