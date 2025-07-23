@@ -67,13 +67,13 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
 
     if (ready && isSized) {
       console.log("   ✅ READY", ready);
-      this.sizeChartContainer(caller);
+    /*  this.sizeChartContainer(caller);*/
       this.drawChart(caller);
     } else {
      
     }
   }
 
-  protected abstract sizeChartContainer(caller: string): void;
+ /* protected abstract sizeChartContainer(caller: string): void;*/
   protected abstract drawChart(caller: string): void;
 }

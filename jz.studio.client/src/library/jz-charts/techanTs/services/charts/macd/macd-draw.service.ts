@@ -19,7 +19,7 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
   //axisLeft: any;
   //axisRight: any;
 
-  private _xScale: any;
+  private _xScale!: { (arg0: string): number; (arg0: string): number; bandwidth: any; };
   private gMacd!: Selection<SVGGElement, unknown, null, undefined>;
   private fastPeriod: number = 12; // Default fast EMA period
   private slowPeriod: number = 26; // Default slow EMA period

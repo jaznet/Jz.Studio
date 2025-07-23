@@ -404,6 +404,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.drawRsi();
   }
 
+  sizeSections(): void {
+    console.log('SIZE', this.rOhlcSectionRef);
+  }
+
   drawAxes(): void {
 
     this.xAxisMonthsTop = select(this.xAxisMonthsTopRef.nativeElement);

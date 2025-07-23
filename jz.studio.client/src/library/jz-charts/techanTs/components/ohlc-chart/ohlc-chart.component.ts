@@ -19,7 +19,7 @@ import { BaseChartComponent } from '../base/base-chart/base-chart.component';
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
-  @Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
+  //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
@@ -43,21 +43,21 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     this.tryDrawWhenReady('ngOnChanges');
   }
 
-  protected override sizeChartContainer(caller: string): void {
-    if (!this.rOhlcSectionRef) {
-      console.warn(`${caller}: rOhlcSectionRef is not set`);
-      return;
-    }
+  //protected override sizeChartContainer(caller: string): void {
+  //  if (!this.rOhlcSectionRef) {
+  //    console.warn(`${caller}: rOhlcSectionRef is not set`);
+  //    return;
+  //  }
 
-    const { width, height } = this.rOhlcSectionRef.nativeElement.getBBox();
-    const section = this.scaffold?.sections?.[ChartType.OHLC];
-    if (section) {
-      section.width = width;
-      section.height = height;
-    }
+  //  const { width, height } = this.rOhlcSectionRef.nativeElement.getBBox();
+  //  const section = this.scaffold?.sections?.[ChartType.OHLC];
+  //  if (section) {
+  //    section.width = width;
+  //    section.height = height;
+  //  }
 
-    console.log(`📐 ${caller}: sized section for OHLC — ${width} x ${height}`);
-  }
+  //  console.log(`📐 ${caller}: sized section for OHLC — ${width} x ${height}`);
+  //}
 
   protected override drawChart(caller: string): void {
     const section = this.scaffold?.sections?.[ChartType.OHLC];
@@ -67,6 +67,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     }
 
     const g = select(this.gChartRef.nativeElement);
+    console.log('BANDWIDTH');
     const candleWidth = this.dateScaleX.bandwidth();
 
     this.yScale = scaleLinear()
