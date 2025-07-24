@@ -8,7 +8,7 @@ import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { scaffold } from '../../../interfaces/techan-interfaces';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
-import { BaseChartComponent } from '../../../components/base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../../../components/base/base-chart/BaseChartComponent';
 
 @Injectable({
   providedIn: 'root',

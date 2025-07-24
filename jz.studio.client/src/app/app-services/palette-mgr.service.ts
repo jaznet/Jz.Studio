@@ -109,14 +109,14 @@ export class PaletteMgrService {
       case 'tuatara':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#40403F');
-        document.documentElement.style.setProperty('--plt-clr-2', '#222121');
+        document.documentElement.style.setProperty('--plt-clr-2', '#40403F');
         document.documentElement.style.setProperty('--plt-clr-3', '#5A5958');
-        document.documentElement.style.setProperty('--plt-clr-4', '#747272');
+        document.documentElement.style.setProperty('--plt-clr-4', '#DCE2C8');
         document.documentElement.style.setProperty('--plt-clr-5', '#929191');
         document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
 
-        document.documentElement.style.setProperty('--plt-txt-1', 'white');
-        document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
+        document.documentElement.style.setProperty('--plt-txt-1', '#DCE2C8');
+        document.documentElement.style.setProperty('--plt-txt-2', '#febd68');
         document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');

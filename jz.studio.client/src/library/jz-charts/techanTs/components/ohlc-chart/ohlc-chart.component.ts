@@ -11,7 +11,7 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../base/base-chart/BaseChartComponent';
 
 @Component({
   selector: 'ohlc-chart',
@@ -36,11 +36,11 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     const section = this.scaffold?.sections?.[ChartType.OHLC];
     const inputsValid = !!this.scaffold && !!section && section.width > 0 && section.height > 0 && this.data?.length && this.dateScaleX;
 
-    if (!this.inputsReady && inputsValid) {
-      this.markInputsReady();
-    }
+    //if (!this.inputsReady && inputsValid) {
+    //  this.markInputsReady();
+    //}
 
-    this.tryDrawWhenReady('ngOnChanges');
+    //this.tryDrawWhenReady('ngOnChanges');
   }
 
   //protected override sizeChartContainer(caller: string): void {

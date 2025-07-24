@@ -62,7 +62,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   // #endregion @ViewChild List
 
   // #region ohlc
-  @ViewChild('ohlcChart', { static: false }) ohlcChartRef!: OhlcChartComponent;
+  @ViewChild('ohlcChart', { static: false }) ohlcChart!: OhlcChartComponent;
 
   @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>
@@ -254,8 +254,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     });
   }
 
-
-
   createScales(scaffold: scaffold): void {
     const section = scaffold.sections[ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
@@ -270,7 +268,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         .domain([])
         .range([0, width]);
     }
-    console.log('scale:', this.dateScaleX);
+ //   console.log('scale:', this.dateScaleX);
     console.log('bandwidth fn?', typeof this.dateScaleX.bandwidth);
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }

@@ -1,79 +1,86 @@
 import {
   Component,
-  ElementRef,
-  Input,
-  ViewChild,
+  OnInit,
   AfterViewInit,
-  SimpleChanges,
-  OnChanges
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 
-import { scaffold } from '../../../interfaces/techan-interfaces';
-import { ChartType } from '../../../enums/chart-type';
-
 @Component({
-  selector: 'base-chart',
+  selector: 'app-base-chart',
   templateUrl: './base-chart.component.html',
-  styleUrls: ['./base-chart.component.scss']
 })
-export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
-  @Input() scaffold!: scaffold;
-
+export abstract class BaseChartComponent implements OnInit, AfterViewInit {
+  // === Lifecycle state flags ===
   protected inputsReady = false;
   protected viewReady = false;
+  protected layoutReady = false;
+  protected dataReady = false;
+  protected drawStarted = false;
 
-  chartType!: ChartType;
+  // === ViewChild references ===
+  // @region ViewChild references
+  @ViewChild('gChartContainer', { static: false }) gChartContainerRef!: ElementRef<SVGGElement>;
+  @ViewChild('rChartContainer', { static: false }) rChartContainerRef!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gChartContainer') gChartContainerRef!: ElementRef<SVGGElement>;
-  @ViewChild('rChartContainer') rChartContainerRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeftRef!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRectLeft', { static: false }) rAxisRectLeftRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisLeft', { static: false }) gAxisLeftRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gAxisGroupLeft') gAxisGroupLeftRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisRectLeft') rAxisRectLeftRef!: ElementRef<SVGRectElement>;
-  @ViewChild('gAxisLeft') gAxisLeftRef!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRightRef!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRectRight', { static: false }) rAxisRectRightRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisRight', { static: false }) gAxisRightRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gAxisGroupRight') gAxisGroupRightRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisRectRight') rAxisRectRightRef!: ElementRef<SVGRectElement>;
-  @ViewChild('gAxisRight') gAxisRightRef!: ElementRef<SVGGElement>;
+  @ViewChild('gContent', { static: false }) gContentRef!: ElementRef<SVGGElement>;
+  @ViewChild('rContent', { static: false }) rContentRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gChart', { static: false }) gChartRef?: ElementRef<SVGGElement>; // Optional for derived draw target
+  // @endregion ViewChild references
 
-  @ViewChild('gContent') gContentRef!: ElementRef<SVGGElement>;
-  @ViewChild('rContent') rContentRef!: ElementRef<SVGRectElement>;
-  @ViewChild('gChart') gChartRef?: ElementRef<SVGGElement>;
+  // === Abstract draw method ===
+  protected abstract drawChart(caller: string): void;
 
-  constructor() { }
+  // === Lifecycle hooks ===
+  ngOnInit(): void {
+    this.inputsReady = true;
+    this.checkReadyToDraw('ngOnInit');
+  }
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    // Log the ViewChild reference
-    console.log('%c🔍 gChartRef afterViewInit', 'color:orange', this.gChartRef);
-    this.tryDrawWhenReady('ngAfterViewInit');
-  } 
-
-  ngOnChanges(_changes: SimpleChanges): void {
-    console.log('%c _changes base', _changes);
+    this.checkReadyToDraw('ngAfterViewInit');
   }
 
-  markInputsReady(): void {
-    this.inputsReady = true;
-    this.tryDrawWhenReady('markInputsReady');
+  // === External triggers (from TechanTsComponent) ===
+  public setDataReady(): void {
+    this.dataReady = true;
+    this.checkReadyToDraw('setDataReady');
   }
 
-  protected tryDrawWhenReady(caller: string): void {
-    const section = this.scaffold?.sections?.[this.chartType];
-    const isSized = !!section && section.width > 0 && section.height > 0;
-    const ready = this.inputsReady && this.viewReady && !!this.gChartRef;
+  public markLayoutReady(): void {
+    this.layoutReady = true;
+    this.checkReadyToDraw('markLayoutReady');
+  }
 
-    console.log('%c      ✔ tryDrawWhenReady called by', 'color:#DEA47E', caller);
-    console.log(`%c  🔴 ${caller}: ready=${ready}`, 'color:#DEA47E', 'gChartRef', this.gChartRef);
+  // === Master sync check ===
+  protected checkReadyToDraw(caller: string): void {
+    const ready =
+      this.inputsReady &&
+      this.viewReady &&
+      this.layoutReady &&
+      this.dataReady &&
+      !!this.gChartRef;
 
-    if (ready && isSized) {
-      console.log("   ✅ READY", ready);
-    /*  this.sizeChartContainer(caller);*/
+    console.log(`🧩 checkReadyToDraw from ${caller}: ready=${ready}`, {
+      inputs: this.inputsReady,
+      view: this.viewReady,
+      layout: this.layoutReady,
+      data: this.dataReady,
+      gChartRef: !!this.gChartRef
+    });
+
+    if (ready && !this.drawStarted) {
+      this.drawStarted = true;
       this.drawChart(caller);
-    } else {
-     
     }
   }
-
- /* protected abstract sizeChartContainer(caller: string): void;*/
-  protected abstract drawChart(caller: string): void;
 }

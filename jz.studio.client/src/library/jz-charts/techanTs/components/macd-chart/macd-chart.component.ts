@@ -4,7 +4,7 @@ import { MacdDrawService } from '../../services/charts/macd/macd-draw.service';
 import { MacdLayoutService } from '../../services/charts/macd/macd-layout.service';
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../base/base-chart/BaseChartComponent';
 /*import { interpolateBlues } from 'd3';*/
 
 @Component({
