@@ -183,9 +183,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   
     this.viewReady = true;
    
-    // Delay tryCreateChart slightly to ensure <macd-chart> ViewChild is resolved
-      setTimeout(() => this.tryCreateChart());
-    //this.createChartFramework();
+    
   }
 
   fetchData(): void {
@@ -203,8 +201,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     );
   }
 
-
-
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
@@ -219,15 +215,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     if (!this.viewReady || !this.dataReady) return;
 
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      if (!this.macdChart) {
-        if (attempt < 10) {
-          console.warn(`⏳ Waiting for macdChart to be created... (attempt ${attempt})`);
-          setTimeout(() => this.initializeChartWhenReady(attempt + 1), 50);
-        } else {
-          console.error('❌ macdChart still not available after 10 attempts.');
-        }
-        return;
-      }
+
 
       // ✅ All good — proceed
       this.layoutService.createScaffolding();

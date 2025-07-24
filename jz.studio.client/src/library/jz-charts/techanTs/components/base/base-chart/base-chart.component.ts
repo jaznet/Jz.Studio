@@ -12,11 +12,14 @@ import {
 })
 export abstract class BaseChartComponent implements OnInit, AfterViewInit {
   // === Lifecycle state flags ===
-  protected inputsReady = false;
-  protected viewReady = false;
   protected layoutReady = false;
   protected dataReady = false;
   protected drawStarted = false;
+
+  protected viewInitialized = false;     // Replaces: viewReady
+  protected inputsInitialized = false;   // Replaces: inputsReady + maybe dataReady + layoutReady
+  protected drawAttempted = false;       // Replaces: drawStarted
+
 
   // === ViewChild references ===
   // @region ViewChild references
@@ -41,46 +44,47 @@ export abstract class BaseChartComponent implements OnInit, AfterViewInit {
 
   // === Lifecycle hooks ===
   ngOnInit(): void {
-    this.inputsReady = true;
-    this.checkReadyToDraw('ngOnInit');
+    this.inputsInitialized = true;
+    this.checkAndDraw('ngOnInit');
   }
 
   ngAfterViewInit(): void {
-    this.viewReady = true;
-    this.checkReadyToDraw('ngAfterViewInit');
+    this.viewInitialized = true;
+    this.checkAndDraw('ngAfterViewInit');
   }
 
   // === External triggers (from TechanTsComponent) ===
   public setDataReady(): void {
     this.dataReady = true;
-    this.checkReadyToDraw('setDataReady');
+    this.checkAndDraw('setDataReady');
   }
 
   public markLayoutReady(): void {
     this.layoutReady = true;
-    this.checkReadyToDraw('markLayoutReady');
+    this.checkAndDraw('markLayoutReady');
   }
 
   // === Master sync check ===
-  protected checkReadyToDraw(caller: string): void {
+  protected checkAndDraw(caller: string = 'unknown'): void {
     const ready =
-      this.inputsReady &&
-      this.viewReady &&
+      this.viewInitialized &&
+      this.inputsInitialized &&
       this.layoutReady &&
       this.dataReady &&
       !!this.gChartRef;
 
-    console.log(`🧩 checkReadyToDraw from ${caller}: ready=${ready}`, {
-      inputs: this.inputsReady,
-      view: this.viewReady,
-      layout: this.layoutReady,
-      data: this.dataReady,
+    console.log(`🧩 checkAndDraw from ${caller}: ready=${ready}`, {
+      viewInitialized: this.viewInitialized,
+      inputsInitialized: this.inputsInitialized,
+      layoutReady: this.layoutReady,
+      dataReady: this.dataReady,
       gChartRef: !!this.gChartRef
     });
 
-    if (ready && !this.drawStarted) {
-      this.drawStarted = true;
-      this.drawChart(caller);
+    if (ready && !this.drawAttempted) {
+      this.drawAttempted = true;
+      this.drawChart(caller); // Optionally pass caller
     }
   }
+
 }
