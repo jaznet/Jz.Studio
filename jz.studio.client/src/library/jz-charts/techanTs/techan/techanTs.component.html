@@ -25,7 +25,6 @@
 
         <!-- 👇 Template reference to chart and input bindings -->
         <ohlc-chart #ohlcChart
-                   *ngIf="isReady"
                     dateScaleX="dateScaleX"
                     [data]="data.stockPriceHistoryData"
                     [scaffold]="layoutService.scaffold"

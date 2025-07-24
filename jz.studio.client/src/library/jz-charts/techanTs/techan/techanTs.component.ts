@@ -174,17 +174,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
-  isReady!: boolean;
+ 
   ngAfterViewInit() {
-    // Force change detection once ElementRef is available
-    Promise.resolve().then(() => {
-      this.isReady = true;
-      this.cdRef.detectChanges(); // flush the change
-    });
+  
     const ticker = 'NVDA';
     this.fetchData();
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
-  //  this.popover_loading.show();
   
     this.viewReady = true;
    
@@ -208,18 +203,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     );
   }
 
-  showError(error: any) {
-    this.popover_loading.hide();
-    this.popover_httperror.error = error.error;
-    this.popover_httperror.headers = error.headers;
-    this.popover_httperror.message = error.message;
-    this.popover_httperror.name = error.name;
-    this.popover_httperror.ok = error.ok;
-    this.popover_httperror.status = error.status;
-    this.popover_httperror.statusText = error.statusText;
-    this.popover_httperror.url = error.url;
-    this.popover_httperror.show();
-  }
+
 
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
@@ -479,6 +463,19 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     /*DRAW*/
     this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
+  }
+
+  showError(error: any) {
+    this.popover_loading.hide();
+    this.popover_httperror.error = error.error;
+    this.popover_httperror.headers = error.headers;
+    this.popover_httperror.message = error.message;
+    this.popover_httperror.name = error.name;
+    this.popover_httperror.ok = error.ok;
+    this.popover_httperror.status = error.status;
+    this.popover_httperror.statusText = error.statusText;
+    this.popover_httperror.url = error.url;
+    this.popover_httperror.show();
   }
 
   // #region DRAW
