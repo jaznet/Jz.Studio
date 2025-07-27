@@ -2,8 +2,8 @@
 import { Injectable } from '@angular/core';
 import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
-import { scaffold } from '../interfaces/techan-interfaces';
 import { ChartType } from '../enums/chart-type';
+import { ChartScaffold } from '../interfaces/chart-scaffold';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class _ScalesService {
     private data: ChartDataService) {
   }
 
-  _createScales(scaffold:scaffold) {
+  _createScales(scaffold: ChartScaffold) {
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
       this.dateScaleX = scaleBand()
         .domain(this.data.parsedData.map(d => d.date.toISOString())) // Ensure only valid trading days

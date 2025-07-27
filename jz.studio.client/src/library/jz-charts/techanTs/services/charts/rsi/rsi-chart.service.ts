@@ -4,11 +4,11 @@ import { Selection, select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale'
 import { ChartDataService } from '../../chart-data.service';
-import { scaffold } from '../../../interfaces/techan-interfaces';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
 import { BaseChartLayoutService } from '../base/base-chart-layout-service';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold';
 
 @Injectable({
   providedIn: 'root',
@@ -94,8 +94,8 @@ export class RsiChart  implements AfterViewInit {
     return rsiValues;
   }
 
-  public drawAxes(scaffold: scaffold) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([scaffold.sections[ChartType.RSI]!.height, 0]);
+  public drawAxes(chartScaffold: ChartScaffold) {
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.sections[ChartType.RSI]!.height, 0]);
 
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);

@@ -1,10 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { scaffold } from '../../interfaces/techan-interfaces';
 import { MacdDrawService } from '../../services/charts/macd/macd-draw.service';
 import { MacdLayoutService } from '../../services/charts/macd/macd-layout.service';
 import { ChartDataService } from '../../services/chart-data.service';
 import { LayoutService } from '../../services/layout.service';
-import { BaseChartComponent } from '../base/base-chart/BaseChartComponent';
 /*import { interpolateBlues } from 'd3';*/
 
 @Component({

@@ -5,10 +5,9 @@ import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { scaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
-import { scaffold } from '../../../interfaces/techan-interfaces';
 import { ChartType } from '../../../enums/chart-type';
 import { LayoutService } from '../../layout.service';
-import { BaseChartComponent } from '../../../components/base/base-chart/BaseChartComponent';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +57,7 @@ export class VolumeChartService implements AfterViewInit {
     return this; // Enables method chaining
   }
 
-  public drawAxes(scaffold:scaffold) {
+  public drawAxes(scaffold: ChartScaffold) {
     this.volumeYscale = scaleLinear()
       .domain([0, this.dataService.maxVolume ?? 10000000]) // Using minPrice and maxPrice to define the domain
       .range([scaffold.sections[ChartType.VOLUME]!.height, 0]); // Invert the range for correct orientation (top to bottom)

@@ -11,10 +11,6 @@ describe('BaseChartComponent', () => {
       declarations: [BaseChartComponent]
     })
     .compileComponents();
-    
-    //fixture = TestBed.createComponent(BaseChartComponent);
-    //component = fixture.componentInstance;
-    //fixture.detectChanges();
   });
 
   it('should create', () => {

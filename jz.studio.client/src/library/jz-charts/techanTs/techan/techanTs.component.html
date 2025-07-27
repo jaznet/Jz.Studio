@@ -26,8 +26,7 @@
         <!-- 👇 Template reference to chart and input bindings -->
         <ohlc-chart #ohlcChart
                     dateScaleX="dateScaleX"
-                    [data]="data.stockPriceHistoryData"
-                    [scaffold]="layoutService.scaffold" >
+                    [data]="data.stockPriceHistoryData">
         </ohlc-chart>
       </g>
 
@@ -52,7 +51,7 @@
         <g id="gMacdContent" [attr.transform]="'translate(40,0)'">
           <rect #rMacdContent id="rMacdContent" width="0" height="0"></rect>
           <text>MACD</text>
-          <g [hidden]="!layoutService?.scaffold?.sections?.[ChartType.MACD]">
+          <g >
             <macd-chart #macdChart>
               <!--[xScale]="scales.dateScaleX"
           [scaffold]="layoutService.scaffold">-->

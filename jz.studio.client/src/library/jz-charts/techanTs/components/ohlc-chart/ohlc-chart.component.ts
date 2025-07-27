@@ -11,7 +11,8 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
-import { BaseChartComponent } from '../base/base-chart/BaseChartComponent';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { ChartScaffold } from '../../interfaces/chart-scaffold';
 
 @Component({
   selector: 'ohlc-chart',
@@ -23,18 +24,19 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
+  override chartScaffold!: ChartScaffold;
+  override chartType = ChartType.OHLC;
   private yScale: any;
 
   constructor() {
     super();
-    this.chartType = ChartType.OHLC;
     console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
   }
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
-    const section = this.scaffold?.sections?.[ChartType.OHLC];
-    const inputsValid = !!this.scaffold && !!section && section.width > 0 && section.height > 0 && this.data?.length && this.dateScaleX;
+    const section = this.chartScaffold?.sections?.[ChartType.OHLC];
+    const inputsValid =  !!section && section.width > 0 && section.height > 0 && this.data?.length && this.dateScaleX;
 
     //if (!this.inputsReady && inputsValid) {
     //  this.markInputsReady();
@@ -60,7 +62,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   //}
 
   protected override drawChart(caller: string): void {
-    const section = this.scaffold?.sections?.[ChartType.OHLC];
+    const section = this.chartScaffold?.sections?.[ChartType.OHLC];
     if (!section || !this.gChartRef) {
       console.warn(`${caller}: Missing section or gChartRef`);
       return;

@@ -3,8 +3,10 @@ import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
 import { ReplaySubject } from "rxjs";
 import { ChartType } from "../enums/chart-type";
-import { SectionAttributes, scaffold, SvgAttributes } from "../interfaces/techan-interfaces";
+import {  SvgAttributes } from "../interfaces/techan-interfaces";
 import { BaseChartLayoutService } from "./charts/base/base-chart-layout-service";
+import { ChartScaffold } from "../interfaces/chart-scaffold";
+import { SectionAttributes } from "../interfaces/section-attributes";
 
 @Injectable({
   providedIn: 'root'
@@ -37,18 +39,19 @@ export class LayoutService {
   ohlcSizeReady$ = new ReplaySubject<{ width: number; height: number }>(1);
 
   sizeReady$: Record<ChartType, ReplaySubject<{ width: number; height: number }>> = {
-    [ChartType.OHLC]: new ReplaySubject(1),
-    [ChartType.VOLUME]: new ReplaySubject(1),
-    [ChartType.MACD]: new ReplaySubject(1),
-    [ChartType.RSI]: new ReplaySubject(1),
-    [ChartType.SMA]: new ReplaySubject(1),
-    [ChartType.EMA]: new ReplaySubject(1),
-    [ChartType.BOLLINGER_BANDS]: new ReplaySubject(1),
-    [ChartType.STOCHASTIC]: new ReplaySubject(1),
-    [ChartType.PRICE]: new ReplaySubject(1)
+      [ChartType.OHLC]: new ReplaySubject(1),
+      [ChartType.VOLUME]: new ReplaySubject(1),
+      [ChartType.MACD]: new ReplaySubject(1),
+      [ChartType.RSI]: new ReplaySubject(1),
+      [ChartType.SMA]: new ReplaySubject(1),
+      [ChartType.EMA]: new ReplaySubject(1),
+      [ChartType.BOLLINGER_BANDS]: new ReplaySubject(1),
+      [ChartType.STOCHASTIC]: new ReplaySubject(1),
+      [ChartType.PRICE]: new ReplaySubject(1),
+    [ChartType.Base]: new ReplaySubject(1)
   };
 
-  scaffold: scaffold = {
+  scaffold: ChartScaffold = {
     width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40, sectionsContainer: {},
     sections: {
       [ChartType.OHLC]: this.ohlc,
@@ -106,7 +109,7 @@ export class LayoutService {
       spacer: 0,
       pct: .4
     };
-    this.scaffold.sections['volume'] = {
+    this.scaffold.sections['VOLUME'] = {
       x: 0, y: 0, width: 0, height: 0,
       margins: { top: 0, right: 40, bottom: 0, left: 40 },
       content: { width: 0, height: 0, x: 0, y: 0 },
@@ -120,7 +123,7 @@ export class LayoutService {
       spacer: 0,
       pct: .2
     };
-    this.scaffold.sections['rsi'] = {
+    this.scaffold.sections['RSI'] = {
       x: 0, y: 0, width: 0, height: 0,
       margins: { top: 0, right: 40, bottom: 0, left: 40 },
       content: { width: 0, height: 0, x: 0, y: 0 },

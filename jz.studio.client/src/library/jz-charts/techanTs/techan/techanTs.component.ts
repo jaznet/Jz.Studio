@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators'; // ✅ add this
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
-import { ohlcData, scaffold, SectionAttributes, SvgAttributes } from '../interfaces/techan-interfaces';
+import { ohlcData, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartDataService } from '../services/chart-data.service';
 import { ChartType } from '../enums/chart-type'; // adjust the path as needed
 import { LayoutService } from '../services/layout.service';
@@ -27,6 +27,8 @@ import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
+import { ChartScaffold } from '../interfaces/chart-scaffold';
+import { SectionAttributes } from '../interfaces/section-attributes';
 
 @Component({
   selector: 'techanTs',
@@ -135,6 +137,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   ticker = 'NVDA';
   dateScaleX: any;
 
+  chartScaffold!: ChartScaffold;
+
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
@@ -182,7 +186,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   
     this.viewReady = true;
-   
     
   }
 
@@ -220,13 +223,49 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       // ✅ All good — proceed
       this.layoutService.createScaffolding();
       this.data.scrubData();
-      this.createScales(this.layoutService.scaffold);
+     // this.createScales(this.layoutService.scaffold);
       this.drawAxes();
-      this.constructChart();
+   
     });
   }
 
-  createScales(scaffold: scaffold): void {
+  private createScaffold(): ChartScaffold {
+    const createSection = (
+      width: number,
+      height: number,
+      margins: { top: number; right: number; bottom: number; left: number },
+      x = 0,
+      y = 0,
+      spacer = 0,
+      pct = 1
+    ): SectionAttributes => ({
+      width,
+      height,
+      margins,
+      x,
+      y,
+      content: null,
+      spacer,
+      pct
+    });
+
+    return {
+      height: 600,
+      width: 1000,
+      xAxisTop: 0,
+      xAxisBottom: 570,
+      yAxisLeft: 0,
+      yAxisRight: 960,
+      sectionsContainer: null,
+      sections: {
+        [ChartType.OHLC]: createSection(1000, 300, { top: 10, right: 30, bottom: 20, left: 50 }),
+        [ChartType.MACD]: createSection(1000, 150, { top: 5, right: 30, bottom: 15, left: 50 }, 0, 300)
+      }
+    };
+  }
+
+
+  createScales(scaffold: ChartScaffold): void {
     const section = scaffold.sections[ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
@@ -245,8 +284,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }
 
+  private createSection(): any { }
+  //SectionAttributes
+     thisSection: any = {
+  }
 
-  createChartFramework() {
+  private createChartFramework() {
  
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
@@ -356,25 +399,17 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //this.layoutService.sma3 = this.sma3Ref.nativeElement;
 
     this.layoutService.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
-    this.layoutService.xAxisTopRect = this.xAxisTopRectRef.nativeElement;
-    this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
+     this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
 
     this.layoutService.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
     this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
   }
 
-  constructChart(): void {
- //   this.drawOhlc();
-    this.drawVolume();
-    this.drawSma1(5);
-    this.drawSma2(50);
-    this.drawSma3(100);
-    //  this.drawMacd();
-    this.drawRsi();
-  }
 
-  sizeSections(): void {
+
+ 
+  sizeElements(): void {
     console.log('SIZE', this.rOhlcSectionRef);
   }
 

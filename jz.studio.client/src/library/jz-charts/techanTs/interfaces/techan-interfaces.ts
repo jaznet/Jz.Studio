@@ -14,31 +14,9 @@ export interface Margins {
   left: number;
 }
 
-export interface SectionAttributes {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  margins: Margins;
-  content: RectDimensions;
-  fill?: string;
-  spacer: number;
-  pct: number;
-}
 
-export interface scaffold {
-  height: number;
-  width: number;
- // margin: number;
-  xAxisTop: number;
-  xAxisBottom: number;
-  yAxisLeft: number;
-  yAxisRight: number;
-  sectionsContainer: any;
-  sections: { [key in ChartType]?: SectionAttributes };
 
-/*  sections: SectionAttributes[];*/
-}
+
 
 export interface SvgAttributes {
   height: number;
