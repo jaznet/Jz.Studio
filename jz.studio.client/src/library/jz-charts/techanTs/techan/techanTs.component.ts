@@ -291,7 +291,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.chartScaffold.sections = sections;
   }
 
-  createScales(): void {
+  private createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.sections);
     const section = this.chartScaffold.sections![ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
@@ -311,24 +311,15 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }
 
-
-
   private sizeSections() {
     console.log('%c     ✔ sizeSections', 'color:#90BEE9');
     // X-AXIS TOP 
     select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
     select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
-    //this.xAxisTopRect.setAttribute('width', `${this.chartScaffold.width}`);
-    //this.xAxisTopRect.setAttribute('height', `${this.chartScaffold.xAxisTop}`);
+    select(this.xAxisBottomRect.nativeElement).attr('width', this.chartScaffold.width);
+    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
   }
 
-
-
-
-
-  //SectionAttributes
-     thisSection: any = {
-  }
 
   private createChartFramework() {
     console.log('%c     ✔ createChartFramework', 'color:#90BEE9');

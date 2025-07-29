@@ -148,7 +148,7 @@ export class LayoutService {
 
   }
 
-  sizeSections(): void {
+  _sizeSections(): void {
     console.log('%c    ✓ sizeSections layout service  💡', 'color:#C9B498');
     this.spacer = 8;
 
