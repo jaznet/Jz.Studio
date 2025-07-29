@@ -93,43 +93,9 @@ export class LayoutService {
  //   private rsiLayout: RsiChartLayoutService
   ) { }
 
-  createScaffolding() {
-    console.log('%c    ✓ createScaffolding layout service', 'color:#C9B498');
-    this.loadSections();
-  //  this.sizeSections();
-    this.alignChartsToScaffold();
-  }
 
-  loadSections() {
-    this.scaffold.sections[ChartType.OHLC] = {
-      x: 0, y: 0, width: 0, height: 0,
-      margins: { top: 0, right: 40, bottom: 0, left: 40 },
-      content: { width: 0, height: 0, x: 0, y: 0 },
-      spacer: 0,
-      pct: .4
-    };
-    this.scaffold.sections['VOLUME'] = {
-      x: 0, y: 0, width: 0, height: 0,
-      margins: { top: 0, right: 40, bottom: 0, left: 40 },
-      content: { width: 0, height: 0, x: 0, y: 0 },
-      spacer: 0,
-      pct: .2
-    };
-    this.scaffold.sections[ChartType.MACD] = {
-      x: 0, y: 0, width: 0, height: 0,
-      margins: { top: 0, right: 40, bottom: 0, left: 40 },
-      content: { width: 0, height: 0, x: 0, y: 0 },
-      spacer: 0,
-      pct: .2
-    };
-    this.scaffold.sections['RSI'] = {
-      x: 0, y: 0, width: 0, height: 0,
-      margins: { top: 0, right: 40, bottom: 0, left: 40 },
-      content: { width: 0, height: 0, x: 0, y: 0 },
-      spacer: 0,
-      pct: .2
-    };
-  }
+
+
 
   getLayoutByChartType(chartType: ChartType): BaseChartLayoutService | undefined {
     switch (chartType) {
@@ -150,7 +116,7 @@ export class LayoutService {
 
   sizeChartSection(chartType: ChartType): void {
 
-    const section = this.scaffold.sections[chartType];
+    const section = this.scaffold.sections![chartType];
     if (!section) {
       console.warn(`No layout section found for chart type: ${chartType}`);
       return;
@@ -200,25 +166,25 @@ export class LayoutService {
     //this.xAxisBottomRect.setAttribute('fill', 'var(--plt-chart-2');
 
     // SECTIONS
-    //   this.spacerAdjusted = this.spacer * (1 + (1 / this.scaffold.sections.he));
+    //   this.spacerAdjusted = this.spacer * (1 + (1 / this.scaffold.sections!.he));
     this.rSectionsContainer.attr('width', `${this.scaffold.width}`);
     this.rSectionsContainer.attr('height', `${this.scaffold.height - this.scaffold.xAxisTop - this.scaffold.xAxisBottom}`);
 
-    this.scaffold.sections[ChartType.OHLC]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.OHLC]!.pct;
-    this.scaffold.sections[ChartType.OHLC]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
+    this.scaffold.sections![ChartType.OHLC]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections![ChartType.OHLC]!.pct;
+    this.scaffold.sections![ChartType.OHLC]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
 
     ////this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     ////this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections[ChartType.OHLC]!.width, this.scaffold.sections[ChartType.OHLC]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.OHLC]!.width, this.scaffold.sections![ChartType.OHLC]!.height);
 
-    this.scaffold.sections[ChartType.MACD]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct;
-    this.scaffold.sections[ChartType.MACD]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
+    this.scaffold.sections![ChartType.MACD]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections![ChartType.MACD]!.pct;
+    this.scaffold.sections![ChartType.MACD]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
 
     //this.rMacdSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     //this.rMacdSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
 
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections[ChartType.MACD]!.width, this.scaffold.sections[ChartType.MACD]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.MACD]!.width, this.scaffold.sections![ChartType.MACD]!.height);
 
     // #endregion MAIN
 

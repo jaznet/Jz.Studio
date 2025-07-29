@@ -242,7 +242,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
       // ✅ All good — proceed
       this.createChartScaffold();
-   //   this.createSections();    
+      this.createSections();    
       this.sizeSections();
       this.data.scrubData();
       // this.createScales(this.layoutService.scaffold);
@@ -257,8 +257,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       width: 400, height: 400,
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
-      sectionsContainer: this.createSections(),
-      sections: 0
+      sectionsContainer: undefined,
+      sections: undefined
     };
 
     console.log('%c', 'color:pink', this.chartScaffold)  ;
@@ -266,42 +266,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.chartScaffold.height = 400;
   }
 
-  //private createScaffold(): ChartScaffold {
-  //  console.log('%c     ✔ create Scaffold', 'color:#90BEE9');
-  //  let yOffset = 0;
-
-  //  const sections: { [key in ChartType]?: SectionAttributes } = {};
-
-  //  for (const entry of chartConfig) {
-  //    if (!entry.include) continue;
-
-  //    sections[entry.type] = {
-  //      width: this.width,
-  //      height: entry.height,
-  //      margins: entry.margins,
-  //      x: 0,
-  //      y: yOffset,
-  //      content: null,
-  //      spacer: 0,
-  //      pct: 1
-  //    };
-
-  //    yOffset += entry.height;
-  //  }
-
-  //  return {
-  //    height: yOffset,
-  //    width: this.width,
-  //    xAxisTop: 0,
-  //    xAxisBottom: yOffset,
-  //    yAxisLeft: 0,
-  //    yAxisRight: this.width - 40,
-  //    sectionsContainer: null,
-  //    sections
-  //  };
-  //}
-
-  private createSections(): any {
+  private createSections(): void {
     const width = 1000;
     let yOffset = 0;
 
@@ -320,26 +285,15 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         spacer: 0,
         pct: 1
       };
-
       yOffset += entry.height;
     }
 
-    return {
-      width,
-      height: yOffset,
-      xAxisTop: 0,
-      xAxisBottom: yOffset - 30,
-      yAxisLeft: 0,
-      yAxisRight: width - 40,
-      sectionsContainer: null, // Set in ngAfterViewInit
-      sections
-    };
- 
+    this.chartScaffold.sections = sections;
   }
 
   createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.sections);
-    const section = this.chartScaffold.sections[ChartType.OHLC];
+    const section = this.chartScaffold.sections![ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
