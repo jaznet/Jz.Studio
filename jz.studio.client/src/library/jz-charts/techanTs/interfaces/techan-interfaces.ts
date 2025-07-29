@@ -14,10 +14,6 @@ export interface Margins {
   left: number;
 }
 
-
-
-
-
 export interface SvgAttributes {
   height: number;
   width: number;

@@ -9,5 +9,7 @@ export interface ChartScaffold {
   yAxisLeft: number;
   yAxisRight: number;
   sectionsContainer: any; // You can tighten this later
-  sections: { [key in ChartType]?: SectionAttributes };
-}
+  /* sections: { [key in ChartType]?: SectionAttributes };*/
+  sections: any
+};
+

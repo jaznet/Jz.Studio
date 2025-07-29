@@ -29,6 +29,7 @@ import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
 import { SectionAttributes } from '../interfaces/section-attributes';
+import { chartConfig } from '../interfaces/chart-config';
 
 @Component({
   selector: 'techanTs',
@@ -47,12 +48,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('rSvgElement', { static: false }) rSvgElementRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: false }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisTopRect', { static: false }) xAxisTopRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
   @ViewChild('xAxisBottomGroup', { static: false }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottomRect', { static: false }) xAxisBottomRectRef!: ElementRef<SVGRectElement>;
+  @ViewChild('xAxisBottomRect', { static: false }) xAxisBottomRect!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisMonthsBottom', { static: false }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
@@ -131,6 +132,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion
 
+  width = 0;
+
   dataReady = false;
   viewReady = false;
   hydrated = false; // Optional safety to prevent double-draw
@@ -141,6 +144,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
+
+
 
   xAxisMonthsTop!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
@@ -178,7 +183,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   ngOnInit(): void { }
 
- 
   ngAfterViewInit() {
   
     const ticker = 'NVDA';
@@ -186,7 +190,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   
     this.viewReady = true;
-    
   }
 
   fetchData(): void {
@@ -194,7 +197,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
       this.data.stockPriceHistoryData = data;
       this.dataReady = true;
-      console.log('%c    ✔ Data Fetched', 'color:#90BEE9');
+      console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
       this.popover_loading.hide();
       this.tryCreateChart();
     },
@@ -217,55 +220,78 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
     if (!this.viewReady || !this.dataReady) return;
 
+
+    console.log('%c     ✔ initializeChartWhenReady', 'color:#90BEE9');
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
-
       // ✅ All good — proceed
-      this.layoutService.createScaffolding();
+      this.createChartScaffold();
+      this.sizeSections();
       this.data.scrubData();
      // this.createScales(this.layoutService.scaffold);
       this.drawAxes();
-   
     });
+  }
+
+  private createChartScaffold() {
+    console.log('%c     ✔ createChartScaffold', 'color:#90BEE9');
+    this.chartScaffold = {
+      width: 400, height: 400,
+      xAxisTop: 30, xAxisBottom: 30,
+      yAxisLeft: 30, yAxisRight: 30,
+      sectionsContainer: 0, sections: 0
+    };
+
+    this.chartScaffold.width = 400;
+    this.chartScaffold.height = 400;
   }
 
   private createScaffold(): ChartScaffold {
-    const createSection = (
-      width: number,
-      height: number,
-      margins: { top: number; right: number; bottom: number; left: number },
-      x = 0,
-      y = 0,
-      spacer = 0,
-      pct = 1
-    ): SectionAttributes => ({
-      width,
-      height,
-      margins,
-      x,
-      y,
-      content: null,
-      spacer,
-      pct
-    });
+    console.log('%c     ✔ createScaffold', 'color:#90BEE9');
+    let yOffset = 0;
+
+    const sections: { [key in ChartType]?: SectionAttributes } = {};
+
+    for (const entry of chartConfig) {
+      if (!entry.include) continue;
+
+      sections[entry.type] = {
+        width: this.width,
+        height: entry.height,
+        margins: entry.margins,
+        x: 0,
+        y: yOffset,
+        content: null,
+        spacer: 0,
+        pct: 1
+      };
+
+      yOffset += entry.height;
+    }
 
     return {
-      height: 600,
-      width: 1000,
+      height: yOffset,
+      width: this.width,
       xAxisTop: 0,
-      xAxisBottom: 570,
+      xAxisBottom: yOffset,
       yAxisLeft: 0,
-      yAxisRight: 960,
+      yAxisRight: this.width - 40,
       sectionsContainer: null,
-      sections: {
-        [ChartType.OHLC]: createSection(1000, 300, { top: 10, right: 30, bottom: 20, left: 50 }),
-        [ChartType.MACD]: createSection(1000, 150, { top: 5, right: 30, bottom: 15, left: 50 }, 0, 300)
-      }
+      sections
     };
   }
 
+  private sizeSections() {
+    console.log('%c     ✔ sizeSections', 'color:#90BEE9');
+    // X-AXIS TOP 
+    select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
+    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
+    //this.xAxisTopRect.setAttribute('width', `${this.chartScaffold.width}`);
+    //this.xAxisTopRect.setAttribute('height', `${this.chartScaffold.xAxisTop}`);
+  }
 
   createScales(scaffold: ChartScaffold): void {
+    console.log('%c     ✔ createScales', 'color:#90BEE9');
     const section = scaffold.sections[ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
@@ -284,13 +310,16 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }
 
-  private createSection(): any { }
+  private createSections(): any {
+    console.log('%c     ✔ createSections', 'color:#90BEE9');
+  }
+
   //SectionAttributes
      thisSection: any = {
   }
 
   private createChartFramework() {
- 
+    console.log('%c     ✔ createChartFramework', 'color:#90BEE9');
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
     this.layoutService.svgElement = select(this.svgElement.nativeElement);
     this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
@@ -301,7 +330,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
 
   //  this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
-    console.log('%c    ✔ Create Chart Framework', 'color:#90BEE9');
+   
  //   this.layoutService.rMacdSection = select(this.rMacd)
  
     // #region OHLC
@@ -402,19 +431,16 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
      this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
 
     this.layoutService.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
-    this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
+  //  this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
     this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
   }
 
-
-
- 
   sizeElements(): void {
     console.log('SIZE', this.rOhlcSectionRef);
   }
 
   drawAxes(): void {
-
+    console.log('%c     ✔  drawAxes', 'color:#90BEE9');
     this.xAxisMonthsTop = select(this.xAxisMonthsTopRef.nativeElement);
     this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
     this.xAxisDays = select(this.xAxisDays);

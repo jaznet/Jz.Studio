@@ -75,7 +75,7 @@ export class LayoutService {
   xAxisMonthsBottom!: SVGGElement;
   xAxisDays!: SVGGElement;
   xAxisTopGroup!: SVGGElement;
-  xAxisTopRect!: SVGRectElement;
+
 
   xAxisBottom!: SVGGElement;
   xAxisBottomGroup!: SVGGElement;
@@ -97,7 +97,7 @@ export class LayoutService {
   createScaffolding() {
     console.log('%c    ✓ createScaffolding layout service', 'color:#C9B498');
     this.loadSections();
-    this.sizeSections();
+  //  this.sizeSections();
     this.alignChartsToScaffold();
   }
 
@@ -196,9 +196,7 @@ export class LayoutService {
     this.rSvgElement.attr('width', `${this.scaffold.width}`);
     this.rSvgElement.attr('height', `${this.scaffold.height}`);
 
-    // X-AXIS TOP
-    this.xAxisTopRect.setAttribute('width', `${this.scaffold.width}`);
-    this.xAxisTopRect.setAttribute('height', `${this.scaffold.xAxisTop}`);
+ 
 
     // X AXIS BOTTOM
     this.xAxisBottomRect.setAttribute('width', `${this.scaffold.width}`);
