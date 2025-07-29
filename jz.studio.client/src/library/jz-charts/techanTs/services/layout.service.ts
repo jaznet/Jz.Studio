@@ -16,8 +16,7 @@ export class LayoutService {
   // #region PROPERTIES
   svgBorder = 8;
   divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
-  svgElement!: Selection<SVGElement, unknown, null, undefined>;
-  rSvgElement!: Selection<SVGRectElement, unknown, null, undefined>;
+
 
   gSectionsContainer!: Selection<SVGGElement, unknown, null, undefined>;
   rSectionsContainer!: Selection<SVGRectElement, unknown, null, undefined>;
@@ -191,10 +190,7 @@ export class LayoutService {
     this.scaffold.height = this.divSvgContainer.node()!.clientHeight - (this.svgBorder * 2);
 
     // #region MAIN
-    this.svgElement.attr('width', `${this.scaffold.width}`);
-    this.svgElement.attr('height', `${this.scaffold.height}`);
-    this.rSvgElement.attr('width', `${this.scaffold.width}`);
-    this.rSvgElement.attr('height', `${this.scaffold.height}`);
+
 
  
 

@@ -45,7 +45,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   // #region @ViewChild List
   @ViewChild('divSvgContainer', { static: false }) divSvgContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGElement>;
-  @ViewChild('rSvgElement', { static: false }) rSvgElementRef!: ElementRef<SVGRectElement>;
+  @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
   @ViewChild('xAxisTopGroup', { static: false }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
@@ -62,7 +62,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('rSectionsContainer', { static: false }) rSectionsContainerRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
-  // #endregion @ViewChild List
+
 
   // #region ohlc
   @ViewChild('ohlcChart', { static: false }) ohlcChart!: OhlcChartComponent;
@@ -131,6 +131,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('popover_httperror', { static: false }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion
+    // #endregion @ViewChild List
 
   width = 0;
 
@@ -184,12 +185,22 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit() {
-  
     const ticker = 'NVDA';
+    this.updateSvgSize();
+    window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   
     this.viewReady = true;
+  }
+
+  private updateSvgSize(): void {
+    const container = this.divSvgContainer.nativeElement;
+    const svg = select(this.svgElement.nativeElement);
+
+    svg
+      .attr('width', container.clientWidth)
+      .attr('height', container.clientHeight);
   }
 
   fetchData(): void {
@@ -217,18 +228,25 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   initializeChartWhenReady(attempt = 0): void {
+   
+    if (!this.viewReady || !this.dataReady) {
+      console.log('%cNOT READY', 'color:red');
+      return;
+    } else {
+      console.log('%cREADY', 'color:green');
+    };
 
-    if (!this.viewReady || !this.dataReady) return;
 
-
-    console.log('%c     ✔ initializeChartWhenReady', 'color:#90BEE9');
+    console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
       this.createChartScaffold();
+   //   this.createSections();    
       this.sizeSections();
       this.data.scrubData();
-     // this.createScales(this.layoutService.scaffold);
+      // this.createScales(this.layoutService.scaffold);
+      this.createScales();
       this.drawAxes();
     });
   }
@@ -239,15 +257,52 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       width: 400, height: 400,
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
-      sectionsContainer: 0, sections: 0
+      sectionsContainer: this.createSections(),
+      sections: 0
     };
 
+    console.log('%c', 'color:pink', this.chartScaffold)  ;
     this.chartScaffold.width = 400;
     this.chartScaffold.height = 400;
   }
 
-  private createScaffold(): ChartScaffold {
-    console.log('%c     ✔ createScaffold', 'color:#90BEE9');
+  //private createScaffold(): ChartScaffold {
+  //  console.log('%c     ✔ create Scaffold', 'color:#90BEE9');
+  //  let yOffset = 0;
+
+  //  const sections: { [key in ChartType]?: SectionAttributes } = {};
+
+  //  for (const entry of chartConfig) {
+  //    if (!entry.include) continue;
+
+  //    sections[entry.type] = {
+  //      width: this.width,
+  //      height: entry.height,
+  //      margins: entry.margins,
+  //      x: 0,
+  //      y: yOffset,
+  //      content: null,
+  //      spacer: 0,
+  //      pct: 1
+  //    };
+
+  //    yOffset += entry.height;
+  //  }
+
+  //  return {
+  //    height: yOffset,
+  //    width: this.width,
+  //    xAxisTop: 0,
+  //    xAxisBottom: yOffset,
+  //    yAxisLeft: 0,
+  //    yAxisRight: this.width - 40,
+  //    sectionsContainer: null,
+  //    sections
+  //  };
+  //}
+
+  private createSections(): any {
+    const width = 1000;
     let yOffset = 0;
 
     const sections: { [key in ChartType]?: SectionAttributes } = {};
@@ -256,12 +311,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       if (!entry.include) continue;
 
       sections[entry.type] = {
-        width: this.width,
+        width,
         height: entry.height,
         margins: entry.margins,
         x: 0,
         y: yOffset,
-        content: null,
+        content: null, // Filled in later if needed
         spacer: 0,
         pct: 1
       };
@@ -270,29 +325,21 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     }
 
     return {
+      width,
       height: yOffset,
-      width: this.width,
       xAxisTop: 0,
-      xAxisBottom: yOffset,
+      xAxisBottom: yOffset - 30,
       yAxisLeft: 0,
-      yAxisRight: this.width - 40,
-      sectionsContainer: null,
+      yAxisRight: width - 40,
+      sectionsContainer: null, // Set in ngAfterViewInit
       sections
     };
+ 
   }
 
-  private sizeSections() {
-    console.log('%c     ✔ sizeSections', 'color:#90BEE9');
-    // X-AXIS TOP 
-    select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
-    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
-    //this.xAxisTopRect.setAttribute('width', `${this.chartScaffold.width}`);
-    //this.xAxisTopRect.setAttribute('height', `${this.chartScaffold.xAxisTop}`);
-  }
-
-  createScales(scaffold: ChartScaffold): void {
-    console.log('%c     ✔ createScales', 'color:#90BEE9');
-    const section = scaffold.sections[ChartType.OHLC];
+  createScales(): void {
+    console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.sections);
+    const section = this.chartScaffold.sections[ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
     if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
@@ -305,14 +352,25 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         .domain([])
         .range([0, width]);
     }
- //   console.log('scale:', this.dateScaleX);
+    //   console.log('scale:', this.dateScaleX);
     console.log('bandwidth fn?', typeof this.dateScaleX.bandwidth);
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }
 
-  private createSections(): any {
-    console.log('%c     ✔ createSections', 'color:#90BEE9');
+
+
+  private sizeSections() {
+    console.log('%c     ✔ sizeSections', 'color:#90BEE9');
+    // X-AXIS TOP 
+    select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
+    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
+    //this.xAxisTopRect.setAttribute('width', `${this.chartScaffold.width}`);
+    //this.xAxisTopRect.setAttribute('height', `${this.chartScaffold.xAxisTop}`);
   }
+
+
+
+
 
   //SectionAttributes
      thisSection: any = {
@@ -321,8 +379,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   private createChartFramework() {
     console.log('%c     ✔ createChartFramework', 'color:#90BEE9');
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
-    this.layoutService.svgElement = select(this.svgElement.nativeElement);
-    this.layoutService.rSvgElement = select(this.rSvgElementRef.nativeElement);
 
     this.layoutService.gSectionsContainer = select(this.gSectionsContainerRef.nativeElement);
     this.layoutService.rSectionsContainer = select(this.rSectionsContainerRef.nativeElement);
