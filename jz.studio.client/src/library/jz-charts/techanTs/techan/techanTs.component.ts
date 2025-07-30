@@ -47,12 +47,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
-  @ViewChild('xAxisTopGroup', { static: false }) xAxisTopGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('gXaxisTop', { static: false }) gXaxisTop!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('xAxisBottomGroup', { static: false }) xAxisBottomGroupRef!: ElementRef<SVGGElement>;
+  @ViewChild('gXaxisBottom', { static: false }) gXaxisBottom!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottomRect', { static: false }) xAxisBottomRect!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisMonthsBottom', { static: false }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
@@ -146,8 +146,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
 
-
-
+  svgContainer!: HTMLDivElement;
   xAxisMonthsTop!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisDays!: any;
@@ -190,17 +189,18 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
-  
     this.viewReady = true;
   }
 
   private updateSvgSize(): void {
-    const container = this.divSvgContainer.nativeElement;
+    this.svgContainer = this.divSvgContainer.nativeElement;
     const svg = select(this.svgElement.nativeElement);
 
     svg
-      .attr('width', container.clientWidth)
-      .attr('height', container.clientHeight);
+      .attr('width', this.svgContainer.clientWidth)
+      .attr('height', this.svgContainer.clientHeight);
+
+    console.log('svg', svg);
   }
 
   fetchData(): void {
@@ -236,14 +236,14 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       console.log('%cREADY', 'color:green');
     };
 
-
     console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
       this.createChartScaffold();
       this.createSections();    
-      this.sizeSections();
+      this.sizeChartElements();
+      this.alignChartElements();
       this.data.scrubData();
       // this.createScales(this.layoutService.scaffold);
       this.createScales();
@@ -252,22 +252,23 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private createChartScaffold() {
-    console.log('%c     ✔ createChartScaffold', 'color:#90BEE9');
+ 
     this.chartScaffold = {
-      width: 400, height: 400,
+      width: this.svgContainer.clientWidth, height: 400,
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
       sectionsContainer: undefined,
       sections: undefined
     };
 
-    console.log('%c', 'color:pink', this.chartScaffold)  ;
-    this.chartScaffold.width = 400;
-    this.chartScaffold.height = 400;
+    this.chartScaffold.width = this.svgContainer.clientWidth;
+    this.chartScaffold.height = this.svgContainer.clientHeight;
+
+    console.log('%c     ✔ createChartScaffold', 'color:#90BEE9', this.chartScaffold.width,'x',this.chartScaffold.height);
   }
 
   private createSections(): void {
-    const width = 1000;
+    const width = 1400;
     let yOffset = 0;
 
     const sections: { [key in ChartType]?: SectionAttributes } = {};
@@ -311,8 +312,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
   }
 
-  private sizeSections() {
-    console.log('%c     ✔ sizeSections', 'color:#90BEE9');
+  private sizeChartElements() {
+    console.log('%c     ✔ sizeChartElements', 'color:#90BEE9');
     // X-AXIS TOP 
     select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
     select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
@@ -320,6 +321,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
   }
 
+  private alignChartElements() {
+    select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.xAxisTop})`);
+    select(this.gXaxisBottom.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
+  }
 
   private createChartFramework() {
     console.log('%c     ✔ createChartFramework', 'color:#90BEE9');
@@ -428,12 +433,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //this.layoutService.sma2 = this.sma2Ref.nativeElement;
     //this.layoutService.sma3 = this.sma3Ref.nativeElement;
 
-    this.layoutService.xAxisTopGroup = this.xAxisTopGroupRef.nativeElement;
-     this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
+  //  this.layoutService.gXaxisTop = this.gXaxisTopRef.nativeElement;
+  //   this.layoutService.xAxisMonthsTop = this.xAxisMonthsTopRef.nativeElement;
 
-    this.layoutService.xAxisBottomGroup = this.xAxisBottomGroupRef.nativeElement;
-  //  this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
-    this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
+  //  this.layoutService.gXaxisBottom = this.gXaxisBottomRef.nativeElement;
+  ////  this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
+  //  this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
   }
 
   sizeElements(): void {

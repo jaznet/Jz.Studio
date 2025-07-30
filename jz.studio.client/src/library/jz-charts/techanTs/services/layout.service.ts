@@ -73,11 +73,11 @@ export class LayoutService {
   xAxisMonthsTop!: SVGGElement;
   xAxisMonthsBottom!: SVGGElement;
   xAxisDays!: SVGGElement;
-  xAxisTopGroup!: SVGGElement;
+  gXaxisTop!: SVGGElement;
 
 
   xAxisBottom!: SVGGElement;
-  xAxisBottomGroup!: SVGGElement;
+  gXaxisBottom!: SVGGElement;
   xAxisBottomRect!: SVGRectElement;
 
   rectVolume!: SVGRectElement;
@@ -267,10 +267,10 @@ export class LayoutService {
   }
 
   alignChartsToScaffold(): void {
-    this.xAxisTopGroup.setAttribute('transform', `translate(0,0)`);
+    this.gXaxisTop.setAttribute('transform', `translate(0,0)`);
     this.xAxisMonthsTop.setAttribute('transform', `translate(40,32)`);
 
-    this.xAxisBottomGroup.setAttribute('transform', `translate(0,${this.scaffold.height - this.scaffold.xAxisBottom})`);
+    this.gXaxisBottom.setAttribute('transform', `translate(0,${this.scaffold.height - this.scaffold.xAxisBottom})`);
     this.xAxisMonthsBottom.setAttribute('transform', `translate(40,0)`);
 
     this.gSectionsContainer.attr('transform', `translate(0,${this.scaffold.xAxisTop})`)
