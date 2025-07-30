@@ -194,13 +194,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private updateSvgSize(): void {
     this.svgContainer = this.divSvgContainer.nativeElement;
-    const svg = select(this.svgElement.nativeElement);
-
-    svg
+   select(this.svgElement.nativeElement)
       .attr('width', this.svgContainer.clientWidth)
       .attr('height', this.svgContainer.clientHeight);
 
-    console.log('svg', svg);
+    console.log('%cupdate SvgSize','color:#90BEE9', this.svgElement);
   }
 
   fetchData(): void {
@@ -221,7 +219,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
-      this.createChartFramework();             // Build framework refs immediatelyfetch
+   //   this.createChartFramework();             // Build framework refs immediatelyfetch
       this.changeDetector.detectChanges(); // Push any binding updates
       this.initializeChartWhenReady();     // ✅ Start safe chart initialization
     }
@@ -240,12 +238,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
+      this.data.scrubData();
       this.createChartScaffold();
-      this.createSections();    
       this.sizeChartElements();
       this.alignChartElements();
-      this.data.scrubData();
-      // this.createScales(this.layoutService.scaffold);
+      this.createSections();   
       this.createScales();
       this.drawAxes();
     });
@@ -264,11 +261,31 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.chartScaffold.width = this.svgContainer.clientWidth;
     this.chartScaffold.height = this.svgContainer.clientHeight;
 
-    console.log('%c     ✔ createChartScaffold', 'color:#90BEE9', this.chartScaffold.width,'x',this.chartScaffold.height);
+    console.log('%c     ✔ create ChartScaffold', 'color:#90BEE9', this.chartScaffold.width,'x',this.chartScaffold.height);
+  }
+
+  private sizeChartElements() {
+    console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
+    
+    select(this.rSvgElement.nativeElement)
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.height);
+    // X-AXIS TOP 
+    select(this.xAxisTopRect.nativeElement)
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.xAxisTop);
+    select(this.xAxisBottomRect.nativeElement)
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.xAxisTop);
+  }
+
+  private alignChartElements() {
+    select(this.gXaxisTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`);
+    select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
   }
 
   private createSections(): void {
-    const width = 1400;
+   
     let yOffset = 0;
 
     const sections: { [key in ChartType]?: SectionAttributes } = {};
@@ -277,7 +294,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       if (!entry.include) continue;
 
       sections[entry.type] = {
-        width,
+        width: this.svgContainer.clientWidth,
         height: entry.height,
         margins: entry.margins,
         x: 0,
@@ -290,6 +307,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     }
 
     this.chartScaffold.sections = sections;
+    console.log('%c sections', 'color:purple', this.chartScaffold.sections);
   }
 
   private createScales(): void {
@@ -310,20 +328,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //   console.log('scale:', this.dateScaleX);
     console.log('bandwidth fn?', typeof this.dateScaleX.bandwidth);
     console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
-  }
-
-  private sizeChartElements() {
-    console.log('%c     ✔ sizeChartElements', 'color:#90BEE9');
-    // X-AXIS TOP 
-    select(this.xAxisTopRect.nativeElement).attr('width', this.chartScaffold.width);
-    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
-    select(this.xAxisBottomRect.nativeElement).attr('width', this.chartScaffold.width);
-    select(this.xAxisTopRect.nativeElement).attr('height', this.chartScaffold.xAxisTop);
-  }
-
-  private alignChartElements() {
-    select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.xAxisTop})`);
-    select(this.gXaxisBottom.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
   }
 
   private createChartFramework() {
