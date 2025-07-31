@@ -246,7 +246,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.createChartScaffold();
       this.sizeChartElements();
       this.alignChartElements();
-      this.createSections();   
+      this.createSections();
+      this.appendSections();
       this.createScales();
       this.drawAxes();
     });
@@ -288,8 +289,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       .attr('height', this.chartScaffold.xAxisTop);
 
     select(this.rSectionsContainer.nativeElement)
-      .attr('width', 100)
-      .attr('height', 100);
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.height - this.chartScaffold.title - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
   }
 
   private alignChartElements() {
@@ -315,7 +316,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         margins: entry.margins,
         x: 0,
         y: yOffset,
-        content: null, // Filled in later if needed
+        content: null, // Filled in later if neededraw
         spacer: 0,
         pct: 1
       };
@@ -324,6 +325,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
     this.chartScaffold.sections = sections;
     console.log('%c sections', 'color:purple', this.chartScaffold.sections);
+  }
+
+  private appendSections() {
+    select(this.gSectionsContainer.nativeElement)
+      .append('g').attr('id','gSection')
+      .append('rect').attr('id', 'rSection');
   }
 
   private createScales(): void {

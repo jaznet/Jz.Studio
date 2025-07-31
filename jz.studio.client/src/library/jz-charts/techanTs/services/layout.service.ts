@@ -18,11 +18,6 @@ export class LayoutService {
   divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
 
 
-
-
-  gOhlcSection!: Selection<SVGGElement, unknown, null, undefined>;
-  rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;
-
   gMacdSection!: Selection<SVGGElement, unknown, null, undefined>;
   rMacdSection!: Selection<SVGRectElement, unknown, null, undefined>;
 
