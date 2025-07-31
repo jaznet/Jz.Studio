@@ -18,8 +18,7 @@ export class LayoutService {
   divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
 
 
-  gSectionsContainer!: Selection<SVGGElement, unknown, null, undefined>;
-  rSectionsContainer!: Selection<SVGRectElement, unknown, null, undefined>;
+
 
   gOhlcSection!: Selection<SVGGElement, unknown, null, undefined>;
   rOhlcSection!: Selection<SVGRectElement, unknown, null, undefined>;
@@ -128,8 +127,8 @@ export class LayoutService {
       return;
     }
 
-    const width = this.rSectionsContainer!.node()?.width.baseVal.value;
-    const height = this.rSectionsContainer!.node()?.height.baseVal.value;
+    const width = 0;
+    const height = 0;
 
     //layout.rSection.attr('width', `${width}`);
     //layout.rSection.attr('height', `${height}`);
@@ -167,19 +166,14 @@ export class LayoutService {
 
     // SECTIONS
     //   this.spacerAdjusted = this.spacer * (1 + (1 / this.scaffold.sections!.he));
-    this.rSectionsContainer.attr('width', `${this.scaffold.width}`);
-    this.rSectionsContainer.attr('height', `${this.scaffold.height - this.scaffold.xAxisTop - this.scaffold.xAxisBottom}`);
 
-    this.scaffold.sections![ChartType.OHLC]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections![ChartType.OHLC]!.pct;
-    this.scaffold.sections![ChartType.OHLC]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
 
     ////this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     ////this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
     console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.OHLC]!.width, this.scaffold.sections![ChartType.OHLC]!.height);
 
-    this.scaffold.sections![ChartType.MACD]!.height = (this.rSectionsContainer.node()!.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections![ChartType.MACD]!.pct;
-    this.scaffold.sections![ChartType.MACD]!.width = this.rSectionsContainer.node()!.width.baseVal.value;
+
 
     //this.rMacdSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
     //this.rMacdSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
@@ -270,7 +264,6 @@ export class LayoutService {
     this.gXaxisTop.setAttribute('transform', `translate(0,0)`);
 
     this.gXaxisBottom.setAttribute('transform', `translate(0,${this.scaffold.height - this.scaffold.xAxisBottom})`);
-    this.gSectionsContainer.attr('transform', `translate(0,${this.scaffold.xAxisTop})`)
 
     //this.ohlcLayout.gSection.attr('transform', `translate(0,${this.spacer})`);
     //this.ohlcLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.OHLC]!.margins.left},0)`);
