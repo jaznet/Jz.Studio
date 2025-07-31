@@ -47,9 +47,14 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
+  @ViewChild('gChartTitle', { static: false }) gChartTitle!: ElementRef<SVGRectElement>;
+  @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
+  @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
+
+
   @ViewChild('gXaxisTop', { static: false }) gXaxisTop!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTopRef!: ElementRef<SVGGElement>;
+  @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTop!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
   @ViewChild('gXaxisBottom', { static: false }) gXaxisBottom!: ElementRef<SVGGElement>;
@@ -147,7 +152,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   chartXaxisMonthsBottom: any;
 
   svgContainer!: HTMLDivElement;
-  xAxisMonthsTop!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisDays!: any;
   xAxisBottom: any;
@@ -251,6 +255,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   private createChartScaffold() {
  
     this.chartScaffold = {
+      title: 36, // Title height
       width: this.svgContainer.clientWidth, height: 400,
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
@@ -270,6 +275,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.rSvgElement.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.height);
+
+    select(this.rChartTitle.nativeElement)
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.title);
     // X-AXIS TOP 
     select(this.xAxisTopRect.nativeElement)
       .attr('width', this.chartScaffold.width)
@@ -280,7 +289,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private alignChartElements() {
-    select(this.gXaxisTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`);
+    select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
+    select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
+    select(this.xAxisMonthsTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},28)`);
+    
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
   }
 
@@ -451,7 +463,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');
-    this.xAxisMonthsTop = select(this.xAxisMonthsTopRef.nativeElement);
+   // this.xAxisMonthsTop = select(this.xAxisMonthsTop.nativeElement);
     this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
     this.xAxisDays = select(this.xAxisDays);
     this.xAxisBottom = select(this.xAxisBottom);
@@ -520,7 +532,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     const tickValues = this.dateScaleX.domain(); // Get the domain values from scaleBand
 
     /*DRAW*/
-    this.xAxisMonthsTop.call(this.chartXaxisMonthsTop);
+    select(this.xAxisMonthsTop.nativeElement).call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
   }
 

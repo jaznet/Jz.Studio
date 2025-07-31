@@ -4,6 +4,7 @@ import { SectionAttributes } from "./section-attributes";
 export interface ChartScaffold {
   height: number;
   width: number;
+  title: number;
   xAxisTop: number;
   xAxisBottom: number;
   yAxisLeft: number;

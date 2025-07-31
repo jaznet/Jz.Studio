@@ -51,6 +51,7 @@ export class LayoutService {
   };
 
   scaffold: ChartScaffold = {
+    title: 36, // Title height
     width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40, sectionsContainer: {},
     sections: {
       [ChartType.OHLC]: this.ohlc,
@@ -70,8 +71,7 @@ export class LayoutService {
   sma3!: SVGElement;
 
   // #region Axes
-  xAxisMonthsTop!: SVGGElement;
-  xAxisMonthsBottom!: SVGGElement;
+
   xAxisDays!: SVGGElement;
   gXaxisTop!: SVGGElement;
 
@@ -268,11 +268,8 @@ export class LayoutService {
 
   alignChartsToScaffold(): void {
     this.gXaxisTop.setAttribute('transform', `translate(0,0)`);
-    this.xAxisMonthsTop.setAttribute('transform', `translate(40,32)`);
 
     this.gXaxisBottom.setAttribute('transform', `translate(0,${this.scaffold.height - this.scaffold.xAxisBottom})`);
-    this.xAxisMonthsBottom.setAttribute('transform', `translate(40,0)`);
-
     this.gSectionsContainer.attr('transform', `translate(0,${this.scaffold.xAxisTop})`)
 
     //this.ohlcLayout.gSection.attr('transform', `translate(0,${this.spacer})`);

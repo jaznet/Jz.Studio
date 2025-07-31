@@ -24,8 +24,7 @@ export class _PartsAxesService {
 
   drawAxes(): void {
 
-    this.xAxisMonthsTop = select(this.layout.xAxisMonthsTop);
-    this.xAxisMonthsBottom = select(this.layout.xAxisMonthsBottom);
+  
     this.xAxisDays = select(this.layout.xAxisDays);
     this.xAxisBottom = select(this.layout.xAxisBottom);
 
