@@ -63,8 +63,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainerRef!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionsContainer', { static: false }) rSectionsContainerRef!: ElementRef<SVGRectElement>;
+  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rSectionsContainer', { static: false }) rSectionsContainer!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -286,14 +286,18 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.xAxisBottomRect.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.xAxisTop);
+
+    select(this.rSectionsContainer.nativeElement)
+      .attr('width', 100)
+      .attr('height', 100);
   }
 
   private alignChartElements() {
     select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
     select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
     select(this.xAxisMonthsTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},28)`);
-    
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
+    select(this.gSectionsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
   }
 
   private createSections(): void {
