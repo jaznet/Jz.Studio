@@ -1,53 +1,45 @@
-
 import { Injectable, ViewContainerRef, ComponentRef, Type } from '@angular/core';
+import { BaseChartComponent } from '../components/base/base-chart/base-chart.component';
 import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
 import { ChartType } from '../enums/chart-type';
 import { chartConfig } from '../interfaces/chart-config';
-//import { ChartType } from '../../models/chart-type.enum';
-//import { chartConfig } from '../config/chart-config';
-//import { OhlcChartComponent } from '../charts/ohlc-chart/ohlc-chart.component';
-//import { MacdChartComponent } from '../charts/macd-chart/macd-chart.component';
-// Add more as needed
+// 🚫 MacdChartComponent intentionally omitted
+
+type ChartComponentMap = Partial<Record<ChartType, Type<BaseChartComponent>>>;
 
 @Injectable({ providedIn: 'root' })
 export class ChartInjectionService {
-  // Map ChartType enum to component classes
-  private chartComponentMap: Partial<Record<ChartType, Type<any>>> = {
+  private chartComponentMap: ChartComponentMap = {
     [ChartType.OHLC]: OhlcChartComponent,
- //   [ChartType.MACD]: MacdChartComponent,
-    // Add additional chart components here
+    // [ChartType.MACD]: MacdChartComponent, // ← omit for now
   };
 
-  /**
-   * Injects chart components based on chartConfig
-   * @param containers A map of ViewContainerRefs keyed by ChartType
-   * @param context Optional inputs to apply (e.g., data, scales)
-   */
   injectCharts(
-    containers: Record<ChartType, ViewContainerRef>,
+    containers: Partial<Record<ChartType, ViewContainerRef>>,
     context: {
       data?: any;
       dateScaleX?: any;
     } = {}
-  ): Record<ChartType, ComponentRef<any>> {
-    const injected: Record<ChartType, ComponentRef<any>> = {} as any;
+  ): Record<ChartType, ComponentRef<BaseChartComponent>> {
+    const injected: Record<ChartType, ComponentRef<BaseChartComponent>> = {} as any;
 
     for (const entry of chartConfig) {
       if (!entry.include) continue;
 
       const chartType = entry.type;
+      const componentType = this.chartComponentMap[chartType];
       const container = containers[chartType];
-      const componentClass = this.chartComponentMap[chartType];
 
-      if (!container || !componentClass) {
-        console.warn(`[ChartInjectionService] Missing container or component for ${chartType}`);
+      if (!componentType || !container) {
+        console.warn(`[ChartInjectionService] Missing component or container for ${chartType}`);
         continue;
       }
 
-      const compRef = container.createComponent(componentClass);
-      if (context.data) compRef.instance.data = context.data;
-      if (context.dateScaleX && 'dateScaleX' in compRef.instance) {
-        compRef.instance.dateScaleX = context.dateScaleX;
+      const compRef = container.createComponent(componentType);
+      compRef.instance.data = context.data ?? [];
+
+      if ('dateScaleX' in compRef.instance) {
+        (compRef.instance as any).dateScaleX = context.dateScaleX;
       }
 
       injected[chartType] = compRef;
