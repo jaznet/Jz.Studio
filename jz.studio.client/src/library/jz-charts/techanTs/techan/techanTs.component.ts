@@ -63,8 +63,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
   @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gSectionsContainer', { static: false }) gSectionsContainer!: ElementRef<SVGGElement>;
-  @ViewChild('rSectionsContainer', { static: false }) rSectionsContainer!: ElementRef<SVGRectElement>;
+  @ViewChild('gPanelsContainer', { static: false }) gPanelsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rPanelsContainer', { static: false }) rPanelsContainer!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -288,7 +288,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.xAxisTop);
 
-    select(this.rSectionsContainer.nativeElement)
+    select(this.rPanelsContainer.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.height - this.chartScaffold.title - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
   }
@@ -298,7 +298,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
     select(this.xAxisMonthsTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},28)`);
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
-    select(this.gSectionsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
+    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
   }
 
   private createSections(): void {
@@ -328,7 +328,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private appendSections() {
-    select(this.gSectionsContainer.nativeElement)
+    select(this.gPanelsContainer.nativeElement)
       .append('g').attr('id','gSection')
       .append('rect').attr('id', 'rSection');
   }
@@ -357,10 +357,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('%c     ✔ createChartFramework', 'color:#90BEE9');
     this.layoutService.divSvgContainer = select(this.divSvgContainer.nativeElement);
 
-    //this.layoutService.gSectionsContainer = select(this.gSectionsContainerRef.nativeElement);
-    //this.layoutService.rSectionsContainer = select(this.rSectionsContainerRef.nativeElement);
+    //this.layoutService.gPanelsContainer = select(this.gPanelsContainerRef.nativeElement);
+    //this.layoutService.rPanelsContainer = select(this.rPanelsContainerRef.nativeElement);
 
-  //  this.layoutService.rSectionsContainer = this.rs.nativeElement;
+  //  this.layoutService.rPanelsContainer = this.rs.nativeElement;
 
   //  this.layoutService.rOhlcSection = select(this.rOhlcSectionRef.nativeElement);
    

@@ -163,23 +163,23 @@ export class LayoutService {
     //   this.spacerAdjusted = this.spacer * (1 + (1 / this.scaffold.sections!.he));
 
 
-    ////this.rOhlcSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
-    ////this.rOhlcSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
+    ////this.rOhlcSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
+    ////this.rOhlcSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
     console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.OHLC]!.width, this.scaffold.sections![ChartType.OHLC]!.height);
 
 
 
-    //this.rMacdSection.attr('width', this.rSectionsContainer.node()!.width.baseVal.value);
-    //this.rMacdSection.attr('height', this.rSectionsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
+    //this.rMacdSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
+    //this.rMacdSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
 
     console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.MACD]!.width, this.scaffold.sections![ChartType.MACD]!.height);
 
     // #endregion MAIN
 
     // #region OHLC
-   // this.ohlcLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    //this.ohlcLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[ChartType.OHLC]!.pct)}`);
+   // this.ohlcLayout.rSection.attr('width', `${this.rPanelsContainer.width.baseVal.value}`);
+    //this.ohlcLayout.rSection.attr('height', `${((this.rPanelsContainer.height.baseVal.value - (5 * this.spacer)) * this.scaffold.sections[ChartType.OHLC]!.pct)}`);
     //this.ohlcLayout.rContent.attr('width', `${this.scaffold.sections[ChartType.OHLC]!.width - this.scaffold.sections[ChartType.OHLC]!.margins.left - this.scaffold.sections[ChartType.OHLC]!.margins.right}`);
 
     //this.scaffold.sections[ChartType.OHLC]!.width = this.ohlcLayout.rSection.node()!.width.baseVal.value;
@@ -194,8 +194,8 @@ export class LayoutService {
     // #endregion OHLC
 
     // #region VOLUME
-    //this.volumeLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    //this.volumeLayout.rSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[ChartType.VOLUME]!.pct) - this.spacerAdjusted}`);
+    //this.volumeLayout.rSection.attr('width', `${this.rPanelsContainer.width.baseVal.value}`);
+    //this.volumeLayout.rSection.attr('height', `${(this.rPanelsContainer.height.baseVal.value * this.scaffold.sections[ChartType.VOLUME]!.pct) - this.spacerAdjusted}`);
 
     //this.scaffold.sections[ChartType.VOLUME]!.width = this.volumeLayout.rSection.node()!.width.baseVal.value;
     //this.scaffold.sections[ChartType.VOLUME]!.height = this.volumeLayout.rSection.node()!.height.baseVal.value;
@@ -216,8 +216,8 @@ export class LayoutService {
     //        console.warn('⚠️ rSection not found');
     //        return;
     //      }
-    //      rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    //      rSection.attr('height', `${(this.rSectionsContainer.height.baseVal.value * this.scaffold.sections[ChartType.MACD]!.pct) - this.spacerAdjusted}`);
+    //      rSection.attr('width', `${this.rPanelsContainer.width.baseVal.value}`);
+    //      rSection.attr('height', `${(this.rPanelsContainer.height.baseVal.value * this.scaffold.sections[ChartType.MACD]!.pct) - this.spacerAdjusted}`);
     //      console.log('💡', rSection.node()?.width.baseVal.value);
     //      this.scaffold.sections[ChartType.MACD]!.width = this.macdLayout.rSection.node()?.width.baseVal.value ?? 0;
     //      this.scaffold.sections[ChartType.MACD]!.height = this.macdLayout.rSection.node()?.height.baseVal.value ?? 0;
@@ -247,8 +247,8 @@ export class LayoutService {
     // #endregion MACD
 
     // #region RSI
-    //this.rsiLayout.rSection.attr('width', `${this.rSectionsContainer.width.baseVal.value}`);
-    //this.rsiLayout.rSection.attr('height', `${((this.rSectionsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct)}`);
+    //this.rsiLayout.rSection.attr('width', `${this.rPanelsContainer.width.baseVal.value}`);
+    //this.rsiLayout.rSection.attr('height', `${((this.rPanelsContainer.height.baseVal.value - (this.spacer * 5)) * this.scaffold.sections[ChartType.MACD]!.pct)}`);
     //this.scaffold.sections[ChartType.MACD]!.width = this.rsiLayout.rSection.node()?.width.baseVal.value ?? 0;
     //this.scaffold.sections[ChartType.MACD]!.height = this.rsiLayout.rSection.node()?.height.baseVal.value ?? 0;
     //this.rsiLayout.rContent.attr('width', `${this.scaffold.sections[ChartType.MACD]!.width - this.scaffold.sections[ChartType.MACD]!.margins.left - this.scaffold.sections[ChartType.MACD]!.margins.right}`);

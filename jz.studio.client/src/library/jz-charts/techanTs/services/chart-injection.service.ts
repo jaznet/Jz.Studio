@@ -36,7 +36,7 @@ export class ChartInjectionService {
       }
 
       const compRef = container.createComponent(componentType);
-      compRef.instance.data = context.data ?? [];
+    //  compRef.instance.data = context.data ?? [];
 
       if ('dateScaleX' in compRef.instance) {
         (compRef.instance as any).dateScaleX = context.dateScaleX;
