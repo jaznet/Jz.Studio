@@ -30,6 +30,8 @@ import { timeFormat } from 'd3-time-format';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
 import { SectionAttributes } from '../interfaces/section-attributes';
 import { chartConfig } from '../interfaces/chart-config';
+import { PanelHostService } from '../services/panel-host.service';
+import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
 
 @Component({
   selector: 'techanTs',
@@ -44,13 +46,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region @ViewChild List
   @ViewChild('divSvgContainer', { static: false }) divSvgContainer!: ElementRef<HTMLDivElement>;
-  @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGElement>;
+  @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGSVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
   @ViewChild('gChartTitle', { static: false }) gChartTitle!: ElementRef<SVGRectElement>;
   @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
   @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
-
 
   @ViewChild('gXaxisTop', { static: false }) gXaxisTop!: ElementRef<SVGGElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
@@ -138,6 +139,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   // #endregion
     // #endregion @ViewChild List
 
+  // #region Properties
   width = 0;
 
   dataReady = false;
@@ -155,15 +157,17 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisDays!: any;
   xAxisBottom: any;
+  // #endregion Properties
 
   @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
 
+  // #region constructor
   constructor(
     private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
-    public data: ChartDataService,
+    public chartData: ChartDataService,
     public  layoutService: LayoutService,
     private popOverService: JzPopOversService,
     private ohlcLayout: OhlcChartLayoutService,
@@ -172,9 +176,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private smaService: SmaChartService,
 /*    private ohlcChart: OhlcChartComponent,*/
     private macdLayout: MacdLayoutService,
-    private macdDraw: MacdDrawService
+    private macdDraw: MacdDrawService,
    /* private baseLayout: BaseChartLayoutService*/
-    
+    private panelHost: PanelHostService
   ) {
     console.log('');
     console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
@@ -184,6 +188,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
+  // #endregion constructor
 
   ngOnInit(): void { }
 
@@ -192,8 +197,18 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
+
+    Promise.resolve().then(() => {
+      const gPanelsContainer = this.gPanelsContainer.nativeElement;
+      this.panelHost.injectChartComponent(
+        gPanelsContainer,
+        ChartType.OHLC,
+        ChartComponentMap[ChartType.OHLC]!
+      );
+      this.viewReady = true;
+    });
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
-    this.viewReady = true;
+//    this.viewReady = true;
   }
 
   private updateSvgSize(): void {
@@ -208,7 +223,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   fetchData(): void {
     this.popover_loading.show();
     this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
-      this.data.stockPriceHistoryData = data;
+      this.chartData.stockPriceHistoryData = data;
       this.dataReady = true;
       console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
       this.popover_loading.hide();
@@ -242,7 +257,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
-      this.data.scrubData();
+      this.chartData.scrubData();
       this.createChartScaffold();
       this.sizeChartElements();
       this.alignChartElements();
@@ -338,9 +353,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     const section = this.chartScaffold.sections![ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
-    if (this.data.dateExtent[0] && this.data.dateExtent[1]) {
+    if (this.chartData.dateExtent[0] && this.chartData.dateExtent[1]) {
       this.dateScaleX = scaleBand()
-        .domain(this.data.parsedData.map(d => d.date.toISOString()))
+        .domain(this.chartData.parsedData.map(d => d.date.toISOString()))
         .range([0, width])
         .padding(0.1);
     } else {
@@ -466,10 +481,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   //  this.layoutService.gXaxisBottom = this.gXaxisBottomRef.nativeElement;
   ////  this.layoutService.xAxisBottomRect = this.xAxisBottomRectRef.nativeElement;
   //  this.layoutService.xAxisMonthsBottom = this.xAxisMonthsBottomRef.nativeElement;
-  }
-
-  sizeElements(): void {
-    console.log('SIZE', this.rOhlcSectionRef);
   }
 
   drawAxes(): void {

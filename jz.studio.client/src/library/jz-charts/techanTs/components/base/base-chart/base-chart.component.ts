@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ChartType } from '../../../enums/chart-type';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold';
+import { ChartDataService } from '../../../services/chart-data.service';
 
 @Directive()
 // This base class is intended to be extended by chart components
@@ -26,6 +27,8 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
+
+  constructor(chartData: ChartDataService) { }
 
   // === Angular lifecycle hooks ===
   ngAfterViewInit(): void {

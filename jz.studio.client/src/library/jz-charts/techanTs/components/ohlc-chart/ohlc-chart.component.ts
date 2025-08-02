@@ -13,6 +13,7 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold';
+import { ChartDataService } from '../../services/chart-data.service';
 
 @Component({
   selector: 'ohlc-chart',
@@ -28,8 +29,8 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   override chartType = ChartType.OHLC;
   private yScale: any;
 
-  constructor() {
-    super();
+  constructor(private chartDatta:ChartDataService) {
+    super(chartDatta);
     console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
   }
 
