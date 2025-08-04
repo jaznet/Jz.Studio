@@ -284,7 +284,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.createChartScaffold();
       this.sizeChartElements();
       this.alignChartElements();
-      this.createSections();
+      this.createPanels();
       this.appendSections();
       this.createScales();
       this.drawAxes();
@@ -339,7 +339,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
   }
 
-  private createSections(): void {
+  private createPanels(): void {
    
     let yOffset = 0;
 
