@@ -285,7 +285,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.sizeChartElements();
       this.alignChartElements();
       this.createPanels();
-      this.appendSections();
+      this.appendPanels();
       this.createScales();
       this.drawAxes();
     });
@@ -343,12 +343,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
    
     let yOffset = 0;
 
-    const sections: { [key in ChartType]?: PanelAttributes } = {};
+    const panels: { [key in ChartType]?: PanelAttributes } = {};
 
     for (const entry of chartConfig) {
       if (!entry.include) continue;
 
-      sections[entry.type] = {
+      panels[entry.type] = {
         width: this.svgContainer.clientWidth,
         height: entry.height,
         margins: entry.margins,
@@ -361,11 +361,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       yOffset += entry.height;
     }
 
-    this.chartScaffold.panels = sections;
+    this.chartScaffold.panels = panels;
     console.log('%c sections', 'color:purple', this.chartScaffold.panels);
   }
 
-  private appendSections() {
+  private appendPanels() {
     select(this.gPanelsContainer.nativeElement)
       .append('g').attr('id','gSection')
       .append('rect').attr('id', 'rSection');
