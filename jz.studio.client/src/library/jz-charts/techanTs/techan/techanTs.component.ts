@@ -373,8 +373,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);
-    const section = this.chartScaffold.panels![ChartType.OHLC];
-    const width = section!.width - section!.margins.left - section!.margins.right;
+    const panel = this.chartScaffold.panels![ChartType.OHLC];
+    const width = panel!.width - panel!.margins.left - panel!.margins.right;
 
     if (this.chartData.dateExtent[0] && this.chartData.dateExtent[1]) {
       this.dateScaleX = scaleBand()
