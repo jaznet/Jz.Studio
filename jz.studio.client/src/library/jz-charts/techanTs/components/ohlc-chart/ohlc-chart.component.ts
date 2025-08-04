@@ -36,12 +36,13 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
-    const section = this.chartScaffold?.sections?.[ChartType.OHLC];
-    const inputsValid =  !!section && section.width > 0 && section.height > 0 && this.data?.length && this.dateScaleX;
+    const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
+    const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
 
     //if (!this.inputsReady && inputsValid) {
     //  this.markInputsReady();
     //}
+
 
     //this.tryDrawWhenReady('ngOnChanges');
   }
@@ -63,13 +64,18 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   //}
 
   protected override drawChart(caller: string): void {
-    const section = this.chartScaffold?.sections?.[ChartType.OHLC];
-    if (!section || !this.gChartRef) {
-      console.warn(`${caller}: Missing section or gChartRef`);
+    const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
+    if (!panel || !this.gChartRef) {
+      console.warn(`${caller}: Missing panel or gChartRef`, {
+        panelMissing: !panel,
+        gChartRefMissing: !this.gChartRef
+      });
       return;
     }
 
     const g = select(this.gChartRef.nativeElement);
+    console.log(`[${this.chartType}] Drawing chart in panel`, panel);
+
     console.log('BANDWIDTH');
     const candleWidth = this.dateScaleX.bandwidth();
 
@@ -78,7 +84,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
         Math.min(...this.data.map(d => d.low)),
         Math.max(...this.data.map(d => d.high))
       ])
-      .range([section.height, 0]);
+      .range([panel.height, 0]);
 
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());

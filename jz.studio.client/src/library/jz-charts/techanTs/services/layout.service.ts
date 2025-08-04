@@ -46,8 +46,8 @@ export class LayoutService {
 
   scaffold: ChartScaffold = {
     title: 36, // Title height
-    width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40, sectionsContainer: {},
-    sections: {
+    width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40, panelsContainer: {},
+    panels: {
       [ChartType.OHLC]: this.ohlc,
       [ChartType.VOLUME]: this.volume,
       [ChartType.MACD]: this.macd,
@@ -55,7 +55,6 @@ export class LayoutService {
     }
   };
   svg_attributes: SvgAttributes = { width: 0, height: 0 };
-
 
   spacer = 0;
   spacerAdjusted = 0;
@@ -68,7 +67,6 @@ export class LayoutService {
 
   xAxisDays!: SVGGElement;
   gXaxisTop!: SVGGElement;
-
 
   xAxisBottom!: SVGGElement;
   gXaxisBottom!: SVGGElement;
@@ -107,11 +105,10 @@ export class LayoutService {
     }
   }
 
-
   sizeChartSection(chartType: ChartType): void {
 
-    const section = this.scaffold.sections![chartType];
-    if (!section) {
+    const panel = this.scaffold.panels![chartType];
+    if (!panel) {
       console.warn(`No layout section found for chart type: ${chartType}`);
       return;
     }
@@ -131,13 +128,13 @@ export class LayoutService {
     //scaffoldSection!.width = width;
     //scaffoldSection!.height = height;
 
-    layout.axisLeft.gAxis.attr('width', `${section.margins.right}`);
+    layout.axisLeft.gAxis.attr('width', `${panel.margins.right}`);
     layout.axisLeft.gAxis.attr('height', `${height}`);
 
-    layout.axisRight.gAxis.attr('width', `${section.margins.right}`);
+    layout.axisRight.gAxis.attr('width', `${panel.margins.right}`);
     layout.axisRight.gAxis.attr('height', `${height}`);
 
-    layout.rContent.attr('width', `${width! - section.margins.left - section.margins.right}`);
+    layout.rContent.attr('width', `${width! - panel.margins.left - panel.margins.right}`);
     layout.rContent.attr('height', `${height}`);
 
   }
@@ -166,14 +163,14 @@ export class LayoutService {
     ////this.rOhlcSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
     ////this.rOhlcSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.OHLC]!.width, this.scaffold.sections![ChartType.OHLC]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.panels![ChartType.OHLC]!.width, this.scaffold.panels![ChartType.OHLC]!.height);
 
 
 
     //this.rMacdSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
     //this.rMacdSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
 
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.sections![ChartType.MACD]!.width, this.scaffold.sections![ChartType.MACD]!.height);
+    console.log('%c     Sections', 'color:#15795F', this.scaffold.panels![ChartType.MACD]!.width, this.scaffold.panels![ChartType.MACD]!.height);
 
     // #endregion MAIN
 

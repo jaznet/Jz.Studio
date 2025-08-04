@@ -32,6 +32,7 @@ import { SectionAttributes } from '../interfaces/section-attributes';
 import { chartConfig } from '../interfaces/chart-config';
 import { PanelHostService } from '../services/panel-host.service';
 import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
+import { baseZIndex } from 'devextreme/ui/overlay';
 
 @Component({
   selector: 'techanTs',
@@ -205,10 +206,32 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
         ChartType.OHLC,
         ChartComponentMap[ChartType.OHLC]!
       );
-      this.viewReady = true;
+
+      const compRef = this.panelHost.injectChartComponent(
+        gPanelsContainer,
+        ChartType.OHLC,
+        ChartComponentMap[ChartType.OHLC]!
+      );
+
+      // Provide inputs
+      compRef.instance.data = this.chartData.stockPriceHistoryData;
+      compRef.instance.dateScaleX = this.dateScaleX;
+      compRef.instance.scaffold = this.layoutService.scaffold;
+
+      // Mark ready + draw
+      compRef.instance.markReadyAndDraw({
+        dataReady: true,
+        inputsInitialized: true,
+        layoutReady: true,
+        caller: 'after dynamic injection'
+      });
+
+      compRef.changeDetectorRef.detectChanges(); baseZIndex
+
+  /*    this.viewReady = true;*/
     });
+
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
-//    this.viewReady = true;
   }
 
   private updateSvgSize(): void {
@@ -275,8 +298,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       width: this.svgContainer.clientWidth, height: 400,
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
-      sectionsContainer: undefined,
-      sections: undefined
+      panelsContainer: undefined,
+      panels: undefined
     };
 
     this.chartScaffold.width = this.svgContainer.clientWidth;
@@ -338,8 +361,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       yOffset += entry.height;
     }
 
-    this.chartScaffold.sections = sections;
-    console.log('%c sections', 'color:purple', this.chartScaffold.sections);
+    this.chartScaffold.panels = sections;
+    console.log('%c sections', 'color:purple', this.chartScaffold.panels);
   }
 
   private appendSections() {
@@ -349,8 +372,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private createScales(): void {
-    console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.sections);
-    const section = this.chartScaffold.sections![ChartType.OHLC];
+    console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);
+    const section = this.chartScaffold.panels![ChartType.OHLC];
     const width = section!.width - section!.margins.left - section!.margins.right;
 
     if (this.chartData.dateExtent[0] && this.chartData.dateExtent[1]) {

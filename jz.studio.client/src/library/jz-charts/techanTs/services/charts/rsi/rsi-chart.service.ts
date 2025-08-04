@@ -95,7 +95,7 @@ export class RsiChart  implements AfterViewInit {
   }
 
   public drawAxes(chartScaffold: ChartScaffold) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.sections![ChartType.RSI]!.height, 0]);
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.panels![ChartType.RSI]!.height, 0]);
 
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);

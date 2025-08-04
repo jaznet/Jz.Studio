@@ -9,8 +9,8 @@ export interface ChartScaffold {
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
-  sectionsContainer: any; // You can tighten this later
-  sections: { [key in ChartType]?: SectionAttributes } | undefined;
+  panelsContainer: any; // You can tighten this later
+  panels: { [key in ChartType]?: SectionAttributes } | undefined;
 
 };
 

@@ -48,7 +48,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
       this.inputsInitialized &&
       this.layoutReady &&
       this.dataReady &&
-      !!this.gChartRef;
+      !!this.gChartRef;   
 
     console.log(`🧩 [${this.chartType}] checkAndDraw from ${caller}: ready=${ready}`, {
       viewInitialized: this.viewInitialized,
@@ -63,6 +63,25 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
       this.drawChart(caller);
     }
   }
+
+  /**
+ * Sets lifecycle flags and attempts to draw.
+ * Intended for use immediately after dynamic injection.
+ */
+  public markReadyAndDraw(options: {
+    dataReady?: boolean;
+    inputsInitialized?: boolean;
+    layoutReady?: boolean;
+    caller?: string;
+  } = {}): void {
+    if (options.dataReady !== undefined) this.dataReady = options.dataReady;
+    if (options.inputsInitialized !== undefined) this.inputsInitialized = options.inputsInitialized;
+    if (options.layoutReady !== undefined) this.layoutReady = options.layoutReady;
+
+    // Always re-check
+    this.checkAndDraw(options.caller || 'markReadyAndDraw');
+  }
+
 
   // === Markers for derived components to call ===
   protected markInputsReady(): void {
