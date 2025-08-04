@@ -28,7 +28,7 @@ import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.componen
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
-import { SectionAttributes } from '../interfaces/section-attributes';
+import { PanelAttributes } from '../interfaces/panel-attributes';
 import { chartConfig } from '../interfaces/chart-config';
 import { PanelHostService } from '../services/panel-host.service';
 import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
@@ -343,7 +343,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
    
     let yOffset = 0;
 
-    const sections: { [key in ChartType]?: SectionAttributes } = {};
+    const sections: { [key in ChartType]?: PanelAttributes } = {};
 
     for (const entry of chartConfig) {
       if (!entry.include) continue;

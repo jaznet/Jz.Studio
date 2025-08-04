@@ -6,7 +6,7 @@ import { ChartType } from "../enums/chart-type";
 import {  SvgAttributes } from "../interfaces/techan-interfaces";
 import { BaseChartLayoutService } from "./charts/base/base-chart-layout-service";
 import { ChartScaffold } from "../interfaces/chart-scaffold";
-import { SectionAttributes } from "../interfaces/section-attributes";
+import { PanelAttributes } from "../interfaces/panel-attributes";
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +21,10 @@ export class LayoutService {
   gMacdSection!: Selection<SVGGElement, unknown, null, undefined>;
   rMacdSection!: Selection<SVGRectElement, unknown, null, undefined>;
 
-  ohlc!: SectionAttributes;
-  volume!: SectionAttributes;
-  macd!: SectionAttributes;
-  rsi!: SectionAttributes;
+  ohlc!: PanelAttributes;
+  volume!: PanelAttributes;
+  macd!: PanelAttributes;
+  rsi!: PanelAttributes;
 
   macdSizeReady$ = new ReplaySubject<{ width: number; height: number }>(1);
   rsiSizeReady$ = new ReplaySubject<{ width: number; height: number }>(1);

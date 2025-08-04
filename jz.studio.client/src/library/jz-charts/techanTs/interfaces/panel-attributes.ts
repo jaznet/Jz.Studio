@@ -1,6 +1,6 @@
 import { Margins, RectDimensions } from "./techan-interfaces";
 
-export interface SectionAttributes {
+export interface PanelAttributes {
   x: number;
   y: number;
   width: number;
