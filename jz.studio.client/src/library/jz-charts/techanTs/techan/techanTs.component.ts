@@ -158,6 +158,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   xAxisDays!: any;
   xAxisBottom: any;
+
+  scaffold!: ChartScaffold;
   // #endregion Properties
 
   @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
@@ -199,37 +201,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
 
-    Promise.resolve().then(() => {
-      const gPanelsContainer = this.gPanelsContainer.nativeElement;
-      this.panelHost.injectChartComponent(
-        gPanelsContainer,
-        ChartType.OHLC,
-        ChartComponentMap[ChartType.OHLC]!
-      );
-
-      const compRef = this.panelHost.injectChartComponent(
-        gPanelsContainer,
-        ChartType.OHLC,
-        ChartComponentMap[ChartType.OHLC]!
-      );
-
-      // Provide inputs
-      compRef.instance.data = this.chartData.stockPriceHistoryData;
-      compRef.instance.dateScaleX = this.dateScaleX;
-      compRef.instance.scaffold = this.layoutService.scaffold;
-
-      // Mark ready + draw
-      compRef.instance.markReadyAndDraw({
-        dataReady: true,
-        inputsInitialized: true,
-        layoutReady: true,
-        caller: 'after dynamic injection'
-      });
-
-      compRef.changeDetectorRef.detectChanges(); baseZIndex
-
-  /*    this.viewReady = true;*/
-    });
+    this.viewReady = true;
+    this.initializeChartWhenReady();
 
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   }
@@ -329,6 +302,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.rPanelsContainer.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.height - this.chartScaffold.title - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
+
+    select(this.rOhlcSection)
   }
 
   private alignChartElements() {

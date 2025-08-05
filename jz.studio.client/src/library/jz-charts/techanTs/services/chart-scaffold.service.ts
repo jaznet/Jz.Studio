@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
 
 @Injectable({ providedIn: 'root' })
-export class ChartScaffoldService {
+export class _ChartScaffoldService {
   private scaffold!: ChartScaffold;
 
   setScaffold(scaffold: ChartScaffold): void {

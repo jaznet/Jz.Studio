@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChartScaffoldService } from './chart-scaffold.service';
+import { _ChartScaffoldService } from './chart-scaffold.service';
 
 describe('ChartScaffoldService', () => {
-  let service: ChartScaffoldService;
+  let service: _ChartScaffoldService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ChartScaffoldService);
+    service = TestBed.inject(_ChartScaffoldService);
   });
 
   it('should be created', () => {

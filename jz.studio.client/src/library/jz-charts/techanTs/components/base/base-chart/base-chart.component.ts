@@ -50,7 +50,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
       this.dataReady &&
       !!this.gChartRef;   
 
-    console.log(`🧩 [${this.chartType}] checkAndDraw from ${caller}: ready=${ready}`, {
+    console.log(`  🧩 [${this.chartType}] checkAndDraw from ${caller}: ready=${ready}`, {
       viewInitialized: this.viewInitialized,
       inputsInitialized: this.inputsInitialized,
       layoutReady: this.layoutReady,

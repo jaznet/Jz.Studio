@@ -107,11 +107,8 @@ export class LayoutService {
 
   sizeChartSection(chartType: ChartType): void {
 
-    const panel = this.scaffold.panels![chartType];
-    if (!panel) {
-      console.warn(`No layout section found for chart type: ${chartType}`);
-      return;
-    }
+
+
 
     const layout = this.getLayoutByChartType(chartType);
     if (!layout) {
@@ -128,14 +125,7 @@ export class LayoutService {
     //scaffoldSection!.width = width;
     //scaffoldSection!.height = height;
 
-    layout.axisLeft.gAxis.attr('width', `${panel.margins.right}`);
-    layout.axisLeft.gAxis.attr('height', `${height}`);
 
-    layout.axisRight.gAxis.attr('width', `${panel.margins.right}`);
-    layout.axisRight.gAxis.attr('height', `${height}`);
-
-    layout.rContent.attr('width', `${width! - panel.margins.left - panel.margins.right}`);
-    layout.rContent.attr('height', `${height}`);
 
   }
 
@@ -143,8 +133,7 @@ export class LayoutService {
     console.log('%c    ✓ sizeSections layout service  💡', 'color:#C9B498');
     this.spacer = 8;
 
-    this.scaffold.width = this.divSvgContainer.node()!.clientWidth - (this.svgBorder * 2);
-    this.scaffold.height = this.divSvgContainer.node()!.clientHeight - (this.svgBorder * 2);
+
 
     // #region MAIN
 
@@ -152,8 +141,7 @@ export class LayoutService {
  
 
     // X AXIS BOTTOM
-    this.xAxisBottomRect.setAttribute('width', `${this.scaffold.width}`);
-    this.xAxisBottomRect.setAttribute('height', `${this.scaffold.xAxisBottom}`);
+
     //this.xAxisBottomRect.setAttribute('fill', 'var(--plt-chart-2');
 
     // SECTIONS
@@ -163,14 +151,10 @@ export class LayoutService {
     ////this.rOhlcSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
     ////this.rOhlcSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.OHLC]?.pct!);
 
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.panels![ChartType.OHLC]!.width, this.scaffold.panels![ChartType.OHLC]!.height);
-
 
 
     //this.rMacdSection.attr('width', this.rPanelsContainer.node()!.width.baseVal.value);
     //this.rMacdSection.attr('height', this.rPanelsContainer.node()!.height.baseVal.value * this.scaffold!.sections![ChartType.MACD]?.pct!);
-
-    console.log('%c     Sections', 'color:#15795F', this.scaffold.panels![ChartType.MACD]!.width, this.scaffold.panels![ChartType.MACD]!.height);
 
     // #endregion MAIN
 
@@ -255,7 +239,7 @@ export class LayoutService {
   alignChartsToScaffold(): void {
     this.gXaxisTop.setAttribute('transform', `translate(0,0)`);
 
-    this.gXaxisBottom.setAttribute('transform', `translate(0,${this.scaffold.height - this.scaffold.xAxisBottom})`);
+
 
     //this.ohlcLayout.gSection.attr('transform', `translate(0,${this.spacer})`);
     //this.ohlcLayout.gContent.attr('transform', `translate(${this.scaffold.sections[ChartType.OHLC]!.margins.left},0)`);

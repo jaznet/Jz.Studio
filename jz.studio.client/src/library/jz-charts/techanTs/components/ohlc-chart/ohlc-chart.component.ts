@@ -25,8 +25,8 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
-  override chartScaffold!: ChartScaffold;
-  override chartType = ChartType.OHLC;
+  //override chartScaffold!: ChartScaffold;
+  //override chartType = ChartType.OHLC;
   private yScale: any;
 
   constructor(private chartDatta:ChartDataService) {
