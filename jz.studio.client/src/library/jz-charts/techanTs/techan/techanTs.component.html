@@ -21,27 +21,18 @@
     <g #gPanelsContainer id="gPanelsContainer">
       <rect #rPanelsContainer id="rPanelsContainer" x="0" y="0" width="0" height="0" class="chart-section"></rect>
 
-      <!-- #region OHLC SECTION-->
-      <g #gOhlcSection id="gOhlcSection" class="ohlcSectionContainer">
-        <rect #rOhlcSection
-              id="rOhlcSection"
-              width="0"
-              height="0"
-              class="chart-section"></rect>
-
-        <text>OHLC</text>
-
-        <!-- 👇 Template reference to chart and input bindings -->
-        <!--<ohlc-chart #ohlcChart
-                    dateScaleX="dateScaleX">-->
-                    <!--[data]="data.stockPriceHistoryData">-->
-        <!--</ohlc-chart>-->
+      <g #panel1 id="gPanel1">
+        <rect width="0" height="0" class="chart-panel" />
       </g>
-
-      <!-- #endregion OHLC CONTENT--> 
-      <!-- #region SECTION MACD -->
-
-      <!-- #endregion SECTION MACD -->
+      <g #panel2 id="gPanel2">
+        <rect width="0" height="0" class="chart-panel" />
+      </g>
+      <g #panel3 id="gPanel3">
+        <rect width="0" height="0" class="chart-panel" />
+      </g>
+      <g #panel4 id="gPanel4">
+        <rect width="0" height="0" class="chart-panel" />
+      </g>
     </g>
 
     <!-- X AXIS BOTTOM -->

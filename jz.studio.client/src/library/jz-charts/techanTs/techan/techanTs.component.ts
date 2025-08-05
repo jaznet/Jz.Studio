@@ -70,6 +70,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
+  @ViewChild('panel1', { static: false }) panel1!: ElementRef<SVGGElement>;
+  @ViewChild('panel2', { static: false }) panel2!: ElementRef<SVGGElement>;
+  @ViewChild('panel3', { static: false }) panel3!: ElementRef<SVGGElement>;
+  @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
+
 
   // #region ohlc
   @ViewChild('ohlcChart', { static: false }) ohlcChart!: OhlcChartComponent;
@@ -303,7 +308,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.height - this.chartScaffold.title - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
 
-    select(this.rOhlcSection)
+  
   }
 
   private alignChartElements() {
@@ -341,9 +346,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private appendPanels() {
-    select(this.gPanelsContainer.nativeElement)
-      .append('g').attr('id','gSection')
-      .append('rect').attr('id', 'rSection');
+    //select(this.gPanelsContainer.nativeElement)
+    //  .append('g').attr('id','gSection')
+    //  .append('rect').attr('id', 'rSection');
   }
 
   private createScales(): void {
