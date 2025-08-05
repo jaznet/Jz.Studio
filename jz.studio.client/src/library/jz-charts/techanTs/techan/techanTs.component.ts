@@ -264,6 +264,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.alignChartElements();
       this.createPanels();
       this.appendPanels();
+      this.sizePanels();
       this.createScales();
       this.drawAxes();
     });
@@ -350,6 +351,36 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     //  .append('g').attr('id','gSection')
     //  .append('rect').attr('id', 'rSection');
   }
+
+
+
+  sizePanels(): void {
+    // Proportional height allocation for panels
+    const panelProportions = [0.4, 0.2, 0.2, 0.2];
+
+    const containerRect = this.rPanelsContainer.nativeElement.getBoundingClientRect();
+    const totalHeight = containerRect.height;
+    const panelWidth = containerRect.width;
+
+    let yOffset = 0;
+    panelProportions.forEach((proportion, index) => {
+      const height = totalHeight * proportion;
+      const panelRef = this[`panel${index + 1}` as keyof this] as ElementRef<SVGGElement>;
+
+      if (panelRef) {
+        select(panelRef.nativeElement)
+          .select('rect')
+          .attr('x', 0)
+          .attr('y', yOffset)
+          .attr('width', panelWidth)
+          .attr('height', height);
+
+        yOffset += height;
+      }
+    });
+  }
+  
+
 
   private createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);
