@@ -17,6 +17,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
 
   // === View references ===
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRectLeft', { static: false }) rAxisRectLeft!: SVGRectElement;
 
   chartType: ChartType = ChartType.Base;
   chartScaffold!: ChartScaffold;
@@ -82,7 +83,6 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
     this.checkAndDraw(options.caller || 'markReadyAndDraw');
   }
 
-
   // === Markers for derived components to call ===
   protected markInputsReady(): void {
     this.inputsInitialized = true;
@@ -99,6 +99,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
     this.checkAndDraw('markDataReady');
   }
 
+  protected abstract sizeChartElements(caller?: string): void;
   // === Abstract drawing method to be implemented ===
   protected abstract drawChart(caller?: string): void;
 }

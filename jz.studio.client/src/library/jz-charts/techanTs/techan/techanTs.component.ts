@@ -382,13 +382,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     console.log('%c sections', 'color:purple', this.chartScaffold.panels);
   }
 
-  private appendPanels() {
-    //select(this.gPanelsContainer.nativeElement)
-    //  .append('g').attr('id','gSection')
-    //  .append('rect').attr('id', 'rSection');
-  }
-
-
+  private appendPanels() { }
 
   sizePanels(): void {
     // Proportional height allocation for panels
@@ -415,8 +409,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       }
     });
   }
-  
-
 
   private createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);

@@ -39,31 +39,10 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
     const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
-
-    //if (!this.inputsReady && inputsValid) {
-    //  this.markInputsReady();
-    //}
-
-
-    //this.tryDrawWhenReady('ngOnChanges');
   }
 
-  //protected override sizeChartContainer(caller: string): void {
-  //  if (!this.rOhlcSectionRef) {
-  //    console.warn(`${caller}: rOhlcSectionRef is not set`);
-  //    return;
-  //  }
-
-  //  const { width, height } = this.rOhlcSectionRef.nativeElement.getBBox();
-  //  const section = this.scaffold?.sections?.[ChartType.OHLC];
-  //  if (section) {
-  //    section.width = width;
-  //    section.height = height;
-  //  }
-
-  //  console.log(`📐 ${caller}: sized section for OHLC — ${width} x ${height}`);
-  //}
-
+  protected override sizeChartElements(caller: string): void { }
+   
   protected override drawChart(caller: string): void {
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
     if (!panel || !this.gChartRef) {
