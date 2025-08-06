@@ -267,6 +267,42 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.sizePanels();
       this.createScales();
       this.drawAxes();
+      this.injectChartsFromConfig();
+    });
+  }
+
+  // Generic chart injector that supports any chart type defined in chartConfig
+  injectChartsFromConfig(): void {
+    const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
+
+    chartConfig.forEach((configEntry, index) => {
+      if (!configEntry.include) return;
+
+      const chartComponent = ChartComponentMap[configEntry.type];
+      const panelRef = panelRefs[index];
+
+      if (!chartComponent || !panelRef) return;
+
+      const compRef = this.panelHost.injectChartComponent(
+        panelRef.nativeElement,
+        configEntry.type,
+        chartComponent
+      );
+
+      // Provide shared inputs
+      compRef.instance.data = this.chartData.stockPriceHistoryData;
+      compRef.instance.dateScaleX = this.dateScaleX;
+      compRef.instance.chartScaffold = this.chartScaffold;
+
+      // Mark ready + draw
+      compRef.instance.markReadyAndDraw({
+        dataReady: true,
+        inputsInitialized: true,
+        layoutReady: true,
+        caller: 'injectChartsFromConfig'
+      });
+
+      compRef.changeDetectorRef.detectChanges();
     });
   }
 

@@ -14,6 +14,7 @@ import { ChartType } from '../../enums/chart-type';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../services/chart-data.service';
+import { toISOStringSafe } from '../../utils/date-utils';
 
 @Component({
   selector: 'ohlc-chart',
@@ -95,8 +96,8 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .data(this.data)
       .join('line')
       .attr('class', 'wick')
-      .attr('x1', d => this.dateScaleX(d.date.toISOString())! + candleWidth / 2)
-      .attr('x2', d => this.dateScaleX(new Date(d.date)) + candleWidth / 2)
+      .attr('x1', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
+      .attr('x2', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
       .attr('y1', d => this.yScale(d.high))
       .attr('y2', d => this.yScale(d.low))
       .attr('stroke', '#52aa8a')
@@ -107,7 +108,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .data(this.data)
       .join('rect')
       .attr('class', 'body')
-      .attr('x', d => this.dateScaleX(new Date(d.date)))
+      .attr('x', d => this.dateScaleX(toISOStringSafe(d.date)))
       .attr('y', d => this.yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
       .attr('height', d => Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close))))

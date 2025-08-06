@@ -18,39 +18,45 @@ export class ChartDataService {
   constructor() { }
 
   scrubData() {
-    const priceValues = this.stockPriceHistoryData.map(d => [d.open, d.high, d.low, d.close]).flat();
-    this.minPrice = min(priceValues);
-    this.maxPrice = max(priceValues);
+    this.cleanParsedData();
+    this.computePriceRange();
+    this.computeMaxVolume();
+    this.computeDateExtent();
+    this.computeMacd();
+  }
 
-    // Calculate the maximum volume
-    this.maxVolume = max(this.stockPriceHistoryData, d => d.volume); // Assuming `volume` is a property in your data
-
-    this.parsedData = this.stockPriceHistoryData.map(d => ({
-      ...d,
-      date: new Date(d.date) // Convert date string to Date object
-    }));
-
-    // Filter out invalid dates
-   // this.parsedData = this.parsedData.filter((d: { date: { getTime: () => number; }; }) => !isNaN(d.date.getTime()));
-
+  private cleanParsedData(): void {
     this.parsedData = this.stockPriceHistoryData
       .map(d => ({
         ...d,
-        date: new Date(d.date) // Convert date string to Date object
+        date: new Date(d.date)
       }))
-      .filter(d => !isNaN(d.date.getTime())) // Filter out invalid dates
-      .filter(d => d.date.getDay() !== 0 && d.date.getDay() !== 6); // Exclude weekends
+      .filter(d => !isNaN(d.date.getTime()))
+      .filter(d => d.date.getDay() !== 0 && d.date.getDay() !== 6);
+  }
 
-    // Calculate date extent
-    this.dateExtent = extent(this.parsedData, (d: ohlcData) => d.date);
+  private computePriceRange(): void {
+    const priceValues = this.parsedData
+      .map(d => [d.open, d.high, d.low, d.close])
+      .flat();
+    this.minPrice = min(priceValues);
+    this.maxPrice = max(priceValues);
+  }
 
-    console.log(' %c    Date Extent:','color:#15795F', this.dateExtent);
-    console.log(' %c    Maximum Volume:','color:#15795F', this.maxVolume);
+  private computeMaxVolume(): void {
+    this.maxVolume = max(this.parsedData, d => d.volume);
+  }
 
+  private computeDateExtent(): void {
+    this.dateExtent = extent(this.parsedData, d => d.date);
+    console.log(' %c    Date Extent:', 'color:#15795F', this.dateExtent);
+    console.log(' %c    Maximum Volume:', 'color:#15795F', this.maxVolume);
+  }
+
+  private computeMacd(): void {
     const shortPeriod = 12;
     const longPeriod = 26;
     const signalPeriod = 9;
-
     this.macdData = this.calculateMacd(this.parsedData, shortPeriod, longPeriod, signalPeriod);
   }
 
