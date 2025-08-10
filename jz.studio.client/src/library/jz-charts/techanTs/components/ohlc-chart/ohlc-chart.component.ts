@@ -22,9 +22,7 @@ import { toISOStringSafe } from '../../utils/date-utils';
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
-  protected override drawChart(caller?: string | undefined): void {
-      throw new Error('Method not implemented.');
-  }
+
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
@@ -43,8 +41,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
     const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
-
-
    
   protected override createChart(caller: string): void {
     this.sizeChartElements();

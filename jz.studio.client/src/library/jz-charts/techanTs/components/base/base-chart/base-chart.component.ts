@@ -40,6 +40,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       });
   }
 
+
   ngAfterViewInit(): void {
     this.viewInitialized = true;
     this.checkAndDraw('ngAfterViewInit');
@@ -57,11 +58,27 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       this.dataReady &&
       !!this.gChartRef;
 
+    console.log(
+      `%c[checkAndDraw] ready=${ready} ` +
+      `%cviewInit=${this.viewInitialized} ` +
+      `%cinputsInit=${this.inputsInitialized} ` +
+      `%clayoutReady=${this.layoutReady} ` +
+      `%cdataReady=${this.dataReady} ` +
+      `%cgChartRef=${!!this.gChartRef}`,
+
+      'color: #4062BB; font-weight: bold;',
+      `color: ${this.viewInitialized ? 'green' : '#BA1200'};`,
+      `color: ${this.inputsInitialized ? 'green' : 'red'};`,
+      `color: ${this.layoutReady ? 'green' : 'red'};`,
+      `color: ${this.dataReady ? 'green' : 'red'};`,
+      `color: ${!!this.gChartRef ? 'green' : 'red'};`
+    );
+
     // console.debug(...) if you want logs
 
     if (ready && !this.drawAttempted) {
       this.drawAttempted = true;
-      this.drawChart(caller);
+      this.createChart(caller);
     }
   }
 
@@ -81,7 +98,9 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     console.log(this.rAxisLeft);
   }
 
-  protected abstract drawChart(caller?: string): void;
+  protected abstract createChart(caller: string): void;
+
+
 
   ngOnDestroy(): void {
     this.destroyed$.next();
