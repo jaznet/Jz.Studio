@@ -1,105 +1,90 @@
 
-import {
-  AfterViewInit,
-  Directive,
-  ElementRef,
-  OnChanges,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+// base-chart.component.ts
+import { AfterViewInit, Directive, ElementRef, OnDestroy, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { ChartType } from '../../../enums/chart-type';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../../services/chart-data.service';
+import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
+import { select } from 'd3-selection';
 
 @Directive()
-// This base class is intended to be extended by chart components
-export abstract class BaseChartComponent implements AfterViewInit, OnChanges {
-
-  // === View references ===
+export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisRectLeft', { static: false }) rAxisRectLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGGElement>;
 
   chartType: ChartType = ChartType.Base;
-  chartScaffold!: ChartScaffold;
+  protected chartScaffold!: ChartScaffold;
 
-  // === Lifecycle state flags ===
   protected viewInitialized = false;
   protected inputsInitialized = false;
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
 
-  constructor(chartData: ChartDataService) { }
+  private destroyed$ = new Subject<void>();
 
-  // === Angular lifecycle hooks ===
+  constructor(
+    protected chartData: ChartDataService,
+    protected scaffoldSvc: ChartScaffoldService
+  ) {
+    // Subscribe immediately so we catch updates even if set before injection
+    this.scaffoldSvc.scaffold$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(scaffold => {
+        if (!scaffold) return;
+        this.chartScaffold = scaffold;
+        // mark layout ready only if our panel exists
+        this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
+        this.checkAndDraw('scaffold$');
+      });
+  }
+
   ngAfterViewInit(): void {
     this.viewInitialized = true;
     this.checkAndDraw('ngAfterViewInit');
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // Optionally override this in derived classes to call markInputsReady()
-    // when all required inputs like xScale, scaffold, etc. are present
+  ngOnChanges(_: SimpleChanges): void {
+    // if you set data/xScale through @Input, flip flags here and re-check
   }
 
-  // === Lifecycle coordinator ===
   protected checkAndDraw(caller: string = 'unknown'): void {
     const ready =
       this.viewInitialized &&
       this.inputsInitialized &&
       this.layoutReady &&
       this.dataReady &&
-      !!this.gChartRef;   
+      !!this.gChartRef;
 
-    console.log(`  🧩 [${this.chartType}] checkAndDraw from ${caller}: ready=${ready}`, {
-      viewInitialized: this.viewInitialized,
-      inputsInitialized: this.inputsInitialized,
-      layoutReady: this.layoutReady,
-      dataReady: this.dataReady,
-      gChartRef: !!this.gChartRef
-    })
+    // console.debug(...) if you want logs
 
     if (ready && !this.drawAttempted) {
       this.drawAttempted = true;
-      this.createChart(caller);
+      this.drawChart(caller);
     }
   }
 
-  /**
- * Sets lifecycle flags and attempts to draw.
- * Intended for use immediately after dynamic injection.
- */
-  public markReadyAndDraw(options: {
+  public markReadyAndDraw(opts: {
     dataReady?: boolean;
     inputsInitialized?: boolean;
-    layoutReady?: boolean;
     caller?: string;
   } = {}): void {
-    if (options.dataReady !== undefined) this.dataReady = options.dataReady;
-    if (options.inputsInitialized !== undefined) this.inputsInitialized = options.inputsInitialized;
-    if (options.layoutReady !== undefined) this.layoutReady = options.layoutReady;
-
-    // Always re-check
-    this.checkAndDraw(options.caller || 'markReadyAndDraw');
+    if (opts.dataReady !== undefined) this.dataReady = opts.dataReady;
+    if (opts.inputsInitialized !== undefined) this.inputsInitialized = opts.inputsInitialized;
+    this.checkAndDraw(opts.caller ?? 'markReadyAndDraw');
   }
 
-  // === Markers for derived components to call ===
-  protected markInputsReady(): void {
-    this.inputsInitialized = true;
-    this.checkAndDraw('markInputsReady');
+  protected  sizeChartElements(): void {
+
+    select(this.rAxisLeft.nativeElement).attr('width', 100).attr('height', 100).attr('stroke','gold');
+    console.log(this.rAxisLeft);
   }
 
-  protected markLayoutReady(): void {
-    this.layoutReady = true;
-    this.checkAndDraw('markLayoutReady');
-  }
+  protected abstract drawChart(caller?: string): void;
 
-  protected markDataReady(): void {
-    this.dataReady = true;
-    this.checkAndDraw('markDataReady');
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
-
-  protected abstract sizeChartElements(caller?: string): void;
-  // === Abstract drawing method to be implemented ===
-  protected abstract createChart(caller?: string): void;
 }

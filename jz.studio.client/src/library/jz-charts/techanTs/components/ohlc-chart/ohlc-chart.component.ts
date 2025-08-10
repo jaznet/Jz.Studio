@@ -22,6 +22,9 @@ import { toISOStringSafe } from '../../utils/date-utils';
   styleUrls: ['./ohlc-chart.component.scss']
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
+  protected override drawChart(caller?: string | undefined): void {
+      throw new Error('Method not implemented.');
+  }
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
@@ -30,10 +33,10 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   //override chartType = ChartType.OHLC;
   private yScale: any;
 
-  constructor(private chartDatta:ChartDataService) {
-    super(chartDatta);
-    console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
-  }
+  //constructor(private chartDatta: ChartDataService, private scaffoldSvc: ChartScaffoldService) {
+  //  super(chartDatta);
+  //  console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
+  //}
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
@@ -41,11 +44,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
 
-  protected override sizeChartElements(): void {
 
-    select(this.rAxisRectLeft.nativeElement).attr('width', 100).attr('height', 100);
-    console.log(this.rAxisRectLeft);
-  }
    
   protected override createChart(caller: string): void {
     this.sizeChartElements();

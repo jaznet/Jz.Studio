@@ -1,22 +1,25 @@
+// chart-scaffold.service.ts
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
 
 @Injectable({ providedIn: 'root' })
-export class _ChartScaffoldService {
-  private scaffold!: ChartScaffold;
+export class ChartScaffoldService {
+  private _scaffold$ = new BehaviorSubject<ChartScaffold | null>(null);
 
-  setScaffold(scaffold: ChartScaffold): void {
-    this.scaffold = scaffold;
+  /** Observable if you ever want to react to scaffold changes */
+  readonly scaffold$ = this._scaffold$.asObservable();
+
+  /** Set once from TechanTs (or update if layout changes) */
+  set scaffold(value: ChartScaffold | null) {
+    this._scaffold$.next(value);
   }
 
-  getScaffold(): ChartScaffold {
-    if (!this.scaffold) {
-      throw new Error('ChartScaffold has not been set.');
-    }
-    return this.scaffold;
-  }
+  /** Synchronous access to latest */
+  get scaffold(): ChartScaffold | null {
+    return this._scaffold$.value; }
 
-  isReady(): boolean {
-    return !!this.scaffold;
+  clear() {
+    this._scaffold$.next(null);
   }
 }
