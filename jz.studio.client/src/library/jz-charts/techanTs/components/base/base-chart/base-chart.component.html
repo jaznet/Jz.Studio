@@ -1,26 +1,16 @@
-
-<!--base-chart.component.html-->
-
-<svg xmlns="http://www.w3.org/2000/svg">
-  <g #gChartContainer id="gChartContainer">
-    <rect #rChartContainer width="0" height="0" id="rChartContainer"></rect>
-
-    <g #gAxisGroupLeft id="gAxisGroupLeft">
-      <rect #rAxisLeft id="rAxisLeft" width="0" height="0"></rect>
-      <g #gAxisLeft id="gAxisLeft"></g>
-    </g>
-
-    <g #gContent id="gContent">
-      <rect #rContent id="rContent" width="0" height="0"></rect>
-      <g #gChart id="gChart"></g>
-
-      <!-- 👇 Derived charts go here -->
-      <!--<ng-content></ng-content>-->
-    </g>
-
-    <g #gAxisGroupRight id="gAxisGroupRight">
-      <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0"></rect>
-      <g #gAxisRight id="gAxisRight"></g>
-    </g>
+<!-- base-chart.component.html -->
+<g #gChartContainer id="gChartContainer">
+  <rect #rChartContainer width="0" height="0" id="rChartContainer"></rect>
+  <g #gAxisGroupLeft id="gAxisGroupLeft">
+    <rect #rAxisLeft id="rAxisLeft" width="0" height="0"></rect>
+    <g #gAxisLeft id="gAxisLeft"></g>
   </g>
-</svg>
+  <g #gContent id="gContent">
+    <rect #rContent id="rContent" width="0" height="0"></rect>
+    <g #gChart id="gChart"></g>
+  </g>
+  <g #gAxisGroupRight id="gAxisGroupRight">
+    <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0"></rect>
+    <g #gAxisRight id="gAxisRight"></g>
+  </g>
+</g>

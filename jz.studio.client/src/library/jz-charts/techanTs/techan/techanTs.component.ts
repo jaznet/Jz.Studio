@@ -33,6 +33,7 @@ import { chartConfig } from '../interfaces/chart-config';
 import { PanelHostService } from '../services/panel-host.service';
 import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
 import { baseZIndex } from 'devextreme/ui/overlay';
+import { ChartScaffoldService } from '../services/chart-scaffold.service';
 
 @Component({
   selector: 'techanTs',
@@ -186,7 +187,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private macdLayout: MacdLayoutService,
     private macdDraw: MacdDrawService,
    /* private baseLayout: BaseChartLayoutService*/
-    private panelHost: PanelHostService
+    private panelHost: PanelHostService,
+    private scaffoldSvc: ChartScaffoldService
   ) {
     console.log('');
     console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
@@ -248,13 +250,13 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   initializeChartWhenReady(attempt = 0): void {
    
     if (!this.viewReady || !this.dataReady) {
-      console.log('%cNOT READY', 'color:red');
+      console.log('%c     ❌ NOT READY', 'color:red');
       return;
     } else {
-      console.log('%cREADY', 'color:green');
+      console.log('%c    ✔ READY', 'color:green');
     };
 
-    console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
+    console.log('%c      ✔ initialize ChartWhenReady', 'color:#90BEE9');
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
@@ -267,6 +269,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.sizePanels();
       this.createScales();
       this.drawAxes();
+
+      // ✅ after scaffold + panels exist, publish it
+      this.scaffoldSvc.scaffold = this.chartScaffold; 
       this.injectChartsFromConfig();
     });
   }

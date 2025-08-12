@@ -28,7 +28,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   @Input() dateScaleX!: any;
 
   //override chartScaffold!: ChartScaffold;
-  //override chartType = ChartType.OHLC;
+  override chartType = ChartType.OHLC;
   private yScale: any;
 
   //constructor(private chartDatta: ChartDataService, private scaffoldSvc: ChartScaffoldService) {
@@ -39,7 +39,9 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
-    const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
+    const ok = !!panel && panel.width > 0 && panel.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    this.markReadyAndDraw({ inputsInitialized: ok, caller: 'ohlc.ngOnChanges' }); // ✅ feed the base
+    //const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
    
   protected override createChart(caller: string): void {

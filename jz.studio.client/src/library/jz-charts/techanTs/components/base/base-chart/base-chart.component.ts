@@ -11,7 +11,7 @@ import { select } from 'd3-selection';
 @Directive()
 export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
-  @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
 
   chartType: ChartType = ChartType.Base;
   protected chartScaffold!: ChartScaffold;
