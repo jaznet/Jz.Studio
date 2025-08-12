@@ -12,6 +12,8 @@ import { select } from 'd3-selection';
 export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
+  
 
   chartType: ChartType = ChartType.Base;
   protected chartScaffold!: ChartScaffold;
@@ -40,7 +42,6 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       });
   }
 
-
   ngAfterViewInit(): void {
     this.viewInitialized = true;
     this.checkAndDraw('ngAfterViewInit');
@@ -51,6 +52,11 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   }
 
   protected checkAndDraw(caller: string = 'unknown'): void {
+
+    if (this.chartScaffold) {
+      this.layoutReady = !!this.chartScaffold.panels?.[this.chartType];
+    }
+
     const ready =
       this.viewInitialized &&
       this.inputsInitialized &&
@@ -94,13 +100,16 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
 
   protected  sizeChartElements(): void {
 
-    select(this.rAxisLeft.nativeElement).attr('width', 100).attr('height', 100).attr('stroke','gold');
-    console.log(this.rAxisLeft);
+    select(this.rAxisLeft.nativeElement).attr('width', 100).attr('height', 100).attr('stroke', 'gold');
+    select(this.rChartContainer.nativeElement)
+      .attr('width', this.scaffoldSvc.scaffold!.width)
+      .attr('height', this.scaffoldSvc.scaffold!.height)
+      .attr('fill','#35605A')
+      .attr('stroke', 'gold');
+    console.log(this.scaffoldSvc.scaffold!.width);
   }
 
   protected abstract createChart(caller: string): void;
-
-
 
   ngOnDestroy(): void {
     this.destroyed$.next();
