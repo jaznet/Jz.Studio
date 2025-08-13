@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
-
+import type { Selection as D3Selection } from 'd3-selection';
 import { ChartType } from '../../../enums/chart-type';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../../services/chart-data.service';
@@ -120,34 +120,38 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   }
 
   /** Create/reuse <rect> INSIDE the host <g>, as a sibling of #gChartContainer. */
+  protected bgRectSel?: D3Selection<SVGRectElement, any, SVGGElement, unknown>;
   protected ensureInnerRect(
     id: string,
-    opts?: {
-      position?: 'behind' | 'front'; className?: string;
+    opts: {
+      position?: 'behind' | 'front';         // default: 'behind' (under #gChartContainer)
+      className?: string;
       attrs?: Record<string, string | number | null | undefined>;
-    }
+    } = {}
   ): SVGRectElement {
-    const host = this.hostEl.nativeElement; // <g id="OHLC">
+    const host = this.hostEl.nativeElement as SVGGElement;  // <g id="OHLC">
+
+    // create or reuse the rect
     const sel = select(host)
       .selectAll<SVGRectElement, unknown>(`rect#${id}`)
       .data([null])
       .join('rect')
       .attr('id', id);
 
-    if (opts?.className) sel.attr('class', opts.className);
-    if (opts?.attrs) for (const [k, v] of Object.entries(opts.attrs)) {
-      if (v != null) sel.attr(k, v as any);
+    if (opts.className) sel.attr('class', opts.className);
+    if (opts.attrs) for (const [k, v] of Object.entries(opts.attrs)) if (v != null) sel.attr(k, v as any);
+
+    // z-order relative to #gChartContainer
+    const anchor = host.querySelector<SVGGElement>(':scope > #gChartContainer');
+    if ((opts.position ?? 'behind') === 'front') {
+      sel.raise();                          // above chart content
+    } else if (anchor) {
+      host.insertBefore(sel.node()!, anchor); // just before content -> behind
+    } else {
+      sel.lower();                          // fallback
     }
 
-    // order relative to #gChartContainer
-    const anchor = host.querySelector<SVGGElement>(':scope > #gChartContainer');
-    if ((opts?.position ?? 'behind') === 'front') {
-      sel.raise();
-    } else if (anchor) {
-      host.insertBefore(sel.node()!, anchor); // behind chart content
-    } else {
-      sel.lower();
-    }
+    this.bgRectSel = sel;
     return sel.node()!;
   }
 
