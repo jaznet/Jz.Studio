@@ -1,55 +1,43 @@
+// panel-host.service.ts
 import {
-  Injectable,
-  ApplicationRef,
-  ComponentFactoryResolver,
-  Injector,
-  ViewContainerRef,
-  ComponentRef,
-  Type,
-  EmbeddedViewRef
+  Injectable, ApplicationRef, ComponentRef, Type, EnvironmentInjector, createComponent
 } from '@angular/core';
+import { select } from 'd3-selection';
 
 @Injectable({ providedIn: 'root' })
 export class PanelHostService {
-  constructor(
-    private appRef: ApplicationRef,
-    private injector: Injector
-  ) { }
+  constructor(private appRef: ApplicationRef, private env: EnvironmentInjector) { }
 
-  /**
-   * Injects a component into a dynamically created <g> SVG group
-   * @param svgRoot The <svg> element to append the <g> to
-   * @param panelId The ID to assign to the <g> element
-   * @param component The component class to inject
-   * @param setupFn Optional: function to assign @Input values
-   */
+  /** Ensure <g id="{groupId}"> exists under parentG, and mount the component into it. */
   injectChartComponent<T>(
-    panelsContainer: SVGGElement,
-    panelId: string,
-    component: Type<T>,
-    setupFn?: (instance: T) => void
+    parentG: SVGGElement,
+    groupId: string,
+    component: Type<T>
   ): ComponentRef<T> {
-    // 1. Create the <g> element
-    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.setAttribute('id', panelId);
-    panelsContainer.appendChild(g);
+    if (!parentG) throw new Error('injectChartComponent: parentG is null/undefined');
 
-    // 2. Create the component
-    const compRef = this.appRef.bootstrap(component, g);
+    const id = String(groupId);
+    const esc = (window as any).CSS?.escape ? (window as any).CSS.escape(id) : id;
 
-    // 3. Assign any input values
-    if (setupFn) {
-      setupFn(compRef.instance);
-    }
+    const hostG = select(parentG)
+      .selectAll<SVGGElement, unknown>(`g#${esc}`)
+      .data([null])
+      .join('g')
+      .attr('id', id)
+      .node() as SVGGElement;
 
-    return compRef;
+    const ref = createComponent(component, {
+      environmentInjector: this.env,
+      hostElement: hostG
+    });
+    this.appRef.attachView(ref.hostView);
+    return ref;
   }
 
-  /**
-   * Removes a chart panel
-   */
-  removePanel(panelId: string, svgRoot: SVGSVGElement): void {
-    const g = svgRoot.querySelector(`#${panelId}`);
-    if (g) svgRoot.removeChild(g);
+  destroy(ref: ComponentRef<any>): void {
+    this.appRef.detachView(ref.hostView);
+    const host = ref.location?.nativeElement as Element | null;
+    ref.destroy();
+    host?.parentNode?.removeChild(host);
   }
 }

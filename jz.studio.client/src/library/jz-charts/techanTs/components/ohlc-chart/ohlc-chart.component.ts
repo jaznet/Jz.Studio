@@ -15,6 +15,7 @@ import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../services/chart-data.service';
 import { toISOStringSafe } from '../../utils/date-utils';
+import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
 @Component({
   selector: 'ohlc-chart',
@@ -31,10 +32,12 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   override chartType = ChartType.OHLC;
   private yScale: any;
 
-  //constructor(private chartDatta: ChartDataService, private scaffoldSvc: ChartScaffoldService) {
-  //  super(chartDatta);
-  //  console.log('%c⛏️ XTOR Ohlc', 'color:#EFDD8D');
-  //}
+  constructor(
+    chartData: ChartDataService,
+    scaffoldSvc: ChartScaffoldService,
+    hostEl: ElementRef<SVGGElement>
+  ) { super(chartData, scaffoldSvc, hostEl); }
+
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
@@ -45,7 +48,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   }
    
   protected override createChart(caller: string): void {
-    this.sizeChartElements();
+ //   this.sizeChartElements();
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
     if (!panel || !this.gChartRef) {
       console.warn(`${caller}: Missing panel or gChartRef`, {
