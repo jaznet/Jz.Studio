@@ -1,21 +1,27 @@
 <!-- base-chart.component.html -->
 
 <g #gChartContainer id="gChartContainer">
-  <rect #rChartContainer width="0" height="0" x="0" y="0" id="rChartContainer"></rect>
+  <rect #rChartContainer width="0" height="0" x="0" y="0" id="rChartContainer" fill="gray"></rect>
 
   <g #gAxisGroupLeft id="gAxisGroupLeft">
-    <rect #rAxisLeft id="rAxisLeft" width="0" height="0" x="0" y="0"></rect>
-    <g #gAxisLeft id="gAxisLeft"></g>
+    <rect #rAxisGroupLeft id="rAxisGroupLeft" width="0" height="0" x="0" y="0"></rect>
+    <g #gAxisLeft id="gAxisLeft">
+      <rect #rAxisLeft id="rAxisLeft"></rect>
+    </g>
   </g>
 
   <g #gContent id="gContent">
     <rect #rContent id="rContent" width="0" height="0" x="0" y="0"></rect>
-    <g #gChart id="gChart"></g>
+    <g #gChart id="gChart">
+      <rect #rChart id="rChart"></rect>
+    </g>
   </g>
 
   <g #gAxisGroupRight id="gAxisGroupRight">
-    <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0" x="0" y="0"></rect>
-    <g #gAxisRight id="gAxisRight"></g>
+    <rect #rAxisGroupRight id="rAxisGroupRight" width="0" height="0" x="0" y="0"></rect>
+    <g #gAxisRight id="gAxisRight">
+      <rect></rect>
+    </g>
   </g>
 </g>
 

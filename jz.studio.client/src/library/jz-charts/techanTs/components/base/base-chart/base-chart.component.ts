@@ -195,10 +195,11 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       //.attr('x', cx)
       //.attr('y', cy)
       .attr('width', panel.width)
-      .attr('height', panel.height);
+      .attr('height', panel.height)
+      .attr('transform','translate(30,0)');
 
     // Optional: axis-left debug rect
-     select(this.rAxisLeft.nativeElement).attr('width', 100).attr('height', 100).attr('stroke', 'gold');
+    select(this.rAxisLeft.nativeElement).attr('width', panel.margins.left).attr('height', panel.height).attr('fill', 'gold');
   }
 
   /** Implement in subclasses to perform actual drawing. */
