@@ -151,11 +151,11 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     const pH = panel.height ?? 0;
 
     // Content box (for rContent if you want it kept accurate)
-    const m = panel.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
-    const cx = m.left;
-    const cy = m.top;
-    const cW = Math.max(0, pW - m.left - m.right);
-    const cH = Math.max(0, pH - m.top - m.bottom);
+    //const m = panel.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
+    //const cx = m.left;
+    //const cy = m.top;
+    //const cW = Math.max(0, pW - m.left - m.right);
+    //const cH = Math.max(0, pH - m.top - m.bottom);
 
     if (this.placeholderMode === 'templateRect') {
       // ✅ Use the template rect as the visible placeholder (no margins)
@@ -192,10 +192,10 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
 
     // Keep content rect sized to the *content* area (useful for layout/debug)
     select(this.rContent.nativeElement)
-      .attr('x', cx)
-      .attr('y', cy)
-      .attr('width', cW)
-      .attr('height', cH);
+      //.attr('x', cx)
+      //.attr('y', cy)
+      .attr('width', panel.width)
+      .attr('height', panel.height);
 
     // Optional: axis-left debug rect
      select(this.rAxisLeft.nativeElement).attr('width', 100).attr('height', 100).attr('stroke', 'gold');
