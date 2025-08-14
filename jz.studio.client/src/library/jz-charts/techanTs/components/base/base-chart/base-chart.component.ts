@@ -135,6 +135,28 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     return sel.node()!;
   }
 
+  private enforceZOrder(): void {
+    const host = this.hostEl.nativeElement as SVGGElement;         // <g id="OHLC">
+    const panel = host.parentNode as SVGGElement;                   // <g id="gPanel1">
+
+    // 1) Panel background should be BEHIND everything in the panel
+    select(panel).select<SVGRectElement>('rect.chart-panel').lower()
+      .attr('pointer-events', 'none');                  // don't steal clicks
+
+    // 2) Inside the host, placeholder should be BEHIND chart content
+    if (this.rChartContainer) {
+      select(this.rChartContainer.nativeElement)
+        .lower()
+        .attr('pointer-events', 'none');                            // don't steal clicks
+    }
+
+    // 3) Ensure the host group itself sits ABOVE other siblings in the panel
+    select(host).raise();
+
+    // 4) Ensure chart content is above any other children inside the host
+    if (this.gChartRef) select(this.gChartRef.nativeElement).raise();
+  }
+
   /**
    * Size chart-local elements.
    * placeholder: full panel (no margins)
