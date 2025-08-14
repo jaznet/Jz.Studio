@@ -4,8 +4,22 @@
   /*  background-color: var(--plt-clr-1);*/
 }
 
+/* global or component SCSS */
+.panel-placeholder {
+  fill: none; /* or a very light fill */
+  stroke: #888; /* subtle outline */
+  stroke-dasharray: 4 4;
+  pointer-events: none; /* don’t intercept mouse */
+}
+
+.chart-bg {
+  fill: none;
+  stroke: #aaa;
+  stroke-dasharray: 3 3;
+}
+
 .chart-panel {
-  fill: var(--plt-chart-1);
+  fill: #35605A;
   stroke: #00BFFF;
   stroke-width: 2px;
 }

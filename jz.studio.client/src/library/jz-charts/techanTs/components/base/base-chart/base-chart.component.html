@@ -1,17 +1,21 @@
 <!-- base-chart.component.html -->
 
 <g #gChartContainer id="gChartContainer">
-  <rect #rChartContainer width="0" height="0" id="rChartContainer"></rect>
+  <rect #rChartContainer width="0" height="0" x="0" y="0" id="rChartContainer"></rect>
+
   <g #gAxisGroupLeft id="gAxisGroupLeft">
-    <rect #rAxisLeft id="rAxisLeft" width="0" height="0"></rect>
+    <rect #rAxisLeft id="rAxisLeft" width="0" height="0" x="0" y="0"></rect>
     <g #gAxisLeft id="gAxisLeft"></g>
   </g>
+
   <g #gContent id="gContent">
-    <rect #rContent id="rContent" width="0" height="0"></rect>
+    <rect #rContent id="rContent" width="0" height="0" x="0" y="0"></rect>
     <g #gChart id="gChart"></g>
   </g>
+
   <g #gAxisGroupRight id="gAxisGroupRight">
-    <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0"></rect>
+    <rect #rAxisRectRight id="rAxisRectRight" width="0" height="0" x="0" y="0"></rect>
     <g #gAxisRight id="gAxisRight"></g>
   </g>
 </g>
+
