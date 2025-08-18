@@ -95,6 +95,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
 
       this.sizeChartElements();
       this.createChart(caller);
+      this.enforceZOrder();  // in case chart added new nodes
     }
   }
 
@@ -222,6 +223,8 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
 
     // Optional: axis-left debug rect
     select(this.rAxisLeft.nativeElement).attr('width', panel.margins.left).attr('height', panel.height).attr('fill', 'gold');
+
+    this.enforceZOrder();
   }
 
   /** Implement in subclasses to perform actual drawing. */
