@@ -31,6 +31,7 @@ export class PanelHostService {
       hostElement: hostG
     });
     this.appRef.attachView(ref.hostView);
+
     return ref;
   }
 
