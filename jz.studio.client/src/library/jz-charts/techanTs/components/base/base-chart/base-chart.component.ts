@@ -61,7 +61,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   }
 
   ngAfterViewInit(): void {
-    console.log(this.rBaseRect);
+ //   console.log(this.rBaseRect);
     // make it 100x100 in the top-left, or use panel dims if you want full panel
     
 
@@ -99,8 +99,15 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     const idStyle = id === 'null' ? N : T;
 
     console.log(
-      `%ccheckAndDraw | %cready:%c${ready} %cviewInitialized:%c${this.viewInitialized} %cinputsInitialized:%c${this.inputsInitialized} %clayoutReady:%c${this.layoutReady} %cdataReady:%c${this.dataReady}`
+      `%c   checkAndDraw | %cready:%c${ready} %cviewInitialized:%c${this.viewInitialized} %cinputsInitialized:%c${this.inputsInitialized} %clayoutReady:%c${this.layoutReady} %cdataReady:%c${this.dataReady}`,
+      'color:#A3C4BC',
+      'color:#A3C4BC', (ready ? 'color:#22c55e;font-weight:700' : 'color:#ef4444;font-weight:700'),
+      'color:#A3C4BC', (this.viewInitialized ? 'color:#22c55e;font-weight:700' : 'color:#ef4444;font-weight:700'),
+      'color:#A3C4BC', (this.inputsInitialized ? 'color:#22c55e;font-weight:700' : 'color:#ef4444;font-weight:700'),
+      'color:#A3C4BC', (this.layoutReady ? 'color:#22c55e;font-weight:700' : 'color:#ef4444;font-weight:700'),
+      'color:#A3C4BC', (this.dataReady ? 'color:#22c55e;font-weight:700' : 'color:#ef4444;font-weight:700'),
     );
+
 
 
     if (ready && !this.drawAttempted) {
