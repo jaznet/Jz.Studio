@@ -15,7 +15,7 @@ type PlaceholderMode = 'templateRect' | 'hostBgRect';
 
 @Directive()
 export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @ViewChild('rBaseRect', { static: false }) rBaseRect!: ElementRef<SVGGElement>;
+  @ViewChild('rBaseRect', { static: false }) rBaseRect!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
   @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;

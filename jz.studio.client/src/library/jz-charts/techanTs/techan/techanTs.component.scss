@@ -1,16 +1,7 @@
 
-.svg-container {
-  /*  margin: 8px;*/
-  /*  background-color: var(--plt-clr-1);*/
-}
+.svg-container { }
 
 /* global or component SCSS */
-.panel-placeholder {
-  fill: none; /* or a very light fill */
-  stroke: #888; /* subtle outline */
-  stroke-dasharray: 4 4;
-  pointer-events: none; /* don’t intercept mouse */
-}
 
 .chart-bg {
   fill: none;
@@ -24,20 +15,13 @@
   stroke-width: 1px;
 }
 
-.base-rect {
- 
-/*  width: 100px;
-  height: 100px;
-  fill: gold;
-  stroke: white;*/
+.base-rect { }
+
+.chart-placeholder {
+  fill: none !important; /* don’t paint over real things */
+  pointer-events: none !important; /* don’t eat mouse events */
+  stroke: none;
 }
-
-.placeholder {
-    
-  fill: #FEA82F;
-}
-
-
 
 .chart-title {
   font-size: 18px;
