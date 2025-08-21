@@ -24,14 +24,24 @@
   stroke-width: 1px;
 }
 
+.base-rect {
+ 
+/*  width: 100px;
+  height: 100px;
+  fill: gold;
+  stroke: white;*/
+}
+
 .placeholder {
     
   fill: #FEA82F;
 }
 
+
+
 .chart-title {
   font-size: 18px;
-  text-anchor:middle;
+  text-anchor: middle;
 }
 
 .x-axis-group {

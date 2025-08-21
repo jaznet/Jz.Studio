@@ -15,6 +15,7 @@ type PlaceholderMode = 'templateRect' | 'hostBgRect';
 
 @Directive()
 export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
+  @ViewChild('rBaseRect', { static: false }) rBaseRect!: ElementRef<SVGGElement>;
   @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
   @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
   @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
@@ -60,6 +61,10 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   }
 
   ngAfterViewInit(): void {
+    console.log(this.rBaseRect);
+    // make it 100x100 in the top-left, or use panel dims if you want full panel
+    
+
     this.viewInitialized = true;
     this.checkAndDraw('ngAfterViewInit');
   }
@@ -78,7 +83,25 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     }
 
     const ready =
-      this.viewInitialized && this.inputsInitialized && this.layoutReady && this.dataReady && !!this.gChartRef;
+      this.viewInitialized &&
+      this.inputsInitialized &&
+      this.layoutReady &&
+      this.dataReady;
+
+    const L = 'color:#A3C4BC';                    // label
+    const G = 'color:#22c55e;font-weight:700';    // true  -> green
+    const R = 'color:#ef4444;font-weight:700';    // false -> red
+    const T = 'color:#38bdf8;font-weight:700';    // id present
+    const N = 'color:#9ca3af;font-style:italic';  // id null/absent
+    const b = (v: boolean) => (v ? G : R);
+
+    const id = this.gChartRef?.nativeElement?.id ?? 'null';
+    const idStyle = id === 'null' ? N : T;
+
+    console.log(
+      `%ccheckAndDraw | %cready:%c${ready} %cviewInitialized:%c${this.viewInitialized} %cinputsInitialized:%c${this.inputsInitialized} %clayoutReady:%c${this.layoutReady} %cdataReady:%c${this.dataReady}`
+    );
+
 
     if (ready && !this.drawAttempted) {
       this.drawAttempted = true;
@@ -173,6 +196,16 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
     const pW = panel.width ?? 0;
     const pH = panel.height ?? 0;
 
+    // ngAfterViewInit or wherever you size it:
+    select(this.rBaseRect.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 110)
+      .attr('height', 110)
+      .attr('fill', 'gold').attr('stroke', 'white')
+      .raise();       
+
+
     // Content box (for rContent if you want it kept accurate)
     //const m = panel.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
     //const cx = m.left;
@@ -212,6 +245,8 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
         ?.attr('width', pW)
         ?.attr('height', pH);
     }
+
+
 
     // Keep content rect sized to the *content* area (useful for layout/debug)
     select(this.rContent.nativeElement)
