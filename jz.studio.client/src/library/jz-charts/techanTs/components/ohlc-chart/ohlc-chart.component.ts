@@ -51,15 +51,15 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   protected override createChart(caller: string): void {
  //   this.sizeChartElements();
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
-    if (!panel || !this.gChartRef) {
+    if (!panel || !this.gChart) {
       console.warn(`${caller}: Missing panel or gChartRef`, {
         panelMissing: !panel,
-        gChartRefMissing: !this.gChartRef
+        gChartRefMissing: !this.gChart
       });
       return;
     }
 
-    const g = select(this.gChartRef.nativeElement);
+    const g = select(this.gChart.nativeElement);
     console.log(`[${this.chartType}] Drawing chart in panel`, panel);
 
     console.log('BANDWIDTH');
