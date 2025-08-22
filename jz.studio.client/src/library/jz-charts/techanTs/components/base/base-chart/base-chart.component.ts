@@ -25,6 +25,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
   @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
   @ViewChild('rContent', { static: false }) rContent!: ElementRef<SVGRectElement>;
+  @ViewChild('rContent', { static: false }) rBase!: ElementRef<SVGRectElement>;
 
   /** Subclasses should set this (e.g., ChartType.OHLC). */
   chartType: ChartType = ChartType.Base;
@@ -150,6 +151,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       .attr('y', 0)
       .attr('width', cW)
       .attr('height', cH)
+      .attr('fill','red')
       .attr('transform', `translate(${m.left},${m.top})`);
 
     // Content rect: translated into margin box
@@ -158,6 +160,7 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
       .attr('y', 0)
       .attr('width', cW)
       .attr('height', cH)
+      .attr('fill', 'blue')
       .attr('transform', `translate(${m.left},${m.top})`);
 
     // (Optional) axis-left debug rect equals left margin area
