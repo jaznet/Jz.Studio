@@ -20,7 +20,7 @@ import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 export abstract class BaseChartComponent
   implements AfterViewInit, OnChanges, OnDestroy {
   // Core drawing group for the chart’s internals
-  @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
+  @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
 
   // Identify the chart kind; override in derived classes
   chartType: ChartType = ChartType.Base;
@@ -52,8 +52,8 @@ export abstract class BaseChartComponent
 
         // Optional: clear the chart group if the scaffold changed
         // (prevents layered redraws for certain flows)
-        if (this.gChartRef?.nativeElement) {
-          select(this.gChartRef.nativeElement).selectAll('*').remove();
+        if (this.gChart?.nativeElement) {
+          select(this.gChart.nativeElement).selectAll('*').remove();
           this.drawAttempted = false; // allow a fresh draw after layout changes
         }
 
@@ -86,7 +86,7 @@ export abstract class BaseChartComponent
       this.inputsInitialized &&
       this.layoutReady &&
       this.dataReady &&
-      !!this.gChartRef;
+      !!this.gChart;
 
     // One-line colorized log
     console.log(
@@ -95,13 +95,13 @@ export abstract class BaseChartComponent
       `%cinputsInit=${this.inputsInitialized} ` +
       `%clayoutReady=${this.layoutReady} ` +
       `%cdataReady=${this.dataReady} ` +
-      `%cgChartRef=${!!this.gChartRef}`,
+      `%cgChartRef=${!!this.gChart}`,
       'color:#4062BB;font-weight:bold;',
       `color:${this.viewInitialized ? 'green' : '#BA1200'};`,
       `color:${this.inputsInitialized ? 'green' : 'red'};`,
       `color:${this.layoutReady ? 'green' : 'red'};`,
       `color:${this.dataReady ? 'green' : 'red'};`,
-      `color:${!!this.gChartRef ? 'green' : 'red'};`
+      `color:${!!this.gChart ? 'green' : 'red'};`
     );
 
     if (ready && !this.drawAttempted) {
