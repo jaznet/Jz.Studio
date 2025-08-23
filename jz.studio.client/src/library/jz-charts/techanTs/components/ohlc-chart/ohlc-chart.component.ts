@@ -37,7 +37,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     chartData: ChartDataService,
     scaffoldSvc: ChartScaffoldService,
     hostEl: ElementRef<SVGGElement>
-  ) { super(chartData, scaffoldSvc, hostEl); }
+  ) { super(chartData, scaffoldSvc); }
 
 
   override ngOnChanges(changes: SimpleChanges): void {

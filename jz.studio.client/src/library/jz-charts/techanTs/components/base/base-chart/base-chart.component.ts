@@ -9,7 +9,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
-
 import { select } from 'd3-selection';
 
 import { ChartType } from '../../../enums/chart-type';
@@ -18,20 +17,18 @@ import { ChartDataService } from '../../../services/chart-data.service';
 import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 
 @Directive()
-export abstract class BaseChartComponent implements AfterViewInit, OnChanges, OnDestroy {
-  @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
-  @ViewChild('rChart', { static: false }) rChart!: ElementRef<SVGGElement>;
-  
-  @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
-  @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
-  @ViewChild('rContent', { static: false }) rContent!: ElementRef<SVGRectElement>;
-  @ViewChild('rContent', { static: false }) rBase!: ElementRef<SVGRectElement>;
+export abstract class BaseChartComponent
+  implements AfterViewInit, OnChanges, OnDestroy {
+  // Core drawing group for the chart’s internals
+  @ViewChild('gChart', { static: false }) gChartRef!: ElementRef<SVGGElement>;
 
-  /** Subclasses should set this (e.g., ChartType.OHLC). */
+  // Identify the chart kind; override in derived classes
   chartType: ChartType = ChartType.Base;
 
+  // Shared layout model from TechanTs via service
   protected chartScaffold!: ChartScaffold;
 
+  // Lifecycle flags coordinated by the base
   protected viewInitialized = false;
   protected inputsInitialized = false;
   protected layoutReady = false;
@@ -42,20 +39,29 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
 
   constructor(
     protected chartData: ChartDataService,
-    protected scaffoldSvc: ChartScaffoldService,
-    /** Host <g> for this chart (e.g., <g id="...-OHLC">) provided by the parent injector. */
-    protected hostEl: ElementRef<SVGGElement>
+    protected scaffoldSvc: ChartScaffoldService
   ) {
-    // React to scaffold changes (dimensions/margins), then try drawing.
+    // Keep the scaffold in sync for all charts
     this.scaffoldSvc.scaffold$
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(scaffold => {
+      .subscribe((scaffold) => {
         if (!scaffold) return;
         this.chartScaffold = scaffold;
+        // layoutReady when the scaffold has a panel for this chart type
         this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
+
+        // Optional: clear the chart group if the scaffold changed
+        // (prevents layered redraws for certain flows)
+        if (this.gChartRef?.nativeElement) {
+          select(this.gChartRef.nativeElement).selectAll('*').remove();
+          this.drawAttempted = false; // allow a fresh draw after layout changes
+        }
+
         this.checkAndDraw('scaffold$');
       });
   }
+
+  // ========== Angular lifecycle ==========
 
   ngAfterViewInit(): void {
     this.viewInitialized = true;
@@ -63,126 +69,68 @@ export abstract class BaseChartComponent implements AfterViewInit, OnChanges, On
   }
 
   ngOnChanges(_: SimpleChanges): void {
-    // Subclasses typically call markReadyAndDraw({ inputsInitialized: true }) from their own ngOnChanges
-  }
-
-  /** Flip readiness flags and re-check draw gate. */
-  public markReadyAndDraw(opts: {
-    dataReady?: boolean;
-    inputsInitialized?: boolean;
-    caller?: string;
-  } = {}): void {
-    if (opts.dataReady !== undefined) this.dataReady = opts.dataReady;
-    if (opts.inputsInitialized !== undefined) this.inputsInitialized = opts.inputsInitialized;
-    this.checkAndDraw(opts.caller ?? 'markReadyAndDraw');
-  }
-
-  /** Central readiness gate; draws once when all prerequisites are true. */
-  protected checkAndDraw(caller: string = 'unknown'): void {
-    if (this.chartScaffold) {
-      this.layoutReady = !!this.chartScaffold.panels?.[this.chartType];
-    }
-
-    const ready =
-      this.viewInitialized &&
-      this.inputsInitialized &&
-      this.layoutReady &&
-      this.dataReady &&
-      !!this.gChart;
-
-    // pretty one-line debug (green for true, red for false)
-    {
-      const L = 'color:#A3C4BC';
-      const G = 'color:#22c55e;font-weight:700';
-      const R = 'color:#ef4444;font-weight:700';
-      const b = (v: boolean) => (v ? G : R);
-      // eslint-disable-next-line no-console
-      console.log(
-        `%ccheckAndDraw | %cready:%c${ready} %cviewInit:%c${this.viewInitialized} %cinputsInit:%c${this.inputsInitialized} %clayoutReady:%c${this.layoutReady} %cdataReady:%c${this.dataReady} `,
-        L,
-        L, b(ready),
-        L, b(this.viewInitialized),
-        L, b(this.inputsInitialized),
-        L, b(this.layoutReady),
-        L, b(this.dataReady),
-        L, b(!!this.gChart),
-      );
-    }
-
-    if (ready && !this.drawAttempted) {
-      this.drawAttempted = true;
-
-      // 1) Size the placeholder + content rects to current panel dims
-      this.sizeChartElements();
-
-      // 2) Let subclass render chart graphics
-      this.createChart(caller);
-    }
-  }
-
-  /**
-   * Size chart-local elements.
-   * - rChartContainer: full panel (no margins) → acts as simple placeholder
-   * - rContent: inner content box (inside margins) for actual drawing area
-   */
-  protected sizeChartElements(): void {
-    const panel = this.chartScaffold?.panels?.[this.chartType];
-    if (!panel) return;
-
-    // Full panel box (placeholder)
-    const pW = panel.width ?? 0;
-    const pH = panel.height ?? 0;
-
-    // Content box (inside margins)
-    const m = panel.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
-    const cW = Math.max(0, pW - m.left - m.right);
-    const cH = Math.max(0, pH - m.top - m.bottom);
-
-    // Placeholder: no margins
-    select(this.rChartContainer.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', pW)
-      .attr('height', pH)
-      .attr('class', 'chart-container'); // style in CSS as you like
-
-    select(this.rChart.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', cW)
-      .attr('height', cH)
-      .attr('fill','red')
-      .attr('transform', `translate(${m.left},${m.top})`);
-
-    // Content rect: translated into margin box
-    select(this.rContent.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', cW)
-      .attr('height', cH)
-      .attr('fill', 'blue')
-      .attr('transform', `translate(${m.left},${m.top})`);
-
-    // (Optional) axis-left debug rect equals left margin area
-    if (this.rAxisLeft) {
-      select(this.rAxisLeft.nativeElement)
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', m.left)
-        .attr('height', pH);
-    }
-  }
-
-  /** Subclasses implement the actual chart drawing into #gChart. */
-  protected abstract createChart(caller: string): void;
-
-  protected chartTypeName(): string {
-    const n = (ChartType as any)[this.chartType];
-    return typeof n === 'string' ? n : String(this.chartType);
+    // If derived charts set inputs via @Input (e.g., data, scales),
+    // they can call this.markInputsReady() or markReadyAndDraw() themselves.
   }
 
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
+
+  // ========== Coordinator ==========
+
+  protected checkAndDraw(caller: string = 'unknown'): void {
+    const ready =
+      this.viewInitialized &&
+      this.inputsInitialized &&
+      this.layoutReady &&
+      this.dataReady &&
+      !!this.gChartRef;
+
+    // One-line colorized log
+    console.log(
+      `%c[checkAndDraw] ready=${ready} ` +
+      `%cviewInit=${this.viewInitialized} ` +
+      `%cinputsInit=${this.inputsInitialized} ` +
+      `%clayoutReady=${this.layoutReady} ` +
+      `%cdataReady=${this.dataReady} ` +
+      `%cgChartRef=${!!this.gChartRef}`,
+      'color:#4062BB;font-weight:bold;',
+      `color:${this.viewInitialized ? 'green' : '#BA1200'};`,
+      `color:${this.inputsInitialized ? 'green' : 'red'};`,
+      `color:${this.layoutReady ? 'green' : 'red'};`,
+      `color:${this.dataReady ? 'green' : 'red'};`,
+      `color:${!!this.gChartRef ? 'green' : 'red'};`
+    );
+
+    if (ready && !this.drawAttempted) {
+      this.drawAttempted = true;
+      this.createChart(caller); // implemented by derived chart
+    }
+  }
+
+  /**
+   * Convenience for dynamic injection sites to flip flags and attempt draw.
+   * Example usage right after you assign inputs like data/xScale.
+   */
+  public markReadyAndDraw(opts: {
+    dataReady?: boolean;
+    inputsInitialized?: boolean;
+    caller?: string;
+  } = {}): void {
+    if (opts.dataReady !== undefined) this.dataReady = opts.dataReady;
+    if (opts.inputsInitialized !== undefined)
+      this.inputsInitialized = opts.inputsInitialized;
+    this.checkAndDraw(opts.caller ?? 'markReadyAndDraw');
+  }
+
+  /** For derived charts to call once their required @Input()s are set */
+  protected markInputsReady(): void {
+    this.inputsInitialized = true;
+    this.checkAndDraw('markInputsReady');
+  }
+
+  /** Subclasses must implement their drawing here */
+  protected abstract createChart(caller: string): void;
 }
