@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 
 import { select } from 'd3-selection';
-
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
@@ -52,9 +51,9 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
  //   this.sizeChartElements();
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
     if (!panel || !this.gChart) {
-      console.warn(`${caller}: Missing panel or gChartRef`, {
+      console.warn(`${caller}: Missing panel or gChart`, {
         panelMissing: !panel,
-        gChartRefMissing: !this.gChart
+        gChartMissing: !this.gChart
       });
       return;
     }

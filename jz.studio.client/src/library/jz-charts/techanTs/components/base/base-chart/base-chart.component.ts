@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Directive,
   ElementRef,
+  Input,
   OnChanges,
   OnDestroy,
   SimpleChanges,
@@ -21,6 +22,15 @@ export abstract class BaseChartComponent
   implements AfterViewInit, OnChanges, OnDestroy {
   // Core drawing group for the chart’s internals
   @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
+
+  @Input()                           // <— allow direct input
+  set scaffold(value: ChartScaffold | undefined) {
+    if (!value) return;
+    this.chartScaffold = value;
+    this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
+    this.drawAttempted = false;      // allow a fresh attempt after layout changes
+    this.checkAndDraw('scaffold@Input');
+  }
 
   // Identify the chart kind; override in derived classes
   chartType: ChartType = ChartType.Base;
@@ -41,22 +51,13 @@ export abstract class BaseChartComponent
     protected chartData: ChartDataService,
     protected scaffoldSvc: ChartScaffoldService
   ) {
-    // Keep the scaffold in sync for all charts
     this.scaffoldSvc.scaffold$
       .pipe(takeUntil(this.destroyed$))
-      .subscribe((scaffold) => {
+      .subscribe(scaffold => {
         if (!scaffold) return;
         this.chartScaffold = scaffold;
-        // layoutReady when the scaffold has a panel for this chart type
         this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
-
-        // Optional: clear the chart group if the scaffold changed
-        // (prevents layered redraws for certain flows)
-        if (this.gChart?.nativeElement) {
-          select(this.gChart.nativeElement).selectAll('*').remove();
-          this.drawAttempted = false; // allow a fresh draw after layout changes
-        }
-
+        this.drawAttempted = false;
         this.checkAndDraw('scaffold$');
       });
   }
@@ -85,12 +86,11 @@ export abstract class BaseChartComponent
       this.viewInitialized &&
       this.inputsInitialized &&
       this.layoutReady &&
-      this.dataReady &&
-      !!this.gChart;
+      this.dataReady;
 
     // One-line colorized log
     console.log(
-      `%c[checkAndDraw] ready=${ready} ` +
+      `%c   [checkAndDraw] ready=${ready} ` +
       `%cviewInit=${this.viewInitialized} ` +
       `%cinputsInit=${this.inputsInitialized} ` +
       `%clayoutReady=${this.layoutReady} ` +

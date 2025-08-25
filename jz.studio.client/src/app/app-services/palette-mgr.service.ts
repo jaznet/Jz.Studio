@@ -106,7 +106,7 @@ export class PaletteMgrService {
         break;
 
 
-      case 'tuatara':
+      case 'default':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#40403F');
         document.documentElement.style.setProperty('--plt-clr-2', '#40403F');
@@ -295,8 +295,6 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--jz-palette-grid-text-light', '#DCE6EF');
         document.documentElement.style.setProperty('--jz-palette-grid-text-dark', 'var(--plt-clr-4');
         break;
-
-     
 
       case 'gray':
         document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');

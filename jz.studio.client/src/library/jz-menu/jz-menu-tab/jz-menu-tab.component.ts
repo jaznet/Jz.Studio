@@ -23,7 +23,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() route: string = "";
   @Input() tab_name: string = 'tab name';
   @Input() btnTxt = "Tab Button";
-  @Input() palette = "not set";
+  @Input() palette = "default";
 
   @Input() isSelected: boolean = false;
   /* @Input() parentValue!: string;*/

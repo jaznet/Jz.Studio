@@ -11,6 +11,6 @@ export class DatavizHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent';
 
   constructor(private palette: PaletteMgrService) {
-    palette.ChangePalette('tuatara');
+    palette.ChangePalette('default');
   }
 }
