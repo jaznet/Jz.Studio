@@ -295,9 +295,9 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       );
 
       // Provide shared inputs
-      compRef.instance.data = this.chartData.stockPriceHistoryData;
-      compRef.instance.dateScaleX = this.dateScaleX;
-      compRef.instance.chartScaffold = this.chartScaffold;
+      compRef.setInput('data', this.chartData.stockPriceHistoryData);
+      compRef.setInput('dateScaleX', this.dateScaleX);
+      compRef.setInput('scaffold', this.chartScaffold);   // <— important
 
       // Mark ready + draw
       compRef.instance.markReadyAndDraw({

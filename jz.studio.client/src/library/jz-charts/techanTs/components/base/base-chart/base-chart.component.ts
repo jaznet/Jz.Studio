@@ -106,8 +106,13 @@ export abstract class BaseChartComponent
 
     if (ready && !this.drawAttempted) {
       this.drawAttempted = true;
+      this.sizeChartParts();
       this.createChart(caller); // implemented by derived chart
     }
+  }
+
+  protected sizeChartParts() {
+
   }
 
   /**
