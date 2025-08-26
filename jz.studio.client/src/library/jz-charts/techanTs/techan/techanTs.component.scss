@@ -36,6 +36,12 @@
   fill: var(--plt-chart-1);
 }
 
+.panel-text {
+    
+  fill: lightgray;
+  font-size: 12px;
+}
+
 ::ng-deep .tick {
   color: orange;
   stroke: var(--plt-chart-3);
