@@ -6,7 +6,7 @@ import { take } from 'rxjs/operators'; // ✅ add this
 import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
-import { ohlcData, SvgAttributes } from '../interfaces/techan-interfaces';
+import { Margins, ohlcData, SvgAttributes } from '../interfaces/techan-interfaces';
 import { ChartDataService } from '../services/chart-data.service';
 import { ChartType } from '../enums/chart-type'; // adjust the path as needed
 import { LayoutService } from '../services/layout.service';
@@ -266,7 +266,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.alignChartElements();
       this.createPanels();
       this.appendPanels();
-      this.sizePanels();
+      this.sizeAndPlacePanels();
       this.createScales();
       this.drawAxes();
 
@@ -389,31 +389,71 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private appendPanels() { }
 
-  sizePanels(): void {
-    // Proportional height allocation for panels
-    const panelProportions = [0.4, 0.2, 0.2, 0.2];
-
+  /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
+  private sizeAndPlacePanels(): void {
     const containerRect = this.rPanelsContainer.nativeElement.getBoundingClientRect();
     const totalHeight = containerRect.height;
     const panelWidth = containerRect.width;
 
-    let yOffset = 0;
-    panelProportions.forEach((proportion, index) => {
-      const height = totalHeight * proportion;
-      const panelRef = this[`panel${index + 1}` as keyof this] as ElementRef<SVGGElement>;
+    // Fixed 4 panels, shown regardless of content
+    const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
+      this.panel1, this.panel2, this.panel3, this.panel4
+    ];
 
-      if (panelRef) {
-        select(panelRef.nativeElement)
-          .select('rect')
-          .attr('x', 0)
-          .attr('y', yOffset)
-          .attr('width', panelWidth)
-          .attr('height', height);
+    // Proportions for the 4 panels (must be length 4)
+    const proportions = [0.4, 0.2, 0.2, 0.2];
+    const sum = proportions.reduce((a, b) => a + b, 0) || 1;
 
-        yOffset += height;
+    // Charts that are actually enabled in config (may be fewer than 4)
+    const included = chartConfig.filter(c => c.include);
+
+    let y = 0;
+    if (!this.chartScaffold.panels) this.chartScaffold.panels = {};
+
+    panelRefs.forEach((ref, i) => {
+      if (!ref) return;
+
+      const height = totalHeight * (proportions[i] / sum);
+
+      // Position the panel group so charts draw at local (0,0)
+      const g = select(ref.nativeElement);
+      g.attr('transform', `translate(0, ${y})`);
+
+      // The rect stays at (0,0) inside the group
+      const rectSel = g.select('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', panelWidth)
+        .attr('height', height);
+
+      // If there is a chart config for this slot, update scaffold for that chart type
+      const cfg = included[i];
+      if (cfg) {
+        const margins: Margins = cfg.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
+        this.chartScaffold.panels![cfg.type] = {
+          ...(this.chartScaffold.panels![cfg.type] ?? {}),
+          width: panelWidth,
+          height,
+          x: 0,            // informational; translate handles true placement
+          y,               // informational; useful for crosshairs/overlays
+          margins,
+          content: null,
+          spacer: 0,
+          pct: proportions[i] / sum
+        };
+        rectSel.classed('empty-panel', false);
+      } else {
+        // No chart bound to this panel → keep it visible as a placeholder
+        rectSel.classed('empty-panel', true);
       }
+
+      y += height;
     });
+
+    console.log('%c✔ sizeAndPlacePanels (translate, 4 always)', 'color:#90BEE9', this.chartScaffold.panels);
   }
+
+
 
   private createScales(): void {
     console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);
