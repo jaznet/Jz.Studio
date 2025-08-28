@@ -1,16 +1,18 @@
-import { ChartType } from "../enums/chart-type";
-import { PanelAttributes } from "./panel-attributes";
+// interfaces/chart-scaffold.ts
+import { ChartType } from '../enums/chart-type';
+import { PanelAttributes } from './panel-attributes';
 
 export interface ChartScaffold {
-  height: number;
-  width: number;
   title: number;
+  width: number;
+  height: number;
   xAxisTop: number;
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
-  panelsContainer: any; // You can tighten this later
-  panels: { [key in ChartType]?: PanelAttributes } | undefined;
 
-};
+  panelsContainer?: any;
 
+  /** Panel attributes by chart type (OHLC, RSI, etc.) */
+  panels?: Partial<Record<ChartType, PanelAttributes>>;
+}

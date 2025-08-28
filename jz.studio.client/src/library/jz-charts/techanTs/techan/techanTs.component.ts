@@ -34,6 +34,7 @@ import { PanelHostService } from '../services/panel-host.service';
 import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
 import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
+import { toISOStringSafe } from '../utils/date-utils';
 
 @Component({
   selector: 'techanTs',
@@ -264,8 +265,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.createChartScaffold();
       this.sizeChartElements();
       this.alignChartElements();
-      this.createPanels();
-      this.appendPanels();
       this.sizeAndPlacePanels();
       this.createScales();
       this.drawAxes();
@@ -361,50 +360,22 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
   }
 
-  private createPanels(): void {
-   
-    let yOffset = 0;
 
-    const panels: { [key in ChartType]?: PanelAttributes } = {};
 
-    for (const entry of chartConfig) {
-      if (!entry.include) continue;
-
-      panels[entry.type] = {
-        width: this.svgContainer.clientWidth,
-        height: entry.height,
-        margins: entry.margins,
-        x: 0,
-        y: yOffset,
-        content: null, // Filled in later if neededraw
-        spacer: 0,
-        pct: 1
-      };
-      yOffset += entry.height;
-    }
-
-    this.chartScaffold.panels = panels;
-    console.log('%c sections', 'color:purple', this.chartScaffold.panels);
-  }
-
-  private appendPanels() { }
-
+  /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
   /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
   private sizeAndPlacePanels(): void {
     const containerRect = this.rPanelsContainer.nativeElement.getBoundingClientRect();
     const totalHeight = containerRect.height;
     const panelWidth = containerRect.width;
 
-    // Fixed 4 panels, shown regardless of content
     const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
       this.panel1, this.panel2, this.panel3, this.panel4
     ];
 
-    // Proportions for the 4 panels (must be length 4)
     const proportions = [0.4, 0.2, 0.2, 0.2];
     const sum = proportions.reduce((a, b) => a + b, 0) || 1;
 
-    // Charts that are actually enabled in config (may be fewer than 4)
     const included = chartConfig.filter(c => c.include);
 
     let y = 0;
@@ -415,64 +386,47 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
       const height = totalHeight * (proportions[i] / sum);
 
-      // Position the panel group so charts draw at local (0,0)
-      const g = select(ref.nativeElement);
-      g.attr('transform', `translate(0, ${y})`);
-
-      // The rect stays at (0,0) inside the group
-      const rectSel = g.select('rect')
+      const g = select(ref.nativeElement).attr('transform', `translate(0, ${y})`);
+      g.select('rect')
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', panelWidth)
         .attr('height', height);
 
-      // If there is a chart config for this slot, update scaffold for that chart type
       const cfg = included[i];
       if (cfg) {
-        const margins: Margins = cfg.margins ?? { top: 0, right: 0, bottom: 0, left: 0 };
         this.chartScaffold.panels![cfg.type] = {
           ...(this.chartScaffold.panels![cfg.type] ?? {}),
           width: panelWidth,
           height,
-          x: 0,            // informational; translate handles true placement
-          y,               // informational; useful for crosshairs/overlays
-          margins,
+          x: 0,     // informational
+          y,        // informational
           content: null,
           spacer: 0,
           pct: proportions[i] / sum
         };
-        rectSel.classed('empty-panel', false);
+        g.select('rect').classed('empty-panel', false);
       } else {
-        // No chart bound to this panel → keep it visible as a placeholder
-        rectSel.classed('empty-panel', true);
+        g.select('rect').classed('empty-panel', true);
       }
 
       y += height;
     });
 
-    console.log('%c✔ sizeAndPlacePanels (translate, 4 always)', 'color:#90BEE9', this.chartScaffold.panels);
+    console.log('%c✔ sizeAndPlacePanels (translate, no margins)', 'color:#90BEE9', this.chartScaffold.panels);
   }
 
 
-
   private createScales(): void {
-    console.log('%c     ✔ create Scales', 'color:#90BEE9', this.chartScaffold.panels);
-    const panel = this.chartScaffold.panels![ChartType.OHLC];
-    const width = panel!.width - panel!.margins.left - panel!.margins.right;
-
-    if (this.chartData.dateExtent[0] && this.chartData.dateExtent[1]) {
-      this.dateScaleX = scaleBand()
-        .domain(this.chartData.parsedData.map(d => d.date.toISOString()))
-        .range([0, width])
-        .padding(0.1);
-    } else {
-      this.dateScaleX = scaleBand()
-        .domain([])
-        .range([0, width]);
+    const panel = this.chartScaffold.panels?.[ChartType.OHLC];
+    if (!panel) {
+      this.dateScaleX = scaleBand().domain([]).range([0, 0]);
+      return;
     }
-    //   console.log('scale:', this.dateScaleX);
-    console.log('bandwidth fn?', typeof this.dateScaleX.bandwidth);
-    console.log('bandwidth val:', this.dateScaleX.bandwidth?.());
+    const width = Math.max(0, panel.width ?? 0);
+    const parsed = this.chartData?.parsedData ?? [];
+    const domainKeys = parsed.map(d => toISOStringSafe(d.date));
+    this.dateScaleX = scaleBand<string>().domain(domainKeys).range([0, width]).padding(0.1);
   }
 
   drawAxes(): void {

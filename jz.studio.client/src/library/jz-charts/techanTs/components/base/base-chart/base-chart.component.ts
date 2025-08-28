@@ -118,6 +118,7 @@ export abstract class BaseChartComponent
     }
   }
 
+  // inside BaseChartComponent
   protected sizeChartParts() {
     const panel = this.chartScaffold?.panels?.[this.chartType];
     if (!panel) return;
@@ -125,16 +126,14 @@ export abstract class BaseChartComponent
     const width = Math.max(0, panel.width ?? 0);
     const height = Math.max(0, panel.height ?? 0);
 
-    // Base fills the whole panel
     select(this.rBase.nativeElement)
       .attr('x', 0).attr('y', 0)
       .attr('width', width).attr('height', height);
 
-    // Content origin stays at (0,0) — no margin translate
+    // No margins: content origin stays at (0,0)
     select(this.gChartContainer.nativeElement)
       .attr('transform', `translate(0,0)`);
 
-    // Inner content boxes = full panel size
     select(this.rChartContainer.nativeElement)
       .attr('x', 0).attr('y', 0)
       .attr('width', width).attr('height', height);
@@ -147,6 +146,7 @@ export abstract class BaseChartComponent
       .attr('x', 0).attr('y', 0)
       .attr('width', width).attr('height', height);
   }
+
 
 
   /**
