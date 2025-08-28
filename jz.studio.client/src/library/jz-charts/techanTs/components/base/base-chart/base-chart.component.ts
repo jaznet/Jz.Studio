@@ -22,6 +22,13 @@ export abstract class BaseChartComponent
   implements AfterViewInit, OnChanges, OnDestroy {
   // Core drawing group for the chart’s internals
   @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
+  @ViewChild('rChart', { static: false }) rChart!: ElementRef<SVGRectElement>;
+  @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
+  @ViewChild('rContent', { static: false }) rContent!: ElementRef<SVGRectElement>;
+  @ViewChild('gChartContainer', { static: false }) gChartContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
+  @ViewChild('gBase', { static: false }) gBase!: ElementRef<SVGGElement>;
+  @ViewChild('rBase', { static: false }) rBase!: ElementRef<SVGRectElement>;
 
   @Input()                           // <— allow direct input
   set scaffold(value: ChartScaffold | undefined) {
@@ -112,8 +119,35 @@ export abstract class BaseChartComponent
   }
 
   protected sizeChartParts() {
+    const panel = this.chartScaffold?.panels?.[this.chartType];
+    if (!panel) return;
 
+    const width = Math.max(0, panel.width ?? 0);
+    const height = Math.max(0, panel.height ?? 0);
+
+    // Base fills the whole panel
+    select(this.rBase.nativeElement)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', width).attr('height', height);
+
+    // Content origin stays at (0,0) — no margin translate
+    select(this.gChartContainer.nativeElement)
+      .attr('transform', `translate(0,0)`);
+
+    // Inner content boxes = full panel size
+    select(this.rChartContainer.nativeElement)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', width).attr('height', height);
+
+    select(this.rContent.nativeElement)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', width).attr('height', height);
+
+    select(this.rChart.nativeElement)
+      .attr('x', 0).attr('y', 0)
+      .attr('width', width).attr('height', height);
   }
+
 
   /**
    * Convenience for dynamic injection sites to flip flags and attempt draw.
