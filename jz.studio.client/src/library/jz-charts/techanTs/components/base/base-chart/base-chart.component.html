@@ -1,28 +1,30 @@
 <!-- base-chart.component.html -->
-<rect #rBase id="rBase" class="base-rect" width="0" height="0" x="0" y="0" ></rect>
 
-<g #gChartContainer id="gChartContainer">
-  <rect #rChartContainer id="rChartContainer" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
+<svg>
+  <rect #rBase id="rBase" class="base-rect" width="0" height="0" x="0" y="0"></rect>
 
-  <g #gAxisGroupLeft id="gAxisGroupLeft">
-    <rect #rAxisGroupLeft id="rAxisGroupLeft" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-    <g #gAxisLeft id="gAxisLeft">
-      <rect #rAxisLeft id="rAxisLeft" class="chart-placeholder"></rect>
+  <g #gChartContainer id="gChartContainer">
+    <rect #rChartContainer id="rChartContainer" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
+
+    <g #gAxisGroupLeft id="gAxisGroupLeft">
+      <rect #rAxisGroupLeft id="rAxisGroupLeft" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
+      <g #gAxisLeft id="gAxisLeft">
+        <rect #rAxisLeft id="rAxisLeft" class="chart-placeholder"></rect>
+      </g>
+    </g>
+
+    <g #gContent id="gContent">
+      <rect #rContent id="rContent" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
+      <g #gChart id="gChart">
+        <rect #rChart id="rChart" class="chart-placeholder"></rect>
+      </g>
+    </g>
+
+    <g #gAxisGroupRight id="gAxisGroupRight">
+      <rect #rAxisGroupRight id="rAxisGroupRight" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
+      <g #gAxisRight id="gAxisRight">
+        <rect></rect>
+      </g>
     </g>
   </g>
-
-  <g #gContent id="gContent">
-    <rect #rContent id="rContent" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-    <g #gChart id="gChart">
-      <rect #rChart id="rChart" class="chart-placeholder"></rect>
-    </g>
-  </g>
-
-  <g #gAxisGroupRight id="gAxisGroupRight">
-    <rect #rAxisGroupRight id="rAxisGroupRight" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-    <g #gAxisRight id="gAxisRight">
-      <rect></rect>
-    </g>
-  </g>
-</g>
-
+</svg>
