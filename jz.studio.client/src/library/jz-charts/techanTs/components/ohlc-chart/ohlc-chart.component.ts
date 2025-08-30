@@ -84,8 +84,8 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .attr('x2', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
       .attr('y1', d => this.yScale(d.high))
       .attr('y2', d => this.yScale(d.low))
-      .attr('stroke', '#52aa8a')
-      .attr('stroke-width', 1);
+      .attr('stroke', '#B0BEC5')
+      .attr('stroke-width', 2);
 
     // Body
     g.selectAll('.body')
@@ -96,7 +96,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .attr('y', d => this.yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
       .attr('height', d => Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close))))
-      .attr('fill', d => d.close >= d.open ? '#5ec57e' : '#de4c4c');
+      .attr('fill', d => d.close >= d.open ? '#FF1744' : '#AEEA00');
 
     console.log(`✅ OHLC drawn (${caller})`);
   }

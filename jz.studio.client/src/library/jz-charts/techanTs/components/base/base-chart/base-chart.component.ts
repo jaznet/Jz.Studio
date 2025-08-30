@@ -17,6 +17,8 @@ import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 })
 export abstract class BaseChartComponent
   implements AfterViewInit, OnChanges, OnDestroy {
+  @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisGroupLeft', { static: false }) rAxisGroupLeft!: ElementRef<SVGRectElement>;
 
   @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
   @ViewChild('rChart', { static: false }) rChart!: ElementRef<SVGRectElement>;
@@ -81,6 +83,8 @@ export abstract class BaseChartComponent
 
     const width = Math.max(0, panel.width ?? 0);
     const height = Math.max(0, panel.height ?? 0);
+
+    select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height);
 
     select(this.rBase.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.gChartContainer.nativeElement).attr('transform', `translate(0,0)`);              // no margins

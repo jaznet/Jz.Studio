@@ -527,7 +527,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   //  //        .yScale(this.ohlcChart.ohlcYscale)
   //  //  .setTargetGroup(this.gOhlcChart.nativeElement)
   //  //  .setCandleWidth()
-  //  //  .drawAxes(this.layoutService.scaffold)
+  //  //  .dra wAxes(this.layoutService.scaffold)
   //  //  .draw();
   //}
 
