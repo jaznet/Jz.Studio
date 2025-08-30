@@ -96,7 +96,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .attr('y', d => this.yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
       .attr('height', d => Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close))))
-      .attr('fill', d => d.close >= d.open ? '#FF1744' : '#AEEA00');
+      .attr('fill', d => d.close >= d.open ? '#66bb6a' : '#ef5350');
 
     console.log(`✅ OHLC drawn (${caller})`);
   }
