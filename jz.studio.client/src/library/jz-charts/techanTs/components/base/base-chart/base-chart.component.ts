@@ -106,4 +106,9 @@ export abstract class BaseChartComponent
   }
   protected markInputsReady(): void { this.inputsInitialized = true; this.checkAndDraw('markInputsReady'); }
   protected abstract createChart(caller: string): void;
+  /** Force children to define their own axis policy */
+  protected abstract drawYAxes(panel: { width: number; height: number }, yScale: any): void;
+
+  /** Optional micro-helpers children can reuse (not required) */
+  protected yTickCount(h: number): number { return Math.max(2, Math.floor(h / 40)); }
 }

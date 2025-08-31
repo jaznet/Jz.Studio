@@ -103,7 +103,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     console.log(`✅ OHLC drawn (${caller})`);
   }
 
-  private drawYAxes(panel: { width: number; height: number }, yScale: any): void {
+  protected override drawYAxes(panel: { width: number; height: number }, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
 
     // OHLC-specific axis policy (tune as you like)
