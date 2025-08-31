@@ -19,6 +19,12 @@ export abstract class BaseChartComponent
   implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('rAxisGroupLeft', { static: false }) rAxisGroupLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisGroupRight', { static: false }) gAxisGroupRight!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisGroupRight', { static: false }) rAxisGroupRight!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisLeft', { static: false }) gAxisLeft!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisRight', { static: false }) gAxisRight!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisRight', { static: false }) rAxisRight!: ElementRef<SVGRectElement>;
 
   @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
   @ViewChild('rChart', { static: false }) rChart!: ElementRef<SVGRectElement>;

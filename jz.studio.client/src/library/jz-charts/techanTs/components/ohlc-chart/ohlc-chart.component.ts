@@ -9,6 +9,8 @@ import {
 
 import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
+import { axisLeft, axisRight } from 'd3-axis';
+import { format as d3format } from 'd3-format';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
@@ -99,5 +101,39 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .attr('fill', d => d.close >= d.open ? '#66bb6a' : '#ef5350');
 
     console.log(`✅ OHLC drawn (${caller})`);
+  }
+
+  private drawYAxes(panel: { width: number; height: number }, yScale: any): void {
+    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
+
+    // OHLC-specific axis policy (tune as you like)
+    const tickCount = Math.max(2, Math.floor(panel.height / 40));
+    const tickFormat = d3format('~f');     // or d3format(',.2f') / currency
+
+    // LEFT (price)
+    select(this.gAxisGroupLeft.nativeElement)
+      .attr('transform', `translate(0,0)`)
+      .classed('y-axis', true);
+
+    select(this.gAxisLeft.nativeElement)
+      .call(
+        axisLeft(yScale)
+          .ticks(tickCount)
+          .tickFormat(tickFormat as any)
+          .tickSizeOuter(0)
+      );
+
+    // RIGHT (mirror)
+    select(this.gAxisGroupRight.nativeElement)
+      .attr('transform', `translate(${panel.width},0)`)
+      .classed('y-axis', true);
+
+    select(this.gAxisRight.nativeElement)
+      .call(
+        axisRight(yScale)
+          .ticks(tickCount)
+          .tickFormat(tickFormat as any)
+          .tickSizeOuter(0)
+      );
   }
 }
