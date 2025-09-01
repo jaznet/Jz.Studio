@@ -32,7 +32,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
 
   //override chartScaffold!: ChartScaffold;
   override chartType = ChartType.OHLC;
-  private yScale: any;
+  //private yScale: any;
 
   constructor(
     chartData: ChartDataService,
@@ -66,12 +66,14 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     console.log('BANDWIDTH');
     const candleWidth = this.dateScaleX.bandwidth();
 
-    this.yScale = scaleLinear()
+    const yScale = scaleLinear()
       .domain([
         Math.min(...this.data.map(d => d.low)),
         Math.max(...this.data.map(d => d.high))
       ])
-      .range([panel.height, 0]);
+      .range([panel.height, 0])
+      .nice();
+
 
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
@@ -84,8 +86,8 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .attr('class', 'wick')
       .attr('x1', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
       .attr('x2', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
-      .attr('y1', d => this.yScale(d.high))
-      .attr('y2', d => this.yScale(d.low))
+      .attr('y1', d => yScale(d.high))
+      .attr('y2', d => yScale(d.low))
       .attr('stroke', '#B0BEC5')
       .attr('stroke-width', 2);
 
@@ -95,12 +97,14 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .join('rect')
       .attr('class', 'body')
       .attr('x', d => this.dateScaleX(toISOStringSafe(d.date)))
-      .attr('y', d => this.yScale(Math.max(d.open, d.close)))
+      .attr('y', d => yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
-      .attr('height', d => Math.max(1, Math.abs(this.yScale(d.open) - this.yScale(d.close))))
+      .attr('height', d => Math.max(1, Math.abs(yScale(d.open) - yScale(d.close))))
       .attr('fill', d => d.close >= d.open ? '#66bb6a' : '#ef5350');
 
     console.log(`✅ OHLC drawn (${caller})`);
+
+    this.drawYAxes(panel, yScale); // ✅ child-controlled axes
   }
 
   protected override drawYAxes(panel: { width: number; height: number }, yScale: any): void {

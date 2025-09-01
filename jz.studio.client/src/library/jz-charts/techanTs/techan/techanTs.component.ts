@@ -315,6 +315,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     this.chartScaffold = {
       title: 36, // Title height
       width: this.svgContainer.clientWidth, height: 400,
+      margins: { bottom: 30, left: 30, right: 30, top: 30, },
       xAxisTop: 30, xAxisBottom: 30,
       yAxisLeft: 30, yAxisRight: 30,
       panelsContainer: undefined,
@@ -399,6 +400,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
           ...(this.chartScaffold.panels![cfg.type] ?? {}),
           width: panelWidth,
           height,
+          margins: { bottom: 30, left: 30, right: 30, top: 30, },
           x: 0,     // informational
           y,        // informational
           content: null,

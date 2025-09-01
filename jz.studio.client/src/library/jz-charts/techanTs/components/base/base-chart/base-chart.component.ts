@@ -78,12 +78,12 @@ export abstract class BaseChartComponent
     const ready = this.viewInitialized && this.inputsInitialized && this.layoutReady && this.dataReady;
     if (ready && !this.drawAttempted) {
       this.drawAttempted = true;
-      this.sizeChartParts();
+      this.sizeAndPositionChartParts();
       this.createChart(caller);
     }
   }
 
-  protected sizeChartParts() {
+  protected sizeAndPositionChartParts() {
     const panel = this.chartScaffold?.panels?.[this.chartType];
     if (!panel) return;
 
@@ -93,7 +93,7 @@ export abstract class BaseChartComponent
     select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height);
 
     select(this.rBase.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
-    select(this.gChartContainer.nativeElement).attr('transform', `translate(0,0)`);              // no margins
+    select(this.gChartContainer.nativeElement).attr('transform', `translate(${this.chartScaffold.margins.left},0)`);              // no margins
     select(this.rChartContainer.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.rContent.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);

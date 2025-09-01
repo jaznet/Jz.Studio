@@ -1,6 +1,7 @@
 // interfaces/chart-scaffold.ts
 import { ChartType } from '../enums/chart-type';
 import { PanelAttributes } from './panel-attributes';
+import { Margins } from './techan-interfaces';
 
 export interface ChartScaffold {
   title: number;
@@ -10,7 +11,7 @@ export interface ChartScaffold {
   xAxisBottom: number;
   yAxisLeft: number;
   yAxisRight: number;
-
+  margins: Margins;
   panelsContainer?: any;
 
   /** Panel attributes by chart type (OHLC, RSI, etc.) */
