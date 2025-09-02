@@ -68,7 +68,7 @@ export class LayoutService {
   // #region Axes
 
   xAxisDays!: SVGGElement;
-  gXaxisTop!: SVGGElement;
+/*  gXaxisTop!: SVGGElement;*/
 
   xAxisBottom!: SVGGElement;
   gXaxisBottom!: SVGGElement;
@@ -239,7 +239,7 @@ export class LayoutService {
   }
 
   alignChartsToScaffold(): void {
-    this.gXaxisTop.setAttribute('transform', `translate(0,0)`);
+/*    this.gXaxisTop.setAttribute('transform', `translate(0,0)`);*/
 
 
 
