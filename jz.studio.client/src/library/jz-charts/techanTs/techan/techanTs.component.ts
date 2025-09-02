@@ -1,6 +1,6 @@
-
 /* techanTs.component.ts */
 
+// #region imports
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { take } from 'rxjs/operators'; // ✅ add this
 import { range } from 'rxjs';
@@ -35,6 +35,7 @@ import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this 
 import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
 import { toISOStringSafe } from '../utils/date-utils';
+// #endregion imports
 
 @Component({
   selector: 'techanTs',
@@ -56,10 +57,10 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
   @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
 
-  @ViewChild('gXaxisTop', { static: false }) gXaxisTop!: ElementRef<SVGGElement>;
-  @ViewChild('gXaxisTop', { static: false }) rXaxisTop!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisTop', { static: false }) gAxisTop!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisTop', { static: false }) rAxisTop!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsTop', { static: false }) xAxisMonthsTop!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
   @ViewChild('gXaxisBottom', { static: false }) gXaxisBottom!: ElementRef<SVGGElement>;
@@ -340,7 +341,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.title);
     // X-AXIS TOP 
-    select(this.xAxisTopRect.nativeElement)
+    select(this.rAxisTop.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.xAxisTop);
     select(this.xAxisBottomRect.nativeElement)
@@ -356,8 +357,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private alignMainChartElements() {
     select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
-    select(this.gXaxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
-    select(this.xAxisMonthsTop.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},28)`);
+    select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
+    select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},28)`);
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
     select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
   }
@@ -503,7 +504,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     const tickValues = this.dateScaleX.domain(); // Get the domain values from scaleBand
 
     /*DRAW*/
-    select(this.xAxisMonthsTop.nativeElement).call(this.chartXaxisMonthsTop);
+    select(this.gAxisTopMonths.nativeElement).call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
   }
 
