@@ -90,13 +90,13 @@ export abstract class BaseChartComponent
     const width = Math.max(0, panel.width ?? 0);
     const height = Math.max(0, panel.height ?? 0);
 
-    select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height);
+    select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height).classed('group',true);
 
     select(this.rBase.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.gChartContainer.nativeElement).attr('transform', `translate(${this.chartScaffold.margins.left},0)`);              // no margins
     select(this.rChartContainer.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.rContent.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
-    select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
+    select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).classed('rChart', true);
   }
 
   public markReadyAndDraw(opts: { dataReady?: boolean; inputsInitialized?: boolean; caller?: string } = {}): void {
