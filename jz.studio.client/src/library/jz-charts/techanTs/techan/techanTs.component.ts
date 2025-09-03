@@ -256,7 +256,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       console.log('%c     ❌ NOT READY', 'color:red');
       return;
     } else {
-      console.log('%c    ✔ READY', 'color:green');
+      console.log('%c     ✔ READY', 'color:green');
     };
 
     console.log('%c      ✔ initialize ChartWhenReady', 'color:#90BEE9');
@@ -356,11 +356,12 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   private alignMainChartElements() {
+    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`).classed('panels-container',true);
     select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
     select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
     select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},20)`);
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
-    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`);
+
   }
 
 
