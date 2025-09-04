@@ -171,7 +171,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   scaffold!: ChartScaffold;
   // #endregion Properties
 
-  @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;
+/*  @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;*/
 
   // #region constructor
   constructor(
@@ -259,7 +259,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       console.log('%c     ✔ READY', 'color:green');
     };
 
-    console.log('%c      ✔ initialize ChartWhenReady', 'color:#90BEE9');
+    console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
       // ✅ All good — proceed
@@ -525,18 +525,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   // #region DRAW
-
-  //drawOhlc(): void {
-  //  this.ohlcChartRef.tryDrawWhenReady();
-  //  //   this.ohlcChartRef.draw();
-  //  //this.ohlcChartRef
-  //  //  .xScale(this.scales.dateScaleX)
-  //  //        .yScale(this.ohlcChart.ohlcYscale)
-  //  //  .setTargetGroup(this.gOhlcChart.nativeElement)
-  //  //  .setCandleWidth()
-  //  //  .dra wAxes(this.layoutService.scaffold)
-  //  //  .draw();
-  //}
 
   drawVolume(): void {
     //this.volumeChart
