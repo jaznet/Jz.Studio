@@ -219,11 +219,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private updateSvgSize(): void {
     this.svgContainer = this.divSvgContainer.nativeElement;
-   select(this.svgElement.nativeElement)
+    select(this.svgElement.nativeElement)
       .attr('width', this.svgContainer.clientWidth)
       .attr('height', this.svgContainer.clientHeight);
 
-    console.log('%cupdate SvgSize','color:#90BEE9', this.svgElement);
+    console.log('%cupdate SvgSize', 'color:#90BEE9', this.svgElement);
   }
 
   fetchData(): void {
@@ -429,9 +429,11 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       return;
     }
     const width = Math.max(0, panel.width ?? 0);
+    const chartWidth = Math.max(0, panel.width - panel.margins.left - panel.margins.right ?? 0);
+
     const parsed = this.chartData?.parsedData ?? [];
     const domainKeys = parsed.map(d => toISOStringSafe(d.date));
-    this.dateScaleX = scaleBand<string>().domain(domainKeys).range([0, width]).padding(0.1);
+      this.dateScaleX = scaleBand<string>().domain(domainKeys).range([0, chartWidth]).padding(0.1);
   }
 
   drawAxes(): void {

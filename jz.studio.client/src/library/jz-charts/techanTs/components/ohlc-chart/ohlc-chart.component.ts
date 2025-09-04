@@ -74,7 +74,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .range([panel.height, 0])
       .nice();
 
-
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
     console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
