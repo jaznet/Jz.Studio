@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MacdChartComp } from './macd-chart.component';
+import { MacdChartComponent } from './macd-chart.component';
 
 describe('MacdChartComponent', () => {
-  let component: MacdChartComp;
-  let fixture: ComponentFixture<MacdChartComp>;
+  let component: MacdChartComponent;
+  let fixture: ComponentFixture<MacdChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MacdChartComp]
+      declarations: [MacdChartComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MacdChartComp);
+    fixture = TestBed.createComponent(MacdChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

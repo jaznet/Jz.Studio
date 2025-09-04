@@ -22,7 +22,7 @@ import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
-import { MacdChartComp } from '../components/macd-chart/macd-chart.component';
+import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
@@ -364,8 +364,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   }
 
-
-
   /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
   /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
   private sizeAndPlacePanels(): void {
@@ -420,7 +418,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
     console.log('%c✔ sizeAndPlacePanels (translate, no margins)', 'color:#90BEE9', this.chartScaffold.panels);
   }
-
 
   private createScales(): void {
     const panel = this.chartScaffold.panels?.[ChartType.OHLC];
