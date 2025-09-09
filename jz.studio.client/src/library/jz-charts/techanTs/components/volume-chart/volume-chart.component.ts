@@ -19,7 +19,6 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   @Input() dateScaleX!: any;
 
   override chartType = ChartType.VOLUME;
-  private L = 0; private R = 0; private T = 4; private B = 0;
 
   constructor(chartData: ChartDataService, scaffoldSvc: ChartScaffoldService) {
     super(chartData, scaffoldSvc);

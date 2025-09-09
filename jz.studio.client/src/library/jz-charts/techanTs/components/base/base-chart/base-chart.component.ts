@@ -15,8 +15,7 @@ import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
   templateUrl: './base-chart.component.html',
   styleUrls: ['./base-chart.component.scss']
 })
-export abstract class BaseChartComponent
-  implements AfterViewInit, OnChanges, OnDestroy {
+export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
 
   @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
@@ -56,6 +55,7 @@ export abstract class BaseChartComponent
 
   protected chartScaffold!: ChartScaffold;
   protected innerHeight: number = 0;
+  protected L = 0; protected R = 0; protected T = 4; protected B = 0;
 
   constructor(
     protected chartData: ChartDataService,
@@ -95,18 +95,18 @@ export abstract class BaseChartComponent
     const width =  Math.max(0, panel.width ?? 0);
     const height = Math.max(0, panel.height ?? 0);
     const chartWidth = Math.max(0, panel.width - this.chartScaffold.panels![this.chartType]!.margins.left - this.chartScaffold.panels![this.chartType]!.margins.right ?? 0);
-    const chartHeight = this.innerHeight;
+    this.innerHeight = height - this.L;
      
     select(this.rSvg.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).classed('rSvg', true);
     select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height).classed('group', true);
     select(this.gAxisLeft.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},0)`);
     select(this.gAxisRight.nativeElement).attr('transform', `translate(${-this.chartScaffold.yAxisRight},0)`);   
     select(this.rBase.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
-    select(this.gChartContainer.nativeElement).attr('transform', `translate(0,4)`);              // no margins stet
+    select(this.gChartContainer.nativeElement).attr('transform', `translate(0,${this.L})`);              // no margins stet
     select(this.rChartContainer.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height);
     select(this.gContent.nativeElement).attr('transform', `translate(30,0)`);      
     select(this.rContent.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', height);
-    select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', height).classed('rChart', true);
+    select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', this.innerHeight).classed('rChart', true);
     select(this.gAxisGroupRight.nativeElement).attr('transform', `translate(${panel.width},0)`);     
   }
 
