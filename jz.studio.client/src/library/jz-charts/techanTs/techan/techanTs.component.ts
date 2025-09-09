@@ -523,24 +523,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region DRAW
 
-  drawVolume(): void {
-    //this.volumeChart
-    //  .xScale(this.scales.dateScaleX)
-    //  /*    .yScale(this.gVolumeChart.volumeYscale)*/
-    //  .setTargetGroup(this.gVolumeContent.nativeElement)
-    //  .setBarWidth()
-    //  .drawAxes(this.layout.scaffold)
-    //  .draw();
-  }
 
-  //drawMacd(): void {
-  //  this.macdChart
-  //    .xScale(this.scales.dateScaleX)
-  //    .setTargetGroup(this.macdLayout.gChart)
-  //    .setPeriods(12, 26, 9) // Typical MACD periods
-  //    .drawAxes(this.layout.scaffold)
-  //    .draw();
-  //}
 
   drawSma1(period: number): void {
     this.smaService

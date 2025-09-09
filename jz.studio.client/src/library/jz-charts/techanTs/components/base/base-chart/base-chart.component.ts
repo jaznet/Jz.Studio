@@ -96,7 +96,6 @@ export abstract class BaseChartComponent
     const height = Math.max(0, panel.height ?? 0);
     const chartWidth = Math.max(0, panel.width - this.chartScaffold.panels![this.chartType]!.margins.left - this.chartScaffold.panels![this.chartType]!.margins.right ?? 0);
     const chartHeight = this.innerHeight;
-   
      
     select(this.rSvg.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).classed('rSvg', true);
     select(this.rAxisGroupLeft.nativeElement).attr('x', 0).attr('y', 0).attr('width', this.chartScaffold.yAxisLeft).attr('height', height).classed('group', true);
