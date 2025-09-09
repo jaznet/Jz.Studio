@@ -359,7 +359,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`).classed('panels-container',true);
     select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
     select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
-    select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},20)`);
+    select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},${this.chartScaffold.xAxisTop})`);
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
 
   }
