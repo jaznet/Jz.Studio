@@ -35,7 +35,8 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
     if (!panel || !this.gChart) return;
 
     const { height, margins } = panel;
-    const L = margins.left, R = margins.right, T = margins.top, B = margins.bottom;
+ //   const L = margins.left, R = margins.right, T = margins.top, B = margins.bottom;
+    const L = 0, R = 0, T = 4, B = 0;
     const innerHeight = Math.max(0, height - T - B);
 
     const g = select(this.gChart.nativeElement);
@@ -51,7 +52,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
       .attr('x', d => this.dateScaleX(toISOStringSafe(d.date))!)
       .attr('y', d => yScale(d.volume ?? 0))
       .attr('width', barW)
-      .attr('height', d => innerHeight - yScale(d.volume ?? 0))
+      .attr('height', d => height - yScale(d.volume ?? 0))
       .attr('fill', d => (d.close >= d.open ? '#5AA469' : '#D46A6A'));
 
     this.drawYAxes(panel, yScale);
