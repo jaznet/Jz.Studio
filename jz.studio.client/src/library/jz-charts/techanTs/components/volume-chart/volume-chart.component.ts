@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { select } from 'd3-selection';
 import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
@@ -14,7 +14,7 @@ import { ChartScaffoldService } from '../../services/chart-scaffold.service';
   templateUrl: '../base/base-chart/base-chart.component.html',
   styleUrls: ['./volume-chart.component.scss']
 })
-export class VolumeChartComponent extends BaseChartComponent implements OnChanges {
+export class VolumeChartComponent extends BaseChartComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
@@ -23,6 +23,10 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
 
   constructor(chartData: ChartDataService, scaffoldSvc: ChartScaffoldService) {
     super(chartData, scaffoldSvc);
+  }
+
+  ngOnInit(): void {
+    this.L = 4;
   }
 
   override ngOnChanges(_: SimpleChanges): void {
@@ -43,7 +47,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
     const g = select(this.gChart.nativeElement);
 
     const maxVol = Math.max(...this.data.map(d => d.volume ?? 0));
-    const yScale = scaleLinear().domain([0, maxVol]).range([innerHeight, 0]).nice();
+    const yScale = scaleLinear().domain([0, maxVol]).range([this.innerHeight, 0]).nice();
 
     const barW = Math.max(1, this.dateScaleX.bandwidth());
     g.selectAll('.vol-bar')
@@ -62,8 +66,8 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   protected override drawYAxes(panel: { width: number; height: number; margins?: any }, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
     const { height, margins } = panel as any;
-    const innerHeight = Math.max(0, height - this.L);
-    const ticks = this.yTickCount(innerHeight);
+    this.innerHeight = Math.max(0, height - this.L);
+    const ticks = this.yTickCount(this.innerHeight);
 
     select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
     select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));

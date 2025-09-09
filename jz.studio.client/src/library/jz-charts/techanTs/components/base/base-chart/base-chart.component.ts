@@ -107,6 +107,7 @@ export abstract class BaseChartComponent
     select(this.gContent.nativeElement).attr('transform', `translate(30,0)`);      
     select(this.rContent.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', height);
     select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', height).classed('rChart', true);
+    select(this.gAxisGroupRight.nativeElement).attr('transform', `translate(600,0)`);     
   }
 
   public markReadyAndDraw(opts: { dataReady?: boolean; inputsInitialized?: boolean; caller?: string } = {}): void {
