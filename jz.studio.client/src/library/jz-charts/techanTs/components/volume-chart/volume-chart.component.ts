@@ -19,6 +19,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   @Input() dateScaleX!: any;
 
   override chartType = ChartType.VOLUME;
+  private L = 0; private R = 0; private T = 4; private B = 0;
 
   constructor(chartData: ChartDataService, scaffoldSvc: ChartScaffoldService) {
     super(chartData, scaffoldSvc);
@@ -36,8 +37,8 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
 
     const { height, margins } = panel;
  //   const L = margins.left, R = margins.right, T = margins.top, B = margins.bottom;
-    const L = 0, R = 0, T = 4, B = 0;
-    const innerHeight = Math.max(0, height - T - B);
+
+    this.innerHeight = Math.max(0, height - this.T);
 
     const g = select(this.gChart.nativeElement);
 
@@ -61,7 +62,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   protected override drawYAxes(panel: { width: number; height: number; margins?: any }, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
     const { height, margins } = panel as any;
-    const innerHeight = Math.max(0, height - margins.top - margins.bottom);
+    const innerHeight = Math.max(0, height - this.L);
     const ticks = this.yTickCount(innerHeight);
 
     select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));

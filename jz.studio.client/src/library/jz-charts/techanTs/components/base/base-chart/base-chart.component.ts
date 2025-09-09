@@ -46,13 +46,16 @@ export abstract class BaseChartComponent
   }
 
   chartType: ChartType = ChartType.Base;
-  protected chartScaffold!: ChartScaffold;
+
   protected viewInitialized = false;
   protected inputsInitialized = false;
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
   private destroyed$ = new Subject<void>();
+
+  protected chartScaffold!: ChartScaffold;
+  protected innerHeight: number = 0;
 
   constructor(
     protected chartData: ChartDataService,
