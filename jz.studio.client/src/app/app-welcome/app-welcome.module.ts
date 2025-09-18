@@ -10,7 +10,7 @@ import { LogonModule } from '../app-parts/app-logon/logon/logon.module';
 
 @NgModule({
   declarations: [
-    AppWelcomeComponent,
+    
   ],
   imports: [
     CommonModule, 
@@ -21,7 +21,7 @@ import { LogonModule } from '../app-parts/app-logon/logon/logon.module';
     LogonModule
   ],
   exports: [
-    AppWelcomeComponent,
+  
   ]
 })
 export class AppWelcomeModule { }

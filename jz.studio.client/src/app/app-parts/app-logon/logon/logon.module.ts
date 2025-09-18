@@ -8,7 +8,7 @@ import { AppRoutingModule } from '../../../app-routing.module';
 
 @NgModule({
   declarations: [
-    LogonComponent
+    
   ],
   imports: [
     CommonModule,
@@ -18,7 +18,7 @@ import { AppRoutingModule } from '../../../app-routing.module';
     AppRoutingModule
   ],
   exports: [
-    LogonComponent 
+     
   ]
 })
 export class LogonModule { }

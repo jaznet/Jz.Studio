@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { JzButtonComponent } from '../../../../library/jz-buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'app-logon',
+  standalone: true,
+  imports: [
+    JzButtonComponent, ReactiveFormsModule
+  ],
   templateUrl: './logon.component.html',
   styleUrls: ['./logon.component.css']
 })

@@ -16,14 +16,10 @@
     </div>
 
     <div class="centered" style="margin-top:18px; color:black">
-      <jz-button [width]="180" [height]="40" routerLink="/home"></jz-button>
-
-      <!--class="jz-button login"
-  [text]="'Logon'"
-  [btnBackground]="'var(--plt-clr-4)'"
-  [btnTextColor]="'black'"
-  [fontSize]="'16px'"-->
-      <div>btn</div>
+      <jz-button text="Enter"
+                 class="jz-btn"
+                 [route]="['/home']">
+      </jz-button>
 
     </div>
   </form>
