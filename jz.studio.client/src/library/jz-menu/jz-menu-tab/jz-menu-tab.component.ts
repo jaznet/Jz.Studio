@@ -26,7 +26,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() menuName = 'not set';
   @Input() isDefault = false;
 
-  @Input() route = '';
+  @Input() route!: string | any[];
   @Input() tab_name = 'tab name';
   @Input() btnTxt = 'Tab Button';
   @Input() palette = 'default';

@@ -25,7 +25,7 @@ import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layou
 import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
 import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
 import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
-import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
+import { scaleTime, scaleUtc, scaleLinear, scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { ChartScaffold } from '../interfaces/chart-scaffold';
 import { PanelAttributes } from '../interfaces/panel-attributes';
@@ -159,7 +159,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   viewReady = false;
   hydrated = false; // Optional safety to prevent double-draw
   ticker = 'NVDA';
-  dateScaleX: any;
+  dateScaleX!: ScaleBand<Date>;
 
   chartScaffold!: ChartScaffold;
 
@@ -425,7 +425,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   private createScales(): void {
     const panel = this.chartScaffold.panels?.[ChartType.OHLC];
     if (!panel) {
-      this.dateScaleX = scaleBand().domain([]).range([0, 0]);
+      this.dateScaleX = scaleBand<Date>().domain([]).range([0, 1]);
       return;
     }
     // safest version
@@ -529,8 +529,6 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   }
 
   // #region DRAW
-
-
 
   drawSma1(period: number): void {
     this.smaService
