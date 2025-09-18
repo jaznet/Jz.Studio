@@ -1,90 +1,52 @@
-
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnInit, Renderer2 } from '@angular/core';
-import { Router } from '@angular/router';
-import { JzMenuService } from '../../jz-menu/jz-menu.service';
+import { Component, HostBinding, Input } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { NgClass } from '@angular/common';
+import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
   selector: 'jz-button',
+  standalone: true,
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './jz-button.component.html',
-  styleUrls: ['./jz-button.component.css']
+  styleUrls: ['./jz-button.component.scss']
 })
-export class JzButtonComponent implements OnInit, AfterViewInit, AfterViewChecked {
-  @HostBinding('class') classes = 'fit-to-content';
+export class JzButtonComponent {
+  /** Router bits */
+  @Input() route: string | any[] = '/';
+  @Input() queryParams?: Record<string, any>;
+  @Input() fragment?: string;
+  @Input() exact = true;
 
-  @Input() route: string = '';
-  
-  @Input() text: string = 'Enter';
-  @Input() height: number = 33;
-  @Input() width: number = 100;
-  //@Input() colorTxt: string = 'var(--plt-txt-5)';
-  @Input() btnBackground: any;
-  @Input() btnTextColor: any;
-  @Input() fontSize: string = '14px';
-  @Input() isSelected: boolean = false;
-  @Input() menuType!: string;
+  /** Visual/config */
+  @Input() text = 'Enter';
+  @Input() disabled = false;
+  @Input() isSelected = false;
 
-  isSubMenu: boolean = false;
-  height_px: string = '0px';
-  width_px: string = '0px';
-  border_px: string = '0px';
-  color!: string;
-  background: string = 'orange';
-  txtColor: string='blue';
+  /** Sizing API (applies to the host) */
+  @Input() width?: number | string;
+  @Input() height?: number | string;
 
-  get parentGetter() {
-    return this.menuType;
-   // return this.menuService.isSubMenu;
+  @HostBinding('style.width') get hostW() { return this.cssSize(this.width); }
+  @HostBinding('style.height') get hostH() { return this.cssSize(this.height); }
+  @HostBinding('attr.aria-disabled') get ariaDisabled() { return this.disabled ? 'true' : null; }
+
+  /** Variant (main/sub) */
+  private _menuType: MenuType = 'main';
+  @Input() set menuType(v: MenuType | string | null | undefined) {
+    this._menuType = normalizeMenuType(v);
   }
+  get menuType(): MenuType { return this._menuType; }
 
-  get isSelectedGetter() {
-    return this.isSelected;
-  }
-
-  constructor(
-    private changeDetector: ChangeDetectorRef,
-    private element: ElementRef,
-    private renderer: Renderer2,
-    private router: Router) {
-  }
-
-  ngOnInit(): void { }
-
-  ngAfterViewInit(): void {
-    this.height_px = this.height + 'px';
-    this.width_px = this.width + 'px';
-    this.border_px = .175 * this.height + 'px';
- //   this.color = this.colorTxt;
-    this.background = this.btnBackground;
-    this.changeDetector.detectChanges();
-    //console.log('button parent tab', this.menuType);
-    //console.log('button selected', this.isSelected);
-    //console.log('button selected', this.isSelectedGetter);
-
-    if (this.menuType === 'sub-menu') {
-      this.isSubMenu = true;
+  /** Prevent navigation when disabled */
+  onClick(e: MouseEvent) {
+    if (this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
     }
   }
 
-  ngAfterViewChecked(): void { }
-
-  onClicked() {
-   // this.selection('select');
-    // console.log(this.element.nativeElement);
-    if (this.route) {
-      this.router.navigate([this.route]);
-    }
-  }
-
-  selection(select: string) {
-    switch (select) {
-      case 'select': {
-        this.renderer.addClass(this.element.nativeElement.firstChild, 'selected');
-        break;
-      }
-      case 'deselect': {
-        this.renderer.removeClass(this.element.nativeElement.firstChild, 'selected');
-        break;
-      }
-    }
+  private cssSize(v?: number | string | null) {
+    if (v == null || v === '') return null;
+    return typeof v === 'number' ? `${v}px` : v;
   }
 }

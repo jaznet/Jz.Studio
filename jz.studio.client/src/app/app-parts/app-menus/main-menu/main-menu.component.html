@@ -7,13 +7,13 @@
                      [menuName]="'menu-main'"
                      [direction]="'horizontal'"
                      [tabs]="tabs"
-                     [menuType]="'main-menu'">
+                     [menuType]="'main'">
 
     <jz-menu-tab [route]="'/home'"
                  [tabId]="'home'"
                  [btnTxt]="'Home'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -21,7 +21,7 @@
                  [tabId]="'dataviz'"
                  [btnTxt]="'Dataviz'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -29,7 +29,7 @@
                  [tabId]="'gfx'"
                  [btnTxt]="'Graphics'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -37,7 +37,7 @@
                  [tabId]="'backoffice'"
                  [btnTxt]="'Backoffice'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -45,7 +45,7 @@
                  [tabId]="'sandbox'"
                  [btnTxt]="'Sandbox'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -53,7 +53,7 @@
                  [tabId]="'architecture'"
                  [btnTxt]="'Architecture'"
                  [direction]="direction"
-                 [menuType]="parentGetter"
+                 [menuType]="menuType"
                  [menuName]="'menu-main'">
     </jz-menu-tab>
 
@@ -62,7 +62,7 @@
                  [tabId]="'admin'"
                  [btnTxt]="'Admin'"
                  [direction]="direction"
-                 [menuType]="parentGetter">
+                 [menuType]="menuType">
     </jz-menu-tab>
 
   </jz-menu-container>

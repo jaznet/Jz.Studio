@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaletteMgrService } from './app-services/palette-mgr.service';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavigationListenerService } from './app-services/navigation-listener.service';
 import { PopOverLoadingComponent } from '../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { JzPopOversService } from '../library/jz-pop-overs/jz-pop-overs.service';
@@ -19,6 +19,8 @@ interface WeatherForecast {
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

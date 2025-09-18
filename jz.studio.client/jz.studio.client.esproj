@@ -16,7 +16,6 @@
     <Folder Include="src\library\jz-charts\techanTs\styles\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
-    <Folder Include=".backup\jz-spirograph\jz-spirograph\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
   </ItemGroup>
@@ -33,5 +32,11 @@
     <None Include=".backup\utilities\keyed-collection.spec.ts" />
     <None Include=".backup\utilities\keyed-collection.ts" />
     <None Include=".backup\utilities\utilities.module.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptConfiguration Remove=".backup\jz-spirograph\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove=".backup\jz-spirograph\**" />
   </ItemGroup>
 </Project>

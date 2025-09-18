@@ -1,38 +1,41 @@
 import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { AppEventsService } from '../../../app/app-services/app-events.service';
+import { normalizeMenuType, type MenuType } from '../../../types/menu';
+
 
 @Component({
   selector: 'jz-menu-container',
+  standalone: true,
+  imports: [CommonModule, JzMenuTabComponent],
+  inputs: ['menuType'], 
   templateUrl: './jz-menu-container.component.html',
   styleUrls: ['./jz-menu-container.component.css']
 })
+
+
 export class JzMenuContainerComponent implements OnInit, AfterViewInit {
 
   @HostBinding('class') classes = 'menu-container';
   @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
- // @ViewChild('tabpanel', { static: false }) tabPanel: MenuTabPanelComponent | any;
- // @ViewChild(TemplateRef, { static: true }) template: TemplateRef<any> | any;
 
   @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
-  //@ContentChildren(JzMenuTabComponent, { descendants: true }) childComponents!: QueryList<JzMenuTabComponent>;
-  //@ContentChildren(JzMenuTabComponent, { descendants: true, read: ElementRef }) childElementRefs!: QueryList<ElementRef>;
 
   @Input() menuName: string | any;
- /* @Input() initialTemplate: TemplateRef<any> | any;*/
   @Input() direction: string = 'horizontal';
  
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
- isSubMenu: boolean = false;
-  @Input() menuType!: string;
+  isSubMenu: boolean = false;
 
-  get parentGetter() {
-    return this.menuType;
+  private _menuType: MenuType = 'main';
+  @Input() set menuType(v: MenuType | string | null | undefined) {
+    this._menuType = normalizeMenuType(v);
   }
+  get menuType(): MenuType { return this._menuType; }
 
   flexflow: string = 'row';
  
@@ -81,7 +84,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     console.log('Menu Container ngAfterViewInit', this.menuType, this.menuService.isSubMenu, this.jztabs.length);
 
-    if (this.menuType === 'sub-menu') {
+    if (this.menuType === 'sub') {
       this.isSubMenu = true;
     }
 

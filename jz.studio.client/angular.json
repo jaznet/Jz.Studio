@@ -48,7 +48,8 @@
               "src/assets/styles/flex-grids.css",
               "src/assets/styles/dx-dark.css",
               "src/assets/styles/popups.css",
-              "src/assets/styles/jz-menus.css"
+              "src/assets/styles/jz-menus.css",
+              "src/assets/styles/buttons.css"
             ],
             "scripts": [
               //"node_modules/techan/dist/techan.min.js"

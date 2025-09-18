@@ -3,7 +3,7 @@
                    [menuName]="'dataviz'"
                    [direction]="'vertical'"
                    [isHorizontal]="false"
-                   [menuType]="'sub-menu'">
+                   [menuType]="'sub'">
 
 
 
@@ -12,7 +12,7 @@
                [btnTxt]="'Home'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter"
+               [menuType]="menuType"
                [isSelected]="true">
   </jz-menu-tab>
 
@@ -21,7 +21,7 @@
                [btnTxt]="'TechanTs'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter"
+               [menuType]="menuType"
                [palette]="'default'">
   </jz-menu-tab>
 
@@ -30,7 +30,7 @@
                [btnTxt]="'Chorodash'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter">
+               [menuType]="menuType">
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'dataviz/sankey'"
@@ -38,7 +38,7 @@
                [btnTxt]="'Sankey'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter">
+               [menuType]="menuType">
   </jz-menu-tab>
 
   <jz-menu-tab [route]="'dataviz/technical'"
@@ -46,7 +46,7 @@
                [btnTxt]="'Technical'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter">
+               [menuType]="menuType">
   </jz-menu-tab>
 
   <!--<jz-menu-tab [route]="'dataviz/technical-analysis'"
@@ -54,7 +54,7 @@
                [btnTxt]="'Technical Analysis'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter">
+               [menuType]="menuType">
   </jz-menu-tab>-->
 
 
@@ -64,7 +64,7 @@
                [btnTxt]="'Syncfusion Chart'"
                [menuName]="'dataviz'"
                [direction]="'vertical'"
-               [menuType]="parentGetter">
+               [menuType]="menuType">
   </jz-menu-tab>
 
 </jz-menu-container>

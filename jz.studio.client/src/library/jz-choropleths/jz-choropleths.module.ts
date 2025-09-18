@@ -8,8 +8,8 @@ import { CountyPaintingStrategy } from './interface/county-painting-strategy';
 
 @NgModule({
   declarations: [
-    ChoroUsaComponent,
-    ChoroStateComponent,  
+   
+
   ],
   imports: [
     CommonModule,
@@ -17,8 +17,7 @@ import { CountyPaintingStrategy } from './interface/county-painting-strategy';
   ],
  
   exports: [
-    ChoroUsaComponent,
-    ChoroStateComponent, 
+  
   ]
 })
 export class JzChoroplethsModule { }

@@ -8,9 +8,9 @@ import { AppContentComponent } from './app-content/app-content.component';
 
 @NgModule({
   declarations: [
-    AppHeaderComponent,
-    AppFooterComponent,
-    AppContentComponent
+
+  
+  
   ],
   imports: [
     CommonModule,
@@ -18,9 +18,9 @@ import { AppContentComponent } from './app-content/app-content.component';
     AppMenusModule
   ],
   exports: [
-    AppHeaderComponent,
-    AppFooterComponent,
-    AppContentComponent
+ 
+  
+
   ]
 })
 export class AppPartsModule { }

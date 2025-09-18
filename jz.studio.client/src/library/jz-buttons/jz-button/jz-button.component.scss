@@ -1,0 +1,104 @@
+/*jz-button.component.scss*/
+
+.jz3d {
+  /* your tokens */
+  --bg: var(--plt-clr-1);
+  --bg-selected: var(--plt-clr-4);
+  --txt: var(--plt-txt-1);
+  --txt-selected: #000;
+  /* shape + optics */
+  --radius: 10px;
+  --depth: 8px;
+  /* warm-tinted speculars from --plt-clr-x (#ede4d1) */
+  --shine: rgba(237, 228, 209, .28);
+  --shine-strong: rgba(237, 228, 209, .48);
+  /* shadows tuned for dark base */
+  --shade: rgba(0,0,0,.36);
+  --shade-soft: rgba(0,0,0,.18);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .55rem 1.1rem;
+  min-width: 6.5rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--txt);
+  cursor: pointer;
+  line-height: 1;
+  /* inner bevel + lift */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 -1px 0 rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.45);
+  /* left->right falloff (upper-left light) */
+  background-image: linear-gradient(90deg, rgba(255,255,255,.06), rgba(0,0,0,.14));
+  background-blend-mode: overlay;
+  /* OGEE band (top router pass) */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    right: 2px;
+    top: 2px;
+    height: max(12px, calc(var(--depth) + 4px));
+    border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 6px 6px;
+    pointer-events: none;
+    background: linear-gradient( to bottom, var(--shine-strong) 0%, var(--shine) 32%, rgba(255,255,255,.06) 52%, rgba(0,0,0,.20) 100% );
+    /* bias highlight toward left to match light direction */
+    mask: linear-gradient(90deg, rgba(0,0,0,.95), rgba(0,0,0,.6));
+    opacity: .98;
+  }
+  /* corner specular + global vignette (upper-left) */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(60% 60% at 22% 18%, var(--shine), transparent 62%), radial-gradient(80% 80% at 90% 90%, rgba(0,0,0,.22), transparent 70%);
+    mix-blend-mode: screen;
+  }
+  /* interactions */
+  transition: transform .06s ease, box-shadow .12s ease, background-color .12s ease;
+
+  &:hover {
+    transform: translateY(-.5px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.28);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255,255,255,.45);
+    outline-offset: 2px;
+  }
+  /* variants (keep your class names) */
+  &.main-menu {
+    background-color: var(--plt-clr-1);
+    color: var(--plt-txt-1);
+  }
+
+  &.sub-menu {
+    background-color: var(--plt-clr-2);
+    color: var(--plt-txt-2);
+  }
+
+  &.selected {
+    background-color: var(--bg-selected);
+    color: var(--txt-selected);
+  }
+
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(0,0,0,.28), 0 -1px 0 rgba(255,255,255,.06);
+  }
+}
+
+/* Motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .jz3d {
+    transition: none;
+  }
+}

@@ -1,10 +1,19 @@
+
+
 import { AfterContentInit, AfterViewInit, Component, ElementRef, HostBinding, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Spiro } from './spiro';
 import array_store from 'devextreme/data/array_store';
 import { SpirographService } from './spirograph.service';
+import { JzRadioButtonComponent } from '../jz-ui-controls/jz-radio-button/jz-radio-button.component';
+import { CommonModule } from '@angular/common';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
+import { DxTemplateModule } from 'devextreme-angular/core';  
+import { DxDropDownBoxModule } from 'devextreme-angular/ui/drop-down-box';
 
 @Component({
   selector: 'jz-spirograph',
+  standalone: true,
+  imports: [CommonModule, JzRadioButtonComponent, DxDataGridModule, DxDropDownBoxModule],
   templateUrl: './jz-spirograph.component.html',
   styleUrl: './jz-spirograph.component.css'
 })

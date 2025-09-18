@@ -1,17 +1,8 @@
+<!--jz-button.component.html-->
 
-<div routerLink="/sandbox"
-     (click)="onClicked()"
-     class="jz-button"
-     [ngStyle]="{'height': height_px, 'width': width_px}"
-     [ngClass]="{ 'sub-menu': isSubMenu, 'main-menu':!isSubMenu }">
-
-  <jz-button3d class="jz-button-3d"
-               [text]="text"
-               [background]="btnBackground"
-               [menuType]="menuType"
-               [isSelected]=isSelected
-               [btnTextColor]="btnTextColor"
-               >
-  </jz-button3d>
-
-</div>
+<button class="jz3d main-menu"
+        [routerLink]="route"
+        [queryParams]="queryParams"
+        [fragment]="fragment">
+  <span class="label">{{ text }}</span>
+</button>

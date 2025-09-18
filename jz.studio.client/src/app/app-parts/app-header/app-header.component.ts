@@ -1,12 +1,18 @@
 
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Host, HostBinding, OnInit, ViewChild } from '@angular/core';
 import { AppStateService } from '../../app-services/app-state.service';
+import { MainMenuComponent } from '../app-menus/main-menu/main-menu.component';
+import { CommonModule } from '@angular/common';
+import { PaletteMenuComponent } from '../app-menus/palette-menu/PaletteMenuComponent';
 
 @Component({
   selector: 'app-header',
+  standalone: true,
+  imports: [CommonModule, MainMenuComponent, PaletteMenuComponent],
   templateUrl: './app-header.component.html',
   styleUrls: ['./app-header.component.css']
 })
+
 export class AppHeaderComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'app-header';
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;

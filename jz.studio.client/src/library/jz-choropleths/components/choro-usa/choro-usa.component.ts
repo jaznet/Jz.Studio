@@ -10,9 +10,12 @@ import { CountyDataService } from '../../services/county-data.service';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
 import * as topojson from 'topojson';
 import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'choro-usa',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './choro-usa.component.html',
   styleUrls: ['./choro-usa.component.css']
 })

@@ -9,7 +9,7 @@ import { ChartComponentsModule } from '../components/chart-components.module';
 /*import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';*/
 
 @NgModule({
-  declarations: [TechanTsComponent],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule,
@@ -17,6 +17,6 @@ import { ChartComponentsModule } from '../components/chart-components.module';
     ChartComponentsModule,
     JzPopOversModule,
   ],
-  exports: [TechanTsComponent]
+  exports: []
 })
 export class TechanTsModule { }

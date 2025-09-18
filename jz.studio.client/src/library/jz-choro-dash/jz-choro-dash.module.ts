@@ -15,8 +15,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
 
 @NgModule({
   declarations: [
-    JzChoroDashComponent,
-    JzChoroDashPanelComponent,
+ 
   ],
   imports: [
     CommonModule,
@@ -35,8 +34,6 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
     }
   ], 
   exports: [
-    JzChoroDashComponent,
-    JzChoroDashPanelComponent,
   ],
 })
 export class JzChoroDashModule { }

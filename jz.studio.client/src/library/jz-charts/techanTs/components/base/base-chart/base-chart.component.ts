@@ -94,7 +94,13 @@ export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, O
 
     const width =  Math.max(0, panel.width ?? 0);
     const height = Math.max(0, panel.height ?? 0);
-    const chartWidth = Math.max(0, panel.width - this.chartScaffold.panels![this.chartType]!.margins.left - this.chartScaffold.panels![this.chartType]!.margins.right ?? 0);
+    const chartWidth = Math.max(
+      0,
+      (panel?.width ?? 0)
+      - (this.chartScaffold.panels?.[this.chartType]?.margins?.left ?? 0)
+      - (this.chartScaffold.panels?.[this.chartType]?.margins?.right ?? 0)
+    );
+
     this.innerHeight = height - this.L;
      
     select(this.rSvg.nativeElement).attr('x', 0).attr('y', 0).attr('width', width).attr('height', height).classed('rSvg', true);

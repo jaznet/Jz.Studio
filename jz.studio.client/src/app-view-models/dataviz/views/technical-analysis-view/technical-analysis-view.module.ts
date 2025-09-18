@@ -5,11 +5,11 @@ import { TechnicalAnalysisViewComponent } from './technical-analysis-view.compon
 import { JzTechnicalAnalysisModule } from '../../../../library/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.module';
 
 @NgModule({
-  declarations: [TechnicalAnalysisViewComponent],
+  declarations: [],
   imports: [
     CommonModule,
     JzTechnicalAnalysisModule
   ],
-  exports: [TechnicalAnalysisViewComponent]
+  exports: []
 })
 export class TechnicalAnalysisViewModule { }

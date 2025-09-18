@@ -8,20 +8,16 @@ import { ElapsedTimeComponent } from './elapsed-time/elapsed-time.component';
 @NgModule({
   declarations: [
    
-    JzRadioButtonComponent,
-    DayOfWeekComponent,
-    JzSpinnerComponent,
-    ElapsedTimeComponent
+
+    DayOfWeekComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
     
-    JzRadioButtonComponent,
-    DayOfWeekComponent,
-    JzSpinnerComponent,
-    ElapsedTimeComponent
+   
+    DayOfWeekComponent
   ]
 })
 export class JzUiControlsModule { }

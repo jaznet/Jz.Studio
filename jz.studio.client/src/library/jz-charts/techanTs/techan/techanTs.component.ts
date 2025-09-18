@@ -35,10 +35,13 @@ import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this 
 import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
 import { toISOStringSafe } from '../utils/date-utils';
+import { CommonModule } from '@angular/common';
 // #endregion imports
 
 @Component({
   selector: 'techanTs',
+  standalone: true,
+  imports: [CommonModule, PopOverLoadingComponent, PopoverHttpErrorComponent],
   templateUrl: './techanTs.component.html',
   styleUrls: ['./techanTs.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -425,12 +428,16 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
       this.dateScaleX = scaleBand().domain([]).range([0, 0]);
       return;
     }
-    const width = Math.max(0, panel.width ?? 0);
-    const chartWidth = Math.max(0, panel.width - panel.margins.left - panel.margins.right ?? 0);
+    // safest version
+    const width =
+      Math.max(0, panel?.width ?? 0);
 
-    const parsed = this.chartData?.parsedData ?? [];
-    const domainKeys = parsed.map(d => toISOStringSafe(d.date));
-      this.dateScaleX = scaleBand<string>().domain(domainKeys).range([0, chartWidth]).padding(0.1);
+    const chartWidth = Math.max(
+      0,
+      (panel?.width ?? 0)
+      - (panel?.margins?.left ?? 0)
+      - (panel?.margins?.right ?? 0)
+    );
   }
 
   drawAxes(): void {

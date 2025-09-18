@@ -105,15 +105,14 @@ export class PaletteMgrService {
 
         break;
 
-
       case 'default':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#40403F');
-        document.documentElement.style.setProperty('--plt-clr-2', '#40403F');
-        document.documentElement.style.setProperty('--plt-clr-3', '#5A5958');
-        document.documentElement.style.setProperty('--plt-clr-4', '#DCE2C8');
-        document.documentElement.style.setProperty('--plt-clr-5', '#929191');
-        document.documentElement.style.setProperty('--plt-clr-x', '#Ffffff');
+        document.documentElement.style.setProperty('--plt-clr-1', '#191816');
+        document.documentElement.style.setProperty('--plt-clr-2', '#43413b');
+        document.documentElement.style.setProperty('--plt-clr-3', '#6e6a61');
+        document.documentElement.style.setProperty('--plt-clr-4', '#989286');
+        document.documentElement.style.setProperty('--plt-clr-5', '#c3bbac');
+        document.documentElement.style.setProperty('--plt-clr-x', '#ede4d1');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#DCE2C8');
         document.documentElement.style.setProperty('--plt-txt-2', '#febd68');

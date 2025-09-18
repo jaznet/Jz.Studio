@@ -13,9 +13,7 @@ import { TechnicalAnalysisViewModule } from './views/technical-analysis-view/tec
 
 @NgModule({
   declarations: [
-    DatavizComponent,
     DatavizHomeComponent,
-    DatavizMenuComponent,
   //  TechChartViewComponent, 
   ],
   imports: [
@@ -28,9 +26,7 @@ import { TechnicalAnalysisViewModule } from './views/technical-analysis-view/tec
     TechnicalAnalysisViewModule
   ],
   exports: [
-    DatavizComponent,
     DatavizHomeComponent,
-    DatavizMenuComponent,
   ],
 })
 export class DatavizModule { }

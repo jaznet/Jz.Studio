@@ -1,8 +1,4 @@
 .app-body {
-  /* background-color: #717568;*/
-  /*  background-color: #0D1F2D;*/
-  /*  background-color: #7a6f9b;*/
-  /*  background-color: #695F85;*/
   background-color: var(--plt-clr-1);
 }
 
@@ -28,7 +24,9 @@ body {
   background-color: antiquewhite;
 }
 
-
+.app-view {
+  border: 1px solid yellow;
+}
 
 .shadow {
   width: 200px;

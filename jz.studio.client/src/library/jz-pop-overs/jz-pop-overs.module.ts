@@ -10,8 +10,8 @@ import { PopoverBaseComponent } from './pop-over-base/pop-over-base.component';
 @NgModule({
   declarations: [
     PopoverBaseComponent,
-    PopOverLoadingComponent,
-    PopoverHttpErrorComponent,
+  
+   
     DynamicPopoverComponent,
   ],
   imports: [
@@ -21,8 +21,8 @@ import { PopoverBaseComponent } from './pop-over-base/pop-over-base.component';
     JzUiControlsModule
   ],
   exports: [
-    PopOverLoadingComponent,
-    PopoverHttpErrorComponent,
+  
+   
     DynamicPopoverComponent
   ]
 })

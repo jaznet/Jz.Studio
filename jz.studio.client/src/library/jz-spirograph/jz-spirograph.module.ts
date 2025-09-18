@@ -10,7 +10,7 @@ import { JzUiControlsModule } from '../jz-ui-controls/jz-ui-controls.module';
 
 @NgModule({
   declarations: [
-    JzSpirographComponent
+
   ],
   imports: [
     CommonModule,
@@ -19,7 +19,7 @@ import { JzUiControlsModule } from '../jz-ui-controls/jz-ui-controls.module';
     JzUiControlsModule
   ],
   exports: [
-    JzSpirographComponent
+
   ],
 })
 export class JzSpirographModule { }

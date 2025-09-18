@@ -14,7 +14,7 @@ import { GraphicsModule } from '../app-view-models/graphics/graphics.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+   
   ],
   imports: [
     BrowserModule,

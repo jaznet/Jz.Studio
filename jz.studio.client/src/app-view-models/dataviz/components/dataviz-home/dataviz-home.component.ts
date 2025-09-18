@@ -8,7 +8,7 @@ import { PaletteMgrService } from '../../../../app/app-services/palette-mgr.serv
   styleUrl: './dataviz-home.component.css'
 })
 export class DatavizHomeComponent {
-  @HostBinding('class') classes = 'fit-to-parent';
+  @HostBinding('class') classes = 'fit-to-parent app-view';
 
   constructor(private palette: PaletteMgrService) {
     palette.ChangePalette('default');

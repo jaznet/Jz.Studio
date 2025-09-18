@@ -4,6 +4,9 @@ import { range } from 'rxjs';
 import { JzTechnicalAnalysisService } from './jz-technical-analysis.service';
 import { StockPriceHistory } from '../../../../models/stock-price-history.model';
 import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
+import { CommonModule } from '@angular/common';
+import { PopoverHttpErrorComponent } from '../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
+import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
 export interface range {
   start: number;
   end: number;
@@ -11,6 +14,9 @@ export interface range {
 
 @Component({
   selector: 'jz-technical-analysis',
+  standalone: true,
+  imports: [
+    CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent],
   templateUrl: './jz-technical-analysis.component.html',
   styleUrl: './jz-technical-analysis.component.css'
 })

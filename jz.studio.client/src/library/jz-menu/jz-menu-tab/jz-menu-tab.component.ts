@@ -1,109 +1,92 @@
+// jz-menu-tab.component.ts
 
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { JzButtonComponent } from '../../jz-buttons/jz-button/jz-button.component';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
-import { JzButtonComponent } from '../../jz-buttons/jz-button/jz-button.component';
+import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
   selector: 'jz-menu-tab',
+  standalone: true,
+  imports: [CommonModule, JzButtonComponent],
   templateUrl: './jz-menu-tab.component.html',
   styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit {
-  @ViewChild('tabbutton') tabButton!:JzButtonComponent
+  @ViewChild('tabbutton') tabButton!: JzButtonComponent;
 
-  @Input() direction: string = 'not set';
-  @Input() flexflow: string = 'not set';
-  @Input() isHorizontal: boolean = true;
-  @Input() tabId: string = 'not set';
-  @Input() menuName: string = 'not set';
+  // Narrow some types for safer templates
+  @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() flexflow: 'row' | 'column' = 'row';
+  @Input() isHorizontal = true;
 
-  @Input() isDefault: boolean = false;
+  @Input() tabId = 'not set';
+  @Input() menuName = 'not set';
+  @Input() isDefault = false;
 
-  @Input() route: string = "";
-  @Input() tab_name: string = 'tab name';
-  @Input() btnTxt = "Tab Button";
-  @Input() palette = "default";
+  @Input() route = '';
+  @Input() tab_name = 'tab name';
+  @Input() btnTxt = 'Tab Button';
+  @Input() palette = 'default';
 
-  @Input() isSelected: boolean = false;
-  /* @Input() parentValue!: string;*/
-  @Input() menuType!: string;
+  @Input() isSelected = false;
 
-  isSubMenu: boolean = false;
-
-  get parentGetter() {
-    return this.menuType;
+  private _menuType: MenuType = 'main';
+  @Input()
+  set menuType(v: MenuType | string | null | undefined) {
+    this._menuType = normalizeMenuType(v);
+    // keep isHorizontal/flexflow consistent if you rely on direction
+  }
+  get menuType(): MenuType {
+    return this._menuType;
   }
 
-  get isSelectedGetter() {
-    return this.isSelected;
+  // derive instead of mutating + remembering
+  get isSubMenu(): boolean {
+    return this._menuType === 'sub';
   }
 
+  // — Optional visual inputs —
   borderRadius!: string;
-  border: string = '1px solid #ffffff';
-  backgroundColor: string = 'transparent';
-
-  textColor: string='yellow';
-
-  borderTop: string ='1px solid transparent';
-  borderRight: string = '1px solid transparent';
-  borderBottom: string = '1px solid transparent';
-  borderLeft: string = '1px solid transparent';
-
-  //paddingTop: string = '0';
-  //paddingRight: string = '8px';
-  //paddingBottom: string = '0';
-  //paddingLeft: string = '8px';
-  
-  marginTop: string = '0';
-  marginRight: string = '0';
-  marginBottom: string = '0';
-  marginLeft: string = '0';
-
-  // Reference the service property
-  //get isSubMenu(): boolean {
-  //  return this.menuService.isSubMenu;
-  //}
+  border = '1px solid #ffffff';
+  backgroundColor = 'transparent';
+  textColor = 'yellow';
+  borderTop = '1px solid transparent';
+  borderRight = '1px solid transparent';
+  borderBottom = '1px solid transparent';
+  borderLeft = '1px solid transparent';
+  marginTop = '0';
+  marginRight = '0';
+  marginBottom = '0';
+  marginLeft = '0';
 
   constructor(
     private menuService: JzMenuService,
     private popups: JzPopOversService,
-    private changeDetector: ChangeDetectorRef,)
-  {
-   // console.log('  Menu Tab constructor', this.isSubMenu, this.isSelected);
-  }
+    private changeDetector: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void {
-
-    switch (this.direction) {
-      case 'horizontal':
-        this.flexflow = 'row';
-        this.isHorizontal = true;
-        break;
-      case 'vertical':
-        this.flexflow = 'column';
-        this.isHorizontal = false; 
-        break;
-      default:
-        this.flexflow = 'row';
-        this.isHorizontal = true;
-        break;
+    // set layout once based on direction
+    if (this.direction === 'horizontal') {
+      this.flexflow = 'row';
+      this.isHorizontal = true;
+    } else {
+      this.flexflow = 'column';
+      this.isHorizontal = false;
     }
-    this.changeDetector.detectChanges();
+    // Usually not needed in ngOnInit; remove if possible
+    // this.changeDetector.detectChanges();
   }
 
   ngAfterViewInit(): void {
-
-  //  console.log('  Menu Tab ngAfterViewInit',  this.isSubMenu, this.isSelected, this.btnTxt);
- //   console.log(this.tabButton, this.menuType, this.isSelected, this.btnTxt,this.menuName);
-    //if (this.menuService.isSubMenu) {
-    //  this.tabButton.isSubMenu = true;
-    //}
+    // If you truly need a tick after view init for something, then:
+    // queueMicrotask(() => this.changeDetector.detectChanges());
   }
 
-  onTabClicked() {
-  //  console.log('TAB', this.menuType, this.palette);
-  
+  onTabClicked(): void {
     this.menuService.tabSelected(this);
     if (this.route === 'sandbox/choro-dash-loader') {
       this.popups.togglePopOverLoading({
@@ -115,5 +98,4 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
 }

@@ -2,11 +2,15 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 import { PopoverBaseComponent } from '../pop-over-base/pop-over-base.component';
+import { CommonModule } from '@angular/common';
+import { DxPopoverModule } from 'devextreme-angular/ui/popover';
 
 @Component({
-  selector: 'popover-http-error',
+  selector: 'pop-over-http-error',
+  standalone: true,
+  imports: [CommonModule, DxPopoverModule],
   templateUrl: './pop-over-http-error.component.html',
-  styleUrls: ['./pop-over-http-error.component.css']
+  styleUrls: ['./pop-over-http-error.component.css'] 
 })
 export class PopoverHttpErrorComponent extends PopoverBaseComponent implements OnInit {
 

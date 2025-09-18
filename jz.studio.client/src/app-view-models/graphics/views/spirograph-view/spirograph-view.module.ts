@@ -6,11 +6,11 @@ import { JzSpirographModule } from '../../../../library/jz-spirograph/jz-spirogr
 
 
 @NgModule({
-  declarations: [SpirographViewComponent],
+  declarations: [],
   imports: [
     CommonModule,
     JzSpirographModule
   ],
-  exports: [SpirographViewComponent],
+  exports: [],
 })
 export class SpirographViewModule { }

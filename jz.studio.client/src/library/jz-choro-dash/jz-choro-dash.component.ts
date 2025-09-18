@@ -11,9 +11,22 @@ import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
 import { JzPopOversService } from '../jz-pop-overs/jz-pop-overs.service';
 import { PopoverHttpErrorComponent } from '../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { ChoroDataService } from '../jz-choropleths/services/choro-data.service';
+import { CommonModule } from '@angular/common';
+import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
+import { DxRadioGroupModule } from 'devextreme-angular/ui/radio-group';
 
 @Component({
   selector: 'jz-choro-dash',
+  standalone: true,
+  imports: [
+    CommonModule,
+    PopOverLoadingComponent,
+    PopoverHttpErrorComponent,
+    ChoroStateComponent,
+    JzChoroDashPanelComponent,
+    ChoroUsaComponent,
+    DxRadioGroupModule
+  ],
   templateUrl: './jz-choro-dash.component.html',
   styleUrl: './jz-choro-dash.component.css'
 })

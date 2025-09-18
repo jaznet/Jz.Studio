@@ -8,13 +8,13 @@ import { JzPopOversModule } from '../../../jz-pop-overs/jz-pop-overs.module';
 
 
 @NgModule({
-  declarations: [JzTechnicalAnalysisComponent],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule,
     JzTechnicalAnalysisRoutingModule,
     JzPopOversModule
   ],
-  exports: [JzTechnicalAnalysisComponent]
+  exports: []
 })
 export class JzTechnicalAnalysisModule { }
