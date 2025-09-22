@@ -3,5 +3,6 @@
 }
 
 .app-view {
-    border: 1px solid yellow;
-}
+  border: 1px solid var(--plt-clr-3);
+  background-color: var(--plt-clr-2);
+} 

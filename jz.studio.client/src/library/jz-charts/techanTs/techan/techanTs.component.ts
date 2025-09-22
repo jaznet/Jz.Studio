@@ -424,21 +424,30 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   private createScales(): void {
     const panel = this.chartScaffold.panels?.[ChartType.OHLC];
-    if (!panel) {
-      this.dateScaleX = scaleBand<Date>().domain([]).range([0, 1]);
-      return;
-    }
-    // safest version
-    const width =
-      Math.max(0, panel?.width ?? 0);
 
-    const chartWidth = Math.max(
+    // Inner width for the X scale (content area)
+    const innerWidth = Math.max(
       0,
       (panel?.width ?? 0)
       - (panel?.margins?.left ?? 0)
       - (panel?.margins?.right ?? 0)
     );
+
+    // Convert incoming dates to Date objects (in case your scrub didn’t already)
+    const raw = this.chartData.stockPriceHistoryData ?? [];
+    const dates: Date[] = raw.map(d =>
+      d.date instanceof Date ? d.date : new Date(d.date)
+    );
+
+    // Build the band scale
+    this.dateScaleX = scaleBand<Date>()
+      .domain(dates)                // one band per trading day
+      .range([0, innerWidth])       // start at 0; you’ll translate the axis/group by the left margin
+      .paddingInner(0.2)
+      .paddingOuter(0.1)
+      .align(0.5);
   }
+
 
   drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');

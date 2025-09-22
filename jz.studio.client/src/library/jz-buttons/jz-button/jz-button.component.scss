@@ -7,7 +7,7 @@
 
 .jz3d {
   /* your tokens */
-  --bg: var(--plt-clr-1);
+  --bg: var(--plt-clr-2);
   --bg-selected: var(--plt-clr-4);
   --txt: var(--plt-txt-1);
   --txt-selected: #000;
@@ -80,7 +80,7 @@
   }
   /* variants (keep your class names) */
   &.main-menu {
-    background-color: var(--plt-clr-1);
+    background-color: var(--plt-clr-2);
     color: var(--plt-txt-1);
   }
 
@@ -96,7 +96,7 @@
 
   .label {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 100;
     text-shadow: 0 1px 0 rgba(0,0,0,.28), 0 -1px 0 rgba(255,255,255,.06);
   }
 }
