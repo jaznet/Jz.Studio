@@ -12,3 +12,16 @@ export function toISOStringSafe(value: Date | string): string {
   const parsed = new Date(value);
   return !isNaN(parsed.getTime()) ? parsed.toISOString() : '';
 }
+
+
+// Coerce many shapes into a real Date.
+// If it can’t be parsed, return an invalid Date (NaN time).
+export function asDate(v: Date | string | number | null | undefined): Date {
+  if (v instanceof Date) return v;
+  if (typeof v === 'string' || typeof v === 'number') {
+    const d = new Date(v);
+    if (!isNaN(d.getTime())) return d;
+  }
+  return new Date(NaN); // caller can guard/fallback if needed
+}
+

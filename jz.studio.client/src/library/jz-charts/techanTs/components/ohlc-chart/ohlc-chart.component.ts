@@ -63,9 +63,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     const g = select(this.gChart.nativeElement);
     console.log(`[${this.chartType}] Drawing chart in panel`, panel);
 
-    console.log('BANDWIDTH');
-    const candleWidth = this.dateScaleX.bandwidth();
-
     const yScale = scaleLinear()
       .domain([
         Math.min(...this.data.map(d => d.low)),
@@ -77,14 +74,23 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
     console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
+
+    const bw = this.dateScaleX.bandwidth();
+    const candleWidth = Math.max(1, bw * 0.99);
+
+    const x0 = (d: { date: Date | string }) => {
+      const dt = d.date instanceof Date ? d.date : new Date(d.date);
+      const x = this.dateScaleX(dt);
+      return x == null ? 0 : x; // fallback if date wasn’t in domain
+    };
  
     // Wick
     g.selectAll('.wick')
       .data(this.data)
       .join('line')
       .attr('class', 'wick')
-      .attr('x1', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
-      .attr('x2', d => this.dateScaleX(toISOStringSafe(d.date))! + candleWidth / 2)
+      .attr('x1', d => x0(d) + bw / 2)
+      .attr('x2', d => x0(d) + bw / 2)
       .attr('y1', d => yScale(d.high))
       .attr('y2', d => yScale(d.low))
       .attr('stroke', '#B0BEC5')
@@ -95,11 +101,11 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
       .data(this.data)
       .join('rect')
       .attr('class', 'body')
-      .attr('x', d => this.dateScaleX(toISOStringSafe(d.date)))
+      .attr('x', d => x0(d) + (bw - candleWidth) / 2) // center in band
       .attr('y', d => yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
       .attr('height', d => Math.max(1, Math.abs(yScale(d.open) - yScale(d.close))))
-      .attr('fill', d => d.close >= d.open ? '#66bb6a' : '#ef5350');
+      .attr('fill', d => (d.close >= d.open ? '#66bb6a' : '#ef5350'));
 
     console.log(`✅ OHLC drawn (${caller})`);
 

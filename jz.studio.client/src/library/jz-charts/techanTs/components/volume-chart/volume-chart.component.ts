@@ -1,11 +1,13 @@
+//volume - chart.component.ts
+
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { select } from 'd3-selection';
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
-import { toISOStringSafe } from '../../utils/date-utils';
+import { toISOStringSafe, asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
@@ -16,7 +18,7 @@ import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 })
 export class VolumeChartComponent extends BaseChartComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];
-  @Input() dateScaleX!: any;
+  @Input() dateScaleX!: ScaleBand<Date>;
 
   override chartType = ChartType.VOLUME;
 
@@ -53,10 +55,10 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
       .data(this.data)
       .join('rect')
       .attr('class', 'vol-bar')
-      .attr('x', d => this.dateScaleX(toISOStringSafe(d.date))!)
+      .attr('x', d => (this.dateScaleX(asDate(d.date)) ?? 0))              // <— pass Date, not string
       .attr('y', d => yScale(d.volume ?? 0))
       .attr('width', barW)
-      .attr('height', d => height - yScale(d.volume ?? 0))
+      .attr('height', d => Math.max(1, this.innerHeight - yScale(d.volume ?? 0))) // use innerHeight
       .attr('fill', d => (d.close >= d.open ? '#5AA469' : '#D46A6A'));
 
     this.drawYAxes(panel, yScale);

@@ -70,22 +70,17 @@
   }
 
 .y-axis {
-  /*  color: var(--plt-chart-2);
-  stroke-width: 1;*/
+  color: var(--axis-color, #98d0f6);
 }
 
-.y-axis > .tick {
-  color: var(--plt-chart-2);
-  stroke-width: 1;
+.y-axis .domain,
+.y-axis .tick line {
+  stroke-opacity: .35;
 }
 
-.y-axis > .domain {
-  color: red;
-  stroke: var(--plt-chart-2);
-  stroke-width: 1;
+.y-axis .tick text {
+  font-size: 10px;
 }
-
-
 
 .title-text {
   fill: lightgray;
