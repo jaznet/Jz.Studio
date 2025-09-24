@@ -188,7 +188,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
-    private smaService: SmaChartService,
+
 /*    private ohlcChart: OhlcChartComponent,*/
     private macdLayout: MacdLayoutService,
     private macdDraw: MacdDrawService,
@@ -539,35 +539,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
   // #region DRAW
 
-  drawSma1(period: number): void {
-    this.smaService
-      .xScale(this.dateScaleX)
-      /*.yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layoutService.sma1) // Specify target group
-      .setRollingPeriod(period)
-      .setColor('#4E59D0')
-      .draw();
-  }
 
-  drawSma2(period: number): void {
-    this.smaService
-      .xScale(this.dateScaleX)
-      /*   .yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layoutService.sma2) // Specify target group
-      .setRollingPeriod(period) // Set desired SMA window size
-      .setColor('#F1FEC6')
-      .draw();
-  }
-
-  drawSma3(period: number): void {
-    this.smaService
-      .xScale(this.dateScaleX)
-      /*   .yScale(this.layout.scaffold)*/
-      .setTargetGroup(this.layoutService.sma3) // Specify target group
-      .setRollingPeriod(period) // Set desired SMA window size
-      .setColor('#ff3a20')
-      .draw();
-  }
 
   drawRsi(): void {
   //  this.rsiChart

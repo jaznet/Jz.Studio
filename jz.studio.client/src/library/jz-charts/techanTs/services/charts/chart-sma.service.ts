@@ -24,11 +24,6 @@ export class SmaChartService {
     return this; // Enables method chaining
   }
 
-  //public yScale(scale: any): this {
-  //  this._yScale = scale;
-  //  return this; // Enables method chaining
-  //}
-
   public setTargetGroup(gTargetRef: any): this {
     this.gSma = select(gTargetRef).attr('class', 'sma-chart');
     return this;

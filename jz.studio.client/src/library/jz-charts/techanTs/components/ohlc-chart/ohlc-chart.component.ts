@@ -11,13 +11,16 @@ import { select } from 'd3-selection';
 import { scaleLinear, scaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { format as d3format } from 'd3-format';
+import { line as d3line, curveLinear } from 'd3-shape';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
 import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../services/chart-data.service';
-import { toISOStringSafe } from '../../utils/date-utils';
+import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { SmaChartService } from '../../services/charts/chart-sma.service';
+import { sma, type Num } from '../../utils/ta-math';
 
 @Component({
   selector: 'ohlc-chart',
@@ -30,6 +33,13 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
+  smaLines: Array<{ period: number; color: string }> = [
+    { period: 20, color: '#ff0000' },
+    { period: 50, color: '#00ff00' },
+    { period: 200, color: '#0000ff' },
+  ];
+
+
   //override chartScaffold!: ChartScaffold;
   override chartType = ChartType.OHLC;
   //private yScale: any;
@@ -37,6 +47,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   constructor(
     chartData: ChartDataService,
     scaffoldSvc: ChartScaffoldService,
+    private smaService: SmaChartService,
     hostEl: ElementRef<SVGGElement>
   ) { super(chartData, scaffoldSvc); }
 
@@ -75,6 +86,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
     console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
 
+    const dates = this.data.map(d => asDate(d.date)); // Date[]
     const bw = this.dateScaleX.bandwidth();
     const candleWidth = Math.max(1, bw * 0.99);
 
@@ -109,7 +121,35 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
 
     console.log(`✅ OHLC drawn (${caller})`);
 
+    this.drawSmaOverlays(g, dates, yScale);
+
     this.drawYAxes(panel, yScale); // ✅ child-controlled axes
+  }
+
+  private drawSmaOverlays(g: d3.Selection<SVGGElement, unknown, null, undefined>, dates: Date[], y: d3.ScaleLinear<number, number>) {
+    const closes = this.data.map(d => d.close);
+    const group = g.selectAll('g.sma-overlays').data([0]).join('g').attr('class', 'sma-overlays');
+
+    const lineGen = d3line<{ dt: Date; v: Num }>()
+      .defined(d => d.v != null)
+      .x(d => (this.dateScaleX(d.dt) ?? 0) + this.dateScaleX.bandwidth() / 2)
+      .y(d => y(d.v as number))
+      .curve(curveLinear);
+
+    this.smaLines.forEach(({ period, color }) => {
+      const series = sma(closes, period);                         // (number|null)[]
+      const pathData = dates.map((dt, i) => ({ dt, v: series[i] as Num }));
+
+      group
+        .selectAll(`path.sma-${period}`)
+        .data([pathData])
+        .join('path')
+        .attr('class', `sma-line sma-${period}`)
+        .attr('d', lineGen as any)
+        .attr('fill', 'none')
+        .attr('stroke', color)
+        .attr('stroke-width', 1.5);
+    });
   }
 
   protected override drawYAxes(panel: { width: number; height: number }, yScale: any): void {
