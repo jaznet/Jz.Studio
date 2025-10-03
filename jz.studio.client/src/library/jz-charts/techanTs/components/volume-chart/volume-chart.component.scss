@@ -1,0 +1,13 @@
+.y-axis {
+  color: var(--axis-color, #cbd5e1);
+}
+
+.y-axis .domain,
+.y-axis .tick line {
+  stroke-opacity: .35;
+}
+
+.y-axis .tick text {
+  font-size: 10px;
+  color: var(--axis-color, #cbd5e1);
+}

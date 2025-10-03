@@ -36,7 +36,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
   smaLines: Array<{ period: number; color: string }> = [
     { period: 20, color: '#ff0000' },
     { period: 50, color: '#00ff00' },
-    { period: 200, color: '#0000ff' },
+    { period: 150, color: '#0000ff' },
   ];
 
 

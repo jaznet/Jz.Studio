@@ -1,107 +1,166 @@
-/*jz-button.component.scss*/
+/* jz-button.component.scss — Filleted Cuboid using --plt-clr-* / --plt-txt-* */
 
+/* Per-instance sizing */
 .jz-btn {
-  width: 180px;
-  height: 40px;
+  --btn-w: 180px;
+  --btn-h: 40px;
+  width: var(--btn-w);
+  height: var(--btn-h);
+}
+
+/* Animatable props */
+@property --depth {
+  syntax: '<length>';
+  initial-value: 12px;
+  inherits: false;
+}
+
+@property --lift {
+  syntax: '<length>';
+  initial-value: 0px;
+  inherits: false;
 }
 
 .jz3d {
-  /* your tokens */
-  --bg: var(--plt-clr-2);
-  --bg-selected: var(--plt-clr-4);
-  --txt: var(--plt-txt-1);
-  --txt-selected: #000;
-  /* shape + optics */
-  --radius: 10px;
-  --depth: 8px;
-  /* warm-tinted speculars from --plt-clr-x (#ede4d1) */
-  --shine: rgba(237, 228, 209, .28);
-  --shine-strong: rgba(237, 228, 209, .48);
-  /* shadows tuned for dark base */
-  --shade: rgba(0,0,0,.36);
-  --shade-soft: rgba(0,0,0,.18);
+  /* === Inputs from app theme (provided elsewhere) ===
+     Pick which palette color drives this instance. */
+  --btn-base: var(--plt-clr-2); /* base surface for this button */
+  --btn-text: var(--plt-txt-1); /* label color */
+  --btn-text-muted: var(--plt-txt-2); /* sub-menu label */
+  --btn-accent: var(--plt-clr-4); /* used by .selected */
+  /* Geometry */
+  --radius: 18px; /* outer pill radius */
+  --fillet: 6px; /* roundover thickness */
+  --depth: 12px; /* cuboid front-face height */
+  --lift: 0px;
+  /* Derived from base (no fixed colors) */
+  --top: var(--btn-base);
+  --top-hover: color-mix(in oklab, var(--btn-base) 85%, #fff 15%);
+  --top-active: color-mix(in oklab, var(--btn-base) 90%, #000 10%);
+  --fillet-hi: color-mix(in oklab, var(--btn-base) 55%, #fff 45%);
+  --fillet-mid: color-mix(in oklab, var(--btn-base) 88%, #fff 12%);
+  --fillet-low: color-mix(in oklab, var(--btn-base) 70%, #000 30%);
+  --front: color-mix(in oklab, var(--btn-base) 60%, #000 40%);
+  --front-hover: color-mix(in oklab, var(--btn-base) 55%, #000 45%);
+  --front-press: color-mix(in oklab, var(--btn-base) 45%, #000 55%);
+  --edge-outline: color-mix(in oklab, var(--btn-base) 15%, #000 85%);
+  /* Selected from accent */
+  --accent-top: var(--btn-accent);
+  --accent-top-hover: color-mix(in oklab, var(--btn-accent) 85%, #fff 15%);
+  --accent-front: color-mix(in oklab, var(--btn-accent) 65%, #000 35%);
+  --accent-outline: color-mix(in oklab, var(--btn-accent) 35%, #000 65%);
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: .55rem 1.1rem;
-  min-width: 6.5rem;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--bg);
-  color: var(--txt);
-  cursor: pointer;
+  min-width: 7rem;
+  padding: 0 1rem;
   line-height: 1;
-  /* inner bevel + lift */
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 -1px 0 rgba(0,0,0,.22), 0 1px 2px rgba(0,0,0,.45);
-  /* left->right falloff (upper-left light) */
-  background-image: linear-gradient(90deg, rgba(255,255,255,.06), rgba(0,0,0,.14));
-  background-blend-mode: overlay;
-  /* OGEE band (top router pass) */
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--btn-text);
+  border-radius: var(--radius);
+  border: 1px solid var(--edge-outline);
+  /* Top face with UL→LR lighting */
+  background: conic-gradient( from 315deg at 22% 20%, rgba(255,255,255,.18) 0turn, rgba(255,255,255,.10) .12turn, rgba(0,0,0,.00) .30turn, rgba(0,0,0,.08) .55turn, rgba(0,0,0,.15) .75turn, rgba(0,0,0,.22) 1turn ), linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.06)), var(--top);
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  transition: transform .08s ease, background-color .14s ease, box-shadow .14s ease, color .12s ease, --depth .08s ease, --lift .08s ease;
+  /* Fillet ring (distinct from top) */
   &::before {
     content: "";
     position: absolute;
-    left: 2px;
-    right: 2px;
-    top: 2px;
-    height: max(12px, calc(var(--depth) + 4px));
-    border-radius: calc(var(--radius) - 2px) calc(var(--radius) - 2px) 6px 6px;
+    inset: 2px;
+    border-radius: calc(var(--radius) - 2px);
     pointer-events: none;
-    background: linear-gradient( to bottom, var(--shine-strong) 0%, var(--shine) 32%, rgba(255,255,255,.06) 52%, rgba(0,0,0,.20) 100% );
-    /* bias highlight toward left to match light direction */
-    mask: linear-gradient(90deg, rgba(0,0,0,.95), rgba(0,0,0,.6));
-    opacity: .98;
+    background: conic-gradient( from 315deg at 22% 20%, var(--fillet-hi) 0turn, var(--fillet-mid) .18turn, var(--top) .35turn, var(--fillet-low) .70turn, var(--fillet-low) 1turn ), linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 55%);
+    -webkit-mask: radial-gradient(100% 100% at 50% 50%, #000 98%, transparent 99%) content-box, radial-gradient(100% 100% at 50% 50%, #000 98%, transparent 99%);
+    mask: radial-gradient(100% 100% at 50% 50%, #000 98%, transparent 99%) content-box, radial-gradient(100% 100% at 50% 50%, #000 98%, transparent 99%);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: var(--fillet);
+    opacity: .9;
   }
-  /* corner specular + global vignette (upper-left) */
+  /* Front face (depth) */
   &::after {
     content: "";
     position: absolute;
-    inset: 0;
-    border-radius: inherit;
+    left: 0;
+    right: 0;
+    height: var(--depth);
+    bottom: calc(-1 * var(--depth));
+    border-radius: 0 0 calc(var(--radius) - 2px) calc(var(--radius) - 2px);
+    background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)), var(--front);
     pointer-events: none;
-    background: radial-gradient(60% 60% at 22% 18%, var(--shine), transparent 62%), radial-gradient(80% 80% at 90% 90%, rgba(0,0,0,.22), transparent 70%);
-    mix-blend-mode: screen;
+    z-index: -1;
   }
-  /* interactions */
-  transition: transform .06s ease, box-shadow .12s ease, background-color .12s ease;
-
+  /* States */
   &:hover {
-    transform: translateY(-.5px);
+    --lift: 1px;
+    transform: translateY(calc(-1 * var(--lift)));
+    background: conic-gradient( from 315deg at 22% 20%, rgba(255,255,255,.20) 0turn, rgba(255,255,255,.12) .12turn, rgba(0,0,0,.00) .30turn, rgba(0,0,0,.08) .55turn, rgba(0,0,0,.16) .75turn, rgba(0,0,0,.24) 1turn ), linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05)), var(--top-hover);
+
+    &::after {
+      background: linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,.50)), var(--front-hover);
+    }
   }
 
   &:active {
+    --lift: 0px;
+    --depth: 6px;
     transform: translateY(0);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.06), inset 0 -1px 0 rgba(0,0,0,.28);
+    background: var(--top-active);
+
+    &::after {
+      background: linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,.62)), var(--front-press);
+    }
   }
 
   &:focus-visible {
-    outline: 2px solid rgba(255,255,255,.45);
-    outline-offset: 2px;
+    outline: 2px solid color-mix(in oklab, var(--btn-base) 10%, #7ccfff 90%);
+    outline-offset: 3px;
   }
-  /* variants (keep your class names) */
+  /* Variants */
   &.main-menu {
-    background-color: var(--plt-clr-2);
-    color: var(--plt-txt-1);
+    color: var(--btn-text);
   }
 
   &.sub-menu {
-    background-color: var(--plt-clr-2);
-    color: var(--plt-txt-2);
+    color: var(--btn-text-muted);
   }
 
   &.selected {
-    background-color: var(--bg-selected);
-    color: var(--txt-selected);
+    background: conic-gradient( from 315deg at 22% 20%, rgba(255,255,255,.25) 0turn, rgba(255,255,255,.10) .20turn, rgba(0,0,0,.00) .40turn, rgba(0,0,0,.10) .65turn, rgba(0,0,0,.18) 1turn ), var(--accent-top);
+    color: #0a0a0a; /* override if your accent is dark */
+    border-color: var(--accent-outline);
+
+    &::before {
+      --fillet-hi: color-mix(in oklab, var(--btn-accent) 30%, #fff 70%);
+      --fillet-mid: color-mix(in oklab, var(--btn-accent) 85%, #fff 15%);
+      --fillet-low: color-mix(in oklab, var(--btn-accent) 65%, #000 35%);
+      opacity: .95;
+    }
+
+    &::after {
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)), var(--accent-front);
+    }
+
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--btn-accent) 30%, transparent 70%);
   }
 
   .label {
-    font-size: 13px;
-    font-weight: 100;
-    text-shadow: 0 1px 0 rgba(0,0,0,.28), 0 -1px 0 rgba(255,255,255,.06);
+    letter-spacing: .015em;
+    text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: .6;
+    cursor: not-allowed;
+    filter: saturate(.75);
   }
 }
 
-/* Motion preference */
 @media (prefers-reduced-motion: reduce) {
   .jz3d {
     transition: none;
