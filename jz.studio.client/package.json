@@ -8,8 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prestart": "node aspnetcore-https",
-    "start:windows": "ng serve --ssl --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\" --host=127.0.0.1",
-    "start:default": "ng serve --ssl --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\" --host=127.0.0.1"
+    "start:windows": "ng serve --ssl --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\" --host localhost",
+    "start:default": "ng serve --ssl --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\" --host localhost"
+
   },
   "private": true,
   "dependencies": {
@@ -43,7 +44,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.6",
-    "@angular/cli": "^17.3.11",
+    "@angular/cli": "^20.3.5",
     "@angular/compiler-cli": "^17.0.0",
     "@types/d3-selection": "^3.0.11",
     "@types/jasmine": "~5.1.0",
