@@ -1,3 +1,5 @@
+//app.component.ts
+
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaletteMgrService } from './app-services/palette-mgr.service';

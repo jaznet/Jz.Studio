@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaletteMenuComponent } from './palette-menu.component';
 
+import { JzRadioButtonComponent } from './jz-radio-button.component';
 
-describe('PaletteMenuComponent', () => {
-  let component: PaletteMenuComponent;
-  let fixture: ComponentFixture<PaletteMenuComponent>;
+describe('JzRadioButtonComponent', () => {
+  let component: JzRadioButtonComponent;
+  let fixture: ComponentFixture<JzRadioButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaletteMenuComponent]
+      imports: [JzRadioButtonComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PaletteMenuComponent);
+    fixture = TestBed.createComponent(JzRadioButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
