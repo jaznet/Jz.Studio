@@ -14,7 +14,7 @@ import { PaletteMgrService } from '../../../app/app-services/palette-mgr.service
 export class JzRadioButtonComponent {
   @HostBinding('class') classes = 'palette-menu-container';
 
-  private _palette: Palette = 'onyx';
+  private _palette: Palette = 'gold';
   /** Bind with: [palette]="'onyx'" */
   @Input()
   set palette(v: string | Palette | null | undefined) {

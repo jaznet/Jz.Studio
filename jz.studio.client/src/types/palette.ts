@@ -1,5 +1,5 @@
 // Canonical list (add/remove as you need)
-export const PALETTES = ['onyx', 'emerald', 'amber', 'sky', 'rose'] as const;
+export const PALETTES = ['onyx', 'gold', 'emerald', 'amber', 'sky', 'rose'] as const;
 export type Palette = typeof PALETTES[number]; // 'onyx' | 'emerald' | 'amber' | 'sky' | 'rose'
 
 /** Case-insensitive, alias-friendly normalizer. Falls back to 'onyx'. */
@@ -11,6 +11,7 @@ export function normalizePalette(
   // simple alias map (extend as needed)
   const aliases: Record<string, Palette> = {
     black: 'onyx',
+    gold:'amber',
     green: 'emerald',
     yellow: 'amber',
     blue: 'sky',
