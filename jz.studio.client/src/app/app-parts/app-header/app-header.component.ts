@@ -3,7 +3,7 @@ import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementR
 import { AppStateService } from '../../app-services/app-state.service';
 import { MainMenuComponent } from '../app-menus/main-menu/main-menu.component';
 import { CommonModule } from '@angular/common';
-import { PaletteMenuComponent } from '../app-menus/palette-menu/PaletteMenuComponent';
+import { PaletteMenuComponent } from '../app-menus/palette-menu/palette-menu.component';
 
 @Component({
   selector: 'app-header',
