@@ -20,11 +20,10 @@ interface WeatherForecast {
 }
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+    selector: 'app-root',
+    imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   @ViewChild('header', { static: true }) header!: AppHeaderComponent;

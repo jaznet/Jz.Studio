@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-techan-ts-view',
-  templateUrl: './techan-ts-view.component.html',
-  styleUrl: './techan-ts-view.component.css'
+    selector: 'app-techan-ts-view',
+    templateUrl: './techan-ts-view.component.html',
+    styleUrl: './techan-ts-view.component.css',
+    standalone: false
 })
 export class TechanTsViewComponent {
 

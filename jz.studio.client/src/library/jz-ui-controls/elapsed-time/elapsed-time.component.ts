@@ -3,11 +3,10 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'elapsed-time',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './elapsed-time.component.html',
-  styleUrls: ['./elapsed-time.component.css']
+    selector: 'elapsed-time',
+    imports: [CommonModule],
+    templateUrl: './elapsed-time.component.html',
+    styleUrls: ['./elapsed-time.component.css']
 })
 export class ElapsedTimeComponent implements OnInit, AfterViewInit {
 

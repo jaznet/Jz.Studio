@@ -2,7 +2,8 @@
 import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
-  selector: '[jzMathjax]'
+    selector: '[jzMathjax]',
+    standalone: false
 })
 export class JzMathJaxDirective implements AfterViewInit {
 

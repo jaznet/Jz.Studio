@@ -7,11 +7,10 @@ import { ElapsedTimeComponent } from '../../jz-ui-controls/elapsed-time/elapsed-
 import { JzSpinnerComponent } from '../../jz-ui-controls/jz-spinner/jz-spinner.component';
 
 @Component({
-  selector: 'pop-over-loading',
-  standalone: true,
-  imports: [CommonModule, ElapsedTimeComponent, JzSpinnerComponent, DxPopoverModule,],
-  templateUrl: './pop-over-loading.component.html',
-  styleUrls: ['./pop-over-loading.component.css']
+    selector: 'pop-over-loading',
+    imports: [CommonModule, ElapsedTimeComponent, JzSpinnerComponent, DxPopoverModule,],
+    templateUrl: './pop-over-loading.component.html',
+    styleUrls: ['./pop-over-loading.component.css']
 })
 export class PopOverLoadingComponent extends PopoverBaseComponent implements OnInit, AfterViewInit {
   @ViewChild('popover_loading', { static: false }) dxpopover: DxPopoverComponent | any;

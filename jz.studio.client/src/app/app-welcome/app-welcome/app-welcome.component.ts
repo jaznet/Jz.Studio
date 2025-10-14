@@ -3,11 +3,10 @@ import { AppStateService } from '../../app-services/app-state.service';
 import { LogonComponent } from '../../app-parts/app-logon/logon/logon.component';
 
 @Component({
-  selector: 'app-welcome',
-  standalone: true,
-  imports: [LogonComponent],
-  templateUrl: './app-welcome.component.html',
-  styleUrls: ['./app-welcome.component.css']
+    selector: 'app-welcome',
+    imports: [LogonComponent],
+    templateUrl: './app-welcome.component.html',
+    styleUrls: ['./app-welcome.component.css']
 })
 export class AppWelcomeComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent centered';

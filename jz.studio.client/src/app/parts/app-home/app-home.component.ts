@@ -2,9 +2,10 @@ import { Component, HostBinding } from '@angular/core';
 import { AppStateService } from '../../app-services/app-state.service';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './app-home.component.html',
-  styleUrls: ['./app-home.component.css']
+    selector: 'app-home',
+    templateUrl: './app-home.component.html',
+    styleUrls: ['./app-home.component.css'],
+    standalone: false
 })
 export class AppHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent view-router-container';

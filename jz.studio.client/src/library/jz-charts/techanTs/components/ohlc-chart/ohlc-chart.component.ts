@@ -23,9 +23,10 @@ import { SmaChartService } from '../../services/charts/chart-sma.service';
 import { sma, type Num } from '../../utils/ta-math';
 
 @Component({
-  selector: 'ohlc-chart',
-  templateUrl: '../base/base-chart/base-chart.component.html',
-  styleUrls: ['./ohlc-chart.component.scss']
+    selector: 'ohlc-chart',
+    templateUrl: '../base/base-chart/base-chart.component.html',
+    styleUrls: ['./ohlc-chart.component.scss'],
+    standalone: false
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
 

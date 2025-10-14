@@ -16,9 +16,10 @@ interface Margin {
 }
 
 @Component({
-  selector: 'sine-plot',
-  templateUrl: './sine-plot.component.html',
-  styleUrls: ['./sine-plot.component.css']
+    selector: 'sine-plot',
+    templateUrl: './sine-plot.component.html',
+    styleUrls: ['./sine-plot.component.css'],
+    standalone: false
 })
 export class SinePlotComponent implements AfterViewInit, OnDestroy,OnInit {
   @HostBinding('class') classes = 'fit-to-parent';

@@ -13,12 +13,12 @@ export interface range {
 }
 
 @Component({
-  selector: 'jz-technical-analysis',
-  standalone: true,
-  imports: [
-    CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent],
-  templateUrl: './jz-technical-analysis.component.html',
-  styleUrl: './jz-technical-analysis.component.css'
+    selector: 'jz-technical-analysis',
+    imports: [
+        CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent
+    ],
+    templateUrl: './jz-technical-analysis.component.html',
+    styleUrl: './jz-technical-analysis.component.css'
 })
 export class JzTechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';

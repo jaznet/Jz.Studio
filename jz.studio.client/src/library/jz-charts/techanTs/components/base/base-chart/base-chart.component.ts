@@ -11,9 +11,10 @@ import { ChartDataService } from '../../../services/chart-data.service';
 import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 
 @Component({
-  selector: 'g[base-chart]',                              // 👈 host is a <g>
-  templateUrl: './base-chart.component.html',
-  styleUrls: ['./base-chart.component.scss']
+    selector: 'g[base-chart]', // 👈 host is a <g>
+    templateUrl: './base-chart.component.html',
+    styleUrls: ['./base-chart.component.scss'],
+    standalone: false
 })
 export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;

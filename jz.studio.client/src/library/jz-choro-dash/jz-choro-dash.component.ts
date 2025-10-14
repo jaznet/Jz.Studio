@@ -16,19 +16,18 @@ import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-p
 import { DxRadioGroupModule } from 'devextreme-angular/ui/radio-group';
 
 @Component({
-  selector: 'jz-choro-dash',
-  standalone: true,
-  imports: [
-    CommonModule,
-    PopOverLoadingComponent,
-    PopoverHttpErrorComponent,
-    ChoroStateComponent,
-    JzChoroDashPanelComponent,
-    ChoroUsaComponent,
-    DxRadioGroupModule
-  ],
-  templateUrl: './jz-choro-dash.component.html',
-  styleUrl: './jz-choro-dash.component.css'
+    selector: 'jz-choro-dash',
+    imports: [
+        CommonModule,
+        PopOverLoadingComponent,
+        PopoverHttpErrorComponent,
+        ChoroStateComponent,
+        JzChoroDashPanelComponent,
+        ChoroUsaComponent,
+        DxRadioGroupModule
+    ],
+    templateUrl: './jz-choro-dash.component.html',
+    styleUrl: './jz-choro-dash.component.css'
 })
 export class JzChoroDashComponent implements OnInit {
   @HostBinding('class') classes = 'fit-to-parent grid-rows view-router-container';

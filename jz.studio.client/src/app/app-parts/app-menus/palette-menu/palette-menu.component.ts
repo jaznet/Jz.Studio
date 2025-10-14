@@ -8,11 +8,10 @@ import { JzRadioButtonComponent } from '../../../../library/jz-ui-controls/jz-ra
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'palette-menu',
-  standalone: true,
-  imports: [CommonModule, JzRadioButtonComponent],
-  templateUrl: './palette-menu.component.html',
-  styleUrls: [ './palette-menu.component.css']
+    selector: 'palette-menu',
+    imports: [CommonModule, JzRadioButtonComponent],
+    templateUrl: './palette-menu.component.html',
+    styleUrls: ['./palette-menu.component.css']
 })
 export class PaletteMenuComponent {
   @HostBinding('class') classes = 'fit-to-content';

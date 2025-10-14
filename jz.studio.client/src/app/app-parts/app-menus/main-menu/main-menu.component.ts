@@ -8,11 +8,10 @@ import type { MenuType } from '../../../../types/menu';
 import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
 
 @Component({
-  selector: 'main-menu',
-  standalone: true,
-  imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent],
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.css']
+    selector: 'main-menu',
+    imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent],
+    templateUrl: './main-menu.component.html',
+    styleUrls: ['./main-menu.component.css']
 })
 export class MainMenuComponent extends MenuBaseComponent implements AfterViewInit, OnInit {
   @HostBinding('class') classes = 'fit-to-parent centered';

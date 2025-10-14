@@ -4,12 +4,13 @@ import { SankeyService, DataItem } from './jz-sankey.service';
 
 
 @Component({
-  selector: 'jz-sankey',
-  templateUrl: './jz-sankey.component.html',
-  styleUrls: ['./jz-sankey.component.css'],
-  host: {
-    '(window:resize)': 'onResize($event)'
-  }
+    selector: 'jz-sankey',
+    templateUrl: './jz-sankey.component.html',
+    styleUrls: ['./jz-sankey.component.css'],
+    host: {
+        '(window:resize)': 'onResize($event)'
+    },
+    standalone: false
 })
 export class SankeyComponent implements OnInit, AfterContentInit, AfterViewInit {
 

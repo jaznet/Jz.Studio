@@ -14,9 +14,10 @@ import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 type Num = number | null | undefined;
 
 @Component({
-  selector: 'macd-chart',
-  templateUrl: '../base/base-chart/base-chart.component.html',
-  styleUrls: ['./macd-chart.component.scss']
+    selector: 'macd-chart',
+    templateUrl: '../base/base-chart/base-chart.component.html',
+    styleUrls: ['./macd-chart.component.scss'],
+    standalone: false
 })
 export class MacdChartComponent extends BaseChartComponent implements OnChanges {
   @Input() data!: ohlcData[];

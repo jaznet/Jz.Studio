@@ -4,9 +4,10 @@ import { DxPopupComponent } from 'devextreme-angular';
 import { DxPopoverComponent } from 'devextreme-angular/ui/popover';
 
 @Component({
-  selector: 'jz-popover-base',
-  templateUrl: './pop-over-base.component.html',
-  styleUrls: ['./pop-over-base.component.css']
+    selector: 'jz-popover-base',
+    templateUrl: './pop-over-base.component.html',
+    styleUrls: ['./pop-over-base.component.css'],
+    standalone: false
 })
 export class PopoverBaseComponent implements AfterViewChecked {
   @ViewChild(DxPopoverComponent) popover!: DxPopoverComponent;

@@ -10,11 +10,10 @@ import {
 import { CommonModule } from '@angular/common'; // brings NgClass, NgStyle, NgIf, NgFor, etc.
 
 @Component({
-  selector: 'jz-button3d',
-  standalone: true,
-  imports: [CommonModule],                 // ⬅️ this fixes NG8002 for ngClass/ngStyle
-  templateUrl: './jz-button3d.component.html',
-  styleUrls: ['./jz-button3d.component.css'] // ⬅️ plural
+    selector: 'jz-button3d',
+    imports: [CommonModule], // ⬅️ this fixes NG8002 for ngClass/ngStyle
+    templateUrl: './jz-button3d.component.html',
+    styleUrls: ['./jz-button3d.component.css'] // ⬅️ plural
 })
 export class JzButton3dComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'fit-to-parent';

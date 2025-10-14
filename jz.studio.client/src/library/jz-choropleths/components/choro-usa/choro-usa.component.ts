@@ -13,11 +13,10 @@ import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.mo
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'choro-usa',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './choro-usa.component.html',
-  styleUrls: ['./choro-usa.component.css']
+    selector: 'choro-usa',
+    imports: [CommonModule],
+    templateUrl: './choro-usa.component.html',
+    styleUrls: ['./choro-usa.component.css']
 })
 export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';

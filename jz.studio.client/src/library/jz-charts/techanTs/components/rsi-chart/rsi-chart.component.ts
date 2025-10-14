@@ -15,9 +15,10 @@ import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 type Num = number | null;
 
 @Component({
-  selector: 'rsi-chart',
-  templateUrl: '../base/base-chart/base-chart.component.html',
-  styleUrls: ['./rsi-chart.component.scss']
+    selector: 'rsi-chart',
+    templateUrl: '../base/base-chart/base-chart.component.html',
+    styleUrls: ['./rsi-chart.component.scss'],
+    standalone: false
 })
 export class RsiChartComponent extends BaseChartComponent implements OnChanges {
   @Input() data!: ohlcData[];

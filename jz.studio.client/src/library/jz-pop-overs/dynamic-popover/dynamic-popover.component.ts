@@ -2,9 +2,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'dynamic-popover',
-  templateUrl: './dynamic-popover.component.html',
-  styleUrls: ['./dynamic-popover.component.css']
+    selector: 'dynamic-popover',
+    templateUrl: './dynamic-popover.component.html',
+    styleUrls: ['./dynamic-popover.component.css'],
+    standalone: false
 })
 export class DynamicPopoverComponent {
   @Input() title: string = '';

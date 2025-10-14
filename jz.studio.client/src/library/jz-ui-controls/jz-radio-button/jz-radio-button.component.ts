@@ -5,11 +5,10 @@ import { AppMgrService } from '../../../app/app-services/app-mgr.service';
 import { PaletteMgrService } from '../../../app/app-services/palette-mgr.service';
 
 @Component({
-  selector: 'jz-radio-button',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './jz-radio-button.component.html',
-  styleUrls: ['./jz-radio-button.component.css']
+    selector: 'jz-radio-button',
+    imports: [CommonModule],
+    templateUrl: './jz-radio-button.component.html',
+    styleUrls: ['./jz-radio-button.component.css']
 })
 export class JzRadioButtonComponent {
   @HostBinding('class') classes = 'palette-menu-container';

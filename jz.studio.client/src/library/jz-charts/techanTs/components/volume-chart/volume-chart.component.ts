@@ -12,9 +12,10 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
 @Component({
-  selector: 'volume-chart',
-  templateUrl: '../base/base-chart/base-chart.component.html',
-  styleUrls: ['./volume-chart.component.scss']
+    selector: 'volume-chart',
+    templateUrl: '../base/base-chart/base-chart.component.html',
+    styleUrls: ['./volume-chart.component.scss'],
+    standalone: false
 })
 export class VolumeChartComponent extends BaseChartComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];

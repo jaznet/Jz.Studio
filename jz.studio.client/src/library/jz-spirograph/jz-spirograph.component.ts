@@ -11,11 +11,10 @@ import { DxTemplateModule } from 'devextreme-angular/core';
 import { DxDropDownBoxModule } from 'devextreme-angular/ui/drop-down-box';
 
 @Component({
-  selector: 'jz-spirograph',
-  standalone: true,
-  imports: [CommonModule, JzRadioButtonComponent, DxDataGridModule, DxDropDownBoxModule],
-  templateUrl: './jz-spirograph.component.html',
-  styleUrl: './jz-spirograph.component.css'
+    selector: 'jz-spirograph',
+    imports: [CommonModule, JzRadioButtonComponent, DxDataGridModule, DxDropDownBoxModule],
+    templateUrl: './jz-spirograph.component.html',
+    styleUrl: './jz-spirograph.component.css'
 })
 export class JzSpirographComponent implements OnInit, AfterViewInit, AfterContentInit {
 

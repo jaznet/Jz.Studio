@@ -3,9 +3,10 @@ import { DockManager } from '../../../../library/jz-docking/dock-spawn/src/DockM
 import { PanelType } from '../../../../library/jz-docking/dock-spawn/src/enums/PanelType';
 import { PanelContainer } from '../../../../library/jz-docking/dock-spawn/src/PanelContainer';
 @Component({
-  selector: 'app-docking-view',
-  templateUrl: './docking-view.component.html',
-  styleUrl: './docking-view.component.css'
+    selector: 'app-docking-view',
+    templateUrl: './docking-view.component.html',
+    styleUrl: './docking-view.component.css',
+    standalone: false
 })
 export class DockingViewComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';

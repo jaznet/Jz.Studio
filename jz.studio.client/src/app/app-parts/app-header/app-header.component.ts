@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common';
 import { PaletteMenuComponent } from '../app-menus/palette-menu/palette-menu.component';
 
 @Component({
-  selector: 'app-header',
-  standalone: true,
-  imports: [CommonModule, MainMenuComponent, PaletteMenuComponent],
-  templateUrl: './app-header.component.html',
-  styleUrls: ['./app-header.component.css']
+    selector: 'app-header',
+    imports: [CommonModule, MainMenuComponent, PaletteMenuComponent],
+    templateUrl: './app-header.component.html',
+    styleUrls: ['./app-header.component.css']
 })
 
 export class AppHeaderComponent implements OnInit, AfterViewInit, AfterViewChecked {

@@ -8,11 +8,10 @@ import { RouterModule } from '@angular/router';
 import { SandboxMenuComponent } from './components/sandbox-menu/sandbox-menu.component';
 
 @Component({
-  selector: 'app-sandbox',
-  standalone: true,
-  imports: [CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent, RouterModule, SandboxMenuComponent],
-  templateUrl: './sandbox.component.html',
-  styleUrls: ['./sandbox.component.css']
+    selector: 'app-sandbox',
+    imports: [CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent, RouterModule, SandboxMenuComponent],
+    templateUrl: './sandbox.component.html',
+    styleUrls: ['./sandbox.component.css']
 })
 export class SandboxComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent ';

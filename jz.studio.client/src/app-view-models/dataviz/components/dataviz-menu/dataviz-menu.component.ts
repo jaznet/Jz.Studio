@@ -6,11 +6,10 @@ import { CommonModule } from '@angular/common';
 import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
 
 @Component({
-  selector: 'dataviz-menu',
-  standalone: true,
-  imports: [CommonModule, JzMenuContainerComponent, JzMenuTabComponent],
-  templateUrl: './dataviz-menu.component.html',
-  styleUrl: './dataviz-menu.component.css'
+    selector: 'dataviz-menu',
+    imports: [CommonModule, JzMenuContainerComponent, JzMenuTabComponent],
+    templateUrl: './dataviz-menu.component.html',
+    styleUrl: './dataviz-menu.component.css'
 })
 export class DatavizMenuComponent extends MenuBaseComponent {
 

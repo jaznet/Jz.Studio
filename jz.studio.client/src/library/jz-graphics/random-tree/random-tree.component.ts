@@ -5,9 +5,10 @@ import { DefaultLinkObject, linkVertical } from 'd3-shape';
 import { interval } from 'd3-timer';
 
 @Component({
-  selector: 'random-tree',
-  templateUrl: './random-tree.component.html',
-  styleUrls: ['./random-tree.component.css']
+    selector: 'random-tree',
+    templateUrl: './random-tree.component.html',
+    styleUrls: ['./random-tree.component.css'],
+    standalone: false
 })
 export class RandomTreeComponent implements OnInit {
   @HostBinding('class') classes = 'fit-to-parent';

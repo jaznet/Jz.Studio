@@ -6,11 +6,10 @@ import { PopoverHttpErrorComponent } from '../../library/jz-pop-overs/pop-over-h
 import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 
 @Component({
-  selector: 'app-dataviz',
-  standalone: true,
-  imports: [CommonModule, DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent], 
-  templateUrl: './dataviz.component.html',
-  styleUrl: './dataviz.component.css'
+    selector: 'app-dataviz',
+    imports: [CommonModule, DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
+    templateUrl: './dataviz.component.html',
+    styleUrl: './dataviz.component.css'
 })
 export class DatavizComponent {
   @HostBinding('class') classes = 'fit-to-parent';

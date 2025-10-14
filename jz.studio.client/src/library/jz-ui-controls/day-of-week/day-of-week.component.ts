@@ -2,9 +2,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'day-of-week',
-  templateUrl: './day-of-week.component.html',
-  styleUrls: ['./day-of-week.component.css']
+    selector: 'day-of-week',
+    templateUrl: './day-of-week.component.html',
+    styleUrls: ['./day-of-week.component.css'],
+    standalone: false
 })
 export class DayOfWeekComponent {
   dayOfWeek: string;

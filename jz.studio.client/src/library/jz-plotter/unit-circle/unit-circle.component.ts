@@ -11,9 +11,10 @@ interface Margin {
 }
 
 @Component({
-  selector: 'unit-circle',
-  templateUrl: './unit-circle.component.html',
-  styleUrl: './unit-circle.component.css'
+    selector: 'unit-circle',
+    templateUrl: './unit-circle.component.html',
+    styleUrl: './unit-circle.component.css',
+    standalone: false
 })
 export class UnitCircleComponent implements AfterViewInit {
   @Input() width: number = 400;

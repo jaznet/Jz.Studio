@@ -11,11 +11,10 @@ import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.mo
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'choro-state',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './choro-state.component.html',
-  styleUrls: ['./choro-state.component.css']
+    selector: 'choro-state',
+    imports: [CommonModule],
+    templateUrl: './choro-state.component.html',
+    styleUrls: ['./choro-state.component.css']
 })
 export class ChoroStateComponent {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';

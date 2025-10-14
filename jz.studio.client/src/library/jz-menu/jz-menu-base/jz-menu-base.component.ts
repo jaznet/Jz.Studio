@@ -3,9 +3,10 @@ import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { Direction } from '../../../types/direction';
 
 @Component({
-  selector: 'jz-menu-base',
-  templateUrl: './jz-menu-base.component.html',
-  styleUrls: ['./jz-menu-base.component.css']
+    selector: 'jz-menu-base',
+    templateUrl: './jz-menu-base.component.html',
+    styleUrls: ['./jz-menu-base.component.css'],
+    standalone: false
 })
 export class MenuBaseComponent implements OnInit, AfterViewInit {
   private _menuType: MenuType = 'main';

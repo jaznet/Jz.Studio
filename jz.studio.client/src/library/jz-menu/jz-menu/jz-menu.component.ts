@@ -3,9 +3,10 @@ import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { JzMenuService } from '../jz-menu.service';
 
 @Component({
-  selector: 'jz-menu',
-  templateUrl: './jz-menu.component.html',
-  styleUrls: ['./jz-menu.component.css']
+    selector: 'jz-menu',
+    templateUrl: './jz-menu.component.html',
+    styleUrls: ['./jz-menu.component.css'],
+    standalone: false
 })
 export class JzMenuComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('style.width') width: string = 'fit-content';

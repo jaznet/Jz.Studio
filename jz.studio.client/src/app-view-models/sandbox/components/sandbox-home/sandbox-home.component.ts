@@ -4,9 +4,10 @@ import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs
 //import { DayOfWeekComponent } from '../../../../library/jz-ui-controls/day-of-week/day-of-week.component';
 
 @Component({
-  selector: 'app-sandbox-home',
-  templateUrl: './sandbox-home.component.html',
-  styleUrls: ['./sandbox-home.component.css']
+    selector: 'app-sandbox-home',
+    templateUrl: './sandbox-home.component.html',
+    styleUrls: ['./sandbox-home.component.css'],
+    standalone: false
 })
 export class SandboxHomeComponent implements AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';

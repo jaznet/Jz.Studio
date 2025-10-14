@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'j3-menu-tab-panel',
-  templateUrl: './j3-menu-tab-panel.component.html',
-  styleUrls: ['./j3-menu-tab-panel.component.css']
+    selector: 'j3-menu-tab-panel',
+    templateUrl: './j3-menu-tab-panel.component.html',
+    styleUrls: ['./j3-menu-tab-panel.component.css'],
+    standalone: false
 })
 export class MenuTabPanelComponent implements OnInit, AfterViewInit {
 

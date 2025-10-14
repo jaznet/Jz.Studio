@@ -39,12 +39,11 @@ import { CommonModule } from '@angular/common';
 // #endregion imports
 
 @Component({
-  selector: 'techanTs',
-  standalone: true,
-  imports: [CommonModule, PopOverLoadingComponent, PopoverHttpErrorComponent],
-  templateUrl: './techanTs.component.html',
-  styleUrls: ['./techanTs.component.scss'],
-  encapsulation: ViewEncapsulation.None
+    selector: 'techanTs',
+    imports: [CommonModule, PopOverLoadingComponent, PopoverHttpErrorComponent],
+    templateUrl: './techanTs.component.html',
+    styleUrls: ['./techanTs.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 export class TechanTsComponent  implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';

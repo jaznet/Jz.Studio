@@ -4,11 +4,10 @@ import { NgClass } from '@angular/common';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
-  selector: 'jz-button',
-  standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgClass],
-  templateUrl: './jz-button.component.html',
-  styleUrls: ['./jz-button.component.scss']
+    selector: 'jz-button',
+    imports: [RouterLink, RouterLinkActive, NgClass],
+    templateUrl: './jz-button.component.html',
+    styleUrls: ['./jz-button.component.scss']
 })
 export class JzButtonComponent {
   /** Router bits */

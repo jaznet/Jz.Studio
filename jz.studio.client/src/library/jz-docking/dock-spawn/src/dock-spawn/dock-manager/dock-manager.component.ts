@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'jz-dock-manager',
-  templateUrl: './dock-manager.component.html',
-  styleUrl: './dock-manager.component.css'
+    selector: 'jz-dock-manager',
+    templateUrl: './dock-manager.component.html',
+    styleUrl: './dock-manager.component.css',
+    standalone: false
 })
 export class DockManagerComponent {
 

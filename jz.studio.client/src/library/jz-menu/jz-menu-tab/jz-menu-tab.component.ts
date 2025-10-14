@@ -8,11 +8,10 @@ import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
-  selector: 'jz-menu-tab',
-  standalone: true,
-  imports: [CommonModule, JzButtonComponent],
-  templateUrl: './jz-menu-tab.component.html',
-  styleUrls: ['./jz-menu-tab.component.css']
+    selector: 'jz-menu-tab',
+    imports: [CommonModule, JzButtonComponent],
+    templateUrl: './jz-menu-tab.component.html',
+    styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @ViewChild('tabbutton') tabButton!: JzButtonComponent;
