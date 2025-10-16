@@ -2,14 +2,14 @@ import { AfterViewInit, Component, HostBinding, OnInit, ViewChild, ViewChildren 
 import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { JzPopOversService } from '../../library/jz-pop-overs/jz-pop-overs.service';
 import { PopOverLoadingParams } from '../../library/jz-pop-overs/interfaces/popoverloadingparams';
-import { CommonModule } from '@angular/common';
+
 import { PopoverHttpErrorComponent } from '../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { RouterModule } from '@angular/router';
 import { SandboxMenuComponent } from './components/sandbox-menu/sandbox-menu.component';
 
 @Component({
     selector: 'app-sandbox',
-    imports: [CommonModule, PopoverHttpErrorComponent, PopOverLoadingComponent, RouterModule, SandboxMenuComponent],
+    imports: [PopoverHttpErrorComponent, PopOverLoadingComponent, RouterModule, SandboxMenuComponent],
     templateUrl: './sandbox.component.html',
     styleUrls: ['./sandbox.component.css']
 })

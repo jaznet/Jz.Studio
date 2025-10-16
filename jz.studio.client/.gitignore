@@ -45,3 +45,4 @@ Thumbs.db
 localhost+*.pem
 localhost+*-key.pem
 
+src/devextreme-license.ts

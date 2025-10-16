@@ -11,12 +11,14 @@ import { AppPartsModule } from './app-parts/app-parts.module';
 import { SandboxModule } from '../app-view-models/sandbox/sandbox.module';
 import { DatavizModule } from '../app-view-models/dataviz/dataviz.module';
 import { GraphicsModule } from '../app-view-models/graphics/graphics.module';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+//import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 
   imports: [
     BrowserModule,
-    HttpClientModule,
+    //HttpClientModule,
     AppRoutingModule,     // handles RouterModule.forRoot(...)
     AppComponent,         // <-- add the standalone root here
     JzUiControlsModule,
@@ -25,6 +27,12 @@ import { GraphicsModule } from '../app-view-models/graphics/graphics.module';
     SandboxModule,
     GraphicsModule,
     DatavizModule
+  ],
+  providers: [
+    provideHttpClient(
+      // keep your existing class-based interceptors working:
+      withInterceptorsFromDi()
+    ),
   ],
   bootstrap: [AppComponent]
 })

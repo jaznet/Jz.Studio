@@ -1,7 +1,7 @@
 
 import { AfterViewInit, Component, HostBinding, Input } from '@angular/core';
 import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-menu-base.component';
-import { CommonModule } from '@angular/common';
+
 import { normalizeMenuType, type MenuType } from '../../../../types/menu';
 import { Direction } from '../../../../types/direction';
 import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-menu-tab.component';
@@ -9,7 +9,7 @@ import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-co
 
 @Component({
     selector: 'sandbox-menu',
-    imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent],
+    imports: [JzMenuTabComponent, JzMenuContainerComponent],
     templateUrl: './sandbox-menu.component.html',
     styleUrls: ['./sandbox-menu.component.css']
 })

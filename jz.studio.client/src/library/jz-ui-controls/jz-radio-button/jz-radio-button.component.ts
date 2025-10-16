@@ -1,12 +1,12 @@
 import { Component, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { normalizePalette, type Palette } from '../../../types/palette';
 import { AppMgrService } from '../../../app/app-services/app-mgr.service';
 import { PaletteMgrService } from '../../../app/app-services/palette-mgr.service';
 
 @Component({
     selector: 'jz-radio-button',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './jz-radio-button.component.html',
     styleUrls: ['./jz-radio-button.component.css']
 })

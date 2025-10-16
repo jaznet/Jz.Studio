@@ -1,10 +1,10 @@
 
-import { CommonModule } from '@angular/common';
+
 import { Component, HostBinding } from '@angular/core';
 
 @Component({
     selector: 'jz-choro-dash-panel',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './jz-choro-dash-panel.component.html',
     styleUrl: './jz-choro-dash-panel.component.css'
 })

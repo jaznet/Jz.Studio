@@ -9,7 +9,7 @@ import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
     selector: 'jz-menu-container',
-    imports: [CommonModule, JzMenuTabComponent],
+    imports: [CommonModule],
     inputs: ['menuType'],
     templateUrl: './jz-menu-container.component.html',
     styleUrls: ['./jz-menu-container.component.css']

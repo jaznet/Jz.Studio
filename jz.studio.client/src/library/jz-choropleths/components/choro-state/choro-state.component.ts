@@ -8,11 +8,11 @@ import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
 import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'choro-state',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './choro-state.component.html',
     styleUrls: ['./choro-state.component.css']
 })

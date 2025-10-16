@@ -1,7 +1,8 @@
 //app.component.ts
 
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild, PLATFORM_ID, DOCUMENT, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit } from '@angular/core';
+import {  isPlatformBrowser } from '@angular/common';
 import { PaletteMgrService } from './app-services/palette-mgr.service';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavigationListenerService } from './app-services/navigation-listener.service';
@@ -20,28 +21,32 @@ interface WeatherForecast {
 }
 
 @Component({
-    selector: 'app-root',
-    imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.css'
+  selector: 'app-root',
+  imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
   @ViewChild('header', { static: true }) header!: AppHeaderComponent;
   @ViewChild('content', { static: true }) content!: AppContentComponent;
   @ViewChild('footer', { static: true }) footer!: AppFooterComponent;
   @ViewChild('popOverLoadingComponent', { static: true }) popover!: PopOverLoadingComponent;
+
+  private observer?: MutationObserver;
   public forecasts: WeatherForecast[] = [];
 
   constructor(
     private router: Router,
     private appService: AppStateService,
     private navigationListenerService: NavigationListenerService,
-    private popoversService:JzPopOversService,
+    private popoversService: JzPopOversService,
     private http: HttpClient,
-    private palette: PaletteMgrService)
-  {
-   // palette.InitializePalette();
+    private palette: PaletteMgrService,
+    @Inject(DOCUMENT) private doc: Document,
+    @Inject(PLATFORM_ID) private pid: Object) {
+    // palette.InitializePalette();
   }
+
 
   ngOnInit() {
     console.log(this.header);
@@ -73,5 +78,27 @@ export class AppComponent implements OnInit {
     //})
   }
 
-  title = 'jz.studio.client';
+  ngAfterViewInit() {
+    if (!isPlatformBrowser(this.pid)) return;
+
+    //const element = this.doc.querySelector<HTMLElement>('dx-license');
+
+    //if (element) {
+    //  element.remove();
+     
+    }
+  
+
+
+
+
+  ngOnDestroy() {
+    //  this.observer?.disconnect();
+  }
+
+  private onDxLicenseFound(el: HTMLElement) {
+    console.log('<dx-license> appeared:', el);
+    // read-only identification:
+    console.log('is correct element?', el.tagName === 'DX-LICENSE');
+  }
 }

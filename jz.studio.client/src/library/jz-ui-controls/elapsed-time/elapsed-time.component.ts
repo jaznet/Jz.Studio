@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
     selector: 'elapsed-time',
-    imports: [CommonModule],
+    imports: [],
     templateUrl: './elapsed-time.component.html',
     styleUrls: ['./elapsed-time.component.css']
 })

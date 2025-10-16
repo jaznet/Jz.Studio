@@ -5,7 +5,7 @@ import { normalizeMenuType, type MenuType } from '../../../types/menu';
 
 @Component({
     selector: 'jz-button',
-    imports: [RouterLink, RouterLinkActive, NgClass],
+    imports: [RouterLink],
     templateUrl: './jz-button.component.html',
     styleUrls: ['./jz-button.component.scss']
 })

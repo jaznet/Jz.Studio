@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterOutlet } from '@angular/router';
 import { DatavizMenuComponent } from './components/dataviz-menu/dataviz-menu.component';
 import { PopoverHttpErrorComponent } from '../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
@@ -7,7 +7,7 @@ import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loa
 
 @Component({
     selector: 'app-dataviz',
-    imports: [CommonModule, DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
+    imports: [DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
     templateUrl: './dataviz.component.html',
     styleUrl: './dataviz.component.css'
 })

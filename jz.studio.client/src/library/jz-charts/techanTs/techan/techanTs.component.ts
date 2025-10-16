@@ -35,12 +35,12 @@ import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this 
 import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
 import { toISOStringSafe } from '../utils/date-utils';
-import { CommonModule } from '@angular/common';
+
 // #endregion imports
 
 @Component({
     selector: 'techanTs',
-    imports: [CommonModule, PopOverLoadingComponent, PopoverHttpErrorComponent],
+    imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
     templateUrl: './techanTs.component.html',
     styleUrls: ['./techanTs.component.scss'],
     encapsulation: ViewEncapsulation.None
