@@ -10,3 +10,12 @@
 
 <pop-over-loading #popover></pop-over-loading>
 <pop-over-http-error #popover_httperror></pop-over-http-error>
+
+<ng-template #popoverTemplate>
+  <div style="max-width: 220px">
+    <strong>Popover Title</strong><br>
+    Content injected through TemplateRef.
+  </div>
+</ng-template>
+
+<jz-pop-over [visible]="popoverVisible" [content]="popoverTemplate"></jz-pop-over>
