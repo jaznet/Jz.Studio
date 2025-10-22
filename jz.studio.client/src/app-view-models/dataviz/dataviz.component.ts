@@ -16,7 +16,9 @@ import { JzPopOver } from '../../components/jz-pop-over/jz-pop-over';
 })
 export class DatavizComponent {
   @HostBinding('class') classes = 'fit-to-parent';
-  constructor() { }
 
   popoverVisible = true;
+  anchor!: HTMLElement;
+
+  constructor() { }
 }
