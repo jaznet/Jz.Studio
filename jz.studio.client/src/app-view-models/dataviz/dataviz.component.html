@@ -8,17 +8,14 @@
   <router-outlet></router-outlet>
 </div>
 
-<pop-over-loading #popover></pop-over-loading>
-<pop-over-http-error #popover_httperror></pop-over-http-error>
+<!-- parent (e.g., dataviz.component.html) -->
+<button #btn (click)="open(btn)">Show Popover</button>
 
-<ng-template #popoverTemplate>
-  <div style="max-width: 220px">
-    <strong>Popover Title</strong><br>
+<ng-template #popoverTpl>
+  <div class="jz" style="max-width:220px">
+    <strong>Popover Title</strong><br />
     Content injected through TemplateRef.
   </div>
 </ng-template>
 
-<jz-pop-over [visible]="popoverVisible"
-             [content]="popoverTemplate"
-             [anchor]="anchor">
-</jz-pop-over>
+

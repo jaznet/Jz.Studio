@@ -1,5 +1,6 @@
-// jz-pop-over.html
+<!-- jz-pop-over.html -->
 
 <div class="jz-popover" [class.visible]="visible">
+  <div class="jz-popover__arrow" [attr.data-pos]="arrowPos"></div>
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>

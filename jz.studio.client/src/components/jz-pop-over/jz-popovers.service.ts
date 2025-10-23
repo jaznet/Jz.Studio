@@ -1,85 +1,58 @@
+// jz-popovers.service.ts
 import { Injectable, Injector, TemplateRef } from '@angular/core';
-import {
-  Overlay,
-  OverlayRef,
-  OverlayConfig,
-  OverlayPositionBuilder
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayRef, OverlayConfig, OverlayPositionBuilder, ConnectedPosition } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { JzPopOver } from './jz-pop-over'; // adjust import path if needed
+import { JzPopOver } from './jz-pop-over';
 
 @Injectable({ providedIn: 'root' })
 export class JzPopoversService {
   private overlayRef?: OverlayRef;
 
-  constructor(
-    private overlay: Overlay,
-    private positionBuilder: OverlayPositionBuilder,
-    private injector: Injector
-  ) { }
+  constructor(private overlay: Overlay, private pos: OverlayPositionBuilder, private injector: Injector) { }
 
-  /**
-   * Opens a JzPopOver overlay connected to a specific element.
-   * @param origin - The DOM element to anchor the popover to.
-   * @param content - The TemplateRef to inject into the popover.
-   */
-  open(origin: HTMLElement, content: TemplateRef<unknown>): void {
-    // Close any previous popover
+  open(origin: HTMLElement, content: TemplateRef<unknown>) {
     this.close();
 
-    // Define how the popover positions itself relative to the target
-    const positionStrategy = this.positionBuilder
-      .flexibleConnectedTo(origin)
-      .withFlexibleDimensions(false)
+    const positionStrategy = this.pos.flexibleConnectedTo(origin)
+      .withFlexibleDimensions(true)
       .withPush(true)
       .withPositions([
-        // Primary: below center
-        {
-          originX: 'center',
-          originY: 'bottom',
-          overlayX: 'center',
-          overlayY: 'top',
-          offsetY: 8
-        },
-        // Fallback: above center
-        {
-          originX: 'center',
-          originY: 'top',
-          overlayX: 'center',
-          overlayY: 'bottom',
-          offsetY: -8
-        }
+        { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: 8 },
+        { originX: 'center', originY: 'top', overlayX: 'center', overlayY: 'bottom', offsetY: -8 },
+        { originX: 'end', originY: 'center', overlayX: 'start', overlayY: 'center', offsetX: 8 },
+        { originX: 'start', originY: 'center', overlayX: 'end', overlayY: 'center', offsetX: -8 },
       ]);
 
-    // Create overlay configuration
-    const config: OverlayConfig = {
+    const cfg: OverlayConfig = {
       positionStrategy,
       hasBackdrop: true,
       backdropClass: 'cdk-overlay-transparent-backdrop',
       scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      disposeOnNavigation: true
+      disposeOnNavigation: true,
     };
 
-    // Create the overlay
-    this.overlayRef = this.overlay.create(config);
+    this.overlayRef = this.overlay.create(cfg);
 
-    // Attach the JzPopOver component into it
     const portal = new ComponentPortal(JzPopOver, null, this.injector);
-    const compRef = this.overlayRef.attach(portal);
+    const cmpRef = this.overlayRef.attach(portal);
+    cmpRef.instance.content = content;
+    cmpRef.instance.visible = true;
 
-    // Pass data into the component instance
-    compRef.instance.content = content;
-    compRef.instance.visible = true;
+    // When CDK reports a new connection, update input and schedule a new tick
+    positionStrategy.positionChanges.subscribe(({ connectionPair }) => {
+      cmpRef.instance.position = connectionPair as ConnectedPosition;
 
-    // Close on backdrop click
+      // Defer marking for check to the next macrotask to avoid NG0100
+      setTimeout(() => cmpRef.changeDetectorRef.markForCheck());
+      // (queueMicrotask is sometimes still same tick; setTimeout is safer here)
+    });
+
     this.overlayRef.backdropClick().subscribe(() => this.close());
+    this.overlayRef.keydownEvents().subscribe(e => { if (e.key === 'Escape') this.close(); });
   }
 
-  /** Closes and disposes the current popover overlay. */
-  close(): void {
-    if (this.overlayRef) {
-      this.overlayRef.dispose();
-      this.overlayRef = undefined;
-    }
+  close() {
+    this.overlayRef?.dispose();
+    this.overlayRef = undefined;
   }
 }
