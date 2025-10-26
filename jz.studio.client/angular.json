@@ -43,7 +43,7 @@
               "node_modules/@syncfusion/ej2-base/styles/material.css",
               "node_modules/@syncfusion/ej2-angular-layouts/styles/material.css",
               "src/assets/styles/mathjax.css",
-              "src/styles.css",
+              "src/styles.scss",
               "src/assets/styles/app.css",
               "src/assets/styles/layouts.css",
               "src/assets/styles/flex-grids.css",
@@ -114,7 +114,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss"
             ],
             "scripts": [],
             "karmaConfig": "karma.conf.js"

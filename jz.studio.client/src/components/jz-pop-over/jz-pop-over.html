@@ -1,6 +1,9 @@
 <!-- jz-pop-over.html -->
 
 <div class="jz-popover" [class.visible]="visible">
-  <div class="jz-popover__arrow" [attr.data-pos]="arrowPos"></div>
-  <ng-container *ngTemplateOutlet="content"></ng-container>
+  <div class="jz-popover__arrow" data-pos="right"></div>
+  <div data-test="hardcoded">Hello from popover</div>
+  <ng-container *ngIf="content">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
 </div>

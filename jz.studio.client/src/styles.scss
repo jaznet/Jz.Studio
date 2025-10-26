@@ -1,3 +1,5 @@
+/* styles.scss*/
+
 /* You can add global styles to this file, and also import other style files */
 @font-face {
   font-family: 'museo';
@@ -26,7 +28,6 @@
 
 html,
 body {
-  display: flex; /* This is usually the default, so it might not need overriding */
   margin: 0; /* Override the default margin */
   /* Add any other styles you need */
   height:100%;
@@ -37,33 +38,42 @@ body {
 
 app-root {
   display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-div {
-    display:flex;
+.cdk-overlay-container {
+  z-index: 1000;
 }
 
-body > div {
-    visibility:hidden;
+.cdk-overlay-backdrop {
+  z-index: 1001;
 }
 
-/*mjx-container {
-  color: cadetblue
+.cdk-overlay-pane {
+  z-index: 1002;
 }
 
-.mjx-container {
-    margin:unset;
-  color: dodgerblue;
+/* Quarantine: prevent global flex or other display hacks from affecting overlays */
+.cdk-overlay-container,
+.cdk-overlay-container *,
+.cdk-global-overlay-wrapper { /* add this */
+  display: revert !important;
 }
 
-.MathJax {
-  color: darkred;
+
+
+.jz-popover {
+  min-width: 240px !important;
+  min-height: 96px !important;
+  outline: 2px dashed hotpink !important;
+  background: #222 !important;
+  color: #fff !important;
 }
 
-.MJX-TEX {
-  color: #a7aaa4;
-}*/
-/* Customize the axis line */
-
+.jz-popover.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}

@@ -11,8 +11,8 @@ import { ConnectedPosition } from '@angular/cdk/overlay';
   styleUrl: './jz-pop-over.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JzPopOver {
-  @Input() content!: TemplateRef<unknown>;
+export class JzPopOverComponent {
+  @Input() content?: TemplateRef<unknown>;
   @Input() visible = false;
 
   /** set by the service; we compute arrowPos and request a new tick */

@@ -8,8 +8,10 @@
   <router-outlet></router-outlet>
 </div>
 
-<!-- parent (e.g., dataviz.component.html) -->
-<button #btn (click)="open(btn)">Show Popover</button>
+<!-- The toggle button -->
+<button #btn (click)="togglePopover(btn)">
+  {{ isPopoverVisible ? 'Hide Popover' : 'Show Popover' }}
+</button>
 
 <ng-template #popoverTpl>
   <div class="jz" style="max-width:220px">

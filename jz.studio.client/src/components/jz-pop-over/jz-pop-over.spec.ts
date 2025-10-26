@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzPopOver } from './jz-pop-over';
+import { JzPopOverComponent } from './jz-pop-over';
 
 describe('JzPopOver', () => {
-  let component: JzPopOver;
-  let fixture: ComponentFixture<JzPopOver>;
+  let component: JzPopOverComponent;
+  let fixture: ComponentFixture<JzPopOverComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JzPopOver]
+      imports: [JzPopOverComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzPopOver);
+    fixture = TestBed.createComponent(JzPopOverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
+   
   it('should create', () => {
     expect(component).toBeTruthy();
   });

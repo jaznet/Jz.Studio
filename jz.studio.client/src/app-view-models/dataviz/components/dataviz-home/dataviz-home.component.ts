@@ -1,14 +1,14 @@
 
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DOCUMENT, HostBinding, Inject, PLATFORM_ID } from '@angular/core';
 import { PaletteMgrService } from '../../../../app/app-services/palette-mgr.service';
-import { JzPopOver } from '../../../../components/jz-pop-over/jz-pop-over';
+import { JzPopOverComponent } from '../../../../components/jz-pop-over/jz-pop-over';
 import { JzPopoversService } from '../../../../components/jz-pop-over/jz-popovers.service';
 
 
 @Component({
   selector: 'dataviz-home',
   standalone: true,
-  imports: [JzPopOver],
+  imports: [JzPopOverComponent],
   templateUrl: './dataviz-home.component.html',
   styleUrl: './dataviz-home.component.css',
 
