@@ -11,6 +11,7 @@
     <Folder Include="src\app-view-models\dataviz\components\" />
     <Folder Include="src\app-view-models\graphics\components\" />
     <Folder Include="src\assets\css\" />
+    <Folder Include="src\components\overlays\" />
     <Folder Include="src\library\jz-charts\techanTs\enums\" />
     <Folder Include="src\library\jz-charts\techanTs\services\parts\" />
     <Folder Include="src\library\jz-charts\techanTs\styles\" />
