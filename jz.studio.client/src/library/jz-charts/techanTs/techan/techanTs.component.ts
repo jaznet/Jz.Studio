@@ -35,14 +35,28 @@ import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this 
 import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
 import { toISOStringSafe } from '../utils/date-utils';
+import { OverlayContainer } from '@angular/cdk/overlay';
+import { HtmlElementOverlayContainer } from '../../../../components/overlays/html-element-overlay-container';
 
 // #endregion imports
+
+// 👇 define it before the @Component decorator
+export function createHtmlElementOverlayContainer(host: ElementRef): OverlayContainer {
+  return new HtmlElementOverlayContainer(host.nativeElement);
+}
 
 @Component({
     selector: 'techanTs',
     imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
     templateUrl: './techanTs.component.html',
-    styleUrls: ['./techanTs.component.scss'],
+  styleUrls: ['./techanTs.component.scss'],
+  providers: [
+    {
+      provide: OverlayContainer,
+      useFactory: createHtmlElementOverlayContainer,
+      deps: [ElementRef],
+    },
+  ],
     encapsulation: ViewEncapsulation.None
 })
 export class TechanTsComponent  implements OnInit, AfterViewInit {
