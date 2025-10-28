@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
-import { JzButtonComponent } from '../../../../library/jz-buttons/jz-button/jz-button.component';
+import { JzButton } from '../../../../components/buttons/jz-button/jz-button';
 
 @Component({
     selector: 'app-logon',
     imports: [
-        JzButtonComponent, ReactiveFormsModule
+        JzButton, ReactiveFormsModule
     ],
     templateUrl: './logon.component.html',
     styleUrls: ['./logon.component.css']
@@ -37,7 +37,7 @@ export class LogonComponent implements OnInit {
     }
   }
 
-  onButtonClick() {
+   onButtonClick() {
     if (this.loginForm.valid) {
       var username = this.loginForm.value.username;
       var password = this.loginForm.value.password;

@@ -2,19 +2,19 @@
 
 import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JzButtonComponent } from '../../jz-buttons/jz-button/jz-button.component';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
+import { JzButton } from '../../../components/buttons/jz-button/jz-button';
 
 @Component({
     selector: 'jz-menu-tab',
-    imports: [CommonModule, JzButtonComponent],
+    imports: [CommonModule, JzButton],
     templateUrl: './jz-menu-tab.component.html',
     styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit {
-  @ViewChild('tabbutton') tabButton!: JzButtonComponent;
+  @ViewChild('tabbutton') tabButton!: JzButton;
 
   // Narrow some types for safer templates
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';

@@ -1,0 +1,57 @@
+// jz-button.scss
+
+.jz-btn {
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .75rem 1rem;
+  border-radius: .9rem;
+  border: 1px solid transparent;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  background: var(--btn-bg, #0ea5e9);
+  color: var(--btn-fg, #06131a);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18), 0 2px 4px rgba(0,0,0,.12);
+  transition: transform .06s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.jz-btn:hover {
+  filter: brightness(1.04);
+}
+
+.jz-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+}
+
+.jz-btn:focus-visible {
+  outline: 3px solid rgba(0,0,0,.4);
+  outline-offset: 3px;
+}
+
+
+/* Active state from RouterLinkActive */
+.jz-btn.is-active,
+.jz-btn.is-selected {
+  filter: brightness(1.06);
+}
+
+
+/* Example menuType hooks */
+.jz-btn.main {
+  --btn-bg: #0ea5e9;
+  --btn-fg: #06131a;
+}
+
+.jz-btn.secondary {
+  --btn-bg: #10b981;
+  --btn-fg: #081a12;
+}
+
+.jz-btn.utility {
+  --btn-bg: #111;
+  --btn-fg: #fff;
+}

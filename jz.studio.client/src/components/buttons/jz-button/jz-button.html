@@ -1,0 +1,15 @@
+<!-- jz-button.html -->
+
+<button type="button"
+        class="jz-btn"
+        [class.is-selected]="isSelected || rla.isActive"
+        [class.main]="menuType === 'main'"
+        [class.sub]="menuType === 'sub'"
+        [class.utility]="menuType === 'utility'"
+        [routerLink]="navigate ? route : null"
+        routerLinkActive="is-active"
+        #rla="routerLinkActive"
+        (click)="onClick($event)"
+        [attr.aria-current]="rla.isActive ? 'page' : null">
+  {{ text }}
+</button>
