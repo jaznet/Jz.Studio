@@ -7,17 +7,16 @@
 
 /* Tunable knobs (can be overridden from a parent theme) */
 :host {
-  --jz-btn-height: 44px; /* visual height of the face */
+  --jz-btn-height: 40px; /* visual height of the face */
   --jz-pad-x: 18px; /* horizontal padding */
-  --jz-fillet: 18px; /* “router round-over” radius */
-  --jz-specular: .70; /* 0..1 gloss intensity */
+  --depth: 5px;
+  --jz-fillet: calc(var(--depth) * 1.8); /* keeps curvature proportional */
+  --jz-specular: .80; /* 0..1 gloss intensity */
   --jz-light-strength: 1; /* 0..1 light power */
   --jz-fg: #06131a; /* readable text color (varies per palette) */
   /* default (used by .main below) */
-  --jz-base: #0ea5e9; /* base face color */
+  --jz-base: var(--plt-clr-2); /* base face color */
 }
-
-
 
 .jz-btn {
   position: relative;
@@ -26,6 +25,7 @@
   justify-content: center;
   gap: 10px;
   min-height: var(--jz-btn-height);
+  min-width: 120px; /* set your preferred baseline width */
   padding: 0 var(--jz-pad-x);
   border: 0;
   border-radius: var(--jz-fillet);
@@ -62,8 +62,8 @@
 
 /* Palette mappings for your menuType classes */
 .jz-btn.main {
-  --jz-base: #0ea5e9;
-  --jz-fg: #06131a;
+  --jz-base: var(--plt-clr-3);
+  --jz-fg: var(--plt-txt-3);
 }
 /* sky */
 .jz-btn.secondary {
@@ -76,38 +76,41 @@
   --jz-fg: #ffffff;
 }
 
+/* */
+
+/* Hover/Active/Focus */
 .jz-btn:hover {
   filter: brightness(1.04);
 }
 
 .jz-btn:active {
   transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+  box-shadow: 0 10px 20px -12px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.42), inset 0 12px 22px -10px rgba(255,255,255,.7), inset 12px 0 20px -10px rgba(255,255,255,.42), inset -12px 0 20px -12px rgba(0,0,0,.6), inset 0 -14px 26px -12px rgba(0,0,0,.65);
 }
 
 .jz-btn:focus-visible {
-  outline: 3px solid rgba(0,0,0,.4);
+  outline: 3px solid rgba(255,255,255,.75);
   outline-offset: 3px;
 }
 
-/* Active state from RouterLinkActive */
+/* Selected/Active via routerLinkActive or isSelected */
 .jz-btn.is-active,
 .jz-btn.is-selected {
   filter: brightness(1.06);
 }
 
-/* Example menuType hooks */
-.jz-btn.main {
-  --btn-bg: var(--plt-clr-2);
-  --btn-fg: #06131a;
+/* Size helpers (optional) */
+.jz-btn.sm {
+  --jz-btn-height: 38px;
+  --jz-fillet: 14px;
+  --jz-pad-x: 14px;
+  font-size: .9rem;
 }
 
-.jz-btn.secondary {
-  --btn-bg: #10b981;
-  --btn-fg: #081a12;
+.jz-btn.lg {
+  --jz-btn-height: 52px;
+  --jz-fillet: 22px;
+  --jz-pad-x: 22px;
+  font-size: 1.02rem;
 }
 
-.jz-btn.utility {
-  --btn-bg: #111;
-  --btn-fg: #fff;
-}
