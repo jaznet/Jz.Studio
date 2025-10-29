@@ -17,22 +17,7 @@
   --jz-base: #0ea5e9; /* base face color */
 }
 
-/* Palette mappings for your menuType classes */
-.jz-btn.main {
-  --jz-base: #0ea5e9;
-  --jz-fg: #06131a;
-}
-/* sky */
-.jz-btn.secondary {
-  --jz-base: #10b981;
-  --jz-fg: #081a12;
-}
-/* emerald */
-.jz-btn.utility {
-  --jz-base: #111111;
-  --jz-fg: #ffffff;
-}
-/* onyx */
+
 
 .jz-btn {
   position: relative;
@@ -62,6 +47,33 @@
   inset 0 calc(-16px * var(--jz-light-strength)) calc(24px * var(--jz-light-strength)) -10px rgba(0,0,0,.60); /* bottom shade */
 
   transition: transform .06s ease, box-shadow .12s ease, filter .12s ease, background-color .12s ease, color .12s ease;
+}
+
+/* Specular gloss — top-left bloom + diagonal streak */
+.jz-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(60% 80% at 0% 0%, rgba(255,255,255,calc(.65*var(--jz-specular))) 0%, rgba(255,255,255,0) 60%), linear-gradient(20deg, rgba(255,255,255,calc(.18*var(--jz-specular))) 10%, rgba(255,255,255,0) 30% 70%, rgba(255,255,255,calc(.08*var(--jz-specular))) 86%, rgba(255,255,255,0) 92%);
+  mix-blend-mode: screen; /* gives that “glassy” feel */
+}
+
+/* Palette mappings for your menuType classes */
+.jz-btn.main {
+  --jz-base: #0ea5e9;
+  --jz-fg: #06131a;
+}
+/* sky */
+.jz-btn.secondary {
+  --jz-base: #10b981;
+  --jz-fg: #081a12;
+}
+/* emerald */
+.jz-btn.utility {
+  --jz-base: #111111;
+  --jz-fg: #ffffff;
 }
 
 .jz-btn:hover {
