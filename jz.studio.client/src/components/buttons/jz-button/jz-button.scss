@@ -1,21 +1,67 @@
 // jz-button.scss
 
+/* --- JzButton Cuboid Gloss (top-left light) ------------------------------ */
+:host {
+  display: inline-block;
+}
+
+/* Tunable knobs (can be overridden from a parent theme) */
+:host {
+  --jz-btn-height: 44px; /* visual height of the face */
+  --jz-pad-x: 18px; /* horizontal padding */
+  --jz-fillet: 18px; /* “router round-over” radius */
+  --jz-specular: .70; /* 0..1 gloss intensity */
+  --jz-light-strength: 1; /* 0..1 light power */
+  --jz-fg: #06131a; /* readable text color (varies per palette) */
+  /* default (used by .main below) */
+  --jz-base: #0ea5e9; /* base face color */
+}
+
+/* Palette mappings for your menuType classes */
+.jz-btn.main {
+  --jz-base: #0ea5e9;
+  --jz-fg: #06131a;
+}
+/* sky */
+.jz-btn.secondary {
+  --jz-base: #10b981;
+  --jz-fg: #081a12;
+}
+/* emerald */
+.jz-btn.utility {
+  --jz-base: #111111;
+  --jz-fg: #ffffff;
+}
+/* onyx */
+
 .jz-btn {
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: .75rem 1rem;
-  border-radius: .9rem;
-  border: 1px solid transparent;
-  font-weight: 700;
-  line-height: 1;
+  gap: 10px;
+  min-height: var(--jz-btn-height);
+  padding: 0 var(--jz-pad-x);
+  border: 0;
+  border-radius: var(--jz-fillet);
   cursor: pointer;
-  background: var(--btn-bg, #0ea5e9);
-  color: var(--btn-fg, #06131a);
-  box-shadow: 0 6px 14px rgba(0,0,0,.18), 0 2px 4px rgba(0,0,0,.12);
-  transition: transform .06s ease, box-shadow .12s ease, filter .12s ease;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  background: var(--jz-base);
+  color: var(--jz-fg);
+  font-weight: 700;
+  letter-spacing: .2px;
+  /* Cuboid illusion: drop + inset edge shaping (TL light) */
+  box-shadow:
+  /* ambient drop */
+  0 14px 28px -12px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.35),
+  /* round-over highlights/shadows */
+  inset 0 calc( 10px * var(--jz-light-strength)) calc(20px * var(--jz-light-strength)) -8px rgba(255,255,255,.75), /* top lip */
+  inset calc( 10px * var(--jz-light-strength)) 0 calc(18px * var(--jz-light-strength)) -8px rgba(255,255,255,.45), /* left edge */
+  inset calc(-14px * var(--jz-light-strength)) 0 calc(22px * var(--jz-light-strength)) -10px rgba(0,0,0,.55), /* right shade */
+  inset 0 calc(-16px * var(--jz-light-strength)) calc(24px * var(--jz-light-strength)) -10px rgba(0,0,0,.60); /* bottom shade */
+
+  transition: transform .06s ease, box-shadow .12s ease, filter .12s ease, background-color .12s ease, color .12s ease;
 }
 
 .jz-btn:hover {
@@ -32,17 +78,15 @@
   outline-offset: 3px;
 }
 
-
 /* Active state from RouterLinkActive */
 .jz-btn.is-active,
 .jz-btn.is-selected {
   filter: brightness(1.06);
 }
 
-
 /* Example menuType hooks */
 .jz-btn.main {
-  --btn-bg: #0ea5e9;
+  --btn-bg: var(--plt-clr-2);
   --btn-fg: #06131a;
 }
 
