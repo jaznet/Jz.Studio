@@ -1,91 +1,123 @@
-// jz-button.scss
-
-/* --- JzButton Cuboid Gloss (top-left light) ------------------------------ */
+/* --- JzButton — Camera-aligned Light B only (perfectly on-axis) ---------- */
 :host {
   display: inline-block;
-}
-
-/* Tunable knobs (can be overridden from a parent theme) */
-:host {
-  --jz-btn-height: 40px; /* visual height of the face */
-  --jz-pad-x: 18px; /* horizontal padding */
-  --depth: 5px;
-  --jz-fillet: calc(var(--depth) * 1.8); /* keeps curvature proportional */
-  --jz-specular: .80; /* 0..1 gloss intensity */
-  --jz-light-strength: 1; /* 0..1 light power */
-  --jz-fg: #06131a; /* readable text color (varies per palette) */
-  /* default (used by .main below) */
-  --jz-base: var(--plt-clr-2); /* base face color */
+  /* Geometry / proportions */
+  --depth: 6px;
+  --jz-fillet: clamp(10px, calc(var(--depth) * 1.8), 28px);
+  --jz-btn-height: 40px;
+  --jz-pad-x: 18px;
+  /* Base color + text */
+  --jz-base: var(--plt-clr-2);
+  --jz-fg: #06131a;
+  /* Lights: A off, B on */
+  --lightA: 0;
+  --lightB: 1;
+  /* Fill + vignette */
+  --fillStrength: .22; /* uniform rim lift */
+  --edgeFalloff: .65; /* stronger at outer edge, fades inward */
+  --vignette: .18; /* very subtle, symmetric */
+  /* Fillet band widths */
+  --rim: max(1px, calc(var(--jz-fillet) * 0.80));
+  --spec-band: max(1px, calc(var(--jz-fillet) * 0.60)); /* unused for A=0 */
+  /* Keep top face planar (SYMMETRIC now) */
+  --faceShade: .12;
 }
 
 .jz-btn {
   position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  z-index: 0;
+  contain: paint;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: var(--jz-btn-height);
-  min-width: 120px; /* set your preferred baseline width */
+  min-width: 120px;
   padding: 0 var(--jz-pad-x);
   border: 0;
   border-radius: var(--jz-fillet);
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
   background: var(--jz-base);
   color: var(--jz-fg);
   font-weight: 700;
   letter-spacing: .2px;
-  /* Cuboid illusion: drop + inset edge shaping (TL light) */
-  box-shadow:
-  /* ambient drop */
-  0 14px 28px -12px rgba(0,0,0,.45), 0 3px 8px rgba(0,0,0,.35),
-  /* round-over highlights/shadows */
-  inset 0 calc( 10px * var(--jz-light-strength)) calc(20px * var(--jz-light-strength)) -8px rgba(255,255,255,.75), /* top lip */
-  inset calc( 10px * var(--jz-light-strength)) 0 calc(18px * var(--jz-light-strength)) -8px rgba(255,255,255,.45), /* left edge */
-  inset calc(-14px * var(--jz-light-strength)) 0 calc(22px * var(--jz-light-strength)) -10px rgba(0,0,0,.55), /* right shade */
-  inset 0 calc(-16px * var(--jz-light-strength)) calc(24px * var(--jz-light-strength)) -10px rgba(0,0,0,.60); /* bottom shade */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  /* On-axis look:
+     - ambient shadow is ZERO-OFFSET (no up/down bias)
+     - face shade is symmetric (no bottom bias) */
+  box-shadow: 0 0 26px rgba(0,0,0,.35), /* ambient halo, centered */
+  inset 0 0 4px rgba(0,0,0,var(--faceShade)); /* symmetric inner planar cue */
 
   transition: transform .06s ease, box-shadow .12s ease, filter .12s ease, background-color .12s ease, color .12s ease;
 }
 
-/* Specular gloss — top-left bloom + diagonal streak */
+.jz-btn > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ring-clipped pseudo base (no center bleed) */
+.jz-btn::before,
 .jz-btn::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background: radial-gradient(60% 80% at 0% 0%, rgba(255,255,255,calc(.65*var(--jz-specular))) 0%, rgba(255,255,255,0) 60%), linear-gradient(20deg, rgba(255,255,255,calc(.18*var(--jz-specular))) 10%, rgba(255,255,255,0) 30% 70%, rgba(255,255,255,calc(.08*var(--jz-specular))) 86%, rgba(255,255,255,0) 92%);
-  mix-blend-mode: screen; /* gives that “glassy” feel */
+  z-index: -1;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
 }
 
-/* Palette mappings for your menuType classes */
+/* Uniform camera fill on the rim (on-axis, no tilt) */
+.jz-btn::before {
+  padding: var(--rim);
+  mix-blend-mode: screen;
+  background:
+  /* uniform rim lift */
+  rgba(255,255,255, calc(var(--lightB)*var(--fillStrength))),
+  /* brighter at outer edge, smooth falloff inward (still symmetric) */
+  radial-gradient(closest-side at 50% 50%, rgba(255,255,255,0) 55%, rgba(255,255,255, calc(var(--lightB)*var(--fillStrength)*var(--edgeFalloff))) 100%);
+  background-blend-mode: screen;
+}
+
+/* Tiny symmetric vignette to keep the round-over readable (no directional bias) */
+.jz-btn::after {
+  padding: var(--rim);
+  mix-blend-mode: multiply;
+  background: radial-gradient(closest-side at 50% 50%, rgba(0,0,0, calc(var(--vignette)*.70)) 0%, rgba(0,0,0, calc(var(--vignette)*.45)) 42%, rgba(0,0,0, 0) 100%);
+}
+
+/* Palettes */
 .jz-btn.main {
   --jz-base: var(--plt-clr-3);
   --jz-fg: var(--plt-txt-3);
 }
-/* sky */
+
 .jz-btn.secondary {
   --jz-base: #10b981;
   --jz-fg: #081a12;
 }
-/* emerald */
+
 .jz-btn.utility {
   --jz-base: #111111;
   --jz-fg: #ffffff;
 }
 
-/* */
-
-/* Hover/Active/Focus */
+/* Interactions */
 .jz-btn:hover {
-  filter: brightness(1.04);
+  filter: brightness(1.02);
 }
 
 .jz-btn:active {
   transform: translateY(1px);
-  box-shadow: 0 10px 20px -12px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.42), inset 0 12px 22px -10px rgba(255,255,255,.7), inset 12px 0 20px -10px rgba(255,255,255,.42), inset -12px 0 20px -12px rgba(0,0,0,.6), inset 0 -14px 26px -12px rgba(0,0,0,.65);
+  /* keep on-axis feel while pressed */
+  box-shadow: 0 0 22px rgba(0,0,0,.42), inset 0 0 5px rgba(0,0,0,var(--faceShade));
 }
 
 .jz-btn:focus-visible {
@@ -93,24 +125,29 @@
   outline-offset: 3px;
 }
 
-/* Selected/Active via routerLinkActive or isSelected */
-.jz-btn.is-active,
-.jz-btn.is-selected {
-  filter: brightness(1.06);
-}
-
-/* Size helpers (optional) */
+/* Sizes */
 .jz-btn.sm {
+  --depth: 5px;
   --jz-btn-height: 38px;
-  --jz-fillet: 14px;
+  --jz-fillet: clamp(10px, calc(var(--depth)*1.8), 24px);
   --jz-pad-x: 14px;
   font-size: .9rem;
 }
 
 .jz-btn.lg {
+  --depth: 8px;
   --jz-btn-height: 52px;
-  --jz-fillet: 22px;
+  --jz-fillet: clamp(12px, calc(var(--depth)*1.8), 30px);
   --jz-pad-x: 22px;
   font-size: 1.02rem;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .jz-btn {
+    transition: none;
+  }
+
+  .jz-btn:active {
+    transform: none;
+  }
+}
