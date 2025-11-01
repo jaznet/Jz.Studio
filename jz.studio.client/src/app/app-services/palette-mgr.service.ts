@@ -9,17 +9,17 @@ export class PaletteMgrService {
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
-    this.ChangePalette('slate');
+    this.ChangePalette('licorice');
   }
 
   ChangePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
     switch (palette) {
 
-      case 'slate':
+      case 'licorice':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#241b0f ');
-        document.documentElement.style.setProperty('--plt-clr-2', '##41301B');
+        document.documentElement.style.setProperty('--plt-clr-2', '#41301B');
         document.documentElement.style.setProperty('--plt-clr-3', '#5D4527');
         document.documentElement.style.setProperty('--plt-clr-4', '#7a5a33');
         document.documentElement.style.setProperty('--plt-clr-5', '#97713f');
@@ -28,8 +28,8 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-y', '#6FA288');
 
         document.documentElement.style.setProperty('--plt-txt-1', 'white');
-        document.documentElement.style.setProperty('--plt-txt-2', '#9DD0D0');
-        document.documentElement.style.setProperty('--plt-txt-3', '#388697');
+        document.documentElement.style.setProperty('--plt-txt-2', '#F3DDC1');
+        document.documentElement.style.setProperty('--plt-txt-3', 'white');
         document.documentElement.style.setProperty('--plt-txt-4', '#3BBFC4');
         document.documentElement.style.setProperty('--plt-txt-5', 'black');
 
@@ -38,6 +38,28 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
 
         break;
+
+      case 'onyx':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#001414');
+        document.documentElement.style.setProperty('--plt-clr-2', '#272a2a');
+        document.documentElement.style.setProperty('--plt-clr-3', '#39615D');
+        document.documentElement.style.setProperty('--plt-clr-4', '#7BA397');
+        document.documentElement.style.setProperty('--plt-clr-5', '#6ED8C1');
+
+        document.documentElement.style.setProperty('--plt-txt-1', 'white');
+        document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
+        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-4', 'black');
+        document.documentElement.style.setProperty('--plt-txt-5', 'white');
+
+        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
+
+        document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
+        document.documentElement.style.setProperty('--popup-color-2', '#679267');
+        document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
+
+        break; 
 
       case 'gunmetal':
 
@@ -174,27 +196,7 @@ export class PaletteMgrService {
 
         break;
 
-      case 'onyx':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#001414');
-        document.documentElement.style.setProperty('--plt-clr-2', '#272a2a');
-        document.documentElement.style.setProperty('--plt-clr-3', '#39615D');
-        document.documentElement.style.setProperty('--plt-clr-4', '#7BA397');
-        document.documentElement.style.setProperty('--plt-clr-5', '#6ED8C1');
-
-        document.documentElement.style.setProperty('--plt-txt-1', 'white');
-        document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
-        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
-        document.documentElement.style.setProperty('--plt-txt-4', 'black');
-        document.documentElement.style.setProperty('--plt-txt-5', 'white');
-
-        document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');
-
-        document.documentElement.style.setProperty('--popup-color-1', '#FFDC5E');
-        document.documentElement.style.setProperty('--popup-color-2', '#679267');
-        document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
-
-        break; 
 
       case 'indigo':
 

@@ -1,28 +1,30 @@
-/* --- JzButton — Camera-aligned Light B only (perfectly on-axis) ---------- */
+/* --- JzButton — TL-only highlight (safe quadrant), R/B = pure base -------- */
 :host {
   display: inline-block;
-  /* Geometry / proportions */
+  /* Geometry */
   --depth: 6px;
-  --jz-fillet: clamp(10px, calc(var(--depth) * 1.8), 28px);
+  --jz-fillet: clamp(10px, calc(var(--depth)*1.8), 28px);
   --jz-btn-height: 40px;
   --jz-pad-x: 18px;
-  /* Base color + text */
+  /* Base + text */
   --jz-base: var(--plt-clr-2);
   --jz-fg: #06131a;
-  /* Lights: A off, B on */
-  --lightA: 0;
-  --lightB: 1;
-  /* Fill + vignette */
-  --fillStrength: .22; /* uniform rim lift */
-  --edgeFalloff: .65; /* stronger at outer edge, fades inward */
-  --vignette: .18; /* very subtle, symmetric */
-  /* Fillet band widths */
-  --rim: max(1px, calc(var(--jz-fillet) * 0.80));
-  --spec-band: max(1px, calc(var(--jz-fillet) * 0.60)); /* unused for A=0 */
-  /* Keep top face planar (SYMMETRIC now) */
-  --faceShade: .12;
+  /* Lighting strengths */
+  --lightA: 1; /* TL key ON */
+  --a-intensity: .60; /* wrap strength */
+  --a-hotspot: .28; /* tiny sparkle at corner */
+  --a-hotspot-size: 70px;
+  /* Top band feel (from above) */
+  --a-topBand: .22;
+  --a-topFall: 14%; /* vertical falloff depth */
+  --a-topWidth: 60%; /* how far the top band extends to the right */
+  /* “Face planar” micro-cue (very subtle, doesn’t touch ring color) */
+  --faceShade: .10;
+  /* Fillet ring width derived from radius */
+  --rim: max(1px, calc(var(--jz-fillet) * .80));
 }
 
+/* Base button — right/bottom remain base color */
 .jz-btn {
   position: relative;
   isolation: isolate;
@@ -45,12 +47,7 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  /* On-axis look:
-     - ambient shadow is ZERO-OFFSET (no up/down bias)
-     - face shade is symmetric (no bottom bias) */
-  box-shadow: 0 0 26px rgba(0,0,0,.35), /* ambient halo, centered */
-  inset 0 0 4px rgba(0,0,0,var(--faceShade)); /* symmetric inner planar cue */
-
+  box-shadow: 0 0 26px rgba(0,0,0,.35), inset 0 0 4px rgba(0,0,0,var(--faceShade));
   transition: transform .06s ease, box-shadow .12s ease, filter .12s ease, background-color .12s ease, color .12s ease;
 }
 
@@ -59,44 +56,59 @@
   z-index: 1;
 }
 
-/* Ring-clipped pseudo base (no center bleed) */
-.jz-btn::before,
-.jz-btn::after {
+/* -----------------------------
+   ::before — (disabled for ring shading)
+   Keep present but no background, so R/B remain pure base.
+   ----------------------------- */
+.jz-btn::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   z-index: -1;
+  /* no background on purpose */
+}
+
+/* -----------------------------
+   ::after — TL highlight ONLY
+   We physically restrict this layer to the TL quadrant by sizing it.
+   It’s also ring-clipped so it lives on the fillet, not the face.
+   ----------------------------- */
+.jz-btn::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  /* TL quadrant box: cannot reach right/bottom even without complex masks */
+  top: 0;
+  left: 0;
+  width: 60%; /* tweak if you want more/less wrap along the top */
+  height: 60%; /* tweak if you want more/less wrap down the left */
+  border-top-left-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  /* ring-clip: show only the fillet band inside this quadrant box */
+  padding: var(--rim);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
-}
-
-/* Uniform camera fill on the rim (on-axis, no tilt) */
-.jz-btn::before {
-  padding: var(--rim);
   mix-blend-mode: screen;
   background:
-  /* uniform rim lift */
-  rgba(255,255,255, calc(var(--lightB)*var(--fillStrength))),
-  /* brighter at outer edge, smooth falloff inward (still symmetric) */
-  radial-gradient(closest-side at 50% 50%, rgba(255,255,255,0) 55%, rgba(255,255,255, calc(var(--lightB)*var(--fillStrength)*var(--edgeFalloff))) 100%);
-  background-blend-mode: screen;
-}
-
-/* Tiny symmetric vignette to keep the round-over readable (no directional bias) */
-.jz-btn::after {
-  padding: var(--rim);
-  mix-blend-mode: multiply;
-  background: radial-gradient(closest-side at 50% 50%, rgba(0,0,0, calc(var(--vignette)*.70)) 0%, rgba(0,0,0, calc(var(--vignette)*.45)) 42%, rgba(0,0,0, 0) 100%);
+  /* top micro-band (from above), limited by the TL box */
+  linear-gradient(180deg, rgba(255,255,255, calc(var(--lightA)*var(--a-topBand))) 0%, rgba(255,255,255, calc(var(--lightA)*var(--a-topBand)*.45)) var(--a-topFall), rgba(255,255,255,0) calc(var(--a-topFall) + 8%)) left / var(--a-topWidth) 100% no-repeat,
+  /* conic arc that wraps across top & around the TL corner (within this box) */
+  conic-gradient(from 345deg at 0% 0%, rgba(255,255,255, calc(var(--lightA)*var(--a-intensity))) 0deg, rgba(255,255,255, calc(var(--lightA)*var(--a-intensity)*.80)) 40deg, rgba(255,255,255, calc(var(--lightA)*var(--a-intensity)*.45)) 85deg, rgba(255,255,255,0) 120deg, rgba(255,255,255,0) 1turn),
+  /* tiny TL sparkle */
+  radial-gradient(var(--a-hotspot-size) var(--a-hotspot-size) at -8% -8%, rgba(255,255,255, calc(var(--lightA)*var(--a-hotspot))) 0%, rgba(255,255,255,0) 55%);
 }
 
 /* Palettes */
 .jz-btn.main {
-  --jz-base: var(--plt-clr-3);
-  --jz-fg: var(--plt-txt-3);
+  --jz-base: var(--plt-clr-2);
+  --jz-fg: var(--plt-txt-2);
 }
 
 .jz-btn.secondary {
@@ -106,17 +118,16 @@
 
 .jz-btn.utility {
   --jz-base: #111111;
-  --jz-fg: #ffffff;
+  --jz-fg: #fff;
 }
 
 /* Interactions */
 .jz-btn:hover {
-  filter: brightness(1.02);
+  filter: brightness(1.03);
 }
 
 .jz-btn:active {
   transform: translateY(1px);
-  /* keep on-axis feel while pressed */
   box-shadow: 0 0 22px rgba(0,0,0,.42), inset 0 0 5px rgba(0,0,0,var(--faceShade));
 }
 
@@ -142,7 +153,7 @@
   font-size: 1.02rem;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion:reduce) {
   .jz-btn {
     transition: none;
   }
