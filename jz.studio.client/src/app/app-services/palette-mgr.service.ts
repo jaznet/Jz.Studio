@@ -41,11 +41,11 @@ export class PaletteMgrService {
 
       case 'feldgrau':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#001414');
-        document.documentElement.style.setProperty('--plt-clr-2', '#272a2a');
+        document.documentElement.style.setProperty('--plt-clr-1', '#152423');
+        document.documentElement.style.setProperty('--plt-clr-2', '#2B4946');
         document.documentElement.style.setProperty('--plt-clr-3', '#39615D');
-        document.documentElement.style.setProperty('--plt-clr-4', '#7BA397');
-        document.documentElement.style.setProperty('--plt-clr-5', '#6ED8C1');
+        document.documentElement.style.setProperty('--plt-clr-4', '#839C9A');
+        document.documentElement.style.setProperty('--plt-clr-5', '#CED8D7');
 
         document.documentElement.style.setProperty('--plt-txt-1', 'white');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
