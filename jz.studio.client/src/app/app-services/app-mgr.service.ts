@@ -16,7 +16,7 @@ export class AppMgrService {
   }
 
   //InitializePalette() {
-  //  this.paletteMgr.ChangePalette('onyx');
+  //  this.paletteMgr.ChangePalette('feldgrau');
   //}
 
   OnViewSelected(view: any) {
@@ -25,13 +25,13 @@ export class AppMgrService {
         this.paletteMgr.ChangePalette('rifle');
         break;
       case 'visualization':
-        this.paletteMgr.ChangePalette('onyx');
+        this.paletteMgr.ChangePalette('feldgrau');
         break;
       case 'equities':
-        this.paletteMgr.ChangePalette('onyx');
+        this.paletteMgr.ChangePalette('feldgrau');
         break;
       case 'chorodash':
-        this.paletteMgr.ChangePalette('onyx');
+        this.paletteMgr.ChangePalette('feldgrau');
         break;
       case 'gears':
         this.paletteMgr.ChangePalette('xyno');

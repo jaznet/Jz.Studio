@@ -39,7 +39,7 @@ export class PaletteMgrService {
 
         break;
 
-      case 'onyx':
+      case 'feldgrau':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#001414');
         document.documentElement.style.setProperty('--plt-clr-2', '#272a2a');

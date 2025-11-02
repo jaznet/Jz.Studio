@@ -3,7 +3,7 @@
 /** Canonical palette keys (must match PaletteMgrService switch cases) */
 export const PALETTES = [
   'licorice',
-  'onyx',
+  'feldgrau',
   'gunmetal',
   'charts',
   'hooker',
@@ -35,7 +35,7 @@ export function isPalette(v: string): v is Palette {
 /** Normalize user input to a canonical palette key. */
 export function normalizePalette(
   v: unknown,
-  fallback: Palette = 'onyx'
+  fallback: Palette = 'feldgrau'
 ): Palette {
   if (typeof v !== 'string') return fallback;
 
@@ -47,14 +47,14 @@ export function normalizePalette(
 
   // Aliases (left side can include spaces; we check both raw and collapsed)
   const aliases: Record<string, Palette> = {
-    black: 'onyx',
-    dark: 'onyx',
+    black: 'feldgrau',
+    dark: 'feldgrau',
 
     // common typos or friendly names
     'gun metal': 'gunmetal',
     gunmetal: 'gunmetal',
 
-    charcoal: 'onyx',
+    charcoal: 'feldgrau',
     coffee: 'coffee',
     java: 'coffee',
 
@@ -69,7 +69,7 @@ export function normalizePalette(
     indigo2: 'indigo2',
 
     licorice: 'licorice',
-    onyx: 'onyx',
+    feldgrau: 'feldgrau',
     charts: 'charts',
     hooker: 'hooker',
     default: 'default',

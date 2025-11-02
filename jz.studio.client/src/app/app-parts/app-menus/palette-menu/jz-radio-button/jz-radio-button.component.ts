@@ -16,7 +16,7 @@ export class JzRadioButtonComponent {
   @HostBinding('class') classes = 'palette-menu-container';
 
   private _palette: Palette = 'gold';
-  /** Bind with: [palette]="'onyx'" */
+  /** Bind with: [palette]="'feldgrau'" */
   @Input()
   set palette(v: string | Palette | null | undefined) {
     this._palette = normalizePalette(v);
