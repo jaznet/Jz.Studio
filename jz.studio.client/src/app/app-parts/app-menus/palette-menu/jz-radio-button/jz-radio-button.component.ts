@@ -1,11 +1,13 @@
 import { Component, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
+import { normalizePalette, Palette } from '../../../../../types/palette';
+import { AppMgrService } from '../../../../app-services/app-mgr.service';
+import { PaletteMgrService } from '../../../../app-services/palette-mgr.service';
 
-import { normalizePalette, type Palette } from '../../../types/palette';
-import { AppMgrService } from '../../../app/app-services/app-mgr.service';
-import { PaletteMgrService } from '../../../app/app-services/palette-mgr.service';
+
 
 @Component({
-    selector: 'jz-radio-button',
+  selector: 'jz-radio-button',
+  standalone: true,
     imports: [],
     templateUrl: './jz-radio-button.component.html',
     styleUrls: ['./jz-radio-button.component.css']

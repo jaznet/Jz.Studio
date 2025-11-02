@@ -8,7 +8,8 @@ import { JzRadioButtonComponent } from './jz-radio-button/jz-radio-button.compon
 
 
 @Component({
-    selector: 'palette-menu',
+  selector: 'palette-menu',
+  standalone: true,
     imports: [JzRadioButtonComponent],
     templateUrl: './palette-menu.component.html',
     styleUrls: ['./palette-menu.component.css']

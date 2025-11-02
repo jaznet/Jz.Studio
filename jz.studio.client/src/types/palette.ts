@@ -1,22 +1,91 @@
-// Canonical list (add/remove as you need)
-export const PALETTES = ['onyx', 'gold', 'emerald', 'amber', 'sky', 'rose'] as const;
-export type Palette = typeof PALETTES[number]; // 'onyx' | 'emerald' | 'amber' | 'sky' | 'rose'
+// palette.ts
 
-/** Case-insensitive, alias-friendly normalizer. Falls back to 'onyx'. */
+/** Canonical palette keys (must match PaletteMgrService switch cases) */
+export const PALETTES = [
+  'licorice',
+  'onyx',
+  'gunmetal',
+  'charts',
+  'hooker',
+  'default',
+  'dune',
+  'gold',
+  'indigo',
+  'bistre',
+  'welcome',
+  'gray',
+  'olive',
+  'xyno',
+  'liver',
+  'oxford',
+  'indigo2',
+  'red',
+  'coffee',
+  'jungle',
+  'findash', // present as a case label in your service
+] as const;
+
+export type Palette = typeof PALETTES[number];
+
+/** Quick membership guard */
+export function isPalette(v: string): v is Palette {
+  return (PALETTES as readonly string[]).includes(v as Palette);
+}
+
+/** Normalize user input to a canonical palette key. */
 export function normalizePalette(
   v: unknown,
   fallback: Palette = 'onyx'
 ): Palette {
-  const s = typeof v === 'string' ? v.toLowerCase().trim() : '';
-  // simple alias map (extend as needed)
+  if (typeof v !== 'string') return fallback;
+
+  // Base normalization
+  const raw = v.trim().toLowerCase();
+
+  // Collapse common separators and spaces: "gun metal", "gun-metal", "gun_metal" -> "gunmetal"
+  const collapsed = raw.replace(/[\s_\-]+/g, '');
+
+  // Aliases (left side can include spaces; we check both raw and collapsed)
   const aliases: Record<string, Palette> = {
     black: 'onyx',
-    gold:'amber',
-    green: 'emerald',
-    yellow: 'amber',
-    blue: 'sky',
-    red: 'rose',
+    dark: 'onyx',
+
+    // common typos or friendly names
+    'gun metal': 'gunmetal',
+    gunmetal: 'gunmetal',
+
+    charcoal: 'onyx',
+    coffee: 'coffee',
+    java: 'coffee',
+
+    gold: 'gold',
+    golden: 'gold',
+
+    olive: 'olive',
+    jungle: 'jungle',
+
+    indigo: 'indigo',
+    'indigo 2': 'indigo2',
+    indigo2: 'indigo2',
+
+    licorice: 'licorice',
+    onyx: 'onyx',
+    charts: 'charts',
+    hooker: 'hooker',
+    default: 'default',
+    dune: 'dune',
+    bistre: 'bistre',
+    welcome: 'welcome',
+    grey: 'gray', // UK spelling
+    gray: 'gray',
+    xyno: 'xyno',
+    liver: 'liver',
+    oxford: 'oxford',
+    red: 'red',
+    findash: 'findash',
   };
-  const candidate = aliases[s] ?? s;
-  return (PALETTES as readonly string[]).includes(candidate) ? (candidate as Palette) : fallback;
+
+  const candidate = aliases[raw] ?? aliases[collapsed] ?? collapsed;
+
+  return isPalette(candidate) ? (candidate as Palette) : fallback;
 }

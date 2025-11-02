@@ -201,7 +201,7 @@ export class PaletteMgrService {
       case 'indigo':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#445469');
-        document.documentElement.style.setProperty('--jz-palette-color-2', '#20334C');
+        document.documentElement.style.setProperty('--plt-clr-2', '#20334C');
         document.documentElement.style.setProperty('--plt-clr-3', '#8DAA9D');
         document.documentElement.style.setProperty('--plt-clr-4', '#A9CEF4');
         document.documentElement.style.setProperty('--plt-clr-5', '#DCE6EF');
@@ -595,8 +595,6 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--popup-color-2', '#679267');
         document.documentElement.style.setProperty('--popup-color-3', '#CF142B');
         break;
-
-
 
       case 'red':
         document.documentElement.style.setProperty('--jz-palette-border', 'var(--plt-clr-3)');

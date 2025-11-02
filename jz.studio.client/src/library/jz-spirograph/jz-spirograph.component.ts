@@ -4,11 +4,11 @@ import { AfterContentInit, AfterViewInit, Component, ElementRef, HostBinding, On
 import { Spiro } from './spiro';
 import array_store from 'devextreme/data/array_store';
 import { SpirographService } from './spirograph.service';
-import { JzRadioButtonComponent } from '../jz-ui-controls/jz-radio-button/jz-radio-button.component';
 
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxTemplateModule } from 'devextreme-angular/core';  
 import { DxDropDownBoxModule } from 'devextreme-angular/ui/drop-down-box';
+import { JzRadioButtonComponent } from '../../app/app-parts/app-menus/palette-menu/jz-radio-button/jz-radio-button.component';
 
 @Component({
     selector: 'jz-spirograph',
