@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
-import { JzButton } from '../../../../components/buttons/jz-button/jz-button';
+import { JzButtonCuboid } from '../../../../components/buttons/jz-button-cuboid/jz-button-cuboid';
 
 @Component({
-    selector: 'app-logon',
-    imports: [
-        JzButton, ReactiveFormsModule
+  selector: 'app-logon',
+  imports: [
+    JzButtonCuboid, ReactiveFormsModule
     ],
     templateUrl: './logon.component.html',
     styleUrls: ['./logon.component.css']
 })
 export class LogonComponent implements OnInit {
+  @Input() text: any;
+
   loginForm!: FormGroup;
 
   constructor(

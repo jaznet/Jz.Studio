@@ -13,12 +13,12 @@ export abstract class ButtonBase {
   @Input() text: string = 'Enter';
   @Input() route: string | any[] | null = null;   // programmatic fallback
   @Input() menuType: MenuType = 'main';
-  @Input() size: ButtonSize = 'md';
+  @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() isSelected = false;
   @Input() disabled = false;
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
-  @Output() clicked = new EventEmitter<MouseEvent>();
+  @Output() clicked = new EventEmitter<void>();
 
   // ——— Accessibility / Host state ————————————————
   @HostBinding('attr.role') role = 'button';
@@ -33,19 +33,8 @@ export abstract class ButtonBase {
   @HostBinding('class.lg') get clsLg() { return this.size === 'lg'; }
 
   // ——— Unified click path: call from child template (click)="handleClick($event)" ———
-  handleClick(ev: MouseEvent) {
-    if (this.disabled) {
-      ev.preventDefault();
-      ev.stopImmediatePropagation();
-      return;
-    }
-    this.clicked.emit(ev);
-
-    // If the skin didn't use [routerLink], fall back to programmatic nav
-    if (this.route && this.router) {
-      const commands = Array.isArray(this.route) ? this.route : [this.route];
-      this.router.navigate(commands).catch(() => { /* ignore nav errors */ });
-    }
+  handleClick() {
+    this.clicked.emit();
   }
 
   // Keyboard activation (space/enter) => click, for a11y

@@ -1,0 +1,11 @@
+<!-- jz-button-cuboid.html -->
+
+<button class="jz-btn jz-btn--cuboid"
+        [attr.type]="type || 'button'"
+        [disabled]="disabled"
+        (click)="handleClick()">
+  <span class="jz-btn__content">
+    <ng-container *ngIf="text; else projected">{{ text }}</ng-container>
+    <ng-template #projected><ng-content></ng-content></ng-template>
+  </span>
+</button>
