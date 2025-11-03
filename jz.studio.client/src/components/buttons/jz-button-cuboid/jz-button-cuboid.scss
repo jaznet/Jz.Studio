@@ -1,133 +1,165 @@
 /*jz-button-cuboid.scss*/
 
-/* Base tokens — your PaletteMgrService will overwrite these at runtime */
-:root {
+/*:root {
   --plt-clr-1: #241b0f;
   --plt-clr-2: #41301B;
   --plt-clr-3: #5D4527;
   --plt-clr-4: #7a5a33;
-}
+}*/
 
-/* ---------- Cuboid button: thin bevel, top-left light ---------- */
 .jz-btn--cuboid {
-  /* Geometry */
-  --jz-radius: 14px;
-  --jz-bevel: 2px;
-  --jz-padding-y: 0.6rem;
-  --jz-padding-x: 1rem;
-  /* Lighting model — base color comes from palette */
+  --jz-radius: 7px;
+  --jz-bevel: 6px;
   --jz-base: var(--plt-clr-3);
   --jz-top: color-mix(in oklch, var(--jz-base), white 18%);
   --jz-bottom: color-mix(in oklch, var(--jz-base), black 18%);
-  /* Bevel ring (light on top/left, darker on right/bottom) */
-  --jz-bevel-light: color-mix(in oklch, var(--jz-base), white 42%);
-  --jz-bevel-dark: color-mix(in oklch, var(--jz-base), black 38%);
-  /* Effects */
-  --jz-specular: color-mix(in oklch, white 70%, var(--jz-top) 30%);
-  --jz-shadow: 0 4px 10px rgba(0 0 0 / 0.28), 0 1px 2px rgba(0 0 0 / 0.18);
-  --jz-text: #fff; /* flip to #111 if you swap to a very light base */
+  --jz-rim-light: color-mix(in oklch, var(--jz-base), white 42%);
+  --jz-rim-dark: color-mix(in oklch, var(--jz-base), black 38%);
+  --jz-text: #fff;
   --jz-focus: color-mix(in oklch, var(--jz-base), white 60%);
   position: relative;
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--jz-padding-y) var(--jz-padding-x);
-  border: solid var(--jz-bevel) transparent;
-  border-radius: var(--jz-radius);
+  border: none;
+  background: none;
+  padding: 0;
   color: var(--jz-text);
-  font-weight: 600;
-  line-height: 1;
   cursor: pointer;
-  user-select: none;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: var(--jz-shadow);
-  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
-  white-space: nowrap;
-  /* Body + bevel ring */
-  background:
-  /* body (top-left lit) */
-  linear-gradient(160deg, var(--jz-top) 0%, var(--jz-bottom) 100%) padding-box,
-  /* bevel ring via conic gradient */
-  conic-gradient(from 315deg, var(--jz-bevel-light) 0 90deg, /* top/left */
-  var(--jz-bevel-dark) 90deg 270deg, /* right/bottom */
-  var(--jz-bevel-light) 270deg 360deg ) border-box;
-  /* inner specular */
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 2px;
-    border-radius: calc(var(--jz-radius) - 2px);
-    pointer-events: none;
-    background: radial-gradient(120% 80% at 15% 15%, rgba(255 255 255 / .18) 0 25%, rgba(255 255 255 / 0) 60%), linear-gradient(160deg, rgba(255 255 255 / .10), rgba(0 0 0 / 0));
-    mix-blend-mode: soft-light;
-  }
-
-  &:hover {
-    filter: saturate(1.04) brightness(1.02);
-    box-shadow: 0 6px 14px rgba(0 0 0 / 0.30), 0 2px 4px rgba(0 0 0 / 0.20);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: translateY(0);
-    filter: brightness(0.98);
-    box-shadow: 0 2px 6px rgba(0 0 0 / 0.24), 0 1px 2px rgba(0 0 0 / 0.18);
-  }
 
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px var(--jz-focus), 0 0 0 calc(2px + var(--jz-bevel)) rgba(255 255 255 / 0.25), var(--jz-shadow);
+    box-shadow: 0 0 0 2px var(--jz-focus), 0 0 0 4px rgba(255 255 255 / .22);
+    border-radius: var(--jz-radius);
   }
 
-  &:disabled,
-  &[aria-disabled="true"] {
-    opacity: .55;
+  &:disabled {
     cursor: not-allowed;
-    filter: grayscale(.2) brightness(.95);
-    box-shadow: 0 1px 2px rgba(0 0 0 / 0.16);
+    opacity: .6;
+  }
+}
+
+/* Grid */
+.jz-btn--nine .cuboid {
+  display: grid;
+  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
+  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
+  border-radius: var(--jz-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0 0 0 / .28), 0 1px 2px rgba(0 0 0 / .18);
+}
+
+.jz-btn--nine .zone {
+  min-width: 2ch;
+  min-height: 2.2em;
+}
+
+/* Grid layout */
+.jz-btn--nine .A {
+  grid-area: 1 / 1;
+}
+
+.jz-btn--nine .B {
+  grid-area: 1 / 2;
+}
+
+.jz-btn--nine .C {
+  grid-area: 1 / 3;
+}
+
+.jz-btn--nine .D {
+  grid-area: 2 / 1;
+}
+
+.jz-btn--nine .E {
+  grid-area: 2 / 2;
+}
+
+.jz-btn--nine .F {
+  grid-area: 2 / 3;
+}
+
+.jz-btn--nine .G {
+  grid-area: 3 / 1;
+}
+
+.jz-btn--nine .H {
+  grid-area: 3 / 2;
+}
+
+.jz-btn--nine .I {
+  grid-area: 3 / 3;
+}
+
+/* === Lighting per zone === */
+
+/* Corners */
+.jz-btn--nine .A {
+  background: radial-gradient(120% 120% at 30% 30%, color-mix(in oklch, var(--jz-base), white 55%) 0 45%, color-mix(in oklch, var(--jz-base), white 25%) 70%, var(--jz-top) 100%);
+}
+
+.jz-btn--nine .C {
+  background: radial-gradient(120% 120% at 70% 30%, color-mix(in oklch, var(--jz-base), white 12%) 0 35%, color-mix(in oklch, var(--jz-base), black 12%) 80%, color-mix(in oklch, var(--jz-base), black 24%) 100%);
+}
+
+.jz-btn--nine .G {
+  background: radial-gradient(120% 120% at 30% 70%, color-mix(in oklch, var(--jz-base), black 16%) 0 50%, color-mix(in oklch, var(--jz-base), black 24%) 100%);
+}
+
+.jz-btn--nine .I {
+  background: radial-gradient(120% 120% at 70% 70%, color-mix(in oklch, var(--jz-base), black 28%) 0 60%, color-mix(in oklch, var(--jz-base), black 38%) 100%);
+}
+
+/* Edges */
+.jz-btn--nine .B {
+  background: linear-gradient(to bottom, var(--jz-rim-light) 0%, color-mix(in oklch, var(--jz-base), white 18%) 100%);
+}
+
+.jz-btn--nine .D {
+  background: linear-gradient(to right, var(--jz-rim-light) 0%, color-mix(in oklch, var(--jz-base), white 14%) 100%);
+}
+
+.jz-btn--nine .F {
+  background: linear-gradient(to left, var(--jz-rim-dark) 0%, color-mix(in oklch, var(--jz-base), black 16%) 100%);
+}
+
+.jz-btn--nine .H {
+  background: linear-gradient(to top, var(--jz-rim-dark) 0%, color-mix(in oklch, var(--jz-base), black 14%) 100%);
+}
+
+/* Center Face (E) */
+.jz-btn--nine .E {
+  position: relative;
+  background: linear-gradient(160deg, var(--jz-top) 0%, var(--jz-bottom) 100%);
+  display: grid;
+  place-items: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 80% at 18% 20%, rgba(255 255 255 / .20) 0 24%, rgba(255 255 255 / 0) 60%), linear-gradient(160deg, rgba(255 255 255 / .08), rgba(0 0 0 / 0));
+    mix-blend-mode: soft-light;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
-  /* content */
   .jz-btn__content {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
+    padding: .55rem 1rem;
+    font-weight: 600;
+    white-space: nowrap;
   }
 }
 
-/* Size helpers (optional) */
-.jz-btn--sm {
-  --jz-radius: 10px;
-  --jz-bevel: 1.5px;
-  --jz-padding-y: .45rem;
-  --jz-padding-x: .75rem;
-  font-size: .9rem;
+/* Hover/active */
+.jz-btn--nine:hover .cuboid {
+  filter: saturate(1.04) brightness(1.02);
+  box-shadow: 0 6px 14px rgba(0 0 0 / .30), 0 2px 4px rgba(0 0 0 / .20);
 }
 
-.jz-btn--lg {
-  --jz-radius: 16px;
-  --jz-bevel: 2px;
-  --jz-padding-y: .8rem;
-  --jz-padding-x: 1.25rem;
-  font-size: 1.05rem;
-}
-
-/* Emphasis helpers (hook into your palette) */
-.jz-btn--primary {
-  --jz-base: var(--plt-clr-3);
-  --jz-text: #fff;
-}
-
-.jz-btn--neutral {
-  --jz-base: var(--plt-clr-2);
-  --jz-text: #f7f7f7;
-}
-
-.jz-btn--accent {
-  --jz-base: var(--plt-clr-4);
-  --jz-text: #111;
+.jz-btn--nine:active .cuboid {
+  filter: brightness(.98);
+  box-shadow: 0 2px 6px rgba(0 0 0 / .24), 0 1px 2px rgba(0 0 0 / .18);
 }
 

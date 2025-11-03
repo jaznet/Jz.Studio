@@ -1,6 +1,6 @@
 /* jz-button-cuboid.ts*/
 
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, ElementRef, HostBinding, Input, Renderer2 } from '@angular/core';
 import { ButtonBase } from '../jz-button/button-base';
 import { NgIf } from '@angular/common';   
 
@@ -27,4 +27,11 @@ export class JzButtonCuboid extends ButtonBase {
 
   // Keep this only if ButtonBase doesn’t already add a stable host class
   @HostBinding('class.jz-btn-host') readonly _hostTag = true;
+
+  constructor(el: ElementRef, renderer: Renderer2) {
+    super();
+    // Ensure the host <app-jz-button-cuboid> isn't treated as a button
+    renderer.removeAttribute(el.nativeElement, 'role');
+    renderer.removeAttribute(el.nativeElement, 'tabindex');
+  }
 }

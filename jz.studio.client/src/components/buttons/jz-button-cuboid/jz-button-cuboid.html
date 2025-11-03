@@ -1,11 +1,27 @@
 <!-- jz-button-cuboid.html -->
 
-<button class="jz-btn jz-btn--cuboid"
+<button class="jz-btn jz-btn--cuboid jz-btn--nine"
         [attr.type]="type || 'button'"
         [disabled]="disabled"
         (click)="handleClick()">
-  <span class="jz-btn__content">
-    <ng-container *ngIf="text; else projected">{{ text }}</ng-container>
-    <ng-template #projected><ng-content></ng-content></ng-template>
-  </span>
+  <div class="cuboid" aria-hidden="true">
+    <div class="zone A"></div>
+    <div class="zone B"></div>
+    <div class="zone C"></div>
+    <div class="zone D"></div>
+
+    <!-- Center face (E) -->
+    <div class="zone E">
+      <span class="jz-btn__content" [style.display]="text ? 'inline-flex' : 'none'">{{ text }}</span>
+      <span class="jz-btn__content" [style.display]="text ? 'none' : 'inline-flex'">
+        <ng-content></ng-content>
+      </span>
+    </div>
+
+    <div class="zone F"></div>
+    <div class="zone G"></div>
+    <div class="zone H"></div>
+    <div class="zone I"></div>
+  </div>
 </button>
+

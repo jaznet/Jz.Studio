@@ -9,7 +9,7 @@ export class PaletteMgrService {
   constructor(private events:AppEventsService) { }
 
   InitializePalette() {
-    this.ChangePalette('licorice');
+    this.ChangePalette('feldgrau');
   }
 
   ChangePalette(palette: string) { 
