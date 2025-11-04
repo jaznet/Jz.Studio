@@ -25,9 +25,12 @@ export class JzButtonComponent {
   @Input() width?: number | string;
   @Input() height?: number | string;
 
-  @HostBinding('style.width') get hostW() { return this.cssSize(this.width); }
-  @HostBinding('style.height') get hostH() { return this.cssSize(this.height); }
+  @HostBinding('style.width') get hostWidth() { return this.cssWidth; }
+  @HostBinding('style.height') get hostHeight() { return this.cssHeight; }
   @HostBinding('attr.aria-disabled') get ariaDisabled() { return this.disabled ? 'true' : null; }
+
+  cssWidth: any;
+  cssHeight: any;
 
   /** Variant (main/sub) */
   private _menuType: MenuType = 'main';
