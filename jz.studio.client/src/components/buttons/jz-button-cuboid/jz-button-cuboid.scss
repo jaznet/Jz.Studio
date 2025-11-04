@@ -149,7 +149,7 @@
    ------------------------------------------------------------ */
 .jz-btn--nine .zone.face {
   position: relative;
-  background: linear-gradient(160deg, var(--jz-top) 0%, var(--jz-bottom) 100%);
+/*  background: linear-gradient(160deg, var(--jz-top) 0%, var(--jz-bottom) 100%);*/
   display: grid;
   place-items: stretch; /* ensures child fills full face */
   padding: 0; /* full face coverage */
