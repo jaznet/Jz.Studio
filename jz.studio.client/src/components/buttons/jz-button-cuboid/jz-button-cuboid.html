@@ -1,27 +1,17 @@
 <!-- jz-button-cuboid.html -->
 
 <button class="jz-btn jz-btn--cuboid jz-btn--nine"
-        [attr.type]="type || 'button'"
+        [attr.type]="type"
         [disabled]="disabled"
-        (click)="handleClick()">
-  <div class="cuboid" aria-hidden="true">
-    <div class="zone A"></div>
-    <div class="zone B"></div>
-    <div class="zone C"></div>
-    <div class="zone D"></div>
-
-    <!-- Center face (E) -->
+        (click)="onClick()"
+        [style.--jz-width]="cssWidth"
+        [style.--jz-height]="cssHeight"
+        [style.--jz-bevel]="cssBevel">
+  <div class="cuboid" >
+    <!-- zones A–I ... -->
     <div class="zone E">
-      <span class="jz-btn__content" [style.display]="text ? 'inline-flex' : 'none'">{{ text }}</span>
-      <span class="jz-btn__content" [style.display]="text ? 'none' : 'inline-flex'">
-        <ng-content></ng-content>
-      </span>
+      <span class="jz-btn__content" [style.display]="hasText ? 'inline-flex' : 'none'">{{ text }}</span>
+      <span class="jz-btn__content" [style.display]="hasText ? 'none' : 'inline-flex'"><ng-content></ng-content></span>
     </div>
-
-    <div class="zone F"></div>
-    <div class="zone G"></div>
-    <div class="zone H"></div>
-    <div class="zone I"></div>
   </div>
 </button>
-

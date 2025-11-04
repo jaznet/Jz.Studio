@@ -1,5 +1,12 @@
 /*jz-button-cuboid.scss*/
 
+:host {
+  display: inline-flex; /* flex-aware, but still shrink-to-fit */
+  align-items: stretch; /* let inner <button> fill height */
+  justify-content: stretch;
+  box-sizing: border-box; /* predictable sizing */
+}
+
 .jz-btn--cuboid {
   --jz-radius: 14px;
   /* base color comes from global palette: --plt-clr-* */
