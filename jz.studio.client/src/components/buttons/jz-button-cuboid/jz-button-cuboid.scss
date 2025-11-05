@@ -40,6 +40,8 @@
   --jz-rim-dark: color-mix(in oklch, var(--jz-base), black 38%);
   --jz-text: #fff;
   --jz-focus: color-mix(in oklch, var(--jz-base), white 60%);
+  --lighter: color-mix(in oklch, var(--jz-base), white 20%);
+  --darker: color-mix(in oklch, var(--jz-base), black 20%);
 
   &:focus-visible {
     outline: none;
