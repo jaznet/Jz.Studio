@@ -20,8 +20,8 @@ export abstract class ButtonBase implements OnChanges {
 
   /** Sizing inputs (numbers ⇒ px). Defaults: auto/auto/6px */
   @Input() width: string | number | null = '100px';
-  @Input() height: string | number | null = '30px';
-  @Input() bevelWidth: string | number = 6;
+  @Input() height: string | number | null = '60px';
+  @Input() bevelWidth: string | number = 24;
   /** kebab-case alias support: [bevelwidth] */
   @Input('bevelwidth') set bevelwidthAlias(v: string | number) { this.bevelWidth = v; }
 

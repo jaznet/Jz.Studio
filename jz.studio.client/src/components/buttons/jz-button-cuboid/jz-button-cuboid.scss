@@ -29,8 +29,8 @@
   /* Base palette tone */
   --jz-base: var(--plt-clr-3);
   /* Derived tones via color-mix */
-  --lighter: color-mix(in oklch, var(--jz-base), white 25%);
-  --darker: color-mix(in oklch, var(--jz-base), black 25%);
+  --lighter: color-mix(in oklch, var(--jz-base), white 28%);
+  --darker: color-mix(in oklch, var(--jz-base), black 28%);
   --rim-light: color-mix(in oklch, var(--jz-base), white 38%);
   --rim-dark: color-mix(in oklch, var(--jz-base), black 32%);
   --jz-text: var(--plt-txt-3);
@@ -53,6 +53,7 @@
    9-zone cuboid grid
    ------------------------------------------------------------ */
 .jz-btn--nine .cuboid {
+  --jz-bevel: 8px;
   width: 100%;
   height: 100%;
   display: grid;
@@ -106,35 +107,48 @@
    Lighting / shading (no linear gradient on face)
    ------------------------------------------------------------ */
 
-/* Corners */
-/* A = top-left corner */
+/* ============== CORNER RADIALS (circle, radius = bevel) ============== */
+/* Corner A (top-left): center at lower-right of the cell; base→light */
 .jz-btn--nine .zone.A {
-  background: radial-gradient( 180% 180% at 30% 30%, /* circle extends beyond cell for soft falloff */
-  var(--lighter) 0%, /* highlight center */
-  var(--jz-base) 100% /* fade to base tone */
-  );
+  /* circle radius = --jz-bevel, centered at 100% 100% (LR of the A cell) */
+  background: radial-gradient(circle var(--jz-bevel) at 100% 100%, var(--jz-base) 0%, var(--lighter) 100%);
 }
 
-/* -------- Corner B: top-right (adjacent: top=light, right=dark) -------- */
+/* Corner C (bottom-right): center at upper-left of the cell; base→dark */
+.jz-btn--nine .zone.C {
+  background: radial-gradient(circle var(--jz-bevel) at 0% 0%, var(--jz-base) 0%, var(--darker) 100%);
+}
+
+/* ============== MIXED CORNERS (B & D): quarter masks + two radials ============== */
+/* We multiply each radial by a conic “quarter” so the light part stays on the
+   light-adjacent edge and the dark part stays on the shadow-adjacent edge.   */
+
+/* Corner B (top-right): top side = light, right side = dark */
 .jz-btn--nine .zone.B {
   background:
-  /* edge overlays (fade to transparent so they combine) */
-  linear-gradient(to bottom, var(--rim-light) 0%, var(--lighter) 70%, transparent 100%), linear-gradient(to left, var(--rim-dark) 0%, var(--darker) 70%, transparent 100%),
-  /* underlay = base with soft specular toward the corner */
-  radial-gradient(170% 170% at 70% 30%, var(--jz-base) 0 100%);
+  /* 1) light texture (base→light) for the TOP quarter of the circle */
+  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 270deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 2) dark texture (base→dark) for the RIGHT quarter of the circle */
+  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 0deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 3) solid base underlay */
+  var(--jz-base);
+  /* Multiply textures by their conic masks; keep the base as normal */
+  background-blend-mode: multiply, normal, multiply, normal, normal;
 }
 
-/* C = bottom-right corner — darkest zone (in shadow) */
-.jz-btn--nine .zone.C {
-  background: radial-gradient( 180% 180% at 70% 70%, /* center over the bottom-right corner */
-  var(--darker) 0%, /* inner tone near the corner */
-  var(--jz-base) 100% /* fade back to base tone */
-  );
-}
-
+/* Corner D (bottom-left): left side = light, bottom side = dark */
 .jz-btn--nine .zone.D {
-  background: linear-gradient(to right, var(--rim-light) 0%, var(--lighter) 70%, transparent 100%), linear-gradient(to top, var(--rim-dark) 0%, var(--darker) 70%, transparent 100%), radial-gradient(170% 170% at 30% 70%, var(--jz-base) 0 100%);
+  background:
+  /* 1) light texture for the LEFT quarter */
+  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 90deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 2) dark texture for the BOTTOM quarter */
+  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 180deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 3) base underlay */
+  var(--jz-base);
+  background-blend-mode: multiply, normal, multiply, normal, normal;
 }
+
+
 
 /* Edges */
 .jz-btn--nine .zone.top {
