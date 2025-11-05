@@ -33,7 +33,7 @@
   --darker: color-mix(in oklch, var(--jz-base), black 25%);
   --rim-light: color-mix(in oklch, var(--jz-base), white 38%);
   --rim-dark: color-mix(in oklch, var(--jz-base), black 32%);
-  --jz-text: #fff;
+  --jz-text: var(--plt-txt-3);
   --jz-focus: color-mix(in oklch, var(--jz-base), white 60%);
   --jz-radius: 6px;
 
@@ -115,10 +115,13 @@
   );
 }
 
-/* B = top-right corner */
+/* -------- Corner B: top-right (adjacent: top=light, right=dark) -------- */
 .jz-btn--nine .zone.B {
-  background: radial-gradient( 180% 180% at 70% 30%, /* near the top-right edge */
-  var(--lighter) 0%, var(--jz-base) 100% );
+  background:
+  /* edge overlays (fade to transparent so they combine) */
+  linear-gradient(to bottom, var(--rim-light) 0%, var(--lighter) 70%, transparent 100%), linear-gradient(to left, var(--rim-dark) 0%, var(--darker) 70%, transparent 100%),
+  /* underlay = base with soft specular toward the corner */
+  radial-gradient(170% 170% at 70% 30%, var(--jz-base) 0 100%);
 }
 
 /* C = bottom-right corner — darkest zone (in shadow) */
@@ -129,10 +132,8 @@
   );
 }
 
-/* D = bottom-left corner */
 .jz-btn--nine .zone.D {
-  background: radial-gradient( 180% 180% at 30% 70%, /* near the bottom-left edge */
-  var(--lighter) 0%, var(--jz-base) 100% );
+  background: linear-gradient(to right, var(--rim-light) 0%, var(--lighter) 70%, transparent 100%), linear-gradient(to top, var(--rim-dark) 0%, var(--darker) 70%, transparent 100%), radial-gradient(170% 170% at 30% 70%, var(--jz-base) 0 100%);
 }
 
 /* Edges */
