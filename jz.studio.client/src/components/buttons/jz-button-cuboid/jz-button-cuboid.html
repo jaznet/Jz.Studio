@@ -1,9 +1,10 @@
 <!-- jz-button-cuboid.html -->
 <!-- =======================================================================
-     Jz Button Cuboid Template  |  Follows Jz-BEM convention
+     Jz Button Cuboid Template | BEM + readable zone names
      Zones (clockwise from top-left):
-       A (TL corner), 1 (Top edge), B (TR corner), 2 (Right edge),
-       C (BR corner), 3 (Bottom edge), D (BL corner), 4 (Left edge), face (Center)
+       A (top-left corner), top (edge), B (top-right corner),
+       right (edge), C (bottom-right corner), bottom (edge),
+       D (bottom-left corner), left (edge), face (center)
      ======================================================================= -->
 
 <button class="jz-btn jz-btn--cuboid jz-btn--nine"
@@ -13,11 +14,11 @@
   <div class="cuboid">
     <!-- Top row -->
     <div class="zone A"></div>
-    <div class="zone 1"></div>
+    <div class="zone top"></div>
     <div class="zone B"></div>
 
     <!-- Middle row -->
-    <div class="zone 4"></div>
+    <div class="zone left"></div>
     <div class="zone face">
       <span class="jz-btn__content"
             [style.display]="hasText ? 'inline-flex' : 'none'">{{ text }}</span>
@@ -26,12 +27,13 @@
         <ng-content></ng-content>
       </span>
     </div>
-    <div class="zone 2"></div>
+    <div class="zone right"></div>
 
     <!-- Bottom row -->
     <div class="zone D"></div>
-    <div class="zone 3"></div>
+    <div class="zone bottom"></div>
     <div class="zone C"></div>
   </div>
 </button>
+
 
