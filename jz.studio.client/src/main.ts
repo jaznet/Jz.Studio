@@ -24,3 +24,12 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(withInterceptorsFromDi()),
   ],
 }).catch(console.error);
+
+
+
+// main.ts (or wherever you register it)
+const cssAny = CSS as any;
+if (cssAny && 'paintWorklet' in cssAny) {
+  cssAny.paintWorklet.addModule('/src/components/jz-button-cuboid/jz-bevel-corner.worklet.js');
+}
+
