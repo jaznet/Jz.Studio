@@ -123,30 +123,22 @@
 /* We multiply each radial by a conic “quarter” so the light part stays on the
    light-adjacent edge and the dark part stays on the shadow-adjacent edge.   */
 
-/* Corner B (top-right): top side = light, right side = dark */
+/* B = top-right (TOP = light ➜ RIGHT = dark) */
 .jz-btn--nine .zone.B {
   background:
-  /* 1) light texture (base→light) for the TOP quarter of the circle */
-  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 270deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 2) dark texture (base→dark) for the RIGHT quarter of the circle */
-  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 0deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 3) solid base underlay */
-  var(--jz-base);
-  /* Multiply textures by their conic masks; keep the base as normal */
-  background-blend-mode: multiply, normal, multiply, normal, normal;
+  /* quarter sweep: 270° (up) → 360° (right) */
+  conic-gradient(from 270deg at 0% 100%, var(--rim-light) 270deg, var(--lighter) 300deg, var(--jz-base) 330deg, var(--darker) 350deg, var(--rim-dark) 360deg, transparent 360.1deg),
+  /* very subtle rounding; optional */
+  radial-gradient(140% 140% at 0% 100%, rgba(0 0 0 / .05) 0 60%, rgba(0 0 0 / 0) 100%), var(--jz-base);
 }
 
-/* Corner D (bottom-left): left side = light, bottom side = dark */
+/* D = bottom-left (BOTTOM = dark ➜ LEFT = light), i.e., 6→9 o’clock */
 .jz-btn--nine .zone.D {
   background:
-  /* 1) light texture for the LEFT quarter */
-  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 90deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 2) dark texture for the BOTTOM quarter */
-  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 180deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 3) base underlay */
-  var(--jz-base);
-  background-blend-mode: multiply, normal, multiply, normal, normal;
+  /* quarter sweep: 90° (down) → 180° (left) */
+  conic-gradient(from 90deg at 100% 0%, var(--rim-dark) 90deg, var(--darker) 115deg, var(--jz-base) 145deg, var(--lighter) 170deg, var(--rim-light) 180deg, transparent 180.1deg), radial-gradient(140% 140% at 100% 0%, rgba(0 0 0 / .05) 0 60%, rgba(0 0 0 / 0) 100%), var(--jz-base);
 }
+
 
 
 
