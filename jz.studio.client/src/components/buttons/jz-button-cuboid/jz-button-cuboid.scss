@@ -1,125 +1,237 @@
-/* ============================================================
-   jz-button-cuboid.scss  (fill host + 5px radius)
-   ============================================================ */
+/* ==========================================================================
+   Jz Button Cuboid Styles  |  Follows Jz-BEM convention
+   Block:     jz-btn
+   Elements:  jz-btn__content
+   Modifiers: jz-btn--cuboid, jz-btn--nine, jz-btn--primary, jz-btn--disabled
+   Zones (clockwise):
+     A (TL), top, B (TR), right, C (BR), bottom, D (BL), left, face (center)
+   ========================================================================== */
 
-/* Host carries the external size */
 :host {
-  display: inline-block;
+  display: inline-flex;
+  align-items: stretch;
+  justify-content: stretch;
   box-sizing: border-box;
-  width: var(--jz-width, auto);
-  height: var(--jz-height, auto);
-  vertical-align: middle;
-  min-width: fit-content;
-  min-height: fit-content;
 }
 
 /* ------------------------------------------------------------
-   Base button element
+   jz-btn--cuboid | palette + derived tones
    ------------------------------------------------------------ */
 .jz-btn--cuboid {
-  --jz-base: var(--plt-clr-3, #3f6a66);
-  --lighter: color-mix(in oklch, var(--jz-base), white 20%);
-  --darker: color-mix(in oklch, var(--jz-base), black 22%);
-  --rim-light: color-mix(in oklch, var(--jz-base), white 42%);
-  --rim-dark: color-mix(in oklch, var(--jz-base), black 38%);
-  --jz-text: #fff;
-  display: block;
   width: 100%;
   height: 100%;
   padding: 0;
-  border: 0;
+  border: none;
   background: none;
-  color: var(--jz-text);
-  line-height: normal;
-  appearance: none;
-  -webkit-appearance: none;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  /* Base palette tone */
+  --jz-base: var(--plt-clr-3);
+  /* Derived tones via color-mix */
+  --lighter: color-mix(in oklch, var(--jz-base), white 28%);
+  --darker: color-mix(in oklch, var(--jz-base), black 28%);
+  --rim-light: color-mix(in oklch, var(--jz-base), white 38%);
+  --rim-dark: color-mix(in oklch, var(--jz-base), black 32%);
+  --jz-text: var(--plt-txt-3);
+  --jz-focus: color-mix(in oklch, var(--jz-base), white 60%);
+  --jz-radius: 6px;
 
-  .cuboid {
-    display: grid;
-    grid-template-rows: var(--jz-bevel, 6px) 1fr var(--jz-bevel, 6px);
-    grid-template-columns: var(--jz-bevel, 6px) 1fr var(--jz-bevel, 6px);
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.18);
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--jz-focus), 0 0 0 4px rgba(255 255 255 / .22);
+    border-radius: var(--jz-radius);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .6;
   }
 }
 
-/* ============================================================
-   Zones grid:
-     A  top   B
-     left face right
-     D bottom C
-   ============================================================ */
+/* ------------------------------------------------------------
+   9-zone cuboid grid
+   ------------------------------------------------------------ */
+.jz-btn--nine .cuboid {
+  --jz-bevel: 8px;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: var(--jz-bevel, 6px) 1fr var(--jz-bevel, 6px);
+  grid-template-columns: var(--jz-bevel, 6px) 1fr var(--jz-bevel, 6px);
+  border-radius: var(--jz-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0 0 0 / .28), 0 1px 2px rgba(0 0 0 / .18);
+}
 
-/* --- Edges (simple gradients, correct direction) --- */
+/* ------------------------------------------------------------
+   Zone positions
+   ------------------------------------------------------------ */
+.jz-btn--nine .zone.A {
+  grid-area: 1 / 1;
+}
+
+.jz-btn--nine .zone.top {
+  grid-area: 1 / 2;
+}
+
+.jz-btn--nine .zone.B {
+  grid-area: 1 / 3;
+}
+
+.jz-btn--nine .zone.right {
+  grid-area: 2 / 3;
+}
+
+.jz-btn--nine .zone.C {
+  grid-area: 3 / 3;
+}
+
+.jz-btn--nine .zone.bottom {
+  grid-area: 3 / 2;
+}
+
+.jz-btn--nine .zone.D {
+  grid-area: 3 / 1;
+}
+
+.jz-btn--nine .zone.left {
+  grid-area: 2 / 1;
+}
+
+.jz-btn--nine .zone.face {
+  grid-area: 2 / 2;
+}
+
+/* ------------------------------------------------------------
+   Lighting / shading (no linear gradient on face)
+   ------------------------------------------------------------ */
+
+/* ============== CORNER RADIALS (circle, radius = bevel) ============== */
+/* --- Corners --- */
+
+/* A (top-left): base → lighter, pivot at bottom-right of the A cell */
+.jz-btn--nine .zone.A {
+  background: radial-gradient( circle var(--jz-bevel) at 100% 100%, var(--jz-base) 0%, var(--lighter) 100% );
+}
+
+/* C (bottom-right): base → darker, pivot at top-left of the C cell */
+.jz-btn--nine .zone.C {
+  background: radial-gradient( circle var(--jz-bevel) at 0% 0%, var(--jz-base) 0%, var(--darker) 100% );
+}
+
+/* ============== MIXED CORNERS (B & D): quarter masks + two radials ============== */
+/* We multiply each radial by a conic “quarter” so the light part stays on the
+   light-adjacent edge and the dark part stays on the shadow-adjacent edge.   */
+
+/* Corner B (top-right): top side = light, right side = dark */
+.jz-btn--nine .zone.B {
+  background:
+  /* 1) light texture (base→light) for the TOP quarter of the circle */
+  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 270deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 2) dark texture (base→dark) for the RIGHT quarter of the circle */
+  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 0deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 3) solid base underlay */
+  var(--jz-base);
+  /* Multiply textures by their conic masks; keep the base as normal */
+  background-blend-mode: multiply, normal, multiply, normal, normal;
+}
+
+/* Corner D (bottom-left): left side = light, bottom side = dark */
+.jz-btn--nine .zone.D {
+  background:
+  /* 1) light texture for the LEFT quarter */
+  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 90deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 2) dark texture for the BOTTOM quarter */
+  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 180deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
+  /* 3) base underlay */
+  var(--jz-base);
+  background-blend-mode: multiply, normal, multiply, normal, normal;
+}
+
+
+
+/* Edges */
 .jz-btn--nine .zone.top {
   background: linear-gradient(to bottom, var(--lighter) 0%, var(--jz-base) 100%);
 }
 
 .jz-btn--nine .zone.right {
-  background: linear-gradient(to left, var(--darker) 0%, var(--jz-base) 100%);
+  background: linear-gradient(to right, var(--jz-base) 0%, var(--darker) 100%);
 }
 
 .jz-btn--nine .zone.bottom {
-  background: linear-gradient(to top, var(--darker) 0%, var(--jz-base) 100%);
+  background: linear-gradient(to bottom, var(--jz-base) 0%, var(--darker) 100%);
 }
 
 .jz-btn--nine .zone.left {
   background: linear-gradient(to right, var(--lighter) 0%, var(--jz-base) 100%);
 }
 
-/* --- Quarter-arc corners using a pivoted conic gradient --- */
-.jz-btn--cuboid {
-  --corner-softness: 96%;
-  --corner-bright: var(--lighter);
-  --corner-dark: var(--darker);
-}
-
-.jz-btn--nine .zone.A,
-.jz-btn--nine .zone.B,
-.jz-btn--nine .zone.C,
-.jz-btn--nine .zone.D {
-  background-color: var(--jz-base);
-}
-
-/* A = top-left */
-.jz-btn--nine .zone.A {
-  background-image: conic-gradient(from 225deg at 0% 0%, var(--corner-bright) 0 90deg, transparent 90deg);
-  -webkit-mask: radial-gradient(closest-side at 0% 0%, #000 var(--corner-softness), transparent 100%);
-  mask: radial-gradient(closest-side at 0% 0%, #000 var(--corner-softness), transparent 100%);
-}
-
-/* B = top-right */
-.jz-btn--nine .zone.B {
-  background-image: conic-gradient(from 315deg at 100% 0%, var(--corner-bright) 0 90deg, transparent 90deg);
-  -webkit-mask: radial-gradient(closest-side at 100% 0%, #000 var(--corner-softness), transparent 100%);
-  mask: radial-gradient(closest-side at 100% 0%, #000 var(--corner-softness), transparent 100%);
-}
-
-/* C = bottom-right */
-.jz-btn--nine .zone.C {
-  background-image: conic-gradient(from 45deg at 100% 100%, var(--corner-dark) 0 90deg, transparent 90deg);
-  -webkit-mask: radial-gradient(closest-side at 100% 100%, #000 var(--corner-softness), transparent 100%);
-  mask: radial-gradient(closest-side at 100% 100%, #000 var(--corner-softness), transparent 100%);
-}
-
-/* D = bottom-left */
-.jz-btn--nine .zone.D {
-  background-image: conic-gradient(from 135deg at 0% 100%, var(--corner-dark) 0 90deg, transparent 90deg);
-  -webkit-mask: radial-gradient(closest-side at 0% 100%, #000 var(--corner-softness), transparent 100%);
-  mask: radial-gradient(closest-side at 0% 100%, #000 var(--corner-softness), transparent 100%);
-}
-
-/* --- Face (flat for now) --- */
-.jz-btn--cuboid .zone.face {
+/* ------------------------------------------------------------
+   Center face
+   ------------------------------------------------------------ */
+.jz-btn--nine .zone.face {
+  position: relative;
   background: var(--jz-base);
+  display: grid;
+  place-items: stretch;
+  padding: 0;
+}
+
+.jz-btn--nine .zone.face .jz-btn__content {
+  inline-size: 100%;
+  block-size: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
   color: var(--jz-text);
   font-weight: 600;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.28);
+  font-size: 1rem;
+  white-space: nowrap;
+  box-sizing: border-box;
+  z-index: 1;
 }
+
+/* ------------------------------------------------------------
+   Hover / active effects
+   ------------------------------------------------------------ */
+.jz-btn--nine:hover .cuboid {
+  filter: saturate(1.04) brightness(1.02);
+  box-shadow: 0 6px 14px rgba(0 0 0 / .30), 0 2px 4px rgba(0 0 0 / .20);
+}
+
+.jz-btn--nine:active .cuboid {
+  filter: brightness(.98);
+  box-shadow: 0 2px 6px rgba(0 0 0 / .24), 0 1px 2px rgba(0 0 0 / .18);
+}
+
+/* ------------------------------------------------------------
+   Debug (optional)
+   ------------------------------------------------------------ */
+/*
+.jz-btn--nine .cuboid > .zone {
+  outline: 1px dashed rgba(255 255 255 / .15);
+  position: relative;
+}
+
+.jz-btn--nine .zone.A::after      { content: "A"; }
+.jz-btn--nine .zone.top::after    { content: "top"; }
+.jz-btn--nine .zone.B::after      { content: "B"; }
+.jz-btn--nine .zone.right::after  { content: "right"; }
+.jz-btn--nine .zone.C::after      { content: "C"; }
+.jz-btn--nine .zone.bottom::after { content: "bottom"; }
+.jz-btn--nine .zone.D::after      { content: "D"; }
+.jz-btn--nine .zone.left::after   { content: "left"; }
+.jz-btn--nine .zone.face::after   { content: "face"; }
+
+.jz-btn--nine .zone::after {
+  position: absolute;
+  inset: 4px auto auto 6px;
+  font-size: 10px;
+  color: #fff;
+  opacity: .7;
+}
+*/
