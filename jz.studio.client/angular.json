@@ -36,7 +36,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*.worklet.js",
+                "input": "src",
+                "output": "/"
+              }
             ],
             "styles": [
               "node_modules/@syncfusion/ej2-angular-base/styles/material.css",

@@ -6,7 +6,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-/*import { routes } from './app/app.routes';*/
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 import { AppRoutingModule } from './app/app-routing.module';
@@ -25,11 +24,33 @@ bootstrapApplication(AppComponent, {
   ],
 }).catch(console.error);
 
-
-
-// main.ts (or wherever you register it)
+// main.ts
 const cssAny = CSS as any;
-if (cssAny && 'paintWorklet' in cssAny) {
-  cssAny.paintWorklet.addModule('/src/components/jz-button-cuboid/jz-bevel-corner.worklet.js');
+
+async function registerPaintWorklet() {
+  try {
+    if (!cssAny || !('paintWorklet' in cssAny)) {
+      console.warn('PaintWorklet not supported in this browser.');
+      return;
+    }
+
+    // Serve from assets + force fresh load in dev
+    const urlBase = '/assets/worklets/jz-bevel-corner-worklet.js';
+    const url = `${urlBase}?v=${Date.now()}`;
+
+    // Preflight fetch — surfaces 404s cleanly
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error(`Worklet 404/HTTP ${r.status} at ${url}`);
+
+    await cssAny.paintWorklet.addModule(url);
+    console.log('[Worklet] loaded:', url);
+
+    // (Optional) mark document so CSS can switch from fallback to worklet
+    document.documentElement.classList.add('has-paint');
+  } catch (err) {
+    console.error('[Worklet] failed to load:', err);
+  }
 }
+registerPaintWorklet();
+
 

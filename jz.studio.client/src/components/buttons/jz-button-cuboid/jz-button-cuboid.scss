@@ -124,32 +124,40 @@
 /* We multiply each radial by a conic “quarter” so the light part stays on the
    light-adjacent edge and the dark part stays on the shadow-adjacent edge.   */
 
-/* Corner B (top-right): top side = light, right side = dark */
+/* Corners B & D via worklet */
 .jz-btn--nine .zone.B {
-  background:
-  /* 1) light texture (base→light) for the TOP quarter of the circle */
-  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 270deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 2) dark texture (base→dark) for the RIGHT quarter of the circle */
-  radial-gradient(circle var(--jz-bevel) at 0% 100%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 0deg at 0% 100%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 3) solid base underlay */
-  var(--jz-base);
-  /* Multiply textures by their conic masks; keep the base as normal */
-  background-blend-mode: multiply, normal, multiply, normal, normal;
+  /* Only enable when the worklet is loaded (class added in main.ts) */
+  background: paint(jz-bevel-corner);
+  --corner: tr;
+  --r: var(--jz-bevel, 6px);
+  --base: var(--jz-base);
+  --c1: var(--lighter);
+  --c2: var(--darker);
+  --wl-debug: 1; /* <-- turn this on to see magenta + hit debugger */
 }
 
-/* Corner D (bottom-left): left side = light, bottom side = dark */
 .jz-btn--nine .zone.D {
-  background:
-  /* 1) light texture for the LEFT quarter */
-  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--lighter) 100%), conic-gradient(from 90deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 2) dark texture for the BOTTOM quarter */
-  radial-gradient(circle var(--jz-bevel) at 100% 0%, var(--jz-base) 0%, var(--darker) 100%), conic-gradient(from 180deg at 100% 0%, #fff 0 90deg, transparent 90deg 360deg),
-  /* 3) base underlay */
-  var(--jz-base);
-  background-blend-mode: multiply, normal, multiply, normal, normal;
+  background: paint(jz-bevel-corner);
+  --corner: bl;
+  --r: var(--jz-bevel, 6px);
+  --base: var(--jz-base);
+  --c1: var(--darker);
+  --c2: var(--lighter);
+  --wl-debug: 1; /* same here while testing */
 }
 
+/* Fallback when Paint API isn’t available (approximation) */
+@supports not (background: paint(jz-bevel-corner)) {
+  .jz-btn--nine .zone.B {
+    background: conic-gradient(from 315deg at 100% 0%, var(--lighter) 0 45deg, var(--jz-base) 45deg 90deg);
+  }
 
+  .jz-btn--nine .zone.D {
+    background: conic-gradient(from 135deg at 0% 100%, var(--lighter) 0 45deg, var(--jz-base) 45deg 90deg);
+    /* optional subtle dark bias toward bottom if you want */
+    background-blend-mode: multiply;
+  }
+}
 
 /* Edges */
 .jz-btn--nine .zone.top {
