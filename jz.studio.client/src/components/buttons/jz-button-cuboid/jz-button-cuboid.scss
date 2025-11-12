@@ -80,49 +80,39 @@
   user-select: none;
 }
 
-/* -------------------------- Derived Tones from Base ---------------------- */
+/* Cuboid overlay: tone derivation + layout/painting in one place */
 :host button.jz-btn > .cuboid {
-  /* tones used by both hybrid and full-paint */
+  /* --- Derived tones from the base palette color --- */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 45%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 45%);
-}
-
-/* ------------------------------ Cuboid Overlay --------------------------- */
-:host button.jz-btn > .cuboid {
+  /* --- Overlay box + grid --- */
   position: absolute;
   inset: 0; /* EXACTLY fill the button */
   border-radius: inherit;
   pointer-events: none;
   z-index: 0;
-  /* 3×3 grid ensures edges/corners have true bevel size */
   display: grid;
   grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
   grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
   gap: 0;
-  /* HYBRID: CSS edges + face, with corners-only worklet on top */
+  /* --- Hybrid: CSS edges + face + corners worklet --- */
   background:
-  /* top edge */
-  linear-gradient(to bottom, var(--jz-edge-light), var(--jz-bg-light)) 0 0/100% var(--jz-bevel) no-repeat,
-  /* left edge */
-  linear-gradient(to right, var(--jz-edge-light), var(--jz-bg-light)) 0 0/var(--jz-bevel) 100% no-repeat,
-  /* right edge */
-  linear-gradient(to left, var(--jz-edge-dark), var(--jz-bg-strong)) 100% 0/var(--jz-bevel) 100% no-repeat,
-  /* bottom edge */
-  linear-gradient(to top, var(--jz-edge-dark), var(--jz-bg-strong)) 0 100%/100% var(--jz-bevel) no-repeat,
-  /* face fill */
-  linear-gradient(to bottom, var(--jz-bg-light) 0%, var(--jz-base-color) 50%, var(--jz-bg-strong) 100%) 0 0/100% 100% no-repeat,
-  /* subtle glaze */
-  radial-gradient(100% 120% at 50% 45%, rgba(255,255,255,.03), rgba(0,0,0,.08)) 0 0/100% 100% no-repeat,
-  /* worklet draws TR + BL highlights only */
-  paint(jz-cuboid-corners);
+  /* top edge */ linear-gradient(to bottom, var(--jz-edge-light), var(--jz-bg-light)) 0 0/100% var(--jz-bevel) no-repeat,
+  /* left edge */ linear-gradient(to right, var(--jz-edge-light), var(--jz-bg-light)) 0 0/var(--jz-bevel) 100% no-repeat,
+  /* right edge */ linear-gradient(to left, var(--jz-edge-dark), var(--jz-bg-strong)) 100% 0/var(--jz-bevel) 100% no-repeat,
+  /* bottom edge */ linear-gradient(to top, var(--jz-edge-dark), var(--jz-bg-strong)) 0 100%/100% var(--jz-bevel) no-repeat,
+  /* face fill */ linear-gradient(to bottom, var(--jz-bg-light) 0%, var(--jz-base-color) 50%, var(--jz-bg-strong) 100%) 0 0/100% 100% no-repeat,
+  /* glaze */ radial-gradient(100% 120% at 50% 45%, rgba(255,255,255,.03), rgba(0,0,0,.08)) 0 0/100% 100% no-repeat,
+  /* corners (TR + BL highlight) */ paint(jz-cuboid-corners);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
-  /* outer depth */
+  /* depth */
   box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
 }
+
 
 /* --------------------------- Full-paint Modifier ------------------------- */
 /* add class 'fullpaint' on the host to hand everything to the worklet */
@@ -154,8 +144,29 @@
   grid-area: 2 / 1;
 }
 
+/* === FACE ZONE ========================================================= */
 :host .cuboid .zone.face {
-  grid-area: 2 / 2;
+  grid-area: 2 / 2; /* the center cell */
+  width: 100%;
+  height: 100%;
+  display: flex; /* make the zone itself flex */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+  text-align: center;
+  overflow: hidden; /* keep text inside the face */
+  z-index: 1; /* above cuboid background */
+}
+
+/* === FACE CONTENT (LABEL) ============================================== */
+:host .cuboid .zone.face > * {
+  display: flex;
+  text-align: center;
+  line-height: 1.2;
+  white-space: normal; /* allow multiline wrapping */
+  word-break: break-word;
+  color: var(--jz-text, black);
+  font-weight: 600;
+  font-size: 1em;
 }
 
 :host .cuboid .zone.right {
