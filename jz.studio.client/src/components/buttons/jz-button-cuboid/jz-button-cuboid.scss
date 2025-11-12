@@ -1,18 +1,69 @@
-/* --------------------------------------------------------------------------
-   JZ BUTTON CUBOID — palette-driven base color version
-   --------------------------------------------------------------------------
-   • Uses --jz-base-color from app palette (e.g., var(--plt-clr-3))
-   • Derives all light/dark tones automatically from it
-   • Works for both hybrid and full-paint modes
-   --------------------------------------------------------------------------*/
+/* ==========================================================================
+   JZ BUTTON CUBOID — complete SCSS (hybrid + full-paint, palette-driven)
+   ========================================================================== */
 
+/* ----------------------------- Host & Defaults --------------------------- */
 :host {
   display: inline-block;
-  inline-size: var(--jz-w, auto);
-  block-size: var(--jz-h, auto);
+  inline-size: var(--jz-w, 140px);
+  block-size: var(--jz-h, 60px);
+  /* geometry defaults */
+  --jz-radius: 8px;
+  --jz-bevel: 8px;
+  /* palette default */
+  --jz-base-color: var(--plt-clr-3, #465e5a);
+  --jz-text: black;
 }
 
-/* === BUTTON HOST ========================================================= */
+/* ----------------------------- Variants (host) --------------------------- */
+/* map host classes to palette tokens; adjust to your palette */
+:host(.primary) {
+  --jz-base-color: var(--plt-clr-1);
+}
+
+:host(.secondary) {
+  --jz-base-color: var(--plt-clr-2);
+}
+
+:host(.tertiary) {
+  --jz-base-color: var(--plt-clr-3);
+}
+
+:host(.success) {
+  --jz-base-color: var(--plt-ok, #2e8b57);
+}
+
+:host(.warning) {
+  --jz-base-color: var(--plt-warn, #b8860b);
+}
+
+:host(.danger) {
+  --jz-base-color: var(--plt-bad, #b03a2e);
+}
+
+/* optional sizes */
+:host(.sm) {
+  --jz-w: 96px;
+  --jz-h: 40px;
+  --jz-radius: 6px;
+  --jz-bevel: 6px;
+}
+
+:host(.md) {
+  --jz-w: 140px;
+  --jz-h: 60px;
+  --jz-radius: 8px;
+  --jz-bevel: 8px;
+}
+
+:host(.lg) {
+  --jz-w: 200px;
+  --jz-h: 72px;
+  --jz-radius: 10px;
+  --jz-bevel: 9px;
+}
+
+/* The button always fills the host */
 :host button.jz-btn {
   position: relative;
   inline-size: 100%;
@@ -23,68 +74,64 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border-radius: calc(var(--jz-radius, 5px) + var(--jz-bevel, 8px));
+  border-radius: calc(var(--jz-radius) + var(--jz-bevel));
   background: none;
   cursor: pointer;
   user-select: none;
-
-  @media (forced-colors: active) {
-    border: 1px solid CanvasText;
-    background: ButtonFace;
-    color: ButtonText;
-    box-shadow: none;
-  }
 }
 
-/* === CUBOID OVERLAY ====================================================== */
+/* -------------------------- Derived Tones from Base ---------------------- */
 :host button.jz-btn > .cuboid {
-  position: absolute;
-  inset: 0; /* <-- exactly same size as button */
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  display: grid;
-  grid-template-columns: var(--jz-bevel, 8px) 1fr var(--jz-bevel, 8px);
-  grid-template-rows: var(--jz-bevel, 8px) 1fr var(--jz-bevel, 8px);
-  /* --- Palette Integration --------------------------------------------- */
-  /* Base color comes directly from the app palette manager */
-  --jz-base-color: var(--plt-clr-3, #465e5a);
-  /* Derived tones */
+  /* tones used by both hybrid and full-paint */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 45%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 45%);
-  --jz-radius: 5px;
-  --jz-bevel: 8px;
-  /* --- Hybrid rendering (CSS + corner worklet) -------------------------- */
+}
+
+/* ------------------------------ Cuboid Overlay --------------------------- */
+:host button.jz-btn > .cuboid {
+  position: absolute;
+  inset: 0; /* EXACTLY fill the button */
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  /* 3×3 grid ensures edges/corners have true bevel size */
+  display: grid;
+  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
+  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
+  gap: 0;
+  /* HYBRID: CSS edges + face, with corners-only worklet on top */
   background:
-  /* Top bevel */
+  /* top edge */
   linear-gradient(to bottom, var(--jz-edge-light), var(--jz-bg-light)) 0 0/100% var(--jz-bevel) no-repeat,
-  /* Left bevel */
+  /* left edge */
   linear-gradient(to right, var(--jz-edge-light), var(--jz-bg-light)) 0 0/var(--jz-bevel) 100% no-repeat,
-  /* Right bevel */
+  /* right edge */
   linear-gradient(to left, var(--jz-edge-dark), var(--jz-bg-strong)) 100% 0/var(--jz-bevel) 100% no-repeat,
-  /* Bottom bevel */
+  /* bottom edge */
   linear-gradient(to top, var(--jz-edge-dark), var(--jz-bg-strong)) 0 100%/100% var(--jz-bevel) no-repeat,
-  /* Face fill */
+  /* face fill */
   linear-gradient(to bottom, var(--jz-bg-light) 0%, var(--jz-base-color) 50%, var(--jz-bg-strong) 100%) 0 0/100% 100% no-repeat,
-  /* Glaze reflection */
+  /* subtle glaze */
   radial-gradient(100% 120% at 50% 45%, rgba(255,255,255,.03), rgba(0,0,0,.08)) 0 0/100% 100% no-repeat,
-  /* Paint Worklet for TR + BL corners */
+  /* worklet draws TR + BL highlights only */
   paint(jz-cuboid-corners);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
-  box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 5px 10px rgba(0,0,0,.35), 0 2px 2px rgba(0,0,0,.35);
+  /* outer depth */
+  box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
 }
 
-/* === FULL PAINT MODE ==================================================== */
+/* --------------------------- Full-paint Modifier ------------------------- */
+/* add class 'fullpaint' on the host to hand everything to the worklet */
 :host(.fullpaint) button.jz-btn > .cuboid {
   background: none;
   background-image: paint(jz-cuboid-full);
 }
 
-/* === ZONES (for debugging or 9-slice layout) ============================ */
+/* --------------------------------- Zones -------------------------------- */
 :host .cuboid .zone {
   display: block;
   min-width: 0;
@@ -109,16 +156,6 @@
 
 :host .cuboid .zone.face {
   grid-area: 2 / 2;
-  display:flex;
-}
-
-:host .zone.face > div {
-  width: 100%;
-  height: 100%;
-  display: flex; /* center label */
-  align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
 :host .cuboid .zone.right {
@@ -137,67 +174,52 @@
   grid-area: 3 / 3;
 }
 
-/* === FACE LABEL AREA ===================================================== */
-:host button.jz-btn > .face {
-  position: relative;
-  z-index: 1;
-  /* Create a flexbox that perfectly centers any content */
-  display: flex;
+/* --------------------------- Centered Face Label ------------------------- */
+/* make the inner element fill the face cell and center its content */
+:host .zone.face > * {
+  width: 100%;
+  height: 100%;
+  display: flex; /* works fine inside the grid cell */
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* The face fills the button’s content area */
-  inline-size: 100%;
-  block-size: 100%;
-  padding: 0 0.5em; /* optional horizontal spacing for long text */
-
-  color: var(--jz-text, black);
+  padding: 0 .75em; /* optional side padding for long text */
+  color: var(--jz-text);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: .02em;
   line-height: 1.2;
-  white-space: normal; /* allow multi-line text */
-  word-break: break-word; /* wrap long words safely */
+  white-space: normal; /* allow multi-line */
+  word-break: break-word;
 }
 
-/* === INNER CONTENT SPAN (label text) ==================================== */
-:host .jz-btn__content {
-  display: inline-block;
-  text-align: center;
-  font: inherit;
-  color: inherit;
-  line-height: inherit;
-}
-
-/* === INTERACTION STATES ================================================= */
+/* ------------------------------ States ---------------------------------- */
 :host button.jz-btn:hover > .cuboid {
   filter: brightness(1.05);
 }
 
 :host button.jz-btn:active > .cuboid {
-  filter: brightness(0.92);
+  filter: brightness(.92);
   transform: translateY(1px);
 }
 
-/* === DEBUG OPTION ======================================================= */
-:host .cuboid.debug .zone.top {
-  background: rgba(255,0,0,.12);
+:host([disabled]),
+:host(.disabled) {
+  pointer-events: none;
+  opacity: .55;
+  filter: grayscale(.2) saturate(.8);
 }
 
-:host .cuboid.debug .zone.left {
-  background: rgba(0,255,0,.12);
-}
+/* ------------------------- High-Contrast Safety -------------------------- */
+@media (forced-colors: active) {
+  :host button.jz-btn {
+    border: 1px solid CanvasText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+  }
 
-:host .cuboid.debug .zone.right {
-  background: rgba(0,0,255,.12);
-}
-
-:host .cuboid.debug .zone.bottom {
-  background: rgba(255,255,0,.12);
-}
-
-:host .cuboid.debug .zone.A,
-:host .cuboid.debug .zone.B,
-:host .cuboid.debug .zone.C,
-:host .cuboid.debug .zone.D {
-  background: rgba(255,0,255,.12);
+  :host button.jz-btn > .cuboid {
+    background: none;
+    box-shadow: none;
+  }
 }
