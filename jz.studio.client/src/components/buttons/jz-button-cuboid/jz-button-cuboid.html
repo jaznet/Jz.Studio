@@ -20,12 +20,13 @@
     <!-- Middle row -->
     <div class="zone left"></div>
     <div class="zone face">
-      <span class="jz-btn__content"
-            [style.display]="hasText ? 'inline-flex' : 'none'">{{ text }}</span>
-      <span class="jz-btn__content"
-            [style.display]="hasText ? 'none' : 'inline-flex'">
-        <ng-content></ng-content>
-      </span>
+      <div>{{text}}</div>
+      <!--<span class="jz-btn__content"
+        [style.display]="hasText ? 'inline-flex' : 'none'">{{ text }}</span>
+  <span class="jz-btn__content"
+        [style.display]="hasText ? 'none' : 'inline-flex'">
+    <ng-content></ng-content>
+  </span>-->
     </div>
     <div class="zone right"></div>
 
