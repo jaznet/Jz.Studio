@@ -1,7 +1,8 @@
+/*jz-button-cuboid.scss*/
+
 /* ==========================================================================
    JZ BUTTON CUBOID — Seamless Flat Face (Hybrid + Full-Paint)
    ========================================================================== */
-
 :host {
   display: inline-block;
   inline-size: var(--jz-w, 140px);
@@ -14,29 +15,31 @@
   --jz-text: black;
 }
 
-/* ----------------------------- Variants ----------------------------- */
-:host(.primary) {
-  --jz-base-color: var(--plt-clr-1);
-}
+/* ===== Variants ===== */
+@at-root {
+  :host(.primary) {
+    --jz-base-color: var(--plt-clr-1);
+  }
 
-:host(.secondary) {
-  --jz-base-color: var(--plt-clr-2);
-}
+  :host(.secondary) {
+    --jz-base-color: var(--plt-clr-2);
+  }
 
-:host(.tertiary) {
-  --jz-base-color: var(--plt-clr-3);
-}
+  :host(.tertiary) {
+    --jz-base-color: var(--plt-clr-3);
+  }
 
-:host(.success) {
-  --jz-base-color: var(--plt-ok, #2e8b57);
-}
+  :host(.success) {
+    --jz-base-color: var(--plt-ok, #2e8b57);
+  }
 
-:host(.warning) {
-  --jz-base-color: var(--plt-warn, #b8860b);
-}
+  :host(.warning) {
+    --jz-base-color: var(--plt-warn, #b8860b);
+  }
 
-:host(.danger) {
-  --jz-base-color: var(--plt-bad, #b03a2e);
+  :host(.danger) {
+    --jz-base-color: var(--plt-bad, #b03a2e);
+  }
 }
 
 /* ----------------------------- Button Host ----------------------------- */
@@ -49,7 +52,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: calc(var(--jz-radius) + var(--jz-bevel));
+  border-radius: var(--jz-radius);
   background: none;
   cursor: pointer;
   flex: 0 0 auto;
@@ -57,39 +60,43 @@
 
 /* ----------------------------- Cuboid Overlay ---------------------------- */
 :host button.jz-btn > .cuboid {
+  /* geometry / placement */
   position: absolute;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
-  /* 3×3 for zones/debug; bevel drives edge thickness */
+  /* 3×3 grid (optional zones/debug) */
   display: grid;
   grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
   grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
-  /* derived tones (keep as-is) */
+  /* derived tones */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 45%);
-  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 45%);
-  /* Edges blend → flat face (no glaze, no face gradient) */
+  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 27%);
+  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
+  /* layered backgrounds:
+     each edge uses 4 stops (0/30/70/100) for a rounded “roll-off” */
   background:
-  /* top edge */
-  linear-gradient(to bottom, var(--jz-edge-light), var(--jz-base-color)) 0 0 / 100% var(--jz-bevel) no-repeat,
-  /* left edge */
-  linear-gradient(to right, var(--jz-edge-light), var(--jz-base-color)) 0 0 / var(--jz-bevel) 100% no-repeat,
-  /* right edge */
-  linear-gradient(to left, var(--jz-edge-dark), var(--jz-base-color)) 100% 0 / var(--jz-bevel) 100% no-repeat,
-  /* bottom edge */
-  linear-gradient(to top, var(--jz-edge-dark), var(--jz-base-color)) 0 100% / 100% var(--jz-bevel) no-repeat,
-  /* FLAT face */
+  /* TOP edge (downward roll into face) */
+  linear-gradient( to bottom, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 0 / 100% var(--jz-bevel) no-repeat,
+  /* LEFT edge (rightward roll) */
+  linear-gradient( to right, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 0 / var(--jz-bevel) 100% no-repeat,
+  /* RIGHT edge (leftward roll) */
+  linear-gradient( to left, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 100% 0 / var(--jz-bevel) 100% no-repeat,
+  /* BOTTOM edge (upward roll) */
+  linear-gradient( to top, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 100% / 100% var(--jz-bevel) no-repeat,
+  /* FLAT face (no gradient) */
   var(--jz-base-color);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
-  /* depth; keep if you still want the soft outer drop */
+  /* outer/inner depth (unchanged) */
   box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
 }
+
+
 
 
 /* --------------------------- Centered Face Label ------------------------- */
