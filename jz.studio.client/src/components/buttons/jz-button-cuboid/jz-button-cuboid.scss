@@ -1,22 +1,20 @@
 /* ==========================================================================
-   JZ BUTTON CUBOID — complete SCSS (hybrid + full-paint, palette-driven)
+   JZ BUTTON CUBOID — Seamless Flat Face (Hybrid + Full-Paint)
    ========================================================================== */
 
-/* ----------------------------- Host & Defaults --------------------------- */
 :host {
   display: inline-block;
   inline-size: var(--jz-w, 140px);
   block-size: var(--jz-h, 60px);
-  /* geometry defaults */
+  /* geometry */
   --jz-radius: 8px;
   --jz-bevel: 8px;
-  /* palette default */
+  /* base palette */
   --jz-base-color: var(--plt-clr-3, #465e5a);
   --jz-text: black;
 }
 
-/* ----------------------------- Variants (host) --------------------------- */
-/* map host classes to palette tokens; adjust to your palette */
+/* ----------------------------- Variants ----------------------------- */
 :host(.primary) {
   --jz-base-color: var(--plt-clr-1);
 }
@@ -41,29 +39,7 @@
   --jz-base-color: var(--plt-bad, #b03a2e);
 }
 
-/* optional sizes */
-:host(.sm) {
-  --jz-w: 96px;
-  --jz-h: 40px;
-  --jz-radius: 6px;
-  --jz-bevel: 6px;
-}
-
-:host(.md) {
-  --jz-w: 140px;
-  --jz-h: 60px;
-  --jz-radius: 8px;
-  --jz-bevel: 8px;
-}
-
-:host(.lg) {
-  --jz-w: 200px;
-  --jz-h: 72px;
-  --jz-radius: 10px;
-  --jz-bevel: 9px;
-}
-
-/* The button always fills the host */
+/* ----------------------------- Button Host ----------------------------- */
 :host button.jz-btn {
   position: relative;
   inline-size: 100%;
@@ -73,134 +49,73 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-sizing: border-box;
   border-radius: calc(var(--jz-radius) + var(--jz-bevel));
   background: none;
   cursor: pointer;
-  user-select: none;
+  flex: 0 0 auto;
 }
 
-/* Cuboid overlay: tone derivation + layout/painting in one place */
+/* ----------------------------- Cuboid Overlay ---------------------------- */
 :host button.jz-btn > .cuboid {
-  /* --- Derived tones from the base palette color --- */
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  /* 3×3 for zones/debug; bevel drives edge thickness */
+  display: grid;
+  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
+  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
+  /* derived tones (keep as-is) */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 45%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 45%);
-  /* --- Overlay box + grid --- */
-  position: absolute;
-  inset: 0; /* EXACTLY fill the button */
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  display: grid;
-  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
-  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
-  gap: 0;
-  /* --- Hybrid: CSS edges + face + corners worklet --- */
+  /* Edges blend → flat face (no glaze, no face gradient) */
   background:
-  /* top edge */ linear-gradient(to bottom, var(--jz-edge-light), var(--jz-bg-light)) 0 0/100% var(--jz-bevel) no-repeat,
-  /* left edge */ linear-gradient(to right, var(--jz-edge-light), var(--jz-bg-light)) 0 0/var(--jz-bevel) 100% no-repeat,
-  /* right edge */ linear-gradient(to left, var(--jz-edge-dark), var(--jz-bg-strong)) 100% 0/var(--jz-bevel) 100% no-repeat,
-  /* bottom edge */ linear-gradient(to top, var(--jz-edge-dark), var(--jz-bg-strong)) 0 100%/100% var(--jz-bevel) no-repeat,
-  /* face fill */ linear-gradient(to bottom, var(--jz-bg-light) 0%, var(--jz-base-color) 50%, var(--jz-bg-strong) 100%) 0 0/100% 100% no-repeat,
-  /* glaze */ radial-gradient(100% 120% at 50% 45%, rgba(255,255,255,.03), rgba(0,0,0,.08)) 0 0/100% 100% no-repeat,
-  /* corners (TR + BL highlight) */ paint(jz-cuboid-corners);
+  /* top edge */
+  linear-gradient(to bottom, var(--jz-edge-light), var(--jz-base-color)) 0 0 / 100% var(--jz-bevel) no-repeat,
+  /* left edge */
+  linear-gradient(to right, var(--jz-edge-light), var(--jz-base-color)) 0 0 / var(--jz-bevel) 100% no-repeat,
+  /* right edge */
+  linear-gradient(to left, var(--jz-edge-dark), var(--jz-base-color)) 100% 0 / var(--jz-bevel) 100% no-repeat,
+  /* bottom edge */
+  linear-gradient(to top, var(--jz-edge-dark), var(--jz-base-color)) 0 100% / 100% var(--jz-bevel) no-repeat,
+  /* FLAT face */
+  var(--jz-base-color);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
-  /* depth */
+  /* depth; keep if you still want the soft outer drop */
   box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
 }
 
 
-/* --------------------------- Full-paint Modifier ------------------------- */
-/* add class 'fullpaint' on the host to hand everything to the worklet */
-:host(.fullpaint) button.jz-btn > .cuboid {
-  background: none;
-  background-image: paint(jz-cuboid-full);
-}
-
-/* --------------------------------- Zones -------------------------------- */
-:host .cuboid .zone {
-  display: block;
-  min-width: 0;
-  min-height: 0;
-}
-
-:host .cuboid .zone.A {
-  grid-area: 1 / 1;
-}
-
-:host .cuboid .zone.top {
-  grid-area: 1 / 2;
-}
-
-:host .cuboid .zone.B {
-  grid-area: 1 / 3;
-}
-
-:host .cuboid .zone.left {
-  grid-area: 2 / 1;
-}
-
-/* === FACE ZONE ========================================================= */
-:host .cuboid .zone.face {
-  grid-area: 2 / 2; /* the center cell */
-  width: 100%;
-  height: 100%;
-  display: flex; /* make the zone itself flex */
-  align-items: center; /* vertical centering */
-  justify-content: center; /* horizontal centering */
-  text-align: center;
-  overflow: hidden; /* keep text inside the face */
-  z-index: 1; /* above cuboid background */
-}
-
-/* === FACE CONTENT (LABEL) ============================================== */
-:host .cuboid .zone.face > * {
-  display: flex;
-  text-align: center;
-  line-height: 1.2;
-  white-space: normal; /* allow multiline wrapping */
-  word-break: break-word;
-  color: var(--jz-text, black);
-  font-weight: 600;
-  font-size: 1em;
-}
-
-:host .cuboid .zone.right {
-  grid-area: 2 / 3;
-}
-
-:host .cuboid .zone.D {
-  grid-area: 3 / 1;
-}
-
-:host .cuboid .zone.bottom {
-  grid-area: 3 / 2;
-}
-
-:host .cuboid .zone.C {
-  grid-area: 3 / 3;
-}
-
 /* --------------------------- Centered Face Label ------------------------- */
-/* make the inner element fill the face cell and center its content */
-:host .zone.face > * {
-  width: 100%;
-  height: 100%;
-  display: flex; /* works fine inside the grid cell */
+:host .cuboid .zone.face {
+  grid-area: 2 / 2;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 .75em; /* optional side padding for long text */
+  z-index: 1;
+}
+
+:host .cuboid .zone.face > * {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 .75em;
   color: var(--jz-text);
   font-weight: 600;
   letter-spacing: .02em;
   line-height: 1.2;
-  white-space: normal; /* allow multi-line */
+  white-space: normal;
   word-break: break-word;
+  text-align: center;
 }
 
 /* ------------------------------ States ---------------------------------- */
@@ -213,8 +128,7 @@
   transform: translateY(1px);
 }
 
-:host([disabled]),
-:host(.disabled) {
+:host([disabled]), :host(.disabled) {
   pointer-events: none;
   opacity: .55;
   filter: grayscale(.2) saturate(.8);
