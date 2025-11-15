@@ -1,8 +1,13 @@
-/*jz-button-cuboid.scss*/
+/* jz-button-cuboid.scss
+   -------------------------------------------------------------------------
+   JZ BUTTON CUBOID — Seamless flat face + beveled edges
+   • Face is flat (var(--jz-base-color))
+   • Edges are CSS linear-gradients
+   • Corners A (TL) & C (BR) get soft radial blends (worklet handles B & D)
+   • Grid tracks are explicit so zones never collapse
+   ------------------------------------------------------------------------- */
 
-/* ==========================================================================
-   JZ BUTTON CUBOID — Seamless Flat Face (Hybrid + Full-Paint)
-   ========================================================================== */
+/* ===================== Host (keep your dimensions) ===================== */
 :host {
   display: inline-block;
   inline-size: var(--jz-w, 140px);
@@ -10,39 +15,37 @@
   /* geometry */
   --jz-radius: 8px;
   --jz-bevel: 8px;
-  /* base palette */
+  /* palette */
   --jz-base-color: var(--plt-clr-3, #465e5a);
   --jz-text: black;
 }
 
-/* ===== Variants ===== */
-@at-root {
-  :host(.primary) {
-    --jz-base-color: var(--plt-clr-1);
-  }
-
-  :host(.secondary) {
-    --jz-base-color: var(--plt-clr-2);
-  }
-
-  :host(.tertiary) {
-    --jz-base-color: var(--plt-clr-3);
-  }
-
-  :host(.success) {
-    --jz-base-color: var(--plt-ok, #2e8b57);
-  }
-
-  :host(.warning) {
-    --jz-base-color: var(--plt-warn, #b8860b);
-  }
-
-  :host(.danger) {
-    --jz-base-color: var(--plt-bad, #b03a2e);
-  }
+/* ============================= Variants =============================== */
+:host(.primary) {
+  --jz-base-color: var(--plt-clr-1);
 }
 
-/* ----------------------------- Button Host ----------------------------- */
+:host(.secondary) {
+  --jz-base-color: var(--plt-clr-2);
+}
+
+:host(.tertiary) {
+  --jz-base-color: var(--plt-clr-3);
+}
+
+:host(.success) {
+  --jz-base-color: var(--plt-ok, #2e8b57);
+}
+
+:host(.warning) {
+  --jz-base-color: var(--plt-warn, #b8860b);
+}
+
+:host(.danger) {
+  --jz-base-color: var(--plt-bad, #b03a2e);
+}
+
+/* =========================== Button host ============================== */
 :host button.jz-btn {
   position: relative;
   inline-size: 100%;
@@ -52,56 +55,105 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--jz-radius);
+  border-radius: var(--jz-radius); /* keep only radius */
   background: none;
   cursor: pointer;
+  box-sizing: border-box;
   flex: 0 0 auto;
 }
 
-/* ----------------------------- Cuboid Overlay ---------------------------- */
+/* ========================== Cuboid overlay ============================ */
+/* Shield from any global `div { display:flex }` rules and freeze tracks */
+:host button.jz-btn > .cuboid,
+:host .cuboid .zone {
+  display: block;
+}
+
 :host button.jz-btn > .cuboid {
-  /* geometry / placement */
   position: absolute;
   inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
   border-radius: inherit;
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
-  /* 3×3 grid (optional zones/debug) */
-  display: grid;
+  /* 3×3 grid (bevel, face, bevel) */
+  display: grid !important;
   grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
   grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
-  /* derived tones */
+  grid-auto-columns: 0;
+  grid-auto-rows: 0;
+  place-items: stretch;
+  /* derived tones (edge contrast softened per your tweak) */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 27%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
-  /* layered backgrounds:
-     each edge uses 4 stops (0/30/70/100) for a rounded “roll-off” */
+  /* Edge bands + flat face */
   background:
-  /* TOP edge (downward roll into face) */
-  linear-gradient( to bottom, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 0 / 100% var(--jz-bevel) no-repeat,
-  /* LEFT edge (rightward roll) */
-  linear-gradient( to right, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 0 / var(--jz-bevel) 100% no-repeat,
-  /* RIGHT edge (leftward roll) */
-  linear-gradient( to left, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 100% 0 / var(--jz-bevel) 100% no-repeat,
-  /* BOTTOM edge (upward roll) */
-  linear-gradient( to top, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 35%) 30%, color-mix(in srgb, var(--jz-base-color), var(--jz-bg-strong) 20%) 70%, var(--jz-base-color) 100% ) 0 100% / 100% var(--jz-bevel) no-repeat,
-  /* FLAT face (no gradient) */
+  /* top edge */
+  linear-gradient( to bottom, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%) 45%, var(--jz-base-color) 100% ) 0 0/100% var(--jz-bevel) no-repeat,
+  /* left edge */
+  linear-gradient( to right, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%) 45%, var(--jz-base-color) 100% ) 0 0/var(--jz-bevel) 100% no-repeat,
+  /* right edge */
+  linear-gradient( to left, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%) 55%, var(--jz-base-color) 100% ) 100% 0/var(--jz-bevel) 100% no-repeat,
+  /* bottom edge */
+  linear-gradient( to top, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%) 55%, var(--jz-base-color) 100% ) 0 100%/100% var(--jz-bevel) no-repeat,
+  /* flat face */
   var(--jz-base-color);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
-  /* outer/inner depth (unchanged) */
+  /* depth (outer + slight inner) */
   box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
 }
 
+/* ============================ Zones map =============================== */
+:host .cuboid .zone.A {
+  grid-area: 1 / 1;
+}
 
+:host .cuboid .zone.top {
+  grid-area: 1 / 2;
+}
 
+:host .cuboid .zone.B {
+  grid-area: 1 / 3;
+}
 
-/* --------------------------- Centered Face Label ------------------------- */
+:host .cuboid .zone.left {
+  grid-area: 2 / 1;
+}
+
 :host .cuboid .zone.face {
   grid-area: 2 / 2;
+}
+
+:host .cuboid .zone.right {
+  grid-area: 2 / 3;
+}
+
+:host .cuboid .zone.D {
+  grid-area: 3 / 1;
+}
+
+:host .cuboid .zone.bottom {
+  grid-area: 3 / 2;
+}
+
+:host .cuboid .zone.C {
+  grid-area: 3 / 3;
+}
+
+/* Prevent empty zones from collapsing (DevTools will show size) */
+:host .cuboid .zone {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* ======================== Face + label centering ======================= */
+:host .cuboid .zone.face {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,7 +177,19 @@
   text-align: center;
 }
 
-/* ------------------------------ States ---------------------------------- */
+/* ================= Radial blends for A (TL) and C (BR) ================= */
+/* These softly rotate the edge lighting around the rounded corner.       */
+/* B & D are intentionally left clean for your corner worklet.            */
+
+:host .cuboid .zone.A {
+  background: radial-gradient( circle at 100% 100%, var(--jz-base-color) 0%, color-mix(in srgb, var(--jz-base-color), white 18%) 40%, var(--jz-edge-light) 100% );
+}
+
+:host .cuboid .zone.C {
+  background: radial-gradient( circle at 0% 0%, var(--jz-base-color) 0%, color-mix(in srgb, var(--jz-base-color), black 18%) 40%, var(--jz-edge-dark) 100% );
+}
+
+/* =========================== Interaction ============================== */
 :host button.jz-btn:hover > .cuboid {
   filter: brightness(1.05);
 }
@@ -141,7 +205,7 @@
   filter: grayscale(.2) saturate(.8);
 }
 
-/* ------------------------- High-Contrast Safety -------------------------- */
+/* ====================== High-contrast safety ========================== */
 @media (forced-colors: active) {
   :host button.jz-btn {
     border: 1px solid CanvasText;
