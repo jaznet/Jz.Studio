@@ -199,10 +199,14 @@
   transform: translateY(1px);
 }
 
-:host([disabled]), :host(.disabled) {
-  pointer-events: none;
-  opacity: .55;
-  filter: grayscale(.2) saturate(.8);
+/* Disabled state on the HOST itself (attribute or class) */
+:host {
+  &[disabled],
+  &.disabled {
+    pointer-events: none;
+    opacity: .55;
+    filter: grayscale(.2) saturate(.8);
+  }
 }
 
 /* ====================== High-contrast safety ========================== */
