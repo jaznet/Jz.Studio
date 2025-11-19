@@ -1,13 +1,9 @@
 /* jz-button-cuboid.scss
-   -------------------------------------------------------------------------
-   JZ BUTTON CUBOID — Seamless flat face + beveled edges
-   • Face is flat (var(--jz-base-color))
-   • Edges are CSS linear-gradients
-   • Corners A (TL) & C (BR) get soft radial blends (worklet handles B & D)
-   • Grid tracks are explicit so zones never collapse
-   ------------------------------------------------------------------------- */
+   ==========================================================================
+   JZ BUTTON CUBOID — Seamless Flat Face with Zoned Edges + B/D Worklet
+   ========================================================================== */
 
-/* ===================== Host (keep your dimensions) ===================== */
+/* ----------------------------- Host & Defaults --------------------------- */
 :host {
   display: inline-block;
   inline-size: var(--jz-w, 140px);
@@ -15,12 +11,12 @@
   /* geometry */
   --jz-radius: 8px;
   --jz-bevel: 8px;
-  /* palette */
+  /* base palette */
   --jz-base-color: var(--plt-clr-3, #465e5a);
   --jz-text: black;
 }
 
-/* ============================= Variants =============================== */
+/* ----------------------------- Variants ---------------------------------- */
 :host(.primary) {
   --jz-base-color: var(--plt-clr-1);
 }
@@ -45,7 +41,29 @@
   --jz-base-color: var(--plt-bad, #b03a2e);
 }
 
-/* =========================== Button host ============================== */
+/* Optional size modifiers */
+:host(.sm) {
+  --jz-w: 96px;
+  --jz-h: 40px;
+  --jz-radius: 6px;
+  --jz-bevel: 6px;
+}
+
+:host(.md) {
+  --jz-w: 140px;
+  --jz-h: 60px;
+  --jz-radius: 8px;
+  --jz-bevel: 8px;
+}
+
+:host(.lg) {
+  --jz-w: 200px;
+  --jz-h: 72px;
+  --jz-radius: 10px;
+  --jz-bevel: 9px;
+}
+
+/* ----------------------------- Button Shell ------------------------------ */
 :host button.jz-btn {
   position: relative;
   inline-size: 100%;
@@ -55,162 +73,185 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--jz-radius); /* keep only radius */
+  border-radius: var(--jz-radius);
   background: none;
   cursor: pointer;
   box-sizing: border-box;
-  flex: 0 0 auto;
 }
 
-/* ========================== Cuboid overlay ============================ */
-/* Shield from any global `div { display:flex }` rules and freeze tracks */
-:host button.jz-btn > .cuboid,
-:host .cuboid .zone {
-  display: block;
-}
+  /* ----------------------------- Cuboid Overlay ---------------------------- */
+  :host button.jz-btn > .cuboid {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    display: grid;
+    grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
+    grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
+    place-items: stretch;
+    border-radius: inherit;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+    /* flat face color behind all zones & worklet */
+    background-color: var(--jz-base-color);
+    /* derived tones */
+    --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
+    --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
+    --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 27%);
+    --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
+    --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
+    --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
+    /* B + D corner highlights via worklet */
+    background-image: paint(jz-corners-bd);
+    background-repeat: no-repeat;
+    background-origin: border-box;
+    background-clip: border-box;
+    /* depth */
+    box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.35) inset, 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 6px 14px rgba(0, 0, 0, 0.35), 0 2px 3px rgba(0, 0, 0, 0.35);
+  }
 
-:host button.jz-btn > .cuboid {
-  position: absolute;
-  inset: 0;
-  inline-size: 100%;
-  block-size: 100%;
-  border-radius: inherit;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-  /* 3×3 grid (bevel, face, bevel) */
-  display: grid !important;
-  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
-  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
-  grid-auto-columns: 0;
-  grid-auto-rows: 0;
-  place-items: stretch;
-  /* derived tones (edge contrast softened per your tweak) */
-  --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
-  --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 27%);
-  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
-  /* Edge bands + flat face */
-  background:
-  /* top edge */
-
-  /* left edge */
-  linear-gradient( to right, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%) 45%, var(--jz-base-color) 100% ) 0 0/var(--jz-bevel) 100% no-repeat,
-  /* right edge */
-  linear-gradient( to left, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%) 55%, var(--jz-base-color) 100% ) 100% 0/var(--jz-bevel) 100% no-repeat,
-  /* bottom edge */
-  linear-gradient( to top, var(--jz-edge-dark) 0%, color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%) 55%, var(--jz-base-color) 100% ) 0 100%/100% var(--jz-bevel) no-repeat,
-  /* flat face */
-  var(--jz-base-color);
-  background-repeat: no-repeat;
-  background-origin: border-box;
-  background-clip: border-box;
-  /* depth (outer + slight inner) */
-  box-shadow: 0 .5px 0 rgba(0,0,0,.35) inset, 0 1px 0 rgba(255,255,255,.06) inset, 0 6px 14px rgba(0,0,0,.35), 0 2px 3px rgba(0,0,0,.35);
-}
-
-/* ============================ Zones map =============================== */
-:host .cuboid .zone.A {
-  grid-area: 1 / 1;
-}
-
-:host .cuboid .zone.top {
-  grid-area: 1 / 2;
-  linear-gradient( to bottom, var(--jz-edge-light) 0%, color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%) 45%, var(--jz-base-color) 100% ) 0 0/100% var(--jz-bevel) no-repeat,
-}
-
-:host .cuboid .zone.B {
-  grid-area: 1 / 3;
-}
-
-:host .cuboid .zone.left {
-  grid-area: 2 / 1;
-}
-
-:host .cuboid .zone.face {
-  grid-area: 2 / 2;
-}
-
-:host .cuboid .zone.right {
-  grid-area: 2 / 3;
-}
-
-:host .cuboid .zone.D {
-  grid-area: 3 / 1;
-}
-
-:host .cuboid .zone.bottom {
-  grid-area: 3 / 2;
-}
-
-:host .cuboid .zone.C {
-  grid-area: 3 / 3;
-}
-
-/* Prevent empty zones from collapsing (DevTools will show size) */
+/* Zones should not collapse */
 :host .cuboid .zone {
   min-width: 0;
   min-height: 0;
+  display: block;
 }
 
-/* ======================== Face + label centering ======================= */
-:host .cuboid .zone.face {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  z-index: 1;
-}
+  /* --------------------------- Grid Cell Mapping --------------------------- */
+  :host .cuboid .zone.A {
+    grid-area: 1 / 1;
+  }
+  /* TL corner */
+  :host .cuboid .zone.top {
+    grid-area: 1 / 2;
+  }
+  /* top edge  */
+  :host .cuboid .zone.B {
+    grid-area: 1 / 3;
+  }
+  /* TR corner */
 
-:host .cuboid .zone.face > * {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 .75em;
-  color: var(--jz-text);
-  font-weight: 600;
-  letter-spacing: .02em;
-  line-height: 1.2;
-  white-space: normal;
-  word-break: break-word;
-  text-align: center;
-}
+  :host .cuboid .zone.left {
+    grid-area: 2 / 1;
+  }
+  /* left edge */
+  :host .cuboid .zone.face {
+    grid-area: 2 / 2;
+  }
+  /* flat face */
+  :host .cuboid .zone.right {
+    grid-area: 2 / 3;
+  }
+  /* right edge */
 
-/* ================= Radial blends for A (TL) and C (BR) ================= */
-/* These softly rotate the edge lighting around the rounded corner.       */
-/* B & D are intentionally left clean for your corner worklet.            */
+  :host .cuboid .zone.D {
+    grid-area: 3 / 1;
+  }
+  /* BL corner */
+  :host .cuboid .zone.bottom {
+    grid-area: 3 / 2;
+  }
+  /* bottom edge */
+  :host .cuboid .zone.C {
+    grid-area: 3 / 3;
+  }
+  /* BR corner */
 
-:host .cuboid .zone.A {
-  background: radial-gradient( circle at 100% 100%, var(--jz-base-color) 0%, color-mix(in srgb, var(--jz-base-color), white 18%) 40%, var(--jz-edge-light) 100% );
-}
+  /* ------------------------------ Edges ------------------------------------ */
+  /* TOP edge – light → mid-light → face */
+  :host .cuboid .zone.top {
+    background-image: linear-gradient( to bottom, var(--jz-edge-light) 0%, var(--jz-edge-mid-light) 45%, var(--jz-base-color) 100% );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 0;
+  }
 
-:host .cuboid .zone.C {
-  background: radial-gradient( circle at 0% 0%, var(--jz-base-color) 0%, color-mix(in srgb, var(--jz-base-color), black 18%) 40%, var(--jz-edge-dark) 100% );
-}
+  /* BOTTOM edge – dark → mid-dark → face */
+  :host .cuboid .zone.bottom {
+    background-image: linear-gradient( to top, var(--jz-edge-dark) 0%, var(--jz-edge-mid-dark) 45%, var(--jz-base-color) 100% );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 100%;
+  }
 
-/* =========================== Interaction ============================== */
+  /* LEFT edge – light (outer) → mid-light → face (inner) */
+  :host .cuboid .zone.left {
+    background-image: linear-gradient( to right, var(--jz-edge-light) 0%, var(--jz-edge-mid-light) 45%, var(--jz-base-color) 100% );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 0 0;
+  }
+
+  /* RIGHT edge – dark (outer) → mid-dark → face (inner) */
+  :host .cuboid .zone.right {
+    background-image: linear-gradient( to left, var(--jz-edge-dark) 0%, var(--jz-edge-mid-dark) 45%, var(--jz-base-color) 100% );
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 100% 0;
+  }
+
+  /* --------------------------- Corner Radials A & C ------------------------ */
+  /* A (top-left): blend left/top edges into face */
+  :host .cuboid .zone.A {
+    background-image: radial-gradient( circle at 100% 100%, /* pivot toward inner corner */
+    var(--jz-base-color) 0%, var(--jz-bg-light) 40%, var(--jz-edge-light) 100% );
+    background-repeat: no-repeat;
+  }
+
+  /* C (bottom-right): blend right/bottom edges into face */
+  :host .cuboid .zone.C {
+    background-image: radial-gradient( circle at 0% 0%, /* pivot toward inner corner */
+    var(--jz-base-color) 0%, var(--jz-bg-strong) 40%, var(--jz-edge-dark) 100% );
+    background-repeat: no-repeat;
+  }
+
+  /* B & D corners are drawn by the worklet; no CSS gradient here */
+
+  /* --------------------------- Face & Label -------------------------------- */
+  :host .cuboid .zone.face {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 1;
+  }
+
+    :host .cuboid .zone.face > * {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.75em;
+      color: var(--jz-text);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      white-space: normal;
+      word-break: break-word;
+      text-align: center;
+    }
+
+/* ------------------------------ States ----------------------------------- */
 :host button.jz-btn:hover > .cuboid {
   filter: brightness(1.05);
 }
 
 :host button.jz-btn:active > .cuboid {
-  filter: brightness(.92);
+  filter: brightness(0.92);
   transform: translateY(1px);
 }
 
-/* Disabled state on the HOST itself (attribute or class) */
-:host {
-  &[disabled],
-  &.disabled {
-    pointer-events: none;
-    opacity: .55;
-    filter: grayscale(.2) saturate(.8);
-  }
+/* Disabled via [disabled] attribute or .disabled class on host */
+:host([disabled]),
+:host(.disabled) {
+  pointer-events: none;
+  opacity: 0.55;
+  filter: grayscale(0.2) saturate(0.8);
 }
 
-/* ====================== High-contrast safety ========================== */
+/* ------------------------- High-Contrast Safety -------------------------- */
 @media (forced-colors: active) {
   :host button.jz-btn {
     border: 1px solid CanvasText;
@@ -219,8 +260,9 @@
     box-shadow: none;
   }
 
-  :host button.jz-btn > .cuboid {
-    background: none;
-    box-shadow: none;
-  }
+    :host button.jz-btn > .cuboid {
+      background: none;
+      background-image: none;
+      box-shadow: none;
+    }
 }
