@@ -98,7 +98,7 @@
     /* derived tones */
     --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
     --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-    --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 27%);
+    --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 25%);
     --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
     --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
     --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
