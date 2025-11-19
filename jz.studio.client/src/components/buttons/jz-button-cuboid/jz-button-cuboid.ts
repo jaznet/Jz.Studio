@@ -25,7 +25,7 @@ export class JzButtonCuboid extends ButtonBase {
     const cssAny = CSS as any; // or add the ambient .d.ts from earlier
     if (cssAny && 'paintWorklet' in cssAny) {
       cssAny.paintWorklet.addModule(
-        new URL('./jz-bevel-corner.worklet.js', import.meta.url) // colocated
+        new URL('./jz-bevel-corner-worklet.js', import.meta.url) // colocated
       );
     }
   }
