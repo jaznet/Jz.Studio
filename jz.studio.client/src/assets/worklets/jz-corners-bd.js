@@ -69,28 +69,56 @@ if (typeof registerPaint !== "undefined") {
 
 
     // Corner painters -----------------------------------------------------
-    paintCornerTR(ctx, w, h, r, light, strength) {
-      console.log('    - paintCornerTR', ctx,w,h,r,light,strength);
-      // clip to quarter-circle in the top-right
+    paintCornerTR(ctx, w, h, r, lightRGB, darkRGB, strength) {
+      console.log('      - JZCornersBD.paintCornerTR called', w, h, r, lightRGB, darkRGB, strength);
+      // center at the *outer* top-right corner
+      const cx = w;
+      const cy = 0;
+
+      // how wide you want the painted band
+      const band = r;           // 0..r pixels from the corner
+      const steps = Math.max(1, Math.floor(band));
+
+      // clip to the quarter circle so strokes can’t bleed outside
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(w - r, 0);
       ctx.arcTo(w, 0, w, r, r);
-      ctx.lineTo(w - r, 0);
+      ctx.arcTo(w, r, w - r, r, r);
       ctx.closePath();
       ctx.clip();
 
-      // Radial highlight emanating from the inner corner pivot
-      const cx = w - r;
-      const cy = r;
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      grad.addColorStop(0.00, this.withAlpha(light, 0.16 * strength));
-      grad.addColorStop(0.55, this.withAlpha(light, 0.06 * strength));
-      grad.addColorStop(1.00, this.withAlpha(light, 0.00));
-      ctx.fillStyle = grad;
-      ctx.fillRect(w - r, 0, r, r);
+      ctx.lineWidth = 1;
+
+      // helper to mix light→dark
+      const mix = (a, b, t) => ({
+        r: a.r * (1 - t) + b.r * t,
+        g: a.g * (1 - t) + b.g * t,
+        b: a.b * (1 - t) + b.b * t,
+      });
+      const rgba = (c, a) =>
+        `rgba(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)},${a})`;
+
+      for (let i = 0; i < steps; i++) {
+    
+        // radius from corner; +0.5 keeps stroke centered on pixel rows
+        const radius = i + 0.5;
+        const t = i / (steps - 1 || 1);   // 0..1 from outermost to innermost
+
+        // MIX LIGHT → DARK (or swap if you want dark→light)
+        const col = mix(lightRGB, darkRGB, t);
+        const alpha = strength * (0.10 + 0.20 * (1 - t)); // fade inward a bit
+
+        ctx.beginPath();
+        // quarter-arc from top edge (-90°) to right edge (0°)
+        ctx.arc(cx, cy, radius, -Math.PI / 2, 0, false);
+        ctx.strokeStyle = rgba(col, alpha);
+        ctx.stroke();
+      }
+
       ctx.restore();
     }
+
 
     paintCornerBL(ctx, w, h, r, dark, strength) {
       // clip to quarter-circle in the bottom-left
@@ -115,7 +143,7 @@ if (typeof registerPaint !== "undefined") {
     }
 
     paint(ctx, size, props) {
-      console.log('    - JZCornersBD.paint called',ctx,size,props);
+//      console.log('    - JZCornersBD.paint called',ctx,size,props);
       const w = size.width, h = size.height;
       const r = Math.max(0, this.px(props, '--jz-radius', 8));
       // bevel informs how “wide” the corner impression should feel
