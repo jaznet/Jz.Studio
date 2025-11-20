@@ -46,27 +46,31 @@ if (typeof registerPaint !== "undefined") {
       }
       return null;
     }
-    withAlpha(color, a) {
-      // Accepts hex or rgb/rgba strings; returns rgba(...)
-      const rgb = this.hexToRgb(color);
-      if (rgb) return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${a})`;
-      // Already rgb/rgba — just normalize alpha
-      const s = color.replace(/\s+/g, '');
-      if (s.startsWith('rgba')) {
-        return s.replace(/rgba\(([^)]+)\)/, (_, inner) => {
-          const parts = inner.split(',');
-          return `rgba(${parts[0]},${parts[1]},${parts[2]},${a})`;
-        });
+
+    withAlpha(color, alpha) {
+      const raw = String(color).trim();
+
+      // If it contains "color-mix", "rgb(", or anything not simple hex — return as-is.
+      if (/color-mix|\brgb/i.test(raw)) {
+        return raw;
       }
-      if (s.startsWith('rgb(')) {
-        return s.replace(/rgb\(([^)]+)\)/, (_, inner) => `rgba(${inner},${a})`);
-      }
-      // Fallback: just return color (browser will blend it as solid)
-      return color;
+
+      // Only accept plain #RRGGBB or RRGGBB
+      const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(raw);
+      if (!m) return raw;
+
+      const r = parseInt(m[1], 16);
+      const g = parseInt(m[2], 16);
+      const b = parseInt(m[3], 16);
+      const a = Math.max(0, Math.min(1, alpha));
+
+      return `rgba(${r}, ${g}, ${b}, ${a})`;
     }
+
 
     // Corner painters -----------------------------------------------------
     paintCornerTR(ctx, w, h, r, light, strength) {
+      console.log('    - paintCornerTR', ctx,w,h,r,light,strength);
       // clip to quarter-circle in the top-right
       ctx.save();
       ctx.beginPath();
@@ -111,6 +115,7 @@ if (typeof registerPaint !== "undefined") {
     }
 
     paint(ctx, size, props) {
+      console.log('    - JZCornersBD.paint called',ctx,size,props);
       const w = size.width, h = size.height;
       const r = Math.max(0, this.px(props, '--jz-radius', 8));
       // bevel informs how “wide” the corner impression should feel

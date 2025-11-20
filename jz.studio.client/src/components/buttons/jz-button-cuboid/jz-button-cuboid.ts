@@ -21,13 +21,6 @@ export class JzButtonCuboid extends ButtonBase {
     renderer.removeAttribute(el.nativeElement, 'role');
     renderer.removeAttribute(el.nativeElement, 'tabindex');
     renderer.removeAttribute(el.nativeElement, 'aria-disabled');
-
-    const cssAny = CSS as any; // or add the ambient .d.ts from earlier
-    if (cssAny && 'paintWorklet' in cssAny) {
-      cssAny.paintWorklet.addModule(
-        new URL('./jz-bevel-corner-worklet.js', import.meta.url) // colocated
-      );
-    }
   }
 
   onClick() { this.emitClicked(); }

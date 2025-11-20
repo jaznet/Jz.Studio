@@ -1,5 +1,5 @@
-/* jz-bevel-corner-worklet.js — paints corners B (top-right) and D (bottom-left) */
-registerPaint('jz-cuboid-bd', class {
+/* jz-bevel-corner-worklet.js */
+registerPaint('jz-corners-bd', class {
   static get inputProperties() {
     return [
       '--jz-radius', '--jz-bevel', '--jz-base-color',

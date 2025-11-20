@@ -35,51 +35,27 @@ dxConfig({
    Paint Worklet registration helpers
 ------------------------------------------------------------------------------------------------- */
 
-/**
- * Registers the older bevel-corner worklet (for experimental or legacy buttons).
- */
-async function registerPaintWorklet() {
-  const cssAny = CSS as any; // <-- prevents TS2339: paintWorklet not on CSS type
-  if (!('paintWorklet' in cssAny)) {
-    console.warn('[Bevel Worklet] paintWorklet not supported.');
-    return;
-  }
-  if ((window as any).__jzBevelLoaded) return;
+// main.ts
 
-  const url = '/assets/worklets/jz-bevel-corner-worklet.js';
-  try {
-    await cssAny.paintWorklet.addModule(url);
-    (window as any).__jzBevelLoaded = true;
-    console.log('[Bevel Worklet] loaded:', url);
-  } catch (err) {
-    console.error('[Bevel Worklet] failed:', err);
-  }
-}
+// Allow CSS.paintWorklet to exist
+declare const CSS: any;
 
-function ensureCuboidPaintWorklet(url = '/assets/worklets/jz-cuboid.worklet.js') {
-  const cssAny = CSS as any; // <-- same fix here
-  if (!('paintWorklet' in cssAny)) {
-    console.warn('[Cuboid Worklet] not supported in this browser.');
-    return;
-  }
-  if ((window as any).__jzCuboidLoaded) return;
-
-  cssAny.paintWorklet
-    .addModule(url)
+// main.ts
+if ('paintWorklet' in (CSS as any)) {
+  (CSS as any).paintWorklet
+    .addModule('assets/worklets/jz-corners-bd.js') // note: no leading slash
     .then(() => {
-      (window as any).__jzCuboidLoaded = true;
-      console.log('[Cuboid Worklet] loaded:', url);
-      document.documentElement.classList.add('has-paint');
+      console.log('✅ jz-corners-bd paint worklet loaded');
     })
-    .catch((err: any) => console.error('[Cuboid Worklet] failed:', err));
+    .catch((err: any) => {
+      console.error('❌ Failed to load jz-corners-bd paint worklet', err);
+    });
+} else {
+  console.warn('⚠️ CSS.paintWorklet not supported in this browser');
 }
 
 
-/* -------------------------------------------------------------------------------------------------
-   Invoke both worklet loaders before Angular bootstraps
-------------------------------------------------------------------------------------------------- */
-registerPaintWorklet();       // Loads jz-bevel-corner-worklet.js
-ensureCuboidPaintWorklet();   // Loads jz-cuboid.worklet.js
+
 
 /* -------------------------------------------------------------------------------------------------
    Angular bootstrap
