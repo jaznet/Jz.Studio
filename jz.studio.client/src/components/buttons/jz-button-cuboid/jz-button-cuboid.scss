@@ -83,6 +83,18 @@
     --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
     --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
     --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
+      /* --- corner helpers (auto-sync with edges) ---------------------- */
+  /* top-left corner A: mostly lighter side of the base */
+  --jz-corner-a-inner:   color-mix(in srgb, var(--jz-base-color), black 18%);
+  --jz-corner-a-mid1:    var(--jz-edge-mid-light);
+  --jz-corner-a-mid2:    color-mix(in srgb, var(--jz-edge-mid-light), var(--jz-edge-light) 45%);
+  --jz-corner-a-outer:   var(--jz-edge-light);
+
+  /* bottom-right corner C: mostly darker side of the base */
+  --jz-corner-c-inner:   color-mix(in srgb, var(--jz-base-color), white 20%);
+  --jz-corner-c-mid1:    var(--jz-edge-mid-dark);
+  --jz-corner-c-mid2:    color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-edge-dark) 55%);
+  --jz-corner-c-outer:   var(--jz-edge-dark);
     /* TR + BL corners painted by worklet – B & D stay transparent */
     background-image: paint(jz-corners-bd);
     background-repeat: no-repeat;
@@ -206,17 +218,33 @@
   /*  B & D are left transparent for the worklet                               */
   /* ========================================================================== */
 
-  /* A – top-left, light bevel */
-  :host .cuboid .zone.A {
-    background: radial-gradient( circle at 100% 100%, var(--jz-base-color) 0%, var(--jz-edge-mid-light) 45%, var(--jz-edge-light) 100% );
-    background-repeat: no-repeat;
-  }
+/* A – top-left, light edge, 4-stop radial:
+   inner (toward face) = base, outer rim = light */
+:host .cuboid .zone.A {
+  background-image: radial-gradient(
+    circle at 100% 100%,            /* inner corner (touches face) */
+    var(--jz-base-color) 0%,        /* right at the face */
+    var(--jz-edge-mid-light) 45%,   /* gentle lift */
+    var(--jz-edge-light) 75%,       /* bright band */
+    var(--jz-edge-light) 100%       /* rim, matches top/left edges */
+  );
+  background-repeat: no-repeat;
+}
 
-  /* C – bottom-right, dark bevel */
-  :host .cuboid .zone.C {
-    background: radial-gradient( circle at 0% 0%, var(--jz-base-color) 0%, var(--jz-edge-mid-dark) 45%, var(--jz-edge-dark) 100% );
-    background-repeat: no-repeat;
-  }
+/* C – bottom-right, dark edge, 4-stop radial:
+   inner (toward face) = base, outer rim = dark */
+:host .cuboid .zone.C {
+  background-image: radial-gradient(
+    circle at 0 0,                  /* inner corner (touches face) */
+    var(--jz-base-color) 0%,        /* right at the face */
+    var(--jz-edge-mid-dark) 45%,    /* gentle darkening */
+    var(--jz-edge-dark) 75%,        /* strong shadow band */
+    var(--jz-edge-dark) 100%        /* rim, matches bottom/right edges */
+  );
+  background-repeat: no-repeat;
+}
+
+
 
   /* B & D stay transparent – only worklet paints these cells */
   :host .cuboid .zone.B,
