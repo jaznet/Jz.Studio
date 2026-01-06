@@ -1,9 +1,13 @@
 import { Directive, HostBinding, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { MenuType } from '../../../types/menu';
 
 @Directive()
 // No template/host listeners here—derived components wire the inner <button>.
 export abstract class ButtonBase implements OnChanges {
   /* ---------- Public API (shared across all buttons) ---------- */
+  @Input() route = '';
+  @Input() menuType: MenuType = 'none';
+  @Input() isSelected: boolean = false;
 
   /** Label text (optional; components may also project content) */
   @Input() text = '';

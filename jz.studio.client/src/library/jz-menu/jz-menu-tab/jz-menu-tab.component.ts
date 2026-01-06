@@ -5,17 +5,16 @@ import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
-import { JzButton } from '../../../components/buttons/jz-button/jz-button';
+import { JzButtonCuboid } from '../../../components/buttons/jz-button-cuboid/jz-button-cuboid';
 
 @Component({
     selector: 'jz-menu-tab',
-    imports: [CommonModule, JzButton],
+    imports: [CommonModule, JzButtonCuboid],
     templateUrl: './jz-menu-tab.component.html',
     styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit {
-  @ViewChild('tabbutton') tabButton!: JzButton;
-
+  @ViewChild('tabbutton') tabButton!: JzButtonCuboid;
   // Narrow some types for safer templates
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() flexflow: 'row' | 'column' = 'row';
@@ -25,7 +24,7 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   @Input() menuName = 'not set';
   @Input() isDefault = false;
 
-  @Input() route!: string | any[];
+  @Input() route!: string;
   @Input() tab_name = 'tab name';
   @Input() btnTxt = 'Tab Button';
   @Input() palette = 'default';

@@ -1,165 +1,181 @@
-// assets/worklets/jz-corners-bd.js
+// /assets/worklets/jz-corners-bd.js
 // Paints beveled overlays for corners B (top-right) and D (bottom-left)
+// in a way that blends with the left/top (LAT) and right/bottom (RCB) edges.
 
-if (typeof registerPaint !== "undefined") {
+if (typeof registerPaint !== 'undefined') {
   class JZCornersBD {
     static get inputProperties() {
       return [
         '--jz-base-color',
-        '--jz-edge-light',
-        '--jz-edge-dark',
         '--jz-radius',
         '--jz-bevel',
-        '--jz-corner-strength' // optional 0..1
+        '--jz-edge-light',
+        '--jz-edge-dark',
+        '--jz-bd-strength',   // 0..1, overall intensity
+        '--jz-bd-light-mix',  // % white used if edge-light is color-mix(...)
+        '--jz-bd-dark-mix',   // % black used if edge-dark is color-mix(...)
+        '--jz-debug-bd'       // >0.5 = magenta debug fill
       ];
     }
 
-    // Helpers -------------------------------------------------------------
-    read(props, name, fallback) {
+    // ---------- helpers ----------------------------------------------------
+
+    _str(props, name, fallback = '') {
       const v = props.get(name);
-      return (v && v.toString().trim().length) ? v.toString().trim() : fallback;
+      return (v && v.toString().trim()) || fallback;
     }
-    px(props, name, fallback) {
-      const v = this.read(props, name, String(fallback));
-      const m = /(-?\d+(\.\d+)?)px/.exec(v);
-      return m ? parseFloat(m[1]) : Number(v) || fallback;
+
+    _num(props, name, fallback = 0) {
+      const s = this._str(props, name, String(fallback));
+      const n = parseFloat(s);
+      return Number.isFinite(n) ? n : fallback;
     }
-    hexToRgb(hex) {
-      if (!hex || typeof hex !== 'string') return null;
-      const s = hex.trim().toLowerCase();
-      if (s.startsWith('rgb')) {
-        // rgb/rgba already fine
-        return null;
-      }
-      const m = s.replace('#', '');
-      if (m.length === 3) {
-        const r = parseInt(m[0] + m[0], 16);
-        const g = parseInt(m[1] + m[1], 16);
-        const b = parseInt(m[2] + m[2], 16);
+
+    _parseRGB(color) {
+      if (!color) return null;
+      let c = color.toString().trim();
+
+      // rgb/rgba(...)
+      let m = /^rgba?\((\d+),\s*(\d+),\s*(\d+)/i.exec(c);
+      if (m) return { r: +m[1], g: +m[2], b: +m[3] };
+
+      // #rgb or #rrggbb
+      if (c[0] === '#') c = c.slice(1);
+      if (c.length === 3) {
+        const r = parseInt(c[0] + c[0], 16);
+        const g = parseInt(c[1] + c[1], 16);
+        const b = parseInt(c[2] + c[2], 16);
         return { r, g, b };
       }
-      if (m.length >= 6) {
-        const r = parseInt(m.slice(0, 2), 16);
-        const g = parseInt(m.slice(2, 4), 16);
-        const b = parseInt(m.slice(4, 6), 16);
+      if (c.length === 6) {
+        const r = parseInt(c.slice(0, 2), 16);
+        const g = parseInt(c.slice(2, 4), 16);
+        const b = parseInt(c.slice(4, 6), 16);
         return { r, g, b };
       }
+
+      // Anything else (e.g. color-mix) → let caller fall back
       return null;
     }
 
-    withAlpha(color, alpha) {
-      const raw = String(color).trim();
-
-      // If it contains "color-mix", "rgb(", or anything not simple hex — return as-is.
-      if (/color-mix|\brgb/i.test(raw)) {
-        return raw;
-      }
-
-      // Only accept plain #RRGGBB or RRGGBB
-      const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(raw);
-      if (!m) return raw;
-
-      const r = parseInt(m[1], 16);
-      const g = parseInt(m[2], 16);
-      const b = parseInt(m[3], 16);
-      const a = Math.max(0, Math.min(1, alpha));
-
-      return `rgba(${r}, ${g}, ${b}, ${a})`;
+    _clamp8(v) {
+      return Math.max(0, Math.min(255, Math.round(v)));
     }
 
+    _mix(a, b, t) {
+      const u = 1 - t;
+      return {
+        r: this._clamp8(a.r * u + b.r * t),
+        g: this._clamp8(a.g * u + b.g * t),
+        b: this._clamp8(a.b * u + b.b * t)
+      };
+    }
 
-    // Corner painters -----------------------------------------------------
-    paintCornerTR(ctx, w, h, r, lightRGB, darkRGB, strength) {
-      console.log('      - JZCornersBD.paintCornerTR called', w, h, r, lightRGB, darkRGB, strength);
-      // center at the *outer* top-right corner
-      const cx = w;
-      const cy = 0;
+    _rgba(rgb, a) {
+      const alpha = Math.max(0, Math.min(1, a));
+      return `rgba(${this._clamp8(rgb.r)},${this._clamp8(rgb.g)},${this._clamp8(rgb.b)},${alpha})`;
+    }
 
-      // how wide you want the painted band
-      const band = r;           // 0..r pixels from the corner
-      const steps = Math.max(1, Math.floor(band));
+    // ---------- main paint --------------------------------------------------
 
-      // clip to the quarter circle so strokes can’t bleed outside
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(w - r, 0);
-      ctx.arcTo(w, 0, w, r, r);
-      ctx.arcTo(w, r, w - r, r, r);
-      ctx.closePath();
-      ctx.clip();
+    paint(ctx, geom, props) {
+      const w = geom.width;
+      const h = geom.height;
 
-      ctx.lineWidth = 1;
+      const radius = Math.max(0, this._num(props, '--jz-radius', 8));
+      const bevel  = Math.max(0, this._num(props, '--jz-bevel', 8));
+      const innerR = Math.max(0, radius - bevel);
+      const outerR = radius;
 
-      // helper to mix light→dark
-      const mix = (a, b, t) => ({
-        r: a.r * (1 - t) + b.r * t,
-        g: a.g * (1 - t) + b.g * t,
-        b: a.b * (1 - t) + b.b * t,
-      });
-      const rgba = (c, a) =>
-        `rgba(${Math.round(c.r)},${Math.round(c.g)},${Math.round(c.b)},${a})`;
+      // Base + edge palette, robust against color-mix(...)
+      const base =
+        this._parseRGB(this._str(props, '--jz-base-color', '#465e5a')) ||
+        { r: 70, g: 94, b: 90 };
 
-      for (let i = 0; i < steps; i++) {
-    
-        // radius from corner; +0.5 keeps stroke centered on pixel rows
-        const radius = i + 0.5;
-        const t = i / (steps - 1 || 1);   // 0..1 from outermost to innermost
+      const lightMixP = this._num(props, '--jz-bd-light-mix', 25); // %
+      const darkMixP  = this._num(props, '--jz-bd-dark-mix', 27);  // %
 
-        // MIX LIGHT → DARK (or swap if you want dark→light)
-        const col = mix(lightRGB, darkRGB, t);
-        const alpha = strength * (0.10 + 0.20 * (1 - t)); // fade inward a bit
+      const edgeLight =
+        this._parseRGB(this._str(props, '--jz-edge-light', '')) ||
+        this._mix(base, { r: 255, g: 255, b: 255 }, lightMixP / 100);
 
+      const edgeDark =
+        this._parseRGB(this._str(props, '--jz-edge-dark', '')) ||
+        this._mix(base, { r: 0, g: 0, b: 0 }, darkMixP / 100);
+
+      const strength = Math.max(0, Math.min(1, this._num(props, '--jz-bd-strength', 1)));
+      const debug    = this._num(props, '--jz-debug-bd', 0) > 0.5;
+
+      const paintCorner = (cx, cy, startAngle, endAngle, rgbStart, rgbEnd, invertFalloff) => {
+        ctx.save();
+
+        // Clip to quarter-ring (between inner & outer radii)
         ctx.beginPath();
-        // quarter-arc from top edge (-90°) to right edge (0°)
-        ctx.arc(cx, cy, radius, -Math.PI / 2, 0, false);
-        ctx.strokeStyle = rgba(col, alpha);
-        ctx.stroke();
-      }
+        ctx.arc(cx, cy, outerR, startAngle, endAngle, false);
+        ctx.arc(cx, cy, innerR, endAngle, startAngle, true);
+        ctx.closePath();
+        ctx.clip();
 
-      ctx.restore();
-    }
+        if (debug) {
+          ctx.fillStyle = 'rgba(255,0,255,0.35)';
+          ctx.fill();
+          ctx.restore();
+          return;
+        }
 
+        // Radial gradient from inner rim (near face) to outer rim (edge),
+        // with 4 stops so it matches the "multi-bristle" brush idea.
+        const g = ctx.createRadialGradient(cx, cy, innerR, cx, cy, outerR);
 
-    paintCornerBL(ctx, w, h, r, dark, strength) {
-      // clip to quarter-circle in the bottom-left
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(0, h - r);
-      ctx.arcTo(0, h, r, h, r);
-      ctx.lineTo(0, h - r);
-      ctx.closePath();
-      ctx.clip();
+        // We treat t=0 at the join with the flat face and t=1 at the outer rim.
+        // For LAT: inner is closer to base, outer pushes toward the brighter/darker edge.
+        const mid = this._mix(rgbStart, rgbEnd, 0.5);
 
-      // Radial shadow from inner pivot
-      const cx = r;
-      const cy = h - r;
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
-      grad.addColorStop(0.00, this.withAlpha(dark, 0.20 * strength));
-      grad.addColorStop(0.60, this.withAlpha(dark, 0.08 * strength));
-      grad.addColorStop(1.00, this.withAlpha(dark, 0.00));
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, h - r, r, r);
-      ctx.restore();
-    }
+        if (!invertFalloff) {
+          // Normal falloff: subtle near inner rim → stronger towards the edge.
+          g.addColorStop(0.00, this._rgba(rgbStart, 0.00 * strength));
+          g.addColorStop(0.35, this._rgba(rgbStart, 0.25 * strength));
+          g.addColorStop(0.70, this._rgba(mid,      0.55 * strength));
+          g.addColorStop(1.00, this._rgba(rgbEnd,   0.80 * strength));
+        } else {
+          // Inverted (used where the outer rim is *darker* than the face).
+          g.addColorStop(0.00, this._rgba(rgbStart, 0.00 * strength));
+          g.addColorStop(0.35, this._rgba(rgbStart, 0.40 * strength));
+          g.addColorStop(0.70, this._rgba(mid,      0.60 * strength));
+          g.addColorStop(1.00, this._rgba(rgbEnd,   0.90 * strength));
+        }
 
-    paint(ctx, size, props) {
-//      console.log('    - JZCornersBD.paint called',ctx,size,props);
-      const w = size.width, h = size.height;
-      const r = Math.max(0, this.px(props, '--jz-radius', 8));
-      // bevel informs how “wide” the corner impression should feel
-      const bevel = Math.max(0, this.px(props, '--jz-bevel', 8));
-      const light = this.read(props, '--jz-edge-light', '#ffffff');
-      const dark = this.read(props, '--jz-edge-dark', '#000000');
-      const strength = Math.min(1, Math.max(0, Number(this.read(props, '--jz-corner-strength', '1'))));
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.restore();
+      };
 
-      // If the bevel is zero, nothing to paint
-      if (bevel <= 0 || r <= 0) return;
+      // B (top-right) corner -----------------------------------------------
+      // Adjacent edges: top (light) and right (dark).
+      // We fade from the lighter side at the inner rim toward darker on the outer rim
+      // so the highlight coming along the top wraps smoothly into the right edge shadow.
+      paintCorner(
+        w - radius,     // cx
+        radius,         // cy
+        -Math.PI / 2,   // startAngle (along top edge)
+        0,              // endAngle   (along right edge)
+        edgeLight,      // inner / toward light
+        edgeDark,       // outer / toward dark
+        true            // invert falloff, because the outer rim is darker
+      );
 
-      // B (top-right) highlight
-      this.paintCornerTR(ctx, w, h, r, light, strength);
-
-      // D (bottom-left) shadow
-      this.paintCornerBL(ctx, w, h, r, dark, strength);
+      // D (bottom-left) corner ---------------------------------------------
+      // Adjacent edges: left (light) and bottom (dark).
+      // Here we want bottom shadow to wrap into the lighter left edge.
+      paintCorner(
+        radius,         // cx
+        h - radius,     // cy
+        Math.PI / 2,    // startAngle (along bottom edge)
+        Math.PI,        // endAngle   (along left edge)
+        edgeDark,       // inner / toward dark from the bottom
+        edgeLight,      // outer / toward light on the left
+        false           // normal falloff (outer rim brighter)
+      );
     }
   }
 
