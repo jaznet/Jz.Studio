@@ -122,7 +122,7 @@
     grid-area: 1 / 2;
   }
 
-  :host .cuboid .zone.B {
+  :host .cuboid .top.right {
     grid-area: 1 / 3;
   }
 
@@ -247,7 +247,7 @@
 
 
   /* B & D stay transparent – only worklet paints these cells */
-  :host .cuboid .zone.B,
+  :host .cuboid .top.right,
   :host .cuboid .zone.D {
     background: none;
   }
