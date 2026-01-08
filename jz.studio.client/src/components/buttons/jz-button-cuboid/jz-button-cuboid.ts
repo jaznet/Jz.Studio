@@ -29,14 +29,14 @@ export class JzButtonCuboid extends ButtonBase implements AfterViewInit {
   }
 
     ngAfterViewInit(): void {
-      const size = this.bevelWidth;   // e.g. 8 or 24
-      const r = size;
+/*      const r = this.bevelWidth;   // e.g. 8 or 24*/
+     
 
       const svg = select(this.topRightRef.nativeElement)
         .append("svg")
-        .attr("width", size)
-        .attr("height", size)
-        .attr("viewBox", `0 0 ${size} ${size}`);
+        .attr("width", this.bevelWidth)
+        .attr("height", this.bevelWidth)
+        .attr("viewBox", `0 0 ${this.bevelWidth} ${this.bevelWidth}`);
 
       const defs = svg.append("defs");
 
