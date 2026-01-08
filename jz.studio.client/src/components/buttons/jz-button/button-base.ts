@@ -25,9 +25,9 @@ export abstract class ButtonBase implements OnChanges {
   /** Sizing inputs (numbers ⇒ px). Defaults: auto/auto/6px */
   @Input() width: string | number | null = '100px';
   @Input() height: string | number | null = '60px';
-  @Input() bevelWidth: string | number = 24;
+  @Input() bevelWidth: number =  8;
   /** kebab-case alias support: [bevelwidth] */
-  @Input('bevelwidth') set bevelwidthAlias(v: string | number) { this.bevelWidth = v; }
+  @Input('bevelwidth') set bevelwidthAlias(v: number) { this.bevelWidth = v; }
 
   /** Primary click event (emit from the inner <button>) */
   @Output() clicked = new EventEmitter<void>();

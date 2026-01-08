@@ -29,59 +29,61 @@ export class JzButtonCuboid extends ButtonBase implements AfterViewInit {
   }
 
     ngAfterViewInit(): void {
-      const width = 240, height = 240;
-      const r = 180;
+      const size = this.bevelWidth;   // e.g. 8 or 24
+      const r = size;
 
       const svg = select(this.topRightRef.nativeElement)
         .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+        .attr("width", size)
+        .attr("height", size)
+        .attr("viewBox", `0 0 ${size} ${size}`);
 
       const defs = svg.append("defs");
 
-      // Linear gradient (you can rotate it by changing x1,y1,x2,y2)
+
       const grad = defs.append("linearGradient")
-        .attr("id", "qgrad")
+        .attr("id", " arcLinearGradient")
         .attr("gradientUnits", "userSpaceOnUse")
         .attr("x1", 0).attr("y1", 0)
-        .attr("x2", r).attr("y2", 0);
+        .attr("x2", this.bevelWidth).attr("y2", 0);
 
-      console.log(defs);
+      console.log(grad);
 
-      grad.append("stop").attr("offset", "0%").attr("stop-color", "#4f46e5");
-      grad.append("stop").attr("offset", "100%").attr("stop-color", "#22c55e");
+      grad.append("stop").attr("offset", "0%").attr("stop-color", "yellow");
+      grad.append("stop").attr("offset", "100%").attr("stop-color", "blue");
 
       // Quarter circle sector from 0° to 90° (top-right)
       type ArcDatum = {
-        innerRadius: number;
+        innerRadius: number ;
         outerRadius: number;
         startAngle: number;
         endAngle: number;
       };
 
-      const a = arc<ArcDatum>()
-        .innerRadius(d => d.innerRadius)
-        .outerRadius(d => d.outerRadius)
-        .startAngle(d => d.startAngle)
-        .endAngle(d => d.endAngle);
-
       const d: ArcDatum = {
         innerRadius: 0,
-        outerRadius: r,
+        outerRadius: this.bevelWidth,
         startAngle: 0,
         endAngle: Math.PI / 2
       };
 
-      svg.append("path")
-        .attr("transform", `translate(${30},${210})`)
-        .attr("d", a(d) ?? "");
+      const a = arc<ArcDatum>()
+        .innerRadius(d => d.outerRadius)   // <- same as outer, makes it a ring segment
+        .outerRadius(d => d.outerRadius)
+        .startAngle(d => d.startAngle)
+        .endAngle(d => d.endAngle);
 
-      //svg.append("path")
-      //  .attr("transform", `translate(${30}, ${210})`) // move origin to bottom-left-ish
-      //  .attr("d", a()!  )
-      //  .attr("fill", "url(#qgrad)")
-      //  .attr("stroke", "#111")
-      //  .attr("stroke-width", 1);
+      // Linear gradient (you can rotate it by changing x1,y1,x2,y2)
+      const gradId = `arcLinearGradient-${crypto.randomUUID()}`;
+
+      svg.append("g")
+        .attr("transform", `translate(0,${r})`) // for top-right corner
+        .append("path")
+        .attr("d", a(d) ?? "")
+        .attr("fill", "none")
+        .attr("stroke", `white`)
+        .attr("stroke-width", 2)
+        .attr("stroke-linecap", "round");
 
     }
 
