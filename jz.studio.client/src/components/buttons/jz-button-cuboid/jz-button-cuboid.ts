@@ -29,7 +29,13 @@ export class JzButtonCuboid extends ButtonBase implements AfterViewInit {
   }
 
     ngAfterViewInit(): void {
-/*      const r = this.bevelWidth;   // e.g. 8 or 24*/
+      // In local coordinates where the arc center is at (0,0):
+      // 0° is at (0,-r), 90° at (r,0) in SVG "clockwise from 12 o'clock" terms.
+      // For a top-right corner you probably want from (0,0?) but here’s a clean quarter:
+      const start = { x: 0, y: -this.bevelWidth }; // top
+      const end = { x: this.bevelWidth, y: 0 }; // right
+
+
      
 
       const svg = select(this.topRightRef.nativeElement)
@@ -40,47 +46,51 @@ export class JzButtonCuboid extends ButtonBase implements AfterViewInit {
 
       const defs = svg.append("defs");
 
+      // define gradId HERE
+      const gradientId = `arcLinearGradient-${crypto.randomUUID()}`;
 
-      const grad = defs.append("linearGradient")
-        .attr("id", " arcLinearGradient")
+      const linearGradient = defs.append("linearGradient")
+        .attr("id", gradientId)
         .attr("gradientUnits", "userSpaceOnUse")
         .attr("x1", 0).attr("y1", 0)
-        .attr("x2", this.bevelWidth).attr("y2", 0);
+        .attr("x2", this.bevelWidth).attr("y2", this.bevelWidth);
 
-      console.log(grad);
+      console.log('gradient', linearGradient);
 
-      grad.append("stop").attr("offset", "0%").attr("stop-color", "yellow");
-      grad.append("stop").attr("offset", "100%").attr("stop-color", "blue");
+      linearGradient.append("stop").attr("offset", "0%").attr("stop-color", "yellow");
+      linearGradient.append("stop").attr("offset", "100%").attr("stop-color", "blue");
 
       // Quarter circle sector from 0° to 90° (top-right)
-      type ArcDatum = {
-        innerRadius: number ;
-        outerRadius: number;
-        startAngle: number;
-        endAngle: number;
-      };
+      //type ArcDatum = {
+      //  innerRadius: number ;
+      //  outerRadius: number;
+      //  startAngle: number;
+      //  endAngle: number;
+      //};
 
-      const d: ArcDatum = {
-        innerRadius: 0,
-        outerRadius: this.bevelWidth,
-        startAngle: 0,
-        endAngle: Math.PI / 2
-      };
+      //const d: ArcDatum = {
+      //  innerRadius: 0,
+      //  outerRadius: this.bevelWidth,
+      //  startAngle: 0,
+      //  endAngle: Math.PI / 2
+      //};
 
-      const a = arc<ArcDatum>()
-        .innerRadius(d => d.outerRadius)   // <- same as outer, makes it a ring segment
-        .outerRadius(d => d.outerRadius)
-        .startAngle(d => d.startAngle)
-        .endAngle(d => d.endAngle);
+      //const a = arc<ArcDatum>()
+      //  .innerRadius(d => d.outerRadius)   // <- same as outer, makes it a ring segment
+      //  .outerRadius(d => d.outerRadius)
+      //  .startAngle(d => d.startAngle)
+      //  .endAngle(d => d.endAngle);
 
       // Linear gradient (you can rotate it by changing x1,y1,x2,y2)
       const gradId = `arcLinearGradient-${crypto.randomUUID()}`;
+      const arcD = `M ${start.x} ${start.y} A ${this.bevelWidth} ${this.bevelWidth} 0 0 1 ${end.x} ${end.y}`;
 
       svg.append("g")
-        .attr("transform", `translate(0,${r})`) // for top-right corner
+        .attr("transform", `translate(0,${this.bevelWidth})`) // for top-right corner
         .append("path")
-        .attr("d", a(d) ?? "")
+        .attr("d", arcD )
         .attr("fill", "none")
+/*        .attr("stroke", `url(#${gradId})`)*/
         .attr("stroke", `white`)
         .attr("stroke-width", 2)
         .attr("stroke-linecap", "round");
