@@ -1,101 +1,28 @@
 // jz-button-cuboid.ts
 
-import { AfterViewInit, Component, ElementRef, HostBinding, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, Renderer2 } from '@angular/core';
 import { ButtonBase } from '../jz-button/button-base';
-import { select } from 'd3-selection';
-import { arc } from 'd3-shape';
 
 @Component({
-  selector: 'jz-button-cuboid', // use the tag you actually place in templates
+  selector: 'jz-button-cuboid',
   standalone: true,
   templateUrl: './jz-button-cuboid.html',
   styleUrls: ['./jz-button-cuboid.scss']
 })
-export class JzButtonCuboid extends ButtonBase implements AfterViewInit {
-  // make wrapper non-interactive & out of the a11y tree
+export class JzButtonCuboid extends ButtonBase {
+  // wrapper out of a11y tree; the <button> is the real control
   @HostBinding('attr.role') role: string | null = null;
   @HostBinding('attr.tabindex') tabIndex: string | null = null;
   @HostBinding('attr.aria-disabled') ariaDisabled: string | null = null;
 
-  @ViewChild('topRight', { static: false }) topRightRef!: ElementRef<HTMLElement>;
-
-
   constructor(el: ElementRef, renderer: Renderer2) {
     super();
-    // belt-and-suspenders: remove any attributes Angular might have inherited 
     renderer.removeAttribute(el.nativeElement, 'role');
     renderer.removeAttribute(el.nativeElement, 'tabindex');
     renderer.removeAttribute(el.nativeElement, 'aria-disabled');
   }
 
-    ngAfterViewInit(): void {
-      // In local coordinates where the arc center is at (0,0):
-      // 0° is at (0,-r), 90° at (r,0) in SVG "clockwise from 12 o'clock" terms.
-      // For a top-right corner you probably want from (0,0?) but here’s a clean quarter:
-      const start = { x: 0, y: -this.bevelWidth }; // top
-      const end = { x: this.bevelWidth, y: 0 }; // right
-
-
-     
-
-      const svg = select(this.topRightRef.nativeElement)
-        .append("svg")
-        .attr("width", this.bevelWidth)
-        .attr("height", this.bevelWidth)
-        .attr("viewBox", `0 0 ${this.bevelWidth} ${this.bevelWidth}`);
-
-      const defs = svg.append("defs");
-
-      // define gradId HERE
-      const gradientId = `arcLinearGradient-${crypto.randomUUID()}`;
-
-      const linearGradient = defs.append("linearGradient")
-        .attr("id", gradientId)
-        .attr("gradientUnits", "userSpaceOnUse")
-        .attr("x1", 0).attr("y1", 0)
-        .attr("x2", this.bevelWidth).attr("y2", this.bevelWidth);
-
-      console.log('gradient', linearGradient);
-
-      linearGradient.append("stop").attr("offset", "0%").attr("stop-color", "yellow");
-      linearGradient.append("stop").attr("offset", "100%").attr("stop-color", "blue");
-
-      // Quarter circle sector from 0° to 90° (top-right)
-      //type ArcDatum = {
-      //  innerRadius: number ;
-      //  outerRadius: number;
-      //  startAngle: number;
-      //  endAngle: number;
-      //};
-
-      //const d: ArcDatum = {
-      //  innerRadius: 0,
-      //  outerRadius: this.bevelWidth,
-      //  startAngle: 0,
-      //  endAngle: Math.PI / 2
-      //};
-
-      //const a = arc<ArcDatum>()
-      //  .innerRadius(d => d.outerRadius)   // <- same as outer, makes it a ring segment
-      //  .outerRadius(d => d.outerRadius)
-      //  .startAngle(d => d.startAngle)
-      //  .endAngle(d => d.endAngle);
-
-      // Linear gradient (you can rotate it by changing x1,y1,x2,y2)
-      const gradId = `arcLinearGradient-${crypto.randomUUID()}`;
-      const arcD = `M ${start.x} ${start.y} A ${this.bevelWidth} ${this.bevelWidth} 0 0 1 ${end.x} ${end.y}`;
-
-      svg.append("g")
-        .attr("transform", `translate(0,${this.bevelWidth})`) // for top-right corner
-        .append("path")
-        .attr("d", arcD )
-        .attr("fill", "none")
-/*        .attr("stroke", `url(#${gradId})`)*/
-        .attr("stroke", `white`)
-        .attr("stroke-width", 2)
-        .attr("stroke-linecap", "round");
-
-    }
-
-  onClick() { this.emitClicked(); }
+  onClick() {
+    this.emitClicked();
+  }
 }

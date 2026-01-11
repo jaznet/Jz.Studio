@@ -18,29 +18,12 @@
 
 /* ----- Variants ---------------------------------------------------------- */
 
-:host(.primary) {
-  --jz-base-color: var(--plt-clr-1);
-}
-
-:host(.secondary) {
-  --jz-base-color: var(--plt-clr-2);
-}
-
-:host(.tertiary) {
-  --jz-base-color: var(--plt-clr-3);
-}
-
-:host(.success) {
-  --jz-base-color: var(--plt-ok, #2e8b57);
-}
-
-:host(.warning) {
-  --jz-base-color: var(--plt-warn, #b8860b);
-}
-
-:host(.danger) {
-  --jz-base-color: var(--plt-bad, #b03a2e);
-}
+:host(.primary)   { --jz-base-color: var(--plt-clr-1); }
+:host(.secondary) { --jz-base-color: var(--plt-clr-2); }
+:host(.tertiary)  { --jz-base-color: var(--plt-clr-3); }
+:host(.success)   { --jz-base-color: var(--plt-ok, #2e8b57); }
+:host(.warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
+:host(.danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
 
 /* ----- Button host ------------------------------------------------------- */
 
@@ -59,31 +42,34 @@
   flex: 0 0 auto;
 }
 
-  /* ----- Cuboid overlay (grid + worklet layer) ----------------------------- */
+/* ----- Cuboid overlay (grid + worklet layer) ----------------------------- */
 
-  :host button.jz-btn > .cuboid {
-    position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    display: grid;
-    grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
-    grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
-    place-items: stretch;
-    border-radius: inherit;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 0;
-    /* flat plate behind everything */
-    background-color: var(--jz-base-color);
-    /* derived tones */
-    --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
-    --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-    --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 25%);
-    --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
-    --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
-    --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
-      /* --- corner helpers (auto-sync with edges) ---------------------- */
+:host button.jz-btn > .cuboid {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  display: grid;
+  grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
+  grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
+  place-items: stretch;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+
+  /* flat plate behind everything */
+  background-color: var(--jz-base-color);
+
+  /* derived tones */
+  --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
+  --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
+  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 25%);
+  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
+  --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
+  --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
+
+  /* --- corner helpers (auto-sync with edges) ---------------------- */
   /* top-left corner A: mostly lighter side of the base */
   --jz-corner-a-inner:   color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-corner-a-mid1:    var(--jz-edge-mid-light);
@@ -95,160 +81,157 @@
   --jz-corner-c-mid1:    var(--jz-edge-mid-dark);
   --jz-corner-c-mid2:    color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-edge-dark) 55%);
   --jz-corner-c-outer:   var(--jz-edge-dark);
-    /* TR + BL corners painted by worklet – B & D stay transparent */
-    background-image: paint(jz-corners-bd);
-    background-repeat: no-repeat;
-    background-origin: border-box;
-    background-clip: border-box;
-    /* depth */
-    box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.35) inset, 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 6px 14px rgba(0, 0, 0, 0.35), 0 2px 3px rgba(0, 0, 0, 0.35);
-  }
+
+  /* TR + BL corners painted by worklet – B & D stay transparent */
+  background-image: paint(jz-corners-bd);
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-clip: border-box;
+
+  /* depth */
+  box-shadow:
+    0 0.5px 0 rgba(0, 0, 0, 0.35) inset,
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 6px 14px rgba(0, 0, 0, 0.35),
+    0 2px 3px rgba(0, 0, 0, 0.35);
+}
 
 /* Make sure every cell exists */
-
 :host .cuboid .zone {
   display: block;
   min-width: 0;
   min-height: 0;
 }
 
-  /* grid placement */
+/* grid placement */
+:host .cuboid .zone.A      { grid-area: 1 / 1; }
+:host .cuboid .zone.top    { grid-area: 1 / 2; }
+:host .cuboid .zone.B      { grid-area: 1 / 3; }
 
-  :host .cuboid .zone.A {
-    grid-area: 1 / 1;
-  }
+:host .cuboid .zone.left   { grid-area: 2 / 1; }
+:host .cuboid .zone.face   { grid-area: 2 / 2; }
+:host .cuboid .zone.right  { grid-area: 2 / 3; }
 
-  :host .cuboid .zone.top {
-    grid-area: 1 / 2;
-  }
+:host .cuboid .zone.D      { grid-area: 3 / 1; }
+:host .cuboid .zone.bottom { grid-area: 3 / 2; }
+:host .cuboid .zone.C      { grid-area: 3 / 3; }
 
-  :host .cuboid .top.right {
-    grid-area: 1 / 3;
-  }
+/* ----- Face (center cell) ----------------------------------------------- */
+:host .cuboid .zone.face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+}
 
-  :host .cuboid .zone.left {
-    grid-area: 2 / 1;
-  }
+:host .cuboid .zone.face > * {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75em;
+  color: var(--jz-text);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  white-space: normal;
+  word-break: break-word;
+  text-align: center;
+}
 
-  :host .cuboid .zone.face {
-    grid-area: 2 / 2;
-  }
+/* ========================================================================== */
+/*  Edge strips (top / bottom / left / right)                                */
+/*  Light source: top-left                                                   */
+/* ========================================================================== */
 
-  :host .cuboid .zone.right {
-    grid-area: 2 / 3;
-  }
+/* TOP edge – light → mid-light → face */
+:host .cuboid .zone.top {
+  background-image: linear-gradient(
+    to bottom,
+    var(--jz-edge-light) 0%,
+    var(--jz-edge-mid-light) 45%,
+    var(--jz-base-color) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--jz-bevel);
+  background-position: 0 0;
+}
 
-  :host .cuboid .zone.D {
-    grid-area: 3 / 1;
-  }
+/* BOTTOM edge – dark → mid-dark → face */
+:host .cuboid .zone.bottom {
+  background-image: linear-gradient(
+    to top,
+    var(--jz-edge-dark) 0%,
+    var(--jz-edge-mid-dark) 45%,
+    var(--jz-base-color) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: 100% var(--jz-bevel);
+  background-position: 0 100%;
+}
 
-  :host .cuboid .zone.bottom {
-    grid-area: 3 / 2;
-  }
+/* LEFT edge – light outer → mid-light → face */
+:host .cuboid .zone.left {
+  background-image: linear-gradient(
+    to right,
+    var(--jz-edge-light) 0%,
+    var(--jz-edge-mid-light) 45%,
+    var(--jz-base-color) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--jz-bevel) 100%;
+  background-position: 0 0;
+}
 
-  :host .cuboid .zone.C {
-    grid-area: 3 / 3;
-  }
+/* RIGHT edge – dark outer → mid-dark → face */
+:host .cuboid .zone.right {
+  background-image: linear-gradient(
+    to left,
+    var(--jz-edge-dark) 0%,
+    var(--jz-edge-mid-dark) 45%,
+    var(--jz-base-color) 100%
+  );
+  background-repeat: no-repeat;
+  background-size: var(--jz-bevel) 100%;
+  background-position: 100% 0;
+}
 
-  /* ----- Face (center cell) ----------------------------------------------- */
+/* ========================================================================== */
+/*  Corners A & C (TL / BR) via radial blend                                 */
+/*  B & D are left transparent for the worklet                               */
+/* ========================================================================== */
 
-  :host .cuboid .zone.face {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 1;
-  }
-
-    :host .cuboid .zone.face > * {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 0.75em;
-      color: var(--jz-text);
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      line-height: 1.2;
-      white-space: normal;
-      word-break: break-word;
-      text-align: center;
-    }
-
-  /* ========================================================================== */
-  /*  Edge strips (top / bottom / left / right)                                */
-  /*  Light source: top-left                                                   */
-  /* ========================================================================== */
-
-  /* TOP edge – light → mid-light → face */
-  :host .cuboid .zone.top {
-    background-image: linear-gradient( to bottom, var(--jz-edge-light) 0%, var(--jz-edge-mid-light) 45%, var(--jz-base-color) 100% );
-    background-repeat: no-repeat;
-    background-size: 100% var(--jz-bevel);
-    background-position: 0 0;
-  }
-
-  /* BOTTOM edge – dark → mid-dark → face */
-  :host .cuboid .zone.bottom {
-    background-image: linear-gradient( to top, var(--jz-edge-dark) 0%, var(--jz-edge-mid-dark) 45%, var(--jz-base-color) 100% );
-    background-repeat: no-repeat;
-    background-size: 100% var(--jz-bevel);
-    background-position: 0 100%;
-  }
-
-  /* LEFT edge – light outer → mid-light → face */
-  :host .cuboid .zone.left {
-    background-image: linear-gradient( to right, var(--jz-edge-light) 0%, var(--jz-edge-mid-light) 45%, var(--jz-base-color) 100% );
-    background-repeat: no-repeat;
-    background-size: var(--jz-bevel) 100%;
-    background-position: 0 0;
-  }
-
-  /* RIGHT edge – dark outer → mid-dark → face */
-  :host .cuboid .zone.right {
-    background-image: linear-gradient( to left, var(--jz-edge-dark) 0%, var(--jz-edge-mid-dark) 45%, var(--jz-base-color) 100% );
-    background-repeat: no-repeat;
-    background-size: var(--jz-bevel) 100%;
-    background-position: 100% 0;
-  }
-
-  /* ========================================================================== */
-  /*  Corners A & C (TL / BR) via radial blend                                 */
-  /*  B & D are left transparent for the worklet                               */
-  /* ========================================================================== */
-
-/* A – top-left, light edge, 4-stop radial:
-   inner (toward face) = base, outer rim = light */
+/* A – top-left */
 :host .cuboid .zone.A {
   background-image: radial-gradient(
-    circle at 100% 100%,            /* inner corner (touches face) */
-    var(--jz-base-color) 0%,        /* right at the face */
-    var(--jz-edge-mid-light) 45%,   /* gentle lift */
-    var(--jz-edge-light) 75%,       /* bright band */
-    var(--jz-edge-light) 100%       /* rim, matches top/left edges */
+    circle at 100% 100%,
+    var(--jz-base-color) 0%,
+    var(--jz-edge-mid-light) 45%,
+    var(--jz-edge-light) 75%,
+    var(--jz-edge-light) 100%
   );
   background-repeat: no-repeat;
 }
 
-/* C – bottom-right, dark edge, 4-stop radial:
-   inner (toward face) = base, outer rim = dark */
+/* C – bottom-right */
 :host .cuboid .zone.C {
   background-image: radial-gradient(
-    circle at 0 0,                  /* inner corner (touches face) */
-    var(--jz-base-color) 0%,        /* right at the face */
-    var(--jz-edge-mid-dark) 45%,    /* gentle darkening */
-    var(--jz-edge-dark) 75%,        /* strong shadow band */
-    var(--jz-edge-dark) 100%        /* rim, matches bottom/right edges */
+    circle at 0 0,
+    var(--jz-base-color) 0%,
+    var(--jz-edge-mid-dark) 45%,
+    var(--jz-edge-dark) 75%,
+    var(--jz-edge-dark) 100%
   );
   background-repeat: no-repeat;
 }
 
-  /* B & D stay transparent – only worklet paints these cells */
-  :host .cuboid .top.right,
-  :host .cuboid .zone.D {
-    background: none;
-  }
+/* B & D stay transparent – only worklet paints these cells */
+:host .cuboid .zone.B,
+:host .cuboid .zone.D {
+  background: none;
+}
 
 /* ----- States ------------------------------------------------------------ */
 
@@ -278,8 +261,8 @@
     box-shadow: none;
   }
 
-    :host button.jz-btn > .cuboid {
-      background: none;
-      box-shadow: none;
-    }
+  :host button.jz-btn > .cuboid {
+    background: none;
+    box-shadow: none;
+  }
 }
