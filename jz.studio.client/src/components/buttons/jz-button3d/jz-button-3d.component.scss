@@ -1,0 +1,353 @@
+/* ========================================================================== */
+/*  JZ BUTTON 3D (V2) — masked bevel ring (consumes ButtonBase CSS vars)      */
+/*  Uses:                                                                     */
+/*    --jz-w     (host width)                                                 */
+/*    --jz-h     (host height)                                                */
+/*    --jz-bevel (host bevel thickness)                                       */
+/* ========================================================================== */
+
+:host {
+  display: inline-block;
+
+  /* Prefer vars from ButtonBase; fall back to reasonable defaults */
+  inline-size: var(--jz-w, 140px);
+  block-size: var(--jz-h, 60px);
+
+  /* Geometry */
+  --jz-radius: 22px;
+
+  /* IMPORTANT: consume ButtonBase bevel var, but keep a separate internal name
+     to avoid collisions when we compute corner sizes. */
+  --jz-bevel-size: var(--jz-bevel, 18px);
+
+  /* Base palette */
+  --jz-base-color: var(--plt-clr-3, #465e5a);
+  --jz-text: black;
+
+  /* Interaction */
+  --jz-hover-brightness: 1.04;
+  --jz-active-brightness: 0.92;
+  --jz-active-translate-y: 1px;
+
+  /* Derived tones */
+  --jz-rim-hi: color-mix(in srgb, var(--jz-base-color), white 48%);
+  --jz-rim-lo: color-mix(in srgb, var(--jz-base-color), black 48%);
+
+  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 26%);
+  --jz-edge-mid-light: color-mix(in srgb, var(--jz-base-color), white 12%);
+  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 32%);
+  --jz-edge-mid-dark: color-mix(in srgb, var(--jz-base-color), black 16%);
+
+  --jz-face-hi: color-mix(in srgb, var(--jz-base-color), white 10%);
+  --jz-face-lo: color-mix(in srgb, var(--jz-base-color), black 10%);
+
+  /* Lighting */
+  --jz-sheen: rgba(255, 255, 255, 0.20);
+  --jz-shadow: rgba(0, 0, 0, 0.38);
+
+  /* Focus */
+  --jz-focus-ring: color-mix(in srgb, white 38%, transparent);
+
+  /* “Roundover profile” breakpoints */
+  --jz-p0: 0%;
+  --jz-p1: 14%;
+  --jz-p2: 34%;
+  --jz-p3: 62%;
+  --jz-p4: 100%;
+}
+
+/* ----- Variants (match your existing scheme) ----------------------------- */
+
+:host(.primary)   { --jz-base-color: var(--plt-clr-1); }
+:host(.secondary) { --jz-base-color: var(--plt-clr-2); }
+:host(.tertiary)  { --jz-base-color: var(--plt-clr-3); }
+:host(.success)   { --jz-base-color: var(--plt-ok, #2e8b57); }
+:host(.warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
+:host(.danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
+
+/* ----- Button host ------------------------------------------------------- */
+
+:host button.jz-btn {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: var(--jz-radius);
+  cursor: pointer;
+  outline: none;
+}
+
+:host button.jz-btn:focus-visible {
+  box-shadow: 0 0 0 3px var(--jz-focus-ring);
+}
+
+/* ----- Cuboid body ------------------------------------------------------- */
+
+:host button.jz-btn > .cuboid {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  /* Face */
+  background:
+    radial-gradient(120% 95% at 18% 10%, rgba(255,255,255,.12), transparent 52%),
+    linear-gradient(180deg, var(--jz-face-hi), var(--jz-face-lo));
+
+  /* Depth */
+  box-shadow:
+    0 10px 18px var(--jz-shadow),
+    0 2px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* ----- Bevel ring -------------------------------------------------------- */
+
+:host button.jz-btn > .cuboid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  /* edge profiles */
+  --top0: var(--jz-rim-hi);
+  --top1: var(--jz-edge-light);
+  --top2: var(--jz-edge-mid-light);
+  --top3: color-mix(in srgb, var(--jz-edge-mid-light), var(--jz-base-color) 55%);
+  --top4: var(--jz-base-color);
+
+  --left0: var(--jz-rim-hi);
+  --left1: var(--jz-edge-light);
+  --left2: var(--jz-edge-mid-light);
+  --left3: color-mix(in srgb, var(--jz-edge-mid-light), var(--jz-base-color) 55%);
+  --left4: var(--jz-base-color);
+
+  --bot0: var(--jz-rim-lo);
+  --bot1: var(--jz-edge-dark);
+  --bot2: var(--jz-edge-mid-dark);
+  --bot3: color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-base-color) 60%);
+  --bot4: var(--jz-base-color);
+
+  --right0: var(--jz-rim-lo);
+  --right1: var(--jz-edge-dark);
+  --right2: var(--jz-edge-mid-dark);
+  --right3: color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-base-color) 60%);
+  --right4: var(--jz-base-color);
+
+  background:
+    /* top edge */
+    linear-gradient(to bottom,
+      var(--top0)  var(--jz-p0),
+      var(--top1)  var(--jz-p1),
+      var(--top2)  var(--jz-p2),
+      var(--top3)  var(--jz-p3),
+      var(--top4)  var(--jz-p4)
+    ) top / 100% var(--jz-bevel-size) no-repeat,
+
+    /* left edge */
+    linear-gradient(to right,
+      var(--left0) var(--jz-p0),
+      var(--left1) var(--jz-p1),
+      var(--left2) var(--jz-p2),
+      var(--left3) var(--jz-p3),
+      var(--left4) var(--jz-p4)
+    ) left / var(--jz-bevel-size) 100% no-repeat,
+
+    /* bottom edge */
+    linear-gradient(to top,
+      var(--bot0)  var(--jz-p0),
+      var(--bot1)  var(--jz-p1),
+      var(--bot2)  var(--jz-p2),
+      var(--bot3)  var(--jz-p3),
+      var(--bot4)  var(--jz-p4)
+    ) bottom / 100% var(--jz-bevel-size) no-repeat,
+
+    /* right edge */
+    linear-gradient(to left,
+      var(--right0) var(--jz-p0),
+      var(--right1) var(--jz-p1),
+      var(--right2) var(--jz-p2),
+      var(--right3) var(--jz-p3),
+      var(--right4) var(--jz-p4)
+    ) right / var(--jz-bevel-size) 100% no-repeat,
+
+    /* TL corner */
+    radial-gradient(circle at 0 0,
+      var(--jz-rim-hi) 0%,
+      var(--jz-edge-light) 22%,
+      var(--jz-edge-mid-light) 48%,
+      var(--jz-base-color) 100%
+    ) 0 0 / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat,
+
+    /* BR corner */
+    radial-gradient(circle at 100% 100%,
+      var(--jz-rim-lo) 0%,
+      var(--jz-edge-dark) 22%,
+      var(--jz-edge-mid-dark) 48%,
+      var(--jz-base-color) 100%
+    ) 100% 100% / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat,
+
+    /* TR corner */
+    conic-gradient(from 180deg at 100% 0,
+      var(--jz-edge-dark) 0deg 22deg,
+      var(--jz-edge-mid-dark) 22deg 44deg,
+      color-mix(in srgb, var(--jz-base-color), black 10%) 44deg 58deg,
+      color-mix(in srgb, var(--jz-base-color), white 8%) 58deg 72deg,
+      var(--jz-edge-mid-light) 72deg 84deg,
+      var(--jz-edge-light) 84deg 90deg,
+      var(--jz-edge-light) 90deg 360deg
+    ) 100% 0 / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat,
+
+    radial-gradient(circle at 100% 0,
+      rgba(255,255,255,.24) 0%,
+      rgba(255,255,255,.10) 28%,
+      rgba(255,255,255,0) 52%
+    ) 100% 0 / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat,
+
+    /* BL corner */
+    conic-gradient(from 0deg at 0 100%,
+      var(--jz-edge-light) 0deg 22deg,
+      var(--jz-edge-mid-light) 22deg 44deg,
+      color-mix(in srgb, var(--jz-base-color), white 6%) 44deg 58deg,
+      color-mix(in srgb, var(--jz-base-color), black 10%) 58deg 72deg,
+      var(--jz-edge-mid-dark) 72deg 84deg,
+      var(--jz-edge-dark) 84deg 90deg,
+      var(--jz-edge-dark) 90deg 360deg
+    ) 0 100% / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat,
+
+    radial-gradient(circle at 0 100%,
+      rgba(255,255,255,.16) 0%,
+      rgba(255,255,255,.08) 26%,
+      rgba(255,255,255,0) 50%
+    ) 0 100% / calc(2 * var(--jz-bevel-size)) calc(2 * var(--jz-bevel-size)) no-repeat;
+
+  /* ring mask */
+  padding: var(--jz-bevel-size);
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  mask-composite: exclude;
+}
+
+/* ----- Sheen band -------------------------------------------------------- */
+
+:host button.jz-btn > .cuboid::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+  background: linear-gradient(180deg, var(--jz-sheen), transparent 58%);
+  opacity: 0.85;
+}
+
+/* ----- Label ------------------------------------------------------------- */
+
+:host button.jz-btn > .cuboid > .label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0 0.75em;
+  color: var(--jz-text);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* ----- States ------------------------------------------------------------ */
+
+:host button.jz-btn:hover > .cuboid {
+  filter: brightness(var(--jz-hover-brightness));
+}
+
+:host button.jz-btn:active > .cuboid {
+  transform: translateY(var(--jz-active-translate-y));
+  filter: brightness(var(--jz-active-brightness));
+}
+
+:host([disabled]),
+:host(.disabled) {
+  pointer-events: none;
+}
+
+:host([disabled]) button.jz-btn,
+:host(.disabled) button.jz-btn {
+  cursor: not-allowed;
+}
+
+:host([disabled]) button.jz-btn > .cuboid,
+:host(.disabled) button.jz-btn > .cuboid {
+  opacity: 0.55;
+  filter: grayscale(0.2) saturate(0.8);
+}
+
+/* ----- Forced colors ----------------------------------------------------- */
+
+@media (forced-colors: active) {
+  :host button.jz-btn {
+    border: 1px solid CanvasText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+  }
+
+  :host button.jz-btn > .cuboid,
+  :host button.jz-btn > .cuboid::before,
+  :host button.jz-btn > .cuboid::after {
+    display: none;
+  }
+}
+
+/*jz-button-3d.component.scss*/
+
+:host button.jz-btn {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  border-radius: var(--jz-radius);
+  cursor: pointer;
+  outline: none;
+  overflow: hidden; /* ensures bevel stays clipped */
+}
+
+:host button.jz-btn > .cuboid {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* ... keep the rest of your cuboid painting here ... */
+}
+
+/* label must be above the painted layers */
+:host button.jz-btn > .label {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0 0.75em;
+  color: var(--jz-text);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+

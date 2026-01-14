@@ -1,0 +1,14 @@
+<!--jz-button-3d.component.html-->
+
+<button class="jz-btn jz-btn--3d"
+        [attr.type]="type"
+        [disabled]="disabled"
+        [attr.aria-label]="text && text.trim().length ? text : null"
+        (click)="onClick()">
+
+  <span class="cuboid" aria-hidden="true"></span>
+
+  <!-- Real accessible label (discernible text) -->
+  <span class="label">{{ text }}</span>
+
+</button>

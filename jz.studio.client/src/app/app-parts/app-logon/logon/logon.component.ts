@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { JzButtonCuboid } from '../../../../components/buttons/jz-button-cuboid/jz-button-cuboid';
-import { JzButton3dComponent } from '../../../../components/buttons/jz-button3d/jz-button3d.component';
+import { JzButton3dComponent } from '../../../../components/buttons/jz-button3d/jz-button-3d.component';
 
 @Component({
   selector: 'app-logon',

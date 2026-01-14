@@ -2,7 +2,6 @@ import { Directive, HostBinding, Input, Output, EventEmitter, OnChanges, SimpleC
 import { MenuType } from '../../../types/menu';
 
 @Directive()
-// No template/host listeners here—derived components wire the inner <button>.
 export abstract class ButtonBase implements OnChanges {
   /* ---------- Public API (shared across all buttons) ---------- */
   @Input() route = '';
@@ -22,29 +21,36 @@ export abstract class ButtonBase implements OnChanges {
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() emphasis: 'primary' | 'neutral' | 'accent' = 'primary';
 
-  /** Sizing inputs (numbers ⇒ px). Defaults: auto/auto/6px */
+  /** Sizing inputs (numbers ⇒ px). Defaults: auto/auto/8px */
   @Input() width: string | number | null = '100px';
   @Input() height: string | number | null = '60px';
-  @Input() bevelWidth: number =  8;
+  @Input() bevelWidth: number = 8;
   /** kebab-case alias support: [bevelwidth] */
   @Input('bevelwidth') set bevelwidthAlias(v: number) { this.bevelWidth = v; }
 
   /** Primary click event (emit from the inner <button>) */
   @Output() clicked = new EventEmitter<void>();
 
-  // button-base.ts
+  /* ---------- CSS vars consumed by component stylesheets ---------- */
 
-  /* ---------- Host-level CSS vars & classes shared by all buttons ---------- */
+  private _cssWidth = 'auto';
+  private _cssHeight = 'auto';
+  private _cssBevel = '8px';
 
-  /** CSS vars consumed by component stylesheets */
-  get cssWidth() { return this.toCss(this.width, 'auto'); }
-  get cssHeight() { return this.toCss(this.height, 'auto'); }
-  get cssBevel() { return this.toCss(this.bevelWidth, '6px'); }
+  get cssWidth() { return this._cssWidth; }
+  get cssHeight() { return this._cssHeight; }
+  get cssBevel() { return this._cssBevel; }
 
-  @HostBinding('style.width') get hostWidth() { return this.cssWidth; }   // '100px' | 'auto'
-  @HostBinding('style.height') get hostHeight() { return this.cssHeight; }  // '30px'  | 'auto'
+  /** Preserve your existing behavior */
+  @HostBinding('style.width') get hostWidth() { return this.cssWidth; }
+  @HostBinding('style.height') get hostHeight() { return this.cssHeight; }
 
-  /** Common host classes for size/emphasis toggles (subclasses’ CSS can target these) */
+  /** NEW: host CSS vars so different button implementations can share sizing */
+  @HostBinding('style.--jz-w') get hostVarW() { return this.cssWidth; }
+  @HostBinding('style.--jz-h') get hostVarH() { return this.cssHeight; }
+  @HostBinding('style.--jz-bevel') get hostVarBevel() { return this.cssBevel; }
+
+  /** Common host classes */
   @HostBinding('class.jz-btn--sm') get _sizeSm() { return this.size === 'sm'; }
   @HostBinding('class.jz-btn--lg') get _sizeLg() { return this.size === 'lg'; }
   @HostBinding('class.jz-btn--primary') get _emphPrimary() { return this.emphasis === 'primary'; }
@@ -58,14 +64,13 @@ export abstract class ButtonBase implements OnChanges {
     this.applySizeVars();
   }
 
-  /** Subclasses should call this once in their constructor for initial values */
+  /** Subclasses can call this if they ever need to force-refresh sizes */
   protected applySizeVars(): void {
-    //this.cssWidth = this.toCss(this.width, 'auto');
-    //this._cssHeight = this.toCss(this.height, 'auto');
-    //this._cssBevel = this.toCss(this.bevelWidth, '6px');
+    this._cssWidth = this.toCss(this.width, 'auto');
+    this._cssHeight = this.toCss(this.height, 'auto');
+    this._cssBevel = this.toCss(this.bevelWidth, '8px');
   }
 
-  /** Utility: normalize string|number|null → css string */
   protected toCss(v: string | number | null | undefined, fallback: string): string {
     if (v === null || v === undefined || v === '') return fallback;
     if (typeof v === 'number') return `${v}px`;
@@ -73,10 +78,8 @@ export abstract class ButtonBase implements OnChanges {
     return /^\d+(\.\d+)?$/.test(s) ? `${s}px` : s;
   }
 
-  /** Helper for derived templates */
   get hasText(): boolean { return !!this.text && this.text.trim().length > 0; }
 
-  /** Call this from the inner <button>’s (click) */
   protected emitClicked(): void {
     if (!this.disabled) this.clicked.emit();
   }
