@@ -37,7 +37,7 @@
     "rxjs": "~7.8.0",
     "svg-path-bounds": "^1.0.2",
     "techan": "^0.7.0",
-    "three.js": "^0.77.0",
+    "three": "^0.182.0",
     "topojson": "^3.0.2",
     "zone.js": "~0.15.1"
   },
@@ -53,6 +53,7 @@
     "@types/jasmine": "~5.1.0",
     "@types/jest": "^29.5.12",
     "@types/mocha": "^10.0.7",
+    "@types/three": "^0.182.0",
     "jasmine": "^5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

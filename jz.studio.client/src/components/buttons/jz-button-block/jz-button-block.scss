@@ -1,2 +1,61 @@
-/*jz-button-block.scss*/
+/* jz-button-block.scss */
 
+:host {
+  display: inline-block;
+
+  /* You’re already passing these as inline styles on the host in your other buttons */
+  width: var(--jz-w, 120px);
+  height: var(--jz-h, 44px);
+}
+
+/* Real button for accessibility */
+.jz-btn--block {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+  user-select: none;
+
+  /* Helps with pointer events on touch/pen */
+  touch-action: manipulation;
+}
+
+/* The Three.js output surface */
+.jz-btn__canvas {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  /* So the button receives input, not the canvas */
+  pointer-events: none;
+
+  border-radius: calc(var(--jz-bevel, 8px) * 0.85);
+}
+
+/* Label sits above the canvas */
+.jz-btn__label {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+
+  /* Match your current look; tweak later */
+  color: #000;
+  text-shadow: none;
+}

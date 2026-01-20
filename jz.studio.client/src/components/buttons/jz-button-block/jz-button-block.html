@@ -1,3 +1,18 @@
-<!--jz-button-block.html-->
+<!-- jz-button-block.html -->
 
+<button class="jz-btn jz-btn--block"
+        type="button"
+        [attr.aria-label]="ariaLabel ?? text"
+        (pointerenter)="onPointerEnter()"
+        (pointerleave)="onPointerLeave()"
+        (pointerdown)="onPointerDown()"
+        (pointerup)="onPointerUp()"
+        (pointercancel)="onPointerCancel()"
+        (focusin)="onFocusIn()"
+        (focusout)="onFocusOut()">
+  <!-- Three.js renders into this -->
+  <canvas #canvas2d class="jz-btn__canvas" aria-hidden="true"></canvas>
 
+  <!-- Accessible, selectable label (not drawn into the canvas) -->
+  <span class="jz-btn__label">{{ text }}</span>
+</button>
