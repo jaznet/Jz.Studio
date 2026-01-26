@@ -15,7 +15,8 @@ export class JzButtonBlockComponent implements AfterViewInit, OnDestroy {
   @Input() text = "Button";
   @Input() ariaLabel?: string;
 
-  @Input() finish: JzButtonBlockFinish = "anodized";
+  // ✅ Now supports archetypes (and still accepts legacy matte/anodized/glossy)
+  @Input() finish: JzButtonBlockFinish = "bakeliteSatin";
   @Input() baseHex = "#2f3440";
 
   private unregister?: () => void;
@@ -37,7 +38,6 @@ export class JzButtonBlockComponent implements AfterViewInit, OnDestroy {
       getT: () => (this.pressed ? 1 : (this.hover || this.focus) ? 0.6 : 0),
     });
 
-    // Initial idle snapshot
     this.renderSvc.snapshot(canvas);
   }
 
@@ -45,7 +45,6 @@ export class JzButtonBlockComponent implements AfterViewInit, OnDestroy {
     this.unregister?.();
   }
 
-  // --- Template event handlers (match the HTML) ---
   onPointerEnter(): void {
     this.hover = true;
     this.renderSvc.setActiveCanvas(this.canvasRef.nativeElement);
@@ -53,7 +52,7 @@ export class JzButtonBlockComponent implements AfterViewInit, OnDestroy {
 
   onPointerLeave(): void {
     this.hover = false;
-    this.pressed = false; // leaving should cancel press visuals
+    this.pressed = false;
     this.renderSvc.maybeReleaseActive(this.canvasRef.nativeElement);
   }
 

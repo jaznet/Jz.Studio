@@ -49,7 +49,7 @@ export class PaletteMgrService {
 
         document.documentElement.style.setProperty('--plt-txt-1', 'white');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
-        document.documentElement.style.setProperty('--plt-txt-3', '#B7AC57');
+        document.documentElement.style.setProperty('--plt-txt-3', 'black');
         document.documentElement.style.setProperty('--plt-txt-4', 'black');
         document.documentElement.style.setProperty('--plt-txt-5', 'white');
 
