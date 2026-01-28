@@ -273,7 +273,10 @@ export class JzButtonBlockRenderService {
     const cssH = Math.max(1, Math.round(rect.height));
     const dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
 
-    // Set sizes (no double-DPR, no supersample multiplier beyond pixelRatio cap)
+    // Prevent CSS resample surprises
+    canvas2d.style.width = `${cssW}px`;
+    canvas2d.style.height = `${cssH}px`;
+
     this.renderer.setPixelRatio(dpr);
     this.renderer.setSize(cssW, cssH, false);
 
@@ -282,25 +285,24 @@ export class JzButtonBlockRenderService {
 
     this.applyEnvironment();
 
-    // Material
     const nextMat = this.getMaterial(reg.getFinish(), reg.getBaseHex());
     if (this.mesh.material !== nextMat) {
       this.mesh.material = nextMat;
       (nextMat as THREE.Material).needsUpdate = true;
     }
 
-    // Motion
     const pressed = t >= 0.999;
     this.mesh.position.y = THREE.MathUtils.lerp(this.mesh.position.y, pressed ? -0.03 : 0, 0.22);
     this.mesh.rotation.x = THREE.MathUtils.lerp(this.mesh.rotation.x, -0.08 * t, 0.16);
     this.mesh.rotation.y = THREE.MathUtils.lerp(this.mesh.rotation.y, 0.10 * t, 0.16);
 
-    // Render WebGL
-    this.renderer.clear(true, true, true);
+    // Critical: true transparent clear (RGB must be 0 when A=0)
+    this.renderer.setClearColor(0x000000, 0);
+    this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
 
-    // Copy WebGL -> 2D at 1:1 drawing buffer size (no scaling = no fringe from filtering)
     const ctx = (reg.ctx2d ??= canvas2d.getContext("2d", { alpha: true })!);
+    ctx.imageSmoothingEnabled = false;
 
     const db = new THREE.Vector2();
     this.renderer.getDrawingBufferSize(db);
@@ -311,8 +313,9 @@ export class JzButtonBlockRenderService {
     }
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.globalCompositeOperation = "copy";  // overwrite pixels (no leftovers)
-    ctx.drawImage(this.renderer.domElement, 0, 0); // 1:1
+    ctx.globalCompositeOperation = "copy";
+    ctx.drawImage(this.renderer.domElement, 0, 0);
     ctx.globalCompositeOperation = "source-over";
   }
+
 }

@@ -1,121 +1,134 @@
-/* jz-button-block-geometry.ts
-   - Builds a rounded-rect ExtrudeGeometry “button block”
-   - Centers the geometry at origin
-   - Computes crease-aware normals (pseudo “smoothing groups”) via a crease angle
-*/
-
+// jz-button-block-geometry.ts
 import * as THREE from "three";
+import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
-/** Utility: create a rounded-rect Shape (centered at 0,0) */
-export function makeRoundedRectShape(width: number, height: number, radius: number): THREE.Shape {
+// If you already have this, keep using yours.
+function makeRoundedRectShape(width: number, height: number, radius: number): THREE.Shape {
   const w = width;
   const h = height;
-  const r = Math.min(radius, w / 2, h / 2);
+  const r = Math.min(radius, Math.min(w, h) * 0.5);
 
-  const x0 = -w / 2;
-  const y0 = -h / 2;
-  const x1 = +w / 2;
-  const y1 = +h / 2;
+  const x = -w / 2;
+  const y = -h / 2;
 
-  const s = new THREE.Shape();
+  const shape = new THREE.Shape();
+  shape.moveTo(x + r, y);
+  shape.lineTo(x + w - r, y);
+  shape.quadraticCurveTo(x + w, y, x + w, y + r);
+  shape.lineTo(x + w, y + h - r);
+  shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  shape.lineTo(x + r, y + h);
+  shape.quadraticCurveTo(x, y + h, x, y + h - r);
+  shape.lineTo(x, y + r);
+  shape.quadraticCurveTo(x, y, x + r, y);
+  shape.closePath();
 
-  // Start at top-left corner (after radius)
-  s.moveTo(x0 + r, y1);
-
-  // Top edge -> top-right corner
-  s.lineTo(x1 - r, y1);
-  s.quadraticCurveTo(x1, y1, x1, y1 - r);
-
-  // Right edge -> bottom-right corner
-  s.lineTo(x1, y0 + r);
-  s.quadraticCurveTo(x1, y0, x1 - r, y0);
-
-  // Bottom edge -> bottom-left corner
-  s.lineTo(x0 + r, y0);
-  s.quadraticCurveTo(x0, y0, x0, y0 + r);
-
-  // Left edge -> top-left corner
-  s.lineTo(x0, y1 - r);
-  s.quadraticCurveTo(x0, y1, x0 + r, y1);
-
-  s.closePath();
-  return s;
+  return shape;
 }
 
 /**
- * Crease-aware normals:
- * - Converts to non-indexed triangles
- * - Computes per-face normals
- * - For each “same position” vertex, averages only neighboring face normals within crease angle
- *
- * This mimics “smoothing groups” enough to keep bevel smooth while keeping crisp breaks.
+ * Computes vertex normals with a crease angle: faces meeting at angles larger than `creaseAngleRad`
+ * will NOT be smoothed together (hard edge), which prevents bevel->side normal bleeding artifacts.
  */
-function computeCreasedNormals(
-  geometry: THREE.BufferGeometry,
+function computeCreasedVertexNormals(
+  geom: THREE.BufferGeometry,
   creaseAngleRad: number
-): THREE.BufferGeometry {
-  // Work on a non-indexed clone so each triangle has its own vertices
-  const geom = geometry.index ? geometry.toNonIndexed() : geometry.clone();
+): void {
+  // Ensure indexed geometry so adjacency exists
+  const indexed =
+    geom.index ? geom : BufferGeometryUtils.mergeVertices(geom, 1e-6);
 
-  const posAttr = geom.getAttribute("position") as THREE.BufferAttribute;
-  const positions = posAttr.array as Float32Array;
+  const pos = indexed.getAttribute("position") as THREE.BufferAttribute;
+  if (!pos) return;
 
-  // Compute per-face normals (one per triangle)
-  const faceNormals: THREE.Vector3[] = [];
-  for (let i = 0; i < positions.length; i += 9) {
-    const ax = positions[i + 0], ay = positions[i + 1], az = positions[i + 2];
-    const bx = positions[i + 3], by = positions[i + 4], bz = positions[i + 5];
-    const cx = positions[i + 6], cy = positions[i + 7], cz = positions[i + 8];
+  const index = indexed.getIndex()!;
+  const triCount = index.count / 3;
 
-    const abx = bx - ax, aby = by - ay, abz = bz - az;
-    const acx = cx - ax, acy = cy - ay, acz = cz - az;
+  // Face normals
+  const faceNormals: THREE.Vector3[] = new Array(triCount);
+  const a = new THREE.Vector3();
+  const b = new THREE.Vector3();
+  const c = new THREE.Vector3();
+  const ab = new THREE.Vector3();
+  const ac = new THREE.Vector3();
 
-    // (AB x AC)
-    const nx = aby * acz - abz * acy;
-    const ny = abz * acx - abx * acz;
-    const nz = abx * acy - aby * acx;
+  for (let f = 0; f < triCount; f++) {
+    const i0 = index.getX(f * 3 + 0);
+    const i1 = index.getX(f * 3 + 1);
+    const i2 = index.getX(f * 3 + 2);
 
-    const n = new THREE.Vector3(nx, ny, nz).normalize();
-    faceNormals.push(n);
+    a.fromBufferAttribute(pos, i0);
+    b.fromBufferAttribute(pos, i1);
+    c.fromBufferAttribute(pos, i2);
+
+    ab.subVectors(b, a);
+    ac.subVectors(c, a);
+
+    const n = new THREE.Vector3().crossVectors(ab, ac).normalize();
+    faceNormals[f] = n;
   }
 
-  // Bucket vertices by position (quantized) so we can average across coincident verts
-  const hash = (x: number, y: number, z: number) =>
-    `${x.toFixed(5)},${y.toFixed(5)},${z.toFixed(5)}`;
-
-  const buckets = new Map<string, number[]>();
-  for (let vi = 0; vi < posAttr.count; vi++) {
-    const key = hash(posAttr.getX(vi), posAttr.getY(vi), posAttr.getZ(vi));
-    const arr = buckets.get(key);
-    if (arr) arr.push(vi);
-    else buckets.set(key, [vi]);
+  // Build vertex -> faces adjacency
+  const vertFaceLists: number[][] = Array.from({ length: pos.count }, () => []);
+  for (let f = 0; f < triCount; f++) {
+    const i0 = index.getX(f * 3 + 0);
+    const i1 = index.getX(f * 3 + 1);
+    const i2 = index.getX(f * 3 + 2);
+    vertFaceLists[i0].push(f);
+    vertFaceLists[i1].push(f);
+    vertFaceLists[i2].push(f);
   }
 
-  const normals = new Float32Array(posAttr.count * 3);
-  const creaseCos = Math.cos(creaseAngleRad);
+  const cosCrease = Math.cos(creaseAngleRad);
 
-  // For each bucket: for each vertex, average only “similar” face normals
-  for (const verts of buckets.values()) {
-    for (const vi of verts) {
-      const faceIndex = Math.floor(vi / 3); // 3 verts per triangle in non-indexed geometry
-      const baseN = faceNormals[faceIndex];
+  // For each corner of each triangle, compute a normal by averaging only faces within crease angle.
+  // That requires splitting vertices when a vertex belongs to multiple smoothing groups.
+  // We do this by "unindexing" to per-triangle vertices, computing per-corner normals, then reindexing.
+  const nonIndexed = indexed.toNonIndexed();
+  const nPos = nonIndexed.getAttribute("position") as THREE.BufferAttribute;
+  const outNormals = new Float32Array(nPos.count * 3);
 
-      const sum = new THREE.Vector3(0, 0, 0);
-      for (const vj of verts) {
-        const fj = Math.floor(vj / 3);
-        const nj = faceNormals[fj];
-        if (baseN.dot(nj) >= creaseCos) sum.add(nj);
+  // Map nonIndexed vertex -> original indexed vertex id + face id:
+  // Since toNonIndexed preserves triangle order, vertex k belongs to face floor(k/3), corner (k%3).
+  const accum = new THREE.Vector3();
+
+  for (let k = 0; k < nPos.count; k++) {
+    const f = Math.floor(k / 3);
+
+    // Original indexed vertex id for this corner:
+    const origVert = index.getX(f * 3 + (k % 3));
+
+    const base = faceNormals[f];
+
+    accum.set(0, 0, 0);
+    const facesAtV = vertFaceLists[origVert];
+
+    for (let j = 0; j < facesAtV.length; j++) {
+      const fj = facesAtV[j];
+      const nj = faceNormals[fj];
+
+      // Only include faces whose normal is within crease angle of the current face normal.
+      if (base.dot(nj) >= cosCrease) {
+        accum.add(nj);
       }
-      sum.normalize();
-
-      normals[vi * 3 + 0] = sum.x;
-      normals[vi * 3 + 1] = sum.y;
-      normals[vi * 3 + 2] = sum.z;
     }
+
+    accum.normalize();
+
+    outNormals[k * 3 + 0] = accum.x;
+    outNormals[k * 3 + 1] = accum.y;
+    outNormals[k * 3 + 2] = accum.z;
   }
 
-  geom.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
-  return geom;
+  nonIndexed.setAttribute("normal", new THREE.BufferAttribute(outNormals, 3));
+
+  // Reindex to reduce vertex count while preserving creases (normals differ across hard edges)
+  const reindexed = BufferGeometryUtils.mergeVertices(nonIndexed, 1e-6);
+  reindexed.computeBoundingBox();
+  reindexed.computeBoundingSphere();
+
+  // Mutate original geometry in place-ish: copy attributes/index over
+  geom.copy(reindexed);
 }
 
 export function makeButtonBlockGeometry(params: {
@@ -130,7 +143,7 @@ export function makeButtonBlockGeometry(params: {
   curveSegments?: number;
   bevelSegments?: number;
 
-  /** Pseudo “smoothing groups” control. 25–45 is typical. Default 35. */
+  /** Optional: crease angle in degrees. Default tuned for bevel blocks. */
   creaseAngleDeg?: number;
 }): THREE.BufferGeometry {
   const shape = makeRoundedRectShape(params.width, params.height, params.radius);
@@ -155,8 +168,10 @@ export function makeButtonBlockGeometry(params: {
   geom.translate(-center.x, -center.y, -(bb.min.z + bb.max.z) / 2);
 
   // IMPORTANT:
-  // Do NOT call mergeVertices()+computeVertexNormals() elsewhere after this,
-  // or you’ll undo the crease behavior.
-  const creaseDeg = params.creaseAngleDeg ?? 35;
-  return computeCreasedNormals(geom, THREE.MathUtils.degToRad(creaseDeg));
+  // Use crease-aware normals instead of plain computeVertexNormals()
+  // This prevents bevel->side normal bleeding that creates the “shadow halo” at the silhouette.
+  const creaseDeg = params.creaseAngleDeg ?? 35; // sweet spot for your bevel proportions
+  computeCreasedVertexNormals(geom, THREE.MathUtils.degToRad(creaseDeg));
+
+  return geom;
 }
