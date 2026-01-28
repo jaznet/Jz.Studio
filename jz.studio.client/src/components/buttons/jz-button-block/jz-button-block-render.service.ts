@@ -3,8 +3,8 @@
    - Single shared WebGLRenderer, copied into per-button 2D canvases
    - PMREM RoomEnvironment setup (TS-safe wrapper via envScene)
    - Optional environment toggle + intensity (kept OFF by default)
-   - Key light placement tuned for glossy specular at ULF (approx)
-   - Debug diagonal line (LRB -> ULF) drawn on top (toggle)
+   - PROVEN LIGHTING: Key + Rim (no fill yet) using DirectionalLights
+   - Debug diagonal line (LRB -> ULF) drawn on top (toggle)  -> REMOVED
    - FIX: renderer sizing uses CSS pixels + pixelRatio (no double-DPR)
    - Material archetypes + caching with versioned key
 */
@@ -14,6 +14,9 @@ import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { makeButtonBlockGeometry } from "./jz-button-block-geometry";
 import { buildMaterialPreset, JzButtonMaterialArchetype } from "./jz-button-block-materials";
+import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUtils.js";
+//import { mergeVertices } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+
 
 export type JzButtonBlockFinish =
   | "matte"
@@ -45,9 +48,13 @@ export class JzButtonBlockRenderService {
   private camera!: THREE.PerspectiveCamera;
 
   private mesh!: THREE.Mesh;
+
+  // ---- Lights (Key + Rim) ----
   private keyLight!: THREE.DirectionalLight;
-  private fillLight!: THREE.HemisphereLight;
   private rimLight!: THREE.DirectionalLight;
+
+  // Optional debug helper for the key
+  private keyHelper?: THREE.DirectionalLightHelper;
 
   private envTex!: THREE.Texture;
 
@@ -64,20 +71,16 @@ export class JzButtonBlockRenderService {
   private readonly MATERIAL_PRESET_VERSION = 1;
 
   // ---- Debug/controls ----
-  private readonly DEBUG_SHOW_DIAGONAL = true;
   private readonly DEBUG_SHOW_KEY_HELPER = false;
 
-  // Environment toggle (OFF while debugging spec)
+  // Environment toggle (OFF while tuning spec)
   private readonly USE_ENVIRONMENT = false;
   private readonly ENV_INTENSITY = 0.25;
 
   // Geometry dims (must match makeButtonBlockGeometry inputs)
   private readonly W = 1.8;
   private readonly H = 0.78;
-  private readonly D = 0.30;
-
-  private diagLine?: THREE.Line;
-  private keyHelper?: THREE.DirectionalLightHelper;
+  private readonly D = 0.20;
 
   constructor(private zone: NgZone) { }
 
@@ -140,34 +143,42 @@ export class JzButtonBlockRenderService {
     const dpr = Math.min((globalThis.window?.devicePixelRatio ?? 1), 2);
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
+      antialias: false,              // <-- key
       alpha: true,
-      preserveDrawingBuffer: true, // required for drawImage(renderer.domElement)
+      premultipliedAlpha: false,     // <-- also important
+      preserveDrawingBuffer: true,
       powerPreference: "high-performance",
     });
 
-    this.renderer.setPixelRatio(dpr);
+    this.renderer.setClearColor(0xff00ff, 1); // magenta, opaque
+
+    this.renderer.setPixelRatio(Math.min((devicePixelRatio ?? 1) * 2, 3)); // supersample
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
-    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.0;
+    this.renderer.toneMapping = THREE.NoToneMapping;
+
+    // Slightly higher exposure helps dark colors when env is OFF
+    this.renderer.toneMappingExposure = 1.15;
 
     this.scene = new THREE.Scene();
 
-    // Environment (PMREM from RoomEnvironment) - TS-safe wrapper
+    // ---- Environment OFF (for clean spec tuning) ----
+    this.scene.environment = null;
+    (this.scene as any).environmentIntensity = 0;
+
+    // PMREM retained so you can flip USE_ENVIRONMENT later without revisiting plumbing
     const pmrem = new THREE.PMREMGenerator(this.renderer);
     const envScene = new THREE.Scene();
     envScene.add(new RoomEnvironment());
     this.envTex = pmrem.fromScene(envScene, 0.04).texture;
     pmrem.dispose();
 
-    this.applyEnvironment();
-
-    // Camera: face-on
-    this.camera = new THREE.PerspectiveCamera(28, 1, 0.01, 10);
-    this.camera.position.set(0.0, 0.0, 2.2);
+    // ---- Camera: straight-on ----
+    // ---- Camera: straight-on (telephoto) ----
+    this.camera = new THREE.PerspectiveCamera(14, 1, 0.01, 20);
+    this.camera.position.set(0, 0, 3.4);
     this.camera.lookAt(0, 0, 0);
 
-    // Geometry
+    // ---- Geometry ----
     this.geom = makeButtonBlockGeometry({
       width: this.W,
       height: this.H,
@@ -179,48 +190,58 @@ export class JzButtonBlockRenderService {
       bevelSegments: 10,
     });
 
+    // Improve bevel/edge shading
+    this.geom = BufferGeometryUtils.mergeVertices(this.geom, 5e-4) as THREE.BufferGeometry;
+    this.geom.computeVertexNormals();
+    //this.geom = BufferGeometryUtils.mergeVertices(this.geom, 1e-4);
+    //this.geom.computeVertexNormals();
+
     // Default material (overridden per-frame)
     this.mesh = new THREE.Mesh(this.geom, this.getMaterial("bakeliteSatin", "#2f3440"));
     this.mesh.position.set(0, 0, 0);
     this.mesh.rotation.set(0, 0, 0);
+
+    // Slightly toward camera so the side-wall doesn't read as a dark outline
+    this.mesh.position.z = -0.0;
+
     this.scene.add(this.mesh);
 
-    // ---- Lights ----
-
-    // Key
-    this.keyLight = new THREE.DirectionalLight(0xffffff, 2.05);
+    // ---- Lights: Key + Rim (no fill) ----
+    this.keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
+    this.keyLight.position.set(-0.9, 0.9, 3.2); // move key forward with telephoto camera
     this.keyLight.target.position.set(0, 0, 0);
-    this.scene.add(this.keyLight.target);
-    this.scene.add(this.keyLight);
+    this.scene.add(this.keyLight, this.keyLight.target);
 
-    // Position key for glossy highlight near ULF corner (approx)
-    this.positionKeyLightForGlossyULF();
+    this.rimLight = new THREE.DirectionalLight(0xffffff, 0.55);
+    this.rimLight.position.set(1.1, -0.4, 2.0);
+    this.rimLight.target.position.set(0, 0, 0);
+    this.scene.add(this.rimLight, this.rimLight.target);
 
+    const frontFill = new THREE.DirectionalLight(0xffffff, 0.10);
+    frontFill.position.set(0.0, 0.0, 4.0); // from camera
+    frontFill.target.position.set(0, 0, 0);
+    this.scene.add(frontFill, frontFill.target);
+
+
+    // Optional helper (DirectionalLightHelper)
     if (this.DEBUG_SHOW_KEY_HELPER) {
-      this.keyHelper = new THREE.DirectionalLightHelper(this.keyLight, 0.35, 0xffffff);
+      this.keyHelper = new THREE.DirectionalLightHelper(this.keyLight, 0.45, 0xffffff);
       this.scene.add(this.keyHelper);
     }
 
-    // Fill + Rim (created but OFF by default for debugging)
-    this.fillLight = new THREE.HemisphereLight(0xffffff, 0x1a1f2a, 0.75);
-    this.fillLight.visible = false;
-    this.scene.add(this.fillLight);
+    // NOTE: If you want to remain strictly "no fill", keep this OFF.
+    // If you want to slightly lift the very dark outside band, enable this (very low).
+    // very small: just prevents “dead black” side band
+ //   this.scene.add(new THREE.AmbientLight(0xffffff, 0.03));
+    // Subtle "sky/ground" lift to prevent the underside band from going dead black
+    const hemi = new THREE.HemisphereLight(0xffffff, 0x3e6b67, 0.14);
+    this.scene.add(hemi);
 
-    this.rimLight = new THREE.DirectionalLight(0xffffff, 1.15);
-    this.rimLight.position.set(1.2, 0.8, -1.4);
-    this.rimLight.visible = false;
-    this.scene.add(this.rimLight);
-
-    // Debug diagonal line (LRB -> ULF) drawn on top
-    if (this.DEBUG_SHOW_DIAGONAL) {
-      this.upsertDiagonalLine_LRB_to_ULF(this.W, this.H, this.D);
-    }
   }
 
   private applyEnvironment(): void {
     if (this.USE_ENVIRONMENT) {
       this.scene.environment = this.envTex;
-      // r182: environmentIntensity exists on Scene, but TS typings vary; cast keeps it safe
       (this.scene as any).environmentIntensity = this.ENV_INTENSITY;
     } else {
       this.scene.environment = null;
@@ -238,55 +259,20 @@ export class JzButtonBlockRenderService {
    *
    * reflect(-L, N) == V  => L = -reflect(V, N)
    *
-   * DirectionalLight direction is (target - position), so "light direction from surface->light"
-   * corresponds to the light's position vector when target is at origin.
+   * For a DirectionalLight, "direction" is (target - position). When the target is origin,
+   * positioning the light along the computed direction gives a stable, predictable key.
+   *
+   * NOTE: leave unused unless you want auto-aiming for glossy.
    */
   private positionKeyLightForGlossyULF(): void {
     const cornerNormal = new THREE.Vector3(-1, +1, +1).normalize();
 
-    // View direction from origin to camera
     const viewDir = this.camera.position.clone().normalize();
-
-    // Desired direction from surface -> light
     const lightDir = viewDir.clone().reflect(cornerNormal).negate().normalize();
 
-    const dist = 4.0; // farther behaves more "directional"
+    const dist = 4.0;
     this.keyLight.position.copy(lightDir.multiplyScalar(dist));
     this.keyLight.target.position.set(0, 0, 0);
-  }
-
-  // -------------------------
-  // Debug diagonal
-  // -------------------------
-
-  private upsertDiagonalLine_LRB_to_ULF(w: number, h: number, d: number): void {
-    const a = new THREE.Vector3(+w / 2, -h / 2, -d / 2); // LRB
-    const b = new THREE.Vector3(-w / 2, +h / 2, +d / 2); // ULF
-
-    const dir = b.clone().sub(a).normalize();
-    const pad = Math.max(w, h, d) * 1.2;
-
-    const a2 = a.clone().addScaledVector(dir, -pad);
-    const b2 = b.clone().addScaledVector(dir, +pad);
-
-    const geom = new THREE.BufferGeometry().setFromPoints([a2, b2]);
-
-    if (!this.diagLine) {
-      const mat = new THREE.LineBasicMaterial({
-        color: 0x4f5d75,
-        transparent: true,
-        opacity: 0.95,
-        depthTest: false,
-        depthWrite: false,
-      });
-
-      this.diagLine = new THREE.Line(geom, mat);
-      this.diagLine.renderOrder = 999;
-      this.scene.add(this.diagLine);
-    } else {
-      this.diagLine.geometry.dispose();
-      this.diagLine.geometry = geom;
-    }
   }
 
   // -------------------------
@@ -308,7 +294,6 @@ export class JzButtonBlockRenderService {
   private normalizeFinishToArchetype(finish: JzButtonBlockFinish): JzButtonMaterialArchetype {
     if (this.isArchetype(finish)) return finish;
 
-    // Legacy UI names -> archetypes
     switch (finish) {
       case "matte":
         return "softPlastic";
@@ -321,14 +306,22 @@ export class JzButtonBlockRenderService {
     }
   }
 
+  private normalizeHex(hex: string): string {
+    const h = (hex ?? "").trim();
+    if (!h) return "#000000";
+    if (h.startsWith("#")) return h;
+    return `#${h}`;
+  }
+
   private getMaterial(finish: JzButtonBlockFinish, hex: string): THREE.Material {
     const archetype = this.normalizeFinishToArchetype(finish);
-    const key = `${this.MATERIAL_PRESET_VERSION}|${archetype}|${hex}`;
+    const normalizedHex = this.normalizeHex(hex);
+    const key = `${this.MATERIAL_PRESET_VERSION}|${archetype}|${normalizedHex}`;
 
     const cached = this.matCache.get(key);
     if (cached) return cached;
 
-    const { mat } = buildMaterialPreset(archetype, hex);
+    const { mat } = buildMaterialPreset(archetype, normalizedHex);
 
     this.matCache.set(key, mat);
     return mat;
@@ -404,15 +397,19 @@ export class JzButtonBlockRenderService {
     // Material
     const finish = reg.getFinish();
     const baseHex = reg.getBaseHex();
-    this.mesh.material = this.getMaterial(finish, baseHex);
-
-    // Key-light alignment for glossy (optional, safe to run per-frame)
-    if (finish === "glossy" || (typeof finish === "string" && finish.startsWith("bakelite"))) {
-      this.positionKeyLightForGlossyULF();
+    const nextMat = this.getMaterial(finish, baseHex);
+    if (this.mesh.material !== nextMat) {
+      this.mesh.material = nextMat;
+      (nextMat as THREE.Material).needsUpdate = true;
     }
 
+    // If you ever want auto-aiming for glossy, re-enable this:
+    // if (finish === "glossy" || (typeof finish === "string" && finish.startsWith("bakelite"))) {
+    //   this.positionKeyLightForGlossyULF();
+    // }
+
     // Exposure: keep conservative; tune later
-    this.renderer.toneMappingExposure = 1.0;
+  //  this.renderer.toneMappingExposure = this.USE_ENVIRONMENT ? 1.0 : 1.25;
 
     // Interaction motion
     const pressed = t >= 0.999;
@@ -428,13 +425,18 @@ export class JzButtonBlockRenderService {
     // Copy to per-button 2D canvas
     const ctx = (reg.ctx2d ??= canvas2d.getContext("2d", { alpha: true })!);
 
-    if (canvas2d.width !== rw || canvas2d.height !== rh) {
-      canvas2d.width = rw;
-      canvas2d.height = rh;
+    const size = new THREE.Vector2();
+    this.renderer.getSize(size); // CSS px
+    const db = new THREE.Vector2();
+    this.renderer.getDrawingBufferSize(db); // real px
+
+    if (canvas2d.width !== db.x || canvas2d.height !== db.y) {
+      canvas2d.width = db.x;
+      canvas2d.height = db.y;
     }
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, rw, rh);
-    ctx.drawImage(this.renderer.domElement, 0, 0, rw, rh);
+    ctx.clearRect(0, 0, db.x, db.y);
+    ctx.drawImage(this.renderer.domElement, 0, 0); // <-- no dest sizing
   }
 }
