@@ -141,13 +141,14 @@ export class JzButtonBlockRenderService {
       width: this.W,
       height: this.H,
       depth: this.D,
-      radius: 0.16,
+      radius: 0.22,
+      fillet: 0.08,
       segments: 18,
     });
 
     this.mesh = new THREE.Mesh(this.geom, this.getMaterial("bakeliteSatin", "#2f3440"));
     this.mesh.position.set(0, 0, 0);
-    this.mesh.rotation.y = 0.25;  // temporary test
+   // this.mesh.rotation.y = 0.25;  // temporary test
     this.scene.add(this.mesh);
 
     this.keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
