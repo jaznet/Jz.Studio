@@ -6,14 +6,13 @@
    ✅ Disable MSAA (antialias:false) to avoid edge-resolve fringe
    ✅ Use DPR supersampling via setPixelRatio (cap 2), then copy 1:1 (no scaling)
    ✅ Clear+copy using globalCompositeOperation="copy" (prevents leftover pixels)
-   ✅ Do NOT mergeVertices/computeVertexNormals here if you adopt the crease-aware normals in makeButtonBlockGeometry
 */
 
 import { Injectable, NgZone } from "@angular/core";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { makeButtonBlockGeometry } from "./jz-button-block-geometry";
-import { buildMaterialPreset, JzButtonMaterialArchetype } from "./jz-button-block-materials";
+import { JzButtonMaterialArchetype } from "./jz-button-block-materials";
 
 export type JzButtonBlockFinish =
   | "matte"
@@ -107,26 +106,24 @@ export class JzButtonBlockRenderService {
   private ensureInit(): void {
     if (this.renderer) return;
 
-    // DPR supersampling is your AA now (cap 2 keeps perf sane)
     const dpr = Math.min(globalThis.devicePixelRatio || 1, 2);
 
     this.renderer = new THREE.WebGLRenderer({
-      antialias: false,              // IMPORTANT: avoid MSAA edge resolve fringe
-      alpha: true,
-      premultipliedAlpha: true,      // IMPORTANT: correct when drawing into 2D canvas
-      preserveDrawingBuffer: true,   // keep if you rely on it; otherwise you can set false
+      antialias: false,            // keep off (DPR is the AA)
+      alpha: false,                // opaque WebGL buffer
+      premultipliedAlpha: false,   // irrelevant when alpha:false, but consistent
+      preserveDrawingBuffer: true,
       powerPreference: "high-performance",
     });
 
     this.renderer.setPixelRatio(dpr);
-    this.renderer.setClearColor(0x000000, 0); // transparent clear
+    this.renderer.setClearColor(0x000000, 1); // opaque clear
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.15;
 
     this.scene = new THREE.Scene();
 
-    // Environment OFF while tuning spec/edges
     this.scene.environment = null;
     (this.scene as any).environmentIntensity = 0;
 
@@ -136,30 +133,23 @@ export class JzButtonBlockRenderService {
     this.envTex = pmrem.fromScene(envScene, 0.04).texture;
     pmrem.dispose();
 
-    // Camera: telephoto-ish, straight-on
     this.camera = new THREE.PerspectiveCamera(14, 1, 0.01, 20);
     this.camera.position.set(0, 0, 3.4);
     this.camera.lookAt(0, 0, 0);
 
-    // Geometry: assume your makeButtonBlockGeometry now returns crease-aware normals
     this.geom = makeButtonBlockGeometry({
       width: this.W,
       height: this.H,
-      radius: 0.22,
       depth: this.D,
-      bevelSize: 0.08,
-      bevelThickness: 0.08,
-      curveSegments: 24,
-      bevelSegments: 10,
-      creaseAngleDeg: 35,
+      radius: 0.16,
+      segments: 18,
     });
 
     this.mesh = new THREE.Mesh(this.geom, this.getMaterial("bakeliteSatin", "#2f3440"));
     this.mesh.position.set(0, 0, 0);
-    this.mesh.rotation.set(0, 0, 0);
+    this.mesh.rotation.y = 0.25;  // temporary test
     this.scene.add(this.mesh);
 
-    // Lights: keep simple (avoid “face hotspot” fill for now)
     this.keyLight = new THREE.DirectionalLight(0xffffff, 1.35);
     this.keyLight.position.set(-0.9, 0.9, 3.2);
     this.keyLight.target.position.set(0, 0, 0);
@@ -170,7 +160,6 @@ export class JzButtonBlockRenderService {
     this.rimLight.target.position.set(0, 0, 0);
     this.scene.add(this.rimLight, this.rimLight.target);
 
-    // If you need lift, HemisphereLight is safer than a “front fill” spotlight.
     const hemi = new THREE.HemisphereLight(0xffffff, 0x0b0f14, 0.10);
     this.scene.add(hemi);
   }
@@ -214,6 +203,7 @@ export class JzButtonBlockRenderService {
     return h.startsWith("#") ? h : `#${h}`;
   }
 
+  // ✅ FIX: no 'reg' referenced here; use the 'hex' argument
   private getMaterial(finish: JzButtonBlockFinish, hex: string): THREE.Material {
     const archetype = this.normalizeFinishToArchetype(finish);
     const normalizedHex = this.normalizeHex(hex);
@@ -222,7 +212,22 @@ export class JzButtonBlockRenderService {
     const cached = this.matCache.get(key);
     if (cached) return cached;
 
-    const { mat } = buildMaterialPreset(archetype, normalizedHex);
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(normalizedHex),
+
+      metalness: 0.0,
+      roughness: 0.28,
+
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.06,
+
+      ior: 1.5,
+
+      // If your three version supports it, great. If not, delete these 2 lines.
+      specularIntensity: 1.0 as any,
+      specularColor: new THREE.Color(0xffffff) as any,
+    });
+
     this.matCache.set(key, mat);
     return mat;
   }
@@ -296,7 +301,8 @@ export class JzButtonBlockRenderService {
     this.mesh.rotation.x = THREE.MathUtils.lerp(this.mesh.rotation.x, -0.08 * t, 0.16);
     this.mesh.rotation.y = THREE.MathUtils.lerp(this.mesh.rotation.y, 0.10 * t, 0.16);
 
-    // Critical: true transparent clear (RGB must be 0 when A=0)
+    // Transparent clear in the 2D canvas result:
+    // clear WebGL to A=0, then copy pixels into 2D canvas
     this.renderer.setClearColor(0x000000, 0);
     this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
@@ -314,8 +320,7 @@ export class JzButtonBlockRenderService {
 
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.globalCompositeOperation = "copy";
-    ctx.drawImage(this.renderer.domElement, 0, 0);
+    ctx.drawImage(this.renderer.domElement, 0, 0); // 1:1
     ctx.globalCompositeOperation = "source-over";
   }
-
 }

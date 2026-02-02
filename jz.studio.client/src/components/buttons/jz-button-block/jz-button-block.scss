@@ -7,6 +7,15 @@
   width: var(--jz-w, 120px);
   height: var(--jz-h, 44px);
 }
+.jz-btn {
+  position: relative;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 18px; /* match your geometry radius visually */
+  overflow: hidden;    /* <-- the actual mask */
+}
+.jz-btn { clip-path: inset(0 round 18px); }
 
 /* Real button for accessibility */
 .jz-btn--block {
@@ -27,17 +36,9 @@
 
 /* The Three.js output surface */
 .jz-btn__canvas {
-  position: absolute;
-  inset: 0;
-
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
-
-  /* So the button receives input, not the canvas */
-  pointer-events: none;
-
-  border-radius: calc(var(--jz-bevel, 8px) * 0.85);
 }
 
 /* Label sits above the canvas */
@@ -47,7 +48,6 @@
 
   display: grid;
   place-items: center;
-
   width: 100%;
   height: 100%;
 
@@ -56,6 +56,6 @@
   letter-spacing: 0.2px;
 
   /* Match your current look; tweak later */
-  color: var(--plt-txt-3);
+  color: dimgray;
   text-shadow: none;
 }
