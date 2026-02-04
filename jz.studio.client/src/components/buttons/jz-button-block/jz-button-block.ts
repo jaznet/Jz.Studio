@@ -1,4 +1,4 @@
-// jz-button-block.ts
+// src/components/buttons/jz-button-block/jz-button-block.ts
 
 import {
   AfterViewInit,
@@ -10,10 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import {
-
-  JzButtonBlockRenderService,
-} from "./jz-button-block-render.service";
+import { JzButtonBlockRenderService } from "./jz-button-block-render.service";
 import { JzButtonBlockFinish } from "./jz-button-block-materials";
 
 @Component({
@@ -26,12 +23,16 @@ export class JzButtonBlockComponent implements AfterViewInit, OnChanges, OnDestr
   @ViewChild("canvas2d", { static: true })
   private canvasRef!: ElementRef<HTMLCanvasElement>;
 
+  // DESIGN-TIME SIZE (source of truth for canvas CSS size)
+  @Input() width = 100;
+  @Input() height = 60;
+
   @Input() text = "Button";
   @Input() ariaLabel?: string;
 
   // Archetypes (and legacy matte/anodized/glossy)
   @Input() finish: JzButtonBlockFinish = "bakeliteSatin";
-  @Input() baseHex = "#553d36";
+  @Input() baseHex = "#4d554a";
 
   private unregister?: () => void;
 
@@ -47,29 +48,38 @@ export class JzButtonBlockComponent implements AfterViewInit, OnChanges, OnDestr
     this.unregister = this.renderSvc.register({
       canvas2d: canvas,
 
-      // ✅ These must read from the component inputs
+      // Finish/color come from inputs
       getFinish: () => this.finish,
       getBaseHex: () => this.baseHex,
 
+      // Activity state
       isActive: () => this.hover || this.pressed || this.focus,
       getT: () => (this.pressed ? 1 : this.hover || this.focus ? 0.6 : 0),
     });
 
-    // Initial frame
-    this.renderSvc.snapshot(canvas);
+    // Ensure first frame after layout settles (important for clientWidth/clientHeight)
+    requestAnimationFrame(() => {
+      this.renderSvc.setActiveCanvas(canvas);
+      this.renderSvc.snapshot(canvas);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // If inputs change while NOT actively animating, refresh the static snapshot.
-    // (During hover/focus/press the RAF loop will pick up the new values automatically.)
     if (!this.canvasRef) return;
-    if (!("finish" in changes) && !("baseHex" in changes)) return;
+
+    const sizeChanged = ("width" in changes) || ("height" in changes);
+    const materialChanged = ("finish" in changes) || ("baseHex" in changes);
+
+    if (!sizeChanged && !materialChanged) return;
 
     const canvas = this.canvasRef.nativeElement;
+
+    // Force service to re-read CSS size and resize backing store
+    this.renderSvc.setActiveCanvas(canvas);
+
+    // If idle, render a static snapshot
     if (!this.hover && !this.pressed && !this.focus) {
       this.renderSvc.snapshot(canvas);
-    } else {
-      this.renderSvc.setActiveCanvas(canvas);
     }
   }
 
@@ -91,7 +101,6 @@ export class JzButtonBlockComponent implements AfterViewInit, OnChanges, OnDestr
   onPointerDown(ev?: PointerEvent): void {
     this.pressed = true;
 
-    // Helps keep “pressed” stable if pointer drifts off the element.
     if (ev && ev.pointerId != null) {
       try {
         (ev.currentTarget as HTMLElement | null)?.setPointerCapture?.(ev.pointerId);

@@ -1,61 +1,53 @@
-/* jz-button-block.scss */
+/* src/components/buttons/jz-button-block/jz-button-block.scss */
 
 :host {
   display: inline-block;
-
-  /* You’re already passing these as inline styles on the host in your other buttons */
-  width: var(--jz-w, 120px);
-  height: var(--jz-h, 44px);
 }
+
 .jz-btn {
   position: relative;
   border: 0;
   padding: 0;
   background: transparent;
-  border-radius: 18px; /* match your geometry radius visually */
-  overflow: hidden;    /* <-- the actual mask */
+
+  /* Mask matches your geometry silhouette */
+  border-radius: 18px;
+  overflow: hidden;
+  clip-path: inset(0 round 18px);
 }
-.jz-btn { clip-path: inset(0 round 18px); }
 
 /* Real button for accessibility */
 .jz-btn--block {
-  position: relative;
-  width: 100%;
-  height: 100%;
-
+  display: inline-block;
   padding: 0;
   border: 0;
   background: transparent;
 
   cursor: pointer;
   user-select: none;
-
-  /* Helps with pointer events on touch/pen */
   touch-action: manipulation;
 }
 
 /* The Three.js output surface */
 .jz-btn__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display: block; /* removes baseline gap */
 }
 
 /* Label sits above the canvas */
 .jz-btn__label {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
 
   display: grid;
   place-items: center;
-  width: 100%;
-  height: 100%;
 
   font-weight: 600;
   font-size: 18px;
   letter-spacing: 0.2px;
 
-  /* Match your current look; tweak later */
   color: dimgray;
   text-shadow: none;
+
+  pointer-events: none; /* let pointer events hit the button */
 }

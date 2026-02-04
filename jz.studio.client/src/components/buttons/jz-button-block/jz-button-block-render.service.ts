@@ -1,4 +1,6 @@
-// jz-button-block-render.service.ts
+// src/components/buttons/jz-button-block/jz-button-block-render.service.ts
+
+import { Injectable } from "@angular/core";
 import * as THREE from "three";
 
 import { makeButtonBlockGeometry, type RoundedButtonGeometryParams } from "./jz-button-block-geometry";
@@ -7,47 +9,40 @@ import {
   type JzButtonBlockFinish,
   type JzButtonMaterialOverrides,
 } from "./jz-button-block-materials";
-import { Injectable } from "@angular/core";
 
-/**
- * This type matches your component’s current register({...}) contract.
- * It supports BOTH:
- *  - value-style: { finish, baseHex, geom }
- *  - getter-style: { getFinish, getBaseHex, getGeom }
- *
- * You can migrate call sites later; this keeps you unblocked now.
- */
 export type JzButtonBlockRegisterParams = {
   canvas2d: HTMLCanvasElement;
   canvas?: HTMLCanvasElement;
 
-  // value-style
+  // value-style geometry (optional)
   geom?: RoundedButtonGeometryParams;
-  geometry?: RoundedButtonGeometryParams;        // alias
-  geometryParams?: RoundedButtonGeometryParams;  // alias
+  geometry?: RoundedButtonGeometryParams;
+  geometryParams?: RoundedButtonGeometryParams;
 
-  // getter-style
+  // getter-style geometry (optional)
   getGeom?: () => RoundedButtonGeometryParams;
-  getGeometry?: () => RoundedButtonGeometryParams;       // alias
-  getGeometryParams?: () => RoundedButtonGeometryParams; // alias
+  getGeometry?: () => RoundedButtonGeometryParams;
+  getGeometryParams?: () => RoundedButtonGeometryParams;
 
+  // finish/color
   getFinish?: () => JzButtonBlockFinish;
   finish?: JzButtonBlockFinish;
 
   getBaseHex?: () => string;
   baseHex?: string;
 
+  // overrides
   getOverrides?: () => JzButtonMaterialOverrides | undefined;
   overrides?: JzButtonMaterialOverrides;
 
+  // clear alpha
   getClearAlpha?: () => number | undefined;
   clearAlpha?: number;
 
+  // interaction
   isActive?: () => boolean;
   getT?: () => number;
 };
-
-
 
 type Registration = {
   canvas: HTMLCanvasElement;
@@ -70,9 +65,8 @@ export class JzButtonBlockRenderService {
     this.registrations.set(canvas, { canvas, params });
 
     if (!this.activeCanvas) {
-      this.setActiveCanvas(canvas); // setActiveCanvas will apply + snapshot
+      this.setActiveCanvas(canvas); // applies + snapshots
     } else if (this.activeCanvas === canvas) {
-      // optional: refresh if re-registering same canvas
       this.setActiveCanvas(canvas);
     }
 
@@ -81,7 +75,6 @@ export class JzButtonBlockRenderService {
       if (this.activeCanvas === canvas) this.maybeReleaseActive(canvas);
     };
   }
-
 
   setActiveCanvas(canvas: HTMLCanvasElement): void {
     this.activeCanvas = canvas;
@@ -93,7 +86,6 @@ export class JzButtonBlockRenderService {
     this.applyParams(reg.params);
     this.snapshot(canvas);
   }
-
 
   snapshot(canvas: HTMLCanvasElement): void {
     this.ensureInitForCanvas(canvas);
@@ -119,7 +111,7 @@ export class JzButtonBlockRenderService {
   }
 
   // -------------------------
-  // Resolve helpers (getters vs values)
+  // Resolve helpers
   // -------------------------
 
   private getCanvas(params: JzButtonBlockRegisterParams): HTMLCanvasElement {
@@ -127,30 +119,17 @@ export class JzButtonBlockRenderService {
   }
 
   private resolveGeom(params?: any): RoundedButtonGeometryParams {
-    // Be permissive: different call sites have evolved different names.
-    // We accept many aliases and NEVER throw. Worst case: we return a safe fallback.
     const p = params ?? {};
 
     const g =
       (typeof p.getGeom === "function" ? p.getGeom() : undefined) ??
       (typeof p.getGeometry === "function" ? p.getGeometry() : undefined) ??
       (typeof p.getGeometryParams === "function" ? p.getGeometryParams() : undefined) ??
-      (typeof p.getGeomParams === "function" ? p.getGeomParams() : undefined) ??
-      (typeof p.getBlockGeom === "function" ? p.getBlockGeom() : undefined) ??
-      (typeof p.getBlockGeometry === "function" ? p.getBlockGeometry() : undefined) ??
-      (typeof p.getButtonGeom === "function" ? p.getButtonGeom() : undefined) ??
-      (typeof p.getButtonGeometry === "function" ? p.getButtonGeometry() : undefined) ??
       p.geom ??
       p.geometry ??
-      p.geometryParams ??
-      p.geomParams ??
-      p.blockGeom ??
-      p.blockGeometry ??
-      p.buttonGeom ??
-      p.buttonGeometry;
+      p.geometryParams;
 
     if (g && typeof g === "object") {
-      // Minimal validation/coercion
       return {
         width: Number(g.width ?? 1.6),
         height: Number(g.height ?? 0.7),
@@ -161,32 +140,27 @@ export class JzButtonBlockRenderService {
       };
     }
 
-    console.warn("[JzButtonBlockRenderService] register params missing geometry; using fallback", p);
-
+    // Default geometry (in world units). Canvas size is controlled by @Input width/height.
     return {
       width: 1.6,
-      height: 0.7,
-      depth: 0.2,
-      radius: 0.18,
-      fillet: 0.06,
+      height: 0.96,
+      depth: 0.24,
+      radius: 0.20,
+      fillet: 0.08,
       segments: 18,
     };
   }
 
-
   private resolveFinish(params?: JzButtonBlockRegisterParams): JzButtonBlockFinish {
-    if (!params) throw new Error("No params");
-    if (params.getFinish) return params.getFinish();
-    if (params.finish) return params.finish;
-    // fall back to a sane default (prevents hard crash if callsite is mid-migration)
+    if (params?.getFinish) return params.getFinish();
+    if (params?.finish) return params.finish;
     return "bakeliteSatin";
   }
 
   private resolveBaseHex(params?: JzButtonBlockRegisterParams): string {
-    if (!params) throw new Error("No params");
-    if (params.getBaseHex) return params.getBaseHex();
-    if (params.baseHex) return params.baseHex;
-    return "#3b2a26";
+    if (params?.getBaseHex) return params.getBaseHex();
+    if (params?.baseHex) return params.baseHex;
+    return "#553d36";
   }
 
   private resolveOverrides(params?: JzButtonBlockRegisterParams): JzButtonMaterialOverrides {
@@ -220,8 +194,9 @@ export class JzButtonBlockRenderService {
       this.renderer.outputColorSpace = THREE.SRGBColorSpace;
       this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
       this.renderer.toneMappingExposure = 1.0;
-      this.renderer.setClearColor(0x222222, 1);
 
+      // Debug background (comment out later)
+      // this.renderer.setClearColor(0x222222, 1);
 
       this.scene = new THREE.Scene();
 
@@ -230,13 +205,15 @@ export class JzButtonBlockRenderService {
       this.camera.position.set(0, 0, 10);
       this.camera.lookAt(0, 0, 0);
 
-      // Minimal lighting (swap in your button spotlight rig later)
+      // Minimal lighting (swap in your spotlight rig later)
       const key = new THREE.DirectionalLight(0xffffff, 2.0);
       key.position.set(4, 3, 6);
       const fill = new THREE.HemisphereLight(0xffffff, 0x444444, 0.55);
       this.scene.add(key, fill);
     }
 
+    // If someone tries to use one singleton renderer across multiple canvases:
+    // rebuild for the new canvas.
     if (this.renderer && this.renderer.domElement !== canvas) {
       this.disposeRendererOnly();
       this.ensureInitForCanvas(canvas);
@@ -249,18 +226,18 @@ export class JzButtonBlockRenderService {
   private resizeToCanvas(canvas: HTMLCanvasElement): void {
     if (!this.renderer || !this.camera) return;
 
-    // 1) Determine desired CSS size
     let cssW = canvas.clientWidth;
     let cssH = canvas.clientHeight;
 
     // If CSS size isn't established yet, fall back to attributes or a sane default
-    if (!cssW || !cssH) {
-      cssW = canvas.width || 300;
-      cssH = canvas.height || 150;
+    if (!cssW || cssW < 2 || !cssH || cssH < 2) {
+      const aw = canvas.width;
+      const ah = canvas.height;
+      cssW = aw && aw >= 2 ? aw : 300;
+      cssH = ah && ah >= 2 ? ah : 150;
     }
 
-    // 2) Ensure the canvas backing store matches CSS size (important!)
-    // If you want DPI-correctness, renderer.setPixelRatio handles that.
+    // Keep backing store in sync with CSS pixels (pixelRatio handles DPR)
     if (canvas.width !== cssW) canvas.width = cssW;
     if (canvas.height !== cssH) canvas.height = cssH;
 
@@ -277,7 +254,6 @@ export class JzButtonBlockRenderService {
     this.camera.updateProjectionMatrix();
   }
 
-
   private applyParams(params: JzButtonBlockRegisterParams): void {
     if (!this.scene || !this.camera) return;
 
@@ -289,7 +265,6 @@ export class JzButtonBlockRenderService {
     const overrides = this.resolveOverrides(params);
 
     const geom = makeButtonBlockGeometry(geomParams);
-
     const { mat } = getOrCreateMaterialPreset(finish, baseHex, overrides);
 
     if (!this.mesh) {
@@ -298,8 +273,6 @@ export class JzButtonBlockRenderService {
     } else {
       const oldGeom = this.mesh.geometry as THREE.BufferGeometry;
       this.mesh.geometry = geom;
-      this.mesh.material = new THREE.MeshNormalMaterial(); // shows normals as colors
-      this.mesh.material.needsUpdate = true;
       oldGeom.dispose();
 
       this.mesh.material = mat;
@@ -318,7 +291,7 @@ export class JzButtonBlockRenderService {
     const viewH = this.camera.top - this.camera.bottom;
     const viewW = viewH * aspect;
 
-    const pad = 0.12;
+    const pad = 0.10;
     const sx = (viewW * (1 - pad)) / (w || 1);
     const sy = (viewH * (1 - pad)) / (h || 1);
     const s = Math.min(sx, sy);
@@ -337,7 +310,6 @@ export class JzButtonBlockRenderService {
   private dispose(): void {
     if (this.mesh) {
       (this.mesh.geometry as THREE.BufferGeometry).dispose();
-      // materials are cached; do not dispose here
       this.mesh = undefined;
     }
     this.scene = undefined;
