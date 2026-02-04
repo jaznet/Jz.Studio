@@ -11,9 +11,10 @@ import {
   ViewChild,
 } from "@angular/core";
 import {
-  JzButtonBlockFinish,
+
   JzButtonBlockRenderService,
 } from "./jz-button-block-render.service";
+import { JzButtonBlockFinish } from "./jz-button-block-materials";
 
 @Component({
   selector: "jz-button-block",

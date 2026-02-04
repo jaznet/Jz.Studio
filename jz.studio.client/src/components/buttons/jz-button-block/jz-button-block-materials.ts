@@ -10,6 +10,12 @@ export type JzButtonMaterialArchetype =
   | "polishedMetal"
   | "lacquered";
 
+export type JzButtonBlockFinish =
+  | "matte"
+  | "anodized"
+  | "glossy"
+  | JzButtonMaterialArchetype;
+
 /**
  * Optional knobs you can pass from the render service if you ever want
  * hover/pressed to subtly change “finish” without changing archetype.
@@ -35,6 +41,10 @@ export type JzButtonMaterialOverrides = Partial<{
   attenuationColor: string;
   attenuationDistance: number;
 
+  // Optional debug/perf knobs
+  envMapIntensity: number;
+  side: THREE.Side;
+
   // For stronger bevel “pop”
   normalScale: number; // (only used if you add a normal map later)
 }>;
@@ -50,10 +60,94 @@ function clamp01(x: number) {
 }
 
 /**
+ * Map simple finishes to an archetype so your switch(...) always hits.
+ */
+export function resolveFinishToArchetype(finish: JzButtonBlockFinish): JzButtonMaterialArchetype {
+  switch (finish) {
+    case "matte":
+      return "softPlastic";
+    case "anodized":
+      return "anodizedMetal";
+    case "glossy":
+      return "lacquered";
+    default:
+      return finish;
+  }
+}
+
+// --- Simple, stable cache ---
+const materialCache = new Map<string, THREE.MeshPhysicalMaterial>();
+
+function stableKeyFromOverrides(o: JzButtonMaterialOverrides): string {
+  // Keep stable ordering; only include fields that affect output.
+  // (If you add maps later, extend this.)
+  const parts: string[] = [];
+
+  if (o.roughness != null) parts.push(`r=${clamp01(o.roughness)}`);
+  if (o.metalness != null) parts.push(`m=${clamp01(o.metalness)}`);
+
+  if (o.clearcoat != null) parts.push(`cc=${clamp01(o.clearcoat)}`);
+  if (o.clearcoatRoughness != null) parts.push(`ccr=${clamp01(o.clearcoatRoughness)}`);
+
+  if (o.sheen != null) parts.push(`sh=${clamp01(o.sheen)}`);
+  if (o.sheenRoughness != null) parts.push(`shr=${clamp01(o.sheenRoughness)}`);
+  if (o.sheenColor != null) parts.push(`shc=${normalizeHex(o.sheenColor).toLowerCase()}`);
+
+  if (o.specularIntensity != null) parts.push(`si=${clamp01(o.specularIntensity)}`);
+  if (o.specularColor != null) parts.push(`sc=${normalizeHex(o.specularColor).toLowerCase()}`);
+
+  if (o.ior != null) parts.push(`ior=${Math.max(1.0, o.ior)}`);
+  if (o.transmission != null) parts.push(`tr=${clamp01(o.transmission)}`);
+  if (o.thickness != null) parts.push(`th=${Math.max(0, o.thickness)}`);
+
+  if (o.attenuationColor != null) parts.push(`ac=${normalizeHex(o.attenuationColor).toLowerCase()}`);
+  if (o.attenuationDistance != null) parts.push(`ad=${Math.max(0, o.attenuationDistance)}`);
+
+  if (o.envMapIntensity != null) parts.push(`emi=${Math.max(0, o.envMapIntensity)}`);
+  if (o.side != null) parts.push(`side=${o.side}`);
+
+  // normalScale doesn't do anything unless you add a normal map
+  // but keeping it here lets you vary cache keys when that day comes.
+  if (o.normalScale != null) parts.push(`ns=${o.normalScale}`);
+
+  return parts.join("|");
+}
+
+function materialKey(
+  archetype: JzButtonMaterialArchetype,
+  baseHex: string,
+  overrides: JzButtonMaterialOverrides
+): string {
+  return `a=${archetype}|c=${normalizeHex(baseHex).toLowerCase()}|${stableKeyFromOverrides(overrides)}`;
+}
+
+/**
+ * Use this from your render service.
+ * - Accepts either the simple finish ("matte/anodized/glossy") OR a concrete archetype.
+ * - Caches materials by (archetype + base color + overrides).
+ */
+export function getOrCreateMaterialPreset(
+  finish: JzButtonBlockFinish,
+  baseHex: string,
+  overrides: JzButtonMaterialOverrides = {}
+): { mat: THREE.MeshPhysicalMaterial; archetype: JzButtonMaterialArchetype; key: string } {
+  const archetype = resolveFinishToArchetype(finish);
+  const key = materialKey(archetype, baseHex, overrides);
+
+  const cached = materialCache.get(key);
+  if (cached) return { mat: cached, archetype, key };
+
+  const { mat } = buildMaterialPreset(archetype, baseHex, overrides);
+  materialCache.set(key, mat);
+
+  return { mat, archetype, key };
+}
+
+/**
  * Returns a MeshPhysicalMaterial tuned for small glossy-ish objects
  * where bevels should read well under directional lighting.
  *
- * IMPORTANT: the returned material is safe to cache & reuse.
+ * IMPORTANT: returned material is safe to cache & reuse AS-LONG-AS you don't mutate it afterward.
  */
 export function buildMaterialPreset(
   archetype: JzButtonMaterialArchetype,
@@ -86,8 +180,12 @@ export function buildMaterialPreset(
     thickness: 0.0,
 
     // Helps reduce edge “crush” in dark colors (subtle, but nice)
-    attenuationColor: new THREE.Color(baseHex),
+    attenuationColor: new THREE.Color(normalizeHex(baseHex)),
     attenuationDistance: 0.0,
+
+    // Optional knobs (safe defaults)
+    envMapIntensity: 1.0,
+    side: THREE.FrontSide,
   };
 
   // --- Archetype tuning ---
@@ -185,7 +283,22 @@ export function buildMaterialPreset(
   if (overrides.attenuationColor != null) mat.attenuationColor = new THREE.Color(normalizeHex(overrides.attenuationColor));
   if (overrides.attenuationDistance != null) mat.attenuationDistance = Math.max(0, overrides.attenuationDistance);
 
-  // Performance: you’re not using maps right now; keep it lean.
-  mat.needsUpdate = false;
+  if (overrides.envMapIntensity != null) mat.envMapIntensity = Math.max(0, overrides.envMapIntensity);
+  if (overrides.side != null) mat.side = overrides.side;
+
+  // NOTE: Do not set mat.needsUpdate = false.
+  // needsUpdate is a flag Three sets when changes require shader recompilation.
+  // For parameter tweaks like these, you typically don't touch it at all.
+
   return { mat };
+}
+
+/**
+ * Optional: clear cache (useful during HMR). Dispose to avoid GPU leaks.
+ */
+export function clearMaterialCache(dispose = true): void {
+  if (dispose) {
+  materialCache.forEach((m) => m.dispose());
+  }
+  materialCache.clear();
 }

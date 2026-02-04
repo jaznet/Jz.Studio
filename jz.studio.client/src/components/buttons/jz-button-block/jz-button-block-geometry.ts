@@ -1,24 +1,36 @@
 // jz-button-block-geometry.ts
+//
+// Option A implementation: **Chamfer Ring**
+// - Replaces the quarter-circle fillet band with a single flat beveled strip
+//   between an inner (inset) top loop and the outer silhouette loop.
+// - The chamfer ring normals intentionally have a +Z component so you get a
+//   visible rim highlight even when viewing straight-on.
+//
+// Notes on parameters:
+// - `fillet` is now interpreted as **bevelWidth** (the inset distance in XY).
+// - `bevelDrop` is derived from bevelWidth + depth so you get a meaningful slope.
+//   You can tune `BEVEL_DROP_FACTOR` below to taste (0.25–0.8 typical).
+
 import * as THREE from "three";
 
 export type RoundedButtonGeometryParams = {
-  width: number;    // X size
-  height: number;   // Y size
-  depth: number;    // Z thickness (centered about 0)
-  radius: number;   // corner radius in XY (outer silhouette)
-  fillet: number;   // edge fillet radius (quarter-circle from top to side)
-  segments?: number; // fillet & corner segments (12–24 typical)
+  width: number;     // X size
+  height: number;    // Y size
+  depth: number;     // Z thickness (centered about 0)
+  radius: number;    // corner radius in XY (outer silhouette)
+  fillet: number;    // (repurposed) bevelWidth for chamfer ring
+  segments?: number; // corner segments (12–24 typical)
 };
 
 /**
- * Analytic rounded-rectangle "slab" with a true quarter-circle fillet on the TOP edge.
+ * Analytic rounded-rectangle "slab" with a **chamfer ring** on the TOP edge.
  *
  * Regions are built explicitly:
  *  - Top face (flat) -> normals (0,0,1)
- *  - Fillet (quarter-cylinder swept around rounded rect) -> normals are radial from fillet center
+ *  - Chamfer ring (flat sloped strip) -> normals = outward+up (explicit)
  *  - Side wall (vertical) -> normals are XY outward
  *
- * This avoids "averaged normals across hard edges" artifacts that ExtrudeGeometry bevels often produce.
+ * This produces a visible rim highlight at straight-on view (what you asked for).
  */
 export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.BufferGeometry {
   const w = p.width;
@@ -26,7 +38,6 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
   const d = p.depth;
 
   const R = p.radius;
-  const f = p.fillet;
 
   const seg = Math.max(4, Math.floor(p.segments ?? 18));
 
@@ -37,22 +48,23 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
   // Outer corner radius can't exceed half extents.
   const outerR = Math.min(R, halfW, halfH);
 
-  // Fillet can't exceed outer radius, and can't exceed depth (so it doesn't invert)
-  const fillet = Math.min(f, outerR, d * 0.5);
+  // Chamfer ring width (XY inset). Re-using p.fillet to avoid breaking call sites.
+  const bevelWidth = Math.max(0, Math.min(p.fillet, outerR, halfW, halfH));
 
-  // "Top plateau" (flat center) inset by fillet distance.
-  // This ensures the fillet meets the top face cleanly.
-  const topInset = fillet;
+  // How far down the chamfer drops from the top face before meeting the side wall.
+  // Bigger drop => more grazing highlight band. Too big => chunky/overdone.
+  const BEVEL_DROP_FACTOR = 0.55; // tweak: 0.25..0.80
+  const bevelDrop = Math.max(0, Math.min(bevelWidth * BEVEL_DROP_FACTOR, d * 0.5));
 
-  // The vertical wall begins below the fillet:
   const zTop = d * 0.5;
-  const zFilletBottom = zTop - fillet; // where fillet meets the vertical wall
+  const zChamferBottom = zTop - bevelDrop; // where chamfer meets the vertical wall
+  const zBottom = -d * 0.5;
 
-  // The top face boundary (in XY) is the outer rounded rect inset by topInset
+  // Inner/top face boundary is the outer rounded rect inset by bevelWidth
+  const topInset = bevelWidth;
+  const topHW = Math.max(0, halfW - topInset);
+  const topHH = Math.max(0, halfH - topInset);
   const topR = Math.max(0, outerR - topInset);
-
-  // Side wall outer silhouette radius remains outerR at all z along the wall.
-  // (The fillet transitions from topR at zTop to outerR at zFilletBottom.)
 
   // Helpers
   const positions: number[] = [];
@@ -60,7 +72,11 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
   const uvs: number[] = [];
   const indices: number[] = [];
 
-  const addVertex = (x: number, y: number, z: number, nx: number, ny: number, nz: number, u: number, v: number) => {
+  const addVertex = (
+    x: number, y: number, z: number,
+    nx: number, ny: number, nz: number,
+    u: number, v: number
+  ) => {
     positions.push(x, y, z);
     normals.push(nx, ny, nz);
     uvs.push(u, v);
@@ -70,22 +86,14 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
   // Build a 2D rounded-rect perimeter as a polyline (closed), with radius 'r'.
   // Returns points in CCW order.
   const roundedRectPerimeter = (rx: number, ry: number, r: number, cornerSeg: number) => {
-    // rectangle half extents
     const hw = rx;
     const hh = ry;
     const rad = Math.min(r, hw, hh);
 
     const pts: THREE.Vector2[] = [];
 
-    // 4 corners centers
     const cx = hw - rad;
     const cy = hh - rad;
-
-    // Angles for each corner (CCW):
-    // top-right: 0..90 -> (cx, cy)
-    // top-left: 90..180 -> (-cx, cy)
-    // bottom-left: 180..270 -> (-cx, -cy)
-    // bottom-right: 270..360 -> (cx, -cy)
 
     const pushArc = (centerX: number, centerY: number, a0: number, a1: number) => {
       for (let i = 0; i <= cornerSeg; i++) {
@@ -97,27 +105,45 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
       }
     };
 
-    // Start at (hw - rad, hh) going CCW
-    pushArc(cx, cy, 0, Math.PI * 0.5);           // top-right
-    pushArc(-cx, cy, Math.PI * 0.5, Math.PI);     // top-left
-    pushArc(-cx, -cy, Math.PI, Math.PI * 1.5);     // bottom-left
-    pushArc(cx, -cy, Math.PI * 1.5, Math.PI * 2); // bottom-right
+    pushArc(cx, cy, 0, Math.PI * 0.5);  // top-right
+    pushArc(-cx, cy, Math.PI * 0.5, Math.PI);        // top-left
+    pushArc(-cx, -cy, Math.PI, Math.PI * 1.5);  // bottom-left
+    pushArc(cx, -cy, Math.PI * 1.5, Math.PI * 2.0);  // bottom-right
 
-    // Remove last point because it's same as first (closed)
-    pts.pop();
+    pts.pop(); // remove duplicate closing point
     return pts;
   };
 
-  // Simple UV mapping helper for top
+  // Simple UV mapping helper (top-projected)
   const topUV = (x: number, y: number) => {
-    // map to [0,1] based on full width/height
     return { u: (x / w) + 0.5, v: (y / h) + 0.5 };
   };
 
+  // Compute outward unit vector in XY for perimeter point i using neighbor tangents.
+  const outwardXY = (loop: THREE.Vector2[], i: number, xRef: number, yRef: number) => {
+    const n = loop.length;
+    const prev = loop[(i - 1 + n) % n];
+    const next = loop[(i + 1) % n];
+
+    const tx = next.x - prev.x;
+    const ty = next.y - prev.y;
+
+    // perp(tangent)
+    let ox = -ty;
+    let oy = tx;
+
+    const len = Math.hypot(ox, oy) || 1;
+    ox /= len;
+    oy /= len;
+
+    // Make sure it points outward (away from origin-ish). Use ref point for sign.
+    const dot = ox * xRef + oy * yRef;
+    if (dot < 0) { ox = -ox; oy = -oy; }
+
+    return { ox, oy };
+  };
+
   // --- 1) TOP FACE (flat) as a triangle fan from center ---
-  // Top face perimeter uses inset rounded rect (topR), and inset extents (halfW - topInset, halfH - topInset).
-  const topHW = Math.max(0, halfW - topInset);
-  const topHH = Math.max(0, halfH - topInset);
   const topPts = roundedRectPerimeter(topHW, topHH, topR, seg);
 
   const topCenter = addVertex(0, 0, zTop, 0, 0, 1, 0.5, 0.5);
@@ -135,138 +161,89 @@ export function makeButtonBlockGeometry(p: RoundedButtonGeometryParams): THREE.B
     indices.push(a, b, c);
   }
 
-  // --- 2) FILLET BAND (quarter-circle) ---
-  // We sweep a quarter-circle profile in Z and XY outward normal direction.
-  //
-  // For each perimeter sample we build a small strip in "t" from 0..1:
-  //  t=0: on top face boundary (z=zTop, XY=top perimeter)
-  //  t=1: at fillet bottom (z=zFilletBottom, XY=outer perimeter)
-  //
-  // The normal at each t is the quarter-circle normal:
-  //  nZ = cos(theta), nOut = sin(theta)
-  // where theta from 0 (top) -> 90deg (side).
-  //
-  // Outward direction in XY is computed from the perimeter tangent.
-
-  // Outer perimeter at the wall start
+  // --- 2) CHAMFER RING (flat sloped strip) ---
+  // Outer perimeter at the silhouette
   const outerPts = roundedRectPerimeter(halfW, halfH, outerR, seg);
 
-  // Sanity: topPts and outerPts lengths match (same seg)
   const nPer = Math.min(topPts.length, outerPts.length);
 
-  // Build rings for each fillet step
-  const filletRings: number[][] = [];
+  // We create a dedicated vertex strip (do NOT reuse topRing) so normals differ.
+  const chamferInnerRing: number[] = [];
+  const chamferOuterRing: number[] = [];
 
-  for (let s = 0; s <= seg; s++) {
-    const t = s / seg;
-    const theta = t * (Math.PI / 2); // 0..90deg
-    const nz = Math.cos(theta);
-    const nOutScale = Math.sin(theta);
+  // Chamfer normal formula (analytic):
+  // n ∝ outward * bevelDrop  +  zHat * bevelWidth
+  // -> ensures a stable +Z component and a controllable rim highlight.
+  for (let i = 0; i < nPer; i++) {
+    const ptIn = topPts[i];
+    const ptOut = outerPts[i];
 
-    const ring: number[] = [];
+    // outward direction derived from OUTER loop (more stable at corners)
+    const { ox, oy } = outwardXY(outerPts, i, ptOut.x, ptOut.y);
 
-    for (let i = 0; i < nPer; i++) {
-      const ptTop = topPts[i];
-      const ptOut = outerPts[i];
+    const nx0 = ox * bevelDrop;
+    const ny0 = oy * bevelDrop;
+    const nz0 = bevelWidth;
 
-      // Interpolate XY from top boundary to outer boundary
-      const x = THREE.MathUtils.lerp(ptTop.x, ptOut.x, t);
-      const y = THREE.MathUtils.lerp(ptTop.y, ptOut.y, t);
+    const inv = 1 / (Math.hypot(nx0, ny0, nz0) || 1);
+    const nx = nx0 * inv;
+    const ny = ny0 * inv;
+    const nz = nz0 * inv;
 
-      // Interpolate Z from zTop to zFilletBottom
-      const z = THREE.MathUtils.lerp(zTop, zFilletBottom, t);
-
-      // Compute outward normal direction in XY from local edge direction.
-      // Use neighbors to estimate tangent, then outward = perpendicular pointing away from center.
-      const prev = outerPts[(i - 1 + nPer) % nPer];
-      const next = outerPts[(i + 1) % nPer];
-      const tx = next.x - prev.x;
-      const ty = next.y - prev.y;
-
-      // outward approx = normalize(perp(tangent)) with sign chosen to point away from center
-      let ox = -ty;
-      let oy = tx;
-
-      const lenO = Math.hypot(ox, oy) || 1;
-      ox /= lenO; oy /= lenO;
-
-      // Ensure outward points away from origin (center)
-      const dot = ox * x + oy * y;
-      if (dot < 0) { ox = -ox; oy = -oy; }
-
-      const nx = ox * nOutScale;
-      const ny = oy * nOutScale;
-
-      // Normal is (nx, ny, nz) — already unit because (nOutScale^2 + nz^2 == 1)
-      // but nx/ny depend on outward direction (unit), so OK.
-      const uv = topUV(x, y);
-      ring.push(addVertex(x, y, z, nx, ny, nz, uv.u, uv.v));
+    // Inner/top edge of chamfer (at top face boundary)
+    {
+      const uv = topUV(ptIn.x, ptIn.y);
+      chamferInnerRing.push(addVertex(ptIn.x, ptIn.y, zTop, nx, ny, nz, uv.u, uv.v));
     }
 
-    filletRings.push(ring);
-  }
-
-  // Connect fillet rings into quads (two triangles per segment)
-  for (let s = 0; s < seg; s++) {
-    const A = filletRings[s];
-    const B = filletRings[s + 1];
-
-    for (let i = 0; i < nPer; i++) {
-      const i2 = (i + 1) % nPer;
-
-      const a = A[i];
-      const b = A[i2];
-      const c = B[i2];
-      const d0 = B[i];
-
-      indices.push(a, b, c);
-      indices.push(a, c, d0);
+    // Outer/bottom edge of chamfer (at outer silhouette, dropped)
+    {
+      const uv = topUV(ptOut.x, ptOut.y);
+      chamferOuterRing.push(addVertex(ptOut.x, ptOut.y, zChamferBottom, nx, ny, nz, uv.u, uv.v));
     }
   }
 
-  // --- 3) SIDE WALL (vertical) from zFilletBottom down to -d/2 ---
-  const zBottom = -d * 0.5;
+  // Connect chamfer ring into quads (two triangles per segment)
+  // Winding assumes loops are CCW and normals are outward+up.
+  for (let i = 0; i < nPer; i++) {
+    const j = (i + 1) % nPer;
 
+    const a = chamferInnerRing[i];
+    const b = chamferInnerRing[j];
+    const c = chamferOuterRing[j];
+    const d0 = chamferOuterRing[i];
+
+    indices.push(a, b, c);
+    indices.push(a, c, d0);
+  }
+
+  // --- 3) SIDE WALL (vertical) from zChamferBottom down to -d/2 ---
   const wallTopRing: number[] = [];
   const wallBotRing: number[] = [];
 
   for (let i = 0; i < nPer; i++) {
     const p2 = outerPts[i];
 
-    // Outward normal in XY = normalized position direction adjusted for rounded rect
-    // Better: compute from neighbors (same as above) so corners behave nicely.
-    const prev = outerPts[(i - 1 + nPer) % nPer];
-    const next = outerPts[(i + 1) % nPer];
-    const tx = next.x - prev.x;
-    const ty = next.y - prev.y;
-
-    let ox = -ty;
-    let oy = tx;
-
-    const lenO = Math.hypot(ox, oy) || 1;
-    ox /= lenO; oy /= lenO;
-
-    const dot = ox * p2.x + oy * p2.y;
-    if (dot < 0) { ox = -ox; oy = -oy; }
+    const { ox, oy } = outwardXY(outerPts, i, p2.x, p2.y);
 
     const uv = topUV(p2.x, p2.y);
-    wallTopRing.push(addVertex(p2.x, p2.y, zFilletBottom, ox, oy, 0, uv.u, uv.v));
+    wallTopRing.push(addVertex(p2.x, p2.y, zChamferBottom, ox, oy, 0, uv.u, uv.v));
     wallBotRing.push(addVertex(p2.x, p2.y, zBottom, ox, oy, 0, uv.u, uv.v));
   }
 
   for (let i = 0; i < nPer; i++) {
-    const i2 = (i + 1) % nPer;
+    const j = (i + 1) % nPer;
 
     const a = wallTopRing[i];
-    const b = wallTopRing[i2];
-    const c = wallBotRing[i2];
+    const b = wallTopRing[j];
+    const c = wallBotRing[j];
     const d0 = wallBotRing[i];
 
     indices.push(a, b, c);
     indices.push(a, c, d0);
   }
 
-  // (Optional) Bottom face could be added similarly if you ever need it. For now it's not visible.
+  // (Optional) Bottom face could be added if needed later.
 
   const g = new THREE.BufferGeometry();
   g.setIndex(indices);
