@@ -1,4 +1,4 @@
-// src/components/buttons/jz-button-block/jz-button-block.ts
+// jz-button-block.ts
 
 import {
   AfterViewInit,
@@ -60,7 +60,7 @@ export class JzButtonBlockComponent implements AfterViewInit, OnChanges, OnDestr
     // Ensure first frame after layout settles (important for clientWidth/clientHeight)
     requestAnimationFrame(() => {
       this.renderSvc.setActiveCanvas(canvas);
-      this.renderSvc.snapshot(canvas);
+    //  this.renderSvc.snapshot(canvas);
     });
   }
 
@@ -79,7 +79,7 @@ export class JzButtonBlockComponent implements AfterViewInit, OnChanges, OnDestr
 
     // If idle, render a static snapshot
     if (!this.hover && !this.pressed && !this.focus) {
-      this.renderSvc.snapshot(canvas);
+   //   this.renderSvc.snapshot(canvas);
     }
   }
 

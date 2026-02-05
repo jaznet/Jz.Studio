@@ -1,7 +1,8 @@
-// src/components/buttons/jz-button-block/jz-button-block-render.service.ts
+// jz-button-block-render.service.ts
 
 import { Injectable } from "@angular/core";
 import * as THREE from "three";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 import { makeButtonBlockGeometry, type RoundedButtonGeometryParams } from "./jz-button-block-geometry";
 import {
@@ -65,7 +66,7 @@ export class JzButtonBlockRenderService {
     this.registrations.set(canvas, { canvas, params });
 
     if (!this.activeCanvas) {
-      this.setActiveCanvas(canvas); // applies + snapshots
+      this.setActiveCanvas(canvas);
     } else if (this.activeCanvas === canvas) {
       this.setActiveCanvas(canvas);
     }
@@ -88,12 +89,15 @@ export class JzButtonBlockRenderService {
   }
 
   snapshot(canvas: HTMLCanvasElement): void {
-    this.ensureInitForCanvas(canvas);
+    // Lazy init if called directly before init happened
+    if (!this.renderer || !this.scene || !this.camera || this.renderer.domElement !== canvas) {
+      this.ensureInitForCanvas(canvas);
+    }
     if (!this.renderer || !this.scene || !this.camera) return;
 
     const reg = this.registrations.get(canvas);
     const alpha = this.resolveClearAlpha(reg?.params);
-    this.renderer.setClearAlpha(alpha);
+    this.renderer.setClearAlpha(0);
 
     this.renderer.render(this.scene, this.camera);
   }
@@ -132,15 +136,14 @@ export class JzButtonBlockRenderService {
     if (g && typeof g === "object") {
       return {
         width: Number(g.width ?? 1.6),
-        height: Number(g.height ?? 0.7),
-        depth: Number(g.depth ?? 0.2),
-        radius: Number(g.radius ?? 0.18),
-        fillet: Number(g.fillet ?? 0.06),
+        height: Number(g.height ?? 0.96),
+        depth: Number(g.depth ?? 0.24),
+        radius: Number(g.radius ?? 0.20),
+        fillet: Number(g.fillet ?? 0.08),
         segments: g.segments != null ? Number(g.segments) : 18,
       };
     }
 
-    // Default geometry (in world units). Canvas size is controlled by @Input width/height.
     return {
       width: 1.6,
       height: 0.96,
@@ -190,30 +193,40 @@ export class JzButtonBlockRenderService {
         powerPreference: "high-performance",
       });
 
+      // Renderer config FIRST
       this.renderer.setPixelRatio(dpr);
       this.renderer.outputColorSpace = THREE.SRGBColorSpace;
       this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
       this.renderer.toneMappingExposure = 1.0;
 
-      // Debug background (comment out later)
-      // this.renderer.setClearColor(0x222222, 1);
-
+      // Create scene ONCE
       this.scene = new THREE.Scene();
 
-      // Face-on ortho camera
+      // Environment reflections (IBL) for MeshPhysicalMaterial
+      const pmrem = new THREE.PMREMGenerator(this.renderer);
+      pmrem.compileEquirectangularShader();
+
+      const envScene = new RoomEnvironment() as unknown as THREE.Scene;
+      const envTex = pmrem.fromScene(envScene, 0.04).texture;
+
+      this.scene.environment = envTex;
+      // keep background transparent: do NOT set this.scene.background
+
+      pmrem.dispose();
+
+      // Face-on ortho camera (will be resized to pixels in resizeToCanvas)
       this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 100);
       this.camera.position.set(0, 0, 10);
       this.camera.lookAt(0, 0, 0);
 
-      // Minimal lighting (swap in your spotlight rig later)
-      const key = new THREE.DirectionalLight(0xffffff, 2.0);
+      // Minimal direct lights (IBL does most of the bevel work now)
+      const key = new THREE.DirectionalLight(0xffffff, 1.25);
       key.position.set(4, 3, 6);
-      const fill = new THREE.HemisphereLight(0xffffff, 0x444444, 0.55);
+      const fill = new THREE.HemisphereLight(0xffffff, 0x444444, 0.35);
       this.scene.add(key, fill);
     }
 
-    // If someone tries to use one singleton renderer across multiple canvases:
-    // rebuild for the new canvas.
+    // Singleton renderer must match canvas
     if (this.renderer && this.renderer.domElement !== canvas) {
       this.disposeRendererOnly();
       this.ensureInitForCanvas(canvas);
@@ -223,13 +236,12 @@ export class JzButtonBlockRenderService {
     this.resizeToCanvas(canvas);
   }
 
-  private resizeToCanvas(canvas: HTMLCanvasElement): void {
-    if (!this.renderer || !this.camera) return;
+  private resizeToCanvas(canvas: HTMLCanvasElement): { cssW: number; cssH: number } {
+    if (!this.renderer || !this.camera) return { cssW: 0, cssH: 0 };
 
     let cssW = canvas.clientWidth;
     let cssH = canvas.clientHeight;
 
-    // If CSS size isn't established yet, fall back to attributes or a sane default
     if (!cssW || cssW < 2 || !cssH || cssH < 2) {
       const aw = canvas.width;
       const ah = canvas.height;
@@ -237,21 +249,23 @@ export class JzButtonBlockRenderService {
       cssH = ah && ah >= 2 ? ah : 150;
     }
 
-    // Keep backing store in sync with CSS pixels (pixelRatio handles DPR)
+    // Backing store matches CSS pixels; DPR handled by renderer.setPixelRatio
     if (canvas.width !== cssW) canvas.width = cssW;
     if (canvas.height !== cssH) canvas.height = cssH;
 
     this.renderer.setSize(cssW, cssH, false);
 
-    const aspect = cssW / cssH;
-    const viewH = 1;
-    const viewW = viewH * aspect;
+    // Pixel-based ortho camera (1 world unit == 1 CSS px)
+    const halfW = cssW * 0.5;
+    const halfH = cssH * 0.5;
 
-    this.camera.left = -viewW;
-    this.camera.right = viewW;
-    this.camera.top = viewH;
-    this.camera.bottom = -viewH;
+    this.camera.left = -halfW;
+    this.camera.right = halfW;
+    this.camera.top = halfH;
+    this.camera.bottom = -halfH;
     this.camera.updateProjectionMatrix();
+
+    return { cssW, cssH };
   }
 
   private applyParams(params: JzButtonBlockRegisterParams): void {
@@ -259,13 +273,34 @@ export class JzButtonBlockRenderService {
 
     const canvas = this.getCanvas(params);
 
-    const geomParams = this.resolveGeom(params);
+    // Ensure size/camera are correct BEFORE generating geometry
+    const { cssW, cssH } = this.resizeToCanvas(canvas);
+
     const finish = this.resolveFinish(params);
     const baseHex = this.resolveBaseHex(params);
     const overrides = this.resolveOverrides(params);
 
+    // Geometry defined by design-time canvas size (CSS px)
+    const pad = 6; // px
+    const w = Math.max(2, cssW - pad * 2);
+    const h = Math.max(2, cssH - pad * 2);
+
+    const radius = Math.min(18, Math.min(w, h) * 0.28);
+    const fillet = Math.min(10, radius * 0.45);
+
+    const geomParams: RoundedButtonGeometryParams = {
+      width: w,
+      height: h,
+      depth: Math.min(24, Math.max(8, Math.min(w, h) * 0.22)),
+      radius,
+      fillet,
+      segments: 18,
+    };
+
     const geom = makeButtonBlockGeometry(geomParams);
-    const { mat } = getOrCreateMaterialPreset(finish, baseHex, overrides);
+
+    // Slightly boost env reflections for bevel readability during tuning
+    const { mat } = getOrCreateMaterialPreset(finish, baseHex, { ...overrides, envMapIntensity: 1.25 });
 
     if (!this.mesh) {
       this.mesh = new THREE.Mesh(geom, mat);
@@ -274,31 +309,13 @@ export class JzButtonBlockRenderService {
       const oldGeom = this.mesh.geometry as THREE.BufferGeometry;
       this.mesh.geometry = geom;
       oldGeom.dispose();
-
       this.mesh.material = mat;
     }
 
-    this.fitMeshToView(canvas, geomParams.width, geomParams.height);
-  }
-
-  private fitMeshToView(canvas: HTMLCanvasElement, w: number, h: number): void {
-    if (!this.mesh || !this.camera) return;
-
-    const cw = canvas.clientWidth || canvas.width || 1;
-    const ch = canvas.clientHeight || canvas.height || 1;
-
-    const aspect = cw / ch;
-    const viewH = this.camera.top - this.camera.bottom;
-    const viewW = viewH * aspect;
-
-    const pad = 0.10;
-    const sx = (viewW * (1 - pad)) / (w || 1);
-    const sy = (viewH * (1 - pad)) / (h || 1);
-    const s = Math.min(sx, sy);
-
-    this.mesh.scale.setScalar(s);
+    // Center in pixel space
     this.mesh.position.set(0, 0, 0);
     this.mesh.rotation.set(0, 0, 0);
+    this.mesh.scale.set(1, 1, 1);
   }
 
   private disposeRendererOnly(): void {

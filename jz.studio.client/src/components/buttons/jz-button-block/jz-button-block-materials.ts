@@ -28,17 +28,17 @@ export type JzButtonMaterialOverrides = Partial<{
   clearcoatRoughness: number;
   sheen: number;
   sheenRoughness: number;
-  sheenColor: string;
+  sheenColor: string | number;
 
   specularIntensity: number;
-  specularColor: string;
+  specularColor: string | number;
 
   ior: number;
   transmission: number;
   thickness: number;
 
   // for plastic-like subsurface feel (very subtle)
-  attenuationColor: string;
+  attenuationColor: string | number;
   attenuationDistance: number;
 
   // Optional debug/perf knobs
@@ -49,20 +49,49 @@ export type JzButtonMaterialOverrides = Partial<{
   normalScale: number; // (only used if you add a normal map later)
 }>;
 
-export function normalizeHex(hex: string): string {
-  const h = (hex ?? "").trim();
-  if (!h) return "#000000";
-  return h.startsWith("#") ? h : `#${h}`;
+/**
+ * Normalize hex input for stable keys + consistent color creation.
+ * Returns a 6-char, lowercase hex string WITHOUT '#'.
+ * Accepts "#RRGGBB", "RRGGBB", or 0xRRGGBB number.
+ */
+export function normalizeHex(hex: string | number): string {
+  if (typeof hex === "number") return (hex >>> 0).toString(16).padStart(6, "0").toLowerCase();
+
+  const s = (hex ?? "").trim().toLowerCase();
+  if (!s) return "000000";
+
+  const raw = s.startsWith("#") ? s.slice(1) : s;
+
+  // Support shorthand #rgb -> rrggbb (helps if you ever pass "#fff")
+  if (raw.length === 3) {
+    const r = raw[0] ?? "0";
+    const g = raw[1] ?? "0";
+    const b = raw[2] ?? "0";
+    return `${r}${r}${g}${g}${b}${b}`.toLowerCase();
+  }
+
+  return raw.padStart(6, "0").slice(0, 6).toLowerCase();
+}
+
+function hexForThree(hex: string | number): string {
+  return `#${normalizeHex(hex)}`;
 }
 
 function clamp01(x: number) {
   return Math.min(1, Math.max(0, x));
 }
 
+/** keep cache keys stable when floats vary at tiny epsilon levels */
+function round3(n: number): string {
+  return (Math.round(n * 1000) / 1000).toFixed(3);
+}
+
 /**
  * Map simple finishes to an archetype so your switch(...) always hits.
  */
-export function resolveFinishToArchetype(finish: JzButtonBlockFinish): JzButtonMaterialArchetype {
+export function resolveFinishToArchetype(
+  finish: JzButtonBlockFinish
+): JzButtonMaterialArchetype {
   switch (finish) {
     case "matte":
       return "softPlastic";
@@ -83,42 +112,50 @@ function stableKeyFromOverrides(o: JzButtonMaterialOverrides): string {
   // (If you add maps later, extend this.)
   const parts: string[] = [];
 
-  if (o.roughness != null) parts.push(`r=${clamp01(o.roughness)}`);
-  if (o.metalness != null) parts.push(`m=${clamp01(o.metalness)}`);
+  if (o.roughness != null) parts.push(`r=${round3(clamp01(o.roughness))}`);
+  if (o.metalness != null) parts.push(`m=${round3(clamp01(o.metalness))}`);
 
-  if (o.clearcoat != null) parts.push(`cc=${clamp01(o.clearcoat)}`);
-  if (o.clearcoatRoughness != null) parts.push(`ccr=${clamp01(o.clearcoatRoughness)}`);
+  if (o.clearcoat != null) parts.push(`cc=${round3(clamp01(o.clearcoat))}`);
+  if (o.clearcoatRoughness != null)
+    parts.push(`ccr=${round3(clamp01(o.clearcoatRoughness))}`);
 
-  if (o.sheen != null) parts.push(`sh=${clamp01(o.sheen)}`);
-  if (o.sheenRoughness != null) parts.push(`shr=${clamp01(o.sheenRoughness)}`);
-  if (o.sheenColor != null) parts.push(`shc=${normalizeHex(o.sheenColor).toLowerCase()}`);
+  if (o.sheen != null) parts.push(`sh=${round3(clamp01(o.sheen))}`);
+  if (o.sheenRoughness != null)
+    parts.push(`shr=${round3(clamp01(o.sheenRoughness))}`);
+  if (o.sheenColor != null) parts.push(`shc=${normalizeHex(o.sheenColor)}`);
 
-  if (o.specularIntensity != null) parts.push(`si=${clamp01(o.specularIntensity)}`);
-  if (o.specularColor != null) parts.push(`sc=${normalizeHex(o.specularColor).toLowerCase()}`);
+  if (o.specularIntensity != null)
+    parts.push(`si=${round3(clamp01(o.specularIntensity))}`);
+  if (o.specularColor != null) parts.push(`sc=${normalizeHex(o.specularColor)}`);
 
-  if (o.ior != null) parts.push(`ior=${Math.max(1.0, o.ior)}`);
-  if (o.transmission != null) parts.push(`tr=${clamp01(o.transmission)}`);
-  if (o.thickness != null) parts.push(`th=${Math.max(0, o.thickness)}`);
+  if (o.ior != null) parts.push(`ior=${round3(Math.max(1.0, o.ior))}`);
+  if (o.transmission != null)
+    parts.push(`tr=${round3(clamp01(o.transmission))}`);
+  if (o.thickness != null) parts.push(`th=${round3(Math.max(0, o.thickness))}`);
 
-  if (o.attenuationColor != null) parts.push(`ac=${normalizeHex(o.attenuationColor).toLowerCase()}`);
-  if (o.attenuationDistance != null) parts.push(`ad=${Math.max(0, o.attenuationDistance)}`);
+  if (o.attenuationColor != null)
+    parts.push(`ac=${normalizeHex(o.attenuationColor)}`);
+  if (o.attenuationDistance != null)
+    parts.push(`ad=${round3(Math.max(0, o.attenuationDistance))}`);
 
-  if (o.envMapIntensity != null) parts.push(`emi=${Math.max(0, o.envMapIntensity)}`);
+  if (o.envMapIntensity != null)
+    parts.push(`emi=${round3(Math.max(0, o.envMapIntensity))}`);
   if (o.side != null) parts.push(`side=${o.side}`);
 
   // normalScale doesn't do anything unless you add a normal map
   // but keeping it here lets you vary cache keys when that day comes.
-  if (o.normalScale != null) parts.push(`ns=${o.normalScale}`);
+  if (o.normalScale != null) parts.push(`ns=${round3(o.normalScale)}`);
 
   return parts.join("|");
 }
 
 function materialKey(
   archetype: JzButtonMaterialArchetype,
-  baseHex: string,
+  baseHex: string | number,
   overrides: JzButtonMaterialOverrides
 ): string {
-  return `a=${archetype}|c=${normalizeHex(baseHex).toLowerCase()}|${stableKeyFromOverrides(overrides)}`;
+  // NOTE: baseHex normalized to "rrggbb" (no #) for stable keys
+  return `a=${archetype}|c=${normalizeHex(baseHex)}|${stableKeyFromOverrides(overrides)}`;
 }
 
 /**
@@ -128,9 +165,13 @@ function materialKey(
  */
 export function getOrCreateMaterialPreset(
   finish: JzButtonBlockFinish,
-  baseHex: string,
+  baseHex: string | number,
   overrides: JzButtonMaterialOverrides = {}
-): { mat: THREE.MeshPhysicalMaterial; archetype: JzButtonMaterialArchetype; key: string } {
+): {
+  mat: THREE.MeshPhysicalMaterial;
+  archetype: JzButtonMaterialArchetype;
+  key: string;
+} {
   const archetype = resolveFinishToArchetype(finish);
   const key = materialKey(archetype, baseHex, overrides);
 
@@ -151,10 +192,10 @@ export function getOrCreateMaterialPreset(
  */
 export function buildMaterialPreset(
   archetype: JzButtonMaterialArchetype,
-  baseHex: string,
+  baseHex: string | number,
   overrides: JzButtonMaterialOverrides = {}
 ): { mat: THREE.MeshPhysicalMaterial } {
-  const base = new THREE.Color(normalizeHex(baseHex));
+  const base = new THREE.Color(hexForThree(baseHex));
 
   // --- Defaults that work well for your “button block” ---
   // A tiny specular boost helps bevels pop even on darker colors.
@@ -180,7 +221,7 @@ export function buildMaterialPreset(
     thickness: 0.0,
 
     // Helps reduce edge “crush” in dark colors (subtle, but nice)
-    attenuationColor: new THREE.Color(normalizeHex(baseHex)),
+    attenuationColor: new THREE.Color(hexForThree(baseHex)),
     attenuationDistance: 0.0,
 
     // Optional knobs (safe defaults)
@@ -267,23 +308,32 @@ export function buildMaterialPreset(
   if (overrides.metalness != null) mat.metalness = clamp01(overrides.metalness);
 
   if (overrides.clearcoat != null) mat.clearcoat = clamp01(overrides.clearcoat);
-  if (overrides.clearcoatRoughness != null) mat.clearcoatRoughness = clamp01(overrides.clearcoatRoughness);
+  if (overrides.clearcoatRoughness != null)
+    mat.clearcoatRoughness = clamp01(overrides.clearcoatRoughness);
 
   if (overrides.sheen != null) mat.sheen = clamp01(overrides.sheen);
-  if (overrides.sheenRoughness != null) mat.sheenRoughness = clamp01(overrides.sheenRoughness);
-  if (overrides.sheenColor != null) mat.sheenColor = new THREE.Color(normalizeHex(overrides.sheenColor));
+  if (overrides.sheenRoughness != null)
+    mat.sheenRoughness = clamp01(overrides.sheenRoughness);
+  if (overrides.sheenColor != null)
+    mat.sheenColor = new THREE.Color(hexForThree(overrides.sheenColor));
 
-  if (overrides.specularIntensity != null) mat.specularIntensity = clamp01(overrides.specularIntensity);
-  if (overrides.specularColor != null) mat.specularColor = new THREE.Color(normalizeHex(overrides.specularColor));
+  if (overrides.specularIntensity != null)
+    mat.specularIntensity = clamp01(overrides.specularIntensity);
+  if (overrides.specularColor != null)
+    mat.specularColor = new THREE.Color(hexForThree(overrides.specularColor));
 
   if (overrides.ior != null) mat.ior = Math.max(1.0, overrides.ior);
-  if (overrides.transmission != null) mat.transmission = clamp01(overrides.transmission);
+  if (overrides.transmission != null)
+    mat.transmission = clamp01(overrides.transmission);
   if (overrides.thickness != null) mat.thickness = Math.max(0, overrides.thickness);
 
-  if (overrides.attenuationColor != null) mat.attenuationColor = new THREE.Color(normalizeHex(overrides.attenuationColor));
-  if (overrides.attenuationDistance != null) mat.attenuationDistance = Math.max(0, overrides.attenuationDistance);
+  if (overrides.attenuationColor != null)
+    mat.attenuationColor = new THREE.Color(hexForThree(overrides.attenuationColor));
+  if (overrides.attenuationDistance != null)
+    mat.attenuationDistance = Math.max(0, overrides.attenuationDistance);
 
-  if (overrides.envMapIntensity != null) mat.envMapIntensity = Math.max(0, overrides.envMapIntensity);
+  if (overrides.envMapIntensity != null)
+    mat.envMapIntensity = Math.max(0, overrides.envMapIntensity);
   if (overrides.side != null) mat.side = overrides.side;
 
   // NOTE: Do not set mat.needsUpdate = false.
@@ -293,12 +343,86 @@ export function buildMaterialPreset(
   return { mat };
 }
 
+export type BlockMatParams = {
+  baseHex: string | number;
+  metalness: number;
+  roughness: number;
+  envId?: string;              // e.g. "roomEnv_v1" or "studioSoftbox"
+  toneMapped?: boolean;        // if you use it
+};
+
+type MatEntry = {
+  mat: THREE.MeshStandardMaterial;
+  refs: number;
+};
+
+export class MaterialCache {
+  private map = new Map<string, MatEntry>();
+
+  constructor(private readonly envProvider: (envId?: string) => THREE.Texture | null) { }
+
+  private key(p: BlockMatParams): string {
+    const base = normalizeHex(p.baseHex);
+    const m = round3(p.metalness);
+    const r = round3(p.roughness);
+    const env = (p.envId ?? "none");
+    const tm = (p.toneMapped ?? true) ? "tm1" : "tm0";
+    return `std|base:${base}|m:${m}|r:${r}|env:${env}|${tm}`;
+  }
+
+  acquire(p: BlockMatParams): THREE.MeshStandardMaterial {
+    const k = this.key(p);
+    const existing = this.map.get(k);
+    if (existing) {
+      existing.refs++;
+      return existing.mat;
+    }
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: new THREE.Color(`#${normalizeHex(p.baseHex)}`),
+      metalness: p.metalness,
+      roughness: p.roughness,
+      toneMapped: p.toneMapped ?? true,
+    });
+
+    const envMap = this.envProvider(p.envId);
+    if (envMap) {
+      mat.envMap = envMap;
+      mat.envMapIntensity = 1.0; // make this part of the key if it varies
+    }
+
+    this.map.set(k, { mat, refs: 1 });
+    return mat;
+  }
+
+  release(p: BlockMatParams): void {
+    const k = this.key(p);
+    const e = this.map.get(k);
+    if (!e) return;
+
+    e.refs--;
+    if (e.refs <= 0) {
+      // only dispose when nobody uses it
+      e.mat.dispose();
+      this.map.delete(k);
+    }
+  }
+
+  /** Optional: if you need to purge everything (route changes, etc.) */
+  disposeAll(): void {
+    this.map.forEach((entry) => entry.mat.dispose());
+    this.map.clear();
+  }
+}
+
 /**
  * Optional: clear cache (useful during HMR). Dispose to avoid GPU leaks.
  */
 export function clearMaterialCache(dispose = true): void {
   if (dispose) {
-  materialCache.forEach((m) => m.dispose());
+    materialCache.forEach((m) => m.dispose());
   }
   materialCache.clear();
 }
+
+

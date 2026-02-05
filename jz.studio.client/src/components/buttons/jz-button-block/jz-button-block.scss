@@ -1,4 +1,4 @@
-/* src/components/buttons/jz-button-block/jz-button-block.scss */
+/* jz-button-block.scss */
 
 :host {
   display: inline-block;
@@ -9,7 +9,6 @@
   border: 0;
   padding: 0;
   background: transparent;
-
   /* Mask matches your geometry silhouette */
   border-radius: 18px;
   overflow: hidden;
@@ -22,7 +21,6 @@
   padding: 0;
   border: 0;
   background: transparent;
-
   cursor: pointer;
   user-select: none;
   touch-action: manipulation;

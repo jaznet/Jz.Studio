@@ -1,4 +1,4 @@
-<!-- src/components/buttons/jz-button-block/jz-button-block.html -->
+<!--jz-button-block.html -->
 
 <button class="jz-btn jz-btn--block"
         type="button"
@@ -15,7 +15,10 @@
   <canvas #canvas2d
           class="jz-btn__canvas"
           [style.width.px]="width"
-          [style.height.px]="height"></canvas>
+          [style.height.px]="height"
+          style="outline: 2px solid yellow;">
+    >
+  </canvas>
 
   <!-- Accessible, selectable label (not drawn into the canvas) -->
   <span class="jz-btn__label">{{ text }}</span>
