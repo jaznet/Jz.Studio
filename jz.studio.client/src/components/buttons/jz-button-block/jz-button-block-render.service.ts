@@ -6,6 +6,8 @@ import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment
 
 import { makeButtonBlockGeometry, type RoundedButtonGeometryParams } from "./jz-button-block-geometry";
 import {
+  clearMaterialCache,
+  getMaterialCacheSize,
   getOrCreateMaterialPreset,
   type JzButtonBlockFinish,
   type JzButtonMaterialOverrides,
@@ -58,7 +60,7 @@ export class JzButtonBlockRenderService {
 
   private mesh?: THREE.Mesh;
   private activeCanvas?: HTMLCanvasElement;
-
+  private envTex?: THREE.Texture;
   private registrations = new Map<HTMLCanvasElement, Registration>();
 
   register(params: JzButtonBlockRegisterParams): () => void {
@@ -97,7 +99,7 @@ export class JzButtonBlockRenderService {
 
     const reg = this.registrations.get(canvas);
     const alpha = this.resolveClearAlpha(reg?.params);
-    this.renderer.setClearAlpha(0);
+    this.renderer.setClearAlpha(alpha);
 
     this.renderer.render(this.scene, this.camera);
   }
@@ -207,9 +209,9 @@ export class JzButtonBlockRenderService {
       pmrem.compileEquirectangularShader();
 
       const envScene = new RoomEnvironment() as unknown as THREE.Scene;
-      const envTex = pmrem.fromScene(envScene, 0.04).texture;
+      this.envTex = pmrem.fromScene(envScene, 0.04).texture;
 
-      this.scene.environment = envTex;
+      this.scene.environment = this.envTex;
       // keep background transparent: do NOT set this.scene.background
 
       pmrem.dispose();
@@ -272,19 +274,13 @@ export class JzButtonBlockRenderService {
     if (!this.scene || !this.camera) return;
 
     const canvas = this.getCanvas(params);
-
-    // Ensure size/camera are correct BEFORE generating geometry
-    const { cssW, cssH } = this.resizeToCanvas(canvas);
-
+    const { cssW, cssH } = this.resizeToCanvas(canvas);     // Ensure size/camera are correct BEFORE generating geometry
     const finish = this.resolveFinish(params);
     const baseHex = this.resolveBaseHex(params);
     const overrides = this.resolveOverrides(params);
-
-    // Geometry defined by design-time canvas size (CSS px)
-    const pad = 6; // px
+    const pad = 6; // px    // Geometry defined by design-time canvas size (CSS px)
     const w = Math.max(2, cssW - pad * 2);
     const h = Math.max(2, cssH - pad * 2);
-
     const radius = Math.min(18, Math.min(w, h) * 0.28);
     const fillet = Math.min(10, radius * 0.45);
 
@@ -298,18 +294,32 @@ export class JzButtonBlockRenderService {
     };
 
     const geom = makeButtonBlockGeometry(geomParams);
+    const debugNormals = true; // toggle
+    const { mat } = getOrCreateMaterialPreset(
+      finish,
+      baseHex,
+      { ...overrides, envMapIntensity: 1.25 }
+    );
 
-    // Slightly boost env reflections for bevel readability during tuning
-    const { mat } = getOrCreateMaterialPreset(finish, baseHex, { ...overrides, envMapIntensity: 1.25 });
+    const useMat: THREE.Material = debugNormals
+      ? new THREE.MeshNormalMaterial()
+      : mat;
+
+    console.log("[jz-btn-block] material cache", {
+      size: getMaterialCacheSize(),
+      finish,
+      baseHex,
+    });
+
 
     if (!this.mesh) {
-      this.mesh = new THREE.Mesh(geom, mat);
+      this.mesh = new THREE.Mesh(geom, useMat);
       this.scene.add(this.mesh);
     } else {
       const oldGeom = this.mesh.geometry as THREE.BufferGeometry;
       this.mesh.geometry = geom;
       oldGeom.dispose();
-      this.mesh.material = mat;
+      this.mesh.material = useMat;
     }
 
     // Center in pixel space
@@ -334,6 +344,9 @@ export class JzButtonBlockRenderService {
 
     this.disposeRendererOnly();
     this.activeCanvas = undefined;
+    this.envTex?.dispose();
+    this.envTex = undefined;
+    clearMaterialCache(true);
   }
 }
 

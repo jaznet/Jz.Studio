@@ -19,6 +19,10 @@ export type JzButtonBlockFinish =
 /**
  * Optional knobs you can pass from the render service if you ever want
  * hover/pressed to subtly change “finish” without changing archetype.
+ *
+ * IMPORTANT: If you want a different look, pass overrides into
+ * getOrCreateMaterialPreset(...) — do NOT mutate the returned material
+ * (it's shared via cache).
  */
 export type JzButtonMaterialOverrides = Partial<{
   roughness: number;
@@ -52,7 +56,7 @@ export type JzButtonMaterialOverrides = Partial<{
 /**
  * Normalize hex input for stable keys + consistent color creation.
  * Returns a 6-char, lowercase hex string WITHOUT '#'.
- * Accepts "#RRGGBB", "RRGGBB", or 0xRRGGBB number.
+ * Accepts "#RRGGBB", "RRGGBB", "#RGB", "RGB", or 0xRRGGBB number.
  */
 export function normalizeHex(hex: string | number): string {
   if (typeof hex === "number") return (hex >>> 0).toString(16).padStart(6, "0").toLowerCase();
@@ -62,7 +66,7 @@ export function normalizeHex(hex: string | number): string {
 
   const raw = s.startsWith("#") ? s.slice(1) : s;
 
-  // Support shorthand #rgb -> rrggbb (helps if you ever pass "#fff")
+  // Support shorthand #rgb -> rrggbb
   if (raw.length === 3) {
     const r = raw[0] ?? "0";
     const g = raw[1] ?? "0";
@@ -89,9 +93,7 @@ function round3(n: number): string {
 /**
  * Map simple finishes to an archetype so your switch(...) always hits.
  */
-export function resolveFinishToArchetype(
-  finish: JzButtonBlockFinish
-): JzButtonMaterialArchetype {
+export function resolveFinishToArchetype(finish: JzButtonBlockFinish): JzButtonMaterialArchetype {
   switch (finish) {
     case "matte":
       return "softPlastic";
@@ -108,8 +110,7 @@ export function resolveFinishToArchetype(
 const materialCache = new Map<string, THREE.MeshPhysicalMaterial>();
 
 function stableKeyFromOverrides(o: JzButtonMaterialOverrides): string {
-  // Keep stable ordering; only include fields that affect output.
-  // (If you add maps later, extend this.)
+  // Stable ordering; include only fields that affect output.
   const parts: string[] = [];
 
   if (o.roughness != null) parts.push(`r=${round3(clamp01(o.roughness))}`);
@@ -133,16 +134,14 @@ function stableKeyFromOverrides(o: JzButtonMaterialOverrides): string {
     parts.push(`tr=${round3(clamp01(o.transmission))}`);
   if (o.thickness != null) parts.push(`th=${round3(Math.max(0, o.thickness))}`);
 
-  if (o.attenuationColor != null)
-    parts.push(`ac=${normalizeHex(o.attenuationColor)}`);
+  if (o.attenuationColor != null) parts.push(`ac=${normalizeHex(o.attenuationColor)}`);
   if (o.attenuationDistance != null)
     parts.push(`ad=${round3(Math.max(0, o.attenuationDistance))}`);
 
-  if (o.envMapIntensity != null)
-    parts.push(`emi=${round3(Math.max(0, o.envMapIntensity))}`);
+  if (o.envMapIntensity != null) parts.push(`emi=${round3(Math.max(0, o.envMapIntensity))}`);
   if (o.side != null) parts.push(`side=${o.side}`);
 
-  // normalScale doesn't do anything unless you add a normal map
+  // normalScale doesn't do anything unless you add a normal map,
   // but keeping it here lets you vary cache keys when that day comes.
   if (o.normalScale != null) parts.push(`ns=${round3(o.normalScale)}`);
 
@@ -154,8 +153,9 @@ function materialKey(
   baseHex: string | number,
   overrides: JzButtonMaterialOverrides
 ): string {
-  // NOTE: baseHex normalized to "rrggbb" (no #) for stable keys
-  return `a=${archetype}|c=${normalizeHex(baseHex)}|${stableKeyFromOverrides(overrides)}`;
+  const o = stableKeyFromOverrides(overrides);
+  const base = normalizeHex(baseHex);
+  return o ? `a=${archetype}|c=${base}|${o}` : `a=${archetype}|c=${base}`;
 }
 
 /**
@@ -167,11 +167,7 @@ export function getOrCreateMaterialPreset(
   finish: JzButtonBlockFinish,
   baseHex: string | number,
   overrides: JzButtonMaterialOverrides = {}
-): {
-  mat: THREE.MeshPhysicalMaterial;
-  archetype: JzButtonMaterialArchetype;
-  key: string;
-} {
+): { mat: THREE.MeshPhysicalMaterial; archetype: JzButtonMaterialArchetype; key: string } {
   const archetype = resolveFinishToArchetype(finish);
   const key = materialKey(archetype, baseHex, overrides);
 
@@ -220,7 +216,7 @@ export function buildMaterialPreset(
     transmission: 0.0,
     thickness: 0.0,
 
-    // Helps reduce edge “crush” in dark colors (subtle, but nice)
+    // Helps reduce edge “crush” in dark colors (subtle)
     attenuationColor: new THREE.Color(hexForThree(baseHex)),
     attenuationDistance: 0.0,
 
@@ -230,7 +226,6 @@ export function buildMaterialPreset(
   };
 
   // --- Archetype tuning ---
-  // Goal: bevel catches light, face stays calm, no “plastic toy” glare unless requested
   switch (archetype) {
     case "bakeliteSatin":
       common.metalness = 0.0;
@@ -257,7 +252,6 @@ export function buildMaterialPreset(
       common.clearcoatRoughness = 0.55;
       common.specularIntensity = 0.45;
       common.ior = 1.42;
-      // a hint of depth for dark plastics
       common.attenuationDistance = 0.15;
       break;
 
@@ -268,7 +262,6 @@ export function buildMaterialPreset(
       common.clearcoatRoughness = 0.18;
       common.specularIntensity = 0.80;
       common.ior = 1.52;
-      // ceramic often has a “soft cloth” micro-sheen
       common.sheen = 0.15;
       common.sheenRoughness = 0.55;
       common.sheenColor = new THREE.Color("#ffffff");
@@ -336,83 +329,7 @@ export function buildMaterialPreset(
     mat.envMapIntensity = Math.max(0, overrides.envMapIntensity);
   if (overrides.side != null) mat.side = overrides.side;
 
-  // NOTE: Do not set mat.needsUpdate = false.
-  // needsUpdate is a flag Three sets when changes require shader recompilation.
-  // For parameter tweaks like these, you typically don't touch it at all.
-
   return { mat };
-}
-
-export type BlockMatParams = {
-  baseHex: string | number;
-  metalness: number;
-  roughness: number;
-  envId?: string;              // e.g. "roomEnv_v1" or "studioSoftbox"
-  toneMapped?: boolean;        // if you use it
-};
-
-type MatEntry = {
-  mat: THREE.MeshStandardMaterial;
-  refs: number;
-};
-
-export class MaterialCache {
-  private map = new Map<string, MatEntry>();
-
-  constructor(private readonly envProvider: (envId?: string) => THREE.Texture | null) { }
-
-  private key(p: BlockMatParams): string {
-    const base = normalizeHex(p.baseHex);
-    const m = round3(p.metalness);
-    const r = round3(p.roughness);
-    const env = (p.envId ?? "none");
-    const tm = (p.toneMapped ?? true) ? "tm1" : "tm0";
-    return `std|base:${base}|m:${m}|r:${r}|env:${env}|${tm}`;
-  }
-
-  acquire(p: BlockMatParams): THREE.MeshStandardMaterial {
-    const k = this.key(p);
-    const existing = this.map.get(k);
-    if (existing) {
-      existing.refs++;
-      return existing.mat;
-    }
-
-    const mat = new THREE.MeshStandardMaterial({
-      color: new THREE.Color(`#${normalizeHex(p.baseHex)}`),
-      metalness: p.metalness,
-      roughness: p.roughness,
-      toneMapped: p.toneMapped ?? true,
-    });
-
-    const envMap = this.envProvider(p.envId);
-    if (envMap) {
-      mat.envMap = envMap;
-      mat.envMapIntensity = 1.0; // make this part of the key if it varies
-    }
-
-    this.map.set(k, { mat, refs: 1 });
-    return mat;
-  }
-
-  release(p: BlockMatParams): void {
-    const k = this.key(p);
-    const e = this.map.get(k);
-    if (!e) return;
-
-    e.refs--;
-    if (e.refs <= 0) {
-      // only dispose when nobody uses it
-      e.mat.dispose();
-      this.map.delete(k);
-    }
-  }
-
-  /** Optional: if you need to purge everything (route changes, etc.) */
-  disposeAll(): void {
-    this.map.forEach((entry) => entry.mat.dispose());
-    this.map.clear();
-  }
 }
 
 /**
@@ -425,4 +342,6 @@ export function clearMaterialCache(dispose = true): void {
   materialCache.clear();
 }
 
-
+export function getMaterialCacheSize(): number {
+  return materialCache.size;
+}

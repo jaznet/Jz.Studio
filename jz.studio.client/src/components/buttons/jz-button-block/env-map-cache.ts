@@ -2,7 +2,7 @@
 
 import * as THREE from "three";
 
-class EnvMapCache {
+export class EnvMapCache {
   private map = new Map<string, THREE.Texture>();
 
   constructor(private readonly build: (envId: string) => THREE.Texture) { }
