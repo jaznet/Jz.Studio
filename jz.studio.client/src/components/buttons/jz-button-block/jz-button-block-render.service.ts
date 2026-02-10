@@ -295,11 +295,15 @@ export class JzButtonBlockRenderService {
 
     const geom = makeButtonBlockGeometry(geomParams);
     const debugNormals = true; // toggle
-    const { mat } = getOrCreateMaterialPreset(
-      finish,
-      baseHex,
-      { ...overrides, envMapIntensity: 1.25 }
-    );
+    const { mat } = getOrCreateMaterialPreset(finish, baseHex, {
+      ...overrides,
+      roughness: 0.12,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.05,
+      specularIntensity: 1.0,
+      envMapIntensity: 2.0,
+    });
+
 
     const useMat: THREE.Material = debugNormals
       ? new THREE.MeshNormalMaterial()
