@@ -15,16 +15,16 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
   templateUrl: './jz-viewer3d.html',
   styleUrls: ['./jz-viewer3d.scss']
 })
-export class JzViewer3dComponent implements AfterViewInit, OnDestroy {
+export class JzViewer3d implements AfterViewInit, OnDestroy {
 
   @ViewChild('canvas', { static: true })
+
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
   private controls!: OrbitControls;
-
   private frameId = 0;
 
   // Scene roots

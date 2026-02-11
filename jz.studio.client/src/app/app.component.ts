@@ -22,6 +22,7 @@ interface WeatherForecast {
 
 @Component({
   selector: 'app-root',
+  standalone:true,
   imports: [AppFooterComponent, RouterOutlet, AppContentComponent, AppHeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -81,16 +82,11 @@ export class AppComponent implements OnInit {
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.pid)) return;
 
-    //const element = this.doc.querySelector<HTMLElement>('dx-license');
-
-    //if (element) {
-    //  element.remove();
-     
-    }
-  
-
-
-
+    // const element = this.doc.querySelector<HTMLElement>('dx-license');
+    // if (element) {
+    //   element.remove();
+    // }
+  }
 
   ngOnDestroy() {
     //  this.observer?.disconnect();
