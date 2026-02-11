@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
-import { AppEventsService } from '../../../app/app-services/app-events.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
+import { ShellEventsService } from '../../../_shell/services/shell-events.service';
 
 
 @Component({
@@ -43,7 +43,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   menuContainer: HTMLDivElement | any;
 
   constructor(
-    private appEvents: AppEventsService,
+    private appEvents: ShellEventsService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
     menuService: JzMenuService,

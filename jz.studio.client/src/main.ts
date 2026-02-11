@@ -21,11 +21,13 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
-import { AppRoutingModule } from './app/app-routing.module';
-import { AppComponent } from './app/app.component';
+//import { AppRoutingModule } from './shell/shell-routing.module';
+//import { AppComponent } from './app/app.component';
 
 // Optional DevExtreme runtime import (kept here for clarity)
 import dxConfig from 'devextreme/core/config';
+import { ShellComponent } from './_shell/shell.component';
+import { ShellRoutingModule } from './_shell/shell-routing.module';
 dxConfig({
   licenseKey:
     'ewogICJmb3JtYXQiOiAxLAogICJjdXN0b21lcklkIjogIjg5ZDllODBlLWJlZTUtNDBlNS1iNmMxLWE0YTVhYWI4ZjBiNCIsCiAgIm1heFZlcnNpb25BbGxvd2VkIjogMjQxCn0=.QDKR+lQMnLPehvairIOqrJ7sI85QgDFXY/ZH6jQj5FVV7xp4p7NmoGm07AAmjaXjI5RqzxCwv+a8irYBEs6Fxa7dWAybnrUl1Ozke69HMqY9aWXrynF6blJIj4cF3GWOmyHrtg=='
@@ -60,9 +62,9 @@ if ('paintWorklet' in (CSS as any)) {
 /* -------------------------------------------------------------------------------------------------
    Angular bootstrap
 ------------------------------------------------------------------------------------------------- */
-bootstrapApplication(AppComponent, {
+bootstrapApplication(ShellComponent, {
   providers: [
-    importProvidersFrom(AppRoutingModule),
+    importProvidersFrom(ShellRoutingModule),
     provideHttpClient(withInterceptorsFromDi())
   ]
 }).catch(console.error);

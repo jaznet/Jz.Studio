@@ -1,0 +1,104 @@
+//app.component.ts
+
+import { HttpClient } from '@angular/common/http';
+import { Component, Inject, OnInit, ViewChild, PLATFORM_ID, DOCUMENT, AfterViewInit, AfterViewChecked, AfterContentChecked, AfterContentInit, inject } from '@angular/core';
+import {  isPlatformBrowser } from '@angular/common';
+import { PaletteMgrService } from './services/palette-mgr.service';
+import { NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { NavigationListenerService } from './services/navigation-listener.service';
+import { PopOverLoadingComponent } from '../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { JzPopOversService } from '../library/jz-pop-overs/jz-pop-overs.service';
+//import { AppHeaderComponent } from './app-parts/app-header/app-header.component';
+//import { AppContentComponent } from './app-parts/app-content/app-content.component';
+//import { AppFooterComponent } from './app-parts/app-footer/app-footer.component';
+import { AppStateService } from './services/shell-state.service';
+import { ShellContentComponent } from './shell-parts/shell-content/shell-content.component';
+import { ShellFooterComponent } from './shell-parts/shell-footer/shell-footer.component';
+import { ShellHeaderComponent } from './shell-parts/shell-header/shell-header.component';
+
+
+interface WeatherForecast {
+  date: string;
+  temperatureC: number;
+  temperatureF: number;
+  summary: string;
+}
+
+@Component({
+  selector: 'app-root',
+  standalone:true,
+  imports: [ShellFooterComponent, RouterOutlet,  ShellContentComponent, ShellHeaderComponent ],
+  templateUrl: './shell.component.html',
+  styleUrl: './shell.component.css'
+})
+export class ShellComponent implements OnInit {
+  @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
+  @ViewChild('content', { static: true }) content!: ShellContentComponent;
+  @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
+  @ViewChild('popOverLoadingComponent', { static: true }) popover!: PopOverLoadingComponent;
+
+  private observer?: MutationObserver;
+  public forecasts: WeatherForecast[] = [];
+
+  private doc = inject(DOCUMENT);
+  private pid = inject(PLATFORM_ID);
+
+  constructor(
+    private router: Router,
+    private appService: AppStateService,
+    private navigationListenerService: NavigationListenerService,
+    private popoversService: JzPopOversService,
+    private http: HttpClient,
+    private palette: PaletteMgrService
+  )
+  { palette.ChangePalette('default'); }
+
+  ngOnInit() {
+    console.log(this.header);
+    console.log(this.content);
+    console.log(this.footer);
+
+    this.palette.InitializePalette();
+
+    window.addEventListener("load", function () {
+      if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+        console.log("The page was reloaded.");
+      } else {
+        console.log("The page was loaded for the first time.");
+      }
+    });
+
+    this.appService.toggleHeaderEvent.subscribe((e) => {
+      this.header.visibility = e === 'hide' ? 'collapse' : 'visible';
+    })
+
+    //this.popupsService.popUpEvent.subscribe((event: any) => {
+    //  this.popup.isPopupVisible = true;
+    //  console.log(this.popup);
+    //})
+
+    //this.popupsService.popoverEvent.subscribe((event: any) => {
+    //  this.popover.isPopupVisible = true;
+    //  console.log(this.popover);
+    //})
+  }
+
+  ngAfterViewInit() {
+    if (!isPlatformBrowser(this.pid)) return;
+
+    // const element = this.doc.querySelector<HTMLElement>('dx-license');
+    // if (element) {
+    //   element.remove();
+    // }
+  }
+
+  ngOnDestroy() {
+    //  this.observer?.disconnect();
+  }
+
+  private onDxLicenseFound(el: HTMLElement) {
+    console.log('<dx-license> appeared:', el);
+    // read-only identification:
+    console.log('is correct element?', el.tagName === 'DX-LICENSE');
+  }
+}
