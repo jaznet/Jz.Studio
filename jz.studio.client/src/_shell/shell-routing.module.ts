@@ -1,4 +1,4 @@
-// app-routing.module.ts
+// shell-routing.module.ts
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -8,7 +8,8 @@ import { AppHomeComponent } from './parts/app-home/app-home.component';
 const routes: Routes = [
   {
     path: '',
-    component: AppWelcomeComponent
+    component: AppWelcomeComponent,
+    pathMatch: 'full'
   },
   {
     path: 'home',

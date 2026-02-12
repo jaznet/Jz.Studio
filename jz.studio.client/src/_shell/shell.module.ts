@@ -1,4 +1,4 @@
-// app.module.ts
+// shell.module.ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.module';
@@ -34,4 +34,4 @@ import { ShellComponent } from './shell.component';
   ],
   bootstrap: [ShellComponent]
 })
-export class AppModule { }
+export class ShellModule { }

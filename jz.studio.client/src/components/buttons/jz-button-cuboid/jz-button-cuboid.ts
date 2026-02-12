@@ -23,6 +23,7 @@ export class JzButtonCuboid extends ButtonBase {
   }
 
   onClick() {
+    console.log('button', this.route);
     this.emitClicked();
   }
 }
