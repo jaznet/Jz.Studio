@@ -6,7 +6,8 @@ import { MainMenuComponent } from '../shell-menus/main-menu/main-menu.component'
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
 
 @Component({
-    selector: 'shell-header',
+  selector: 'shell-header',
+    standalone:true,
     imports: [CommonModule, MainMenuComponent, PaletteMenuComponent],
     templateUrl: './shell-header.component.html',
     styleUrls: ['./shell-header.component.css']

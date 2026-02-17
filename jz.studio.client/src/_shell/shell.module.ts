@@ -22,9 +22,9 @@ import { ShellComponent } from './shell.component';
     JzUiControlsModule,
     AppPartsModule,
     AppWelcomeModule,
-    SandboxModule,
-    GraphicsModule,
-    DatavizModule
+    //SandboxModule,
+    //GraphicsModule,
+    //DatavizModule
   ],
   providers: [
     provideHttpClient(
@@ -32,6 +32,6 @@ import { ShellComponent } from './shell.component';
       withInterceptorsFromDi()
     ),
   ],
-  bootstrap: [ShellComponent]
+//  bootstrap: [ShellComponent]
 })
 export class ShellModule { }

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'shell-content',
+  standalone:true,
   imports: [RouterModule],
   templateUrl: './shell-content.component.html',
   styleUrls: ['./shell-content.component.css']

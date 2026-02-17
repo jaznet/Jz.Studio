@@ -1,37 +1,28 @@
-import { Directive, HostBinding, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, HostBinding, Input, Output, EventEmitter, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuType } from '../../../types/menu';
 
 @Directive()
 export abstract class ButtonBase implements OnChanges {
-  /* ---------- Public API (shared across all buttons) ---------- */
+  protected router = inject(Router);
+
   @Input() route = '';
   @Input() menuType: MenuType = 'none';
   @Input() isSelected: boolean = false;
 
-  /** Label text (optional; components may also project content) */
   @Input() text = '';
-
-  /** Disabled state */
   @Input() disabled = false;
-
-  /** Button type for the inner <button> */
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
-  /** Size & emphasis (common styling toggles) */
   @Input() size: 'sm' | 'md' | 'lg' = 'md';
   @Input() emphasis: 'primary' | 'neutral' | 'accent' = 'primary';
 
-  /** Sizing inputs (numbers ⇒ px). Defaults: auto/auto/8px */
   @Input() width: string | number | null = '100px';
-  @Input() height: string | number | null = '60px';
+  @Input() height: string | number | null = '30px';
   @Input() bevelWidth: number = 8;
-  /** kebab-case alias support: [bevelwidth] */
   @Input('bevelwidth') set bevelwidthAlias(v: number) { this.bevelWidth = v; }
 
-  /** Primary click event (emit from the inner <button>) */
   @Output() clicked = new EventEmitter<void>();
-
-  /* ---------- CSS vars consumed by component stylesheets ---------- */
 
   private _cssWidth = 'auto';
   private _cssHeight = 'auto';
@@ -41,16 +32,13 @@ export abstract class ButtonBase implements OnChanges {
   get cssHeight() { return this._cssHeight; }
   get cssBevel() { return this._cssBevel; }
 
-  /** Preserve your existing behavior */
   @HostBinding('style.width') get hostWidth() { return this.cssWidth; }
   @HostBinding('style.height') get hostHeight() { return this.cssHeight; }
 
-  /** NEW: host CSS vars so different button implementations can share sizing */
   @HostBinding('style.--jz-w') get hostVarW() { return this.cssWidth; }
   @HostBinding('style.--jz-h') get hostVarH() { return this.cssHeight; }
   @HostBinding('style.--jz-bevel') get hostVarBevel() { return this.cssBevel; }
 
-  /** Common host classes */
   @HostBinding('class.jz-btn--sm') get _sizeSm() { return this.size === 'sm'; }
   @HostBinding('class.jz-btn--lg') get _sizeLg() { return this.size === 'lg'; }
   @HostBinding('class.jz-btn--primary') get _emphPrimary() { return this.emphasis === 'primary'; }
@@ -58,13 +46,10 @@ export abstract class ButtonBase implements OnChanges {
   @HostBinding('class.jz-btn--accent') get _emphAccent() { return this.emphasis === 'accent'; }
   @HostBinding('class.jz-btn-host') readonly _hostTag = true;
 
-  /* ---------- Lifecycle ---------- */
-
   ngOnChanges(_: SimpleChanges): void {
     this.applySizeVars();
   }
 
-  /** Subclasses can call this if they ever need to force-refresh sizes */
   protected applySizeVars(): void {
     this._cssWidth = this.toCss(this.width, 'auto');
     this._cssHeight = this.toCss(this.height, 'auto');
@@ -80,7 +65,17 @@ export abstract class ButtonBase implements OnChanges {
 
   get hasText(): boolean { return !!this.text && this.text.trim().length > 0; }
 
-  protected emitClicked(): void {
-    if (!this.disabled) this.clicked.emit();
+  /** Call from concrete button component */
+  protected onActivated(): void {
+    if (this.disabled) return;
+
+    this.clicked.emit();
+
+    const r = (this.route ?? '').trim();
+    if (!r) return;
+
+    // Normalize to absolute
+    const url = r.startsWith('/') ? r : `/${r}`;
+    this.router.navigateByUrl(url);
   }
 }

@@ -27,7 +27,7 @@ interface WeatherForecast {
 @Component({
   selector: 'app-root',
   standalone:true,
-  imports: [ShellFooterComponent, RouterOutlet,  ShellContentComponent, ShellHeaderComponent ],
+  imports: [ShellHeaderComponent, ShellFooterComponent, RouterOutlet,  ShellContentComponent ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.css'
 })

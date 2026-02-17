@@ -15,6 +15,6 @@ export class JzButton3dComponent extends ButtonBase {
   @HostBinding('attr.aria-disabled') ariaDisabled: string | null = null;
 
   onClick() {
-    this.emitClicked();
+    this.onActivated();
   }
 }
