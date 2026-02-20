@@ -17,15 +17,15 @@ const routes: Routes = [
   },
   {
     path: 'dataviz',
-    loadChildren: () => import('../app-view-models/dataviz/dataviz.module').then(m => m.DatavizModule)
+    loadChildren: () => import('../_apps/dataviz/dataviz.module').then(m => m.DatavizModule)
   },
   {
     path: 'graphics',
-    loadChildren: () => import('../app-view-models/graphics/graphics.module').then(m => m.GraphicsModule)
+    loadChildren: () => import('../_apps/graphics/graphics.module').then(m => m.GraphicsModule)
   },
   {
     path: 'sandbox',
-    loadChildren: () => import('../app-view-models/sandbox/sandbox.module').then(m => m.SandboxModule)
+    loadChildren: () => import('../_apps/sandbox/sandbox.module').then(m => m.SandboxModule)
   },
   {
     path: 'architecture',
