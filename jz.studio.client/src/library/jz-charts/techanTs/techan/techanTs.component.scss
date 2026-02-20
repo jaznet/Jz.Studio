@@ -1,7 +1,21 @@
 
-.svg-container { }
+.rSvgElement {
+    fill: blueviolet
+}
 
-/* global or component SCSS */
+.chart-container{
+    fill:var(--plt-clr-4)
+}
+
+.rChartTitle {
+        fill: var(--plt-clr-4)
+}
+
+.chart-panel {
+  fill:var(--plt-clr-4);
+  stroke: #FFEEDB;
+  stroke-width: 1px;
+}
 
 .chart-bg {
   fill: none;
@@ -9,20 +23,14 @@
   stroke-dasharray: 3 3;
 }
 
-.chart-panel {
-  fill: #849483;
-  stroke: #FFEEDB;
-  stroke-width: 1px;
-}
+
 
 .base-rect { }
 
-.chart-container{
-    fill:gold
-}
+
 
 .chart-placeholder {
-  fill: #263238;
+/*  fill: #1C3238;*/
   /*fill: none !important;*/ /* don’t paint over real things */
   /*pointer-events: none !important;*/ /* don’t eat mouse events */
   /*stroke: none;*/

@@ -41,11 +41,11 @@ export class PaletteMgrService {
 
       case 'feldgrau':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#152423');
-        document.documentElement.style.setProperty('--plt-clr-2', '#2B4946');
-        document.documentElement.style.setProperty('--plt-clr-3', '#39615D');
-        document.documentElement.style.setProperty('--plt-clr-4', '#839C9A');
-        document.documentElement.style.setProperty('--plt-clr-5', '#CED8D7');
+        document.documentElement.style.setProperty('--plt-clr-1', '#1a0f0b');
+        document.documentElement.style.setProperty('--plt-clr-2', '#24150f');
+        document.documentElement.style.setProperty('--plt-clr-3', '#2e1b13');
+        document.documentElement.style.setProperty('--plt-clr-4', '#382017');
+        document.documentElement.style.setProperty('--plt-clr-5', '#F7AB68');
 
         document.documentElement.style.setProperty('--plt-txt-1', 'white');
         document.documentElement.style.setProperty('--plt-txt-2', '#D4CD9B');
@@ -129,11 +129,17 @@ export class PaletteMgrService {
 
       case 'default':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#191816');
-        document.documentElement.style.setProperty('--plt-clr-2', '#43413b');
-        document.documentElement.style.setProperty('--plt-clr-3', '#6e6a61');
-        document.documentElement.style.setProperty('--plt-clr-4', '#989286');
-        document.documentElement.style.setProperty('--plt-clr-5', '#c3bbac');
+        document.documentElement.style.setProperty('--plt-clr-1', '#191010');
+        document.documentElement.style.setProperty('--plt-clr-2', '##322020');
+        document.documentElement.style.setProperty('--plt-clr-3', '#4b3030');
+        document.documentElement.style.setProperty('--plt-clr-4', '##644040');
+        document.documentElement.style.setProperty('--plt-clr-5', '#F7AB68');
+
+        //document.documentElement.style.setProperty('--plt-clr-1', '#1D100C');
+        //document.documentElement.style.setProperty('--plt-clr-2', '#3A2218');
+        //document.documentElement.style.setProperty('--plt-clr-3', '#2e1b13');
+        //document.documentElement.style.setProperty('--plt-clr-4', '#74422f');
+        //document.documentElement.style.setProperty('--plt-clr-5', '#F7AB68');
         document.documentElement.style.setProperty('--plt-clr-x', '#ede4d1');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#DCE2C8');
