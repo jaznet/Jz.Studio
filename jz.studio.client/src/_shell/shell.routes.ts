@@ -19,17 +19,17 @@ export const SHELL_ROUTES: Routes = [
   {
     path: 'dataviz',
     loadChildren: () =>
-      import('../__apps/dataviz/dataviz.routes').then(m => m.DATAVIZ_ROUTES)
+      import('../_apps/dataviz/dataviz.routes').then(m => m.DATAVIZ_ROUTES)
   },
   {
     path: 'graphics',
     loadChildren: () =>
-      import('../__apps/graphics/graphics.routes').then(m => m.GRAPHICS_ROUTES)
+      import('../_apps/graphics/graphics.routes').then(m => m.GRAPHICS_ROUTES)
   },
   {
     path: 'sandbox',
     loadChildren: () =>
-      import('../__apps/sandbox/sandbox.routes').then(m => m.SANDBOX_ROUTES)
+      import('../_apps/sandbox/sandbox.routes').then(m => m.SANDBOX_ROUTES)
   },
   {
     path: 'architecture',

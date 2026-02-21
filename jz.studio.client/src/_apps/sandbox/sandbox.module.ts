@@ -19,7 +19,7 @@ import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
 @NgModule({
   declarations: [
   
-    SandboxHomeComponent,
+
  
     DockingViewComponent,
     DashboardViewComponent,
@@ -37,9 +37,6 @@ import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
     JzDatavizModule
   ],
   exports: [
- 
-    SandboxHomeComponent,
-  
     DockingViewComponent,
     DashboardViewComponent,
     GraphicsViewComponent

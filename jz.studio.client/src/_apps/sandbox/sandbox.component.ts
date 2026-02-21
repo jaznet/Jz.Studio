@@ -8,7 +8,8 @@ import { RouterModule } from '@angular/router';
 import { SandboxMenuComponent } from './components/sandbox-menu/sandbox-menu.component';
 
 @Component({
-    selector: 'app-sandbox',
+  selector: 'app-sandbox',
+    standalone:true,
     imports: [PopoverHttpErrorComponent, PopOverLoadingComponent, RouterModule, SandboxMenuComponent],
     templateUrl: './sandbox.component.html',
     styleUrls: ['./sandbox.component.css']

@@ -8,7 +8,8 @@ import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-m
 import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
 
 @Component({
-    selector: 'sandbox-menu',
+  selector: 'sandbox-menu',
+    standalone:true,
     imports: [JzMenuTabComponent, JzMenuContainerComponent],
     templateUrl: './sandbox-menu.component.html',
     styleUrls: ['./sandbox-menu.component.css']

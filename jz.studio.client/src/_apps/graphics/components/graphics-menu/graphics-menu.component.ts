@@ -5,7 +5,8 @@ import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-m
 import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
 
 @Component({
-    selector: 'graphics-menu',
+  selector: 'graphics-menu',
+    standalone:true,
     imports: [JzMenuTabComponent, JzMenuContainerComponent],
     templateUrl: './graphics-menu.component.html',
     styleUrl: './graphics-menu.component.css'

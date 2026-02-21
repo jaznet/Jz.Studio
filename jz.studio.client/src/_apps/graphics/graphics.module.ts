@@ -17,7 +17,7 @@ import { JzPlotterModule } from '../../library/jz-plotter/jz-plotter.module';
 @NgModule({
   declarations: [
 
-    GraphicsHomeComponent,
+    
     
     RaindomTreeViewComponent,
     SinewaveViewComponent,
@@ -33,9 +33,6 @@ import { JzPlotterModule } from '../../library/jz-plotter/jz-plotter.module';
    JzSpirographModule
   ],
   exports: [
-   
-    GraphicsHomeComponent,
-  
     RaindomTreeViewComponent,
     SinewaveViewComponent
   ]

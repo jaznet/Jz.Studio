@@ -8,7 +8,6 @@
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist\jz.studio.client\</PublishAssetsDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\app-view-models\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\components\overlays\" />
     <Folder Include="src\library\jz-charts\techanTs\enums\" />
@@ -18,7 +17,6 @@
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
-    <Folder Include="src\_apps\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".backup\jz-spirograph\jz-spirograph.component.css" />

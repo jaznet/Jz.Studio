@@ -6,7 +6,8 @@ import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-m
 import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
 
 @Component({
-    selector: 'dataviz-menu',
+  selector: 'dataviz-menu',
+    standalone:true,
     imports: [JzMenuContainerComponent, JzMenuTabComponent],
     templateUrl: './dataviz-menu.component.html',
     styleUrl: './dataviz-menu.component.css'

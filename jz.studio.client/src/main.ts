@@ -6,8 +6,8 @@ import { ShellComponent } from './_shell/shell.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { JzUiControlsModule } from './library/jz-ui-controls/jz-ui-controls.module';
 import { AppWelcomeModule } from './_shell/app-welcome/app-welcome.module';
-import { AppPartsModule } from './_shell/shell-parts/shell-parts.module';
 import { SHELL_ROUTES } from './_shell/shell.routes';
+import { AppPartsModule } from './_shell/shell-parts/shell-parts.module';
 
 bootstrapApplication(ShellComponent, {
   providers: [
