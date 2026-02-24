@@ -10,7 +10,7 @@
   block-size: var(--jz-h, 60px);
   /* geometry */
   --jz-radius: 8px;
-  --jz-bevel: 8px;
+  --jz-bevel: 4px;
   /* base palette */
   --jz-base-color: var(--plt-clr-3, #F7AB68);
   --jz-text: var(--plt-txt-3);
@@ -64,8 +64,8 @@
   /* derived tones */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 25%);
-  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 27%);
+  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 10%);
+  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 40%);
   --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
   --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
 
@@ -131,8 +131,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0.75em;
-  color: var(--jz-text);
+  padding: 0 0.75em; 
+  color: var(--plt-txt-3);
   font-weight: 600;
   letter-spacing: 0.02em;
   line-height: 1.2;

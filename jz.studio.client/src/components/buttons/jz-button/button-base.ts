@@ -19,7 +19,7 @@ export abstract class ButtonBase implements OnChanges {
 
   @Input() width: string | number | null = '125px';
   @Input() height: string | number | null = '40px';
-  @Input() bevelWidth: number = 8;
+  @Input() bevelWidth: number = 4;
   @Input('bevelwidth') set bevelwidthAlias(v: number) { this.bevelWidth = v; }
 
   @Output() clicked = new EventEmitter<void>();
