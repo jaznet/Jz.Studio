@@ -18,7 +18,7 @@ export abstract class ButtonBase implements OnChanges {
   @Input() emphasis: 'primary' | 'neutral' | 'accent' = 'primary';
 
   @Input() width: string | number | null = '125px';
-  @Input() height: string | number | null = '40px';
+  @Input() height: string | number | null = '30';
   @Input() bevelWidth: number = 4;
   @Input('bevelwidth') set bevelwidthAlias(v: number) { this.bevelWidth = v; }
 

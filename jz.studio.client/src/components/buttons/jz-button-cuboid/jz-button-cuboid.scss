@@ -119,6 +119,7 @@
 /* ----- Face (center cell) ----------------------------------------------- */
 :host .cuboid .zone.face {
   display: flex;
+  border-radius:8px;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -126,6 +127,8 @@
 }
 
 :host .cuboid .zone.face > * {
+    background-color:var(--plt-clr-3);
+    border-radius:6px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -133,7 +136,8 @@
   justify-content: center;
   padding: 0 0.75em; 
   color: var(--plt-txt-3);
-  font-weight: 600;
+  font-size:12px;
+  font-weight: 100;
   letter-spacing: 0.02em;
   line-height: 1.2;
   white-space: normal;
@@ -208,8 +212,8 @@
   background-image: radial-gradient(
     circle at 100% 100%,
     var(--jz-base-color) 0%,
-    var(--jz-edge-mid-light) 45%,
-    var(--jz-edge-light) 75%,
+        var(--jz-edge-light)  50%,
+ 
     var(--jz-edge-light) 100%
   );
   background-repeat: no-repeat;
@@ -244,7 +248,7 @@
   transform: translateY(1px);
 }
 
-:host([disabled]),
+:host(disabled),
 :host(.disabled) {
   pointer-events: none;
   opacity: 0.55;
@@ -255,7 +259,7 @@
 
 @media (forced-colors: active) {
   :host button.jz-btn {
-    border: 1px solid CanvasText;
+    border: 1px solid black;
     background: ButtonFace;
     color: ButtonText;
     box-shadow: none;

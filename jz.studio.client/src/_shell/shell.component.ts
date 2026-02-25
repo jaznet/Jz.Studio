@@ -51,7 +51,9 @@ export class ShellComponent implements OnInit {
     private http: HttpClient,
     private palette: PaletteMgrService
   )
-  { palette.ChangePalette('default'); }
+  {
+    palette.ChangePalette("cofffee'");
+  }
 
   ngOnInit() {
     console.log(this.header);

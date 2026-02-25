@@ -14,6 +14,7 @@ export class PaletteMgrService {
 
   ChangePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
+
     switch (palette) {
 
       case 'protan':

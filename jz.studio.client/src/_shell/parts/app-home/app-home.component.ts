@@ -14,7 +14,7 @@ export class AppHomeComponent {
   constructor(private appService: AppStateService, private palette: PaletteMgrService,) {
     console.log('AppHomeComponent');
     {
-      palette.ChangePalette('protan');
+      palette.ChangePalette('coffee');
     }
     appService.showHeader();
     appService.showMenu();
