@@ -64,7 +64,7 @@
   /* derived tones */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
-  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 10%);
+  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 15%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 40%);
   --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
   --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
@@ -119,7 +119,7 @@
 /* ----- Face (center cell) ----------------------------------------------- */
 :host .cuboid .zone.face {
   display: flex;
-  border-radius:8px;
+  border-radius:5px;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -212,9 +212,7 @@
   background-image: radial-gradient(
     circle at 100% 100%,
     var(--jz-base-color) 0%,
-        var(--jz-edge-light)  50%,
- 
-    var(--jz-edge-light) 100%
+    var(--jz-edge-light) 40%
   );
   background-repeat: no-repeat;
 }
@@ -224,9 +222,7 @@
   background-image: radial-gradient(
     circle at 0 0,
     var(--jz-base-color) 0%,
-    var(--jz-edge-mid-dark) 45%,
-    var(--jz-edge-dark) 75%,
-    var(--jz-edge-dark) 100%
+    var(--jz-edge-dark) 50%
   );
   background-repeat: no-repeat;
 }

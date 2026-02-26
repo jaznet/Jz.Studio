@@ -1,7 +1,7 @@
 // jz-button-cuboid.ts
 
 import { Component, ElementRef, HostBinding, Renderer2 } from '@angular/core';
-import { ButtonBase } from '../jz-button/button-base';
+import { ButtonBase } from '../jz-button/jz-button-base';
 
 @Component({
   selector: 'jz-button-cuboid',

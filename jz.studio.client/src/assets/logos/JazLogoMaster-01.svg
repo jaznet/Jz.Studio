@@ -16,7 +16,7 @@
       }
 
       .st2 {
-        stroke: #000;
+        stroke: #6ea288;
         stroke-linecap: round;
         stroke-miterlimit: 10;
         stroke-width: 21px;

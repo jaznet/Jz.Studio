@@ -1,7 +1,7 @@
 //jz-button-3d.component.ts
 
 import { Component, HostBinding } from '@angular/core';
-import { ButtonBase } from '../jz-button/button-base';
+import { ButtonBase } from '../jz-button/jz-button-base';
 
 @Component({
   selector: 'jz-button-3d',

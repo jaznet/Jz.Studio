@@ -1,4 +1,4 @@
-import { ButtonBase } from './button-base';
+import { ButtonBase } from './jz-button-base';
 
 describe('ButtonBase', () => {
   it('should create an instance', () => {
