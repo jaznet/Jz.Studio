@@ -15,7 +15,7 @@ import { PaletteMgrService } from '../../../../_shell/services/palette-mgr.servi
 
 })
 export class DatavizHomeComponent implements AfterViewInit {
-  @HostBinding('class') classes = 'fit-to-parent app-view';
+  @HostBinding('class') classes = 'fit-to-parent';
 
   popoverVisible = true;
   anchor!: HTMLElement;

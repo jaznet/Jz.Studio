@@ -1,5 +1,7 @@
 .view-router-container {
     border-radius:9px;
+    border:1px solid var(--plt-clr-5);
+    background-color:var(--plt-clr-2) ;
 }
 
 .app-view {
