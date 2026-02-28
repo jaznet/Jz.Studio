@@ -24,19 +24,19 @@ const routes: Routes = [
       },
       {
         path: 'technical-analysis',
-        loadChildren: () => import('../../library/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
+        loadChildren: () => import('../../components/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
       },
       {
         path: 'techanTs',
-        loadChildren: () => import('../../library/jz-charts/techanTs/techan/techanTs.module').then(m => m.TechanTsModule)
+        loadChildren: () => import('../../components/jz-charts/techanTs/techan/techanTs.module').then(m => m.TechanTsModule)
       },
       {
         path: 'syncfusion-chart',
-        loadChildren: () => import('../../library/jz-charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
+        loadChildren: () => import('../../components/jz-charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
       },
       {
         path: 'sankey',
-        loadChildren: () => import('../../library/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
+        loadChildren: () => import('../../components/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
       },
     ]
   }

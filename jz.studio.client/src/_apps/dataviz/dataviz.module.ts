@@ -22,7 +22,7 @@ import { TechnicalAnalysisViewModule } from './views/technical-analysis-view/tec
     JzPopOversModule,
     RouterModule,
     DatavizRouterModule,
-    SankeyViewModule,
+ 
     TechnicalAnalysisViewModule
   ],
   exports: [

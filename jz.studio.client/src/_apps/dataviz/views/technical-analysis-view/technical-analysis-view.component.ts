@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { JzTechnicalAnalysisComponent } from '../../../../library/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.component';
+import { JzTechnicalAnalysisComponent } from '../../../../components/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.component';
 
 @Component({
     selector: 'technical-analysis-view',

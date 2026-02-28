@@ -15,10 +15,10 @@ import { SmaChartService } from '../services/charts/chart-sma.service';
 import { MacdDrawService } from '../services/charts/macd/macd-draw.service';
 import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
 import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
-import { PopoverHttpErrorComponent } from '../../../jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
+import { PopoverHttpErrorComponent } from '../../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { StockPriceHistory } from '../../../../models/stock-price-history.model';
-import { JzPopOversService } from '../../../jz-pop-overs/jz-pop-overs.service';
-import { PopOverLoadingComponent } from '../../../jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs.service';
+import { PopOverLoadingComponent } from '../../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
 import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
 import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
@@ -36,7 +36,7 @@ import { baseZIndex } from 'devextreme/ui/overlay';
 import { ChartScaffoldService } from '../services/chart-scaffold.service';
 import { toISOStringSafe } from '../utils/date-utils';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { HtmlElementOverlayContainer } from '../../../../components/overlays/html-element-overlay-container';
+import { HtmlElementOverlayContainer } from '../../../overlays/html-element-overlay-container';
 
 // #endregion imports
 
