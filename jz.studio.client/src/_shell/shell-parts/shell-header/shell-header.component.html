@@ -1,27 +1,21 @@
 
 <div #appHeader [ngStyle]="{'visibility': visibility}">
 
+  <!--Column 1: Logo-->
   <div class="grid-col-fixed logo-container">
-    <img src="../assets/logos/JazLogoMaster-00.svg" width="100" />
+    <img src="../assets/logos/JazLogoMaster-00.svg"  style="width:70%"/>
   </div>
 
   <div class="grid-col-fill">
-    <div class="grid-cols" style="justify-content:end">
-      <div style="margin-right:16px;margin-top:8px">
-        <palette-menu></palette-menu>
-      </div>
-
-      <!--<menu-main-aux #mainMenuAux></menu-main-aux>-->
-
+    <div style="margin-right:16px;margin-top:8px;justify-content:flex-end" >
+      <palette-menu></palette-menu>
     </div>
-
     <div #mainMenuContainer
          [ngStyle]="{'visibility':isMainMenuVisible ? 'visible' : 'hidden'}"
          class="grid-row-fixed menu-container">
-
       <main-menu #mainMenu></main-menu>
-
     </div>
   </div>
-
 </div>
+
+
