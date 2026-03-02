@@ -15,6 +15,7 @@ export class JzMenuService {
   }
 
   tabSelected(tab: JzMenuTabComponent) {
+    console.log('tab', tab);
     this.menuItemSelectedEvent.emit(tab);
     this.paletteMgr.ChangePalette(tab.palette);
   }

@@ -5,7 +5,8 @@ export const PALETTES = [
   'protan',
   'protan2',
   'coffee',
-
+  'onyx',
+  'onyx2'
 
 ] as const;
 
@@ -34,6 +35,8 @@ export function normalizePalette(
     protan: 'protan',
     protan2: 'protan2',
     coffee: 'coffee',
+    onyx: 'onyx',
+    onyx2: 'onyx2'
   };
 
   const candidate = aliases[raw] ?? aliases[collapsed] ?? collapsed;

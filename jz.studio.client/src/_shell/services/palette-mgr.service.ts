@@ -66,6 +66,38 @@ export class PaletteMgrService {
 
         break;
 
+      case 'onyx':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#161313');
+        document.documentElement.style.setProperty('--plt-clr-2', '#2c2626');
+        document.documentElement.style.setProperty('--plt-clr-3', '#423838');
+        document.documentElement.style.setProperty('--plt-clr-4', '#584b4b');
+        document.documentElement.style.setProperty('--plt-clr-5', '#584b4b');
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
+        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
+        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
+        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
+        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
+
+        break;
+
+      case 'onyx2':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#131416');
+        document.documentElement.style.setProperty('--plt-clr-2', '#26282c');
+        document.documentElement.style.setProperty('--plt-clr-3', '#383c42');
+        document.documentElement.style.setProperty('--plt-clr-4', '#4b5058');
+        document.documentElement.style.setProperty('--plt-clr-5', '#5e646e');
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
+        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
+        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
+        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
+        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
+
+        break;
+
       case 'feldgrau':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#1a0f0b');
@@ -112,11 +144,11 @@ export class PaletteMgrService {
 
       default:
         console.log('deffault');
-        document.documentElement.style.setProperty('--plt-clr-1', '#86e7b8');
-        document.documentElement.style.setProperty('--plt-clr-2', '#93ff96');
-        document.documentElement.style.setProperty('--plt-clr-3', '#b2ffa8');
-        document.documentElement.style.setProperty('--plt-clr-4', '#d0ffb7');
-        document.documentElement.style.setProperty('--plt-clr-5', '#f2f5de');
+        document.documentElement.style.setProperty('--plt-clr-1', '#433633');
+        document.documentElement.style.setProperty('--plt-clr-2', '#5c5552');
+        document.documentElement.style.setProperty('--plt-clr-3', '#8f857d');
+        document.documentElement.style.setProperty('--plt-clr-4', '#decbb7');
+        document.documentElement.style.setProperty('--plt-clr-5', '#f7f0f5');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#083A2A'); // deep teal
         document.documentElement.style.setProperty('--plt-txt-2', '#08320A'); // dark green

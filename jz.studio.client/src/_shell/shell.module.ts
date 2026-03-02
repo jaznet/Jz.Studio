@@ -8,7 +8,6 @@ import { SandboxModule } from '../_apps/sandbox/sandbox.module';
 import { DatavizModule } from '../_apps/dataviz/dataviz.module';
 import { GraphicsModule } from '../_apps/graphics/graphics.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { ShellRoutingModule } from './shell-routing.module';
 import { ShellComponent } from './shell.component';
 //import { HttpClientModule } from '@angular/common/http';
 
@@ -17,7 +16,6 @@ import { ShellComponent } from './shell.component';
   imports: [
     BrowserModule,
     //HttpClientModule,
-    ShellRoutingModule,     // handles RouterModule.forRoot(...)
     ShellComponent,         // <-- add the standalone root here
     JzUiControlsModule,
     AppPartsModule,
