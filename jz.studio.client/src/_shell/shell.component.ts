@@ -52,7 +52,7 @@ export class ShellComponent implements OnInit {
     private palette: PaletteMgrService
   )
   {
-    palette.ChangePalette("cofffee'");
+//    palette.ChangePalette("cofffee'");
   }
 
   ngOnInit() {

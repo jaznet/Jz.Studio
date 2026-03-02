@@ -27,7 +27,7 @@ export class DatavizHomeComponent implements AfterViewInit {
     private popovers: JzPopoversService,
     private palette: PaletteMgrService,
   ) {
-    palette.ChangePalette('protan');
+ //    palette.ChangePalette('protan');
   }
 
   ngAfterViewInit(): void {
