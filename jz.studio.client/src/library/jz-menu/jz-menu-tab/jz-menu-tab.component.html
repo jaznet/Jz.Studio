@@ -12,10 +12,11 @@
      }">
 
   <jz-button-cuboid #tabbutton
-             class="jz-button"
-             [text]="btnTxt"
-             [route]="route"
-             [menuType]="menuType"
-             [isSelected]="isSelected">
+                    class="jz-button"
+                    [route]="route"
+                    [variant]="menuType === 'sub' ? 'secondary' : 'primary'"
+                    [tone]="menuType === 'sub' ? 2 : 1"
+                    (clicked)="onTabClicked()">
+    {{btnTxt}}
   </jz-button-cuboid>
 </div>

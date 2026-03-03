@@ -3,12 +3,12 @@
 <button class="jz-btn jz-btn--3d"
         [attr.type]="type"
         [disabled]="disabled"
-        [attr.aria-label]="text && text.trim().length ? text : null"
-        (click)="onClick()">
+        [attr.aria-label]="ariaLabel || null" 
+       >
 
   <span class="cuboid" aria-hidden="true"></span>
 
   <!-- Real accessible label (discernible text) -->
-  <span class="label">{{ text }}</span>
+  <span class="label"><ng-content></ng-content></span>
 
 </button>

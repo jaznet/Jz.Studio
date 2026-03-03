@@ -5,16 +5,16 @@ import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
-import { JzButtonCuboid } from '../../../components/buttons/jz-button-cuboid/jz-button-cuboid';
+import { JzButtonCuboidComponent } from '../../../components/buttons/jz-button-cuboid/jz-button-cuboid.component';
 
 @Component({
     selector: 'jz-menu-tab',
-    imports: [CommonModule, JzButtonCuboid],
+    imports: [CommonModule, JzButtonCuboidComponent],
     templateUrl: './jz-menu-tab.component.html',
     styleUrls: ['./jz-menu-tab.component.css']
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit {
-  @ViewChild('tabbutton') tabButton!: JzButtonCuboid;
+  @ViewChild('tabbutton') tabButton!: JzButtonCuboidComponent;
   // Narrow some types for safer templates
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() flexflow: 'row' | 'column' = 'row';

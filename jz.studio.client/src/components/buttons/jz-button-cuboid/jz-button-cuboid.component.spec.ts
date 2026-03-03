@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { JzButtonCuboidComponent } from './jz-button-cuboid.component';
 
-import { JzButtonCuboid } from './jz-button-cuboid';
+
 
 describe('JzButtonCuboid', () => {
-  let component: JzButtonCuboid;
-  let fixture: ComponentFixture<JzButtonCuboid>;
+  let component: JzButtonCuboidComponent;
+  let fixture: ComponentFixture<JzButtonCuboidComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzButtonCuboid]
+      declarations: [JzButtonCuboidComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzButtonCuboid);
+    fixture = TestBed.createComponent(JzButtonCuboidComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

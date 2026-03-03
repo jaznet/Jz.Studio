@@ -1,11 +1,12 @@
-<!-- jz-button-cuboid.html -->
+<!-- jz-button-cuboid.component.html -->
 
 <button class="jz-btn jz-btn--cuboid jz-btn--nine"
         [attr.type]="type"
-        [disabled]="disabled"
-        (click)="onClick()">
+        [disabled]="disabled || loading"
+        (click)="onClick($event)">
+  <!--jz-button-cuboid.component.html-->
 
-  <div class="cuboid" >
+  <div class="cuboid">
     <!-- Top row -->
     <div class="zone A"></div>
     <div class="zone top"></div>
@@ -14,12 +15,14 @@
     <!-- Middle row -->
     <div class="zone left"></div>
     <div class="zone face">
-      <div>{{ text }}</div> 
+      <div class="label">
+        <ng-content></ng-content>
+      </div>
     </div>
     <div class="zone right"></div>
 
     <!-- Bottom row -->
-    <div class="zone D"></div> 
+    <div class="zone D"></div>
     <div class="zone bottom"></div>
     <div class="zone C"></div>
   </div>
