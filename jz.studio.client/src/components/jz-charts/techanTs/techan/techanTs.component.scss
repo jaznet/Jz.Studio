@@ -7,7 +7,7 @@
 }
 
 .chart-container{
-    fill:var(--plt-clr-4)
+  /*  fill:var(--plt-clr-2)*/
 }
 
 .rChartTitle {
@@ -45,11 +45,10 @@
 }
 
 .x-axis-group {
-  fill: var(--plt-chart-1);
+  fill: var(--plt-clr-2);
 }
 
 .panel-text {
-    
   fill: lightgray;
   font-size: 12px;
 }
