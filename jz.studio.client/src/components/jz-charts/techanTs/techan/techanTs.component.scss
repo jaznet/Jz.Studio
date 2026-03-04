@@ -44,6 +44,10 @@
   text-anchor: middle;
 }
 
+.axis-panel{
+    fill:var(--plt-clr-3);
+}
+
 .x-axis-group {
   fill: var(--plt-clr-2);
 }

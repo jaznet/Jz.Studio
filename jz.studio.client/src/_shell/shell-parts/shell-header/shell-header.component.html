@@ -10,12 +10,14 @@
     <div style="margin-right:16px;margin-top:8px;justify-content:flex-end" >
       <palette-menu></palette-menu>
     </div>
+
     <div #mainMenuContainer
          [ngStyle]="{'visibility':isMainMenuVisible ? 'visible' : 'hidden'}"
          class="grid-row-fixed menu-container">
       <main-menu #mainMenu></main-menu>
     </div>
   </div>
+
 </div>
 
 
