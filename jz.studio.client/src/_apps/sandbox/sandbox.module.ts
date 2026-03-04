@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { SandboxComponent } from './sandbox.component';
 import { SandboxRouterModule } from './sandbox-router.module';
 import { JzUiControlsModule } from '../../library/jz-ui-controls/jz-ui-controls.module';
-import { JzMenuModule } from '../../library/jz-menu/jz-menu.module';
 import { JzPopOversModule } from '../../library/jz-pop-overs/jz-pop-overs.module';
 import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
 import { JzDatavizModule } from '../../library/jz-dataviz/jz-dataviz.module';
@@ -15,6 +14,7 @@ import { DockingViewComponent } from './views/docking-view/docking-view.componen
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
 import { GraphicsViewComponent } from './views/graphics-view/graphics-view.component';
 import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
+import { JzMenuModule } from '../../components/menus/jz-menu.module';
 
 @NgModule({
   declarations: [

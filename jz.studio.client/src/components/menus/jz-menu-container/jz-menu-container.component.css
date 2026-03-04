@@ -8,7 +8,7 @@
 }
 
 .menu-tab-panel.horizontal {
-  margin-bottom: -1px;
+  margin-bottom: -2px;
   z-index: 10;
   position: relative;
 }

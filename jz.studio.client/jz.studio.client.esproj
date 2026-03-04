@@ -11,6 +11,7 @@
     <Folder Include="src\assets\css\" />
     <Folder Include="src\components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
+    <Folder Include="src\library\jz-menu\" />
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />

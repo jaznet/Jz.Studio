@@ -1,11 +1,11 @@
 
 import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-menu-base.component';
 import { AppStateService } from '../../../services/shell-state.service';
 import { CommonModule } from '@angular/common';
-import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-menu-tab.component';
 import type { MenuType } from '../../../../types/menu';
-import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
+import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
+import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
+import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 
 @Component({
     selector: 'main-menu',

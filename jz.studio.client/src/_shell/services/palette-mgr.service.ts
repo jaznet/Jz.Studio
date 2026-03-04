@@ -53,10 +53,10 @@ export class PaletteMgrService {
       case 'coffee':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#191010');
-        document.documentElement.style.setProperty('--plt-clr-2', '#322020');
-        document.documentElement.style.setProperty('--plt-clr-3', '#4b3030');
-        document.documentElement.style.setProperty('--plt-clr-4', '#644040');
-        document.documentElement.style.setProperty('--plt-clr-5', '#7C5050');
+        document.documentElement.style.setProperty('--plt-clr-2', '#3d2828');
+        document.documentElement.style.setProperty('--plt-clr-3', '#644040');
+        document.documentElement.style.setProperty('--plt-clr-4', '#895858');
+        document.documentElement.style.setProperty('--plt-clr-5', '#a77676');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
         document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020

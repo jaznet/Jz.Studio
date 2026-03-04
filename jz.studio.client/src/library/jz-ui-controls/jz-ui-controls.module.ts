@@ -6,16 +6,12 @@ import { ElapsedTimeComponent } from './elapsed-time/elapsed-time.component';
 
 @NgModule({
   declarations: [
-   
-
     DayOfWeekComponent
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    
-   
     DayOfWeekComponent
   ]
 })

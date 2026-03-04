@@ -11,7 +11,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { JzButtonSize, JzButtonVariant, JzTone, JzButtonTokens } from '../_core/jz-button-types';
-import { UrlTree } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 
 @Directive()
 export abstract class JzButtonBaseDirective {
@@ -20,7 +20,9 @@ export abstract class JzButtonBaseDirective {
   @Input() queryParams?: Record<string, any>;
   @Input() fragment?: string;
   @Input() replaceUrl = false;
-
+  /** Width/height can be '150px', '10rem', '100%', etc. */
+  @Input() width?: string;
+  @Input() height?: string;
   @Input() ariaLabel?: string;
   @Input() variant: JzButtonVariant = 'primary';
   @Input() size: JzButtonSize = 'md';
@@ -42,10 +44,8 @@ export abstract class JzButtonBaseDirective {
   // ---------- Host bindings (classes + attributes) ----------
 
   @HostBinding('class.jz-btn') protected readonly hostClass = true;
-
   @HostBinding('class.is-disabled') get isDisabledClass() { return this.disabled; }
   @HostBinding('class.is-loading') get isLoadingClass() { return this.loading; }
-
   @HostBinding('class') get variantSizeClasses(): string {
     // Keep base class always present; add variant & size classes
     return [
@@ -77,7 +77,8 @@ export abstract class JzButtonBaseDirective {
 
   constructor(
     protected readonly elRef: ElementRef<HTMLElement>,
-    protected readonly r2: Renderer2
+    protected readonly r2: Renderer2,
+    protected readonly router: Router
   ) { }
 
   // ---------- Events / State model ----------
@@ -122,6 +123,21 @@ export abstract class JzButtonBaseDirective {
       ev.stopImmediatePropagation();
       return;
     }
+
+    // ✅ if route provided, button navigates even when used standalone
+    if (this.route) {
+      ev.preventDefault();
+
+      if (typeof this.route === 'string') {
+        this.router.navigateByUrl(this.route.startsWith('/') ? this.route : '/' + this.route);
+      } else if (Array.isArray(this.route)) {
+        this.router.navigate(this.route, { queryParams: this.queryParams, fragment: this.fragment, replaceUrl: this.replaceUrl });
+      } else {
+        this.router.navigateByUrl(this.route);
+      }
+      return;
+    }
+
     this.clicked.emit(ev);
   }
 
@@ -174,10 +190,23 @@ export abstract class JzButtonBaseDirective {
     this.r2.setStyle(host, '--jz-hover', this.hovered ? 1 : 0);
     this.r2.setStyle(host, '--jz-press', this.pressed ? 1 : 0);
     this.r2.setStyle(host, '--jz-focus', this.focused ? 1 : 0);
+
+    this.applySizeVars();
   }
 
   /** Call once after inputs are set (skins can call in ngOnInit / ngOnChanges) */
   protected initTokens(): void {
-    this.applyTokens();
+    this.applySizeVars();   // ✅ ensure defaults are present
+    this.applyTokens();     // your existing token application
   }
+
+  protected applySizeVars(): void {
+    const host = this.elRef.nativeElement;
+
+    // defaults
+    this.r2.setStyle(host, '--jz-w', this.width?.trim() || '150px');
+    this.r2.setStyle(host, '--jz-h', this.height?.trim() || '30px');
+  }
+
+
 }

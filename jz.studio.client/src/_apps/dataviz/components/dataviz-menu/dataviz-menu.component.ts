@@ -1,9 +1,8 @@
 
 import { Component } from '@angular/core';
-import { MenuBaseComponent } from '../../../../library/jz-menu/jz-menu-base/jz-menu-base.component';
-import { JzMenuTabComponent } from '../../../../library/jz-menu/jz-menu-tab/jz-menu-tab.component';
-
-import { JzMenuContainerComponent } from '../../../../library/jz-menu/jz-menu-container/jz-menu-container.component';
+import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
+import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
+import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 
 @Component({
   selector: 'dataviz-menu',

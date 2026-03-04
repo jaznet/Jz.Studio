@@ -1,4 +1,7 @@
 
+.svg-container{
+    border:4px;
+}
 .rSvgElement {
     fill: blueviolet
 }
@@ -8,7 +11,7 @@
 }
 
 .rChartTitle {
-        fill: var(--plt-clr-4)
+        fill: var(--plt-clr-2)
 }
 
 .chart-panel {

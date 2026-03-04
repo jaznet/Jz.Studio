@@ -1,19 +1,27 @@
 // jz-menu-tab.component.ts
 
-import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
-import { JzPopOversService } from '../../jz-pop-overs/jz-pop-overs.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { JzButtonCuboidComponent } from '../../../components/buttons/jz-button-cuboid/jz-button-cuboid.component';
+import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
+import { JZ_MENU_CONTEXT } from '../jz-menu/jz-menu-context.token';
+import { JzMenuContextService } from '../jz-menu/jz-menu-context.service';
 
 @Component({
-    selector: 'jz-menu-tab',
-    imports: [CommonModule, JzButtonCuboidComponent],
-    templateUrl: './jz-menu-tab.component.html',
-    styleUrls: ['./jz-menu-tab.component.css']
+  selector: 'jz-menu-tab',
+  standalone: true,
+  imports: [CommonModule, JzButtonCuboidComponent],
+  providers: [
+    JzMenuContextService,
+    { provide: JZ_MENU_CONTEXT, useExisting: JzMenuContextService }
+  ],
+  templateUrl: './jz-menu-tab.component.html',
+  styleUrls: ['./jz-menu-tab.component.css'],
+
 })
-export class JzMenuTabComponent implements OnInit, AfterViewInit {
+export class JzMenuTabComponent implements OnInit, AfterViewInit, OnChanges{
   @ViewChild('tabbutton') tabButton!: JzButtonCuboidComponent;
   // Narrow some types for safer templates
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
@@ -61,10 +69,12 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
   marginLeft = '0';
 
   constructor(
+    private readonly menuCtx: JzMenuContextService,
     private menuService: JzMenuService,
     private popups: JzPopOversService,
     private changeDetector: ChangeDetectorRef
   ) { }
+
 
   ngOnInit(): void {
     // set layout once based on direction
@@ -77,11 +87,18 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit {
     }
     // Usually not needed in ngOnInit; remove if possible
     // this.changeDetector.detectChanges();
+    this.menuCtx.menuType = this.menuType;
   }
 
   ngAfterViewInit(): void {
     // If you truly need a tick after view init for something, then:
     // queueMicrotask(() => this.changeDetector.detectChanges());
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['menuType']) {
+      this.menuCtx.menuType = this.menuType;
+    }
   }
 
   onTabClicked(): void {
