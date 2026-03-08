@@ -3,8 +3,6 @@ import { normalizePalette, Palette } from '../../../../../types/palette';
 import { AppMgrService } from '../../../../services/shell-mgr.service';
 import { PaletteMgrService } from '../../../../services/palette-mgr.service';
 
-
-
 @Component({
   selector: 'jz-radio-button',
   standalone: true,

@@ -6,8 +6,8 @@ export const PALETTES = [
   'protan2',
   'coffee',
   'onyx',
-  'onyx2'
-
+  'onyx2',
+  'yale'
 ] as const;
 
 export type Palette = typeof PALETTES[number];
@@ -36,7 +36,8 @@ export function normalizePalette(
     protan2: 'protan2',
     coffee: 'coffee',
     onyx: 'onyx',
-    onyx2: 'onyx2'
+    onyx2: 'onyx2',
+    yale:'yale'
   };
 
   const candidate = aliases[raw] ?? aliases[collapsed] ?? collapsed;

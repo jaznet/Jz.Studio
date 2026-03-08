@@ -15,7 +15,7 @@ export class PaletteMgrService {
   ChangePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
 
-    switch (palette) {
+      switch (palette) {
 
       case 'protan':
 
@@ -98,6 +98,23 @@ export class PaletteMgrService {
 
         break;
 
+      case 'yale':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#0c1821');
+        document.documentElement.style.setProperty('--plt-clr-2', '#162b3c');
+        document.documentElement.style.setProperty('--plt-clr-3', '#20415a');
+        document.documentElement.style.setProperty('--plt-clr-4', '#2b5778');
+        document.documentElement.style.setProperty('--plt-clr-5', '#23b5d3');
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#FFFFFF'); // on #191010
+        document.documentElement.style.setProperty('--plt-txt-2', '#FFFFFF'); // on #322020
+        document.documentElement.style.setProperty('--plt-txt-3', '#111111'); // on #4B3030
+        document.documentElement.style.setProperty('--plt-txt-4', '#111111'); // on #644040
+        document.documentElement.style.setProperty('--plt-txt-5', '#FFFFFF'); // on #7C5050
+
+        break;
+
+
       case 'feldgrau':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#1a0f0b');
@@ -143,7 +160,7 @@ export class PaletteMgrService {
         break;
 
       default:
-        console.log('deffault');
+        console.log('default');
         document.documentElement.style.setProperty('--plt-clr-1', '#433633');
         document.documentElement.style.setProperty('--plt-clr-2', '#5c5552');
         document.documentElement.style.setProperty('--plt-clr-3', '#8f857d');
