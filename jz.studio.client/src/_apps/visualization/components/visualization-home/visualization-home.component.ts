@@ -7,7 +7,7 @@ import { PaletteMgrService } from '../../../../_shell/services/palette-mgr.servi
 
 
 @Component({
-  selector: 'dataviz-home',
+  selector: 'visualization-home',
   standalone: true,
   imports: [JzPopOverComponent],
   templateUrl: './visualization-home.component.html',

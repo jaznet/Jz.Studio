@@ -17,7 +17,7 @@ export const SHELL_ROUTES: Routes = [
 
   // Injected Apps (lazy)
   {
-    path: 'dataviz',
+    path: 'visualization',
     loadChildren: () =>
       import('../_apps/visualization/visualization.routes').then(m => m.VISUALIZATION_ROUTES)
   },
