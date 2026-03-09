@@ -8,13 +8,13 @@ import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loa
 import { JzPopoversService } from '../../components/jz-pop-over/jz-popovers.service';
 
 @Component({
-  selector: 'app-dataviz',
+  selector: 'app-visualization',
   standalone: true,
   imports: [DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
   templateUrl: './visualization.component.html',
   styleUrl: './visualization.component.css'
 })
-export class DatavizComponent {
+export class VisualizationComponent {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('popoverTpl') tpl!: TemplateRef<unknown>;
 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatavizComponent } from './visualization.component';
+import { VisualizationComponent } from './visualization.component';
 
 describe('DatavizComponent', () => {
-  let component: DatavizComponent;
-  let fixture: ComponentFixture<DatavizComponent>;
+  let component: VisualizationComponent;
+  let fixture: ComponentFixture<VisualizationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatavizComponent]
+      declarations: [VisualizationComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DatavizComponent);
+    fixture = TestBed.createComponent(VisualizationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
