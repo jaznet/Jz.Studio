@@ -10,11 +10,11 @@ import { PaletteMgrService } from '../../../../_shell/services/palette-mgr.servi
   selector: 'dataviz-home',
   standalone: true,
   imports: [JzPopOverComponent],
-  templateUrl: './dataviz-home.component.html',
-  styleUrl: './dataviz-home.component.css',
+  templateUrl: './visualization-home.component.html',
+  styleUrl: './visualization-home.component.css',
 
 })
-export class DatavizHomeComponent implements AfterViewInit {
+export class VisualizationHomeComponent implements AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
   popoverVisible = true;

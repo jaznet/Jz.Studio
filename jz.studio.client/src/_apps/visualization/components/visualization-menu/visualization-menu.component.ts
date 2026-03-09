@@ -5,12 +5,12 @@ import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-c
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 
 @Component({
-  selector: 'dataviz-menu',
+  selector: 'visualization-menu',
     standalone:true,
     imports: [JzMenuContainerComponent, JzMenuTabComponent],
-    templateUrl: './dataviz-menu.component.html',
-    styleUrl: './dataviz-menu.component.css'
+    templateUrl: './visualization-menu.component.html',
+    styleUrl: './visualization-menu.component.css'
 })
-export class DatavizMenuComponent extends MenuBaseComponent {
+export class VisualizationMenuComponent extends MenuBaseComponent {
 
 }

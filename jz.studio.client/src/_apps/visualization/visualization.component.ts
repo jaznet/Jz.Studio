@@ -2,15 +2,15 @@
 
 import { Component, HostBinding, TemplateRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DatavizMenuComponent } from './components/dataviz-menu/dataviz-menu.component';
 import { PopoverHttpErrorComponent } from '../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { JzPopoversService } from '../../components/jz-pop-over/jz-popovers.service';
+import { VisualizationMenuComponent } from './components/visualization-menu/visualization-menu.component';
 
 @Component({
   selector: 'app-visualization',
   standalone: true,
-  imports: [DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
+  imports: [VisualizationMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
   templateUrl: './visualization.component.html',
   styleUrl: './visualization.component.css'
 })

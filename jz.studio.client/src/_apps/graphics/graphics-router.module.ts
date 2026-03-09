@@ -32,11 +32,7 @@ const routes: Routes = [
       {
         path: 'spirograph',
         component: SpirographViewComponent
-      },
-      //{
-      //  path: 'dataviz',
-      //  loadChildren: () => import('../../library/jz-dataviz/jz-dataviz.module').then(m => m.JzDatavizModule)
-      //},
+      }
     
     ]
   }

@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { VisualizationComponent } from './visualization.component';
-import { DatavizHomeComponent } from './components/dataviz-home/dataviz-home.component';
+import { VisualizationHomeComponent } from './components/visualization-home/visualization-home.component';
 
 const routes: Routes = [
   {
@@ -12,11 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DatavizHomeComponent
+        component: VisualizationHomeComponent
       },
       {
         path: 'home',
-        component: DatavizHomeComponent
+        component: VisualizationHomeComponent
       },
       {
         path: 'choro-dash-loader',

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DatavizMenuComponent } from './dataviz-menu.component';
+import { VisualizationMenuComponent } from './visualization-menu.component';
 
 describe('DatavizMenuComponent', () => {
-  let component: DatavizMenuComponent;
-  let fixture: ComponentFixture<DatavizMenuComponent>;
+  let component: VisualizationMenuComponent;
+  let fixture: ComponentFixture<VisualizationMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DatavizMenuComponent]
+      declarations: [VisualizationMenuComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(DatavizMenuComponent);
+    fixture = TestBed.createComponent(VisualizationMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
