@@ -21,4 +21,4 @@ import { JzMenuModule } from '../../components/menus/jz-menu.module';
   exports: [
   ],
 })
-export class DatavizModule { }
+export class VisualizationModule { }

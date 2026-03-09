@@ -19,7 +19,7 @@ export const SHELL_ROUTES: Routes = [
   {
     path: 'dataviz',
     loadChildren: () =>
-      import('../_apps/visualization/visualization.routes').then(m => m.DATAVIZ_ROUTES)
+      import('../_apps/visualization/visualization.routes').then(m => m.VISUALIZATION_ROUTES)
   },
   {
     path: 'graphics',
