@@ -47,4 +47,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class DatavizRouterModule { }
+export class VisualizationRouterModule { }
