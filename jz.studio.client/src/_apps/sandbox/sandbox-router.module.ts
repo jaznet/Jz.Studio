@@ -20,10 +20,7 @@ const routes: Routes = [
         path: 'home',
         component: SandboxHomeComponent
       },
-      {
-        path: 'dataviz',
-        loadChildren: () => import('../../library/jz-dataviz/jz-dataviz.module').then(m => m.JzDatavizModule)
-      },
+
       {
         path: 'choro-dash-loader',
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
