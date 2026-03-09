@@ -4,6 +4,6 @@ export const DATAVIZ_ROUTES: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./dataviz.module').then(m => m.DatavizModule)
+      import('./visualization.module').then(m => m.DatavizModule)
   }
 ];

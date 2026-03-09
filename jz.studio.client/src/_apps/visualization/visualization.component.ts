@@ -11,8 +11,8 @@ import { JzPopoversService } from '../../components/jz-pop-over/jz-popovers.serv
   selector: 'app-dataviz',
   standalone: true,
   imports: [DatavizMenuComponent, RouterOutlet, PopoverHttpErrorComponent, PopOverLoadingComponent],
-  templateUrl: './dataviz.component.html',
-  styleUrl: './dataviz.component.css'
+  templateUrl: './visualization.component.html',
+  styleUrl: './visualization.component.css'
 })
 export class DatavizComponent {
   @HostBinding('class') classes = 'fit-to-parent';

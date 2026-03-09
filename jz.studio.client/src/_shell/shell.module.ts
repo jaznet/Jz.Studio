@@ -5,7 +5,6 @@ import { JzUiControlsModule } from '../library/jz-ui-controls/jz-ui-controls.mod
 import { AppWelcomeModule } from './app-welcome/app-welcome.module';
 import { AppPartsModule } from './shell-parts/shell-parts.module';
 import { SandboxModule } from '../_apps/sandbox/sandbox.module';
-import { DatavizModule } from '../_apps/dataviz/dataviz.module';
 import { GraphicsModule } from '../_apps/graphics/graphics.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ShellComponent } from './shell.component';
@@ -19,10 +18,7 @@ import { ShellComponent } from './shell.component';
     ShellComponent,         // <-- add the standalone root here
     JzUiControlsModule,
     AppPartsModule,
-    AppWelcomeModule,
-    //SandboxModule,
-    //GraphicsModule,
-    //DatavizModule
+    AppWelcomeModule
   ],
   providers: [
     provideHttpClient(
