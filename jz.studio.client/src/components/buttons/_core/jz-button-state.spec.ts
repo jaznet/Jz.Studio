@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JzButtonState } from './jz-button-state';
+import { JzButtonState } from '../../../_framework/ui/buttons/_core/jz-button-state.model';
 
 describe('JzButtonState', () => {
   let service: JzButtonState;

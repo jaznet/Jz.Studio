@@ -10,7 +10,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { JzButtonSize, JzButtonVariant, JzTone, JzButtonTokens } from '../_core/jz-button-types';
+import { JzButtonSize, JzButtonVariant, JzTone, JzButtonTokens } from '../../../_framework/ui/buttons/_core/jz-button-types';
 import { Router, UrlTree } from '@angular/router';
 
 @Directive()
