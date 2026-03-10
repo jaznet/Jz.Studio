@@ -8,13 +8,11 @@ import { SandboxModule } from '../_apps/sandbox/sandbox.module';
 import { GraphicsModule } from '../_apps/graphics/graphics.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ShellComponent } from './shell.component';
-//import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
 
   imports: [
     BrowserModule,
-    //HttpClientModule,
     ShellComponent,         // <-- add the standalone root here
     JzUiControlsModule,
     AppPartsModule,
