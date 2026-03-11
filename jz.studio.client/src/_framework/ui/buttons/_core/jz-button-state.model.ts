@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class JzButtonState {
-  
+export interface JzButtonVisualState {
+  disabled: boolean;
+  hovered: boolean;
+  pressed: boolean;
+  focused: boolean;
+  focusVisible: boolean;
+  keyboardActive: boolean;
 }
