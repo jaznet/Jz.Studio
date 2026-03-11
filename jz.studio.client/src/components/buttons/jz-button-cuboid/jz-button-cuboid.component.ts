@@ -16,14 +16,6 @@ export class JzButtonCuboidComponent extends JzButtonBaseDirective implements On
 
   private readonly menuCtx = inject(JZ_MENU_CONTEXT, { optional: true });
 
-  //constructor(
-  //  elRef: ElementRef<HTMLElement>,
-  //  r2: Renderer2,
-  //  router: Router
-  //) {
-  //  super(elRef, r2, router);
-  //}
-
   ngOnInit(): void {
     this.initTokens();
   }
