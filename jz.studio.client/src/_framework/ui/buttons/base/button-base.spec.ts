@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ButtonBaseComponent } from './button-base';
 
-import { JzButtonBase } from './jz-button-base';
 
-describe('JzButtonBase', () => {
-  let component: JzButtonBase;
-  let fixture: ComponentFixture<JzButtonBase>;
+
+describe('ButtonBase', () => {
+  let component: ButtonBaseComponent
+  let fixture: ComponentFixture<ButtonBaseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzButtonBase]
+      declarations: [ButtonBaseComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzButtonBase);
+    fixture = TestBed.createComponent(ButtonBaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

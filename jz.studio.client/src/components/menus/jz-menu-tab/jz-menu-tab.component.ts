@@ -4,15 +4,15 @@ import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, 
 import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
-import { JzButtonCuboidComponent } from '../../../components/buttons/jz-button-cuboid/jz-button-cuboid.component';
 import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
 import { JZ_MENU_CONTEXT } from '../jz-menu/jz-menu-context.token';
 import { JzMenuContextService } from '../jz-menu/jz-menu-context.service';
+import { ButtonCuboidComponent } from '../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
 
 @Component({
   selector: 'jz-menu-tab',
   standalone: true,
-  imports: [CommonModule, JzButtonCuboidComponent],
+  imports: [CommonModule, ButtonCuboidComponent],
   providers: [
     JzMenuContextService,
     { provide: JZ_MENU_CONTEXT, useExisting: JzMenuContextService }
@@ -22,7 +22,7 @@ import { JzMenuContextService } from '../jz-menu/jz-menu-context.service';
 
 })
 export class JzMenuTabComponent implements OnInit, AfterViewInit, OnChanges{
-  @ViewChild('tabbutton') tabButton!: JzButtonCuboidComponent;
+  @ViewChild('tabbutton') tabButton!: ButtonCuboidComponent;
   // Narrow some types for safer templates
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() flexflow: 'row' | 'column' = 'row';

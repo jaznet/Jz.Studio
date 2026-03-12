@@ -1,9 +1,12 @@
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { JzButtonVisualState } from './jz-button-types';
 
-@Injectable()
-export class JzButtonInteractionService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ButtonInteractionService {
   private readonly _state = new BehaviorSubject<JzButtonVisualState>({
     disabled: false,
     hovered: false,

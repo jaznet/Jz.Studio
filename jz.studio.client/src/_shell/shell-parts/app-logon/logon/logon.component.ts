@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
-import { JzButtonCuboidComponent } from '../../../../components/buttons/jz-button-cuboid/jz-button-cuboid.component';
 import { JzButton3dComponent } from '../../../../components/buttons/jz-button3d/jz-button-3d.component';
 import { JzButtonBlockComponent } from '../../../../components/buttons/jz-button-block/jz-button-block';
+import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
 
 @Component({
   selector: 'app-logon',
   imports: [
-    JzButtonCuboidComponent,
+    ButtonCuboidComponent,
     JzButton3dComponent,
     JzButtonBlockComponent,
     ReactiveFormsModule
