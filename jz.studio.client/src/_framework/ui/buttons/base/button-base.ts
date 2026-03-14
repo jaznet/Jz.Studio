@@ -1,3 +1,5 @@
+/* button-base.ts*/
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -39,7 +41,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
   private readonly subscription: Subscription;
 
   constructor(
-    private readonly interaction: ButtonInteractionService
+    protected readonly interaction: ButtonInteractionService
   ) {
     this.subscription = this.interaction.state$.subscribe(state => {
       this.applyState(state);
@@ -122,7 +124,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private emitActivation(): void {
+  protected emitActivation(): void {
     if (!this.jzDisabled) {
       this.activated.emit();
     }

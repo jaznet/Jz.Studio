@@ -1,27 +1,31 @@
+// button-cuboid.component.ts
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonBaseComponent } from '../base/button-base';
-import { JzButtonSize, JzButtonVariant } from '../_core/jz-button-types';
+import { ButtonInteractionService } from '../_core/button-interaction.service';
 
 @Component({
   selector: 'button-cuboid',
   standalone: true,
-  imports: [ButtonBaseComponent],
   templateUrl: './button-cuboid.component.html',
-  styleUrls: ['./button-cuboid.component.scss']
+  styleUrls: ['./button-cuboid.component.scss'],
+  providers: [ButtonInteractionService]
 })
-export class ButtonCuboidComponent {
+export class ButtonCuboidComponent extends ButtonBaseComponent {
   @Input() route?: string;
-  @Input() jzDisabled = false;
-  @Input() jzVariant: JzButtonVariant = 'primary';
-  @Input() jzSize: JzButtonSize = 'md';
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
   @Output() clicked = new EventEmitter<void>();
 
-  constructor(private readonly router: Router) { }
+  constructor(
+    interaction: ButtonInteractionService,
+    private readonly router: Router
+  ) {
+    super(interaction);
+  }
 
-  onActivated(): void {
+  protected override emitActivation(): void {
+    super.emitActivation();
     this.clicked.emit();
 
     if (this.route) {
