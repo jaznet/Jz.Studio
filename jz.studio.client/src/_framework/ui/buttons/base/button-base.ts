@@ -61,6 +61,24 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     this.onClick(event);
   }
 
+  onClick(event: MouseEvent): void {
+    if (this.jzDisabled) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+
+    if (!this.interaction.state.keyboardActive) {
+      this.emitActivation();
+    }
+  }
+
+  protected emitActivation(): void {
+    if (!this.jzDisabled) {
+      this.activated.emit();
+    }
+  }
+
   onPointerEnter(): void {
     this.interaction.onPointerEnter();
   }
@@ -117,23 +135,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     this.keyboardMode = false;
   }
 
-  onClick(event: MouseEvent): void {
-    if (this.jzDisabled) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      return;
-    }
 
-    if (!this.interaction.state.keyboardActive) {
-      this.emitActivation();
-    }
-  }
-
-  protected emitActivation(): void {
-    if (!this.jzDisabled) {
-      this.activated.emit();
-    }
-  }
 
   private applyState(state: JzButtonVisualState): void {
     this.isDisabled = state.disabled;
