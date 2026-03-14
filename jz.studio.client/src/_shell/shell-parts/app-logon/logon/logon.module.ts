@@ -7,17 +7,13 @@ import { JzUiControlsModule } from '../../../../library/jz-ui-controls/jz-ui-con
 
 
 @NgModule({
-  declarations: [
-    
-  ],
+  declarations: [  ],
   imports: [
     CommonModule,
     JzUiControlsModule,
     ReactiveFormsModule,
     RouterModule
   ],
-  exports: [
-     
-  ]
+  exports: [  ]
 })
 export class LogonModule { }

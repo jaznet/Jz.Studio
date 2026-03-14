@@ -7,6 +7,7 @@ import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-
 
 @Component({
   selector: 'app-logon',
+  standalone: true,
   imports: [
     ButtonCuboidComponent,
     JzButton3dComponent,
