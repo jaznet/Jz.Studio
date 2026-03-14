@@ -45,7 +45,7 @@ export class LogonComponent implements OnInit {
     }
   }
 
-   onButtonClick() {
+   onLogonButtonClick() {
     if (this.loginForm.valid) {
       var username = this.loginForm.value.username;
       var password = this.loginForm.value.password;
