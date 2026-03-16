@@ -56,10 +56,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     }
   }
 
-  onButtonClick(event: MouseEvent): void {
-    console.log('button-cuboid real button clicked', event);
-    this.onClick(event);
-  }
+
 
   onClick(event: MouseEvent): void {
     if (this.jzDisabled) {

@@ -3,41 +3,30 @@
 // #region imports
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { take } from 'rxjs/operators'; // ✅ add this
-import { range } from 'rxjs';
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { TechanTsService } from './techanTs.service';
-import { Margins, ohlcData, SvgAttributes } from '../interfaces/techan-interfaces';
-import { ChartDataService } from '../services/chart-data.service';
-import { ChartType } from '../enums/chart-type'; // adjust the path as needed
-import { LayoutService } from '../services/layout.service';
 import { select, selection, selectAll, Selection } from 'd3-selection';
-import { SmaChartService } from '../services/charts/chart-sma.service';
-import { MacdDrawService } from '../services/charts/macd/macd-draw.service';
-import { RsiChart } from '../services/charts/rsi/rsi-chart.service';
-import { RsiChartLayoutService } from '../services/charts/rsi/rsi-chart-layout.service';
-import { PopoverHttpErrorComponent } from '../../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
-import { StockPriceHistory } from '../../../../models/stock-price-history.model';
-import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs.service';
-import { PopOverLoadingComponent } from '../../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { VolumeChartService } from '../services/charts/volume/volume-chart.service';
-import { VolumeChartLayoutService } from '../services/charts/volume/volume-chart-layout.service';
-import { OhlcChartLayoutService } from '../services/charts/ohlc/ohlc-chart-layout.service';
-import { MacdChartComponent } from '../components/macd-chart/macd-chart.component';
-import { MacdLayoutService } from '../services/charts/macd/macd-layout.service';
-import { OhlcChartComponent } from '../components/ohlc-chart/ohlc-chart.component';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
-import { ChartScaffold } from '../interfaces/chart-scaffold';
-import { PanelAttributes } from '../interfaces/panel-attributes';
-import { chartConfig } from '../interfaces/chart-config';
-import { PanelHostService } from '../services/panel-host.service';
-import { ChartComponentMap } from '../maps/chart-component-map'; // Ensure this import exists to avoid errors'
-import { baseZIndex } from 'devextreme/ui/overlay';
-import { ChartScaffoldService } from '../services/chart-scaffold.service';
-import { toISOStringSafe } from '../utils/date-utils';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { HtmlElementOverlayContainer } from '../../../overlays/html-element-overlay-container';
-
+import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container';
+import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
+import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
+import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { OhlcChartComponent } from './components/ohlc-chart/ohlc-chart.component';
+import { ChartType } from './enums/chart-type';
+import { chartConfig } from './interfaces/chart-config';
+import { ChartScaffold } from './interfaces/chart-scaffold';
+import { ChartComponentMap } from './maps/chart-component-map';
+import { ChartDataService } from './services/chart-data.service';
+import { ChartScaffoldService } from './services/chart-scaffold.service';
+import { MacdDrawService } from './services/charts/macd/macd-draw.service';
+import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
+import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
+import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
+import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
+import { LayoutService } from './services/layout.service';
+import { PanelHostService } from './services/panel-host.service';
 // #endregion imports
 
 // 👇 define it before the @Component decorator
@@ -46,9 +35,9 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
 }
 
 @Component({
-    selector: 'techanTs',
-    imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
-    templateUrl: './techanTs.component.html',
+  selector: 'techanTs',
+  imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
+  templateUrl: './techanTs.component.html',
   styleUrls: ['./techanTs.component.scss'],
   providers: [
     {
@@ -57,7 +46,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
       deps: [ElementRef],
     },
   ],
-    encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class TechanTsComponent  implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
