@@ -14,12 +14,12 @@ import { format as d3format } from 'd3-format';
 import { line as d3line, curveLinear } from 'd3-shape';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../services/chart-data.service';
 import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
 
 @Component({
@@ -40,16 +40,17 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges,
     { period: 150, color: '#0000ff' },
   ];
 
+  //override chartScaffold!: ChartScaffold;
   override chartType = ChartType.OHLC;
+  //private yScale: any;
 
   constructor(
     chartData: ChartDataService,
     scaffoldSvc: ChartScaffoldService,
     private smaService: SmaChartService,
     hostEl: ElementRef<SVGGElement>
-  ) {
-    super(chartData, scaffoldSvc);
-  }
+  ) { super(chartData, scaffoldSvc); }
+
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);

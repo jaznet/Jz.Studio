@@ -25,8 +25,8 @@ import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
 import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
 import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
-import { LayoutService } from './services/layout.service';
 import { PanelHostService } from './services/panel-host.service';
+import { LayoutService } from './engine/layout/layout.service';
 // #endregion imports
 
 // 👇 define it before the @Component decorator

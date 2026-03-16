@@ -14,7 +14,6 @@
     <Folder Include="src\components\jz-charts\techanTs\charts\rsi\" />
     <Folder Include="src\components\jz-charts\techanTs\charts\ohlc\" />
     <Folder Include="src\components\jz-charts\techanTs\engine\indicators\" />
-    <Folder Include="src\components\jz-charts\techanTs\engine\layout\" />
     <Folder Include="src\components\jz-charts\techanTs\engine\rendering\" />
     <Folder Include="src\components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />

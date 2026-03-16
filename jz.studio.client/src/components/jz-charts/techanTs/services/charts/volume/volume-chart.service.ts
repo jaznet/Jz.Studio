@@ -6,8 +6,8 @@ import { scaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { LayoutService } from '../../layout.service';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold';
+import { LayoutService } from '../../../engine/layout/layout.service';
 
 @Injectable({
   providedIn: 'root',

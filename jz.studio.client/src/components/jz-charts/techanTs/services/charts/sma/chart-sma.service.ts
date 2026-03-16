@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 import { line } from 'd3-shape';
-import { ChartDataService } from '../chart-data.service';
-import { LayoutService } from '../layout.service';
+import { LayoutService } from '../../../engine/layout/layout.service';
+import { ChartDataService } from '../../chart-data.service';
 
 @Injectable({
   providedIn: 'root',
