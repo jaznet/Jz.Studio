@@ -1,9 +1,7 @@
 
 import { Injectable } from '@angular/core';
-import { ChartDataService } from './chart-data.service';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand } from 'd3-scale';
-import { ChartType } from '../enums/chart-type';
-import { ChartScaffold } from '../interfaces/chart-scaffold';
+import { ChartDataService } from '../../services/chart-data.service';
 
 @Injectable({
   providedIn: 'root'

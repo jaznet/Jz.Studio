@@ -3,7 +3,7 @@ import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { LayoutService } from './layout.service';
-import { _ScalesService } from './scales.service';
+import { _ScalesService } from '../engine/scales/scales.service';
 
 @Injectable({
   providedIn: 'root'
