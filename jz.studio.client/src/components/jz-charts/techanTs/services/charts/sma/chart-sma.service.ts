@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 import { line } from 'd3-shape';
-import { LayoutService } from '../../../engine/layout/panel-layout.service';
+import { PanelLayoutService } from '../../../engine/layout/panel-layout.service';
 import { ChartDataService } from '../../chart-data.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class SmaChartService {
 
   constructor(
     private data: ChartDataService,
-    private layout: LayoutService
+    private layout: PanelLayoutService
   ) { }
 
   public xScale(scale: any): this {

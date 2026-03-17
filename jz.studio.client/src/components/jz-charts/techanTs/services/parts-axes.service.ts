@@ -3,7 +3,7 @@ import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
 import { timeFormat } from 'd3-time-format';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { _ScalesService } from '../engine/scales/scales.service';
-import { LayoutService } from '../engine/layout/panel-layout.service';
+import { PanelLayoutService } from '../engine/layout/panel-layout.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class _PartsAxesService {
 
   constructor(
     private scales: _ScalesService,
-    private layout: LayoutService) { }
+    private layout: PanelLayoutService) { }
 
   drawAxes(): void {
 

@@ -26,7 +26,7 @@ import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout
 import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
 import { PanelHostService } from './services/panel-host.service';
-import { LayoutService } from './engine/layout/panel-layout.service';
+import { PanelLayoutService } from './engine/layout/panel-layout.service';
 // #endregion imports
 
 // 👇 define it before the @Component decorator
@@ -185,7 +185,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
     private stockPriceService: TechanTsService,
     public chartData: ChartDataService,
-    public  layoutService: LayoutService,
+    public layoutService: PanelLayoutService,
     private popOverService: JzPopOversService,
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
@@ -320,7 +320,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   private createChartScaffold() {
  
     this.chartScaffold = {
-      title: 36, // Title height
+      titleHeight: 36, // Title height
       width: this.svgContainer.clientWidth, height: 400,
       margins: { bottom: 30, left: 30, right: 30, top: 30, },
       xAxisTop: 30, xAxisBottom: 30,
@@ -344,7 +344,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
     select(this.rChartTitle.nativeElement)
       .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.title);
+      .attr('height', this.chartScaffold.titleHeight);
     // X-AXIS TOP 
     select(this.rAxisTop.nativeElement)
       .attr('width', this.chartScaffold.width)
@@ -355,15 +355,15 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
 
     select(this.rPanelsContainer.nativeElement)
       .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.height - this.chartScaffold.title - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
+      .attr('height', this.chartScaffold.height - this.chartScaffold.titleHeight - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
 
   
   }
 
   private alignMainChartElements() {
-    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title + this.chartScaffold.xAxisTop})`).classed('panels-container',true);
-    select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.title / 2}`).attr('x', `${this.chartScaffold.width/2}`);
-    select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.title})`);
+    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.titleHeight + this.chartScaffold.xAxisTop})`).classed('panels-container',true);
+    select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.titleHeight / 2}`).attr('x', `${this.chartScaffold.width/2}`);
+    select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
     select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},${this.chartScaffold.xAxisTop})`);
     select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
 

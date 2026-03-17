@@ -1,5 +1,7 @@
 // panel layout.service.ts
 
+
+
 import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
 import { ReplaySubject } from "rxjs";
@@ -12,7 +14,7 @@ import { BaseChartLayoutService } from "../../services/charts/base/base-chart-la
 @Injectable({
   providedIn: 'root'
 })
-export class LayoutService {
+export class PanelLayoutService {
 
   // #region PROPERTIES
   svgBorder = 8;
@@ -45,7 +47,7 @@ export class LayoutService {
   };
 
   scaffold: ChartScaffold = {
-    title: 36, // Title height
+    titleHeight: 36, // Title height
     width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40,
     margins: { bottom: 30, left: 30, right: 30, top: 30, },
     panelsContainer: {},

@@ -4,7 +4,7 @@ import { AxisLayout, AxisLayoutRefs } from "../../parts/axis-layout";
 import { ChartType } from "../../../enums/chart-type";
 import { ReplaySubject, take } from "rxjs";
 import { ChartDataService } from "../../chart-data.service";
-import { LayoutService } from "../../../engine/layout/panel-layout.service";
+import { PanelLayoutService } from "../../../engine/layout/panel-layout.service";
 
 @Injectable()
 export abstract class BaseChartLayoutService implements AfterViewInit {
@@ -20,7 +20,7 @@ export abstract class BaseChartLayoutService implements AfterViewInit {
   protected abstract setSize(width: number, height: number): void;
 
   constructor(
-    protected layoutService: LayoutService,
+    protected layoutService: PanelLayoutService,
     protected dataService: ChartDataService) { }
 
   ngAfterViewInit(): void {
