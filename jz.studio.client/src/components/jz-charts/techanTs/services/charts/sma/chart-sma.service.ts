@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 import { line } from 'd3-shape';
-import { LayoutService } from '../../../engine/layout/layout.service';
+import { LayoutService } from '../../../engine/layout/panel-layout.service';
 import { ChartDataService } from '../../chart-data.service';
 
 @Injectable({

@@ -4,7 +4,7 @@ import { AxisLayout, AxisLayoutRefs } from "../../parts/axis-layout";
 import { ChartType } from "../../../enums/chart-type";
 import { ReplaySubject, take } from "rxjs";
 import { ChartDataService } from "../../chart-data.service";
-import { LayoutService } from "../../../engine/layout/layout.service";
+import { LayoutService } from "../../../engine/layout/panel-layout.service";
 
 @Injectable()
 export abstract class BaseChartLayoutService implements AfterViewInit {

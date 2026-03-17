@@ -1,4 +1,4 @@
-// layout.service.ts
+// panel layout.service.ts
 
 import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';

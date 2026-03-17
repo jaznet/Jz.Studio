@@ -7,7 +7,7 @@ import { ChartDataService } from '../../chart-data.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
-import { LayoutService } from '../../../engine/layout/layout.service';
+import { LayoutService } from '../../../engine/layout/panel-layout.service';
 
 @Injectable({
   providedIn: 'root',
