@@ -8,7 +8,7 @@ import { select } from 'd3-selection';
 import { ChartType } from '../../../enums/chart-type';
 import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 import { ChartDataService } from '../../../services/chart-data.service';
-import { ChartScaffoldService } from '../../../services/chart-viewport.service';
+import { ChartViewportService } from '../../../services/chart-viewport.service';
 
 @Component({
     selector: 'g[base-chart]', // 👈 host is a <g>
