@@ -9,7 +9,7 @@ import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';      // ← use Date helper, not ISO strings
 import { ChartDataService } from '../../services/chart-data.service';
-import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { ChartScaffoldService } from '../../services/chart-viewport.service';
 
 type Num = number | null | undefined;
 

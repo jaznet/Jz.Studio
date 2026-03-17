@@ -18,7 +18,7 @@ import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { ChartDataService } from '../../services/chart-data.service';
 import { asDate, toISOStringSafe } from '../../utils/date-utils';
-import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { ChartScaffoldService } from '../../services/chart-viewport.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
 

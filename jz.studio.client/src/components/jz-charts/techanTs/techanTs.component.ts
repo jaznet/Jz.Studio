@@ -19,7 +19,7 @@ import { chartConfig } from './interfaces/chart-config';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
-import { ChartScaffoldService } from './services/chart-scaffold.service';
+import { ChartScaffoldService } from './services/chart-viewport.service';
 import { MacdDrawService } from './services/charts/macd/macd-draw.service';
 import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
 import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';

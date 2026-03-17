@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ChartScaffold } from '../interfaces/chart-scaffold.interface';
 
 @Injectable({ providedIn: 'root' })
-export class ChartScaffoldService {
+export class ChartViewportService {
   private _scaffold$ = new BehaviorSubject<ChartScaffold | null>(null);
 
   /** Observable if you ever want to react to scaffold changes */
