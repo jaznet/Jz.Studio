@@ -16,7 +16,7 @@ import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-
 import { OhlcChartComponent } from './components/ohlc-chart/ohlc-chart.component';
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
-import { ChartScaffold } from './interfaces/chart-scaffold';
+import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';

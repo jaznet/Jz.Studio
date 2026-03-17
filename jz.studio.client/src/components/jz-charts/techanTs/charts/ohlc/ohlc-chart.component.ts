@@ -14,7 +14,6 @@ import { format as d3format } from 'd3-format';
 import { line as d3line, curveLinear } from 'd3-shape';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
-import { ChartScaffold } from '../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../services/chart-data.service';
 import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';

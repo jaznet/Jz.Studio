@@ -1,7 +1,8 @@
 // chart-scaffold.service.ts
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ChartScaffold } from '../interfaces/chart-scaffold';
+import { ChartScaffold } from '../interfaces/chart-scaffold.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ChartScaffoldService {

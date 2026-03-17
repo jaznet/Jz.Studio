@@ -5,7 +5,7 @@ import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { ChartType } from '../../../enums/chart-type';
 import { BaseChartLayoutService } from '../base/base-chart-layout-service';
-import { ChartScaffold } from '../../../interfaces/chart-scaffold';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 
 
 @Injectable({

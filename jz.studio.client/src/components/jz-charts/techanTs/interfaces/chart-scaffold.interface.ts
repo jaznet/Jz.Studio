@@ -1,4 +1,5 @@
-// interfaces/chart-scaffold.ts
+// chart-scaffold.service.ts
+
 import { ChartType } from '../enums/chart-type';
 import { PanelAttributes } from './panel-attributes';
 import { Margins } from './techan-interfaces';

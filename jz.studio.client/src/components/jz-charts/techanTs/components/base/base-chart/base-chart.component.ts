@@ -6,7 +6,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
 
 import { ChartType } from '../../../enums/chart-type';
-import { ChartScaffold } from '../../../interfaces/chart-scaffold';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 import { ChartDataService } from '../../../services/chart-data.service';
 import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 

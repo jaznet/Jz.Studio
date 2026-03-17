@@ -6,9 +6,9 @@ import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
 
 import { ChartType } from '../../../enums/chart-type';
-import { ChartScaffold } from '../../../interfaces/chart-scaffold';
 import { ChartDataService } from '../../../services/chart-data.service';
 import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 
 @Component({
     selector: 'g[base-chart]', // 👈 host is a <g>

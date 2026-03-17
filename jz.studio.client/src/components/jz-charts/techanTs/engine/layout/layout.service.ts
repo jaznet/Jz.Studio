@@ -3,7 +3,7 @@ import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
 import { ReplaySubject } from "rxjs";
 import { ChartType } from "../../enums/chart-type";
-import { ChartScaffold } from "../../interfaces/chart-scaffold";
+import { ChartScaffold } from "../../interfaces/chart-scaffold.interface";
 import { PanelAttributes } from "../../interfaces/panel-attributes";
 import { SvgAttributes } from "../../interfaces/techan-interfaces";
 import { BaseChartLayoutService } from "../../services/charts/base/base-chart-layout-service";
