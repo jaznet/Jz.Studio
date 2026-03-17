@@ -16,10 +16,10 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
 import { ChartDataService } from '../../services/chart-data.service';
 import { asDate, toISOStringSafe } from '../../utils/date-utils';
-import { ChartScaffoldService } from '../../services/chart-viewport.service';
+import { ChartViewportService } from '../../services/chart-viewport.service';
 import { sma, type Num } from '../../utils/ta-math';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
+import { BaseChartComponent } from '../../components/base/base-chart/base-chart.component';
 
 @Component({
     selector: 'ohlc-chart',
