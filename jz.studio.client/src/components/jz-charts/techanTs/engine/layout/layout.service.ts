@@ -1,3 +1,4 @@
+// layout.service.ts
 
 import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
@@ -16,7 +17,6 @@ export class LayoutService {
   // #region PROPERTIES
   svgBorder = 8;
   divSvgContainer!: Selection<HTMLDivElement, unknown, null, undefined>;
-
 
   gMacdSection!: Selection<SVGGElement, unknown, null, undefined>;
   rMacdSection!: Selection<SVGRectElement, unknown, null, undefined>;
@@ -79,17 +79,7 @@ export class LayoutService {
   // #endregion
 
   constructor(
- //   private ngZone: NgZone,
- ///*   private ohlcChart: OhlcChartService,*/
- //   private ohlcLayout: OhlcChartLayoutService,
- //   private volumeLayout: VolumeChartLayoutService,
- //   private macdLayout: MacdLayoutService,
- //   private rsiLayout: RsiChartLayoutService
   ) { }
-
-
-
-
 
   getLayoutByChartType(chartType: ChartType): BaseChartLayoutService | undefined {
     switch (chartType) {
