@@ -9,9 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\assets\css\" />
-    <Folder Include="src\components\jz-charts\techanTs\charts\macd\" />
-    <Folder Include="src\components\jz-charts\techanTs\charts\volume\" />
-    <Folder Include="src\components\jz-charts\techanTs\charts\rsi\" />
     <Folder Include="src\components\jz-charts\techanTs\charts\ohlc\" />
     <Folder Include="src\components\jz-charts\techanTs\engine\indicators\" />
     <Folder Include="src\components\jz-charts\techanTs\engine\rendering\" />

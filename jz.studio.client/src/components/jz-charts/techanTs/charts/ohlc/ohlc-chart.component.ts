@@ -19,11 +19,11 @@ import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
-import { BaseChartComponent } from '../../components/base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../base/base-chart/base-chart.component';
 
 @Component({
     selector: 'ohlc-chart',
-  templateUrl: '../../components/base/base-chart/base-chart.component.html',
+  templateUrl: '../../charts/base/base-chart/base-chart.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })

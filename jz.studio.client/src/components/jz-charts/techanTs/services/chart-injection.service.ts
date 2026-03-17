@@ -1,5 +1,5 @@
 import { Injectable, ViewContainerRef, ComponentRef, Type } from '@angular/core';
-import { BaseChartComponent } from '../components/base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../charts/base/base-chart/base-chart.component';
 import { ChartType } from '../enums/chart-type';
 import { chartConfig } from '../interfaces/chart-config';
 import { OhlcChartComponent } from '../charts/ohlc/ohlc-chart.component';

@@ -14,7 +14,7 @@ import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
     selector: 'g[base-chart]', // 👈 host is a <g>
     templateUrl: './base-chart.component.html',
     styleUrls: ['./base-chart.component.scss'],
-    standalone: false
+    standalone: true
 })
 export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;

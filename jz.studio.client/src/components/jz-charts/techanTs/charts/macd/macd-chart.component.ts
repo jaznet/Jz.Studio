@@ -4,7 +4,7 @@ import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { line as d3line, curveLinear } from 'd3-shape';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { BaseChartComponent } from '../../charts/base/base-chart/base-chart.component';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';      // ← use Date helper, not ISO strings
