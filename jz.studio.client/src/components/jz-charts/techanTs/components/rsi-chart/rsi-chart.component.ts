@@ -10,7 +10,7 @@ import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';     // ← use Date helper
 import { ChartDataService } from '../../services/chart-data.service';
-import { ChartScaffoldService } from '../../services/chart-viewport.service';
+import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
 type Num = number | null;
 

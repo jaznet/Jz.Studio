@@ -16,16 +16,16 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { ChartType } from '../../enums/chart-type';
 import { ChartDataService } from '../../services/chart-data.service';
 import { asDate, toISOStringSafe } from '../../utils/date-utils';
-import { ChartViewportService } from '../../services/chart-viewport.service';
+import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
 import { BaseChartComponent } from '../../components/base/base-chart/base-chart.component';
 
 @Component({
     selector: 'ohlc-chart',
-    templateUrl: '../base/base-chart/base-chart.component.html',
+  templateUrl: '../../components/base/base-chart/base-chart.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
-    standalone: false
+    standalone: true
 })
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
 

@@ -9,7 +9,7 @@ import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { toISOStringSafe, asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
-import { ChartScaffoldService } from '../../services/chart-viewport.service';
+import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
 @Component({
     selector: 'volume-chart',

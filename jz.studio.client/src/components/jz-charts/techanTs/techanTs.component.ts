@@ -13,13 +13,12 @@ import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay
 import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
 import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { OhlcChartComponent } from './components/ohlc-chart/ohlc-chart.component';
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
-import { ChartScaffoldService } from './services/chart-viewport.service';
+import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { MacdDrawService } from './services/charts/macd/macd-draw.service';
 import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
 import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
@@ -27,6 +26,7 @@ import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.se
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
 import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
+import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 // #endregion imports
 
 // 👇 define it before the @Component decorator
