@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TechanTsComponent } from './techanTs.component';
+import { TechanTsComponent } from './technical-analysis.component';
 
 const routes: Routes = [
   {

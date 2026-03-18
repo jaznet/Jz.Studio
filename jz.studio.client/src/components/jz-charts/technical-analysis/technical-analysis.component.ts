@@ -4,7 +4,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { take } from 'rxjs/operators'; // ✅ add this
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { TechanTsService } from './techanTs.service';
+import { TechanTsService } from './technical-analysis.service';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
@@ -37,8 +37,8 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
 @Component({
   selector: 'techanTs',
   imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
-  templateUrl: './techanTs.component.html',
-  styleUrls: ['./techanTs.component.scss'],
+  templateUrl: './technical-analysis.component.html',
+  styleUrls: ['./technical-analysis.component.scss'],
   providers: [
     {
       provide: OverlayContainer,

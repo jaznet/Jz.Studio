@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TechanTsComponent } from './techanTs.component';
+import { TechanTsComponent } from './technical-analysis.component';
 
 describe('JzTechnicalAnalysisComponent', () => {
   let component: TechanTsComponent;

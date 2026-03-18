@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 
-import { TechanTsService } from './techanTs.service';
+import { TechanTsService } from './technical-analysis.service';
 
 describe('JzTechnicalAnalysisService', () => {
   let service: TechanTsService;
