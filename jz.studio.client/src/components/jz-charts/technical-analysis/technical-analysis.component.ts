@@ -4,7 +4,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { take } from 'rxjs/operators'; // ✅ add this
 import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { TechanTsService } from './technical-analysis.service';
 import { select, selection, selectAll, Selection } from 'd3-selection';
 import { scaleTime, scaleUtc, scaleLinear, scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
@@ -27,6 +26,7 @@ import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-
 import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
+import { TechnicalAnalysisService } from './technical-analysis.service';
 // #endregion imports
 
 // 👇 define it before the @Component decorator
@@ -48,7 +48,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class TechanTsComponent  implements OnInit, AfterViewInit {
+export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
   ChartType = ChartType; // expose enum to template
@@ -184,7 +184,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
     private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
-    private stockPriceService: TechanTsService,
+    private stockPriceService: TechnicalAnalysisService,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
     private popOverService: JzPopOversService,

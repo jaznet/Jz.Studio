@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TechanTsComponent } from './technical-analysis.component';
+import { TechnicalAnalysisComponent } from './technical-analysis.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: TechanTsComponent,
+    component: TechnicalAnalysisComponent,
     children: [
       {
         path: '',
-        component: TechanTsComponent
+        component: TechnicalAnalysisComponent
       },
     ]
   }

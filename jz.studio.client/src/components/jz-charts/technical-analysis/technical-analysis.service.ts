@@ -6,7 +6,7 @@ import { StockPriceHistory } from '../../../models/stock-price-history.model';
 @Injectable({
   providedIn: 'root'
 })
-export class TechanTsService {
+export class TechnicalAnalysisService {
 
   private apiUrl = 'https://localhost:7105/api/JazDb/stock-prices-api';  // Update with your API URL
 
