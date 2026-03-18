@@ -4,20 +4,20 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
-import { BaseChartComponent } from '../../charts/base/base-chart/base-chart.component';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { toISOStringSafe, asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
 
 @Component({
     selector: 'volume-chart',
-    templateUrl: '../base/base-chart/base-chart.component.html',
+  templateUrl: '../scaffold/techants-scaffold.component.html',
     styleUrls: ['./volume-chart.component.scss'],
     standalone: false
 })
-export class VolumeChartComponent extends BaseChartComponent implements OnChanges, OnInit {
+export class VolumeChartComponent extends TechTsScaffoldComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;
 

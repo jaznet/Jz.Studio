@@ -19,15 +19,15 @@ import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
-import { BaseChartComponent } from '../base/base-chart/base-chart.component';
+import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
 
 @Component({
     selector: 'ohlc-chart',
-  templateUrl: '../../charts/base/base-chart/base-chart.component.html',
+  templateUrl: '../scaffold/techants-scaffold.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })
-export class OhlcChartComponent extends BaseChartComponent implements OnChanges, AfterViewInit {
+export class OhlcChartComponent extends TechTsScaffoldComponent implements OnChanges, AfterViewInit {
 
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];

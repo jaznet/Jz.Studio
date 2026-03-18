@@ -15,7 +15,7 @@ import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-ove
 import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
-import { ChartScaffold } from './interfaces/chart-scaffold.interface';
+import { TechanTsScaffold } from './interfaces/techants-scaffold.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
@@ -163,7 +163,8 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   ticker = 'NVDA';
   dateScaleX!: ScaleBand<Date>;
 
-  chartScaffold!: ChartScaffold;
+  chartScaffold!: TechanTsScaffold;
+  scaffold!: TechanTsScaffold;
 
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
@@ -173,7 +174,7 @@ export class TechanTsComponent  implements OnInit, AfterViewInit {
   xAxisDays!: any;
   xAxisBottom: any;
 
-  scaffold!: ChartScaffold;
+
   // #endregion Properties
 
 /*  @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;*/

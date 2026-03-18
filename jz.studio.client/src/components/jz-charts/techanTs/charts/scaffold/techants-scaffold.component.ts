@@ -4,19 +4,19 @@ import {
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
+import { ChartType } from '../../enums/chart-type';
+import { TechanTsScaffold } from '../../interfaces/techants-scaffold.interface';
+import { ChartDataService } from '../../services/chart-data.service';
+import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 
-import { ChartType } from '../../../enums/chart-type';
-import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
-import { ChartDataService } from '../../../services/chart-data.service';
-import { ChartScaffoldService } from '../../../services/chart-scaffold.service';
 
 @Component({
     selector: 'g[base-chart]', // 👈 host is a <g>
-    templateUrl: './base-chart.component.html',
-    styleUrls: ['./base-chart.component.scss'],
+  templateUrl: '../scaffold/techants-scaffold.component.html',
+  styleUrls: ['../scaffold/techants-scaffold.component.scss'],
     standalone: true
 })
-export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, OnDestroy {
+export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
 
   @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
@@ -37,7 +37,7 @@ export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, O
   @ViewChild('rBase', { static: false }) rBase!: ElementRef<SVGRectElement>;
 
   @Input()
-  set scaffold(value: ChartScaffold | undefined) {
+  set scaffold(value: TechanTsScaffold | undefined) {
     if (!value) return;
     this.chartScaffold = value;
     this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
@@ -54,7 +54,7 @@ export abstract class BaseChartComponent  implements AfterViewInit, OnChanges, O
   protected drawAttempted = false;
   private destroyed$ = new Subject<void>();
 
-  protected chartScaffold!: ChartScaffold;
+  protected chartScaffold!: TechanTsScaffold;
   protected innerHeight: number = 0;
   protected L = 0; protected R = 0; protected T = 4; protected B = 0;
 

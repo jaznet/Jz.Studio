@@ -86,7 +86,7 @@ Future direction:
 
 - Master SVG scaffold defined in host
 - Panels injected dynamically
-- Charts extend `BaseChartComponent`
+- Charts extend `TechTsScaffoldComponent`
 - Data centralized in `ChartDataService`
 - Lifecycle synchronization required before draw
 - Layout deterministic and panel-driven

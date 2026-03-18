@@ -6,7 +6,7 @@ import { Injectable, NgZone } from "@angular/core";
 import { Selection } from 'd3-selection';
 import { ReplaySubject } from "rxjs";
 import { ChartType } from "../../enums/chart-type";
-import { ChartScaffold } from "../../interfaces/chart-scaffold.interface";
+import { TechanTsScaffold } from "../../interfaces/techants-scaffold.interface";
 import { PanelAttributes } from "../../interfaces/panel-attributes";
 import { SvgAttributes } from "../../interfaces/techan-interfaces";
 import { BaseChartLayoutService } from "../../services/charts/base/base-chart-layout-service";
@@ -46,7 +46,7 @@ export class PanelLayoutService {
     [ChartType.Base]: new ReplaySubject(1)
   };
 
-  scaffold: ChartScaffold = {
+  scaffold: TechanTsScaffold = {
     titleHeight: 36, // Title height
     width: 0, height: 0, xAxisTop: 32, xAxisBottom: 32, yAxisLeft: 40, yAxisRight: 40,
     margins: { bottom: 30, left: 30, right: 30, top: 30, },

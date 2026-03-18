@@ -4,22 +4,22 @@ import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { line as d3line, curveLinear } from 'd3-shape';
-import { BaseChartComponent } from '../../charts/base/base-chart/base-chart.component';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';      // ← use Date helper, not ISO strings
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
 
 type Num = number | null | undefined;
 
 @Component({
     selector: 'macd-chart',
-    templateUrl: '../base/base-chart/base-chart.component.html',
+    templateUrl: '../scaffold/techants-scaffold.component.html',
     styleUrls: ['./macd-chart.component.scss'],
     standalone: false
 })
-export class MacdChartComponent extends BaseChartComponent implements OnChanges {
+export class MacdChartComponent extends TechTsScaffoldComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;              // ← typed to Date
 
