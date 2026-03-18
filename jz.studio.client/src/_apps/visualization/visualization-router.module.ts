@@ -22,10 +22,7 @@ const routes: Routes = [
         path: 'choro-dash-loader',
         loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
       },
-      {
-        path: 'bubble',
-        loadChildren: () => import('../../components/jz-charts/jz-technical-analysis/techanJs/jz-technical-analysis.module').then(m => m.JzTechnicalAnalysisModule)
-      },
+
       {
         path: 'techanTs',
         loadChildren: () => import('../../components/jz-charts/techanTs/techanTs.module').then(m => m.TechanTsModule)
