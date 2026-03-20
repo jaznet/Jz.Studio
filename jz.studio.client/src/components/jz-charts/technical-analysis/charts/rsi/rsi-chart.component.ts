@@ -10,14 +10,14 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';     // ← use Date helper
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 type Num = number | null;
 
 @Component({
     selector: 'rsi-chart',
-  templateUrl: '../_scaffold/scaffold.component.html',
+  templateUrl: '../base/scaffold.component.html',
     styleUrls: ['./rsi-chart.component.scss'],
     standalone: false
 })

@@ -2,7 +2,7 @@ import { Injectable, ViewContainerRef, ComponentRef, Type } from '@angular/core'
 import { ChartType } from '../enums/chart-type';
 import { chartConfig } from '../interfaces/chart-config';
 import { OhlcChartComponent } from '../charts/ohlc/ohlc-chart.component';
-import { ScaffoldComponent } from '../charts/_scaffold/scaffold.component';
+import { ScaffoldComponent } from '../charts/base/scaffold.component';
 // 🚫 MacdChartComponent intentionally omitted
 
 type ChartComponentMap = Partial<Record<ChartType, Type<ScaffoldComponent>>>;

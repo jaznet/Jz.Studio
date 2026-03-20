@@ -9,12 +9,12 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { toISOStringSafe, asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 @Component({
     selector: 'volume-chart',
-  templateUrl: '../_scaffold/scaffold.component.html',
+  templateUrl: '../base/scaffold.component.html',
     styleUrls: ['./volume-chart.component.scss'],
     standalone: false
 })

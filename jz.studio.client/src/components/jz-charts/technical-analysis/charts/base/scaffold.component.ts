@@ -1,7 +1,5 @@
 // scafffold.component.ts
-import {
-  AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild
-} from '@angular/core';
+import {  AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild} from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
 import { ChartType } from '../../enums/chart-type';
@@ -12,10 +10,10 @@ import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 
 @Component({
-    selector: 'g[base-chart]', // 👈 host is a <g>
-  templateUrl: '../_scaffold/scaffold.component.html',
-  styleUrls: ['../_scaffold/scaffold.component.scss'],
-    standalone: true
+  selector: 'g[base-chart]', // 👈 host is a <g>
+  templateUrl: '../base/scaffold.component.html',
+  styleUrls: ['../base/scaffold.component.scss'],
+  standalone: true
 })
 export abstract class ScaffoldComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;

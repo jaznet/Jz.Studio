@@ -19,12 +19,12 @@ import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
-import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 @Component({
     selector: 'ohlc-chart',
-  templateUrl: '../_scaffold/scaffold.component.html',
+  templateUrl: '../base/scaffold.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })
