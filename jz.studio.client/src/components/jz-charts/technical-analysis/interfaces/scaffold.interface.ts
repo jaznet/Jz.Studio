@@ -1,10 +1,10 @@
 // chart-scaffold.service.ts
 
 import { ChartType } from '../enums/chart-type';
-import { PanelAttributes } from './panel-attributes';
+import { PanelAttributes } from './panel-attributes.interface';
 import { Margins } from './techan-interfaces';
 
-export interface TechanTsScaffold {
+export interface Scaffold {
   titleHeight: number;
   width: number;
   height: number;

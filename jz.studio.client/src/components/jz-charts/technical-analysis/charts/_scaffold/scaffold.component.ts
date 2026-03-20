@@ -1,22 +1,23 @@
-// base-chart.component.ts
+// scafffold.component.ts
 import {
   AfterViewInit, Component, ElementRef, Input, OnChanges, OnDestroy, SimpleChanges, ViewChild
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { select } from 'd3-selection';
 import { ChartType } from '../../enums/chart-type';
-import { TechanTsScaffold } from '../../interfaces/techants-scaffold.interface';
+import { Scaffold } from '../../interfaces/scaffold.interface';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
+import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 
 @Component({
     selector: 'g[base-chart]', // 👈 host is a <g>
-  templateUrl: '../scaffold/techants-scaffold.component.html',
-  styleUrls: ['../scaffold/techants-scaffold.component.scss'],
+  templateUrl: '../_scaffold/scaffold.component.html',
+  styleUrls: ['../_scaffold/scaffold.component.scss'],
     standalone: true
 })
-export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChanges, OnDestroy {
+export abstract class ScaffoldComponent  implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
 
   @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
@@ -37,7 +38,7 @@ export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChang
   @ViewChild('rBase', { static: false }) rBase!: ElementRef<SVGRectElement>;
 
   @Input()
-  set scaffold(value: TechanTsScaffold | undefined) {
+  set scaffold(value: Scaffold | undefined) {
     if (!value) return;
     this.chartScaffold = value;
     this.layoutReady = !!this.chartScaffold?.panels?.[this.chartType];
@@ -54,7 +55,7 @@ export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChang
   protected drawAttempted = false;
   private destroyed$ = new Subject<void>();
 
-  protected chartScaffold!: TechanTsScaffold;
+  protected chartScaffold!: Scaffold;
   protected innerHeight: number = 0;
   protected L = 0; protected R = 0; protected T = 4; protected B = 0;
 
@@ -93,13 +94,13 @@ export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChang
     const panel = this.chartScaffold?.panels?.[this.chartType];
     if (!panel) return;
 
-    const width =  Math.max(0, panel.width ?? 0);
-    const height = Math.max(0, panel.height ?? 0);
+    const width = Math.max(0, panel.bounds.width ?? 0);
+    const height = Math.max(0, panel.bounds.height ?? 0);
     const chartWidth = Math.max(
       0,
-      (panel?.width ?? 0)
-      - (this.chartScaffold.panels?.[this.chartType]?.margins?.left ?? 0)
-      - (this.chartScaffold.panels?.[this.chartType]?.margins?.right ?? 0)
+      (panel?.bounds.width ?? 0)
+      - (this.chartScaffold.panels?.[this.chartType]?.bounds?.x ?? 0)
+      - (this.chartScaffold.panels?.[this.chartType]?.content?.x ?? 0)
     );
 
     this.innerHeight = height - this.L;
@@ -114,7 +115,7 @@ export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChang
     select(this.gContent.nativeElement).attr('transform', `translate(30,0)`);      
     select(this.rContent.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', height);
     select(this.rChart.nativeElement).attr('x', 0).attr('y', 0).attr('width', chartWidth).attr('height', this.innerHeight).classed('rChart', true);
-    select(this.gAxisGroupRight.nativeElement).attr('transform', `translate(${panel.width},0)`);     
+    select(this.gAxisGroupRight.nativeElement).attr('transform', `translate(${panel.bounds,width},0)`);     
   }
 
   public markReadyAndDraw(opts: { dataReady?: boolean; inputsInitialized?: boolean; caller?: string } = {}): void {
@@ -125,7 +126,10 @@ export abstract class TechTsScaffoldComponent  implements AfterViewInit, OnChang
   protected markInputsReady(): void { this.inputsInitialized = true; this.checkAndDraw('markInputsReady'); }
   protected abstract createChart(caller: string): void;
   /** Force children to define their own axis policy */
-  protected abstract drawYAxes(panel: { width: number; height: number }, yScale: any): void;
+  protected abstract drawYAxes(
+    panel: PanelAttributes,
+    yScale: any
+  ): void;
 
   /** Optional micro-helpers children can reuse (not required) */
   protected yTickCount(h: number): number { return Math.max(2, Math.floor(h / 40)); }

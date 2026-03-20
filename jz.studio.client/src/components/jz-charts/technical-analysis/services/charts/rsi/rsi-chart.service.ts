@@ -6,7 +6,7 @@ import { scaleLinear } from 'd3-scale'
 import { ChartDataService } from '../../chart-data.service';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { TechanTsScaffold } from '../../../interfaces/techants-scaffold.interface';
+import { Scaffold } from '../../../interfaces/scaffold.interface';
 import { PanelLayoutService } from '../../../engine/layout/panel-layout.service';
 
 @Injectable({
@@ -93,8 +93,8 @@ export class RsiChart  implements AfterViewInit {
     return rsiValues;
   }
 
-  public drawAxes(chartScaffold: TechanTsScaffold) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.panels![ChartType.RSI]!.height, 0]);
+  public drawAxes(chartScaffold: Scaffold) {
+    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.panels![ChartType.RSI]!.bounds.height, 0]);
 
     this.chartYaxisLeft = axisLeft(this.rsiYscale);
     this.chartYaxisRight = axisRight(this.rsiYscale);

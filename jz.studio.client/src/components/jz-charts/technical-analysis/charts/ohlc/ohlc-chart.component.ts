@@ -19,15 +19,16 @@ import { asDate, toISOStringSafe } from '../../utils/date-utils';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
-import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
+import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 @Component({
     selector: 'ohlc-chart',
-  templateUrl: '../scaffold/techants-scaffold.component.html',
+  templateUrl: '../_scaffold/scaffold.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })
-export class OhlcChartComponent extends TechTsScaffoldComponent implements OnChanges, AfterViewInit {
+export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, AfterViewInit {
 
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];
@@ -39,9 +40,7 @@ export class OhlcChartComponent extends TechTsScaffoldComponent implements OnCha
     { period: 150, color: '#0000ff' },
   ];
 
-  //override chartScaffold!: ChartScaffold;
   override chartType = ChartType.OHLC;
-  //private yScale: any;
 
   constructor(
     chartData: ChartDataService,
@@ -54,7 +53,7 @@ export class OhlcChartComponent extends TechTsScaffoldComponent implements OnCha
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
-    const ok = !!panel && panel.width > 0 && panel.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'ohlc.ngOnChanges' }); // ✅ feed the base
     //const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
@@ -78,7 +77,7 @@ export class OhlcChartComponent extends TechTsScaffoldComponent implements OnCha
         Math.min(...this.data.map(d => d.low)),
         Math.max(...this.data.map(d => d.high))
       ])
-      .range([panel.height, 0])
+      .range([panel.bounds.height, 0])
       .nice();
 
     console.log('Wick data', this.data);
@@ -125,6 +124,40 @@ export class OhlcChartComponent extends TechTsScaffoldComponent implements OnCha
     this.drawYAxes(panel, yScale); // ✅ child-controlled axes
   }
 
+  protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
+    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
+
+    // OHLC-specific axis policy (tune as you like)
+    const tickCount = Math.max(2, Math.floor(panel.bounds.height / 40));
+    const tickFormat = d3format('~f');     // or d3format(',.2f') / currency
+
+    // LEFT (price)
+    select(this.gAxisGroupLeft.nativeElement)
+      .attr('transform', `translate(0,0)`)
+      .classed('y-axis', true);
+
+    select(this.gAxisLeft.nativeElement)
+      .call(
+        axisLeft(yScale)
+          .ticks(tickCount)
+          .tickFormat(tickFormat as any)
+          .tickSizeOuter(0)
+      );
+
+    // RIGHT (mirror)
+    select(this.gAxisGroupRight.nativeElement)
+      .attr('transform', `translate(${panel.bounds.width},0)`)
+      .classed('y-axis', true);
+
+    select(this.gAxisRight.nativeElement)
+      .call(
+        axisRight(yScale)
+          .ticks(tickCount)
+          .tickFormat(tickFormat as any)
+          .tickSizeOuter(0)
+      );
+  }
+
   private drawSmaOverlays(g: d3.Selection<SVGGElement, unknown, null, undefined>, dates: Date[], y: d3.ScaleLinear<number, number>) {
     const closes = this.data.map(d => d.close);
     const group = g.selectAll('g.sma-overlays').data([0]).join('g').attr('class', 'sma-overlays');
@@ -151,37 +184,5 @@ export class OhlcChartComponent extends TechTsScaffoldComponent implements OnCha
     });
   }
 
-  protected override drawYAxes(panel: { width: number; height: number }, yScale: any): void {
-    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
 
-    // OHLC-specific axis policy (tune as you like)
-    const tickCount = Math.max(2, Math.floor(panel.height / 40));
-    const tickFormat = d3format('~f');     // or d3format(',.2f') / currency
-
-    // LEFT (price)
-    select(this.gAxisGroupLeft.nativeElement)
-      .attr('transform', `translate(0,0)`)
-      .classed('y-axis', true);
-
-    select(this.gAxisLeft.nativeElement)
-      .call(
-        axisLeft(yScale)
-          .ticks(tickCount)
-          .tickFormat(tickFormat as any)
-          .tickSizeOuter(0)
-      );
-
-    // RIGHT (mirror)
-    select(this.gAxisGroupRight.nativeElement)
-      .attr('transform', `translate(${panel.width},0)`)
-      .classed('y-axis', true);
-
-    select(this.gAxisRight.nativeElement)
-      .call(
-        axisRight(yScale)
-          .ticks(tickCount)
-          .tickFormat(tickFormat as any)
-          .tickSizeOuter(0)
-      );
-  }
 }

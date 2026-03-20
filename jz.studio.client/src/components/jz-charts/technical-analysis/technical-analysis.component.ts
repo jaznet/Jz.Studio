@@ -14,7 +14,7 @@ import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-ove
 import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
-import { TechanTsScaffold } from './interfaces/techants-scaffold.interface';
+import { Scaffold } from './interfaces/scaffold.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
@@ -163,8 +163,8 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   ticker = 'NVDA';
   dateScaleX!: ScaleBand<Date>;
 
-  chartScaffold!: TechanTsScaffold;
-  scaffold!: TechanTsScaffold;
+  chartScaffold!: Scaffold;
+  scaffold!: Scaffold;
 
   chartXaxisMonthsTop: any;
   chartXaxisMonthsBottom: any;
@@ -376,6 +376,7 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     const containerRect = this.rPanelsContainer.nativeElement.getBoundingClientRect();
     const totalHeight = containerRect.height;
     const panelWidth = containerRect.width;
+    const panelHeight = containerRect.height;
 
     const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
       this.panel1, this.panel2, this.panel3, this.panel4
@@ -402,17 +403,38 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
         .attr('height', height);
 
       const cfg = included[i];
+
       if (cfg) {
+        const existing = this.chartScaffold.panels![cfg.type]?.bounds;
         this.chartScaffold.panels![cfg.type] = {
           ...(this.chartScaffold.panels![cfg.type] ?? {}),
-          width: panelWidth,
-          height,
-          margins: { bottom: 30, left: 30, right: 30, top: 30, },
-          x: 0,     // informational
-          y,        // informational
-          content: null,
-          spacer: 0,
-          pct: proportions[i] / sum
+          chartType: cfg.type,
+          bounds: {
+            x: existing?.x ?? 0,
+            y: existing?.y ?? y,
+            width: panelWidth,
+            height: panelHeight
+          },
+          content: {
+            x: 0,
+            y: 0,
+            width: panelWidth,
+            height: panelHeight
+          },
+          axisLeft: {
+            x: 0,
+            y: 0,
+            width: 0,
+            height: panelHeight
+          },
+          axisRight: {
+            x: panelWidth,
+            y: 0,
+            width: 0,
+            height: panelHeight
+          },
+          ratio: proportions[i] / sum,
+          order: i
         };
         g.select('rect').classed('empty-panel', false);
       } else {
@@ -431,9 +453,9 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     // Inner width for the X scale (content area)
     const innerWidth = Math.max(
       0,
-      (panel?.width ?? 0)
-      - (panel?.margins?.left ?? 0)
-      - (panel?.margins?.right ?? 0)
+      (panel?.bounds.width ?? 0)
+      - (panel?.bounds?.x ?? 0)
+      - (panel?.content?.x ?? 0)
     );
 
     // Convert incoming dates to Date objects (in case your scrub didn’t already)

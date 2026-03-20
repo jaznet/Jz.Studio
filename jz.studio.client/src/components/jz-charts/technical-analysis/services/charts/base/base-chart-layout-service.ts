@@ -24,20 +24,20 @@ export abstract class BaseChartLayoutService implements AfterViewInit {
     protected dataService: ChartDataService) { }
 
   ngAfterViewInit(): void {
-    const sizeStream = this.getSizeStreamForChartType(this.chartType);
-    sizeStream?.pipe(take(1)).subscribe(({ width, height }) => {
-      this.setSize(width, height);
-    });
+    //const sizeStream = this.getSizeStreamForChartType(this.chartType);
+    //sizeStream?.pipe(take(1)).subscribe(({ width, height }) => {
+    //  this.setSize(width, height);
+    //});
   }
 
-  protected getSizeStreamForChartType(chartType: ChartType): ReplaySubject<{ width: number; height: number }> | undefined {
-    switch (chartType) {
-      case ChartType.MACD: return this.layoutService.macdSizeReady$;
-      case ChartType.RSI: return this.layoutService.rsiSizeReady$;
-      case ChartType.VOLUME: return this.layoutService.volumeSizeReady$;
-      case ChartType.OHLC: return this.layoutService.ohlcSizeReady$;
-      default: return undefined;
-    }
-  }
+  //protected getSizeStreamForChartType(chartType: ChartType): ReplaySubject<{ width: number; height: number }> | undefined {
+  //  switch (chartType) {
+  //    case ChartType.MACD: return this.layoutService.macdSizeReady$;
+  //    case ChartType.RSI: return this.layoutService.rsiSizeReady$;
+  //    case ChartType.VOLUME: return this.layoutService.volumeSizeReady$;
+  //    case ChartType.OHLC: return this.layoutService.ohlcSizeReady$;
+  //    default: return undefined;
+  //  }
+  //}
 
 }

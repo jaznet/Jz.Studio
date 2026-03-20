@@ -9,15 +9,16 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { toISOStringSafe, asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
+import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 @Component({
     selector: 'volume-chart',
-  templateUrl: '../scaffold/techants-scaffold.component.html',
+  templateUrl: '../_scaffold/scaffold.component.html',
     styleUrls: ['./volume-chart.component.scss'],
     standalone: false
 })
-export class VolumeChartComponent extends TechTsScaffoldComponent implements OnChanges, OnInit {
+export class VolumeChartComponent extends ScaffoldComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;
 
@@ -33,7 +34,7 @@ export class VolumeChartComponent extends TechTsScaffoldComponent implements OnC
 
   override ngOnChanges(_: SimpleChanges): void {
     const panel = this.chartScaffold?.panels?.[ChartType.VOLUME];
-    const ok = !!panel && panel.width > 0 && panel.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'volume.ngOnChanges' });
   }
 
@@ -41,10 +42,10 @@ export class VolumeChartComponent extends TechTsScaffoldComponent implements OnC
     const panel = this.chartScaffold?.panels?.[ChartType.VOLUME];
     if (!panel || !this.gChart) return;
 
-    const { height, margins } = panel;
+    const { bounds, content } = panel;
  //   const L = margins.left, R = margins.right, T = margins.top, B = margins.bottom;
 
-    this.innerHeight = Math.max(0, height - this.T);
+    this.innerHeight = Math.max(0, bounds.height - this.T);
 
     const g = select(this.gChart.nativeElement);
 
@@ -65,7 +66,7 @@ export class VolumeChartComponent extends TechTsScaffoldComponent implements OnC
     this.drawYAxes(panel, yScale);
   }
 
-  protected override drawYAxes(panel: { width: number; height: number; margins?: any }, yScale: any): void {
+  protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
     const { height, margins } = panel as any;
     this.innerHeight = Math.max(0, height - this.L);

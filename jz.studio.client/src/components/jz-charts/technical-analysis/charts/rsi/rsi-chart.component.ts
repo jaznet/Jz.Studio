@@ -10,17 +10,18 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';     // ← use Date helper
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
+import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 type Num = number | null;
 
 @Component({
     selector: 'rsi-chart',
-  templateUrl: '../scaffold/techants-scaffold.component.html',
+  templateUrl: '../_scaffold/scaffold.component.html',
     styleUrls: ['./rsi-chart.component.scss'],
     standalone: false
 })
-export class RsiChartComponent extends TechTsScaffoldComponent implements OnChanges {
+export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;            // ← typed to Date
   @Input() period = 14;
@@ -33,7 +34,7 @@ export class RsiChartComponent extends TechTsScaffoldComponent implements OnChan
 
   override ngOnChanges(_: SimpleChanges): void {
     const panel = this.chartScaffold?.panels?.[ChartType.RSI];
-    const ok = !!panel && panel.width > 0 && panel.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'rsi.ngOnChanges' });
   }
 
@@ -67,7 +68,7 @@ export class RsiChartComponent extends TechTsScaffoldComponent implements OnChan
     if (!panel || !this.gChart) return;
 
     // match base inner-height policy
-    this.innerHeight = Math.max(0, panel.height - this.T);
+    this.innerHeight = Math.max(0, panel.bounds.height - this.T);
 
     const g = select(this.gChart.nativeElement);
     const bandW = this.dateScaleX.bandwidth();
@@ -84,13 +85,13 @@ export class RsiChartComponent extends TechTsScaffoldComponent implements OnChan
     g.selectAll('.rsi-band-ob')
       .data([0]).join('rect')
       .attr('class', 'rsi-band-ob')
-      .attr('x', 0).attr('width', panel.width)
+      .attr('x', 0).attr('width', panel.bounds.width)
       .attr('y', 0).attr('height', y70);
 
     g.selectAll('.rsi-band-os')
       .data([0]).join('rect')
       .attr('class', 'rsi-band-os')
-      .attr('x', 0).attr('width', panel.width)
+      .attr('x', 0).attr('width', panel.bounds.width)
       .attr('y', y30).attr('height', Math.max(0, this.innerHeight - y30));
 
     // guide lines
@@ -98,7 +99,7 @@ export class RsiChartComponent extends TechTsScaffoldComponent implements OnChan
     g.selectAll('.rsi-guide')
       .data(guides).join('line')
       .attr('class', 'rsi-guide')
-      .attr('x1', 0).attr('x2', panel.width)
+      .attr('x1', 0).attr('x2', panel.bounds.width)
       .attr('y1', d => y(d)).attr('y2', d => y(d));
 
     // RSI line
@@ -120,7 +121,7 @@ export class RsiChartComponent extends TechTsScaffoldComponent implements OnChan
     this.drawYAxes(panel, y);
   }
 
-  protected override drawYAxes(panel: { width: number; height: number; margins?: any }, yScale: any): void {
+  protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
 
     const ticks = [0, 30, 50, 70, 100];

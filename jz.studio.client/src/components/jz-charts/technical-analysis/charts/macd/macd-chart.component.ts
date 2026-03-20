@@ -9,17 +9,18 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';      // ← use Date helper, not ISO strings
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { TechTsScaffoldComponent } from '../scaffold/techants-scaffold.component';
+import { ScaffoldComponent } from '../_scaffold/scaffold.component';
+import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
 
 type Num = number | null | undefined;
 
 @Component({
     selector: 'macd-chart',
-    templateUrl: '../scaffold/techants-scaffold.component.html',
+    templateUrl: '../_scaffold/scaffold.component.html',
     styleUrls: ['./macd-chart.component.scss'],
     standalone: false
 })
-export class MacdChartComponent extends TechTsScaffoldComponent implements OnChanges {
+export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;              // ← typed to Date
 
@@ -31,7 +32,7 @@ export class MacdChartComponent extends TechTsScaffoldComponent implements OnCha
 
   override ngOnChanges(_: SimpleChanges): void {
     const panel = this.chartScaffold?.panels?.[ChartType.MACD];
-    const ok = !!panel && panel.width > 0 && panel.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'macd.ngOnChanges' });
   }
 
@@ -79,7 +80,7 @@ export class MacdChartComponent extends TechTsScaffoldComponent implements OnCha
     if (!panel || !this.gChart) return;
 
     // Use the same inner height logic as other charts
-    this.innerHeight = Math.max(0, panel.height - this.T);
+    this.innerHeight = Math.max(0, panel.bounds.height - this.T);
 
     const g = select(this.gChart.nativeElement);
     const bandW = this.dateScaleX.bandwidth();
@@ -102,7 +103,7 @@ export class MacdChartComponent extends TechTsScaffoldComponent implements OnCha
       .data([0])
       .join('line')
       .attr('class', 'macd-baseline')
-      .attr('x1', 0).attr('x2', panel.width)
+      .attr('x1', 0).attr('x2', panel.bounds.width)
       .attr('y1', y(0)).attr('y2', y(0));
 
     // histogram bars
@@ -145,9 +146,9 @@ export class MacdChartComponent extends TechTsScaffoldComponent implements OnCha
     this.drawYAxes(panel, y);
   }
 
-  protected override drawYAxes(panel: { width: number; height: number; margins?: any }, yScale: any): void {
+  protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
-    const innerH = Math.max(0, panel.height - this.L);
+    const innerH = Math.max(0, panel.bounds.height - this.L);
     const ticks = this.yTickCount(innerH);
     select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
     select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));

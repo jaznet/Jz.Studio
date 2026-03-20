@@ -25,8 +25,8 @@ export class _PartsAxesService {
   drawAxes(): void {
 
   
-    this.xAxisDays = select(this.layout.xAxisDays);
-    this.xAxisBottom = select(this.layout.xAxisBottom);
+    //this.xAxisDays = select(this.layout.xAxisDays);
+    //this.xAxisBottom = select(this.layout.xAxisBottom);
 
     const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
     const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023

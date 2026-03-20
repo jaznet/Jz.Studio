@@ -5,7 +5,7 @@ import { scaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { ChartType } from '../../../enums/chart-type';
 import { BaseChartLayoutService } from '../base/base-chart-layout-service';
-import { TechanTsScaffold } from '../../../interfaces/techants-scaffold.interface';
+import { Scaffold } from '../../../interfaces/scaffold.interface';
 
 
 @Injectable({
@@ -108,7 +108,7 @@ export class MacdDrawService extends BaseChartLayoutService implements AfterView
 
   public draw() { }
 
-  public drawAxes(chartScaffold: TechanTsScaffold) {
+  public drawAxes(chartScaffold: Scaffold) {
     // Calculate the min and max values from MACD data
     const allValues = this.data.flatMap((d: { macd: any; signal: any; histogram: any; }) => {
       return [d.macd, d.signal, d.histogram];
