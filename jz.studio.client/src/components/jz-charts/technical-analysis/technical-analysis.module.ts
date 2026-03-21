@@ -8,7 +8,9 @@ import { JzPopOversModule } from '../../../library/jz-pop-overs/jz-pop-overs.mod
 import { ChartComponentsModule } from './components/chart-components.module';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   imports: [
     CommonModule,
     RouterModule,
