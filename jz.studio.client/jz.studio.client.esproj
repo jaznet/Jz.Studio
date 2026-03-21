@@ -38,4 +38,31 @@
   <ItemGroup>
     <None Remove=".backup\jz-spirograph\**" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.scss" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\jz-charts\technical-analysis\charts\base\scaffold.component.html" />
+  </ItemGroup>
 </Project>
