@@ -1,17 +1,29 @@
-/* techanTs.component.ts */
+/* technical-analysis.component.ts */
 
 // #region imports
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, NgZone, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { take } from 'rxjs/operators'; // ✅ add this
-import { axisBottom, axisRight, axisLeft, axisTop } from 'd3-axis';
-import { select, selection, selectAll, Selection } from 'd3-selection';
-import { scaleTime, scaleUtc, scaleLinear, scaleBand, type ScaleBand } from 'd3-scale';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  NgZone,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
+import { take } from 'rxjs/operators';
+import { axisBottom, axisTop } from 'd3-axis';
+import { select, Selection } from 'd3-selection';
+import { scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { OverlayContainer } from '@angular/cdk/overlay';
+
 import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container';
 import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
 import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
 import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
 import { Scaffold } from './interfaces/scaffold.interface';
@@ -29,7 +41,6 @@ import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
 // #endregion imports
 
-// 👇 define it before the @Component decorator
 export function createHtmlElementOverlayContainer(host: ElementRef): OverlayContainer {
   return new HtmlElementOverlayContainer(host.nativeElement);
 }
@@ -48,17 +59,17 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
+export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  ChartType = ChartType; // expose enum to template
+  ChartType = ChartType;
 
   // #region @ViewChild List
   @ViewChild('divSvgContainer', { static: false }) divSvgContainer!: ElementRef<HTMLDivElement>;
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGSVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gChartTitle', { static: false }) gChartTitle!: ElementRef<SVGRectElement>;
+  @ViewChild('gChartTitle', { static: false }) gChartTitle!: ElementRef<SVGGElement>;
   @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
   @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
 
@@ -84,12 +95,11 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   @ViewChild('panel3', { static: false }) panel3!: ElementRef<SVGGElement>;
   @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
 
-
   // #region ohlc
   @ViewChild('ohlcChart', { static: false }) ohlcChart!: OhlcChartComponent;
 
   @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>
+  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>;
 
   @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
   @ViewChild('rOhlcContent', { static: false }) rOhlcContent!: ElementRef<SVGRectElement>;
@@ -105,7 +115,7 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   @ViewChild('rOhlcAxisRight', { static: false }) rOhlcAxisRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
-  // #region VOLUME GROUP
+  // #region VOLUME
   @ViewChild('gVolumeSection', { static: false }) gVolumeSection!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeSection', { static: false }) rVolumeSection!: ElementRef<SVGRectElement>;
   @ViewChild('gVolumeContent', { static: false }) gVolumeContent!: ElementRef<SVGGElement>;
@@ -119,11 +129,7 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   @ViewChild('gVolumeAxisRight', { static: false }) gVolumeAxisRight!: ElementRef<SVGGElement>;
   @ViewChild('gVolumeAxisGroupRight', { static: false }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('rVolumeAxisRight', { static: false }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
-  // #endregion VOLUME GROUP gVolumeChart
-
-  // #region MACD
-  //@ViewChild('rMacdContent', { static: false }) rMacdContent!: ElementRef<SVGRectElement>;
-  // #endregion MACD
+  // #endregion VOLUME
 
   // #region RSI
   @ViewChild('gRsiSection', { static: false }) gRsiSection!: ElementRef<SVGGElement>;
@@ -139,28 +145,26 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   @ViewChild('gRsiAxisGroupRight', { static: false }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
   @ViewChild('rRsiAxisGroupRight', { static: false }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
   @ViewChild('gRsiAxisRight', { static: false }) gRsiAxisRight!: ElementRef<SVGGElement>;
-  // #endregion Rsi
+  // #endregion RSI
 
-  // #region @VIEWCHILD lIST
   @ViewChild('sma1', { static: false }) sma1Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma2', { static: false }) sma2Ref!: ElementRef<SVGGElement>;
   @ViewChild('sma3', { static: false }) sma3Ref!: ElementRef<SVGGElement>;
 
-  // RSIGROUP
   @ViewChild('gRsiGroup', { static: false }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
   @ViewChild('popover_httperror', { static: false }) popover_httperror!: PopoverHttpErrorComponent;
   @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
-  // #endregion
-    // #endregion @ViewChild List
+  // #endregion @ViewChild List
 
   // #region Properties
   width = 0;
 
   dataReady = false;
   viewReady = false;
-  hydrated = false; // Optional safety to prevent double-draw
+  hydrated = false;
   ticker = 'NVDA';
+
   dateScaleX!: ScaleBand<Date>;
 
   chartScaffold!: Scaffold;
@@ -171,15 +175,10 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
 
   svgContainer!: HTMLDivElement;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
-  xAxisDays!: any;
+  xAxisDays: any;
   xAxisBottom: any;
-
-
   // #endregion Properties
 
-/*  @ViewChild('macdChart', { static: false }) macdChart!: MacdChartComp;*/
-
-  // #region constructor
   constructor(
     private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
@@ -191,28 +190,27 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
-
-/*    private ohlcChart: OhlcChartComponent,*/
     private macdLayout: MacdLayoutService,
     private macdDraw: MacdDrawService,
-   /* private baseLayout: BaseChartLayoutService*/
     private panelHost: PanelHostService,
     private scaffoldSvc: ChartScaffoldService
   ) {
     console.log('');
     console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
+
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
+
+    this.xAxisDays = null;
+    this.xAxisBottom = null;
   }
-  // #endregion constructor
 
   ngOnInit(): void { }
 
-  ngAfterViewInit() {
-    const ticker = 'NVDA';
+  ngAfterViewInit(): void {
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
@@ -225,6 +223,7 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
 
   private updateSvgSize(): void {
     this.svgContainer = this.divSvgContainer.nativeElement;
+
     select(this.svgElement.nativeElement)
       .attr('width', this.svgContainer.clientWidth)
       .attr('height', this.svgContainer.clientHeight);
@@ -234,13 +233,17 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
 
   fetchData(): void {
     this.popover_loading.show();
-    this.stockPriceService.getStockPrices(this.ticker).subscribe((data) => {
-      this.chartData.stockPriceHistoryData = data;
-      this.dataReady = true;
-      console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
-      this.popover_loading.hide();
-      this.tryCreateChart();
-    },
+
+    this.stockPriceService.getStockPrices(this.ticker).subscribe(
+      (data) => {
+        this.chartData.stockPriceHistoryData = data;
+        this.dataReady = true;
+
+        console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
+
+        this.popover_loading.hide();
+        this.tryCreateChart();
+      },
       (error) => {
         this.showError(error);
       }
@@ -250,25 +253,22 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
   tryCreateChart(): void {
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
-   //   this.createChartFramework();             // Build framework refs immediatelyfetch
-      this.changeDetector.detectChanges(); // Push any binding updates
-      this.initializeChartWhenReady();     // ✅ Start safe chart initialization
+      this.changeDetector.detectChanges();
+      this.initializeChartWhenReady();
     }
   }
 
   initializeChartWhenReady(attempt = 0): void {
-   
     if (!this.viewReady || !this.dataReady) {
       console.log('%c     ❌ NOT READY', 'color:red');
       return;
     } else {
       console.log('%c     ✔ READY', 'color:green');
-    };
+    }
 
     console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
 
-      // ✅ All good — proceed
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
       this.sizeChartElements();
@@ -277,13 +277,11 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
       this.createScales();
       this.drawAxes();
 
-      // ✅ after scaffold + panels exist, publish it
-      this.scaffoldSvc.scaffold = this.chartScaffold; 
+      this.scaffoldSvc.scaffold = this.chartScaffold;
       this.injectChartsFromConfig();
     });
   }
 
-  // Generic chart injector that supports any chart type defined in chartConfig
   injectChartsFromConfig(): void {
     const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
 
@@ -301,16 +299,13 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
         chartComponent
       );
 
-      // Provide shared inputs
       compRef.setInput('data', this.chartData.stockPriceHistoryData);
       compRef.setInput('dateScaleX', this.dateScaleX);
-      compRef.setInput('scaffold', this.chartScaffold);   // <— important
+      compRef.setInput('scaffold', this.chartScaffold);
 
-      // Mark ready + draw
       compRef.instance.markReadyAndDraw({
         dataReady: true,
         inputsInitialized: true,
-        layoutReady: true,
         caller: 'injectChartsFromConfig'
       });
 
@@ -318,14 +313,21 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     });
   }
 
-  private createChartScaffold() {
- 
+  private createChartScaffold(): void {
     this.chartScaffold = {
-      titleHeight: 36, // Title height
-      width: this.svgContainer.clientWidth, height: 400,
-      margins: { bottom: 30, left: 30, right: 30, top: 30, },
-      xAxisTop: 30, xAxisBottom: 30,
-      yAxisLeft: 30, yAxisRight: 30,
+      titleHeight: 36,
+      width: this.svgContainer.clientWidth,
+      height: 400,
+      margins: {
+        bottom: 30,
+        left: 30,
+        right: 30,
+        top: 30,
+      },
+      xAxisTop: 30,
+      xAxisBottom: 30,
+      yAxisLeft: 30,
+      yAxisRight: 30,
       panelsContainer: undefined,
       panels: undefined
     };
@@ -333,12 +335,18 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     this.chartScaffold.width = this.svgContainer.clientWidth;
     this.chartScaffold.height = this.svgContainer.clientHeight;
 
-    console.log('%c     ✔ create ChartScaffold', 'color:#90BEE9', this.chartScaffold.width,'x',this.chartScaffold.height);
+    console.log(
+      '%c     ✔ create ChartScaffold',
+      'color:#90BEE9',
+      this.chartScaffold.width,
+      'x',
+      this.chartScaffold.height
+    );
   }
 
-  private sizeChartElements() {
+  private sizeChartElements(): void {
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
-    
+
     select(this.rSvgElement.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.height);
@@ -346,210 +354,223 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     select(this.rChartTitle.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.titleHeight);
-    // X-AXIS TOP 
+
     select(this.rAxisTop.nativeElement)
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.xAxisTop);
+
     select(this.xAxisBottomRect.nativeElement)
       .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.xAxisTop);
+      .attr('height', this.chartScaffold.xAxisBottom);
 
     select(this.rPanelsContainer.nativeElement)
       .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.height - this.chartScaffold.titleHeight - this.chartScaffold.xAxisTop - this.chartScaffold.xAxisBottom);
-
-  
+      .attr(
+        'height',
+        this.chartScaffold.height
+        - this.chartScaffold.titleHeight
+        - this.chartScaffold.xAxisTop
+        - this.chartScaffold.xAxisBottom
+      );
   }
 
-  private alignMainChartElements() {
-    select(this.gPanelsContainer.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.titleHeight + this.chartScaffold.xAxisTop})`).classed('panels-container',true);
-    select(this.tChartTitleText.nativeElement).attr('y', `${this.chartScaffold.titleHeight / 2}`).attr('x', `${this.chartScaffold.width/2}`);
-    select(this.gAxisTop.nativeElement).attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
-    select(this.gAxisTopMonths.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft},${this.chartScaffold.xAxisTop})`);
-    select(this.gXaxisBottom.nativeElement).attr('transform', `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisTop})`);
+  private alignMainChartElements(): void {
+    select(this.gPanelsContainer.nativeElement)
+      .attr(
+        'transform',
+        `translate(0, ${this.chartScaffold.titleHeight + this.chartScaffold.xAxisTop})`
+      )
+      .classed('panels-container', true);
 
+    select(this.tChartTitleText.nativeElement)
+      .attr('y', `${this.chartScaffold.titleHeight / 2}`)
+      .attr('x', `${this.chartScaffold.width / 2}`);
+
+    select(this.gAxisTop.nativeElement)
+      .attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
+
+    select(this.gAxisTopMonths.nativeElement)
+      .attr(
+        'transform',
+        `translate(${this.chartScaffold.yAxisLeft},${this.chartScaffold.xAxisTop})`
+      );
+
+    select(this.gXaxisBottom.nativeElement)
+      .attr(
+        'transform',
+        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
+      );
   }
 
-  /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
-  /** Always render 4 panels; use <g transform="translate(...)"> for placement. */
   private sizeAndPlacePanels(): void {
-    const containerRect = this.rPanelsContainer.nativeElement.getBoundingClientRect();
-    const totalHeight = containerRect.height;
-    const panelWidth = containerRect.width;
-    const panelHeight = containerRect.height;
-
-    const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
-      this.panel1, this.panel2, this.panel3, this.panel4
-    ];
-
     const proportions = [0.4, 0.2, 0.2, 0.2];
-    const sum = proportions.reduce((a, b) => a + b, 0) || 1;
+    const includedConfigs = chartConfig.filter(c => c.include);
+    const includedCount = includedConfigs.length;
 
-    const included = chartConfig.filter(c => c.include);
+    const panelDefinitions = includedConfigs.map((configEntry, index) => ({
+      id: configEntry.type,
+      chartType: configEntry.type,
+      ratio: proportions[index] ?? (1 / Math.max(1, includedCount)),
+      showTitle: false,
+      showAxisLeft: true,
+      showAxisRight: true,
+      showXAxisTop: false,
+      showXAxisBottom: index === includedCount - 1
+    }));
 
-    let y = 0;
-    if (!this.chartScaffold.panels) this.chartScaffold.panels = {};
-
-    panelRefs.forEach((ref, i) => {
-      if (!ref) return;
-
-      const height = totalHeight * (proportions[i] / sum);
-
-      const g = select(ref.nativeElement).attr('transform', `translate(0, ${y})`);
-      g.select('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', panelWidth)
-        .attr('height', height);
-
-      const cfg = included[i];
-
-      if (cfg) {
-        const existing = this.chartScaffold.panels![cfg.type]?.bounds;
-        this.chartScaffold.panels![cfg.type] = {
-          ...(this.chartScaffold.panels![cfg.type] ?? {}),
-          chartType: cfg.type,
-          bounds: {
-            x: existing?.x ?? 0,
-            y: existing?.y ?? y,
-            width: panelWidth,
-            height: panelHeight
-          },
-          content: {
-            x: 0,
-            y: 0,
-            width: panelWidth,
-            height: panelHeight
-          },
-          axisLeft: {
-            x: 0,
-            y: 0,
-            width: 0,
-            height: panelHeight
-          },
-          axisRight: {
-            x: panelWidth,
-            y: 0,
-            width: 0,
-            height: panelHeight
-          },
-          ratio: proportions[i] / sum,
-          order: i
-        };
-        g.select('rect').classed('empty-panel', false);
-      } else {
-        g.select('rect').classed('empty-panel', true);
-      }
-
-      y += height;
+    const resolvedScaffold = this.layoutService.buildScaffold({
+      width: this.chartScaffold.width,
+      height: this.chartScaffold.height,
+      margins: this.chartScaffold.margins,
+      titleHeight: this.chartScaffold.titleHeight,
+      axisLeftWidth: this.chartScaffold.yAxisLeft,
+      axisRightWidth: this.chartScaffold.yAxisRight,
+      xAxisTopHeight: this.chartScaffold.xAxisTop,
+      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
+      panelGap: 0,
+      panels: panelDefinitions
     });
 
-    console.log('%c✔ sizeAndPlacePanels (translate, no margins)', 'color:#90BEE9', this.chartScaffold.panels);
+    this.chartScaffold.panelsContainer = resolvedScaffold.panelsContainer;
+    this.chartScaffold.panels = resolvedScaffold.panels;
+
+    const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
+      this.panel1,
+      this.panel2,
+      this.panel3,
+      this.panel4
+    ];
+
+    panelRefs.forEach((ref, index) => {
+      if (!ref) return;
+
+      const configEntry = includedConfigs[index];
+      if (!configEntry) {
+        select(ref.nativeElement)
+          .attr('transform', 'translate(0,0)')
+          .select('rect')
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', 0)
+          .attr('height', 0)
+          .classed('empty-panel', true);
+
+        return;
+      }
+
+      const panel = this.chartScaffold.panels?.[configEntry.type];
+      if (!panel) return;
+
+      select(ref.nativeElement)
+        .attr('transform', `translate(${panel.panelRect.x}, ${panel.panelRect.y})`);
+
+      select(ref.nativeElement)
+        .select('rect')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', panel.panelRect.width)
+        .attr('height', panel.panelRect.height)
+        .classed('empty-panel', false);
+    });
+
+    console.log(
+      '%c✔ sizeAndPlacePanels via PanelLayoutService',
+      'color:#90BEE9',
+      this.chartScaffold.panels
+    );
   }
 
   private createScales(): void {
     const panel = this.chartScaffold.panels?.[ChartType.OHLC];
+    if (!panel) return;
 
-    // Inner width for the X scale (content area)
-    const innerWidth = Math.max(
-      0,
-      (panel?.bounds.width ?? 0)
-      - (panel?.bounds?.x ?? 0)
-      - (panel?.content?.x ?? 0)
-    );
+    const contentWidth = Math.max(0, panel.contentRect.width ?? 0);
 
-    // Convert incoming dates to Date objects (in case your scrub didn’t already)
     const raw = this.chartData.stockPriceHistoryData ?? [];
     const dates: Date[] = raw.map(d =>
       d.date instanceof Date ? d.date : new Date(d.date)
     );
 
-    // Build the band scale
     this.dateScaleX = scaleBand<Date>()
-      .domain(dates)                // one band per trading day
-      .range([0, innerWidth])       // start at 0; you’ll translate the axis/group by the left margin
+      .domain(dates)
+      .range([0, contentWidth])
       .paddingInner(0.2)
       .paddingOuter(0.1)
       .align(0.5);
   }
 
-
   drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');
-   // this.xAxisMonthsTop = select(this.xAxisMonthsTop.nativeElement);
+
     this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
-    this.xAxisDays = select(this.xAxisDays);
-    this.xAxisBottom = select(this.xAxisBottom);
 
-    const dateFormatter = timeFormat('%b %Y'); // Format as 'Jan 2023'
-    const dateFormatterMajor = timeFormat("%b %Y"); // Example: Jan 2023
-    const dateFormatterMinor = timeFormat("%d");    // Example: 1, 2, 3...
+    const dateFormatterMajor = timeFormat('%b %Y');
 
-    // CHART
-    let lastMonth = -1;
-    let lastYear = -1;
+    let lastMonthTop = -1;
+    let lastYearTop = -1;
+
+    let lastMonthBottom = -1;
+    let lastYearBottom = -1;
 
     type CustomAxisDomain = string | number | Date | { valueOf(): number };
 
     this.chartXaxisMonthsTop = axisTop(this.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+      .tickFormat((domainValue: CustomAxisDomain) => {
         let date: Date;
-        if (typeof domainValue === "string") {
+
+        if (typeof domainValue === 'string') {
           date = new Date(domainValue);
         } else if (domainValue instanceof Date) {
           date = domainValue;
-        } else if (typeof domainValue === "number") {
+        } else if (typeof domainValue === 'number') {
           date = new Date(domainValue);
         } else {
-          return "";
+          return '';
         }
 
         const currentMonth = date.getMonth();
         const currentYear = date.getFullYear();
 
-        if (currentMonth !== lastMonth || currentYear !== lastYear) {
-          lastMonth = currentMonth;
-          lastYear = currentYear;
-          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
-        } else {
-          return ""; // Skip redundant months
+        if (currentMonth !== lastMonthTop || currentYear !== lastYearTop) {
+          lastMonthTop = currentMonth;
+          lastYearTop = currentYear;
+          return `${dateFormatterMajor(date)}`;
         }
+
+        return '';
       });
 
     this.chartXaxisMonthsBottom = axisBottom(this.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain, index: number) => {
+      .tickFormat((domainValue: CustomAxisDomain) => {
         let date: Date;
-        if (typeof domainValue === "string") {
+
+        if (typeof domainValue === 'string') {
           date = new Date(domainValue);
         } else if (domainValue instanceof Date) {
           date = domainValue;
-        } else if (typeof domainValue === "number") {
+        } else if (typeof domainValue === 'number') {
           date = new Date(domainValue);
         } else {
-          return "";
+          return '';
         }
 
         const currentMonth = date.getMonth();
         const currentYear = date.getFullYear();
 
-        if (currentMonth !== lastMonth || currentYear !== lastYear) {
-          lastMonth = currentMonth;
-          lastYear = currentYear;
-          return `${dateFormatterMajor(date)}`; // Example: "Jan 2023"
-        } else {
-          return ""; // Skip redundant months
+        if (currentMonth !== lastMonthBottom || currentYear !== lastYearBottom) {
+          lastMonthBottom = currentMonth;
+          lastYearBottom = currentYear;
+          return `${dateFormatterMajor(date)}`;
         }
+
+        return '';
       });
 
-    // Apply the tick values based on the domain of scaleBand
-    const tickValues = this.dateScaleX.domain(); // Get the domain values from scaleBand
-
-    /*DRAW*/
     select(this.gAxisTopMonths.nativeElement).call(this.chartXaxisMonthsTop);
     this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
   }
 
-  showError(error: any) {
+  showError(error: any): void {
     this.popover_loading.hide();
     this.popover_httperror.error = error.error;
     this.popover_httperror.headers = error.headers;
@@ -562,20 +583,7 @@ export class TechnicalAnalysisComponent  implements OnInit, AfterViewInit {
     this.popover_httperror.show();
   }
 
-  // #region DRAW
-
-
-
   drawRsi(): void {
-  //  this.rsiChart
-  //    .xScale(this.scales.dateScaleX)
-  //    /* .yScale(this.scales.rsiYscale)*/
-  //    .setTargetGroup(this.rsiLayout.gChart) // Define a <g> for RSI
-  //    .setRollingPeriod(14) // Optional: Change the period
-  //    .drawAxes(this.layout.scaffold)
-  //    .draw();
+    // Future integration point.
   }
-  // #endregion DRAW
 }
-
-

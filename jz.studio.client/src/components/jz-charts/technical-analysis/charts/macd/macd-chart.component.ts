@@ -32,7 +32,7 @@ export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
 
   override ngOnChanges(_: SimpleChanges): void {
     const panel = this.chartScaffold?.panels?.[ChartType.MACD];
-    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.panelRect.width > 0 && panel.panelRect.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'macd.ngOnChanges' });
   }
 
@@ -80,7 +80,7 @@ export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
     if (!panel || !this.gChart) return;
 
     // Use the same inner height logic as other charts
-    this.innerHeight = Math.max(0, panel.bounds.height - this.T);
+    this.innerHeight = Math.max(0, panel.panelRect.height);
 
     const g = select(this.gChart.nativeElement);
     const bandW = this.dateScaleX.bandwidth();
@@ -103,7 +103,7 @@ export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
       .data([0])
       .join('line')
       .attr('class', 'macd-baseline')
-      .attr('x1', 0).attr('x2', panel.bounds.width)
+      .attr('x1', 0).attr('x2', panel.panelRect.width)
       .attr('y1', y(0)).attr('y2', y(0));
 
     // histogram bars
@@ -148,7 +148,7 @@ export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
 
   protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
-    const innerH = Math.max(0, panel.bounds.height - this.L);
+    const innerH = Math.max(0, panel.innerHeight);
     const ticks = this.yTickCount(innerH);
     select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
     select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));

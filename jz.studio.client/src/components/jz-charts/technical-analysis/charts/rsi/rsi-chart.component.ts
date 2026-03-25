@@ -34,7 +34,7 @@ export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
 
   override ngOnChanges(_: SimpleChanges): void {
     const panel = this.chartScaffold?.panels?.[ChartType.RSI];
-    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.innerWidth > 0 && panel.innerHeight > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'rsi.ngOnChanges' });
   }
 
@@ -68,7 +68,7 @@ export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
     if (!panel || !this.gChart) return;
 
     // match base inner-height policy
-    this.innerHeight = Math.max(0, panel.bounds.height - this.T);
+    this.innerHeight = Math.max(0, panel.innerHeight)
 
     const g = select(this.gChart.nativeElement);
     const bandW = this.dateScaleX.bandwidth();
@@ -85,13 +85,13 @@ export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
     g.selectAll('.rsi-band-ob')
       .data([0]).join('rect')
       .attr('class', 'rsi-band-ob')
-      .attr('x', 0).attr('width', panel.bounds.width)
+      .attr('x', 0).attr('width', panel.innerWidth)
       .attr('y', 0).attr('height', y70);
 
     g.selectAll('.rsi-band-os')
       .data([0]).join('rect')
       .attr('class', 'rsi-band-os')
-      .attr('x', 0).attr('width', panel.bounds.width)
+      .attr('x', 0).attr('width', panel.innerWidth)
       .attr('y', y30).attr('height', Math.max(0, this.innerHeight - y30));
 
     // guide lines
@@ -99,7 +99,7 @@ export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
     g.selectAll('.rsi-guide')
       .data(guides).join('line')
       .attr('class', 'rsi-guide')
-      .attr('x1', 0).attr('x2', panel.bounds.width)
+      .attr('x1', 0).attr('x2', panel.innerWidth)
       .attr('y1', d => y(d)).attr('y2', d => y(d));
 
     // RSI line

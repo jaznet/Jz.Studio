@@ -1,7 +1,10 @@
+import { ChartType } from "../enums/chart-type";
+
 export interface PanelDefinition {
   id: string;
+  chartType: ChartType;
   ratio: number;
-  showTitle?: boolean;
+
   showAxisLeft?: boolean;
   showAxisRight?: boolean;
   showXAxisTop?: boolean;

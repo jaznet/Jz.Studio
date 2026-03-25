@@ -17,6 +17,7 @@
     <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
+    <Folder Include="src\_framework\layout\panel-workspace\" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".backup\jz-spirograph\jz-spirograph.component.css" />

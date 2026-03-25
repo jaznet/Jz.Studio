@@ -1,53 +1,37 @@
-import { AfterViewInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { line } from 'd3-shape';
 import { Selection, select } from 'd3-selection';
 import { axisLeft, axisRight } from 'd3-axis';
-import { scaleLinear } from 'd3-scale'
+import { scaleLinear, ScaleBand, ScaleLinear } from 'd3-scale';
+
 import { ChartDataService } from '../../chart-data.service';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
 import { Scaffold } from '../../../interfaces/scaffold.interface';
-import { PanelLayoutService } from '../../../engine/layout/panel-layout.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RsiChart  implements AfterViewInit {
- 
-  rsiYscale: any;
-
-  chartYaxisLeft: any;
-  chartYaxisRight: any;
-
-  private _xScale: any;
-/*  private _yScale: any;*/
-  private gRsi: any;
-  private rollingPeriod: number = 14; // Default RSI period
+export class RsiChart {
+  private rsiYscale!: ScaleLinear<number, number>;
+  private _xScale!: ScaleBand<Date>;
+  private gRsi!: Selection<SVGGElement, unknown, null, undefined>;
+  private rollingPeriod = 14;
 
   constructor(
     private dataService: ChartDataService,
-    private rsiLayout: RsiChartLayoutService,
-    layoutService: PanelLayoutService
-  ) {
-  //  super(dataService, layoutService)
-  }
+    private rsiLayout: RsiChartLayoutService
+  ) { }
 
-    ngAfterViewInit(): void {
-   //   this.rsiLayout.initializeSelections(this.buildRefs());
-    }
-
-  public xScale(scale: any): this {
+  public xScale(scale: ScaleBand<Date>): this {
     this._xScale = scale;
     return this;
   }
 
-  public yScale(scale: any): this {
-   /* this._yScale = scale;*/
-    return this;
-  }
+  public setTargetGroup(gTargetRef: SVGGElement | Element): this {
+    this.gRsi = select(gTargetRef as SVGGElement)
+      .attr('class', 'rsi-chart');
 
-  public setTargetGroup(gTargetRef: any): this {
-    this.gRsi = gTargetRef.attr('class', 'rsi-chart');
     return this;
   }
 
@@ -63,19 +47,18 @@ export class RsiChart  implements AfterViewInit {
     let gainSum = 0;
     let lossSum = 0;
 
-    // Initialize gain and loss sums for the first rolling period
     for (let i = 1; i < this.rollingPeriod; i++) {
       const change = data[i].close - data[i - 1].close;
       if (change > 0) {
         gainSum += change;
       } else {
-        lossSum -= change; // Loss is a negative value
+        lossSum -= change;
       }
     }
 
-    // Calculate RSI for the rest of the data
     for (let i = this.rollingPeriod; i < data.length; i++) {
       const change = data[i].close - data[i - 1].close;
+
       if (change > 0) {
         gainSum = (gainSum * (this.rollingPeriod - 1) + change) / this.rollingPeriod;
         lossSum = (lossSum * (this.rollingPeriod - 1)) / this.rollingPeriod;
@@ -84,38 +67,57 @@ export class RsiChart  implements AfterViewInit {
         lossSum = (lossSum * (this.rollingPeriod - 1) - change) / this.rollingPeriod;
       }
 
-      const rs = gainSum / lossSum;
+      const rs = lossSum === 0 ? 100 : gainSum / lossSum;
       const rsi = 100 - 100 / (1 + rs);
 
-      rsiValues.push({ date: data[i].date, rsi });
+      rsiValues.push({
+        date: data[i].date,
+        rsi
+      });
     }
 
     return rsiValues;
   }
 
-  public drawAxes(chartScaffold: Scaffold) {
-    this.rsiYscale = scaleLinear().domain([0, 100]).range([chartScaffold.panels![ChartType.RSI]!.bounds.height, 0]);
+  public drawAxes(chartScaffold: Scaffold): this {
+    const panel = chartScaffold.panels?.[ChartType.RSI];
+    if (!panel) {
+      return this;
+    }
 
-    this.chartYaxisLeft = axisLeft(this.rsiYscale);
-    this.chartYaxisRight = axisRight(this.rsiYscale);
+    const contentHeight = Math.max(0, panel.contentRect.height ?? 0);
 
-    this.rsiLayout.axisLeft.gAxis.call(this.chartYaxisLeft);
-    this.rsiLayout.axisRight.gAxis.call(this.chartYaxisRight);
+    this.rsiYscale = scaleLinear<number, number>()
+      .domain([0, 100])
+      .range([contentHeight, 0]);
+
+    const leftAxis = axisLeft(this.rsiYscale);
+    const rightAxis = axisRight(this.rsiYscale);
+
+    this.rsiLayout.axisLeft.gAxis.call(leftAxis);
+    this.rsiLayout.axisRight.gAxis.call(rightAxis);
 
     return this;
   }
 
   public draw(): void {
-    // Calculate RSI data
-    const rsiData = this.calculateRsi(this.dataService.parsedData);
+    if (!this.gRsi || !this._xScale || !this.rsiYscale) {
+      return;
+    }
 
-    // Define the RSI line generator
+    const parsedData = this.dataService.parsedData ?? [];
+    const rsiData = this.calculateRsi(parsedData);
+
     const rsiLine = line<{ date: Date; rsi: number }>()
-      .x((d) => this._xScale(d.date.toISOString())! + this._xScale.bandwidth() / 2) // Fix x mapping
-      .y((d) => isNaN(this.rsiYscale(d.rsi)) ? this.rsiYscale(50) : this.rsiYscale(d.rsi)); // Fix y mapping
+      .x((d) => (this._xScale(d.date) ?? 0) + this._xScale.bandwidth() / 2)
+      .y((d) => {
+        const y = this.rsiYscale(d.rsi);
+        return Number.isNaN(y) ? this.rsiYscale(50) : y;
+      });
 
-    // Append or update the RSI path
-    const rsiPath = this.gRsi.selectAll('.rsi-line').data([rsiData]);
+    const rsiPath = this.gRsi
+      .selectAll<SVGPathElement, { date: Date; rsi: number }[]>('.rsi-line')
+      .data([rsiData]);
 
     rsiPath
       .enter()
@@ -129,27 +131,34 @@ export class RsiChart  implements AfterViewInit {
 
     rsiPath.exit().remove();
 
-    // Draw overbought, oversold, and middle lines
-    this.drawThresholdLine(70, 'overbought', 'dotted');
-    this.drawThresholdLine(30, 'oversold', 'dotted');
-    this.drawThresholdLine(50, 'middle', 'solid');
+    this.drawThresholdLine(70, 'overbought', '4, 2');
+    this.drawThresholdLine(30, 'oversold', '4, 2');
+    this.drawThresholdLine(50, 'middle', 'none');
   }
 
   private drawThresholdLine(level: number, className: string, strokeDasharray: string): void {
-    const thresholdLine = this.gRsi.selectAll(`.${className}-line`).data([level]);
+    if (!this.gRsi || !this._xScale || !this.rsiYscale) {
+      return;
+    }
+
+    const thresholdLine = this.gRsi
+      .selectAll<SVGLineElement, number>(`.${className}-line`)
+      .data([level]);
+
+    const [xStart, xEnd] = this._xScale.range();
 
     thresholdLine
       .enter()
       .append('line')
       .attr('class', `${className}-line`)
       .merge(thresholdLine)
-      .attr('x1', this._xScale.range()[0]) // Start of the x-axis
-      .attr('x2', this._xScale.range()[1]) // End of the x-axis
+      .attr('x1', xStart)
+      .attr('x2', xEnd)
       .attr('y1', this.rsiYscale(level))
       .attr('y2', this.rsiYscale(level))
-      .attr('stroke', className === 'middle' ? 'gray' : 'red') // Different color for middle line
+      .attr('stroke', className === 'middle' ? 'gray' : 'red')
       .attr('stroke-width', 1)
-      .attr('stroke-dasharray', strokeDasharray === 'dotted' ? '4, 2' : 'none') // Dotted or solid
+      .attr('stroke-dasharray', strokeDasharray)
       .attr('fill', 'none');
 
     thresholdLine.exit().remove();

@@ -53,7 +53,7 @@ export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
     const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
-    const ok = !!panel && panel.bounds.width > 0 && panel.bounds.height > 0 && !!this.data?.length && !!this.dateScaleX;
+    const ok = !!panel && panel.innerWidth > 0 && panel.innerHeight > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'ohlc.ngOnChanges' }); // ✅ feed the base
     //const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
@@ -77,7 +77,7 @@ export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, 
         Math.min(...this.data.map(d => d.low)),
         Math.max(...this.data.map(d => d.high))
       ])
-      .range([panel.bounds.height, 0])
+      .range([panel.innerHeight, 0])
       .nice();
 
     console.log('Wick data', this.data);
@@ -128,7 +128,7 @@ export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, 
     if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
 
     // OHLC-specific axis policy (tune as you like)
-    const tickCount = Math.max(2, Math.floor(panel.bounds.height / 40));
+    const tickCount = Math.max(2, Math.floor(panel.innerHeight / 40));
     const tickFormat = d3format('~f');     // or d3format(',.2f') / currency
 
     // LEFT (price)
@@ -146,7 +146,7 @@ export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, 
 
     // RIGHT (mirror)
     select(this.gAxisGroupRight.nativeElement)
-      .attr('transform', `translate(${panel.bounds.width},0)`)
+      .attr('transform', `translate(${panel.innerWidth},0)`)
       .classed('y-axis', true);
 
     select(this.gAxisRight.nativeElement)

@@ -1,21 +1,16 @@
 import { ChartType } from '../enums/chart-type';
 import { Margins } from './techan-interfaces';
+import { PanelDefinition } from './panel-definition.interface';
 
 export interface ChartLayoutRequest {
   width: number;
   height: number;
-
   margins: Margins;
-
   titleHeight: number;
+  axisLeftWidth: number;
+  axisRightWidth: number;
   xAxisTopHeight: number;
   xAxisBottomHeight: number;
-  yAxisLeftWidth: number;
-  yAxisRightWidth: number;
-
   panelGap: number;
-
-  panelOrder: ChartType[];
-
-  panelRatios: Partial<Record<ChartType, number>>;
+  panels: PanelDefinition[];
 }
