@@ -14,7 +14,7 @@ import { select } from 'd3-selection';
 
 import { ChartType } from '../../enums/chart-type';
 import { Scaffold } from '../../interfaces/scaffold.interface';
-import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
+import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 

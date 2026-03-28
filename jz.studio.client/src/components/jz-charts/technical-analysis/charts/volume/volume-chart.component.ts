@@ -11,7 +11,7 @@ import { asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
-import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
+import { PanelAttributes } from '../../interfaces/panel-interfaces';
 
 @Component({
   selector: 'volume-chart',

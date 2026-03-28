@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
-import { PanelAttributes, Rect } from '../../interfaces/panel-attributes.interface';
+import { PanelAttributes, PanelViewModel, Rect } from '../../interfaces/panel-interfaces';
 import { Scaffold } from '../../interfaces/scaffold.interface';
 
 @Injectable({
@@ -137,8 +137,8 @@ export class PanelLayoutService {
         titleRect,
         axisLeftRect,
         axisRightRect,
-        xAxisTopRect,
-        xAxisBottomRect,
+        axisTopRect: xAxisTopRect,
+        axisBottomRect: xAxisBottomRect,
         contentRect,
         innerWidth: contentRect.width,
         innerHeight: contentRect.height
@@ -148,6 +148,46 @@ export class PanelLayoutService {
     });
 
     return result;
+  }
+
+  buildPanelViewModels(
+    request: ChartLayoutRequest
+  ): PanelViewModel[] {
+
+    const panelsContainer = this.buildPanelsContainer(request);
+    const panels = this.buildPanels(request, panelsContainer);
+
+    const result: PanelViewModel[] = [];
+
+    Object.entries(panels).forEach(([chartType, panel]) => {
+      if (!panel) return;
+
+      const viewModel: PanelViewModel = {
+        id: panel.id,
+        chartType: chartType as ChartType,
+        order: panel.index,
+        visible: true,
+
+        bounds: panel.panelRect,
+
+        innerWidth: panel.innerWidth,
+        innerHeight: panel.innerHeight,
+
+        rects: {
+          panelRect: panel.panelRect,
+          titleRect: panel.titleRect,
+          axisLeftRect: panel.axisLeftRect,
+          axisRightRect: panel.axisRightRect,
+          axisTopRect: panel.axisTopRect,
+          axisBottomRect: panel.axisBottomRect,
+          contentRect: panel.contentRect
+        }
+      };
+
+      result.push(viewModel);
+    });
+
+    return result.sort((a, b) => a.order - b.order);
   }
 
   private normalizeRatios(

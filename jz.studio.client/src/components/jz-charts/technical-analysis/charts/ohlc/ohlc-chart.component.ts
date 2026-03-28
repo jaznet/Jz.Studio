@@ -20,7 +20,7 @@ import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
-import { PanelAttributes } from '../../interfaces/panel-attributes.interface';
+import { PanelAttributes } from '../../interfaces/panel-interfaces';
 
 @Component({
     selector: 'ohlc-chart',

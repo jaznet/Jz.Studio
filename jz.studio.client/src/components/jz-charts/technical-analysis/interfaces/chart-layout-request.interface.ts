@@ -1,6 +1,6 @@
 import { ChartType } from '../enums/chart-type';
 import { Margins } from './techan-interfaces';
-import { PanelDefinition } from './panel-definition.interface';
+import { PanelDefinition } from './panel-interfaces';
 
 export interface ChartLayoutRequest {
   width: number;
