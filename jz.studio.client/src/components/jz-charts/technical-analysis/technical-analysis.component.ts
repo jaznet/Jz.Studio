@@ -158,6 +158,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   // #endregion @ViewChild List
 
   // #region Properties
+
   width = 0;
 
   dataReady = false;
@@ -418,7 +419,20 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       showXAxisBottom: index === includedCount - 1
     }));
 
-    const resolvedScaffold = this.layoutService.buildScaffold({
+    //const resolvedScaffold = this.layoutService.buildScaffold({
+    //  width: this.chartScaffold.width,
+    //  height: this.chartScaffold.height,
+    //  margins: this.chartScaffold.margins,
+    //  titleHeight: this.chartScaffold.titleHeight,
+    //  axisLeftWidth: this.chartScaffold.yAxisLeft,
+    //  axisRightWidth: this.chartScaffold.yAxisRight,
+    //  xAxisTopHeight: this.chartScaffold.xAxisTop,
+    //  xAxisBottomHeight: this.chartScaffold.xAxisBottom,
+    //  panelGap: 0,
+    //  panels: panelDefinitions
+    //});
+
+    const request = {
       width: this.chartScaffold.width,
       height: this.chartScaffold.height,
       margins: this.chartScaffold.margins,
@@ -429,7 +443,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       xAxisBottomHeight: this.chartScaffold.xAxisBottom,
       panelGap: 0,
       panels: panelDefinitions
-    });
+    };
+
+    const resolvedScaffold = this.layoutService.buildScaffold(request);
+    const panels = this.layoutService.buildPanelViewModels(request);
+    console.log('PanelViewModels', panels);
 
     this.chartScaffold.panelsContainer = resolvedScaffold.panelsContainer;
     this.chartScaffold.panels = resolvedScaffold.panels;
