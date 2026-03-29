@@ -39,6 +39,8 @@ import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
+import type { PanelViewModel } from './interfaces/panel-interfaces';
+
 // #endregion imports
 
 export function createHtmlElementOverlayContainer(host: ElementRef): OverlayContainer {
@@ -160,6 +162,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   // #region Properties
 
   width = 0;
+
+  panelViewModels: PanelViewModel[] = [];
 
   dataReady = false;
   viewReady = false;
@@ -448,6 +452,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     const resolvedScaffold = this.layoutService.buildScaffold(request);
     const panels = this.layoutService.buildPanelViewModels(request);
     console.log('PanelViewModels', panels);
+
 
     this.chartScaffold.panelsContainer = resolvedScaffold.panelsContainer;
     this.chartScaffold.panels = resolvedScaffold.panels;
