@@ -98,14 +98,14 @@ export class PanelLayoutService {
       };
 
       const axisLeftRect: Rect = {
-        x: panelRect.x,
-        y: panelRect.y,
+        x: 0,
+        y: currentY,
         width: request.axisLeftWidth,
         height: panelRect.height
       };
 
       const axisRightRect: Rect = {
-        x: panelRect.x + panelRect.width - request.axisRightWidth,
+        x: panelRect.width - request.axisRightWidth,
         y: panelRect.y,
         width: request.axisRightWidth,
         height: panelRect.height
