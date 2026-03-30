@@ -506,40 +506,46 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private drawPanelDebug(): void {
-
     const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
 
     this.panelViewModels.forEach((panel, index) => {
       const ref = panelRefs[index];
       if (!ref) return;
 
-      const g = select(ref.nativeElement);
+      const gPanel = select(ref.nativeElement);
+
+      gPanel.select('.panel-debug').remove();
+
+      const gDebug = gPanel.append('g')
+        .attr('class', 'panel-debug');
 
       const r = panel.rects;
+      const offsetX = panel.bounds.x;
+      const offsetY = panel.bounds.y;
 
-      // CONTENT (green)
-      g.append('rect')
-        .attr('x', r.contentRect.x - panel.bounds.x)
-        .attr('y', r.contentRect.y - panel.bounds.y)
-        .attr('width', r.contentRect.width)
-        .attr('height', r.contentRect.height)
-        .attr('fill', 'rgba(0,255,0,0.1)');
-
-      // LEFT AXIS (red)
-      g.append('rect')
-        .attr('x', r.axisLeftRect.x - panel.bounds.x)
-        .attr('y', r.axisLeftRect.y - panel.bounds.y)
+      gDebug.append('rect')
+        .attr('x', r.axisLeftRect.x - offsetX)
+        .attr('y', r.axisLeftRect.y - offsetY)
         .attr('width', r.axisLeftRect.width)
         .attr('height', r.axisLeftRect.height)
-        .attr('fill', 'rgba(255,0,0,0.2)');
+        .attr('fill', 'none')
+        .attr('stroke', 'red');
 
-      // RIGHT AXIS (blue)
-      g.append('rect')
-        .attr('x', r.axisRightRect.x - panel.bounds.x)
-        .attr('y', r.axisRightRect.y - panel.bounds.y)
+      gDebug.append('rect')
+        .attr('x', r.contentRect.x - offsetX)
+        .attr('y', r.contentRect.y - offsetY)
+        .attr('width', r.contentRect.width)
+        .attr('height', r.contentRect.height)
+        .attr('fill', 'none')
+        .attr('stroke', 'yellow');
+
+      gDebug.append('rect')
+        .attr('x', r.axisRightRect.x - offsetX)
+        .attr('y', r.axisRightRect.y - offsetY)
         .attr('width', r.axisRightRect.width)
         .attr('height', r.axisRightRect.height)
-        .attr('fill', 'rgba(0,0,255,0.2)');
+        .attr('fill', 'none')
+        .attr('stroke', 'blue');
     });
   }
 
