@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { PanelWorkspaceState } from '../models/panel-workspace-state.interface';
-import { WorkspacePanelInstance } from '../models/workspace-panel-instance.interface';
+/*import { PanelWorkspaceState } from '../interfaces/panel-workspace-state.interface';*/
+import { WorkspacePanelInstance } from '../interfaces/workspace-panel-instance.interface';
+import { PanelWorkspaceState } from '../interfaces/panel-workspace-state.interface';
 
 @Injectable({
   providedIn: 'root'

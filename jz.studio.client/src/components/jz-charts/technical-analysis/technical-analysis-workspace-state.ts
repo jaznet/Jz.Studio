@@ -1,6 +1,6 @@
 
-import { PanelWorkspaceLayoutMode } from "../../../_framework/layout/panel-workspace/models/panel-workspace-layout-mode.enum";
-import { PanelWorkspaceState } from "../../../_framework/layout/panel-workspace/models/panel-workspace-state.interface";
+import { PanelWorkspaceLayoutMode } from "../../../_framework/layout/panel-workspace/interfaces/panel-workspace-layout-mode.enum";
+import { PanelWorkspaceState } from "../../../_framework/layout/panel-workspace/interfaces/panel-workspace-state.interface";
 
 
 export const TECHNICAL_ANALYSIS_WORKSPACE_STATE: PanelWorkspaceState = {
