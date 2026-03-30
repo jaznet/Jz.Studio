@@ -506,14 +506,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private drawPanelDebug(): void {
-    const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
+    const panelRefByChartType: Partial<Record<ChartType, ElementRef<SVGGElement>>> = {
+      [ChartType.OHLC]: this.panel1,
+      [ChartType.VOLUME]: this.panel2,
+      [ChartType.MACD]: this.panel3,
+      [ChartType.RSI]: this.panel4
+    };
 
-    this.panelViewModels.forEach((panel, index) => {
-      const ref = panelRefs[index];
+    this.panelViewModels.forEach(panel => {
+      const ref = panelRefByChartType[panel.chartType];
       if (!ref) return;
 
       const gPanel = select(ref.nativeElement);
-
       gPanel.select('.panel-debug').remove();
 
       const gDebug = gPanel.append('g')

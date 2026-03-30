@@ -58,17 +58,19 @@ export class PanelLayoutService {
   ): Partial<Record<ChartType, PanelAttributes>> {
     const result: Partial<Record<ChartType, PanelAttributes>> = {};
 
-    const panels = [
-      { chartType: ChartType.OHLC, ratio: 0.4 },
-      { chartType: ChartType.VOLUME, ratio: 0.2 },
-      { chartType: ChartType.RSI, ratio: 0.2 }
-    ];
+    const panels = request.panels ?? [];
 
-    const normalizedPanels = this.normalizeRatios(panels);
+    const normalizedPanels = this.normalizeRatios(
+      panels.map(panel => ({
+        chartType: panel.chartType,
+        ratio: panel.ratio
+      }))
+    );
+
     const totalGapHeight = Math.max(0, panels.length - 1) * request.panelGap;
     const usableHeight = Math.max(0, panelsContainer.height - totalGapHeight);
 
-    let currentY = panelsContainer.y;
+    let currentY = 0;
 
     normalizedPanels.forEach((panel, index) => {
       const ratio = panel.ratio;
