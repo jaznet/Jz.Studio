@@ -84,7 +84,7 @@ export class PanelLayoutService {
       }
 
       const panelRect: Rect = {
-        x: panelsContainer.x,
+        x: 0,
         y: currentY,
         width: panelsContainer.width,
         height: Math.max(0, panelHeight)
@@ -112,8 +112,8 @@ export class PanelLayoutService {
       };
 
       const xAxisTopRect: Rect = {
-        x: panelRect.x + request.axisLeftWidth,
-        y: panelRect.y,
+        x: request.axisLeftWidth,
+        y: currentY,
         width: Math.max(0, panelRect.width - request.axisLeftWidth - request.axisRightWidth),
         height: 0
       };
