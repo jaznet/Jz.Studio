@@ -1,11 +1,7 @@
 import { ChartType } from '../enums/chart-type';
+import { Rect } from './common-interfaces';
 
-export interface Rect {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+
 
 export interface PanelDefinition {
   id: string;
@@ -58,4 +54,13 @@ export interface PanelAttributes {
   contentRect: Rect;
   innerWidth: number;
   innerHeight: number;
+}
+
+export interface PanelWorkspaceItem {
+  id: string;
+  order: number;
+  visible: boolean;
+  rect: Rect;
+  headerRect?: Rect;
+  bodyRect: Rect;
 }

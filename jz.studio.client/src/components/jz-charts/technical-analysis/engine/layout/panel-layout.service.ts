@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
-import { PanelAttributes, PanelViewModel, Rect } from '../../interfaces/panel-interfaces';
+import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
 import { Scaffold } from '../../interfaces/scaffold.interface';
+import { Rect } from '../../interfaces/common-interfaces';
 
 @Injectable({
   providedIn: 'root'
