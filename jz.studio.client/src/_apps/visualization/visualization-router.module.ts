@@ -25,15 +25,15 @@ const routes: Routes = [
 
       {
         path: 'techanTs',
-        loadChildren: () => import('../../components/jz-charts/technical-analysis/technical-analysis.module').then(m => m.TechanTsModule)
+        loadChildren: () => import('../../components/charts/technical-analysis/technical-analysis.module').then(m => m.TechanTsModule)
       },
       {
         path: 'syncfusion-chart',
-        loadChildren: () => import('../../components/jz-charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
+        loadChildren: () => import('../../components/charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
       },
       {
         path: 'sankey',
-        loadChildren: () => import('../../components/jz-charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
+        loadChildren: () => import('../../components/charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
       },
     ]
   }

@@ -368,28 +368,27 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', this.chartScaffold.width)
       .attr('height', this.chartScaffold.xAxisBottom);
 
+    const pc = this.chartScaffold.panelsContainer;
+    if (!pc) return;
+
     select(this.rPanelsContainer.nativeElement)
-      .attr('width', this.chartScaffold.width)
-      .attr(
-        'height',
-        this.chartScaffold.height
-        - this.chartScaffold.titleHeight
-        - this.chartScaffold.xAxisTop
-        - this.chartScaffold.xAxisBottom
-      );
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', pc.width)
+      .attr('height', pc.height);
   }
 
   private alignMainChartElements(): void {
+    const pc = this.chartScaffold.panelsContainer;
+    if (!pc) return;
+
     select(this.gPanelsContainer.nativeElement)
-      .attr(
-        'transform',
-        `translate(0, ${this.chartScaffold.titleHeight + this.chartScaffold.xAxisTop})`
-      )
+      .attr('transform', `translate(${pc.x}, ${pc.y})`)
       .classed('panels-container', true);
 
     select(this.tChartTitleText.nativeElement)
-      .attr('y', `${this.chartScaffold.titleHeight / 2}`)
-      .attr('x', `${this.chartScaffold.width / 2}`);
+      .attr('y', this.chartScaffold.titleHeight / 2)
+      .attr('x', this.chartScaffold.width / 2);
 
     select(this.gAxisTop.nativeElement)
       .attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
@@ -397,7 +396,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.gAxisTopMonths.nativeElement)
       .attr(
         'transform',
-        `translate(${this.chartScaffold.yAxisLeft},${this.chartScaffold.xAxisTop})`
+        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`
       );
 
     select(this.gXaxisBottom.nativeElement)
