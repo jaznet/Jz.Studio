@@ -1,31 +1,32 @@
-<!-- base-chart.component.html -->
+<!-- scaffold.component.html -->
 
-<svg:rect #rSvg id="rSvg" width="0" height="0" x="0" y="0"></svg:rect>
-<svg>
-  <rect #rBase id="rBase" class="base-rect" width="0" height="0" x="0" y="0"></rect>
+<svg #svgRoot>
+  <svg:rect #rSvg id="rSvg" width="0" height="0" x="0" y="0"></svg:rect>
+  <!-- Base -->
+  <rect #rBase class="base-rect" x="0" y="0" width="0" height="0"></rect>
 
-  <g #gChartContainer id="gChartContainer">
-    <rect #rChartContainer id="rChartContainer" class="chart-container" width="0" height="0" x="0" y="0"></rect>
-
-    <g #gAxisGroupLeft id="gAxisGroupLeft">
-      <rect #rAxisGroupLeft id="rAxisGroupLeft" class="chart-placeholder axis-panel" width="0" height="0" x="0" y="0"></rect>
-      <g #gAxisLeft id="gAxisLeft">
-        <rect #rAxisLeft id="rAxisLeft" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-      </g>
-    </g>
-
-    <g #gContent id="gContent">
-      <rect #rContent id="rContent" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-      <g #gChart id="gChart">
-        <rect #rChart id="rChart" class="chart-placeholder"  width="0" height="0"></rect>
-      </g>
-    </g>
-
-    <g #gAxisGroupRight id="gAxisGroupRight">
-      <rect #rAxisGroupRight id="rAxisGroupRight" class="chart-placeholder axis-panel" width="0" height="0" x="0" y="0"></rect>
-      <g #gAxisRight id="gAxisRight">
-        <rect #rAxisRight id="rAxisLeft" class="chart-placeholder" width="0" height="0" x="0" y="0"></rect>
-      </g>
-    </g>
+  <!-- Title -->
+  <g #gTitle>
+    <rect #rTitle x="0" y="0" width="0" height="0"></rect>
+    <text #tTitle></text>
   </g>
+
+  <!-- Top X Axis -->
+  <g #gAxisTop>
+    <rect #rAxisTop x="0" y="0" width="0" height="0"></rect>
+    <g #gAxisTopTicks></g>
+  </g>
+
+  <!-- Panels Container -->
+  <g #gPanelsContainer>
+    <rect #rPanelsContainer x="0" y="0" width="0" height="0"></rect>
+    <!-- dynamic panel hosts go here -->
+  </g>
+
+  <!-- Bottom X Axis -->
+  <g #gAxisBottom>
+    <rect #rAxisBottom x="0" y="0" width="0" height="0"></rect>
+    <g #gAxisBottomTicks></g>
+  </g>
+
 </svg>

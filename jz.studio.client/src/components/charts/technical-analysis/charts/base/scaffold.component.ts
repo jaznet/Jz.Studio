@@ -40,8 +40,8 @@ export abstract class ScaffoldComponent implements AfterViewInit, OnChanges, OnD
   @ViewChild('rChart', { static: false }) rChart!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
   @ViewChild('rContent', { static: false }) rContent!: ElementRef<SVGRectElement>;
-  @ViewChild('gChartContainer', { static: false }) gChartContainer!: ElementRef<SVGGElement>;
-  @ViewChild('rChartContainer', { static: false }) rChartContainer!: ElementRef<SVGRectElement>;
+  @ViewChild('gPanelsContainer', { static: false }) gPanelsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rPanelsContainer', { static: false }) rPanelsContainer!: ElementRef<SVGRectElement>;
   @ViewChild('rBase', { static: false }) rBase!: ElementRef<SVGRectElement>;
 
   @Input()
@@ -155,75 +155,16 @@ export abstract class ScaffoldComponent implements AfterViewInit, OnChanges, OnD
 
     // This component is hosted as <g[base-chart]> inside the correct panel slot,
     // so the chart container itself should be local to the panel.
-    select(this.gChartContainer.nativeElement)
+    select(this.gPanelsContainer.nativeElement)
       .attr('transform', 'translate(0,0)');
 
-    select(this.rChartContainer.nativeElement)
+    select(this.rPanelsContainer.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', panelWidth)
       .attr('height', panelHeight);
 
-    // Left axis region.
-    select(this.gAxisGroupLeft.nativeElement)
-      .attr('transform', `translate(${axisLeftLocalX},${axisLeftLocalY})`);
-
-    select(this.rAxisGroupLeft.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', axisLeftWidth)
-      .attr('height', axisLeftHeight)
-      .classed('group', true);
-
-    select(this.gAxisLeft.nativeElement)
-      .attr('transform', 'translate(0,0)');
-
-    select(this.rAxisLeft.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', axisLeftWidth)
-      .attr('height', axisLeftHeight);
-
-    // Right axis region.
-    select(this.gAxisGroupRight.nativeElement)
-      .attr('transform', `translate(${axisRightLocalX},${axisRightLocalY})`);
-
-    select(this.rAxisGroupRight.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', axisRightWidth)
-      .attr('height', axisRightHeight)
-      .classed('group', true);
-
-    select(this.gAxisRight.nativeElement)
-      .attr('transform', 'translate(0,0)');
-
-    select(this.rAxisRight.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', axisRightWidth)
-      .attr('height', axisRightHeight);
-
-    // Content region: this is the only region chart scales should use.
-    select(this.gContent.nativeElement)
-      .attr('transform', `translate(${contentLocalX},${contentLocalY})`);
-
-    select(this.rContent.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', contentWidth)
-      .attr('height', contentHeight);
-
-    // Chart drawing surface inside the content region.
-    select(this.gChart.nativeElement)
-      .attr('transform', 'translate(0,0)');
-
-    select(this.rChart.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', contentWidth)
-      .attr('height', contentHeight)
-      .classed('rChart', true);
+    
   }
 
   public markReadyAndDraw(
