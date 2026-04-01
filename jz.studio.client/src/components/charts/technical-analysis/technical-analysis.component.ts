@@ -172,7 +172,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   dateScaleX!: ScaleBand<Date>;
 
-  chartScaffold!: Scaffold;
   scaffold!: Scaffold;
 
   chartXaxisMonthsTop: any;
@@ -276,13 +275,14 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
+      this.sizeAndPlacePanels();
       this.sizeChartElements();
       this.alignMainChartElements();
-      this.sizeAndPlacePanels();
+
       this.createScales();
       this.drawAxes();
 
-      this.scaffoldSvc.scaffold = this.chartScaffold;
+      this.scaffoldSvc.scaffold = this.scaffold;
       this.injectChartsFromConfig();
     });
   }
@@ -306,7 +306,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
       compRef.setInput('data', this.chartData.stockPriceHistoryData);
       compRef.setInput('dateScaleX', this.dateScaleX);
-      compRef.setInput('scaffold', this.chartScaffold);
+      compRef.setInput('scaffold', this.scaffold);
 
       compRef.instance.markReadyAndDraw({
         dataReady: true,
@@ -319,7 +319,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private createChartScaffold(): void {
-    this.chartScaffold = {
+    this.scaffold = {
       titleHeight: 36,
       width: this.svgContainer.clientWidth,
       height: 400,
@@ -337,39 +337,40 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       panels: undefined
     };
 
-    this.chartScaffold.width = this.svgContainer.clientWidth;
-    this.chartScaffold.height = this.svgContainer.clientHeight;
+    this.scaffold.width = this.svgContainer.clientWidth;
+    this.scaffold.height = this.svgContainer.clientHeight;
 
     console.log(
       '%c     ✔ create ChartScaffold',
       'color:#90BEE9',
-      this.chartScaffold.width,
+      this.scaffold.width,
       'x',
-      this.chartScaffold.height
+      this.scaffold.height
     );
   }
 
   private sizeChartElements(): void {
+    const pc = this.scaffold.panelsContainer;
+    if (!pc) return;
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
 
     select(this.rSvgElement.nativeElement)
-      .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.height);
+      .attr('width', this.scaffold.width)
+      .attr('height', this.scaffold.height);
 
     select(this.rChartTitle.nativeElement)
-      .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.titleHeight);
+      .attr('width', this.scaffold.width)
+      .attr('height', this.scaffold.titleHeight);
 
     select(this.rAxisTop.nativeElement)
-      .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.xAxisTop);
+      .attr('width', this.scaffold.width)
+      .attr('height', this.scaffold.xAxisTop);
 
     select(this.xAxisBottomRect.nativeElement)
-      .attr('width', this.chartScaffold.width)
-      .attr('height', this.chartScaffold.xAxisBottom);
+      .attr('width', this.scaffold.width)
+      .attr('height', this.scaffold.xAxisBottom);
 
-    const pc = this.chartScaffold.panelsContainer;
-    if (!pc) return;
+   
 
     select(this.rPanelsContainer.nativeElement)
       .attr('x', 0)
@@ -379,30 +380,29 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private alignMainChartElements(): void {
-    const pc = this.chartScaffold.panelsContainer;
+    const pc = this.scaffold.panelsContainer;
     if (!pc) return;
 
     select(this.gPanelsContainer.nativeElement)
-      .attr('transform', `translate(${pc.x}, ${pc.y})`)
       .classed('panels-container', true);
 
     select(this.tChartTitleText.nativeElement)
-      .attr('y', this.chartScaffold.titleHeight / 2)
-      .attr('x', this.chartScaffold.width / 2);
+      .attr('y', this.scaffold.titleHeight / 2)
+      .attr('x', this.scaffold.width / 2);
 
     select(this.gAxisTop.nativeElement)
-      .attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
+      .attr('transform', `translate(0, ${this.scaffold.titleHeight})`);
 
     select(this.gAxisTopMonths.nativeElement)
       .attr(
         'transform',
-        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`
+        `translate(${this.scaffold.yAxisLeft}, ${this.scaffold.xAxisTop})`
       );
 
     select(this.gXaxisBottom.nativeElement)
       .attr(
         'transform',
-        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
+        `translate(${this.scaffold.yAxisLeft}, ${this.scaffold.height - this.scaffold.xAxisBottom})`
       );
   }
 
@@ -422,42 +422,62 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       showXAxisBottom: index === includedCount - 1
     }));
 
-    //const resolvedScaffold = this.layoutService.buildScaffold({
-    //  width: this.chartScaffold.width,
-    //  height: this.chartScaffold.height,
-    //  margins: this.chartScaffold.margins,
-    //  titleHeight: this.chartScaffold.titleHeight,
-    //  axisLeftWidth: this.chartScaffold.yAxisLeft,
-    //  axisRightWidth: this.chartScaffold.yAxisRight,
-    //  xAxisTopHeight: this.chartScaffold.xAxisTop,
-    //  xAxisBottomHeight: this.chartScaffold.xAxisBottom,
-    //  panelGap: 0,
-    //  panels: panelDefinitions
-    //});
-
     const request = {
-      width: this.chartScaffold.width,
-      height: this.chartScaffold.height,
-      margins: this.chartScaffold.margins,
-      titleHeight: this.chartScaffold.titleHeight,
-      axisLeftWidth: this.chartScaffold.yAxisLeft,
-      axisRightWidth: this.chartScaffold.yAxisRight,
-      xAxisTopHeight: this.chartScaffold.xAxisTop,
-      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
+      width: this.scaffold.width,
+      height: this.scaffold.height,
+      margins: this.scaffold.margins,
+      titleHeight: this.scaffold.titleHeight,
+      yAxisLeftWidth: this.scaffold.yAxisLeft,
+      yAxisRightWidth: this.scaffold.yAxisRight,
+      xAxisTopHeight: this.scaffold.xAxisTop,
+      xAxisBottomHeight: this.scaffold.xAxisBottom,
       panelGap: 0,
       panels: panelDefinitions
     };
 
     const resolvedScaffold = this.layoutService.buildScaffold(request);
-    const panels = this.layoutService.buildPanelViewModels(request);
-    console.log('PanelViewModels', panels);
 
+    // ✅ ASSIGN FIRST (critical)
+    this.scaffold.panelsContainer = resolvedScaffold.panelsContainer;
+    this.scaffold.panels = resolvedScaffold.panels;
 
-    this.chartScaffold.panelsContainer = resolvedScaffold.panelsContainer;
-    this.chartScaffold.panels = resolvedScaffold.panels;
-    this.panelViewModels = this.layoutService.buildPanelViewModels(request);
-    this.drawPanelDebug();
+    // ✅ NOW log the real data
+    console.log('✅ panelsContainer', this.scaffold.panelsContainer);
+    console.log('✅ panels', this.scaffold.panels);
 
+    const pc = this.scaffold.panelsContainer;
+    if (!pc) return;
+
+    // ✅ POSITION the container (THIS WAS MISSING)
+    select(this.gPanelsContainer.nativeElement)
+      .attr('transform', `translate(${pc.x}, ${pc.y})`);
+
+    // Optional debug fill
+    select(this.rPanelsContainer.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', pc.width)
+      .attr('height', pc.height);
+
+    // ✅ sanity check
+    const panelsMap = this.scaffold.panels;
+    if (!pc || !panelsMap) return;
+
+    const panelList = Object.values(panelsMap).filter(
+      (panel): panel is NonNullable<typeof panel> => !!panel
+    );
+
+    const totalPanelHeight = panelList.reduce((sum, panel) => {
+      return sum + (panel?.panelRect.height ?? 0);
+    }, 0);
+
+    console.log('%cPanelsContainer sanity check', 'color:#90BEE9', {
+      panelsContainerHeight: pc.height,
+      totalPanelHeight,
+      difference: pc.height - totalPanelHeight
+    });
+
+    // ✅ render panels RELATIVE to container
     const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
       this.panel1,
       this.panel2,
@@ -469,39 +489,31 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       if (!ref) return;
 
       const configEntry = includedConfigs[index];
-      if (!configEntry) {
-        select(ref.nativeElement)
-          .attr('transform', 'translate(0,0)')
-          .select('rect')
-          .attr('x', 0)
-          .attr('y', 0)
-          .attr('width', 0)
-          .attr('height', 0)
-          .classed('empty-panel', true);
+      if (!configEntry) return;
 
-        return;
-      }
-
-      const panel = this.chartScaffold.panels?.[configEntry.type];
+      const panel = this.scaffold.panels?.[configEntry.type];
       if (!panel) return;
 
+      // 🔑 KEY FIX: subtract container origin
+      const localX = panel.panelRect.x - pc.x;
+      const localY = panel.panelRect.y - pc.y;
+
       select(ref.nativeElement)
-        .attr('transform', `translate(${panel.panelRect.x}, ${panel.panelRect.y})`);
+        .attr('transform', `translate(${localX}, ${localY})`);
 
       select(ref.nativeElement)
         .select('rect')
         .attr('x', 0)
         .attr('y', 0)
         .attr('width', panel.panelRect.width)
-        .attr('height', panel.panelRect.height)
-        .classed('empty-panel', false);
+        .attr('height', panel.panelRect.height);
     });
 
-    console.log(
-      '%c✔ sizeAndPlacePanels via PanelLayoutService',
-      'color:#90BEE9',
-      this.chartScaffold.panels
-    );
+    this.panelViewModels = this.layoutService.buildPanelViewModels(request);
+
+    this.drawPanelDebug();
+
+    console.log('%c✔ sizeAndPlacePanels FIXED', 'color:#90BEE9');
   }
 
   private drawPanelDebug(): void {
@@ -553,7 +565,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private createScales(): void {
-    const panel = this.chartScaffold.panels?.[ChartType.OHLC];
+    const panel = this.scaffold.panels?.[ChartType.OHLC];
     if (!panel) return;
 
     const contentWidth = Math.max(0, panel.contentRect.width ?? 0);

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PanelWorkspaceState } from '../interfaces/panel-workspace-state.interface';
 import { WorkspacePanelInstance } from '../interfaces/workspace-panel-instance.interface';
 import { Rect } from '../../../../components/charts/technical-analysis/interfaces/common-interfaces';
+import { ChartLayoutRequest } from '../../../../components/charts/technical-analysis/interfaces/chart-layout-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,35 +15,26 @@ export class PanelWorkspaceService {
       .sort((a, b) => a.order - b.order);
   }
 
-  buildPanelsContainer(request: {
-    width: number;
-    height: number;
-    margins: { top: number; right: number; bottom: number; left: number };
-    titleHeight: number;
-    xAxisTopHeight: number;
-    xAxisBottomHeight: number;
-  }): Rect {
-    const x = request.margins.left;
+   buildPanelsContainer(request: ChartLayoutRequest): Rect {
+    const x = request.margins.left + request.axisLeftWidth;
     const y = request.margins.top + request.titleHeight + request.xAxisTopHeight;
 
     const width =
-      request.width -
-      request.margins.left -
-      request.margins.right;
+      request.width
+      - request.margins.left
+      - request.margins.right
+      - request.axisLeftWidth
+      - request.axisRightWidth;
 
     const height =
-      request.height -
-      request.margins.top -
-      request.margins.bottom -
-      request.titleHeight -
-      request.xAxisTopHeight;
+      request.height
+      - request.margins.top
+      - request.margins.bottom
+      - request.titleHeight
+      - request.xAxisTopHeight
+      - request.xAxisBottomHeight;
 
-    return {
-      x,
-      y,
-      width: Math.max(0, width),
-      height: Math.max(0, height)
-    };
+    return { x, y, width, height };
   }
 
   buildStackedPanelRects(

@@ -17,15 +17,7 @@ export class PanelLayoutService {
   ) { }
 
   buildScaffold(request: ChartLayoutRequest): Scaffold {
-    const panelsContainer = this.panelWorkspaceService.buildPanelsContainer({
-      width: request.width,
-      height: request.height,
-      margins: request.margins,
-      titleHeight: request.titleHeight,
-      xAxisTopHeight: request.xAxisTopHeight,
-      xAxisBottomHeight: request.xAxisBottomHeight
-    });
-
+    const panelsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
     const panels = this.buildPanels(request, panelsContainer);
 
     return {
@@ -46,82 +38,53 @@ export class PanelLayoutService {
     request: ChartLayoutRequest,
     panelsContainer: Rect
   ): Partial<Record<ChartType, PanelAttributes>> {
+
+    const availableHeight = panelsContainer.height;
+
+    console.log('availableHeight', availableHeight);
+
+    const panelDefs = request.panels ?? [];
+
+    const totalRatio = panelDefs.reduce((sum, p) => sum + (p.ratio ?? 0), 0) || 1;
+
+    let currentY = 0;
+
     const result: Partial<Record<ChartType, PanelAttributes>> = {};
 
-    const runtimePanels: WorkspacePanelInstance[] = (request.panels ?? []).map((panel, index) => ({
-      instanceId: `${String(panel.chartType)}-${index}`,
-      definitionId: String(panel.chartType),
-      visible: true,
-      order: index,
-      ratio: panel.ratio
-    }));
+    panelDefs.forEach((def, index) => {
 
-    const stackedPanels = this.panelWorkspaceService.buildStackedPanelRects(
-      runtimePanels,
-      panelsContainer,
-      request.panelGap
-    );
+      const panelHeight = availableHeight * (def.ratio / totalRatio);
 
-    stackedPanels.forEach(({ panel, rect }, index) => {
-      const chartType = panel.definitionId as ChartType;
-      const panelRect = rect;
-
-      const titleRect: Rect = {
-        x: panelRect.x,
-        y: panelRect.y,
-        width: panelRect.width,
-        height: 0
+      const panelRect: Rect = {
+        x: panelsContainer.x,
+        y: panelsContainer.y + currentY,
+        width: panelsContainer.width,
+        height: panelHeight
       };
 
-      const axisLeftRect: Rect = {
-        x: 0,
-        y: panelRect.y,
-        width: request.axisLeftWidth,
-        height: panelRect.height
-      };
-
-      const axisRightRect: Rect = {
-        x: panelRect.width - request.axisRightWidth,
-        y: panelRect.y,
-        width: request.axisRightWidth,
-        height: panelRect.height
-      };
-
-      const axisTopRect: Rect = {
-        x: request.axisLeftWidth,
-        y: panelRect.y,
-        width: Math.max(0, panelRect.width - request.axisLeftWidth - request.axisRightWidth),
-        height: 0
-      };
-
-      const axisBottomRect: Rect = {
-        x: request.axisLeftWidth,
-        y: panelRect.y + panelRect.height,
-        width: Math.max(0, panelRect.width - request.axisLeftWidth - request.axisRightWidth),
-        height: 0
-      };
-
-      const contentRect: Rect = {
-        x: request.axisLeftWidth,
-        y: panelRect.y,
-        width: Math.max(0, panelRect.width - request.axisLeftWidth - request.axisRightWidth),
-        height: panelRect.height
-      };
-
-      result[chartType] = {
-        id: panel.definitionId,
-        index,
+      result[def.chartType] = {
+        id: def.id,
+        chartType: def.chartType,
         panelRect,
-        titleRect,
-        axisLeftRect,
-        axisRightRect,
-        axisTopRect,
-        axisBottomRect,
-        contentRect,
-        innerWidth: contentRect.width,
-        innerHeight: contentRect.height
+        // you’ll fill these later or already have helpers:
+        contentRect: undefined as any,
+        axisLeftRect: undefined as any,
+        axisRightRect: undefined as any,
+        xAxisTopRect: undefined as any,
+        xAxisBottomRect: undefined as any,
+        titleRect: undefined as any
       };
+
+      currentY += panelHeight;
     });
+
+    // ✅ NOW you can debug
+    const totalPanelHeight = Object.values(result).reduce((sum, p) => {
+      return sum + (p?.panelRect.height ?? 0);
+    }, 0);
+
+    console.log('totalPanelHeight', totalPanelHeight);
+    console.log('difference', availableHeight - totalPanelHeight);
 
     return result;
   }
@@ -129,14 +92,7 @@ export class PanelLayoutService {
   buildPanelViewModels(
     request: ChartLayoutRequest
   ): PanelViewModel[] {
-    const panelsContainer = this.panelWorkspaceService.buildPanelsContainer({
-      width: request.width,
-      height: request.height,
-      margins: request.margins,
-      titleHeight: request.titleHeight,
-      xAxisTopHeight: request.xAxisTopHeight,
-      xAxisBottomHeight: request.xAxisBottomHeight
-    });
+    const panelsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
 
     const panels = this.buildPanels(request, panelsContainer);
 
