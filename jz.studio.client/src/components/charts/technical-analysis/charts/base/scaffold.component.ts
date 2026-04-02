@@ -71,16 +71,16 @@ export abstract class ScaffoldComponent implements AfterViewInit, OnChanges, OnD
     protected chartData: ChartDataService,
     protected scaffoldSvc: ChartScaffoldService
   ) {
-    this.scaffoldSvc.scaffold$
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe(scaffold => {
-        if (!scaffold) return;
+    //this.scaffoldSvc.scaffold$
+    //  .pipe(takeUntil(this.destroyed$))
+    //  .subscribe(scaffold => {
+    //    if (!scaffold) return;
 
-        this.chartScaffold = scaffold;
-        this.layoutReady = !!this.getPanel();
-        this.drawAttempted = false;
-        this.checkAndDraw('scaffold$');
-      });
+    //    this.chartScaffold = scaffold;
+    //    this.layoutReady = !!this.getPanel();
+    //    this.drawAttempted = false;
+    //    this.checkAndDraw('scaffold$');
+    //  });
   }
 
   ngAfterViewInit(): void {
@@ -184,10 +184,10 @@ export abstract class ScaffoldComponent implements AfterViewInit, OnChanges, OnD
     this.checkAndDraw(opts.caller ?? 'markReadyAndDraw');
   }
 
-  protected markInputsReady(): void {
-    this.inputsInitialized = true;
-    this.checkAndDraw('markInputsReady');
-  }
+  //protected markInputsReady(): void {
+  //  this.inputsInitialized = true;
+  //  this.checkAndDraw('markInputsReady');
+  //}
 
   protected getPanel(): PanelAttributes | undefined {
     return this.chartScaffold?.panels?.[this.chartType];
