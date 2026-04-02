@@ -216,6 +216,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
+    console.log('%c     ✔  createScales', 'color:#90BEE9');
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
@@ -227,6 +228,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private updateSvgSize(): void {
+    console.log('%c     ✔  updateSvgSize', 'color:#90BEE9');
     this.svgContainer = this.divSvgContainer.nativeElement;
 
     select(this.svgElement.nativeElement)
@@ -236,7 +238,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     console.log('%cupdate SvgSize', 'color:#90BEE9', this.svgElement);
   }
 
-  fetchData(): void {
+  private fetchData(): void {
+    console.log('%c     ✔  fetchData', 'color:#90BEE9');
     this.popover_loading.show();
 
     this.stockPriceService.getStockPrices(this.ticker).subscribe(
@@ -255,7 +258,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     );
   }
 
-  tryCreateChart(): void {
+  private tryCreateChart(): void {
+    console.log('%c     ✔  tryCreateChart', 'color:#90BEE9');
     if (this.viewReady && this.dataReady && !this.hydrated) {
       this.hydrated = true;
       this.changeDetector.detectChanges();
@@ -263,7 +267,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     }
   }
 
-  initializeChartWhenReady(attempt = 0): void {
+  private initializeChartWhenReady(attempt = 0): void {
+    console.log('%c     ✔  initializeChartWhenReady', 'color:#90BEE9');
     if (!this.viewReady || !this.dataReady) {
       console.log('%c     ❌ NOT READY', 'color:red');
       return;
@@ -288,7 +293,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     });
   }
 
-  injectChartsFromConfig(): void {
+  private injectChartsFromConfig(): void {
+    console.log('%c     ✔  injectChartsFromConfig', 'color:#90BEE9');
     const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
 
     chartConfig.forEach((configEntry, index) => {
@@ -320,6 +326,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private createChartScaffold(): void {
+    console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
     this.scaffold = {
       titleHeight: 36,
       width: this.svgContainer.clientWidth,
@@ -351,6 +358,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private sizeChartElements(): void {
+    console.log('%c     ✔  createScales', 'color:#90BEE9');
     const pc = this.scaffold.panelsContainer;
     if (!pc) return;
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
@@ -373,6 +381,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private alignMainChartElements(): void {
+    console.log('%c     ✔  alighMainChartElements', 'color:#90BEE9');
     const pc = this.scaffold.panelsContainer;
     if (!pc) return;
 
@@ -400,6 +409,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private sizeAndPlacePanels(): void {
+    console.log('%c     ✔  sizeAndPlacePanels', 'color:#fdf0d5');
     const proportions = [0.4, 0.2, 0.2, 0.2];
     const includedConfigs = chartConfig.filter(c => c.include);
     const includedCount = includedConfigs.length;
@@ -499,60 +509,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     this.panelViewModels = this.layoutService.buildPanelViewModels(request);
 
-    this.drawPanelDebug();
-
     console.log('%c✔ sizeAndPlacePanels FIXED', 'color:#90BEE9');
   }
 
-  private drawPanelDebug(): void {
-    const panelRefByChartType: Partial<Record<ChartType, ElementRef<SVGGElement>>> = {
-      [ChartType.OHLC]: this.panel1,
-      [ChartType.VOLUME]: this.panel2,
-      [ChartType.MACD]: this.panel3,
-      [ChartType.RSI]: this.panel4
-    };
-
-    this.panelViewModels.forEach(panel => {
-      const ref = panelRefByChartType[panel.chartType];
-      if (!ref) return;
-
-      const gPanel = select(ref.nativeElement);
-      gPanel.select('.panel-debug').remove();
-
-      //const gDebug = gPanel.append('g')
-      //  .attr('class', 'panel-debug');
-
-      const r = panel.rects;
-      const offsetX = panel.bounds.x;
-      const offsetY = panel.bounds.y;
-
-      //gDebug.append('rect')
-      //  .attr('x', r.axisLeftRect.x - offsetX)
-      //  .attr('y', r.axisLeftRect.y - offsetY)
-      //  .attr('width', r.axisLeftRect.width)
-      //  .attr('height', r.axisLeftRect.height)
-      //  .attr('fill', 'none')
-      //  .attr('stroke', 'red');
-
-      //gDebug.append('rect')
-      //  .attr('x', r.contentRect.x - offsetX)
-      //  .attr('y', r.contentRect.y - offsetY)
-      //  .attr('width', r.contentRect.width)
-      //  .attr('height', r.contentRect.height)
-      //  .attr('fill', 'none')
-      //  .attr('stroke', 'yellow');
-
-      //gDebug.append('rect')
-      //  .attr('x', r.axisRightRect.x - offsetX)
-      //  .attr('y', r.axisRightRect.y - offsetY)
-      //  .attr('width', r.axisRightRect.width)
-      //  .attr('height', r.axisRightRect.height)
-      //  .attr('fill', 'none')
-      //  .attr('stroke', 'blue');
-    });
-  }
-
   private createScales(): void {
+    console.log('%c     ✔  createScales', 'color:#90BEE9');
     const panel = this.scaffold.panels?.[ChartType.OHLC];
     if (!panel) return;
 
@@ -571,7 +532,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .align(0.5);
   }
 
-  drawAxes(): void {
+  private drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');
 
     this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
