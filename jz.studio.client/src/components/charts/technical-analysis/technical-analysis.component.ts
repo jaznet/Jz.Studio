@@ -227,6 +227,49 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   }
 
+  private renderOuterScaffoldOnce(): void {
+    const scaffold = this.scaffold;
+    const pc = scaffold?.panelsContainer;
+    if (!scaffold || !pc) return;
+
+    select(this.rSvgElement.nativeElement)
+      .attr('width', scaffold.width)
+      .attr('height', scaffold.height);
+
+    select(this.rChartTitle.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', scaffold.width)
+      .attr('height', scaffold.titleHeight);
+
+    select(this.gAxisTop.nativeElement)
+      .attr('transform', `translate(0, ${scaffold.titleHeight})`);
+
+    select(this.rAxisTop.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', scaffold.width)
+      .attr('height', scaffold.xAxisTop);
+
+    select(this.gPanelsContainer.nativeElement)
+      .attr('transform', `translate(${pc.x}, ${pc.y})`);
+
+    select(this.rPanelsContainer.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', pc.width)
+      .attr('height', pc.height);
+
+    select(this.gXaxisBottom.nativeElement)
+      .attr('transform', `translate(0, ${scaffold.height - scaffold.xAxisBottom})`);
+
+    select(this.xAxisBottomRect.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', scaffold.width)
+      .attr('height', scaffold.xAxisBottom);
+  }
+
   private updateSvgSize(): void {
     console.log('%c     ✔  updateSvgSize', 'color:#90BEE9');
     this.svgContainer = this.divSvgContainer.nativeElement;
