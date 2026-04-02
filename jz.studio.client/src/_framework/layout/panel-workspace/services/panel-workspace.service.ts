@@ -16,23 +16,16 @@ export class PanelWorkspaceService {
   }
 
    buildPanelsContainer(request: ChartLayoutRequest): Rect {
-    const x = request.margins.left + request.axisLeftWidth;
-    const y = request.margins.top + request.titleHeight + request.xAxisTopHeight;
+     const x = 0;
+     const y = request.titleHeight + request.xAxisTopHeight;
 
-    const width =
-      request.width
-      - request.margins.left
-      - request.margins.right
-      - request.axisLeftWidth
-      - request.axisRightWidth;
+     const width = request.width;
 
-    const height =
-      request.height
-      - request.margins.top
-      - request.margins.bottom
-      - request.titleHeight
-      - request.xAxisTopHeight
-      - request.xAxisBottomHeight;
+     const height =
+       request.height
+       - request.titleHeight
+       - request.xAxisTopHeight
+       - request.xAxisBottomHeight;
 
     return { x, y, width, height };
   }

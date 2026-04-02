@@ -40,11 +40,7 @@ export class PanelLayoutService {
   ): Partial<Record<ChartType, PanelAttributes>> {
 
     const availableHeight = panelsContainer.height;
-
-    console.log('availableHeight', availableHeight);
-
     const panelDefs = request.panels ?? [];
-
     const totalRatio = panelDefs.reduce((sum, p) => sum + (p.ratio ?? 0), 0) || 1;
 
     let currentY = 0;
@@ -52,7 +48,6 @@ export class PanelLayoutService {
     const result: Partial<Record<ChartType, PanelAttributes>> = {};
 
     panelDefs.forEach((def, index) => {
-
       const panelHeight = availableHeight * (def.ratio / totalRatio);
 
       const panelRect: Rect = {
@@ -62,27 +57,79 @@ export class PanelLayoutService {
         height: panelHeight
       };
 
+      const titleHeight = def.showTitle ? request.titleHeight : 0;
+      const axisTopHeight = def.showXAxisTop === true ? request.xAxisTopHeight : 0;
+      const axisBottomHeight = def.showXAxisBottom === true ? request.xAxisBottomHeight : 0;
+      const axisLeftWidth = def.showAxisLeft === true ? request.axisLeftWidth : 0;
+      const axisRightWidth = def.showAxisRight === true ? request.axisRightWidth : 0;
+
+      const innerWidth = Math.max(0, panelRect.width - axisLeftWidth - axisRightWidth);
+      const innerHeight = Math.max(0, panelRect.height - titleHeight - axisTopHeight - axisBottomHeight);
+
+      const titleRect: Rect = {
+        x: panelRect.x,
+        y: panelRect.y,
+        width: panelRect.width,
+        height: titleHeight
+      };
+
+      const axisTopRect: Rect = {
+        x: panelRect.x + axisLeftWidth,
+        y: panelRect.y + titleHeight,
+        width: innerWidth,
+        height: axisTopHeight
+      };
+
+      const axisBottomRect: Rect = {
+        x: panelRect.x + axisLeftWidth,
+        y: panelRect.y + panelRect.height - axisBottomHeight,
+        width: innerWidth,
+        height: axisBottomHeight
+      };
+
+      const axisLeftRect: Rect = {
+        x: panelRect.x,
+        y: panelRect.y + titleHeight + axisTopHeight,
+        width: axisLeftWidth,
+        height: innerHeight
+      };
+
+      const axisRightRect: Rect = {
+        x: panelRect.x + panelRect.width - axisRightWidth,
+        y: panelRect.y + titleHeight + axisTopHeight,
+        width: axisRightWidth,
+        height: innerHeight
+      };
+
+      const contentRect: Rect = {
+        x: panelRect.x + axisLeftWidth,
+        y: panelRect.y + titleHeight + axisTopHeight,
+        width: innerWidth,
+        height: innerHeight
+      };
+
       result[def.chartType] = {
         id: def.id,
-        chartType: def.chartType,
+        index,
         panelRect,
-        // you’ll fill these later or already have helpers:
-        contentRect: undefined as any,
-        axisLeftRect: undefined as any,
-        axisRightRect: undefined as any,
-        xAxisTopRect: undefined as any,
-        xAxisBottomRect: undefined as any,
-        titleRect: undefined as any
+        titleRect,
+        axisLeftRect,
+        axisRightRect,
+        axisTopRect,
+        axisBottomRect,
+        contentRect,
+        innerWidth,
+        innerHeight
       };
 
       currentY += panelHeight;
     });
 
-    // ✅ NOW you can debug
     const totalPanelHeight = Object.values(result).reduce((sum, p) => {
       return sum + (p?.panelRect.height ?? 0);
     }, 0);
 
+    console.log('availableHeight', availableHeight);
     console.log('totalPanelHeight', totalPanelHeight);
     console.log('difference', availableHeight - totalPanelHeight);
 

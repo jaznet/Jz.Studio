@@ -13,6 +13,7 @@ export interface PanelDefinition {
   showXAxisBottom?: boolean;
   visible?: boolean;
   order?: number;
+  showTitle?: boolean;
 }
 
 export interface PanelRenderRectangles {

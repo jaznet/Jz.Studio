@@ -40,6 +40,7 @@ import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
 import type { PanelViewModel } from './interfaces/panel-interfaces';
+import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 
 // #endregion imports
 
@@ -369,14 +370,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.xAxisBottomRect.nativeElement)
       .attr('width', this.scaffold.width)
       .attr('height', this.scaffold.xAxisBottom);
-
-   
-
-    select(this.rPanelsContainer.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', pc.width)
-      .attr('height', pc.height);
   }
 
   private alignMainChartElements(): void {
@@ -422,13 +415,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       showXAxisBottom: index === includedCount - 1
     }));
 
-    const request = {
+    const request: ChartLayoutRequest = {
       width: this.scaffold.width,
       height: this.scaffold.height,
       margins: this.scaffold.margins,
       titleHeight: this.scaffold.titleHeight,
-      yAxisLeftWidth: this.scaffold.yAxisLeft,
-      yAxisRightWidth: this.scaffold.yAxisRight,
+      axisLeftWidth: this.scaffold.yAxisLeft,
+      axisRightWidth: this.scaffold.yAxisRight,
       xAxisTopHeight: this.scaffold.xAxisTop,
       xAxisBottomHeight: this.scaffold.xAxisBottom,
       panelGap: 0,
@@ -452,12 +445,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.gPanelsContainer.nativeElement)
       .attr('transform', `translate(${pc.x}, ${pc.y})`);
 
-    // Optional debug fill
-    select(this.rPanelsContainer.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', pc.width)
-      .attr('height', pc.height);
+
 
     // ✅ sanity check
     const panelsMap = this.scaffold.panels;
@@ -531,36 +519,36 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       const gPanel = select(ref.nativeElement);
       gPanel.select('.panel-debug').remove();
 
-      const gDebug = gPanel.append('g')
-        .attr('class', 'panel-debug');
+      //const gDebug = gPanel.append('g')
+      //  .attr('class', 'panel-debug');
 
       const r = panel.rects;
       const offsetX = panel.bounds.x;
       const offsetY = panel.bounds.y;
 
-      gDebug.append('rect')
-        .attr('x', r.axisLeftRect.x - offsetX)
-        .attr('y', r.axisLeftRect.y - offsetY)
-        .attr('width', r.axisLeftRect.width)
-        .attr('height', r.axisLeftRect.height)
-        .attr('fill', 'none')
-        .attr('stroke', 'red');
+      //gDebug.append('rect')
+      //  .attr('x', r.axisLeftRect.x - offsetX)
+      //  .attr('y', r.axisLeftRect.y - offsetY)
+      //  .attr('width', r.axisLeftRect.width)
+      //  .attr('height', r.axisLeftRect.height)
+      //  .attr('fill', 'none')
+      //  .attr('stroke', 'red');
 
-      gDebug.append('rect')
-        .attr('x', r.contentRect.x - offsetX)
-        .attr('y', r.contentRect.y - offsetY)
-        .attr('width', r.contentRect.width)
-        .attr('height', r.contentRect.height)
-        .attr('fill', 'none')
-        .attr('stroke', 'yellow');
+      //gDebug.append('rect')
+      //  .attr('x', r.contentRect.x - offsetX)
+      //  .attr('y', r.contentRect.y - offsetY)
+      //  .attr('width', r.contentRect.width)
+      //  .attr('height', r.contentRect.height)
+      //  .attr('fill', 'none')
+      //  .attr('stroke', 'yellow');
 
-      gDebug.append('rect')
-        .attr('x', r.axisRightRect.x - offsetX)
-        .attr('y', r.axisRightRect.y - offsetY)
-        .attr('width', r.axisRightRect.width)
-        .attr('height', r.axisRightRect.height)
-        .attr('fill', 'none')
-        .attr('stroke', 'blue');
+      //gDebug.append('rect')
+      //  .attr('x', r.axisRightRect.x - offsetX)
+      //  .attr('y', r.axisRightRect.y - offsetY)
+      //  .attr('width', r.axisRightRect.width)
+      //  .attr('height', r.axisRightRect.height)
+      //  .attr('fill', 'none')
+      //  .attr('stroke', 'blue');
     });
   }
 

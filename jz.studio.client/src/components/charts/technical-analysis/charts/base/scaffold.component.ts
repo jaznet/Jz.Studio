@@ -156,13 +156,17 @@ export abstract class ScaffoldComponent implements AfterViewInit, OnChanges, OnD
     // This component is hosted as <g[base-chart]> inside the correct panel slot,
     // so the chart container itself should be local to the panel.
     select(this.gPanelsContainer.nativeElement)
-      .attr('transform', 'translate(0,0)');
+      .attr('transform', 'translate(0,60)');
+
+    const pc = this.chartScaffold?.panelsContainer;
+    if (!pc) return;
+
 
     select(this.rPanelsContainer.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', panelWidth)
-      .attr('height', panelHeight);
+      .attr('width', pc.width)
+      .attr('height', pc.height);
 
     
   }
