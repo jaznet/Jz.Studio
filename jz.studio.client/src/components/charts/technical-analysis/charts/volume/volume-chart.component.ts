@@ -16,7 +16,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
   selector: 'volume-chart',
-  templateUrl: '../base/scaffold.component.html',
+  templateUrl: '../base-chart/base-chart.component.html',
   styleUrls: ['./volume-chart.component.scss'],
   standalone: false
 })

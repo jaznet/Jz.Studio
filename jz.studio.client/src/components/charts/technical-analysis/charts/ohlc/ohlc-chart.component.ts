@@ -25,7 +25,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
     selector: 'ohlc-chart',
-  templateUrl: '../base/scaffold.component.html',
+    templateUrl: '../base-chart/base-chart.component.html',
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })

@@ -17,7 +17,7 @@ type Num = number | null | undefined;
 
 @Component({
     selector: 'macd-chart',
-  templateUrl: '../base/scaffold.component.html',
+    templateUrl: '../base-chart/base-chart.component.html',
     styleUrls: ['./macd-chart.component.scss'],
     standalone: false
 })

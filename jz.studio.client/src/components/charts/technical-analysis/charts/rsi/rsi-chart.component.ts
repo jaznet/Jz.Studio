@@ -18,7 +18,7 @@ type Num = number | null;
 
 @Component({
     selector: 'rsi-chart',
-  templateUrl: '../base/scaffold.component.html',
+    templateUrl: '../base-chart/base-chart.component.html',
     styleUrls: ['./rsi-chart.component.scss'],
     standalone: false
 })
