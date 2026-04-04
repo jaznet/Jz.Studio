@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { select, Selection } from 'd3-selection';
-//import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 //import { scaleLinear, ScaleBand } from 'd3-scale';
 import { scaleLinear, ScaleLinear, ScaleBand, NumberValue } from 'd3-scale';
 import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';

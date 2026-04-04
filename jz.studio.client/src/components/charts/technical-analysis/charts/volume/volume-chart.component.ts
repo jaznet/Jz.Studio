@@ -12,6 +12,7 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
+import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
   selector: 'volume-chart',
@@ -19,7 +20,7 @@ import { PanelAttributes } from '../../interfaces/panel-interfaces';
   styleUrls: ['./volume-chart.component.scss'],
   standalone: false
 })
-export class VolumeChartComponent extends ScaffoldComponent implements OnChanges, OnInit {
+export class VolumeChartComponent extends BaseChartComponent implements OnChanges, OnInit {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;
 
@@ -29,7 +30,7 @@ export class VolumeChartComponent extends ScaffoldComponent implements OnChanges
     chartData: ChartDataService,
     scaffoldSvc: ChartScaffoldService
   ) {
-    super(chartData, scaffoldSvc);
+    super();
   }
 
   ngOnInit(): void {

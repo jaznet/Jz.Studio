@@ -11,6 +11,7 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
+import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 type Num = number | null | undefined;
 
@@ -20,14 +21,14 @@ type Num = number | null | undefined;
     styleUrls: ['./macd-chart.component.scss'],
     standalone: false
 })
-export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
+export class MacdChartComponent extends BaseChartComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;              // ← typed to Date
 
   override chartType = ChartType.MACD;
 
-  constructor(chartData: ChartDataService, scaffoldSvc: ChartScaffoldService) {
-    super(chartData, scaffoldSvc);
+  constructor() {
+    super();
   }
 
   override ngOnChanges(_: SimpleChanges): void {
@@ -147,10 +148,10 @@ export class MacdChartComponent extends ScaffoldComponent implements OnChanges {
   }
 
   protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
-    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
+    //if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
     const innerH = Math.max(0, panel.innerHeight);
     const ticks = this.yTickCount(innerH);
-    select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
-    select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));
+    //select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
+    //select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));
   }
 }

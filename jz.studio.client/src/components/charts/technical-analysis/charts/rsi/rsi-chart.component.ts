@@ -12,6 +12,7 @@ import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
+import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 type Num = number | null;
 
@@ -21,7 +22,7 @@ type Num = number | null;
     styleUrls: ['./rsi-chart.component.scss'],
     standalone: false
 })
-export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
+export class RsiChartComponent extends BaseChartComponent implements OnChanges {
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;            // ← typed to Date
   @Input() period = 14;
@@ -29,7 +30,7 @@ export class RsiChartComponent extends ScaffoldComponent implements OnChanges {
   override chartType = ChartType.RSI;
 
   constructor(chartData: ChartDataService, scaffoldSvc: ChartScaffoldService) {
-    super(chartData, scaffoldSvc);
+    super();
   }
 
   override ngOnChanges(_: SimpleChanges): void {

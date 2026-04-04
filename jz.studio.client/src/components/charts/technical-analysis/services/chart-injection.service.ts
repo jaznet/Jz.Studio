@@ -2,10 +2,10 @@ import { Injectable, ViewContainerRef, ComponentRef, Type } from '@angular/core'
 import { ChartType } from '../enums/chart-type';
 import { chartConfig } from '../interfaces/chart-config';
 import { OhlcChartComponent } from '../charts/ohlc/ohlc-chart.component';
-import { ScaffoldComponent } from '../charts/base/scaffold.component';
+import { BaseChartComponent } from '../charts/base-chart/base-chart.component';
 // 🚫 MacdChartComponent intentionally omitted
 
-type ChartComponentMap = Partial<Record<ChartType, Type<ScaffoldComponent>>>;
+type ChartComponentMap = Partial<Record<ChartType, Type<BaseChartComponent>>>;
 
 @Injectable({ providedIn: 'root' })
 export class ChartInjectionService {
@@ -20,8 +20,8 @@ export class ChartInjectionService {
       data?: any;
       dateScaleX?: any;
     } = {}
-  ): Record<ChartType, ComponentRef<ScaffoldComponent>> {
-    const injected: Record<ChartType, ComponentRef<ScaffoldComponent>> = {} as any;
+  ): Record<ChartType, ComponentRef<BaseChartComponent>> {
+    const injected: Record<ChartType, ComponentRef<BaseChartComponent>> = {} as any;
 
     for (const entry of chartConfig) {
       if (!entry.include) continue;

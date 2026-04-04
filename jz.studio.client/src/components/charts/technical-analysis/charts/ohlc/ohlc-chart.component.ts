@@ -21,6 +21,7 @@ import { sma, type Num } from '../../utils/ta-math';
 import { SmaChartService } from '../../services/charts/sma/chart-sma.service';
 import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
+import { BaseChartComponent } from '../base-chart/base-chart.component';
 
 @Component({
     selector: 'ohlc-chart',
@@ -28,7 +29,7 @@ import { PanelAttributes } from '../../interfaces/panel-interfaces';
     styleUrls: ['./ohlc-chart.component.scss'],
     standalone: true
 })
-export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, AfterViewInit {
+export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
 
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
   @Input() data!: ohlcData[];
@@ -47,7 +48,9 @@ export class OhlcChartComponent extends ScaffoldComponent implements OnChanges, 
     scaffoldSvc: ChartScaffoldService,
     private smaService: SmaChartService,
     hostEl: ElementRef<SVGGElement>
-  ) { super(chartData, scaffoldSvc); }
+  ) { super(); }
+
+
 
 
   override ngOnChanges(changes: SimpleChanges): void {
