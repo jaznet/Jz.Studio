@@ -356,7 +356,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
       compRef.setInput('data', this.chartData.stockPriceHistoryData);
       compRef.setInput('dateScaleX', this.dateScaleX);
-      compRef.setInput('scaffold', this.scaffold);
+  //    compRef.setInput('scaffold', this.scaffold);
 
       compRef.instance.markReadyAndDraw({
         dataReady: true,
