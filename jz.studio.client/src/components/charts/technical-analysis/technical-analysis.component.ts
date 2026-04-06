@@ -201,6 +201,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     private scaffoldSvc: ChartScaffoldService
   ) {
     console.log('');
+    console.log('');
     console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
 
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
