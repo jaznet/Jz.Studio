@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { VisualizationComponent } from './visualization.component';
 import { VisualizationHomeComponent } from './components/visualization-home/visualization-home.component';
+import { TechnicalAnalysisComponent } from '../../components/charts/technical-analysis/technical-analysis.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
 
       {
         path: 'techanTs',
-        loadChildren: () => import('../../components/charts/technical-analysis/technical-analysis.module').then(m => m.TechanTsModule)
+        component: TechnicalAnalysisComponent
+     //   loadChildren: () => import('../../components/charts/technical-analysis/technical-analysis.module').then(m => m.TechanTsModule)
       },
       {
         path: 'syncfusion-chart',
