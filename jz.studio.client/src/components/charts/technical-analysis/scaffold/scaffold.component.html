@@ -1,0 +1,34 @@
+<!-- scaffold.component.html -->
+
+<div #divSvgContainer >
+<svg #svgRoot>
+  <svg:rect #rSvg id="rSvg" width="0" height="0" x="0" y="0"></svg:rect>
+  <!-- Base -->
+  <rect #rBase class="base-rect" x="0" y="0" width="0" height="0"></rect>
+
+  <!-- Title -->
+  <g #gTitle>
+    <rect #rTitle x="0" y="0" width="0" height="0"></rect>
+    <text #tTitle></text>
+  </g>
+
+  <!-- Top X Axis -->
+  <g #gAxisTop>
+    <rect #rAxisTop x="0" y="0" width="0" height="0"></rect>
+    <g #gAxisTopTicks></g>
+  </g>
+
+  <!-- Panels Container -->
+  <g #gPanelsContainer>
+    <rect #rPanelsContainer x="0" y="0" width="0" height="0"></rect>
+    <!-- dynamic panel hosts go here -->
+  </g>
+
+  <!-- Bottom X Axis -->
+  <g #gAxisBottom>
+    <rect #rAxisBottom x="0" y="0" width="0" height="0"></rect>
+    <g #gAxisBottomTicks></g>
+  </g>
+
+</svg>
+</div>
