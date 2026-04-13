@@ -13,19 +13,19 @@ export class PaintPopulationStrategy implements CountyPaintingStrategy {
     private countyDataService: CountyDataService
   ) { }
 
-  getData(popover_loading: any, popover_httperror: any, callback: (data: any) => void): void {
-    this.choroDataService.getPopulationData(popover_loading, popover_httperror).subscribe(
+  getData( callback: (data: any) => void): void {
+    this.choroDataService.getPopulationData().subscribe(
       (responseData: any) => {
-        popover_loading.isPopupVisible = false;
+  //      popover_loading.isPopupVisible = false;
         console.log('Data received:', responseData);
         callback(responseData);
       },
       (error: HttpErrorResponse) => {
-         popover_httperror.ok = error.ok;
-        popover_httperror.message = error.message;
-        popover_httperror.url = error.url;
-        popover_httperror.statusText = error.statusText;
-        popover_httperror.isPopupVisible = true;
+        // popover_httperror.ok = error.ok;
+        //popover_httperror.message = error.message;
+        //popover_httperror.url = error.url;
+        //popover_httperror.statusText = error.statusText;
+        //popover_httperror.isPopupVisible = true;
         console.error('Error fetching data:', error);
       }
     );

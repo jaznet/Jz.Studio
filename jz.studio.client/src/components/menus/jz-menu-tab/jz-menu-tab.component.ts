@@ -4,7 +4,6 @@ import { Component, Input, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, 
 import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
-import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
 import { JZ_MENU_CONTEXT } from '../jz-menu/jz-menu-context.token';
 import { JzMenuContextService } from '../jz-menu/jz-menu-context.service';
 import { ButtonCuboidComponent } from '../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
@@ -71,7 +70,6 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, OnChanges{
   constructor(
     private readonly menuCtx: JzMenuContextService,
     private menuService: JzMenuService,
-    private popups: JzPopOversService,
     private changeDetector: ChangeDetectorRef
   ) { }
 
@@ -104,13 +102,13 @@ export class JzMenuTabComponent implements OnInit, AfterViewInit, OnChanges{
   onTabClicked(): void {
     this.menuService.tabSelected(this);
     if (this.route === 'sandbox/choro-dash-loader') {
-      this.popups.togglePopOverLoading({
-        action: 'show',
-        route: this.route,
-        title: 'Chorodash',
-        url: '',
-        view: 'view'
-      });
+      //this.popups.togglePopOverLoading({
+      //  action: 'show',
+      //  route: this.route,
+      //  title: 'Chorodash',
+      //  url: '',
+      //  view: 'view'
+      //});
     }
   }
 }

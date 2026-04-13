@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TechanTsRoutingModule } from './technical-analysis-routing.module';
-import { JzPopOversModule } from '../../../library/jz-pop-overs/jz-pop-overs.module';
 import { ChartComponentsModule } from './components/chart-components.module';
 
 @NgModule({
@@ -14,7 +13,6 @@ import { ChartComponentsModule } from './components/chart-components.module';
     RouterModule,
     TechanTsRoutingModule,
     ChartComponentsModule,
-    JzPopOversModule,
   ],
   exports: []
 })

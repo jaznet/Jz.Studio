@@ -6,8 +6,6 @@ import {  isPlatformBrowser } from '@angular/common';
 import { PaletteMgrService } from './services/palette-mgr.service';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavigationListenerService } from './services/navigation-listener.service';
-import { PopOverLoadingComponent } from '../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
-import { JzPopOversService } from '../library/jz-pop-overs/jz-pop-overs.service';
 //import { AppHeaderComponent } from './app-parts/app-header/app-header.component';
 //import { AppContentComponent } from './app-parts/app-content/app-content.component';
 //import { AppFooterComponent } from './app-parts/app-footer/app-footer.component';
@@ -35,7 +33,6 @@ export class ShellComponent implements OnInit {
   @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
   @ViewChild('content', { static: true }) content!: ShellContentComponent;
   @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
-  @ViewChild('popOverLoadingComponent', { static: true }) popover!: PopOverLoadingComponent;
 
   private observer?: MutationObserver;
   public forecasts: WeatherForecast[] = [];
@@ -47,7 +44,6 @@ export class ShellComponent implements OnInit {
     private router: Router,
     private appService: AppStateService,
     private navigationListenerService: NavigationListenerService,
-    private popoversService: JzPopOversService,
     private http: HttpClient,
     private palette: PaletteMgrService
   )

@@ -1,15 +1,14 @@
 
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DOCUMENT, HostBinding, inject, Inject, PLATFORM_ID } from '@angular/core';
 
-import { JzPopOverComponent } from '../../../../components/jz-pop-over/jz-pop-over';
-import { JzPopoversService } from '../../../../components/jz-pop-over/jz-popovers.service';
+
 import { PaletteMgrService } from '../../../../_shell/services/palette-mgr.service';
 
 
 @Component({
   selector: 'visualization-home',
   standalone: true,
-  imports: [JzPopOverComponent],
+  imports: [],
   templateUrl: './visualization-home.component.html',
   styleUrl: './visualization-home.component.css',
 
@@ -24,7 +23,6 @@ export class VisualizationHomeComponent implements AfterViewInit {
   private pid = inject(PLATFORM_ID);
 
   constructor(
-    private popovers: JzPopoversService,
     private palette: PaletteMgrService,
   ) {
  //    palette.ChangePalette('protan');

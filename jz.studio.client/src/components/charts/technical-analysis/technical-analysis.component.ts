@@ -19,10 +19,7 @@ import { scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { OverlayContainer } from '@angular/cdk/overlay';
 
-import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container';
-import { JzPopOversService } from '../../../library/jz-pop-overs/jz-pop-overs.service';
-import { PopoverHttpErrorComponent } from '../../../library/jz-pop-overs/pop-over-http-error/pop-over-http-error.component';
-import { PopOverLoadingComponent } from '../../../library/jz-pop-overs/pop-over-loading/pop-over-loading.component';
+import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container'
 
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
@@ -50,7 +47,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
 
 @Component({
   selector: 'techanTs',
-  imports: [PopOverLoadingComponent, PopoverHttpErrorComponent],
+  imports: [],
   templateUrl: './technical-analysis.component.html',
   styleUrls: ['./technical-analysis.component.scss'],
   providers: [
@@ -156,8 +153,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gRsiGroup', { static: false }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('popover_httperror', { static: false }) popover_httperror!: PopoverHttpErrorComponent;
-  @ViewChild('popover_loading', { static: false }) popover_loading!: PopOverLoadingComponent;
   // #endregion @ViewChild List
 
   // #region Properties
@@ -191,7 +186,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     private stockPriceService: TechnicalAnalysisService,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
-    private popOverService: JzPopOversService,
     private ohlcLayout: OhlcChartLayoutService,
     private volumeLayout: VolumeChartLayoutService,
     private rsiLayout: RsiChartLayoutService,
@@ -201,8 +195,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     private scaffoldSvc: ChartScaffoldService
   ) {
     console.log('');
-    console.log('');
-    console.log('%c⛏️ XTOR TechanTs', 'color: #90BEE9');
+    console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
+    console.log('%c⛏️ XTOR Technical Analysis Component', 'color: #D9B208');
 
     document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
     document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
@@ -217,7 +211,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-    console.log('%c     ✔  createScales', 'color:#90BEE9');
+  
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
@@ -228,14 +222,32 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     console.log('%c  🔵 ngAfterViewInit TechanTsComponent', 'color:#90BEE9');
   }
 
+  private updateSvgSize(): void {
+
+    this.svgContainer = this.divSvgContainer.nativeElement;
+
+    select(this.svgElement.nativeElement)
+      .attr('width', this.divSvgContainer.nativeElement.clientWidth)
+      .attr('height', this.divSvgContainer.nativeElement.clientHeight);
+
+    select(this.rSvgElement.nativeElement)
+      .attr('width', this.divSvgContainer.nativeElement.clientWidth)
+      .attr('height', this.divSvgContainer.nativeElement.clientHeight);
+
+
+    console.log('%c     svgElement ', 'color:#8fb996', this.svgElement, ' x ',
+      this.svgElement.nativeElement.clientWidth, this.svgElement.nativeElement.clientHeight);
+    console.log('%c     rSvgElement', 'color:#f9dc5c', this.rSvgElement, ' x ',
+      this.svgElement.nativeElement.clientWidth, this.svgElement.nativeElement.clientHeight);
+  }
+
   private renderOuterScaffoldOnce(): void {
     const scaffold = this.scaffold;
+
     const pc = scaffold?.panelsContainer;
     if (!scaffold || !pc) return;
 
-    select(this.rSvgElement.nativeElement)
-      .attr('width', scaffold.width)
-      .attr('height', scaffold.height);
+
 
     select(this.rChartTitle.nativeElement)
       .attr('x', 0)
@@ -271,20 +283,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('height', scaffold.xAxisBottom);
   }
 
-  private updateSvgSize(): void {
-    console.log('%c     ✔  updateSvgSize', 'color:#90BEE9');
-    this.svgContainer = this.divSvgContainer.nativeElement;
 
-    select(this.svgElement.nativeElement)
-      .attr('width', this.svgContainer.clientWidth)
-      .attr('height', this.svgContainer.clientHeight);
-
-    console.log('%cupdate SvgSize', 'color:#90BEE9', this.svgElement);
-  }
 
   private fetchData(): void {
     console.log('%c     ✔  fetchData', 'color:#90BEE9');
-    this.popover_loading.show();
+/*    this.popover_loading.show();*/
 
     this.stockPriceService.getStockPrices(this.ticker).subscribe(
       (data) => {
@@ -293,7 +296,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
         console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
 
-        this.popover_loading.hide();
+   /*     this.popover_loading.hide();*/
         this.tryCreateChart();
       },
       (error) => {
@@ -407,9 +410,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     if (!pc) return;
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
 
-    select(this.rSvgElement.nativeElement)
-      .attr('width', this.scaffold.width)
-      .attr('height', this.scaffold.height);
+    //select(this.rSvgElement.nativeElement)
+    //  .attr('width', this.scaffold.width)
+    //  .attr('height', this.scaffold.height);
 
     select(this.rChartTitle.nativeElement)
       .attr('width', this.scaffold.width)
@@ -648,16 +651,16 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   showError(error: any): void {
-    this.popover_loading.hide();
-    this.popover_httperror.error = error.error;
-    this.popover_httperror.headers = error.headers;
-    this.popover_httperror.message = error.message;
-    this.popover_httperror.name = error.name;
-    this.popover_httperror.ok = error.ok;
-    this.popover_httperror.status = error.status;
-    this.popover_httperror.statusText = error.statusText;
-    this.popover_httperror.url = error.url;
-    this.popover_httperror.show();
+    //this.popover_loading.hide();
+    //this.popover_httperror.error = error.error;
+    //this.popover_httperror.headers = error.headers;
+    //this.popover_httperror.message = error.message;
+    //this.popover_httperror.name = error.name;
+    //this.popover_httperror.ok = error.ok;
+    //this.popover_httperror.status = error.status;
+    //this.popover_httperror.statusText = error.statusText;
+    //this.popover_httperror.url = error.url;
+    //this.popover_httperror.show();
   }
 
   drawRsi(): void {

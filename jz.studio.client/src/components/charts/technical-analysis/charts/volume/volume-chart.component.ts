@@ -10,7 +10,6 @@ import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';
 import { ChartDataService } from '../../services/chart-data.service';
 import { ChartScaffoldService } from '../../services/chart-scaffold.service';
-import { ScaffoldComponent } from '../base/scaffold.component';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { BaseChartComponent } from '../base-chart/base-chart.component';
 

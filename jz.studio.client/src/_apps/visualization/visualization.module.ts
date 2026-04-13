@@ -1,7 +1,6 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JzPopOversModule } from '../../library/jz-pop-overs/jz-pop-overs.module';
 import { RouterModule } from '@angular/router';
 import { VisualizationRouterModule } from './visualization-router.module';
 import { JzMenuModule } from '../../components/menus/jz-menu.module';
@@ -12,7 +11,6 @@ import { JzMenuModule } from '../../components/menus/jz-menu.module';
   imports: [
     CommonModule,
     JzMenuModule,
-    JzPopOversModule,
     RouterModule,
     VisualizationRouterModule
   ],

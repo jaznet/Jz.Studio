@@ -15,20 +15,20 @@ export class PaintElectionStrategy implements CountyPaintingStrategy {
     private countyDataService: CountyDataService,
   ) { }
 
-  getData(popover_loading: any, popover_httperror: any, callback: (data: any) => void): void {
+  getData( callback: (data: any) => void): void {
     // Use the choroDataService to fetch data and handle painting
     this.choroDataService.getElectionData().subscribe(
       (responseData: any) => {
-        popover_loading.isPopupVisible = false;
+      //  popover_loading.isPopupVisible = false;
         callback(responseData);
       },
       (error: HttpErrorResponse) => {
         // Handle error
-        popover_httperror.ok = error.ok;
-        popover_httperror.message = error.message;
-        popover_httperror.url = error.url;
-        popover_httperror.statusText = error.statusText;
-        popover_httperror.isPopupVisible = true;
+        //popover_httperror.ok = error.ok;
+        //popover_httperror.message = error.message;
+        //popover_httperror.url = error.url;
+        //popover_httperror.statusText = error.statusText;
+        //popover_httperror.isPopupVisible = true;
         console.error('Error fetching data:', error);
       }
     );

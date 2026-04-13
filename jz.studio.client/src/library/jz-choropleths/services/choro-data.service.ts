@@ -61,30 +61,23 @@ export class ChoroDataService {
     }, {});
   }
 
-  getPopulationData(popover_loading: any, popover_httperror: any): Observable<Population[]> {
+  getPopulationData(): Observable<Population[]> {
     if (this.isPopulationDataFetched) {
       return of(Object.values(this.populationDataDictionary));
     } else {
-      popover_loading.isPopupVisible = true;
-      popover_loading.url = `${this.apiBaseUrl}/population-api`;
-      popover_loading.data = 'Population';
+    
 
       return this.http.get<Population[]>(`${this.apiBaseUrl}/population-api`).pipe(
         map(responseData => {
           this.buildPopulationDictionary(responseData);
           this.isPopulationDataFetched = true;
-          popover_loading.isPopupVisible = false;
           return responseData;
         }),
-        catchError((error: HttpErrorResponse) => {
-          popover_httperror.ok = error.ok;
-          popover_httperror.message = error.message;
-          popover_httperror.url = error.url;
-          popover_httperror.statusText = error.statusText;
-          popover_httperror.isPopupVisible = true;
-          console.error('Error fetching data:', error);
-          return throwError(error);
-        })
+  //      catchError(() => {
+       
+  //        console.error('Error fetching data:');
+  ///*        return throwError(error);*/
+  //      })
       );
     }
   }

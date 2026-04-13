@@ -15,7 +15,6 @@
     <Folder Include="src\components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-menu\" />
-    <Folder Include="src\library\jz-pop-overs\interfaces\" />
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
     <Folder Include="src\_framework\layout\panel-workspace\enums\" />
@@ -39,32 +38,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove=".backup\jz-spirograph\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.scss" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.scss" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.scss" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\components\charts\technical-analysis\charts\base\scaffold.component.html" />
   </ItemGroup>
 </Project>

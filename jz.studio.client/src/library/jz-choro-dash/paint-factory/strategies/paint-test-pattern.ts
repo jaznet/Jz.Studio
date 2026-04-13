@@ -14,7 +14,7 @@ export class PaintTestPatternStrategy implements CountyPaintingStrategy {
     private countyDataService: CountyDataService
   ) { }
 
-  getData(popover_loading: any, popover_httperror: any): void {
+  getData(): void {
     this.getColor('');
   }
 

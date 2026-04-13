@@ -1,6 +1,5 @@
 
 import { AfterViewInit, Component, HostBinding } from '@angular/core';
-import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs.service';
 //import { DayOfWeekComponent } from '../../../../library/jz-ui-controls/day-of-week/day-of-week.component';
 
 @Component({
@@ -12,7 +11,7 @@ import { JzPopOversService } from '../../../../library/jz-pop-overs/jz-pop-overs
 export class SandboxHomeComponent implements AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  constructor(private popupsService: JzPopOversService) { }
+  constructor() { }
     ngAfterViewInit(): void {
      /* this.popupsService.showPopupLoading();*/
      /* this.popupsService.showPopoverLoading();*/
