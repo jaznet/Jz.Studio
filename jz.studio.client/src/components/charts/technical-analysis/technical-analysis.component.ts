@@ -7,6 +7,7 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  Input,
   NgZone,
   OnInit,
   ViewChild,
@@ -153,6 +154,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gRsiGroup', { static: false }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
+  @Input() chartTitle: any = 'Technical Analysis Chart';
+
   // #endregion @ViewChild List
 
   // #region Properties
@@ -255,11 +258,17 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', scaffold.width)
       .attr('height', scaffold.titleHeight);
 
-    select(this.tChartTitleText.nativeElement)
-      .attr('x', centerX)
-      .attr('y', centerY)
+    console.log('this', this);
+    console.log('rChartTitle', this.rChartTitle);
+    console.log('tChartTitleText', this.tChartTitleText);
+    console.log('native text by id', document.getElementById('tChartTitleText'));
+
+    select(this.chartTitle.nativeElement)
+      .attr('x', this.scaffoldFramework.width / 2)
+      .attr('y', this.scaffoldFramework.titleHeight / 2)
       .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'middle');
+      .attr('dominant-baseline', 'middle')
+      .attr('fill', 'gray');
 
     select(this.gAxisTop.nativeElement)
       .attr('transform', `translate(0, ${scaffold.titleHeight})`);

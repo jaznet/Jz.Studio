@@ -8,7 +8,6 @@ export interface ChartLayoutRequest {
   margins: Margins;
   titleWidth: number;
   titleHeight: number;
-
   axisLeftWidth: number;
   axisRightWidth: number;
   xAxisTopHeight: number;
