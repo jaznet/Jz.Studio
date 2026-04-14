@@ -285,11 +285,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     //select(this.gPanelsContainer.nativeElement)
     //  .attr('transform', `translate(${pc.x}, ${pc.y})`);
 
-    //select(this.rPanelsContainer.nativeElement)
-    //  .attr('x', 0)
-    //  .attr('y', 0)
-    //  .attr('width', pc.width)
-    //  .attr('height', pc.height);
+    select(this.rPanelsContainer.nativeElement)
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', scaffold.width)
+      .attr('height', scaffold.height - scaffold.titleHeight - scaffold.xAxisTop - scaffold.xAxisBottom);
 
     select(this.gAxisBottom.nativeElement)
       .attr('transform', `translate(0, ${scaffold.height - scaffold.xAxisBottom})`);

@@ -7,6 +7,11 @@
      fill:var(--plt-clr-3);
 }
 
+.panels-container {
+  fill: var(--plt-clr-4);
+  border:2px solid black;
+}
+
 .chart-container{
     fill:var(--plt-clr-2);
 }
@@ -52,6 +57,10 @@ fill:transparent;
 .panel-text {
   fill: lightgray;
   font-size: 12px;
+}
+
+.panels-container {
+  fill: var(--plt-clr-4);
 }
 
 ::ng-deep .tick {
