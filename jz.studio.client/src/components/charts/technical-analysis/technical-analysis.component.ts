@@ -246,13 +246,25 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     //const pc = scaffold?.panelsContainer;
     //if (!scaffold || !pc) return;
 
+    const centerX = scaffold.titleWidth / 2;
+    const centerY = scaffold.titleHeight / 2;
+
     select(this.rChartTitle.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', scaffold.width)
       .attr('height', scaffold.titleHeight);
 
+    select(this.tChartTitleText.nativeElement)
+      .attr('x', centerX)
+      .attr('y', centerY)
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'middle');
+
     select(this.gAxisTop.nativeElement)
+      .attr('transform', `translate(0, ${scaffold.titleHeight})`);
+
+    select(this.gAxisTopMonths.nativeElement)
       .attr('transform', `translate(0, ${scaffold.titleHeight})`);
 
     select(this.rAxisTop.nativeElement)
@@ -374,6 +386,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
     this.scaffoldFramework = {
       titleHeight: 36,
+      titleWidth: this.svgContainer.clientWidth,
       width: this.svgContainer.clientWidth,
       height: 400,
       margins: {
@@ -451,110 +464,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
         'transform',
         `translate(${this.scaffoldFramework.yAxisLeft}, ${this.scaffoldFramework.height - this.scaffoldFramework.xAxisBottom})`
       );
-  }
-
-  private sizeAndPlacePanels(): void {
-    console.log('%c     ✔  sizeAndPlacePanels', 'color:#fdf0d5');
-    const proportions = [0.4, 0.2, 0.2, 0.2];
-    const includedConfigs = chartConfig.filter(c => c.include);
-    const includedCount = includedConfigs.length;
-
-    const panelDefinitions = includedConfigs.map((configEntry, index) => ({
-      id: configEntry.type,
-      chartType: configEntry.type,
-      ratio: proportions[index] ?? (1 / Math.max(1, includedCount)),
-      showTitle: false,
-      showAxisLeft: true,
-      showAxisRight: true,
-      showXAxisTop: false,
-      showXAxisBottom: index === includedCount - 1
-    }));
-
-    const request: ChartLayoutRequest = {
-      width: this.scaffoldFramework.width,
-      height: this.scaffoldFramework.height,
-      margins: this.scaffoldFramework.margins,
-      titleHeight: this.scaffoldFramework.titleHeight,
-      axisLeftWidth: this.scaffoldFramework.yAxisLeft,
-      axisRightWidth: this.scaffoldFramework.yAxisRight,
-      xAxisTopHeight: this.scaffoldFramework.xAxisTop,
-      xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
-      panelGap: 0,
-      panels: panelDefinitions
-    };
-
-    const resolvedScaffold = this.layoutService.buildScaffold(request);
-
-    // ✅ ASSIGN FIRST (critical)
-    this.scaffoldFramework.panelsContainer = resolvedScaffold.panelsContainer;
-    this.scaffoldFramework.panels = resolvedScaffold.panels;
-
-    // ✅ NOW log the real data
-    console.log('✅ panelsContainer', this.scaffoldFramework.panelsContainer);
-    console.log('✅ panels', this.scaffoldFramework.panels);
-
-    const pc = this.scaffoldFramework.panelsContainer;
-    if (!pc) return;
-
-    // ✅ POSITION the container (THIS WAS MISSING)
-    select(this.gPanelsContainer.nativeElement)
-      .attr('transform', `translate(${pc.x}, ${pc.y})`);
-
-
-
-    // ✅ sanity check
-    const panelsMap = this.scaffoldFramework.panels;
-    if (!pc || !panelsMap) return;
-
-    const panelList = Object.values(panelsMap).filter(
-      (panel): panel is NonNullable<typeof panel> => !!panel
-    );
-
-    const totalPanelHeight = panelList.reduce((sum, panel) => {
-      return sum + (panel?.panelRect.height ?? 0);
-    }, 0);
-
-    console.log('%cPanelsContainer sanity check', 'color:#90BEE9', {
-      panelsContainerHeight: pc.height,
-      totalPanelHeight,
-      difference: pc.height - totalPanelHeight
-    });
-
-    // ✅ render panels RELATIVE to container
-    const panelRefs: Array<ElementRef<SVGGElement> | undefined> = [
-      this.panel1,
-      this.panel2,
-      this.panel3,
-      this.panel4
-    ];
-
-    panelRefs.forEach((ref, index) => {
-      if (!ref) return;
-
-      const configEntry = includedConfigs[index];
-      if (!configEntry) return;
-
-      const panel = this.scaffoldFramework.panels?.[configEntry.type];
-      if (!panel) return;
-
-      // 🔑 KEY FIX: subtract container origin
-      const localX = panel.panelRect.x - pc.x;
-      const localY = panel.panelRect.y - pc.y;
-
-      select(ref.nativeElement)
-        .attr('transform', `translate(${localX}, ${localY})`);
-
-      select(ref.nativeElement)
-        .select('rect')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', panel.panelRect.width)
-        .attr('height', panel.panelRect.height);
-    });
-
-    this.panelViewModels = this.layoutService.buildPanelViewModels(request);
-
-    console.log('%c✔ sizeAndPlacePanels FIXED', 'color:#90BEE9');
   }
 
   private createScales(): void {

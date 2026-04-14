@@ -21,7 +21,8 @@ export class PanelLayoutService {
     const panels = this.buildPanels(request, panelsContainer);
 
     return {
-      titleHeight: request.titleHeight,
+      titleHeight: request.titleHeight, 
+      titleWidth: request.titleWidth,
       width: request.width,
       height: request.height,
       xAxisTop: request.xAxisTopHeight,
