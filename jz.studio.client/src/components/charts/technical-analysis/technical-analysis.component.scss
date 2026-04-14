@@ -2,12 +2,13 @@
 .svg-container{
     border:4px;
 }
+
 .rSvgElement {
-    fill: blueviolet
+     fill:var(--plt-clr-3);
 }
 
 .chart-container{
-    fill:var(--plt-clr-2)
+    fill:var(--plt-clr-2);
 }
 
 .rChartTitle {
