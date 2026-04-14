@@ -79,11 +79,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
-  @ViewChild('gXaxisBottom', { static: false }) gXaxisBottom!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottomRect', { static: false }) xAxisBottomRect!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisMonthsBottom', { static: false }) xAxisMonthsBottomRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisBottom', { static: false }) xAxisBottomRef!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;
+  @ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
+  @ViewChild('rAxisBottom', { static: false }) rAxisBottom!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisBottomMonths', { static: false }) gAxisBottomMonths!: ElementRef<SVGGElement>;
+  //@ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
+/*  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;*/
 
   @ViewChild('gPanelsContainer', { static: false }) gPanelsContainer!: ElementRef<SVGGElement>;
   @ViewChild('rPanelsContainer', { static: false }) rPanelsContainer!: ElementRef<SVGRectElement>;
@@ -172,9 +172,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   chartXaxisMonthsTop!: Axis<Date>;
   chartXaxisMonthsBottom!: Axis<Date>;
-
-  svgContainer!: HTMLDivElement;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
+  svgContainer!: HTMLDivElement;
   xAxisDays: any;
   xAxisBottom: any;
   // #endregion Properties
@@ -244,10 +243,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   private renderOuterScaffoldOnce(): void {
     const scaffold = this.scaffoldFramework;
 
-    const pc = scaffold?.panelsContainer;
-    if (!scaffold || !pc) return;
-
-
+    //const pc = scaffold?.panelsContainer;
+    //if (!scaffold || !pc) return;
 
     select(this.rChartTitle.nativeElement)
       .attr('x', 0)
@@ -264,19 +261,19 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', scaffold.width)
       .attr('height', scaffold.xAxisTop);
 
-    select(this.gPanelsContainer.nativeElement)
-      .attr('transform', `translate(${pc.x}, ${pc.y})`);
+    //select(this.gPanelsContainer.nativeElement)
+    //  .attr('transform', `translate(${pc.x}, ${pc.y})`);
 
-    select(this.rPanelsContainer.nativeElement)
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', pc.width)
-      .attr('height', pc.height);
+    //select(this.rPanelsContainer.nativeElement)
+    //  .attr('x', 0)
+    //  .attr('y', 0)
+    //  .attr('width', pc.width)
+    //  .attr('height', pc.height);
 
-    select(this.gXaxisBottom.nativeElement)
+    select(this.gAxisBottom.nativeElement)
       .attr('transform', `translate(0, ${scaffold.height - scaffold.xAxisBottom})`);
 
-    select(this.xAxisBottomRect.nativeElement)
+    select(this.rAxisBottom.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', scaffold.width)
@@ -423,7 +420,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', this.scaffoldFramework.width)
       .attr('height', this.scaffoldFramework.xAxisTop);
 
-    select(this.xAxisBottomRect.nativeElement)
+    select(this.rAxisBottom.nativeElement)
       .attr('width', this.scaffoldFramework.width)
       .attr('height', this.scaffoldFramework.xAxisBottom);
   }
@@ -449,7 +446,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
         `translate(${this.scaffoldFramework.yAxisLeft}, ${this.scaffoldFramework.xAxisTop})`
       );
 
-    select(this.gXaxisBottom.nativeElement)
+    select(this.gAxisBottom.nativeElement)
       .attr(
         'transform',
         `translate(${this.scaffoldFramework.yAxisLeft}, ${this.scaffoldFramework.height - this.scaffoldFramework.xAxisBottom})`
@@ -583,7 +580,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   private drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');
 
-    this.xAxisMonthsBottom = select(this.xAxisMonthsBottomRef.nativeElement);
+   // this.gAxisBottomMonths = select(this.gAxisBottomMonths.nativeElement);
 
     const dateFormatterMajor = timeFormat('%b %Y');
 
@@ -643,12 +640,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
           lastYearBottom = currentYear;
           return `${dateFormatterMajor(date)}`;
         }
-
         return '';
       });
 
     select(this.gAxisTopMonths.nativeElement).call(this.chartXaxisMonthsTop);
-    this.xAxisMonthsBottom.call(this.chartXaxisMonthsBottom);
+    select(this.gAxisBottomMonths.nativeElement).call(this.chartXaxisMonthsBottom);
   }
 
   showError(error: any): void {
