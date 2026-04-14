@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
 import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
-import { Scaffold } from '../../interfaces/scaffold.interface';
+import { ScaffoldFramework } from '../../interfaces/scaffold-framework.interface';
 import { Rect } from '../../interfaces/common-interfaces';
 import { WorkspacePanelInstance } from '../../../../../_framework/layout/panel-workspace/interfaces/workspace-panel-instance.interface';
 import { PanelWorkspaceService } from '../../../../../_framework/layout/panel-workspace/services/panel-workspace.service';
@@ -16,7 +16,7 @@ export class PanelLayoutService {
     private panelWorkspaceService: PanelWorkspaceService
   ) { }
 
-  buildScaffold(request: ChartLayoutRequest): Scaffold {
+  buildScaffold(request: ChartLayoutRequest): ScaffoldFramework {
     const panelsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
     const panels = this.buildPanels(request, panelsContainer);
 

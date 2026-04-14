@@ -7,7 +7,7 @@ import { scaleLinear, ScaleBand, ScaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { Scaffold } from '../../../interfaces/scaffold.interface';
+import { ScaffoldFramework } from '../../../interfaces/scaffold-framework.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -79,7 +79,7 @@ export class RsiChart {
     return rsiValues;
   }
 
-  public drawAxes(chartScaffold: Scaffold): this {
+  public drawAxes(chartScaffold: ScaffoldFramework): this {
     const panel = chartScaffold.panels?.[ChartType.RSI];
     if (!panel) {
       return this;

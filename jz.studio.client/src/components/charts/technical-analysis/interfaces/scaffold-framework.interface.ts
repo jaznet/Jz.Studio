@@ -4,7 +4,7 @@ import { ChartType } from '../enums/chart-type';
 import { PanelAttributes } from './panel-interfaces';
 import { Margins } from './techan-interfaces';
 
-export interface Scaffold {
+export interface ScaffoldFramework {
   titleHeight: number;
   width: number;
   height: number;

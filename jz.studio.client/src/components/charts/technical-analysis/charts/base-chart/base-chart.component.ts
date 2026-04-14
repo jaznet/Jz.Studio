@@ -2,7 +2,7 @@
 
 import { Component, ElementRef, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
-import { Scaffold } from '../../interfaces/scaffold.interface';
+import { ScaffoldFramework } from '../../interfaces/scaffold-framework.interface';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
 
@@ -33,7 +33,7 @@ export abstract class BaseChartComponent implements OnChanges {
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
-  protected chartScaffold!: Scaffold;
+  protected chartScaffold!: ScaffoldFramework;
   protected innerHeight = 0;
 
   chartType: ChartType = ChartType.Base;

@@ -7,7 +7,7 @@ import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { ChartDataService } from '../../chart-data.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { Scaffold } from '../../../interfaces/scaffold.interface';
+import { ScaffoldFramework } from '../../../interfaces/scaffold-framework.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,7 @@ export class VolumeChartService {
     return this;
   }
 
-  public drawAxes(scaffold: Scaffold): this {
+  public drawAxes(scaffold: ScaffoldFramework): this {
     const panel = scaffold.panels?.[ChartType.VOLUME];
     if (!panel) {
       return this;
