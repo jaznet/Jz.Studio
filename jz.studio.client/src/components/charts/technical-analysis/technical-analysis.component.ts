@@ -230,7 +230,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.svgContainer = this.divSvgContainer.nativeElement;
 
     select(this.svgElement.nativeElement)
-      .attr('width', this.divSvgContainer.nativeElement.clientWidth)
+      .attr('width', this.divSvgContainer.nativeElement.clientWidth-5)
       .attr('height', this.divSvgContainer.nativeElement.clientHeight);
 
     select(this.rSvgElement.nativeElement)
@@ -267,7 +267,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('fill', 'gray');
 
     select(this.gAxisTop.nativeElement)
-      .attr('transform', `translate(0, ${scaffold.titleHeight})`);
+      .attr('transform', `translate(${scaffold.margins.left}, ${scaffold.titleHeight})`);
 
     select(this.gAxisTopMonths.nativeElement)
       .attr('transform', `translate(0, ${scaffold.titleHeight - 6})`);
@@ -288,7 +288,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('height', scaffold.height - scaffold.titleHeight - scaffold.xAxisTop - scaffold.xAxisBottom);
 
     select(this.gAxisBottom.nativeElement)
-      .attr('transform', `translate(0, ${scaffold.height - scaffold.xAxisBottom})`);
+      .attr('transform', `translate(${scaffold.margins.left}, ${scaffold.height - scaffold.xAxisBottom})`);
 
     select(this.rAxisBottom.nativeElement)
       .attr('x', 0)
