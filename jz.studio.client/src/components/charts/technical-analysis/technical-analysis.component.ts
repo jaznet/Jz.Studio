@@ -231,7 +231,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     select(this.svgElement.nativeElement)
       .attr('width', this.divSvgContainer.nativeElement.clientWidth-5)
-      .attr('height', this.divSvgContainer.nativeElement.clientHeight);
+      .attr('height', this.divSvgContainer.nativeElement.clientHeight-2);
 
     select(this.rSvgElement.nativeElement)
       .attr('width', this.divSvgContainer.nativeElement.clientWidth)
