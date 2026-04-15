@@ -275,14 +275,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.rAxisTop.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', scaffold.width)
+      .attr('width', scaffold.width - scaffold.margins.left - scaffold.margins.right)
       .attr('height', scaffold.xAxisTop);
-
-    //select(this.rAxisTopMonths.nativeElement)
-    //  .attr('x', 0)
-    //  .attr('y', 0)
-    //  .attr('width', scaffold.width)
-    //  .attr('height', scaffold.xAxisTop);
 
     select(this.gPanelsContainer.nativeElement)
       .attr('transform', `translate(0,  ${scaffold.titleHeight + scaffold.xAxisTop})`);
@@ -299,7 +293,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.rAxisBottom.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', scaffold.width)
+      .attr('width', scaffold.width - scaffold.margins.left - scaffold.margins.right)
       .attr('height', scaffold.xAxisBottom);
   }
 
