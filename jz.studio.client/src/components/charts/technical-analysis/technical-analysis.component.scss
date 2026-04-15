@@ -5,6 +5,7 @@
 
 .rSvgElement {
      fill:var(--plt-clr-3);
+     border-radius:8px;
 }
 
 .panels-container {
@@ -17,7 +18,10 @@
 }
 
 .rChartTitle {
-        fill: var(--plt-clr-2)
+  fill: var(--plt-clr-2);
+
+  stroke-width: 1;         /* border thickness */
+                /* vertical radius */
 }
 
 .chart-panel {
@@ -59,14 +63,17 @@ fill:transparent;
   font-size: 12px;
 }
 
-.panels-container {
-  fill: var(--plt-clr-4);
+.tick {
+  stroke: lightyellow;
 }
 
-::ng-deep .tick {
-  color: orange;
-  stroke: var(--plt-chart-3);
-  stroke-width: 1;
+.tick line {
+  stroke:white;
+}
+
+.tick text {
+  fill: white;
+  stroke:none;
 }
 
 .domain {

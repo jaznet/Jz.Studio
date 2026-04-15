@@ -1,16 +1,17 @@
 <!--techanTs.component.html-->
 
-<div #divSvgContainer id="divSvgContainer" class="grid-rows" >
+<div #divSvgContainer id="divSvgContainer" class="grid-rows" style="border-radius:8px">
   <svg #svgElement id="svgElement">
-    <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0"></rect>
+    <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
     <g id="gChartTitle">
       <rect #rChartTitle
             id="rChartTitle"
-            x="0"
-            y="0"
+            class="rChartTitle"
+            x="0" y="0" width="0" height="0"
             [attr.width]="scaffoldFramework?.width ?? 0"
             [attr.height]="scaffoldFramework?.titleHeight ?? 0"
-            fill="var(--plt-clr-2)">
+            fill="var(--plt-clr-2)"
+            rx="8" ry="8">
       </rect>
 
       <text id="tChartTitleText"
@@ -18,7 +19,7 @@
             [attr.y]="(scaffoldFramework?.titleHeight ?? 0) / 2"
             text-anchor="middle"
             dominant-baseline="middle"
-            fill="gray">
+            fill="lightyellow">
         {{ chartTitle }}
       </text>
     </g>
@@ -27,7 +28,7 @@
     <g #gAxisTop id="gAxisTop" class="x-axis-group">
       <rect #rAxisTop id="rAxisTop" class="axis-panel" width="0" height="0" x="0" y="0"></rect>
       <g #gAxisTopMonths id="gAxisTopMonths" class="x-axis"></g>
-      <rect #rAxisTopMonths id="rAxisTopMonths" width="0" height="0" x="0" y="0" stroke="yellow"></rect>
+      <rect #rAxisTopMonths id="rAxisTopMonths" width="0" height="0" x="0" y="0" ></rect>
     </g>
 
     <g #gPanelsContainer id="gPanelsContainer">

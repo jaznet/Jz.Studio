@@ -76,6 +76,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gAxisTop', { static: false }) gAxisTop!: ElementRef<SVGGElement>;
   @ViewChild('rAxisTop', { static: false }) rAxisTop!: ElementRef<SVGRectElement>;
+  @ViewChild('rAxisTopMonths', { static: false }) rAxisTopMonths!: ElementRef<SVGRectElement>;
   @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
   @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
@@ -256,12 +257,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', scaffold.width)
-      .attr('height', scaffold.titleHeight);
-
-    console.log('this', this);
-    console.log('rChartTitle', this.rChartTitle);
-    console.log('tChartTitleText', this.tChartTitleText);
-    console.log('native text by id', document.getElementById('tChartTitleText'));
+      .attr('height', scaffold.titleHeight)
 
     select(this.chartTitle.nativeElement)
       .attr('x', this.scaffoldFramework.width / 2)
@@ -274,7 +270,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(0, ${scaffold.titleHeight})`);
 
     select(this.gAxisTopMonths.nativeElement)
-      .attr('transform', `translate(0, ${scaffold.titleHeight})`);
+      .attr('transform', `translate(0, ${scaffold.titleHeight - 6})`);
 
     select(this.rAxisTop.nativeElement)
       .attr('x', 0)
@@ -282,8 +278,14 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', scaffold.width)
       .attr('height', scaffold.xAxisTop);
 
-    //select(this.gPanelsContainer.nativeElement)
-    //  .attr('transform', `translate(${pc.x}, ${pc.y})`);
+    //select(this.rAxisTopMonths.nativeElement)
+    //  .attr('x', 0)
+    //  .attr('y', 0)
+    //  .attr('width', scaffold.width)
+    //  .attr('height', scaffold.xAxisTop);
+
+    select(this.gPanelsContainer.nativeElement)
+      .attr('transform', `translate(0,  ${scaffold.titleHeight + scaffold.xAxisTop})`);
 
     select(this.rPanelsContainer.nativeElement)
       .attr('x', 0)
@@ -349,7 +351,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       //this.sizeAndPlacePanels();
       this.renderOuterScaffoldOnce();
       this.sizeChartElements();
-      this.alignMainChartElements();
+    //  this.alignMainChartElements();
 
       this.createScales();
       this.drawAxes();
