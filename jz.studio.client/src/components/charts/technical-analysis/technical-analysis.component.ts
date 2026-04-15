@@ -270,7 +270,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('transform', `translate(${scaffold.margins.left}, ${scaffold.titleHeight})`);
 
     select(this.gAxisTopMonths.nativeElement)
-      .attr('transform', `translate(0, ${scaffold.titleHeight - 6})`);
+      .attr('transform', `translate(0, ${scaffold.titleHeight - 7})`);
 
     select(this.rAxisTop.nativeElement)
       .attr('x', 0)

@@ -4,13 +4,13 @@
 }
 
 .rSvgElement {
-     fill:var(--plt-clr-3);
+     fill:var(--plt-clr-2);
      border-radius:8px;
 }
 
 .panels-container {
-  fill: var(--plt-clr-4);
-  border:2px solid black;
+  fill: var(--plt-clr-2);
+//  border:2px solid black;
 }
 
 .chart-container{
@@ -77,7 +77,7 @@ fill:transparent;
 }
 
 .domain {
-  stroke: var(--plt-chart-2);
+  stroke: white;
 }
 
 .x-axis {
@@ -92,8 +92,8 @@ fill:transparent;
 
   .x-axis > .domain {
     color: red;
-    stroke: var(--plt-chart-2);
-    stroke-width: 1;
+    stroke: white;
+    stroke-width: 2;
   }
 
 .y-axis {
