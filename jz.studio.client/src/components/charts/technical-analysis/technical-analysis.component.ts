@@ -485,7 +485,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     this.dateScaleX = scaleBand<Date>()
       .domain(dates)
-      .range([0, contentWidth])
+      .range([0, contentWidth - this.scaffoldFramework.margins.left - this.scaffoldFramework.margins.right])
       .paddingInner(0.2)
       .paddingOuter(0.1)
       .align(0.5);

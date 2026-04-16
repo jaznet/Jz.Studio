@@ -1,3 +1,8 @@
+/*technical-analysis.component.scss*/
+
+:host {
+ --axis-stroke: lightyellow;
+}
 
 .svg-container{
     border:4px;
@@ -10,7 +15,6 @@
 
 .panels-container {
   fill: var(--plt-clr-2);
-//  border:2px solid black;
 }
 
 .chart-container{
@@ -19,9 +23,7 @@
 
 .rChartTitle {
   fill: var(--plt-clr-2);
-
-  stroke-width: 1;         /* border thickness */
-                /* vertical radius */
+  stroke-width: 1;     
 }
 
 .chart-panel {
@@ -64,11 +66,11 @@ fill:transparent;
 }
 
 .tick {
-  stroke: lightyellow;
+  stroke: deepskyblue;
 }
 
 .tick line {
-  stroke:white;
+  stroke: var(--axis-stroke);
 }
 
 .tick text {
