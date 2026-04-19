@@ -1,7 +1,10 @@
 /*technical-analysis.component.scss*/
 
-:host {
- --axis-stroke: lightyellow;
+techants {
+  --chart-title-color: #decbb7;
+  --axis-tick-color: #87cefa;
+  --axis-line-color:#87cefa;
+  --axis-label-color: #87cefa;
 }
 
 .svg-container{
@@ -11,6 +14,10 @@
 .rSvgElement {
      fill:var(--plt-clr-2);
      border-radius:8px;
+}
+
+.chart-title-text {
+fill:var(--chart-title-color);
 }
 
 .panels-container {
@@ -66,20 +73,16 @@ fill:transparent;
 }
 
 .tick {
-  stroke: deepskyblue;
+  stroke:rebeccapurple ;
 }
-
+                                                                                                                                                                      
 .tick line {
-  stroke: var(--axis-stroke);
+  stroke: var(--axis-line-color);
 }
 
 .tick text {
-  fill: white;
+  fill: var(--axis-label-color);
   stroke:none;
-}
-
-.domain {
-  stroke: white;
 }
 
 .x-axis {
@@ -94,7 +97,7 @@ fill:transparent;
 
   .x-axis > .domain {
     color: red;
-    stroke: white;
+    stroke: var(--axis-line-color);
     stroke-width: 1;
   }
 

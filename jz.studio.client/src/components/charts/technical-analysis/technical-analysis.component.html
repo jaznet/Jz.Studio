@@ -10,16 +10,16 @@
             x="0" y="0" width="0" height="0"
             [attr.width]="scaffoldFramework?.width ?? 0"
             [attr.height]="scaffoldFramework?.titleHeight ?? 0"
-            fill="var(--plt-clr-2)"
+        
             rx="8" ry="8">
       </rect>
 
-      <text id="tChartTitleText"
+      <text id="tChartTitleText" class="chart-title-text"
             [attr.x]="(scaffoldFramework?.width ?? 0) / 2"
             [attr.y]="(scaffoldFramework?.titleHeight ?? 0) / 2"
             text-anchor="middle"
             dominant-baseline="middle"
-            fill="lightyellow">
+            color=var(--chart-title-color)>
         {{ chartTitle }}
       </text>
     </g>
