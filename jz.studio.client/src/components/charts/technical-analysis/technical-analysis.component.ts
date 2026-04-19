@@ -13,6 +13,9 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
+
+// #region imports
+
 import { take } from 'rxjs/operators';
 import { Axis, axisBottom, axisTop } from 'd3-axis';
 import { select, Selection } from 'd3-selection';
@@ -37,7 +40,7 @@ import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
-import type { PanelViewModel } from './interfaces/panel-interfaces';
+import type { PanelAttributes, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 
 // #endregion imports
@@ -46,7 +49,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
   return new HtmlElementOverlayContainer(host.nativeElement);
 }
 
-@Component({
+@Component({ // TechnicalAnalysisComponent
   selector: 'techanTs',
   imports: [],
   templateUrl: './technical-analysis.component.html',
@@ -62,8 +65,6 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
 })
 export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   @HostBinding('class') classes = 'fit-to-parent';
-
-  ChartType = ChartType;
 
   // #region @ViewChild List
   @ViewChild('divSvgContainer', { static: false }) divSvgContainer!: ElementRef<HTMLDivElement>;
@@ -160,9 +161,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   // #endregion @ViewChild List
 
   // #region Properties
-
+  ChartType = ChartType;
   width = 0;
 
+  scaffoldFramework!: ScaffoldFramework;
   panelViewModels: PanelViewModel[] = [];
 
   dataReady = false;
@@ -172,7 +174,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   dateScaleX!: ScaleBand<Date>;
 
-  scaffoldFramework!: ScaffoldFramework;
+
 
   chartXaxisMonthsTop!: Axis<Date>;
   chartXaxisMonthsBottom!: Axis<Date>;
@@ -296,8 +298,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', scaffold.width - scaffold.margins.left - scaffold.margins.right)
       .attr('height', scaffold.xAxisBottom);
   }
-
-
 
   private fetchData(): void {
     console.log('%c     ✔  fetchData', 'color:#90BEE9');
@@ -559,6 +559,49 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     select(this.gAxisTopMonths.nativeElement).call(this.chartXaxisMonthsTop);
     select(this.gAxisBottomMonths.nativeElement).call(this.chartXaxisMonthsBottom);
+  }
+
+  private renderPanelHosts(): void {
+    if (!this.scaffoldFramework?.panels) return;
+
+    const panels = Object.values(this.scaffoldFramework.panels).filter(Boolean);
+
+    const container = select(this.gPanelsContainer.nativeElement);
+
+    // JOIN
+    const hosts = container
+      .selectAll<SVGGElement, PanelAttributes>('g.panel-host')
+      .data(panels, (d: any) => d.id);
+
+    // EXIT
+    hosts.exit().remove();
+
+    // ENTER
+    const enter = hosts
+      .enter()
+      .append('g')
+      .attr('class', 'panel-host');
+
+    // Debug rect
+    enter.append('rect')
+      .attr('class', 'panel-debug');
+
+    // MERGE
+    const merged = enter.merge(hosts as any);
+
+    // POSITION
+    merged.attr('transform', d =>
+      `translate(${d.panelRect.x}, ${d.panelRect.y})`
+    );
+
+    // SIZE
+    merged.select<SVGRectElement>('rect.panel-debug')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', d => d.panelRect.width)
+      .attr('height', d => d.panelRect.height)
+      .attr('fill', 'rgba(255,0,0,0.1)')
+      .attr('stroke', 'yellow');
   }
 
   showError(error: any): void {
