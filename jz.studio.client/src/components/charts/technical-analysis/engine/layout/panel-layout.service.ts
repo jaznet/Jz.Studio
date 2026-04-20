@@ -30,17 +30,17 @@ export class PanelLayoutService {
       yAxisLeft: request.axisLeftWidth,
       yAxisRight: request.axisRightWidth,
       margins: request.margins,
-      panelsContainer,
+
       panels
     };
   }
 
   private buildPanels(
     request: ChartLayoutRequest,
-    panelsContainer: Rect
+    panelHostsContainer: Rect
   ): Partial<Record<ChartType, PanelAttributes>> {
 
-    const availableHeight = panelsContainer.height;
+    const availableHeight = panelHostsContainer.height;
     const panelDefs = request.panels ?? [];
     const totalRatio = panelDefs.reduce((sum, p) => sum + (p.ratio ?? 0), 0) || 1;
 

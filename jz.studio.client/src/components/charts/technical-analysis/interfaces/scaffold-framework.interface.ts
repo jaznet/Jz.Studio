@@ -15,7 +15,7 @@ export interface ScaffoldFramework {
   yAxisLeft: number;
   yAxisRight: number;
   margins: Margins;
-  panelsContainer?: Rect;
+  panelHostsContainer?: Rect;
 
   /** Panel attributes by chart type (OHLC, RSI, etc.) */
   panels?: Partial<Record<ChartType, PanelAttributes>>;
