@@ -88,8 +88,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   //@ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
 /*  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;*/
 
-  @ViewChild('gPanelsContainer', { static: false }) gPanelsContainer!: ElementRef<SVGGElement>;
-  @ViewChild('rPanelsContainer', { static: false }) rPanelsContainer!: ElementRef<SVGRectElement>;
+  @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
+  @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
 
   @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
 
@@ -248,10 +248,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   private renderOuterScaffoldOnce(): void {
     const scaffold = this.scaffoldFramework;
-
-    //const pc = scaffold?.panelsContainer;
-    //if (!scaffold || !pc) return;
-
     const centerX = scaffold.titleWidth / 2;
     const centerY = scaffold.titleHeight / 2;
 
@@ -280,10 +276,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('width', scaffold.width - scaffold.margins.left - scaffold.margins.right)
       .attr('height', scaffold.xAxisTop);
 
-    select(this.gPanelsContainer.nativeElement)
+    select(this.gPanelHostsContainer.nativeElement)
       .attr('transform', `translate(0,  ${scaffold.titleHeight + scaffold.xAxisTop})`);
 
-    select(this.rPanelsContainer.nativeElement)
+    select(this.rPanelHostsContainer.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', scaffold.width)
@@ -448,7 +444,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     const pc = this.scaffoldFramework.panelsContainer;
     if (!pc) return;
 
-    select(this.gPanelsContainer.nativeElement)
+    select(this.gPanelHostsContainer.nativeElement)
       .classed('panels-container', true);
 
     select(this.tChartTitleText.nativeElement)
@@ -566,12 +562,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     const panels = Object.values(this.scaffoldFramework.panels).filter(Boolean);
 
-    const container = select(this.gPanelsContainer.nativeElement);
+    const container = select(this.gPanelHostsContainer.nativeElement);
 
     // JOIN
     const hosts = container
       .selectAll<SVGGElement, PanelAttributes>('g.panel-host')
-      .data(panels, (d: any) => d.id);
+      .data(panels, (d: PanelAttributes) => d.id);
 
     // EXIT
     hosts.exit().remove();
