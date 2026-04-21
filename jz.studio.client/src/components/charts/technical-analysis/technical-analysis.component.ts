@@ -224,30 +224,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.panelPreferenceService.preferences$
       .pipe(takeUntil(this.destroyed$))
       .subscribe(preferences => {
-        const panelDefinitions = this.buildPanelDefinitions(preferences);
-
-        const request: ChartLayoutRequest = {
-          width: this.scaffoldFramework.width,
-          height: this.scaffoldFramework.height,
-          margins: this.scaffoldFramework.margins,
-          titleWidth: this.scaffoldFramework.titleWidth,
-          titleHeight: this.scaffoldFramework.titleHeight,
-          axisLeftWidth: this.scaffoldFramework.yAxisLeft,
-          axisRightWidth: this.scaffoldFramework.yAxisRight,
-          xAxisTopHeight: this.scaffoldFramework.xAxisTop,
-          xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
-          panelGap: 0,
-          panels: panelDefinitions
-        };
-
-        const resolved = this.layoutService.buildScaffold(request);
-
-        this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
-        this.scaffoldFramework.chartMap = resolved.chartMap;
-
-        this.sizeChartElements();
-        this.alignMainChartElements();
-        this.renderPanelHosts();
+        this.applyPanelPreferences(preferences);
       });
   }
 
@@ -658,6 +635,35 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
     this.scaffoldFramework.chartMap = resolved.chartMap;
+  }
+
+  private applyPanelPreferences(preferences: PanelPreference[]): void {
+    if (!this.scaffoldFramework?.width || !this.scaffoldFramework?.height) return;
+
+    const panelDefinitions = this.buildPanelDefinitions(preferences);
+
+    const request: ChartLayoutRequest = {
+      width: this.scaffoldFramework.width,
+      height: this.scaffoldFramework.height,
+      margins: this.scaffoldFramework.margins,
+      titleWidth: this.scaffoldFramework.titleWidth,
+      titleHeight: this.scaffoldFramework.titleHeight,
+      axisLeftWidth: this.scaffoldFramework.yAxisLeft,
+      axisRightWidth: this.scaffoldFramework.yAxisRight,
+      xAxisTopHeight: this.scaffoldFramework.xAxisTop,
+      xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+      panelGap: 0,
+      panels: panelDefinitions
+    };
+
+    const resolved = this.layoutService.buildScaffold(request);
+
+    this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
+    this.scaffoldFramework.chartMap = resolved.chartMap;
+
+    this.sizeChartElements();
+    this.alignMainChartElements();
+    this.renderPanelHosts();
   }
 
   private renderPanelHosts(): void {
