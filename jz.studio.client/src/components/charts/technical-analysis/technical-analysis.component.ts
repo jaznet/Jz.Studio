@@ -42,6 +42,7 @@ import { TechnicalAnalysisService } from './technical-analysis.service';
 import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { PanelHostService } from '../../../_framework/layout/panel-workspace/services/panel-host.service';
+import { PanelPreference } from './interfaces/panel-preference.interface';
 
 // #endregion imports
 
@@ -653,6 +654,27 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('height', d => d.panelRect.height)
       .attr('fill', 'rgba(0, 128, 255, 0.1)')
       .attr('stroke', 'yellow');
+  }
+
+  // technical-analysis.component.ts
+
+  private buildPanelDefinitions(
+    preferences: PanelPreference[]
+  ): PanelDefinition[] {
+    const visiblePrefs = preferences
+      .filter(p => p.visible)
+      .sort((a, b) => a.order - b.order);
+
+    return visiblePrefs.map((pref, index) => ({
+      id: pref.id,
+      chartType: pref.chartType,
+      ratio: pref.ratio,
+      showAxisLeft: pref.showAxisLeft ?? true,
+      showAxisRight: pref.showAxisRight ?? false,
+      showXAxisTop: pref.showXAxisTop ?? false,
+      showXAxisBottom:
+        pref.showXAxisBottom ?? index === visiblePrefs.length - 1
+    }));
   }
 
   showError(error: any): void {
