@@ -340,6 +340,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
+      this.bindPanelPreferences();
       this.sizeAndPlacePanels();
       this.renderOuterScaffoldOnce();
 
@@ -458,9 +459,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.gPanelHostsContainer.nativeElement)
       .classed('panels-container', true);
 
-    select(this.tChartTitleText.nativeElement)
-      .attr('y', this.scaffoldFramework.titleHeight / 2)
-      .attr('x', this.scaffoldFramework.width / 2);
+    //select(this.tChartTitleText.nativeElement)
+    //  .attr('y', this.scaffoldFramework.titleHeight / 2)
+    //  .attr('x', this.scaffoldFramework.width / 2);
 
     select(this.gAxisTop.nativeElement)
       .attr('transform', `translate(0, ${this.scaffoldFramework.titleHeight})`);
@@ -677,6 +678,35 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       showXAxisBottom:
         pref.showXAxisBottom ?? index === visiblePrefs.length - 1
     }));
+  }
+
+  private bindPanelPreferences(): void {
+    this.panelPreferenceService.preferences$.subscribe(preferences => {
+      const panelDefinitions = this.buildPanelDefinitions(preferences);
+
+      const request: ChartLayoutRequest = {
+        width: this.scaffoldFramework.width,
+        height: this.scaffoldFramework.height,
+        margins: this.scaffoldFramework.margins,
+        titleWidth: this.scaffoldFramework.titleWidth,
+        titleHeight: this.scaffoldFramework.titleHeight,
+        axisLeftWidth: this.scaffoldFramework.yAxisLeft,
+        axisRightWidth: this.scaffoldFramework.yAxisRight,
+        xAxisTopHeight: this.scaffoldFramework.xAxisTop,
+        xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+        panelGap: 0,
+        panels: panelDefinitions
+      };
+
+      const resolved = this.layoutService.buildScaffold(request);
+
+      this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
+      this.scaffoldFramework.chartMap = resolved.chartMap;
+
+      this.sizeChartElements();
+      this.alignMainChartElements();
+      this.renderPanelHosts();
+    });
   }
 
   showError(error: any): void {
