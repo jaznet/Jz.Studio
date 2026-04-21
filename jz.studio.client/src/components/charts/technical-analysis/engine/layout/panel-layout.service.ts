@@ -56,8 +56,8 @@ export class PanelLayoutService {
       const panelHeight = availableHeight * (def.ratio / totalRatio);
 
       const panelRect: DivRect = {
-        x: panelHostsContainer.x,
-        y: panelHostsContainer.y + currentY,
+        x: 0,
+        y: currentY,
         width: panelHostsContainer.width,
         height: panelHeight
       };
