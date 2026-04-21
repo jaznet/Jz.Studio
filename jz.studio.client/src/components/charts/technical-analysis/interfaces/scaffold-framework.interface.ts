@@ -5,8 +5,6 @@ import { DivRect } from './common-interfaces';
 import { PanelAttributes } from './panel-interfaces';
 import { Margins } from './techan-interfaces';
 
-
-
 export interface ScaffoldFramework {
   titleWidth: number;
   titleHeight: number;
@@ -17,7 +15,6 @@ export interface ScaffoldFramework {
   yAxisLeft: number;
   yAxisRight: number;
   margins: Margins;
-  panelHostsContainer: DivRect;
-
-  chartMap?: Partial<Record<ChartType, PanelAttributes>>;  /** Panel attributes by chart type (OHLC, RSI, etc.) */
+  panelHostsContainer?: DivRect;
+  chartMap?: Partial<Record<ChartType, PanelAttributes>>;
 }

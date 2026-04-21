@@ -413,7 +413,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     this.scaffoldFramework.width = this.svgContainer.clientWidth;
     this.scaffoldFramework.height = this.svgContainer.clientHeight;
-    this.scaffoldFramework.panelHostsContainer.width = this.svgContainer.clientWidth;
+    this.scaffoldFramework.panelHostsContainer!.width = this.svgContainer.clientWidth;
 
   //  console.log(
   //    '%c     ✔ create ChartScaffold',
@@ -624,33 +624,26 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
     const container = select(this.gPanelHostsContainer.nativeElement);
 
-    // JOIN
     const hosts = container
       .selectAll<SVGGElement, PanelAttributes>('g.panel-host')
-      .data(panels, (d: any) => d.id);
+      .data(panels, (d: PanelAttributes) => d.id);
 
-    // EXIT
     hosts.exit().remove();
 
-    // ENTER
     const enter = hosts
       .enter()
       .append('g')
       .attr('class', 'panel-host');
 
-    // Debug rect so you can SEE them
     enter.append('rect')
       .attr('class', 'panel-debug');
 
-    // MERGE
     const merged = enter.merge(hosts as any);
 
-    // POSITION each panel host
     merged.attr('transform', d =>
       `translate(${d.panelRect.x}, ${d.panelRect.y})`
     );
 
-    // SIZE the debug rect
     merged.select<SVGRectElement>('rect.panel-debug')
       .attr('x', 0)
       .attr('y', 0)
@@ -658,8 +651,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       .attr('height', d => d.panelRect.height)
       .attr('fill', 'rgba(0, 128, 255, 0.1)')
       .attr('stroke', 'yellow');
-
-    console.log('✔ PanelHosts rendered:', panels.length);
   }
 
   showError(error: any): void {

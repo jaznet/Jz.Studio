@@ -16,16 +16,13 @@ export class PanelLayoutService {
     private panelWorkspaceService: PanelWorkspaceService
   ) { }
 
-
-
   buildScaffold(request: ChartLayoutRequest): ScaffoldFramework {
-    const panelHostsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
-    const panels = this.buildPanels(request, panelHostsContainer);
-    const rect: DivRect = {x:0, y:0, width:0, height:0};
+    const panelHostsContainer = this.buildPanelHostsContainer(request);
+    const chartMap = this.buildPanels(request, panelHostsContainer);
 
     return {
-      titleHeight: request.titleHeight, 
       titleWidth: request.titleWidth,
+      titleHeight: request.titleHeight,
       width: request.width,
       height: request.height,
       xAxisTop: request.xAxisTopHeight,
@@ -33,17 +30,30 @@ export class PanelLayoutService {
       yAxisLeft: request.axisLeftWidth,
       yAxisRight: request.axisRightWidth,
       margins: request.margins,
-      chartMap: panels,
-      panelHostsContainer: rect
-/*      chartMap:*/
+      panelHostsContainer,
+      chartMap
     };
+  }
+
+  private buildPanelHostsContainer(request: ChartLayoutRequest): DivRect {
+    const x = 0;
+    const y = request.titleHeight + request.xAxisTopHeight;
+
+    const width = request.width;
+
+    const height =
+      request.height
+      - request.titleHeight
+      - request.xAxisTopHeight
+      - request.xAxisBottomHeight;
+
+    return { x, y, width, height };
   }
 
   private buildPanels(
     request: ChartLayoutRequest,
     panelHostsContainer: DivRect
   ): Partial<Record<ChartType, PanelAttributes>> {
-
     const availableHeight = panelHostsContainer.height;
     const panelDefs = request.panels ?? [];
     const totalRatio = panelDefs.reduce((sum, p) => sum + (p.ratio ?? 0), 0) || 1;
@@ -62,7 +72,7 @@ export class PanelLayoutService {
         height: panelHeight
       };
 
-      const titleHeight = def.showTitle ? request.titleHeight : 0;
+      const titleHeight = 0;
       const axisTopHeight = def.showXAxisTop === true ? request.xAxisTopHeight : 0;
       const axisBottomHeight = def.showXAxisBottom === true ? request.xAxisBottomHeight : 0;
       const axisLeftWidth = def.showAxisLeft === true ? request.axisLeftWidth : 0;
@@ -129,14 +139,6 @@ export class PanelLayoutService {
 
       currentY += panelHeight;
     });
-
-    const totalPanelHeight = Object.values(result).reduce((sum, p) => {
-      return sum + (p?.panelRect.height ?? 0);
-    }, 0);
-
-    console.log('availableHeight', availableHeight);
-    console.log('totalPanelHeight', totalPanelHeight);
-    console.log('difference', availableHeight - totalPanelHeight);
 
     return result;
   }
