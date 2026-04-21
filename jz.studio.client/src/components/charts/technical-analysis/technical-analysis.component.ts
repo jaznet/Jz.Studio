@@ -36,12 +36,12 @@ import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
 import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
 import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
-import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
 import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
+import { PanelHostService } from '../../../_framework/layout/panel-workspace/services/panel-host.service';
 
 // #endregion imports
 
