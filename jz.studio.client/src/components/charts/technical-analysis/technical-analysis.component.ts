@@ -43,6 +43,7 @@ import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfa
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { PanelHostService } from '../../../_framework/layout/panel-workspace/services/panel-host.service';
 import { PanelPreference } from './interfaces/panel-preference.interface';
+import { PanelPreferenceService } from '../../../_framework/layout/panel-workspace/services/panel-preference.service';
 
 // #endregion imports
 
@@ -197,7 +198,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     private macdLayout: MacdLayoutService,
     private macdDraw: MacdDrawService,
     private panelHost: PanelHostService,
-    private scaffoldSvc: ChartScaffoldService
+    private scaffoldSvc: ChartScaffoldService,
+    private panelPreferenceService: PanelPreferenceService
   ) {
     console.log('');
     console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
