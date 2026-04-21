@@ -566,6 +566,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   }
 
   private sizeAndPlacePanels(): void {
+
     const panelDefinitions: PanelDefinition[] = [
       {
         id: 'ohlc',
@@ -594,6 +595,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
         ratio: 0.15,
       }
     ];
+
     const request: ChartLayoutRequest = {
       width: this.scaffoldFramework.width,
       height: this.scaffoldFramework.height,
