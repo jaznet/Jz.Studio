@@ -31,7 +31,7 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   override ngOnChanges(_: SimpleChanges): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.MACD];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.MACD];
     const ok = !!panel && panel.panelRect.width > 0 && panel.panelRect.height > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'macd.ngOnChanges' });
   }
@@ -76,7 +76,7 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   protected override createChart(caller: string): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.MACD];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.MACD];
     if (!panel || !this.gChart) return;
 
     // Use the same inner height logic as other charts

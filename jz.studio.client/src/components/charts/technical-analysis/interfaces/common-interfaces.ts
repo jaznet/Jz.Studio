@@ -1,4 +1,4 @@
-export interface Rect {
+export interface DivRect {
   x: number;
   y: number;
   width: number;

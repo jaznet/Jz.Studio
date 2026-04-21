@@ -43,7 +43,7 @@ export abstract class BaseChartComponent implements OnChanges {
   }
 
   protected getPanel(): PanelAttributes | undefined {
-    return this.chartScaffold?.panels?.[this.chartType];
+    return this.chartScaffold?.chartMap?.[this.chartType];
   }
 
   protected renderPanelChartParts(): void {

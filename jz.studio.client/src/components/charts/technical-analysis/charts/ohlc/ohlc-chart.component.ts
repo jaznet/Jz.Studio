@@ -54,15 +54,15 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
 
   override ngOnChanges(changes: SimpleChanges): void {
     console.log('%c  🟡 ngOnChanges ohlc', 'color:#EFDD8D', changes);
-    const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.OHLC];
     const ok = !!panel && panel.innerWidth > 0 && panel.innerHeight > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'ohlc.ngOnChanges' }); // ✅ feed the base
     //const inputsValid = !!panel && panel.width > 0 && panel.height > 0 && this.data?.length && this.dateScaleX;
   }
    
   protected override createChart(caller: string): void {
- //   this.sizeChartElements();
-    const panel = this.chartScaffold?.panels?.[ChartType.OHLC];
+    //   this.sizeChartElements();
+    const panel = this.chartScaffold?.chartMap?.[ChartType.OHLC];
     if (!panel || !this.gChart) {
       console.warn(`${caller}: Missing panel or gChart`, {
         panelMissing: !panel,

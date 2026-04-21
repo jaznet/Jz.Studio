@@ -80,7 +80,7 @@ export class RsiChart {
   }
 
   public drawAxes(chartScaffold: ScaffoldFramework): this {
-    const panel = chartScaffold.panels?.[ChartType.RSI];
+    const panel = chartScaffold.chartMap?.[ChartType.RSI];
     if (!panel) {
       return this;
     }

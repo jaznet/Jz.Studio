@@ -33,7 +33,7 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
   }
 
   override ngOnChanges(_: SimpleChanges): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.RSI];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.RSI];
     const ok = !!panel && panel.innerWidth > 0 && panel.innerHeight > 0 && !!this.data?.length && !!this.dateScaleX;
     this.markReadyAndDraw({ inputsInitialized: ok, caller: 'rsi.ngOnChanges' });
   }
@@ -64,7 +64,7 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
   }
 
   protected override createChart(caller: string): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.RSI];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.RSI];
     if (!panel || !this.gChart) return;
 
     // match base inner-height policy

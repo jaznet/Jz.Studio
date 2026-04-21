@@ -1,19 +1,19 @@
-import { Rect } from "./common-interfaces";
+import { DivRect } from "./common-interfaces";
 
 export interface ChartViewportLayout {
-  frameRect: Rect;
-  contentRect: Rect;
-  axisLeftRect?: Rect;
-  axisRightRect?: Rect;
-  axisTopRect?: Rect;
-  axisBottomRect?: Rect;
+  frameRect: DivRect;
+  contentRect: DivRect;
+  axisLeftRect?: DivRect;
+  axisRightRect?: DivRect;
+  axisTopRect?: DivRect;
+  axisBottomRect?: DivRect;
 }
 
 export interface ChartFrame {
-  outerRect: Rect;
-  contentRect: Rect;
-  axisLeftRect?: Rect;
-  axisRightRect?: Rect;
-  axisTopRect?: Rect;
-  axisBottomRect?: Rect;
+  outerRect: DivRect;
+  contentRect: DivRect;
+  axisLeftRect?: DivRect;
+  axisRightRect?: DivRect;
+  axisTopRect?: DivRect;
+  axisBottomRect?: DivRect;
 }

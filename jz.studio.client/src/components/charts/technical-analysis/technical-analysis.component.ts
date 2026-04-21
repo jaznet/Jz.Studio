@@ -22,7 +22,7 @@ import { select, Selection } from 'd3-selection';
 import { scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { OverlayContainer } from '@angular/cdk/overlay';
-
+import { DivRect } from './interfaces/common-interfaces';
 import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container'
 
 import { ChartType } from './enums/chart-type';
@@ -40,7 +40,7 @@ import { PanelHostService } from './services/panel-host.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
-import type { PanelAttributes, PanelViewModel } from './interfaces/panel-interfaces';
+import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 
 // #endregion imports
@@ -174,14 +174,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   dateScaleX!: ScaleBand<Date>;
 
-
-
   chartXaxisMonthsTop!: Axis<Date>;
   chartXaxisMonthsBottom!: Axis<Date>;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   svgContainer!: HTMLDivElement;
   xAxisDays: any;
   xAxisBottom: any;
+ //   panelEngine: any;
   // #endregion Properties
 
   constructor(
@@ -338,9 +337,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
-      //this.sizeAndPlacePanels();
+      this.sizeAndPlacePanels();
       this.renderOuterScaffoldOnce();
+
       this.renderPanelHosts();
+      console.log('scaffoldFramework before renderPanelHosts', this.scaffoldFramework);
       this.sizeChartElements();
     //  this.alignMainChartElements();
 
@@ -401,25 +402,31 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
       xAxisBottom: 30,
       yAxisLeft: 30,
       yAxisRight: 30,
-      panelsContainer: undefined,
-      panels: undefined
+      panelHostsContainer: {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+      },
+      chartMap: undefined
     };
 
     this.scaffoldFramework.width = this.svgContainer.clientWidth;
     this.scaffoldFramework.height = this.svgContainer.clientHeight;
+    this.scaffoldFramework.panelHostsContainer.width = this.svgContainer.clientWidth;
 
-    console.log(
-      '%c     ✔ create ChartScaffold',
-      'color:#90BEE9',
-      this.scaffoldFramework.width,
-      'x',
-      this.scaffoldFramework.height
-    );
+  //  console.log(
+  //    '%c     ✔ create ChartScaffold',
+  //    'color:#90BEE9',
+  //    this.scaffoldFramework.width,
+  //    'x',
+  //    this.scaffoldFramework.height
+  //  );
   }
 
   private sizeChartElements(): void {
     console.log('%c     ✔  createScales', 'color:#90BEE9');
-    const pc = this.scaffoldFramework.panelsContainer;
+    const pc = this.scaffoldFramework.panelHostsContainer;
     if (!pc) return;
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
 
@@ -442,7 +449,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   private alignMainChartElements(): void {
     console.log('%c     ✔  alighMainChartElements', 'color:#90BEE9');
-    const pc = this.scaffoldFramework.panelsContainer;
+    const pc = this.scaffoldFramework.panelHostsContainer;
     if (!pc) return;
 
     select(this.gPanelHostsContainer.nativeElement)
@@ -558,10 +565,62 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     select(this.gAxisBottomMonths.nativeElement).call(this.chartXaxisMonthsBottom);
   }
 
-  private renderPanelHosts(): void {
-    if (!this.scaffoldFramework?.panelsC) return;
+  private sizeAndPlacePanels(): void {
+    const panelDefinitions: PanelDefinition[] = [
+      {
+        id: 'ohlc',
+        chartType: ChartType.OHLC,
+        ratio: 0.5,
+        showAxisLeft: true,
+        showAxisRight: true,
+        showXAxisTop: false,
+        showXAxisBottom: false,
+      },
+      {
+        id: 'volume',
+        chartType: ChartType.VOLUME,
+        ratio: 0.2,
+        showAxisLeft: true,
+        showAxisRight: false,
+      },
+      {
+        id: 'macd',
+        chartType: ChartType.MACD,
+        ratio: 0.15,
+      },
+      {
+        id: 'rsi',
+        chartType: ChartType.RSI,
+        ratio: 0.15,
+      }
+    ];
+    const request: ChartLayoutRequest = {
+      width: this.scaffoldFramework.width,
+      height: this.scaffoldFramework.height,
+      margins: this.scaffoldFramework.margins,
+      titleWidth: this.scaffoldFramework.titleWidth,
+      titleHeight: this.scaffoldFramework.titleHeight,
+      axisLeftWidth: this.scaffoldFramework.yAxisLeft,
+      axisRightWidth: this.scaffoldFramework.yAxisRight,
+      xAxisTopHeight: this.scaffoldFramework.xAxisTop,
+      xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+      panelGap: 0,
+      panels: panelDefinitions
+    };
 
-    const panels = Object.values(this.scaffoldFramework.panels).filter(Boolean);
+    const resolved = this.layoutService.buildScaffold(request);
+
+    this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
+    this.scaffoldFramework.chartMap = resolved.chartMap;
+  }
+
+  private renderPanelHosts(): void {
+    const panelsMap = this.scaffoldFramework?.chartMap;
+    if (!panelsMap) return;
+
+    const panels = Object.values(panelsMap).filter(
+      (panel): panel is PanelAttributes => !!panel
+    );
 
     const container = select(this.gPanelHostsContainer.nativeElement);
 

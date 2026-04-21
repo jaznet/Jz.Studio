@@ -3,7 +3,7 @@ import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
 import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
 import { ScaffoldFramework } from '../../interfaces/scaffold-framework.interface';
-import { Rect } from '../../interfaces/common-interfaces';
+import { DivRect } from '../../interfaces/common-interfaces';
 import { WorkspacePanelInstance } from '../../../../../_framework/layout/panel-workspace/interfaces/workspace-panel-instance.interface';
 import { PanelWorkspaceService } from '../../../../../_framework/layout/panel-workspace/services/panel-workspace.service';
 
@@ -16,9 +16,12 @@ export class PanelLayoutService {
     private panelWorkspaceService: PanelWorkspaceService
   ) { }
 
+
+
   buildScaffold(request: ChartLayoutRequest): ScaffoldFramework {
-    const panelsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
-    const panels = this.buildPanels(request, panelsContainer);
+    const panelHostsContainer = this.panelWorkspaceService.buildPanelsContainer(request);
+    const panels = this.buildPanels(request, panelHostsContainer);
+    const rect: DivRect = {x:0, y:0, width:0, height:0};
 
     return {
       titleHeight: request.titleHeight, 
@@ -30,14 +33,15 @@ export class PanelLayoutService {
       yAxisLeft: request.axisLeftWidth,
       yAxisRight: request.axisRightWidth,
       margins: request.margins,
-
-      panels
+      chartMap: panels,
+      panelHostsContainer: rect
+/*      chartMap:*/
     };
   }
 
   private buildPanels(
     request: ChartLayoutRequest,
-    panelHostsContainer: Rect
+    panelHostsContainer: DivRect
   ): Partial<Record<ChartType, PanelAttributes>> {
 
     const availableHeight = panelHostsContainer.height;
@@ -51,10 +55,10 @@ export class PanelLayoutService {
     panelDefs.forEach((def, index) => {
       const panelHeight = availableHeight * (def.ratio / totalRatio);
 
-      const panelRect: Rect = {
-        x: panelsContainer.x,
-        y: panelsContainer.y + currentY,
-        width: panelsContainer.width,
+      const panelRect: DivRect = {
+        x: panelHostsContainer.x,
+        y: panelHostsContainer.y + currentY,
+        width: panelHostsContainer.width,
         height: panelHeight
       };
 
@@ -67,42 +71,42 @@ export class PanelLayoutService {
       const innerWidth = Math.max(0, panelRect.width - axisLeftWidth - axisRightWidth);
       const innerHeight = Math.max(0, panelRect.height - titleHeight - axisTopHeight - axisBottomHeight);
 
-      const titleRect: Rect = {
+      const titleRect: DivRect = {
         x: panelRect.x,
         y: panelRect.y,
         width: panelRect.width,
         height: titleHeight
       };
 
-      const axisTopRect: Rect = {
+      const axisTopRect: DivRect = {
         x: panelRect.x + axisLeftWidth,
         y: panelRect.y + titleHeight,
         width: innerWidth,
         height: axisTopHeight
       };
 
-      const axisBottomRect: Rect = {
+      const axisBottomRect: DivRect = {
         x: panelRect.x + axisLeftWidth,
         y: panelRect.y + panelRect.height - axisBottomHeight,
         width: innerWidth,
         height: axisBottomHeight
       };
 
-      const axisLeftRect: Rect = {
+      const axisLeftRect: DivRect = {
         x: panelRect.x,
         y: panelRect.y + titleHeight + axisTopHeight,
         width: axisLeftWidth,
         height: innerHeight
       };
 
-      const axisRightRect: Rect = {
+      const axisRightRect: DivRect = {
         x: panelRect.x + panelRect.width - axisRightWidth,
         y: panelRect.y + titleHeight + axisTopHeight,
         width: axisRightWidth,
         height: innerHeight
       };
 
-      const contentRect: Rect = {
+      const contentRect: DivRect = {
         x: panelRect.x + axisLeftWidth,
         y: panelRect.y + titleHeight + axisTopHeight,
         width: innerWidth,

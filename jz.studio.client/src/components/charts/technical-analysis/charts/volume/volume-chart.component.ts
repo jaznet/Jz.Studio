@@ -37,7 +37,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   }
 
   override ngOnChanges(_: SimpleChanges): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.VOLUME];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.VOLUME];
 
     const ok =
       !!panel &&
@@ -53,7 +53,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
   }
 
   protected override createChart(caller: string): void {
-    const panel = this.chartScaffold?.panels?.[ChartType.VOLUME];
+    const panel = this.chartScaffold?.chartMap?.[ChartType.VOLUME];
     if (!panel || !this.gChart || !this.data?.length || !this.dateScaleX) return;
 
     const contentWidth = Math.max(0, panel.contentRect.width ?? 0);

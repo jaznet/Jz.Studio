@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PanelWorkspaceState } from '../interfaces/panel-workspace-state.interface';
 import { WorkspacePanelInstance } from '../interfaces/workspace-panel-instance.interface';
-import { Rect } from '../../../../components/charts/technical-analysis/interfaces/common-interfaces';
+import { DivRect } from '../../../../components/charts/technical-analysis/interfaces/common-interfaces';
 import { ChartLayoutRequest } from '../../../../components/charts/technical-analysis/interfaces/chart-layout-request.interface';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class PanelWorkspaceService {
       .sort((a, b) => a.order - b.order);
   }
 
-   buildPanelsContainer(request: ChartLayoutRequest): Rect {
+  buildPanelsContainer(request: ChartLayoutRequest): DivRect {
      const x = 0;
      const y = request.titleHeight + request.xAxisTopHeight;
 
@@ -32,11 +32,11 @@ export class PanelWorkspaceService {
 
   buildStackedPanelRects(
     panels: WorkspacePanelInstance[],
-    panelsContainer: Rect,
+    panelsContainer: DivRect,
     panelGap: number
   ): Array<{
     panel: WorkspacePanelInstance;
-    rect: Rect;
+    rect: DivRect;
   }> {
     const activePanels = panels
       .filter(panel => panel.visible)
@@ -58,7 +58,7 @@ export class PanelWorkspaceService {
         panelHeight = panelsContainer.height - currentY;
       }
 
-      const rect: Rect = {
+      const rect: DivRect = {
         x: 0,
         y: currentY,
         width: panelsContainer.width,

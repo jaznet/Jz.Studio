@@ -1,5 +1,5 @@
 import { ChartType } from '../enums/chart-type';
-import { Rect } from './common-interfaces';
+import { DivRect } from './common-interfaces';
 
 
 
@@ -17,13 +17,13 @@ export interface PanelDefinition {
 }
 
 export interface PanelRenderRectangles {
-  panelRect: Rect;
-  titleRect: Rect;
-  axisTopRect: Rect;
-  axisBottomRect: Rect;
-  axisLeftRect: Rect;
-  axisRightRect: Rect;
-  contentRect: Rect;
+  panelRect: DivRect;
+  titleRect: DivRect;
+  axisTopRect: DivRect;
+  axisBottomRect: DivRect;
+  axisLeftRect: DivRect;
+  axisRightRect: DivRect;
+  contentRect: DivRect;
 }
 
 export interface PanelViewModel {
@@ -32,7 +32,7 @@ export interface PanelViewModel {
   order: number;
   visible: boolean;
 
-  bounds: Rect;
+  bounds: DivRect;
   innerWidth: number;
   innerHeight: number;
 
@@ -46,13 +46,13 @@ export interface PanelViewModel {
 export interface PanelAttributes {
   id: string;
   index: number;
-  panelRect: Rect;
-  titleRect: Rect;
-  axisLeftRect: Rect;
-  axisRightRect: Rect;
-  axisTopRect: Rect;
-  axisBottomRect: Rect;
-  contentRect: Rect;
+  panelRect: DivRect;
+  titleRect: DivRect;
+  axisLeftRect: DivRect;
+  axisRightRect: DivRect;
+  axisTopRect: DivRect;
+  axisBottomRect: DivRect;
+  contentRect: DivRect;
   innerWidth: number;
   innerHeight: number;
 }
@@ -61,7 +61,7 @@ export interface PanelWorkspaceItem {
   id: string;
   order: number;
   visible: boolean;
-  rect: Rect;
-  headerRect?: Rect;
-  bodyRect: Rect;
+  rect: DivRect;
+  headerRect?: DivRect;
+  bodyRect: DivRect;
 }

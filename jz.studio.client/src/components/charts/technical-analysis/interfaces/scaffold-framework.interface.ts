@@ -1,9 +1,11 @@
 // chart-scaffold.service.ts
 
 import { ChartType } from '../enums/chart-type';
-import { Rect } from './common-interfaces';
+import { DivRect } from './common-interfaces';
 import { PanelAttributes } from './panel-interfaces';
 import { Margins } from './techan-interfaces';
+
+
 
 export interface ScaffoldFramework {
   titleWidth: number;
@@ -15,8 +17,7 @@ export interface ScaffoldFramework {
   yAxisLeft: number;
   yAxisRight: number;
   margins: Margins;
-  panelHostsContainer?: Rect;
+  panelHostsContainer: DivRect;
 
-  /** Panel attributes by chart type (OHLC, RSI, etc.) */
-  panels?: Partial<Record<ChartType, PanelAttributes>>;
+  chartMap?: Partial<Record<ChartType, PanelAttributes>>;  /** Panel attributes by chart type (OHLC, RSI, etc.) */
 }

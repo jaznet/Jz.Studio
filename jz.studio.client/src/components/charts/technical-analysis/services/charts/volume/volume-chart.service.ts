@@ -51,7 +51,7 @@ export class VolumeChartService {
   }
 
   public drawAxes(scaffold: ScaffoldFramework): this {
-    const panel = scaffold.panels?.[ChartType.VOLUME];
+    const panel = scaffold.chartMap?.[ChartType.VOLUME];
     if (!panel) {
       return this;
     }
