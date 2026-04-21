@@ -498,9 +498,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private createScales(): void {
 
-    //const panel = this.scaffoldFramework.panels?.[ChartType.OHLC];
-    //if (!panel) return;
-
     const contentWidth = Math.max(0, this.scaffoldFramework.width ?? 0);
 
     const raw = this.chartData.stockPriceHistoryData ?? [];
@@ -588,34 +585,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private sizeAndPlacePanels(): void {
 
-    const panelDefinitions: PanelDefinition[] = [
-      {
-        id: 'ohlc',
-        chartType: ChartType.OHLC,
-        ratio: 0.5,
-        showAxisLeft: true,
-        showAxisRight: true,
-        showXAxisTop: false,
-        showXAxisBottom: false,
-      },
-      {
-        id: 'volume',
-        chartType: ChartType.VOLUME,
-        ratio: 0.2,
-        showAxisLeft: true,
-        showAxisRight: false,
-      },
-      {
-        id: 'macd',
-        chartType: ChartType.MACD,
-        ratio: 0.15,
-      },
-      {
-        id: 'rsi',
-        chartType: ChartType.RSI,
-        ratio: 0.15,
-      }
-    ];
+    const preferences = this.panelPreferenceService.getPreferences();
+    const panelDefinitions = this.buildPanelDefinitions(preferences);
 
     const request: ChartLayoutRequest = {
       width: this.scaffoldFramework.width,

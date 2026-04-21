@@ -38,15 +38,5 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisTop: false,
     showXAxisBottom: false
   },
-  {
-    id: 'rsi',
-    chartType: ChartType.RSI,
-    order: 4,
-    visible: true,
-    ratio: 0.15,
-    showAxisLeft: true,
-    showAxisRight: false,
-    showXAxisTop: false,
-    showXAxisBottom: true
-  }
+
 ];
