@@ -9,6 +9,7 @@ import {
   HostBinding,
   Input,
   NgZone,
+  OnDestroy,
   OnInit,
   ViewChild,
   ViewEncapsulation
@@ -16,7 +17,7 @@ import {
 
 // #region imports
 
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Axis, axisBottom, axisTop } from 'd3-axis';
 import { select, Selection } from 'd3-selection';
 import { scaleBand, type ScaleBand } from 'd3-scale';
@@ -44,6 +45,7 @@ import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface'
 import { PanelHostService } from '../../../_framework/layout/panel-workspace/services/panel-host.service';
 import { PanelPreference } from './interfaces/panel-preference.interface';
 import { PanelPreferenceService } from '../../../_framework/layout/panel-workspace/services/panel-preference.service';
+import { Subject } from 'rxjs';
 
 // #endregion imports
 
@@ -65,7 +67,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
+export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
 
   // #region @ViewChild List
@@ -164,6 +166,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
 
   // #region Properties
   ChartType = ChartType;
+  private readonly destroyed$ = new Subject<void>();
   width = 0;
 
   scaffoldFramework!: ScaffoldFramework;
@@ -182,7 +185,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
   svgContainer!: HTMLDivElement;
   xAxisDays: any;
   xAxisBottom: any;
- //   panelEngine: any;
   // #endregion Properties
 
   constructor(
@@ -215,7 +217,45 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.xAxisBottom = null;
   }
 
-  ngOnInit(): void { }
+
+  ngOnInit(): void {
+    this.bindPanelPreferences();
+
+    this.panelPreferenceService.preferences$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(preferences => {
+        const panelDefinitions = this.buildPanelDefinitions(preferences);
+
+        const request: ChartLayoutRequest = {
+          width: this.scaffoldFramework.width,
+          height: this.scaffoldFramework.height,
+          margins: this.scaffoldFramework.margins,
+          titleWidth: this.scaffoldFramework.titleWidth,
+          titleHeight: this.scaffoldFramework.titleHeight,
+          axisLeftWidth: this.scaffoldFramework.yAxisLeft,
+          axisRightWidth: this.scaffoldFramework.yAxisRight,
+          xAxisTopHeight: this.scaffoldFramework.xAxisTop,
+          xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+          panelGap: 0,
+          panels: panelDefinitions
+        };
+
+        const resolved = this.layoutService.buildScaffold(request);
+
+        this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
+        this.scaffoldFramework.chartMap = resolved.chartMap;
+
+        this.sizeChartElements();
+        this.alignMainChartElements();
+        this.renderPanelHosts();
+      });
+  }
+
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
+  }
 
   ngAfterViewInit(): void {
   
@@ -340,7 +380,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit {
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
-      this.bindPanelPreferences();
+   //   this.bindPanelPreferences();
       this.sizeAndPlacePanels();
       this.renderOuterScaffoldOnce();
 
