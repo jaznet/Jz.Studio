@@ -16,27 +16,37 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisTop: false,
     showXAxisBottom: false
   },
-  {
-    id: 'volume',
-    chartType: ChartType.VOLUME,
-    order: 2,
-    visible: true,
-    ratio: 0.2,
-    showAxisLeft: true,
-    showAxisRight: false,
-    showXAxisTop: false,
-    showXAxisBottom: false
-  },
-  {
-    id: 'macd',
-    chartType: ChartType.MACD,
-    order: 3,
-    visible: true,
-    ratio: 0.15,
-    showAxisLeft: true,
-    showAxisRight: false,
-    showXAxisTop: false,
-    showXAxisBottom: false
-  },
-
+  //{
+  //  id: 'volume',
+  //  chartType: ChartType.VOLUME,
+  //  order: 2,
+  //  visible: true,
+  //  ratio: 0.2,
+  //  showAxisLeft: true,
+  //  showAxisRight: false,
+  //  showXAxisTop: false,
+  //  showXAxisBottom: false
+  //},
+  //{
+  //  id: 'macd',
+  //  chartType: ChartType.MACD,
+  //  order: 3,
+  //  visible: true,
+  //  ratio: 0.15,
+  //  showAxisLeft: true,
+  //  showAxisRight: false,
+  //  showXAxisTop: false,
+  //  showXAxisBottom: false
+  //},
+  //{
+  //  id: 'rsi',
+  //  chartType: ChartType.RSI,
+  //  order: 4,
+  //  visible: true,
+  //  ratio: 0.15,
+  //  showAxisLeft: true,
+  //  showAxisRight: false,
+  //  showXAxisTop: false,
+  //  showXAxisBottom: true
+  //}
 ];
