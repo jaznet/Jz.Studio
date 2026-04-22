@@ -27,26 +27,26 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisTop: false,
     showXAxisBottom: false
   },
-  //{
-  //  id: 'macd',
-  //  chartType: ChartType.MACD,
-  //  order: 3,
-  //  visible: true,
-  //  ratio: 0.15,
-  //  showAxisLeft: true,
-  //  showAxisRight: false,
-  //  showXAxisTop: false,
-  //  showXAxisBottom: false
-  //},
-  //{
-  //  id: 'rsi',
-  //  chartType: ChartType.RSI,
-  //  order: 4,
-  //  visible: true,
-  //  ratio: 0.15,
-  //  showAxisLeft: true,
-  //  showAxisRight: false,
-  //  showXAxisTop: false,
-  //  showXAxisBottom: true
-  //}
+  {
+    id: 'macd',
+    chartType: ChartType.MACD,
+    order: 3,
+    visible: true,
+    ratio: 0.15,
+    showAxisLeft: true,
+    showAxisRight: false,
+    showXAxisTop: false,
+    showXAxisBottom: false
+  },
+  {
+    id: 'rsi',
+    chartType: ChartType.RSI,
+    order: 4,
+    visible: true,
+    ratio: 0.15,
+    showAxisLeft: true,
+    showAxisRight: false,
+    showXAxisTop: false,
+    showXAxisBottom: true
+  }
 ];

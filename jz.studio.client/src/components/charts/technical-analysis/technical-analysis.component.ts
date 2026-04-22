@@ -663,9 +663,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     const merged = enter.merge(hosts as any);
 
-    merged.attr('transform', d =>
-      `translate(${d.panelRect.x}, ${d.panelRect.y})`
-    );
+    merged
+      .attr('id', d => `panel-host-${d.id}`)
+      .attr('data-panel-id', d => d.id)
+      .attr('transform', d => `translate(${d.panelRect.x}, ${d.panelRect.y})`);
 
     merged.select<SVGRectElement>('rect.panel-debug')
       .attr('x', 0)
