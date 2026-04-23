@@ -28,7 +28,6 @@ import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay
 
 import { ChartType } from './enums/chart-type';
 import { chartConfig } from './interfaces/chart-config';
-import { ScaffoldFramework } from './interfaces/scaffold-framework.interface';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
@@ -46,6 +45,7 @@ import { PanelHostService } from '../../../_framework/layout/panel-workspace/ser
 import { PanelPreference } from './interfaces/panel-preference.interface';
 import { PanelPreferenceService } from '../../../_framework/layout/panel-workspace/services/panel-preference.service';
 import { Subject } from 'rxjs';
+import { ChartScaffold } from './interfaces/chart-scafffold.interface';
 
 // #endregion imports
 
@@ -169,7 +169,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly destroyed$ = new Subject<void>();
   width = 0;
 
-  scaffoldFramework!: ScaffoldFramework;
+  chartScaffold!: ChartScaffold;
   panelViewModels: PanelViewModel[] = [];
 
   dataReady = false;
@@ -219,7 +219,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
 
   ngOnInit(): void {
-    this.bindPanelPreferences();
+   /* this.bindPanelPreferences();*/
 
     this.panelPreferenceService.preferences$
       .pipe(takeUntil(this.destroyed$))
@@ -266,7 +266,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private renderOuterScaffoldOnce(): void {
-    const scaffold = this.scaffoldFramework;
+    const scaffold = this.chartScaffold;
     const centerX = scaffold.titleWidth / 2;
     const centerY = scaffold.titleHeight / 2;
 
@@ -277,8 +277,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('height', scaffold.titleHeight)
 
     select(this.chartTitle.nativeElement)
-      .attr('x', this.scaffoldFramework.width / 2)
-      .attr('y', this.scaffoldFramework.titleHeight / 2)
+      .attr('x', this.chartScaffold.width / 2)
+      .attr('y', this.chartScaffold.titleHeight / 2)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('fill', 'gray');
@@ -357,58 +357,100 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
-   //   this.bindPanelPreferences();
-      this.sizeAndPlacePanels();
-      this.renderOuterScaffoldOnce();
-
-      this.renderPanelHosts();
-      console.log('scaffoldFramework before renderPanelHosts', this.scaffoldFramework);
-      this.sizeChartElements();
-    //  this.alignMainChartElements();
-
+      this.bindPanelPreferences();
       this.createScales();
       this.drawAxes();
 
-      this.scaffoldSvc.scaffold = this.scaffoldFramework;
-      this.injectChartsFromConfig();
+      this.sizeAndPlacePanels();
+      this.renderOuterScaffoldOnce();
+      this.sizeChartElements();
+      //  this.alignMainChartElements();
+
+      this.renderPanelHosts();
+      this.injectFirstChart();
+
+      this.scaffoldSvc.scaffold = this.chartScaffold;
+      this.injectConfiguredPanels();
     });
   }
 
-  private injectChartsFromConfig(): void {
-    console.log('%c     ✔  injectChartsFromConfig', 'color:#90BEE9');
-    const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
+  private injectConfiguredPanels(): void {
+    const chartMap = this.chartScaffold?.chartMap;
+    if (!chartMap) return;
 
-    chartConfig.forEach((configEntry, index) => {
-      if (!configEntry.include) return;
+    const preferences = this.panelPreferenceService.getPreferences()
+      .filter(p => p.visible)
+      .sort((a, b) => a.order - b.order);
 
-      const chartComponent = ChartComponentMap[configEntry.type];
-      const panelRef = panelRefs[index];
+    preferences.forEach(pref => {
+      const panel = chartMap[pref.chartType];
+      if (!panel) return;
 
-      if (!chartComponent || !panelRef) return;
+      const host = this.gPanelHostsContainer.nativeElement.querySelector(
+        `#panel-host-${panel.id}`
+      ) as SVGGElement | null;
+
+      if (!host) return;
+
+      const chartComponent = ChartComponentMap[pref.chartType];
+      if (!chartComponent) return;
 
       const compRef = this.panelHost.injectChartComponent(
-        panelRef.nativeElement,
-        configEntry.type,
+        host,
+        pref.chartType,
         chartComponent
       );
 
       compRef.setInput('data', this.chartData.stockPriceHistoryData);
       compRef.setInput('dateScaleX', this.dateScaleX);
-  //    compRef.setInput('scaffold', this.scaffold);
+      compRef.setInput('panel', panel);
+      compRef.setInput('scaffold', this.chartScaffold);
 
       compRef.instance.markReadyAndDraw({
         dataReady: true,
         inputsInitialized: true,
-        caller: 'injectChartsFromConfig'
+        caller: 'injectConfiguredPanels'
       });
 
       compRef.changeDetectorRef.detectChanges();
     });
   }
 
+  //private injectChartsFromConfig(): void {
+  //  console.log('%c     ✔  injectChartsFromConfig', 'color:#90BEE9');
+  //  const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
+
+  //  chartConfig.forEach((configEntry, index) => {
+  //    if (!configEntry.include) return;
+
+  //    const chartComponent = ChartComponentMap[configEntry.type];
+  //    const panelRef = panelRefs[index];
+
+  //    if (!chartComponent || !panelRef) return;
+
+  //    const compRef = this.panelHost.injectChartComponent(
+  //      panelRef.nativeElement,
+  //      configEntry.type,
+  //      chartComponent
+  //    );
+
+  //    compRef.setInput('data', this.chartData.stockPriceHistoryData);
+  //    compRef.setInput('dateScaleX', this.dateScaleX);
+  ////    compRef.setInput('scaffold', this.scaffold);
+
+  //    compRef.instance.markReadyAndDraw({
+  //      dataReady: true,
+  //      inputsInitialized: true,
+  //      caller: 'injectChartsFromConfig'
+  //    });
+
+  //    compRef.changeDetectorRef.detectChanges();
+  //  });
+  //}
+
   private createChartScaffold(): void {
     console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
-    this.scaffoldFramework = {
+    this.chartScaffold = {
       titleHeight: 36,
       titleWidth: this.svgContainer.clientWidth,
       width: this.svgContainer.clientWidth,
@@ -432,73 +474,73 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       chartMap: undefined
     };
 
-    this.scaffoldFramework.width = this.svgContainer.clientWidth;
-    this.scaffoldFramework.height = this.svgContainer.clientHeight;
-    this.scaffoldFramework.panelHostsContainer!.width = this.svgContainer.clientWidth;
+    this.chartScaffold.width = this.svgContainer.clientWidth;
+    this.chartScaffold.height = this.svgContainer.clientHeight;
+    this.chartScaffold.panelHostsContainer!.width = this.svgContainer.clientWidth;
 
   //  console.log(
   //    '%c     ✔ create ChartScaffold',
   //    'color:#90BEE9',
-  //    this.scaffoldFramework.width,
+  //    this.chartScaffold.width,
   //    'x',
-  //    this.scaffoldFramework.height
+  //    this.chartScaffold.height
   //  );
   }
 
   private sizeChartElements(): void {
     console.log('%c     ✔  createScales', 'color:#90BEE9');
-    const pc = this.scaffoldFramework.panelHostsContainer;
+    const pc = this.chartScaffold.panelHostsContainer;
     if (!pc) return;
     console.log('%c     ✔ size ChartElements', 'color:#90BEE9');
 
     //select(this.rSvgElement.nativeElement)
-    //  .attr('width', this.scaffoldFramework.width)
-    //  .attr('height', this.scaffoldFramework.height);
+    //  .attr('width', this.chartScaffold.width)
+    //  .attr('height', this.chartScaffold.height);
 
     select(this.rChartTitle.nativeElement)
-      .attr('width', this.scaffoldFramework.width)
-      .attr('height', this.scaffoldFramework.titleHeight);
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.titleHeight);
 
     select(this.rAxisTop.nativeElement)
-      .attr('width', this.scaffoldFramework.width)
-      .attr('height', this.scaffoldFramework.xAxisTop);
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.xAxisTop);
 
     select(this.rAxisBottom.nativeElement)
-      .attr('width', this.scaffoldFramework.width)
-      .attr('height', this.scaffoldFramework.xAxisBottom);
+      .attr('width', this.chartScaffold.width)
+      .attr('height', this.chartScaffold.xAxisBottom);
   }
 
   private alignMainChartElements(): void {
     console.log('%c     ✔  alighMainChartElements', 'color:#90BEE9');
-    const pc = this.scaffoldFramework.panelHostsContainer;
+    const pc = this.chartScaffold.panelHostsContainer;
     if (!pc) return;
 
     select(this.gPanelHostsContainer.nativeElement)
       .classed('panels-container', true);
 
     //select(this.tChartTitleText.nativeElement)
-    //  .attr('y', this.scaffoldFramework.titleHeight / 2)
-    //  .attr('x', this.scaffoldFramework.width / 2);
+    //  .attr('y', this.chartScaffold.titleHeight / 2)
+    //  .attr('x', this.chartScaffold.width / 2);
 
     select(this.gAxisTop.nativeElement)
-      .attr('transform', `translate(0, ${this.scaffoldFramework.titleHeight})`);
+      .attr('transform', `translate(0, ${this.chartScaffold.titleHeight})`);
 
     select(this.gAxisTopMonths.nativeElement)
       .attr(
         'transform',
-        `translate(${this.scaffoldFramework.yAxisLeft}, ${this.scaffoldFramework.xAxisTop})`
+        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`
       );
 
     select(this.gAxisBottom.nativeElement)
       .attr(
         'transform',
-        `translate(${this.scaffoldFramework.yAxisLeft}, ${this.scaffoldFramework.height - this.scaffoldFramework.xAxisBottom})`
+        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
       );
   }
 
   private createScales(): void {
 
-    const contentWidth = Math.max(0, this.scaffoldFramework.width ?? 0);
+    const contentWidth = Math.max(0, this.chartScaffold.width ?? 0);
 
     const raw = this.chartData.stockPriceHistoryData ?? [];
     const dates: Date[] = raw.map(d =>
@@ -507,7 +549,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     this.dateScaleX = scaleBand<Date>()
       .domain(dates)
-      .range([0, contentWidth - this.scaffoldFramework.margins.left - this.scaffoldFramework.margins.right])
+      .range([0, contentWidth - this.chartScaffold.margins.left - this.chartScaffold.margins.right])
       .paddingInner(0.2)
       .paddingOuter(0.1)
       .align(0.5);
@@ -589,48 +631,48 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     const panelDefinitions = this.buildPanelDefinitions(preferences);
 
     const request: ChartLayoutRequest = {
-      width: this.scaffoldFramework.width,
-      height: this.scaffoldFramework.height,
-      margins: this.scaffoldFramework.margins,
-      titleWidth: this.scaffoldFramework.titleWidth,
-      titleHeight: this.scaffoldFramework.titleHeight,
-      axisLeftWidth: this.scaffoldFramework.yAxisLeft,
-      axisRightWidth: this.scaffoldFramework.yAxisRight,
-      xAxisTopHeight: this.scaffoldFramework.xAxisTop,
-      xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+      width: this.chartScaffold.width,
+      height: this.chartScaffold.height,
+      margins: this.chartScaffold.margins,
+      titleWidth: this.chartScaffold.titleWidth,
+      titleHeight: this.chartScaffold.titleHeight,
+      axisLeftWidth: this.chartScaffold.yAxisLeft,
+      axisRightWidth: this.chartScaffold.yAxisRight,
+      xAxisTopHeight: this.chartScaffold.xAxisTop,
+      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
       panelGap: 0,
       panels: panelDefinitions
     };
 
     const resolved = this.layoutService.buildScaffold(request);
 
-    this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
-    this.scaffoldFramework.chartMap = resolved.chartMap;
+    this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
+    this.chartScaffold.chartMap = resolved.chartMap;
   }
 
   private applyPanelPreferences(preferences: PanelPreference[]): void {
-    if (!this.scaffoldFramework?.width || !this.scaffoldFramework?.height) return;
+    if (!this.chartScaffold?.width || !this.chartScaffold?.height) return;
 
     const panelDefinitions = this.buildPanelDefinitions(preferences);
 
     const request: ChartLayoutRequest = {
-      width: this.scaffoldFramework.width,
-      height: this.scaffoldFramework.height,
-      margins: this.scaffoldFramework.margins,
-      titleWidth: this.scaffoldFramework.titleWidth,
-      titleHeight: this.scaffoldFramework.titleHeight,
-      axisLeftWidth: this.scaffoldFramework.yAxisLeft,
-      axisRightWidth: this.scaffoldFramework.yAxisRight,
-      xAxisTopHeight: this.scaffoldFramework.xAxisTop,
-      xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+      width: this.chartScaffold.width,
+      height: this.chartScaffold.height,
+      margins: this.chartScaffold.margins,
+      titleWidth: this.chartScaffold.titleWidth,
+      titleHeight: this.chartScaffold.titleHeight,
+      axisLeftWidth: this.chartScaffold.yAxisLeft,
+      axisRightWidth: this.chartScaffold.yAxisRight,
+      xAxisTopHeight: this.chartScaffold.xAxisTop,
+      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
       panelGap: 0,
       panels: panelDefinitions
     };
 
     const resolved = this.layoutService.buildScaffold(request);
 
-    this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
-    this.scaffoldFramework.chartMap = resolved.chartMap;
+    this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
+    this.chartScaffold.chartMap = resolved.chartMap;
 
     this.sizeChartElements();
     this.alignMainChartElements();
@@ -638,7 +680,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private renderPanelHosts(): void {
-    const panelsMap = this.scaffoldFramework?.chartMap;
+    const panelsMap = this.chartScaffold?.chartMap;
     if (!panelsMap) return;
 
     const panels = Object.values(panelsMap).filter(
@@ -677,8 +719,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('stroke', 'yellow');
   }
 
-  // technical-analysis.component.ts
-
   private buildPanelDefinitions(
     preferences: PanelPreference[]
   ): PanelDefinition[] {
@@ -703,28 +743,61 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       const panelDefinitions = this.buildPanelDefinitions(preferences);
 
       const request: ChartLayoutRequest = {
-        width: this.scaffoldFramework.width,
-        height: this.scaffoldFramework.height,
-        margins: this.scaffoldFramework.margins,
-        titleWidth: this.scaffoldFramework.titleWidth,
-        titleHeight: this.scaffoldFramework.titleHeight,
-        axisLeftWidth: this.scaffoldFramework.yAxisLeft,
-        axisRightWidth: this.scaffoldFramework.yAxisRight,
-        xAxisTopHeight: this.scaffoldFramework.xAxisTop,
-        xAxisBottomHeight: this.scaffoldFramework.xAxisBottom,
+        width: this.chartScaffold.width,
+        height: this.chartScaffold.height,
+        margins: this.chartScaffold.margins,
+        titleWidth: this.chartScaffold.titleWidth,
+        titleHeight: this.chartScaffold.titleHeight,
+        axisLeftWidth: this.chartScaffold.yAxisLeft,
+        axisRightWidth: this.chartScaffold.yAxisRight,
+        xAxisTopHeight: this.chartScaffold.xAxisTop,
+        xAxisBottomHeight: this.chartScaffold.xAxisBottom,
         panelGap: 0,
         panels: panelDefinitions
       };
 
       const resolved = this.layoutService.buildScaffold(request);
 
-      this.scaffoldFramework.panelHostsContainer = resolved.panelHostsContainer;
-      this.scaffoldFramework.chartMap = resolved.chartMap;
+      this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
+      this.chartScaffold.chartMap = resolved.chartMap;
 
       this.sizeChartElements();
       this.alignMainChartElements();
       this.renderPanelHosts();
     });
+  }
+
+  private injectFirstChart(): void {
+    const chartMap = this.chartScaffold?.chartMap;
+    if (!chartMap) return;
+
+    const ohlcPanel = chartMap[ChartType.OHLC];
+    if (!ohlcPanel) return;
+
+    const host = this.gPanelHostsContainer.nativeElement.querySelector(
+      '#panel-host-ohlc'
+    ) as SVGGElement | null;
+
+    if (!host) return;
+
+    const compRef = this.panelHost.injectChartComponent(
+      host,
+      ChartType.OHLC,
+      OhlcChartComponent
+    );
+
+    compRef.setInput('data', this.chartData.stockPriceHistoryData);
+    compRef.setInput('dateScaleX', this.dateScaleX);
+    compRef.setInput('panel', ohlcPanel);
+    compRef.setInput('scaffold', this.chartScaffold);
+
+    compRef.instance.markReadyAndDraw({
+      dataReady: true,
+      inputsInitialized: true,
+      caller: 'injectFirstChart'
+    });
+
+    compRef.changeDetectorRef.detectChanges();
   }
 
   showError(error: any): void {

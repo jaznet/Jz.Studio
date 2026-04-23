@@ -1,11 +1,13 @@
+// panel-layout.service.ts
+
 import { Injectable } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
 import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
-import { ScaffoldFramework } from '../../interfaces/scaffold-framework.interface';
 import { DivRect } from '../../interfaces/common-interfaces';
 import { WorkspacePanelInstance } from '../../../../../_framework/layout/panel-workspace/interfaces/workspace-panel-instance.interface';
 import { PanelWorkspaceService } from '../../../../../_framework/layout/panel-workspace/services/panel-workspace.service';
+import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,7 @@ export class PanelLayoutService {
     private panelWorkspaceService: PanelWorkspaceService
   ) { }
 
-  buildScaffold(request: ChartLayoutRequest): ScaffoldFramework {
+  buildScaffold(request: ChartLayoutRequest): ChartScaffold {
     const panelHostsContainer = this.buildPanelHostsContainer(request);
     const chartMap = this.buildPanels(request, panelHostsContainer);
 

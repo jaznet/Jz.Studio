@@ -5,7 +5,7 @@ import { DivRect } from './common-interfaces';
 import { PanelAttributes } from './panel-interfaces';
 import { Margins } from './techan-interfaces';
 
-export interface ScaffoldFramework {
+export interface ChartScaffold {
   titleWidth: number;
   titleHeight: number;
   width: number;

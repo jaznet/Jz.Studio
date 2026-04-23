@@ -1,10 +1,10 @@
 // base-chart.component.ts
 
-import { Component, ElementRef, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
-import { ScaffoldFramework } from '../../interfaces/scaffold-framework.interface';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
+import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
 
 @Component({
   selector: 'base-chart',
@@ -27,13 +27,24 @@ export abstract class BaseChartComponent implements OnChanges {
   @ViewChild('rAxisRight', { static: false }) rAxisRight!: ElementRef<SVGRectElement>;
   @ViewChild('gChart', { static: false }) gChart!: ElementRef<SVGGElement>;
 
+  @Input()
+  set scaffold(value: ChartScaffold | undefined) {
+    if (!value) return;
+
+    this.chartScaffold = value;
+    this.layoutReady = !!this.getPanel();
+    this.drawAttempted = false;
+    this.checkAndDraw('scaffold@Input');
+  }
+  @Input() panel?: PanelAttributes;
+
 
   protected viewInitialized = false;
   protected inputsInitialized = false;
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
-  protected chartScaffold!: ScaffoldFramework;
+  protected chartScaffold!: ChartScaffold;
   protected innerHeight = 0;
 
   chartType: ChartType = ChartType.Base;
@@ -43,7 +54,7 @@ export abstract class BaseChartComponent implements OnChanges {
   }
 
   protected getPanel(): PanelAttributes | undefined {
-    return this.chartScaffold?.chartMap?.[this.chartType];
+    return this.panel ?? this.chartScaffold?.chartMap?.[this.chartType];
   }
 
   protected renderPanelChartParts(): void {
