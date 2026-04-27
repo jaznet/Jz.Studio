@@ -392,21 +392,24 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private createChartScaffold(): void {
     console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
+
+    const margins = {
+      bottom: 30,
+      left: 40,
+      right: 40,
+      top: 30,
+    };
+
     this.chartScaffold = {
       titleHeight: 36,
       titleWidth: this.svgContainer.clientWidth,
       width: this.svgContainer.clientWidth,
       height: 400,
-      margins: {
-        bottom: 30,
-        left:40,
-        right: 40,
-        top: 30,
-      },
+     margins,
       xAxisTop: 30,
       xAxisBottom: 30,
-      yAxisLeft: 40,
-      yAxisRight: 40,
+      //yAxisLeft: 40,
+      //yAxisRight: 40,
       panelHostsContainer: {
         x: 0,
         y: 0,
@@ -470,13 +473,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     select(this.gAxisTopMonths.nativeElement)
       .attr(
         'transform',
-        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.xAxisTop})`
+        `translate(${this.chartScaffold.margins.left}, ${this.chartScaffold.xAxisTop})`
       );
 
     select(this.gAxisBottom.nativeElement)
       .attr(
         'transform',
-        `translate(${this.chartScaffold.yAxisLeft}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
+        `translate(${this.chartScaffold.margins.left}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
       );
   }
 
@@ -578,8 +581,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       margins: this.chartScaffold.margins,
       titleWidth: this.chartScaffold.titleWidth,
       titleHeight: this.chartScaffold.titleHeight,
-      axisLeftWidth: this.chartScaffold.yAxisLeft,
-      axisRightWidth: this.chartScaffold.yAxisRight,
+      axisLeftWidth: this.chartScaffold.margins.left,
+      axisRightWidth: this.chartScaffold.margins.right,
       xAxisTopHeight: this.chartScaffold.xAxisTop,
       xAxisBottomHeight: this.chartScaffold.xAxisBottom,
       panelGap: 0,
@@ -603,8 +606,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       margins: this.chartScaffold.margins,
       titleWidth: this.chartScaffold.titleWidth,
       titleHeight: this.chartScaffold.titleHeight,
-      axisLeftWidth: this.chartScaffold.yAxisLeft,
-      axisRightWidth: this.chartScaffold.yAxisRight,
+      axisLeftWidth: this.chartScaffold.margins.left,
+      axisRightWidth: this.chartScaffold.margins.right,
       xAxisTopHeight: this.chartScaffold.xAxisTop,
       xAxisBottomHeight: this.chartScaffold.xAxisBottom,
       panelGap: 0,
@@ -658,8 +661,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('y', 0)
       .attr('width', d => Math.max(0, d.panelRect.width))
       .attr('height', d => Math.max(0, d.panelRect.height))
-      .attr('fill', 'rgba(0, 128, 255, 0.1)')
-      .attr('stroke', 'yellow');
+      .attr('fill', 'rgba(0, 128, 255, 0.1)');
+   //   .attr('stroke', 'yellow');
   }
 
   private buildPanelDefinitions(

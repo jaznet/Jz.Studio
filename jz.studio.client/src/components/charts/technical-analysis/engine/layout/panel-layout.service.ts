@@ -6,6 +6,7 @@ import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interf
 import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
 import { DivRect } from '../../interfaces/common-interfaces';
 import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
+import { Margins } from '../../interfaces/techan-interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,13 @@ export class PanelLayoutService {
     const panelHostsContainer = this.buildPanelHostsContainer(request);
     const chartMap = this.buildPanels(request, panelHostsContainer);
 
+    const margins: Margins = {
+      left: request.axisLeftWidth,
+      right: request.axisRightWidth,
+      top: request.margins.top,
+      bottom: request.margins.bottom
+    };
+
     return {
       titleWidth: request.titleWidth,
       titleHeight: request.titleHeight,
@@ -22,9 +30,7 @@ export class PanelLayoutService {
       height: request.height,
       xAxisTop: request.xAxisTopHeight,
       xAxisBottom: request.xAxisBottomHeight,
-      yAxisLeft: request.axisLeftWidth,
-      yAxisRight: request.axisRightWidth,
-      margins: request.margins,
+     margins,
       panelHostsContainer,
       chartMap
     };

@@ -12,8 +12,8 @@ export interface ChartScaffold {
   height: number;
   xAxisTop: number;
   xAxisBottom: number;
-  yAxisLeft: number;
-  yAxisRight: number;
+  //yAxisLeft: number;
+  //yAxisRight: number;
   margins: Margins;
   panelHostsContainer?: DivRect;
   chartMap?: Partial<Record<ChartType, PanelAttributes>>;
