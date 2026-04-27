@@ -405,8 +405,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       },
       xAxisTop: 30,
       xAxisBottom: 30,
-      yAxisLeft: 30,
-      yAxisRight: 30,
+      yAxisLeft: 40,
+      yAxisRight: 40,
       panelHostsContainer: {
         x: 0,
         y: 0,

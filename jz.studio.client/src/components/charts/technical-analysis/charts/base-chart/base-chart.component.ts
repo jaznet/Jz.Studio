@@ -64,6 +64,10 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   }
 
   protected renderPanelChartParts(): void {
+
+    const chart = this.chartScaffold;
+    if (!chart) return;
+    console.log('Rendering panel chart parts with scaffold:', chart);
     const panel = this.getPanel();
     if (!panel) return;
 
@@ -76,7 +80,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     const panelHeight = Math.max(0, panelRect.height);
     const contentWidth = Math.max(0, contentRect.width);
     const contentHeight = Math.max(0, contentRect.height);
-    const axisLeftWidth = Math.max(0, axisLeftRect.width);
+    const axisLeftWidth = Math.max(0, chart.margins.left);
     const axisLeftHeight = Math.max(0, axisLeftRect.height);
     const axisRightWidth = Math.max(0, axisRightRect.width);
     const axisRightHeight = Math.max(0, axisRightRect.height);
