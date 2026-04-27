@@ -27,7 +27,6 @@ import { DivRect } from './interfaces/common-interfaces';
 import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container'
 
 import { ChartType } from './enums/chart-type';
-import { chartConfig } from './interfaces/chart-config';
 import { ChartComponentMap } from './maps/chart-component-map';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
@@ -37,7 +36,6 @@ import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout
 import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
-import { OhlcChartComponent } from './charts/ohlc/ohlc-chart.component';
 import { TechnicalAnalysisService } from './technical-analysis.service';
 import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
@@ -90,7 +88,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('rAxisBottom', { static: false }) rAxisBottom!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisBottomMonths', { static: false }) gAxisBottomMonths!: ElementRef<SVGGElement>;
   //@ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
-/*  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;*/
+  /*  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;*/
 
   @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
   @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
@@ -103,62 +101,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
 
   // #region ohlc
-  @ViewChild('ohlcChart', { static: false }) ohlcChart!: OhlcChartComponent;
-
-  @ViewChild('gOhlcSection', { static: false }) gOhlcSectionRef!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcSection', { static: false }) rOhlcSectionRef!: ElementRef<SVGRectElement>;
-
-  @ViewChild('gOhlcContent', { static: false }) gOhlcContent!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcContent', { static: false }) rOhlcContent!: ElementRef<SVGRectElement>;
-
-  @ViewChild('gOhlcChart', { static: false }) gOhlcChart!: ElementRef<SVGGElement>;
-
-  @ViewChild('gOhlcAxisGroupLeft', { static: false }) gOhlcAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcAxisLeft', { static: false }) rOhlcAxisLeft!: ElementRef<SVGRectElement>;
-  @ViewChild('gOhlcAxisLeft', { static: false }) gOhlcAxisLeft!: ElementRef<SVGGElement>;
-
-  @ViewChild('gOhlcAxisGroupRight', { static: false }) gOhlcAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('gOhlcAxisRight', { static: false }) gOhlcAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('rOhlcAxisRight', { static: false }) rOhlcAxisRight!: ElementRef<SVGRectElement>;
   // #endregion ohlc
 
   // #region VOLUME
-  @ViewChild('gVolumeSection', { static: false }) gVolumeSection!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeSection', { static: false }) rVolumeSection!: ElementRef<SVGRectElement>;
-  @ViewChild('gVolumeContent', { static: false }) gVolumeContent!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeContent', { static: false }) rVolumeContent!: ElementRef<SVGRectElement>;
-  @ViewChild('gVolumeChart', { static: false }) gVolumeChart!: ElementRef<SVGGElement>;
-
-  @ViewChild('gVolumeAxisLeft', { static: false }) gVolumeAxisLeft!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisGroupLeft', { static: false }) gVolumeAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeAxisLeft', { static: false }) rVolumeAxisLeft!: ElementRef<SVGRectElement>;
-
-  @ViewChild('gVolumeAxisRight', { static: false }) gVolumeAxisRight!: ElementRef<SVGGElement>;
-  @ViewChild('gVolumeAxisGroupRight', { static: false }) gVolumeAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('rVolumeAxisRight', { static: false }) rVolumeAxisRight!: ElementRef<SVGRectElement>;
   // #endregion VOLUME
 
   // #region RSI
-  @ViewChild('gRsiSection', { static: false }) gRsiSection!: ElementRef<SVGGElement>;
-  @ViewChild('gRsiSectionContent', { static: false }) gRsiSectionContent!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiSectionContent', { static: false }) rRsiSectionContent!: ElementRef<SVGRectElement>;
-  @ViewChild('rRsiSectionRect', { static: false }) rRsiSectionRect!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiChart', { static: false }) gRsiChart!: ElementRef<SVGGElement>;
-
-  @ViewChild('gRsiAxisGroupLeft', { static: false }) gRsiAxisGroupLeft!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiAxisGroupLeft', { static: false }) rRsiAxisGroupLeft!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiAxisLeft', { static: false }) gRsiAxisLeft!: ElementRef<SVGGElement>;
-
-  @ViewChild('gRsiAxisGroupRight', { static: false }) gRsiAxisGroupRight!: ElementRef<SVGGElement>;
-  @ViewChild('rRsiAxisGroupRight', { static: false }) rRsiAxisGroupRight!: ElementRef<SVGRectElement>;
-  @ViewChild('gRsiAxisRight', { static: false }) gRsiAxisRight!: ElementRef<SVGGElement>;
   // #endregion RSI
 
-  @ViewChild('sma1', { static: false }) sma1Ref!: ElementRef<SVGGElement>;
-  @ViewChild('sma2', { static: false }) sma2Ref!: ElementRef<SVGGElement>;
-  @ViewChild('sma3', { static: false }) sma3Ref!: ElementRef<SVGGElement>;
 
-  @ViewChild('gRsiGroup', { static: false }) gRsiGroupRef!: ElementRef<SVGGElement>;
 
   @Input() chartTitle: any = 'Technical Analysis Chart';
 
@@ -219,8 +170,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
 
   ngOnInit(): void {
-   /* this.bindPanelPreferences();*/
-
     this.panelPreferenceService.preferences$
       .pipe(takeUntil(this.destroyed$))
       .subscribe(preferences => {
@@ -235,7 +184,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngAfterViewInit(): void {
-  
+
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
     this.fetchData();
@@ -251,8 +200,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.svgContainer = this.divSvgContainer.nativeElement;
 
     select(this.svgElement.nativeElement)
-      .attr('width', this.divSvgContainer.nativeElement.clientWidth-5)
-      .attr('height', this.divSvgContainer.nativeElement.clientHeight-2);
+      .attr('width', this.divSvgContainer.nativeElement.clientWidth - 5)
+      .attr('height', this.divSvgContainer.nativeElement.clientHeight - 2);
 
     select(this.rSvgElement.nativeElement)
       .attr('width', this.divSvgContainer.nativeElement.clientWidth)
@@ -267,21 +216,19 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private renderOuterScaffoldOnce(): void {
     const scaffold = this.chartScaffold;
-    const centerX = scaffold.titleWidth / 2;
-    const centerY = scaffold.titleHeight / 2;
-
     select(this.rChartTitle.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', scaffold.width)
       .attr('height', scaffold.titleHeight)
 
-    select(this.chartTitle.nativeElement)
-      .attr('x', this.chartScaffold.width / 2)
-      .attr('y', this.chartScaffold.titleHeight / 2)
+    select(this.tChartTitleText.nativeElement)
+      .attr('x', scaffold.width / 2)
+      .attr('y', scaffold.titleHeight / 2)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
-      .attr('fill', 'gray');
+      .attr('fill', 'gray')
+      .text(this.chartTitle);
 
     select(this.gAxisTop.nativeElement)
       .attr('transform', `translate(${scaffold.margins.left}, ${scaffold.titleHeight})`);
@@ -316,7 +263,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private fetchData(): void {
     console.log('%c     ✔  fetchData', 'color:#90BEE9');
-/*    this.popover_loading.show();*/
+    /*    this.popover_loading.show();*/
 
     this.stockPriceService.getStockPrices(this.ticker).subscribe(
       (data) => {
@@ -325,7 +272,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
         console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
 
-   /*     this.popover_loading.hide();*/
+        /*     this.popover_loading.hide();*/
         this.tryCreateChart();
       },
       (error) => {
@@ -357,17 +304,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
       this.chartData.scrubData();
       this.createChartScaffold();
-      this.bindPanelPreferences();
+      this.renderOuterScaffoldOnce();
+      this.sizeChartElements();
       this.createScales();
       this.drawAxes();
 
-      this.sizeAndPlacePanels();
-      this.renderOuterScaffoldOnce();
-      this.sizeChartElements();
-      //  this.alignMainChartElements();
-
-      this.renderPanelHosts();
-      this.injectFirstChart();
+      this.applyPanelPreferences(this.panelPreferenceService.getPreferences());
 
       this.scaffoldSvc.scaffold = this.chartScaffold;
       this.injectConfiguredPanels();
@@ -457,8 +399,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       height: 400,
       margins: {
         bottom: 30,
-        left: 30,
-        right: 30,
+        left:40,
+        right: 40,
         top: 30,
       },
       xAxisTop: 30,
@@ -478,13 +420,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.chartScaffold.height = this.svgContainer.clientHeight;
     this.chartScaffold.panelHostsContainer!.width = this.svgContainer.clientWidth;
 
-  //  console.log(
-  //    '%c     ✔ create ChartScaffold',
-  //    'color:#90BEE9',
-  //    this.chartScaffold.width,
-  //    'x',
-  //    this.chartScaffold.height
-  //  );
+    //  console.log(
+    //    '%c     ✔ create ChartScaffold',
+    //    'color:#90BEE9',
+    //    this.chartScaffold.width,
+    //    'x',
+    //    this.chartScaffold.height
+    //  );
   }
 
   private sizeChartElements(): void {
@@ -558,7 +500,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private drawAxes(): void {
     console.log('%c     ✔  drawAxes', 'color:#90BEE9');
 
-   // this.gAxisBottomMonths = select(this.gAxisBottomMonths.nativeElement);
+    // this.gAxisBottomMonths = select(this.gAxisBottomMonths.nativeElement);
 
     const dateFormatterMajor = timeFormat('%b %Y');
 
@@ -674,6 +616,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
     this.chartScaffold.chartMap = resolved.chartMap;
 
+    this.renderOuterScaffoldOnce();
     this.sizeChartElements();
     this.alignMainChartElements();
     this.renderPanelHosts();
@@ -713,8 +656,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     merged.select<SVGRectElement>('rect.panel-debug')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('width', d => d.panelRect.width)
-      .attr('height', d => d.panelRect.height)
+      .attr('width', d => Math.max(0, d.panelRect.width))
+      .attr('height', d => Math.max(0, d.panelRect.height))
       .attr('fill', 'rgba(0, 128, 255, 0.1)')
       .attr('stroke', 'yellow');
   }
@@ -738,67 +681,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     }));
   }
 
-  private bindPanelPreferences(): void {
-    this.panelPreferenceService.preferences$.subscribe(preferences => {
-      const panelDefinitions = this.buildPanelDefinitions(preferences);
 
-      const request: ChartLayoutRequest = {
-        width: this.chartScaffold.width,
-        height: this.chartScaffold.height,
-        margins: this.chartScaffold.margins,
-        titleWidth: this.chartScaffold.titleWidth,
-        titleHeight: this.chartScaffold.titleHeight,
-        axisLeftWidth: this.chartScaffold.yAxisLeft,
-        axisRightWidth: this.chartScaffold.yAxisRight,
-        xAxisTopHeight: this.chartScaffold.xAxisTop,
-        xAxisBottomHeight: this.chartScaffold.xAxisBottom,
-        panelGap: 0,
-        panels: panelDefinitions
-      };
-
-      const resolved = this.layoutService.buildScaffold(request);
-
-      this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
-      this.chartScaffold.chartMap = resolved.chartMap;
-
-      this.sizeChartElements();
-      this.alignMainChartElements();
-      this.renderPanelHosts();
-    });
-  }
-
-  private injectFirstChart(): void {
-    const chartMap = this.chartScaffold?.chartMap;
-    if (!chartMap) return;
-
-    const ohlcPanel = chartMap[ChartType.OHLC];
-    if (!ohlcPanel) return;
-
-    const host = this.gPanelHostsContainer.nativeElement.querySelector(
-      '#panel-host-ohlc'
-    ) as SVGGElement | null;
-
-    if (!host) return;
-
-    const compRef = this.panelHost.injectChartComponent(
-      host,
-      ChartType.OHLC,
-      OhlcChartComponent
-    );
-
-    compRef.setInput('data', this.chartData.stockPriceHistoryData);
-    compRef.setInput('dateScaleX', this.dateScaleX);
-    compRef.setInput('panel', ohlcPanel);
-    compRef.setInput('scaffold', this.chartScaffold);
-
-    compRef.instance.markReadyAndDraw({
-      dataReady: true,
-      inputsInitialized: true,
-      caller: 'injectFirstChart'
-    });
-
-    compRef.changeDetectorRef.detectChanges();
-  }
 
   showError(error: any): void {
     //this.popover_loading.hide();

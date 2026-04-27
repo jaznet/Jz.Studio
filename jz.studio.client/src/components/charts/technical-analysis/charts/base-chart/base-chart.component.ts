@@ -1,6 +1,6 @@
 // base-chart.component.ts
 
-import { Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
@@ -12,12 +12,12 @@ import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
   templateUrl: './base-chart.component.html',
   styleUrl: './base-chart.component.scss'
 })
-export abstract class BaseChartComponent implements OnChanges {
+export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
   @ViewChild('rContent', { static: false }) rContent!: ElementRef<SVGRectElement>;
-  @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGRectElement>;
+  @ViewChild('gAxisGroupLeft', { static: false }) gAxisGroupLeft!: ElementRef<SVGGElement>;
   @ViewChild('rAxisGroupLeft', { static: false }) rAxisGroupLeft!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisLeft', { static: false }) gAxisLeft!: ElementRef<SVGGElement>;
   @ViewChild('rAxisLeft', { static: false }) rAxisLeft!: ElementRef<SVGRectElement>;
@@ -38,19 +38,25 @@ export abstract class BaseChartComponent implements OnChanges {
   }
   @Input() panel?: PanelAttributes;
 
-
   protected viewInitialized = false;
   protected inputsInitialized = false;
   protected layoutReady = false;
   protected dataReady = false;
   protected drawAttempted = false;
-  protected chartScaffold!: ChartScaffold;
+  protected chartScaffold?: ChartScaffold;
   protected innerHeight = 0;
 
   chartType: ChartType = ChartType.Base;
 
-  ngOnChanges(changes: SimpleChanges): void {
-      throw new Error('Method not implemented.');
+  ngAfterViewInit(): void {
+    this.viewInitialized = true;
+    this.checkAndDraw('ngAfterViewInit');
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.layoutReady = !!this.getPanel();
+    this.drawAttempted = false;
+    this.checkAndDraw('ngOnChanges');
   }
 
   protected getPanel(): PanelAttributes | undefined {
@@ -77,24 +83,18 @@ export abstract class BaseChartComponent implements OnChanges {
 
     const contentLocalX = Math.max(0, contentRect.x - panelRect.x);
     const contentLocalY = Math.max(0, contentRect.y - panelRect.y);
-    const axisLeftLocalX = Math.max(0, axisLeftRect.x - panelRect.x);
+    const axisLeftLocalX = Math.max(0, axisLeftRect.width);
     const axisLeftLocalY = Math.max(0, axisLeftRect.y - panelRect.y);
-    const axisRightLocalX = Math.max(0, axisRightRect.x - panelRect.x);
+    const axisRightLocalX = Math.max(0, axisRightRect.width);        //axisRightRect.x - panelRect.x);
     const axisRightLocalY = Math.max(0, axisRightRect.y - panelRect.y);
 
     this.innerHeight = contentHeight;
 
-    select(this.rSvg.nativeElement)
+     select(this.rSvg.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', panelWidth)
       .attr('height', panelHeight);
-
-    //select(this.rBase.nativeElement)
-    //  .attr('x', 0)
-    //  .attr('y', 0)
-    //  .attr('width', panelWidth)
-    //  .attr('height', panelHeight);
 
     select(this.gContent.nativeElement)
       .attr('transform', `translate(${contentLocalX}, ${contentLocalY})`);
@@ -108,11 +108,15 @@ export abstract class BaseChartComponent implements OnChanges {
     select(this.gAxisGroupLeft.nativeElement)
       .attr('transform', `translate(${axisLeftLocalX}, ${axisLeftLocalY})`);
 
+    select(this.gAxisLeft.nativeElement)
+      .attr('transform', `translate(${axisLeftLocalX}, ${axisLeftLocalY})`);
+
     select(this.rAxisGroupLeft.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', axisLeftWidth)
       .attr('height', axisLeftHeight);
+   
 
     select(this.gAxisGroupRight.nativeElement)
       .attr('transform', `translate(${axisRightLocalX}, ${axisRightLocalY})`);
