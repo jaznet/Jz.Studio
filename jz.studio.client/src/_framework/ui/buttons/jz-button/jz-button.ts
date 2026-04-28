@@ -2,7 +2,7 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MenuType } from '../../../types/menu';
+import { MenuType } from '../../../../types/menu';
 
 @Component({
   selector: 'jz-button',
