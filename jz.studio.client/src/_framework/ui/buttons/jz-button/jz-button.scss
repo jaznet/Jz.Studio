@@ -24,6 +24,13 @@
   --rim: max(1px, calc(var(--jz-fillet) * .80));
 }
 
+button {
+  border: 2px solid transparent;
+}
+
+button.active {
+  border-color: var(--jz-active-border, #00a8d8);
+}
 /* Base button — right/bottom remain base color */
 .jz-btn {
   position: relative;
