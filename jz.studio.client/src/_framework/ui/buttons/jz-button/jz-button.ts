@@ -12,6 +12,7 @@ import { MenuType } from '../../../../types/menu';
   styleUrl: './jz-button.scss'
 })
 export class JzButton {
+  @Input() active = false;
   @Input() isSelected = false;
   @Input() route: string | any[] = '/';
   @Input() menuType: MenuType = 'main';
