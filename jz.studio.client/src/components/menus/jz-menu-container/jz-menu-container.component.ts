@@ -1,7 +1,6 @@
 import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JzMenuService } from '../jz-menu.service';
-import { MenuTabPanelComponent } from '../j3-menu-tab-panel/j3-menu-tab-panel.component';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { ShellEventsService } from '../../../_shell/services/shell-events.service';
