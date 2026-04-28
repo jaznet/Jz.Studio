@@ -1,0 +1,18 @@
+:host {
+  display: block;
+}
+
+.jz-nav-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.jz-nav-group.horizontal {
+  flex-direction: row;
+  align-items: center;
+}
+
+.jz-nav-group.vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
