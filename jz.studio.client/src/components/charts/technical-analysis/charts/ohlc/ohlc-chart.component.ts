@@ -147,9 +147,9 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       );
 
     // RIGHT (mirror)
-    select(this.gAxisGroupRight.nativeElement)
-      .attr('transform', `translate(${panel.innerWidth},0)`)
-      .classed('y-axis', true);
+    //select(this.gAxisGroupRight.nativeElement)
+    //  .attr('transform', `translate(${panel.innerWidth},0)`)
+    //  .classed('y-axis', true);
 
     select(this.gAxisRight.nativeElement)
       .call(

@@ -93,13 +93,13 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     const contentLocalY = Math.max(0, contentRect.y - panelRect.y);
     const axisLeftLocalX = Math.max(0, axisLeftRect.width);
     const axisLeftLocalY = Math.max(0, axisLeftRect.y - panelRect.y);
-    const axisRightLocalX = Math.max(0, axisLeftRect.width + contentRect.width + (axisRightRect.width*2));        //axisRightRect.x - panelRect.x);
+    const axisRightLocalX = Math.max(0, axisLeftRect.width + contentRect.width );        //axisRightRect.x - panelRect.x);
     const axisRightLocalY = Math.max(0, axisRightRect.y - panelRect.y);
 
     this.innerHeight = contentHeight;
 
-    select(this.gAxisGroupLeft.nativeElement)
-      .attr('transform', `translate(${axisLeftLocalX}, ${axisLeftLocalY})`);
+    //select(this.gAxisGroupLeft.nativeElement)
+    //  .attr('transform', `translate(${axisLeftLocalX}, ${axisLeftLocalY})`);
 
     select(this.gAxisLeft.nativeElement)
       .attr('transform', `translate(${axisLeftLocalX}, ${axisLeftLocalY})`);
@@ -124,16 +124,15 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       .attr('y', 0)
       .attr('width', contentWidth)
       .attr('height', contentHeight);
-   
-
-    select(this.gAxisGroupRight.nativeElement)
-      .attr('transform', `translate(${axisRightLocalX + axisRightWidth}, ${axisRightLocalY})`);
 
     select(this.rAxisGroupRight.nativeElement)
       .attr('x', 0)
       .attr('y', 0)
       .attr('width', axisRightWidth)
       .attr('height', axisRightHeight);
+
+    select(this.gAxisGroupRight.nativeElement)
+      .attr('transform', `translate(${axisRightLocalX}, ${axisRightLocalY})`);
 
     //select(this.gChart.nativeElement)
     //  .attr('transform', `translate(${contentLocalX}, ${contentLocalY})`);

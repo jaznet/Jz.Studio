@@ -93,18 +93,18 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
 
     const ticks = this.yTickCount(contentHeight);
 
-    //select(this.gAxisLeft.nativeElement)
-    //  .call(
-    //    axisLeft(yScale)
-    //      .ticks(ticks)
-    //      .tickSizeOuter(0)
-    //  );
+    select(this.gAxisLeft.nativeElement)
+      .call(
+        axisLeft(yScale)
+          .ticks(ticks)
+          .tickSizeOuter(0)
+      );
 
-    //select(this.gAxisRight.nativeElement)
-    //  .call(
-    //    axisRight(yScale)
-    //      .ticks(ticks)
-    //      .tickSizeOuter(0)
-    //  );
+    select(this.gAxisRight.nativeElement)
+      .call(
+        axisRight(yScale)
+          .ticks(ticks)
+          .tickSizeOuter(0)
+      );
   }
 }

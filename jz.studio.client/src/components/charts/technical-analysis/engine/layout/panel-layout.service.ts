@@ -13,15 +13,25 @@ import { Margins } from '../../interfaces/techan-interfaces';
 export class PanelLayoutService {
 
   buildScaffold(request: ChartLayoutRequest): ChartScaffold {
-    const panelHostsContainer = this.buildPanelHostsContainer(request);
-    const chartMap = this.buildPanels(request, panelHostsContainer);
-
     const margins: Margins = {
       left: request.axisLeftWidth,
       right: request.axisRightWidth,
       top: request.margins.top,
       bottom: request.margins.bottom
     };
+
+    const panelHostsContainer = this.buildPanelHostsContainer({
+      ...request,
+      margins
+    });
+
+    const chartMap = this.buildPanels(
+      {
+        ...request,
+        margins
+      },
+      panelHostsContainer
+    );
 
     return {
       titleWidth: request.titleWidth,
@@ -30,7 +40,7 @@ export class PanelLayoutService {
       height: request.height,
       xAxisTop: request.xAxisTopHeight,
       xAxisBottom: request.xAxisBottomHeight,
-     margins,
+      margins,
       panelHostsContainer,
       chartMap
     };
@@ -52,6 +62,7 @@ export class PanelLayoutService {
 
     return { x, y, width, height };
   }
+
 
   private buildPanels(
     request: ChartLayoutRequest,
@@ -78,11 +89,11 @@ export class PanelLayoutService {
       const titleHeight = 0;
       const axisTopHeight = def.showXAxisTop === true ? request.xAxisTopHeight : 0;
       const axisBottomHeight = def.showXAxisBottom === true ? request.xAxisBottomHeight : 0;
-      const axisLeftWidth = def.showAxisLeft === true ? request.axisLeftWidth : 0;
-      const axisRightWidth = def.showAxisRight === true ? request.axisRightWidth : 0;
-
-      const innerWidth = Math.max(0, panelRect.width - axisLeftWidth - axisRightWidth);
-      const innerHeight = Math.max(0, panelRect.height - titleHeight - axisTopHeight - axisBottomHeight);
+      const axisLeftWidth = request.margins.left;
+      const axisRightWidth = request.margins.right;
+      const innerWidth = Math.max(0,panelRect.width - axisLeftWidth - axisRightWidth);
+      const innerHeight = Math.max(0,panelRect.height - titleHeight - axisTopHeight - axisBottomHeight);
+      const contentY = panelRect.y + titleHeight + axisTopHeight;
 
       const titleRect: DivRect = {
         x: panelRect.x,
@@ -107,23 +118,23 @@ export class PanelLayoutService {
 
       const axisLeftRect: DivRect = {
         x: panelRect.x,
-        y: panelRect.y + titleHeight + axisTopHeight,
-        width: Math.max(0, axisLeftWidth),
-        height: Math.max(0, innerHeight)
+        y: contentY,
+        width: axisLeftWidth,
+        height: innerHeight
       };
 
       const axisRightRect: DivRect = {
         x: panelRect.x + panelRect.width - axisRightWidth,
-        y: panelRect.y + titleHeight + axisTopHeight,
-        width: Math.max(0, axisRightWidth),
-        height: Math.max(0, innerHeight)
+        y: contentY,
+        width: axisRightWidth,
+        height: innerHeight
       };
 
       const contentRect: DivRect = {
         x: panelRect.x + axisLeftWidth,
-        y: panelRect.y + titleHeight + axisTopHeight,
-        width: Math.max(0, innerWidth),
-        height: Math.max(0, innerHeight)
+        y: contentY,
+        width: innerWidth,
+        height: innerHeight
       };
 
       result[def.chartType] = {
