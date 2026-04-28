@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzButton } from './jz-button';
+import { JzButtonComponent } from './jz-button';
 
 describe('JzButton', () => {
-  let component: JzButton;
-  let fixture: ComponentFixture<JzButton>;
+  let component: JzButtonComponent;
+  let fixture: ComponentFixture<JzButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzButton]
+      declarations: [JzButtonComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzButton);
+    fixture = TestBed.createComponent(JzButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

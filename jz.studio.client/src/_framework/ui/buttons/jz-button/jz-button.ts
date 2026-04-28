@@ -11,8 +11,9 @@ import { MenuType } from '../../../../types/menu';
   templateUrl: './jz-button.html',
   styleUrl: './jz-button.scss'
 })
-export class JzButton {
+export class JzButtonComponent {
   @Input() active = false;
+  @Input() disabled = false;
   @Input() isSelected = false;
   @Input() route: string | any[] = '/';
   @Input() menuType: MenuType = 'main';
