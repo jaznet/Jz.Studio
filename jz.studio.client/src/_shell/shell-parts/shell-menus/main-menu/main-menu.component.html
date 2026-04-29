@@ -1,3 +1,4 @@
+<!--main-menu.component.html-->
 
 <div #menuContainer
      class="main-menu-container" style="margin-left:8px"
@@ -21,7 +22,7 @@
     <jz-menu-tab [route]="'/visualization'"
                  [tabId]="'visualization'"
                  [btnTxt]="'Visualization'"
-                 [direction]="direction" 
+                 [direction]="direction"
                  [menuType]="menuType"
                  [palette]="'coffee'" ,
                  [menuName]="'menu-main'">
@@ -41,9 +42,15 @@
                  [btnTxt]="'Sandbox'"
                  [direction]="direction"
                  [menuType]="menuType"
-                 [palette]="'coffee'" ,
+                 [palette]="'onyx'" ,
                  [menuName]="'menu-main'">
     </jz-menu-tab>
+
+    <!--<jz-nav-group [route]="'/sandbox'"
+                 [tabId]="'sandbox'"
+                 [btnTxt]="'Sandbox'"
+                 [direction]="direction"  >
+    </jz-nav-group>-->
 
     <jz-menu-tab [route]="'/architecture'"
                  [tabId]="'architecture'"

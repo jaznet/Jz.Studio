@@ -114,7 +114,6 @@ export class PaletteMgrService {
 
         break;
 
-
       case 'feldgrau':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#1a0f0b');

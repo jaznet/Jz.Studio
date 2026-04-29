@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
 import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+import { JzNavGroupComponent } from '../../../../_framework/navigation/jz-nav-group-component/jz-nav-group.component';
 
 @Component({
     selector: 'main-menu',
-    imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent],
+  imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent, JzNavGroupComponent],
     templateUrl: './main-menu.component.html',
     styleUrls: ['./main-menu.component.css']
 })
