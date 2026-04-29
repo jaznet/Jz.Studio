@@ -6,7 +6,7 @@ import { ButtonBaseComponent } from '../base/button-base';
 import { ButtonInteractionService } from '../_core/button-interaction.service';
 
 @Component({
-  selector: 'button-cuboid',
+  selector: 'jz-button-cuboid',
   standalone: true,
   templateUrl: './button-cuboid.component.html',
   styleUrls: ['./button-cuboid.component.scss'],
