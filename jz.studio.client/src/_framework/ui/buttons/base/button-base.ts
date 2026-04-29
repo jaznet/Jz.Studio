@@ -48,9 +48,9 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     return this._active;
   }
 
-  @Input() jzDisabled = false;
-  @Input() jzVariant: JzButtonVariant = 'primary';
-  @Input() jzSize: JzButtonSize = 'md';
+ // @Input() jzDisabled = false;
+  @Input() variant: JzButtonVariant = 'primary';
+  @Input() size: JzButtonSize = 'md';
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
   @Output() activated = new EventEmitter<void>();
@@ -71,19 +71,19 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
       this.applyState(state);
     });
 
-    this.interaction.setDisabled(this.jzDisabled);
+    this.interaction.setDisabled(this._disabled);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['jzDisabled']) {
-      this.interaction.setDisabled(this.jzDisabled);
+      this.interaction.setDisabled(this._disabled);
     }
   }
 
 
 
   onClick(event: MouseEvent): void {
-    if (this.jzDisabled) {
+    if (this._disabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
       return;
@@ -95,7 +95,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
   }
 
   protected emitActivation(): void {
-    if (!this.jzDisabled) {
+    if (!this._disabled) {
       this.activated.emit();
     }
   }
@@ -109,7 +109,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
   }
 
   onPointerDown(event: PointerEvent): void {
-    if (this.jzDisabled) {
+    if (this._disabled) {
       event.preventDefault();
       return;
     }
