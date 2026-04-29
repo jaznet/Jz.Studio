@@ -4,13 +4,13 @@
      [class.horizontal]="orientation === 'horizontal'"
      [class.vertical]="orientation === 'vertical'">
 
-  <jz-button *ngFor="let item of items"
+  <jz-button-cuboid *ngFor="let item of items"
              [active]="isActive(item)"
              [disabled]="item.disabled ?? false"
              (clicked)="onSelect(item)">
 
     {{ item.label }}
 
-  </jz-button>
+  </jz-button-cuboid>
 
 </nav>

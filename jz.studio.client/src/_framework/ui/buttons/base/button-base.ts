@@ -24,6 +24,30 @@ import { JzButtonSize, JzButtonVariant } from '../_core/jz-button-types';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonBaseComponent implements OnChanges, OnDestroy {
+
+  private _disabled = false;
+  @Input()
+  set disabled(value: boolean) {
+    this._disabled = value;
+    this.interaction.setDisabled(value);
+  }
+  get disabled(): boolean {
+    return this._disabled;
+  }
+
+  private _active = false;
+  @Input()
+  set active(value: boolean) {
+    this._active = value;
+
+    // optional: hook later if needed
+    // this.interaction.setActive(value);
+  }
+
+  get active(): boolean {
+    return this._active;
+  }
+
   @Input() jzDisabled = false;
   @Input() jzVariant: JzButtonVariant = 'primary';
   @Input() jzSize: JzButtonSize = 'md';

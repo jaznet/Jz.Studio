@@ -4,8 +4,8 @@
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { JzButtonComponent } from '../../ui/buttons/jz-button/jz-button';
 import { JzNavItem } from '../models/jz-nav-item.model';
+import { ButtonCuboidComponent } from '../../ui/buttons/button-cuboid/button-cuboid.component';
 
 export type JzNavOrientation = 'horizontal' | 'vertical';
 
@@ -15,7 +15,7 @@ export type JzNavOrientation = 'horizontal' | 'vertical';
   imports: [
     CommonModule,
     RouterModule,
-    JzButtonComponent
+    ButtonCuboidComponent
   ],
   templateUrl: './jz-nav-group.component.html',
   styleUrl: './jz-nav-group.component.scss'
