@@ -54,6 +54,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
 
   @Output() activated = new EventEmitter<void>();
+  @Output() clicked = new EventEmitter<MouseEvent>();
 
   isDisabled = false;
   isHovered = false;
@@ -92,6 +93,16 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     if (!this.interaction.state.keyboardActive) {
       this.emitActivation();
     }
+  }
+
+  protected onBaseClick(event: MouseEvent): void {
+    if (this.disabled) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+
+    this.clicked.emit(event);
   }
 
   protected emitActivation(): void {

@@ -1,1 +1,15 @@
-<p>button-base works!</p>
+<button class="jz-button-base"
+        [type]="type"
+        [disabled]="disabled"
+        [class.active]="active"
+        [class.disabled]="disabled"
+        [class.primary]="variant === 'primary'"
+        [class.secondary]="variant === 'secondary'"
+        [class.sm]="size === 'sm'"
+        [class.md]="size === 'md'"
+        [class.lg]="size === 'lg'"
+        (click)="onBaseClick($event)">
+
+  <ng-content></ng-content>
+
+</button>
