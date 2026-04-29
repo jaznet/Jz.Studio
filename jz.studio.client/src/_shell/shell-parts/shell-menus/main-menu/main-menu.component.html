@@ -1,74 +1,14 @@
-<!--main-menu.component.html-->
+<!-- main-menu.component.html -->
 
 <div #menuContainer
-     class="main-menu-container" style="margin-left:8px"
-     [ngStyle]="{'visibility':isMainMenuVisible}">
+     class="main-menu-container"
+     style="margin-left:8px"
+     [ngStyle]="{ visibility: isMainMenuVisible }">
 
-  <jz-menu-container class="main-menu menu-horizontal menu-view"
-                     [menuName]="'menu-main'"
-                     [direction]="'horizontal'"
-                     [tabs]="tabs"
-                     [menuType]="'main'">
+  <jz-nav-group class="main-menu menu-horizontal menu-view"
+                [items]="navItems"
+                [orientation]="'horizontal'"
+                (selected)="onNavSelected($event)">
+  </jz-nav-group>
 
-    <jz-menu-tab [route]="'/home'"
-                 [tabId]="'home'"
-                 [btnTxt]="'Home'"
-                 [direction]="direction"
-                 [menuType]="menuType"
-                 [palette]="'coffee'" ,
-                 [menuName]="'menu-main'">
-    </jz-menu-tab>
-
-    <jz-menu-tab [route]="'/visualization'"
-                 [tabId]="'visualization'"
-                 [btnTxt]="'Visualization'"
-                 [direction]="direction"
-                 [menuType]="menuType"
-                 [palette]="'coffee'" ,
-                 [menuName]="'menu-main'">
-    </jz-menu-tab>
-
-    <jz-menu-tab [route]="'/backoffice'"
-                 [tabId]="'backoffice'"
-                 [btnTxt]="'Backoffice'"
-                 [direction]="direction"
-                 [menuType]="menuType"
-                 [palette]="'coffee'" ,
-                 [menuName]="'menu-main'">
-    </jz-menu-tab>
-
-    <jz-menu-tab [route]="'/sandbox'"
-                 [tabId]="'sandbox'"
-                 [btnTxt]="'Sandbox'"
-                 [direction]="direction"
-                 [menuType]="menuType"
-                 [palette]="'onyx'" ,
-                 [menuName]="'menu-main'">
-    </jz-menu-tab>
-
-    <!--<jz-nav-group [route]="'/sandbox'"
-                 [tabId]="'sandbox'"
-                 [btnTxt]="'Sandbox'"
-                 [direction]="direction"  >
-    </jz-nav-group>-->
-
-    <jz-menu-tab [route]="'/architecture'"
-                 [tabId]="'architecture'"
-                 [btnTxt]="'Architecture'"
-                 [direction]="direction"
-                 [menuType]="menuType"
-                 [palette]="'coffee'" ,
-                 [menuName]="'menu-main'">
-    </jz-menu-tab>
-
-    <jz-menu-tab [menuName]="'menu-main'"
-                 [route]="'/admin'"
-                 [tabId]="'admin'"
-                 [btnTxt]="'Admin'"
-                 [direction]="direction"
-                 [palette]="'coffee'" ,
-                 [menuType]="menuType">
-    </jz-menu-tab>
-
-  </jz-menu-container>
 </div>

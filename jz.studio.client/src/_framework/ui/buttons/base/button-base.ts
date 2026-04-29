@@ -95,7 +95,7 @@ export class ButtonBaseComponent implements OnChanges, OnDestroy {
     }
   }
 
-  protected onBaseClick(event: MouseEvent): void {
+  public onBaseClick(event: MouseEvent): void {
     if (this.disabled) {
       event.preventDefault();
       event.stopPropagation();

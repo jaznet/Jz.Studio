@@ -1,7 +1,7 @@
 
 // jz-nav-group.component.ts
 
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { JzNavItem } from '../models/jz-nav-item.model';
@@ -22,7 +22,9 @@ export type JzNavOrientation = 'horizontal' | 'vertical';
 })
 export class JzNavGroupComponent {
   @Input() items: JzNavItem[] = [];
-  @Input() orientation: JzNavOrientation = 'horizontal';
+  @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+
+  @Output() selected = new EventEmitter<JzNavItem>();
 
   constructor(private router: Router) { }
 
@@ -44,10 +46,6 @@ export class JzNavGroupComponent {
   }
 
   onSelect(item: JzNavItem): void {
-    if (item.disabled || !item.route) {
-      return;
-    }
-
-    this.router.navigate(Array.isArray(item.route) ? item.route : [item.route]);
+    this.selected.emit(item);
   }
 }

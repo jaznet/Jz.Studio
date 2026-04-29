@@ -1,8 +1,11 @@
 <!-- jz-button-cuboid.component.html -->
 
 <button class="jz-btn jz-btn--cuboid jz-btn--nine"
-        type="button"
-        (click)="onButtonClick($event)">
+        [type]="type"
+        [disabled]="disabled"
+        [class.active]="active"
+        [class.disabled]="disabled"
+        (click)="onBaseClick($event)">
 
   <div class="cuboid">
     <!-- Top row -->

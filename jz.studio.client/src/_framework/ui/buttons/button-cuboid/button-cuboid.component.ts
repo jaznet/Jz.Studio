@@ -14,26 +14,11 @@ import { ButtonInteractionService } from '../_core/button-interaction.service';
 })
 export class ButtonCuboidComponent extends ButtonBaseComponent {
   @Input() route?: string;
-  @Output() clicked = new EventEmitter<void>();
 
   constructor(
     interaction: ButtonInteractionService,
     private readonly router: Router
   ) {
     super(interaction);
-  }
-
-  onButtonClick(event: MouseEvent): void {
-    console.log('button-cuboid real button clicked', event);
-    this.onClick(event);
-  }
-
-  protected override emitActivation(): void {
-    super.emitActivation();
-    this.clicked.emit();
-
-    if (this.route) {
-      this.router.navigateByUrl(this.route);
-    }
   }
 }
