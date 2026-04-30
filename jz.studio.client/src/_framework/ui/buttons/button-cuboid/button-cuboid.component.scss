@@ -7,11 +7,9 @@
 :host {
   display: inline-block;
 
-  /* ✅ sizing defaults (overridable via base directive setting --jz-w/--jz-h) */
   inline-size: var(--jz-w, 125px);
   block-size: var(--jz-h, 30px);
 
-  /* ✅ play nicely inside flex/grids (prevents stretch/grow surprises) */
   flex: 0 0 auto;
   align-self: center;
 
@@ -19,14 +17,14 @@
   --jz-radius: 8px;
   --jz-bevel: 4px;
 
-  /* base palette (fallbacks) */
-  --jz-base-color: var(--plt-clr-3, #F7AB68);
+  /* base palette */
+  --jz-base-color: var(--plt-clr-3, #f7ab68);
   --jz-text: var(--plt-txt-3);
 }
 
-/* ----- Variants ---------------------------------------------------------- */
-/* NOTE: your base directive currently adds classes like v-primary, v-secondary
-   If you still use .primary etc, keep these OR add v-* mappings below. */
+/* ========================================================================== */
+/*  Variants                                                                  */
+/* ========================================================================== */
 
 :host(.primary)   { --jz-base-color: var(--plt-clr-2); }
 :host(.secondary) { --jz-base-color: var(--plt-clr-4); }
@@ -35,7 +33,6 @@
 :host(.warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
 :host(.danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
 
-/* If you're using v-* classes from the base directive, these are the real ones: */
 :host(.v-primary)   { --jz-base-color: var(--plt-clr-2); }
 :host(.v-secondary) { --jz-base-color: var(--plt-clr-4); }
 :host(.v-tertiary)  { --jz-base-color: var(--plt-clr-3); }
@@ -43,7 +40,9 @@
 :host(.v-warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
 :host(.v-danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
 
-/* ----- Button host ------------------------------------------------------- */
+/* ========================================================================== */
+/*  Button host                                                               */
+/* ========================================================================== */
 
 :host button.jz-btn {
   position: relative;
@@ -60,17 +59,21 @@
   flex: 0 0 auto;
 }
 
-/* ----- Cuboid overlay (grid + worklet layer) ----------------------------- */
+/* ========================================================================== */
+/*  Cuboid layer                                                              */
+/* ========================================================================== */
 
 :host button.jz-btn > .cuboid {
   position: absolute;
   inset: 0;
   inline-size: 100%;
   block-size: 100%;
+
   display: grid;
   grid-template-columns: var(--jz-bevel) 1fr var(--jz-bevel);
   grid-template-rows: var(--jz-bevel) 1fr var(--jz-bevel);
   place-items: stretch;
+
   border-radius: inherit;
   pointer-events: none;
   overflow: hidden;
@@ -82,31 +85,28 @@
   /* derived tones */
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
+
   --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 15%);
   --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 40%);
   --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
   --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
 
-  /* --- corner helpers (auto-sync with edges) ---------------------- */
-  /* top-left corner A: mostly lighter side of the base */
+  /* corner helpers */
   --jz-corner-a-inner: color-mix(in srgb, var(--jz-base-color), black 18%);
   --jz-corner-a-mid1: var(--jz-edge-mid-light);
   --jz-corner-a-mid2: color-mix(in srgb, var(--jz-edge-mid-light), var(--jz-edge-light) 45%);
   --jz-corner-a-outer: var(--jz-edge-light);
 
-  /* bottom-right corner C: mostly darker side of the base */
   --jz-corner-c-inner: color-mix(in srgb, var(--jz-base-color), white 20%);
   --jz-corner-c-mid1: var(--jz-edge-mid-dark);
   --jz-corner-c-mid2: color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-edge-dark) 55%);
   --jz-corner-c-outer: var(--jz-edge-dark);
 
-  /* TR + BL corners painted by worklet – B & D stay transparent */
   background-image: paint(jz-corners-bd);
   background-repeat: no-repeat;
   background-origin: border-box;
   background-clip: border-box;
 
-  /* depth */
   box-shadow:
     0 0.5px 0 rgba(0, 0, 0, 0.35) inset,
     0 1px 0 rgba(255, 255, 255, 0.06) inset,
@@ -114,14 +114,16 @@
     0 2px 3px rgba(0, 0, 0, 0.35);
 }
 
-/* Make sure every cell exists */
+/* ========================================================================== */
+/*  Grid zones                                                                */
+/* ========================================================================== */
+
 :host .cuboid .zone {
   display: block;
   min-width: 0;
   min-height: 0;
 }
 
-/* grid placement */
 :host .cuboid .zone.A      { grid-area: 1 / 1; }
 :host .cuboid .zone.top    { grid-area: 1 / 2; }
 :host .cuboid .zone.B      { grid-area: 1 / 3; }
@@ -134,7 +136,10 @@
 :host .cuboid .zone.bottom { grid-area: 3 / 2; }
 :host .cuboid .zone.C      { grid-area: 3 / 3; }
 
-/* ----- Face (center cell) ----------------------------------------------- */
+/* ========================================================================== */
+/*  Face                                                                      */
+/* ========================================================================== */
+
 :host .cuboid .zone.face {
   display: flex;
   border-radius: 5px;
@@ -145,7 +150,6 @@
 }
 
 :host .cuboid .zone.face > * {
-  /* ✅ use token-driven colors so tone/variant works */
   background-color: var(--jz-bg, var(--jz-base-color));
   color: var(--plt-txt-1);
 
@@ -169,11 +173,9 @@
 }
 
 /* ========================================================================== */
-/*  Edge strips (top / bottom / left / right)                                */
-/*  Light source: top-left                                                   */
+/*  Edge strips                                                               */
 /* ========================================================================== */
 
-/* TOP edge – light → mid-light → face */
 :host .cuboid .zone.top {
   background-image: linear-gradient(
     to bottom,
@@ -186,7 +188,6 @@
   background-position: 0 0;
 }
 
-/* BOTTOM edge – dark → mid-dark → face */
 :host .cuboid .zone.bottom {
   background-image: linear-gradient(
     to top,
@@ -199,7 +200,6 @@
   background-position: 0 100%;
 }
 
-/* LEFT edge – light outer → mid-light → face */
 :host .cuboid .zone.left {
   background-image: linear-gradient(
     to right,
@@ -212,7 +212,6 @@
   background-position: 0 0;
 }
 
-/* RIGHT edge – dark outer → mid-dark → face */
 :host .cuboid .zone.right {
   background-image: linear-gradient(
     to left,
@@ -226,11 +225,9 @@
 }
 
 /* ========================================================================== */
-/*  Corners A & C (TL / BR) via radial blend                                 */
-/*  B & D are left transparent for the worklet                               */
+/*  Corners                                                                   */
 /* ========================================================================== */
 
-/* A – top-left */
 :host .cuboid .zone.A {
   background-image: radial-gradient(
     circle at 100% 100%,
@@ -240,7 +237,6 @@
   background-repeat: no-repeat;
 }
 
-/* C – bottom-right */
 :host .cuboid .zone.C {
   background-image: radial-gradient(
     circle at 0 0,
@@ -250,13 +246,14 @@
   background-repeat: no-repeat;
 }
 
-/* B & D stay transparent – only worklet paints these cells */
 :host .cuboid .zone.B,
 :host .cuboid .zone.D {
   background: none;
 }
 
-/* ----- States ------------------------------------------------------------ */
+/* ========================================================================== */
+/*  States                                                                    */
+/* ========================================================================== */
 
 :host button.jz-btn:hover > .cuboid {
   filter: brightness(1.05);
@@ -267,7 +264,24 @@
   transform: translateY(1px);
 }
 
-/* Disabled handling */
+/* active class is currently on the inner button, not on the host */
+:host button.jz-btn.active > .cuboid {
+  --jz-base-color: var(--plt-clr-4);
+  --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 28%);
+  --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 22%);
+
+  background-color: var(--jz-base-color);
+
+  box-shadow:
+    0 0 0 1px #16c7e8,
+    0 0 12px rgba(22, 199, 232, 0.45);
+}
+
+:host button.jz-btn.active .cuboid .zone.face > * {
+  background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
+  color: black;
+}
+
 :host(.is-disabled),
 :host(.disabled) {
   pointer-events: none;
@@ -275,7 +289,9 @@
   filter: grayscale(0.2) saturate(0.8);
 }
 
-/* ----- High-contrast fallback ------------------------------------------- */
+/* ========================================================================== */
+/*  High-contrast fallback                                                    */
+/* ========================================================================== */
 
 @media (forced-colors: active) {
   :host button.jz-btn {

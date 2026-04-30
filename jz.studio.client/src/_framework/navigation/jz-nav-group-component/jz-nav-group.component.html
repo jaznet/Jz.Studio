@@ -4,7 +4,9 @@
      [class.horizontal]="orientation === 'horizontal'"
      [class.vertical]="orientation === 'vertical'">
 
-  <jz-button-cuboid *ngFor="let item of items"
+
+  <jz-button-cuboid
+                   *ngFor="let item of items"
                     [active]="isActive(item)"
                     [disabled]="item.disabled ?? false"
                     (clicked)="onSelect(item)">
