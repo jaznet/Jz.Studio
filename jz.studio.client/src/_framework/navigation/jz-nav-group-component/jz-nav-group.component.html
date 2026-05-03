@@ -1,18 +1,22 @@
-<!--jz-nav-group.component.html-->
+<!-- jz-nav-group.component.html -->
 
 <nav class="jz-nav-group"
      [class.horizontal]="orientation === 'horizontal'"
      [class.vertical]="orientation === 'vertical'">
 
+  <jz-nav-item *ngFor="let item of items"
+               [item]="item"
+               [active]="isActive(item)"
+               [disabled]="item.disabled ?? false"
+               (selected)="onSelect(item)">
 
-  <jz-button-cuboid
-                   *ngFor="let item of items"
-                    [active]="isActive(item)"
-                    [disabled]="item.disabled ?? false"
-                    (clicked)="onSelect(item)">
+    <jz-button-cuboid [active]="isActive(item)"
+                      [disabled]="item.disabled ?? false">
 
-    {{ item.label }}
+      {{ item.label }}
 
-  </jz-button-cuboid>
+    </jz-button-cuboid>
+
+  </jz-nav-item>
 
 </nav>

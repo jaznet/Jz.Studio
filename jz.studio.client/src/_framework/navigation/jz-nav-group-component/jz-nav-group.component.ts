@@ -3,9 +3,11 @@
 
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { JzNavItem } from '../models/jz-nav-item.model';
 import { ButtonCuboidComponent } from '../../ui/buttons/button-cuboid/button-cuboid.component';
+import { JzMenuTabComponent } from '../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+import { CommonModule, NgFor } from '@angular/common';
+import { JzNavItemComponent } from '../jz-nav-item/jz-nav-item.component';
 
 export type JzNavOrientation = 'horizontal' | 'vertical';
 
@@ -15,7 +17,10 @@ export type JzNavOrientation = 'horizontal' | 'vertical';
   imports: [
     CommonModule,
     RouterModule,
-    ButtonCuboidComponent
+    ButtonCuboidComponent,
+    JzMenuTabComponent,
+    JzNavItemComponent,
+    NgFor
   ],
   templateUrl: './jz-nav-group.component.html',
   styleUrl: './jz-nav-group.component.scss'

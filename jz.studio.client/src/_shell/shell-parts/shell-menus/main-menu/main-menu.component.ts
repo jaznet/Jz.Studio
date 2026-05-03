@@ -22,7 +22,7 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
   isMainMenuVisible = 'collapse';
-  //  override menuType: string = 'main-menu';
+  //  override menuType: string = 'main-menu';yelloe
 
   navItems = [
     { id: 'home', label: 'HoXme', route: '/home', palette: 'coffee' },
