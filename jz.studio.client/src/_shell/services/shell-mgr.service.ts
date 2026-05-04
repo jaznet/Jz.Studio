@@ -16,25 +16,25 @@ export class AppMgrService {
   }
 
   //InitializePalette() {
-  //  this.paletteMgr.ChangePalette('feldgrau');
+  //  this.paletteMgr.changePalette('feldgrau');
   //}
 
   OnViewSelected(view: any) {
     switch (view) {
       case 'home':
-        this.paletteMgr.ChangePalette('rifle');
+        this.paletteMgr.changePalette('rifle');
         break;
       case 'visualization':
-        this.paletteMgr.ChangePalette('feldgrau');
+        this.paletteMgr.changePalette('feldgrau');
         break;
       case 'equities':
-        this.paletteMgr.ChangePalette('feldgrau');
+        this.paletteMgr.changePalette('feldgrau');
         break;
       case 'chorodash':
-        this.paletteMgr.ChangePalette('feldgrau');
+        this.paletteMgr.changePalette('feldgrau');
         break;
       case 'gears':
-        this.paletteMgr.ChangePalette('xyno');
+        this.paletteMgr.changePalette('xyno');
         break;
     }
   }

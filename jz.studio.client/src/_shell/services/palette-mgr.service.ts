@@ -9,10 +9,10 @@ export class PaletteMgrService {
   constructor(private events: ShellEventsService) { }
 
   InitializePalette() {
-    this.ChangePalette('yale');
+    this.changePalette('yale');
   }
 
-  ChangePalette(palette: string) { 
+  changePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
 
       switch (palette) {

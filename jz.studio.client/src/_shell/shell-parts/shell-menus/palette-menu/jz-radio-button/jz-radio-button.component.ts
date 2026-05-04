@@ -41,6 +41,6 @@ export class JzRadioButtonComponent {
 
   setPalette(): void {
     // optional: guard to be explicit
-    this.paletteMgr.ChangePalette(this._palette);
+    this.paletteMgr.changePalette(this._palette);
   }
 }

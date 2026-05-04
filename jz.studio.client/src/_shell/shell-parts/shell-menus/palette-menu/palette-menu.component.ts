@@ -32,6 +32,6 @@ export class PaletteMenuComponent {
 
   setPalette(palette: string) {
      this.paletteName = palette;
-    this.paletteMgr.ChangePalette(palette);
+    this.paletteMgr.changePalette(palette);
   }
 }

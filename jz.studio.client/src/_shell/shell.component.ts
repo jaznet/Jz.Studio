@@ -66,7 +66,7 @@ export class ShellComponent implements OnInit {
           // this.paletteService.setPalette(item.palette);
           console.log('ACTIVE NAV ITEM:', item);
           if (item?.palette) {
-            this.paletteService.ChangePalette(item.palette);
+            this.paletteService.changePalette(item.palette);
           }
         }
       });
