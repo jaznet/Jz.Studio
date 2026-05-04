@@ -13,4 +13,5 @@ export interface JzNavItem {
   route: string;
   disabled?: boolean;
   layoutType?: JzViewLayoutType;
+  palette?: string;
 }

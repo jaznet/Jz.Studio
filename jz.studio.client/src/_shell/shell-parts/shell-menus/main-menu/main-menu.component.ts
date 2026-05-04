@@ -10,6 +10,8 @@ import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.
 import { Router } from '@angular/router';
 import { JzNavGroupComponent }
   from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
+import { NAV_ITEMS } from '../../../../_framework/navigation/config/nav.config';
+import { NavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
   selector: 'main-menu',
@@ -26,29 +28,30 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   isMainMenuVisible = 'collapse';
   //  override menuType: string = 'main-menu';yelloe
 
-  navItems = [
-    { id: 'jzhome', label: 'HoXme', route: '/home', palette: 'coffee' },
-    { id: 'visualization', label: 'Visualization', route: '/visualization', palette: 'coffee' },
-    { id: 'backoffice', label: 'Backoffice', route: '/backoffice', palette: 'coffee' },
-    { id: 'sandbox', label: 'Sandbox', route: '/sandbox', palette: 'onyx' },
-    { id: 'architecture', label: 'Architecture', route: '/architecture', palette: 'coffee' },
-    { id: 'admin', label: 'Admin', route: '/admin', palette: 'coffee' }
-  ];
+  items$ = this.navService.items$;
 
-  constructor( router: Router, private app: AppStateService) {
+
+  constructor(router: Router, private navService: NavService, private app: AppStateService) {
     super(router);
   }
 
   override ngOnInit(): void {
     this.menuType = 'main';
+    console.log('MainMenuComponent initialized');
+
+    //this.app.menuVisibility$.subscribe(menu => {
+    //  this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
+    //});
+
+    this.app.toggleMenuEvent.subscribe((menu: any) => {
+      // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
+      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
+    })
   }
    
   override ngAfterViewInit(): void {
     console.log('direction:', this.direction);
-    this.app.toggleMenuEvent.subscribe((menu: any) => {
-     // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
-      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
-    })
+   
   }
 
   //onNavSelected(item: JzNavItem): void {
