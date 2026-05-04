@@ -5,9 +5,9 @@ import { CommonModule } from '@angular/common';
 import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
 import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
-import { JzNavGroupComponent } from '../../../../_framework/navigation/jz-nav-group-component/jz-nav-group.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
 import { Router } from '@angular/router';
+import { JzNavGroupComponent } from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
 
 @Component({
   selector: 'main-menu',

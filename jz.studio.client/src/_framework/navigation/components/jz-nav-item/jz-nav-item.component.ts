@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { JzNavItem } from '../models/jz-nav-item.model';
+import { JzNavItem } from '../../models/jz-nav-item.model';
 
 @Component({
   selector: 'jz-nav-item',
