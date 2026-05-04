@@ -28,6 +28,7 @@ export type JzNavOrientation = 'horizontal' | 'vertical';
 export class JzNavGroupComponent {
   @Input() items: JzNavItem[] = [];
   @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() exact = false;
 
   @Output() selected = new EventEmitter<JzNavItem>();
 
@@ -43,7 +44,7 @@ export class JzNavGroupComponent {
       : this.router.parseUrl(item.route);
 
     return this.router.isActive(urlTree, {
-      paths: 'subset',
+      paths: this.exact ? 'exact' : 'subset',
       queryParams: 'ignored',
       fragment: 'ignored',
       matrixParams: 'ignored'
