@@ -1,11 +1,23 @@
+// jz-nav-item.component.scss
+
+#jzhome {
+border-color: none;
+}
 
 .jz-nav-item {
 padding:8px;
 }
 
-.jz-nav-item.active {
+:host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
 border: 1.5px solid var(--plt-clr-5);
 border-bottom-color: var(--plt-clr-2);
 border-radius: 8px 8px 0 0;
+background-color: var(--plt-clr-2);
+}
+
+:host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
+border: 1.5px solid var(--plt-clr-5);
+border-right-color: var(--plt-clr-2);
+border-radius:  8px 0 0 8px;
 background-color: var(--plt-clr-2);
 }

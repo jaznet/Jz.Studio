@@ -25,7 +25,7 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   //  override menuType: string = 'main-menu';yelloe
 
   navItems = [
-    { id: 'home', label: 'HoXme', route: '/home', palette: 'coffee' },
+    { id: 'jzhome', label: 'HoXme', route: '/home', palette: 'coffee' },
     { id: 'visualization', label: 'Visualization', route: '/visualization', palette: 'coffee' },
     { id: 'backoffice', label: 'Backoffice', route: '/backoffice', palette: 'coffee' },
     { id: 'sandbox', label: 'Sandbox', route: '/sandbox', palette: 'onyx' },
@@ -33,8 +33,8 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
     { id: 'admin', label: 'Admin', route: '/admin', palette: 'coffee' }
   ];
 
-  constructor(private router: Router, private app: AppStateService) {
-    super();
+  constructor( router: Router, private app: AppStateService) {
+    super(router);
   }
 
   override ngOnInit(): void {
@@ -49,9 +49,9 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
     })
   }
 
-  onNavSelected(item: JzNavItem): void {
-    // for now
-    this.router.navigateByUrl(item.route);
-  }
+  //onNavSelected(item: JzNavItem): void {
+  //  // for now
+  //  this.router.navigateByUrl(item.route);
+  //}
  
 }

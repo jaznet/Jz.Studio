@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { Direction } from '../../../types/direction';
+import { JzNavItem } from '../../../_framework/navigation/models/jz-nav-item.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'jz-menu-base',
@@ -22,11 +24,15 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
   isSubMenu: boolean = false;
   // isMenuVisible: string = 'collapsed';
 
-  constructor() { }
+  constructor(private router: Router) { }
   
   ngOnInit(): void {  }
 
   ngAfterViewInit(): void {
  
+  }
+
+  onSubNavSelected(item: JzNavItem): void {
+    this.router.navigateByUrl(item.route);
   }
 }
