@@ -34,7 +34,7 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
   }
 
   onNavSelected(item: JzNavItem): void {
-    this.navService.setActiveItem(item);   // 👈 notify system
+    //this.navService.setActiveItem(item);   // 👈 notify system
     this.router.navigateByUrl(item.route);
   }
 }
