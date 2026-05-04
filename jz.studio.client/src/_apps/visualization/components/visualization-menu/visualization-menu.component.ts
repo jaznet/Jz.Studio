@@ -5,11 +5,12 @@ import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-c
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
 import { JzNavGroupComponent } from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'visualization-menu',
   standalone: true,
-  imports: [JzMenuContainerComponent, JzMenuTabComponent, JzNavGroupComponent],
+  imports: [CommonModule, JzMenuContainerComponent, JzMenuTabComponent, JzNavGroupComponent],
   templateUrl: './visualization-menu.component.html',
   styleUrl: './visualization-menu.component.css'
 })

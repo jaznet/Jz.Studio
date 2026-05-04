@@ -28,7 +28,6 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   isMainMenuVisible = 'collapse';
   //  override menuType: string = 'main-menu';yelloe
 
-  items$ = this.navService.items$;
 
 
   constructor(router: Router,  navService: JzNavService, private app: AppStateService) {

@@ -9,7 +9,7 @@ import { JzNavService } from '../../../_framework/navigation/services/jz-nav.ser
     selector: 'jz-menu-base',
     templateUrl: './jz-menu-base.component.html',
     styleUrls: ['./jz-menu-base.component.css'],
-    standalone: false
+    standalone: true
 })
 export class MenuBaseComponent implements OnInit, AfterViewInit {
   private _menuType: MenuType = 'main';
@@ -18,6 +18,8 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
   }
   get menuType(): MenuType { return this._menuType; }
 
+  items$ = this.navService.items$;
+  activeItem$ = this.navService.activeItem$;
 
   direction: Direction = 'horizontal'; 
   menuName: string = 'base';

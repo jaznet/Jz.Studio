@@ -6,10 +6,18 @@
      [ngStyle]="{ visibility: isMainMenuVisible }">
 
   <jz-nav-group *ngIf="items$ | async as items"
+                class="main-nav"
+                [class.blank-view]="(activeItem$ | async)?.layoutType === 'blank'"
+                [items]="items"
+                orientation="horizontal"
+                (selected)="onNavSelected($event)">
+  </jz-nav-group>
+
+  <!--<jz-nav-group *ngIf="items$ | async as items"
                 class="main-menu menu-horizontal menu-view"
                 [items]="items"
                 [orientation]="'horizontal'"
                 (selected)="onNavSelected($event)">
-  </jz-nav-group>
+  </jz-nav-group>-->
 
 </div>
