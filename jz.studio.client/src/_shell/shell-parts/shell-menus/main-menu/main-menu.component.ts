@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { JzNavGroupComponent }
   from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
 import { NAV_ITEMS } from '../../../../_framework/navigation/config/nav.config';
-import { NavService } from '../../../../_framework/navigation/services/jz-nav.service';
+import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
   selector: 'main-menu',

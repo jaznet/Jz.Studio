@@ -6,13 +6,11 @@ import {  isPlatformBrowser } from '@angular/common';
 import { PaletteMgrService } from './services/palette-mgr.service';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { NavigationListenerService } from './services/navigation-listener.service';
-//import { AppHeaderComponent } from './app-parts/app-header/app-header.component';
-//import { AppContentComponent } from './app-parts/app-content/app-content.component';
-//import { AppFooterComponent } from './app-parts/app-footer/app-footer.component';
 import { AppStateService } from './services/shell-state.service';
 import { ShellContentComponent } from './shell-parts/shell-content/shell-content.component';
 import { ShellFooterComponent } from './shell-parts/shell-footer/shell-footer.component';
 import { ShellHeaderComponent } from './shell-parts/shell-header/shell-header.component';
+import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
 
 
 interface WeatherForecast {
@@ -40,9 +38,12 @@ export class ShellComponent implements OnInit {
   private doc = inject(DOCUMENT);
   private pid = inject(PLATFORM_ID);
 
+  activeItem$ = this.navService.activeItem$;
+
   constructor(
     private router: Router,
     private appService: AppStateService,
+    private navService: JzNavService,
     private navigationListenerService: NavigationListenerService,
     private http: HttpClient,
     private palette: PaletteMgrService

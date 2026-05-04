@@ -7,9 +7,9 @@
 
   <jz-nav-group *ngIf="items$ | async as items"
                 class="main-menu menu-horizontal menu-view"
-                 [items]="items"
+                [items]="items"
                 [orientation]="'horizontal'"
-                (selected)="onSubNavSelected($event)">
+                (selected)="onNavSelected($event)">
   </jz-nav-group>
 
 </div>

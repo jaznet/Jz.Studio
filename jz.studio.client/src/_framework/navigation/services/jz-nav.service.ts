@@ -42,4 +42,11 @@ export class JzNavService {
   findByRoute(route: string): JzNavItem | undefined {
     return this.itemsSubject.value.find(item => item.route === route);
   }
+
+  private readonly activeItemSubject = new BehaviorSubject<JzNavItem | null>(null);
+  readonly activeItem$ = this.activeItemSubject.asObservable();
+
+  setActiveItem(item: JzNavItem): void {
+    this.activeItemSubject.next(item);
+  }
 }
