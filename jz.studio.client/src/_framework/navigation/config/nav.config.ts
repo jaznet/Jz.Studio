@@ -5,14 +5,14 @@ export const NAV_ITEMS: JzNavItem[] = [
     id: 'jzhome',
     label: 'HoXme',
     route: '/home',
-    palette: 'coffee',
+    palette: 'onyx',
     layoutType: 'blank'
   },
   {
     id: 'visualization',
     label: 'Visualization',
     route: '/visualization',
-    palette: 'coffee',
+    palette: 'yale',
     layoutType: 'left-nav-framed'
   },
   {

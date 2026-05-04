@@ -63,8 +63,11 @@ export class ShellComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
         if (item?.palette) {
-         // this.paletteService.setPalette(item.palette);
-          this.paletteService.ChangePalette(item.palette);
+          // this.paletteService.setPalette(item.palette);
+          console.log('ACTIVE NAV ITEM:', item);
+          if (item?.palette) {
+            this.paletteService.ChangePalette(item.palette);
+          }
         }
       });
 
