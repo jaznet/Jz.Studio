@@ -11,6 +11,7 @@ import { ShellContentComponent } from './shell-parts/shell-content/shell-content
 import { ShellFooterComponent } from './shell-parts/shell-footer/shell-footer.component';
 import { ShellHeaderComponent } from './shell-parts/shell-header/shell-header.component';
 import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
+import { Subject, takeUntil } from 'rxjs';
 
 
 interface WeatherForecast {
@@ -39,6 +40,7 @@ export class ShellComponent implements OnInit {
   private pid = inject(PLATFORM_ID);
 
   activeItem$ = this.navService.activeItem$;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private router: Router,
@@ -46,7 +48,7 @@ export class ShellComponent implements OnInit {
     private navService: JzNavService,
     private navigationListenerService: NavigationListenerService,
     private http: HttpClient,
-    private palette: PaletteMgrService
+    private paletteService: PaletteMgrService
   )
   {
 //    palette.ChangePalette("cofffee'");
@@ -57,7 +59,16 @@ export class ShellComponent implements OnInit {
     console.log(this.content);
     console.log(this.footer);
 
-    this.palette.InitializePalette();
+    this.navService.activeItem$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(item => {
+        if (item?.palette) {
+         // this.paletteService.setPalette(item.palette);
+          this.paletteService.ChangePalette(item.palette);
+        }
+      });
+
+    this.paletteService.InitializePalette();
 
     window.addEventListener("load", function () {
       if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {

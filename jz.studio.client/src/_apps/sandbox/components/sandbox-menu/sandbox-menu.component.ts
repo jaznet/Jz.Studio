@@ -6,6 +6,7 @@ import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-c
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
 import { Router } from '@angular/router';
+import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
   selector: 'sandbox-menu',
@@ -18,8 +19,8 @@ export class SandboxMenuComponent extends MenuBaseComponent  {
 
   @Input() override menuName: string = '';
 
-  constructor(router: Router) {
-    super(router);
+  constructor(router: Router, navService: JzNavService) {
+    super(router, navService);
     this.menuType = 'main';
   }
 

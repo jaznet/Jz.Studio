@@ -3,6 +3,7 @@ import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-
 import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
 import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
 import { Router } from '@angular/router';
+import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
   selector: 'graphics-menu',
@@ -14,8 +15,8 @@ import { Router } from '@angular/router';
 export class GraphicsMenuComponent extends MenuBaseComponent {
   @Input() override menuName: string = '';
 
-  constructor( router: Router) {
-    super(router);
+  constructor(router: Router, navService: JzNavService) {
+    super(router, navService);
     this.menuType = 'sub';
     this.direction = 'vertical';
   }

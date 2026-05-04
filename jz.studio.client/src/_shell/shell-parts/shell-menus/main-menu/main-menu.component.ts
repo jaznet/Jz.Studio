@@ -31,14 +31,14 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   items$ = this.navService.items$;
 
 
-  constructor(router: Router, private navService: NavService, private app: AppStateService) {
-    super(router);
+  constructor(router: Router,  navService: JzNavService, private app: AppStateService) {
+    super(router, navService);
   }
 
   override ngOnInit(): void {
     this.menuType = 'main';
     console.log('MainMenuComponent initialized');
-
+   // this.navService.activeItem$.subscribe(...) // unless side effects
     //this.app.menuVisibility$.subscribe(menu => {
     //  this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     //});

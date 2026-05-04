@@ -3,6 +3,7 @@ import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { Direction } from '../../../types/direction';
 import { JzNavItem } from '../../../_framework/navigation/models/jz-nav-item.model';
 import { Router } from '@angular/router';
+import { JzNavService } from '../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
     selector: 'jz-menu-base',
@@ -24,7 +25,7 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
   isSubMenu: boolean = false;
   // isMenuVisible: string = 'collapsed';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, protected navService: JzNavService) { }
   
   ngOnInit(): void {  }
 
@@ -32,7 +33,8 @@ export class MenuBaseComponent implements OnInit, AfterViewInit {
  
   }
 
-  onSubNavSelected(item: JzNavItem): void {
+  onNavSelected(item: JzNavItem): void {
+    this.navService.setActiveItem(item);   // 👈 notify system
     this.router.navigateByUrl(item.route);
   }
 }
