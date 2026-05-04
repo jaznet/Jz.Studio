@@ -9,7 +9,7 @@ import { NAV_ITEMS } from '../config/nav.config';
 @Injectable({
   providedIn: 'root'
 })
-export class NavService {
+export class JzNavService {
   private readonly itemsSubject = new BehaviorSubject<JzNavItem[]>(NAV_ITEMS);
 
   readonly items$: Observable<JzNavItem[]> = this.itemsSubject.asObservable();
