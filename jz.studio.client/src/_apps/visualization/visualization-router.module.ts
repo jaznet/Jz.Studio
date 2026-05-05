@@ -9,14 +9,15 @@ import { JzChoroDashComponent } from '../../library/jz-choro-dash/jz-choro-dash.
 import { SankeyComponent } from '../../components/charts/jz-sankey/jz-sankey.component';
 import { JzBubbleChart } from '../../components/charts/jz-bubble-chart/jz-bubble-chart';
 import { JzSyncfusionChartComponent } from '../../components/charts/jz-syncfusion-chart/jz-syncfusion-chart.component';
+import { VisualizationHomeComponent } from './components/visualization-home/visualization-home.component';
 
 const routes: Routes = [
   {
     path: '',
     component: VisualizationComponent,
     children: [
-      { path: '', redirectTo: 'techanTs', pathMatch: 'full' },
-
+    /*  { path: '', redirectTo: 'techanTs', pathMatch: 'full' },*/
+      { path: '', component: VisualizationHomeComponent },
       { path: 'techanTs', component: TechnicalAnalysisComponent },
       { path: 'chorodash', component: JzChoroDashComponent }, // 👈 THIS WAS MISSING
       { path: 'sankey', component: SankeyComponent },

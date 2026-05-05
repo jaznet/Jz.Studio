@@ -12,7 +12,7 @@ export const NAV_ITEMS: JzNavItem[] = [
     id: 'visualization',
     label: 'Visualization',
     route: '/visualization',
-    palette: 'yale',
+    palette: 'onyx',
     layoutType: 'left-nav-framed'
   },
   {

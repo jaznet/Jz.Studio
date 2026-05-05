@@ -9,10 +9,17 @@ padding:8px;
 }
 
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
-/*border: 1.5px solid var(--plt-clr-5);
+border: 1.5px solid var(--plt-clr-3);
 border-bottom-color: var(--plt-clr-2);
 border-radius: 8px 8px 0 0;
-background-color: var(--plt-clr-2);*/
+background-color: var(--plt-clr-2);
+}
+
+:host-context(jz-nav-group.blank-view)
+:host-context(nav.jz-nav-group.horizontal)
+.jz-nav-item.active {
+  border: none;
+  background-color: transparent;
 }
 
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {

@@ -15,7 +15,23 @@ export class PaletteMgrService {
   changePalette(palette: string) { 
     this.events.paletteChangedEvent.emit(palette);
 
-      switch (palette) {
+    switch (palette) {
+
+      case 'onyx':
+
+        document.documentElement.style.setProperty('--plt-clr-1', '#161313');
+        document.documentElement.style.setProperty('--plt-clr-2', '#2c2626');
+        document.documentElement.style.setProperty('--plt-clr-3', '#423838');
+        document.documentElement.style.setProperty('--plt-clr-4', '#584b4b');
+        document.documentElement.style.setProperty('--plt-clr-5', '#584b4b');
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
+        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
+        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
+        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
+        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
+
+        break;
 
       case 'protan':
 
@@ -66,21 +82,7 @@ export class PaletteMgrService {
 
         break;
 
-      case 'onyx':
-
-        document.documentElement.style.setProperty('--plt-clr-1', '#161313');
-        document.documentElement.style.setProperty('--plt-clr-2', '#2c2626');
-        document.documentElement.style.setProperty('--plt-clr-3', '#423838');
-        document.documentElement.style.setProperty('--plt-clr-4', '#584b4b');
-        document.documentElement.style.setProperty('--plt-clr-5', '#584b4b');
-
-        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
-        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
-        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
-        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
-        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
-
-        break;
+     
 
       case 'onyx2':
 
@@ -101,8 +103,8 @@ export class PaletteMgrService {
       case 'yale':
 
         document.documentElement.style.setProperty('--plt-clr-1', '#0c1821');
-        document.documentElement.style.setProperty('--plt-clr-2', '#162b3c');
-        document.documentElement.style.setProperty('--plt-clr-3', '#20415a');
+        document.documentElement.style.setProperty('--plt-clr-2', '#203D56');
+          document.documentElement.style.setProperty('--plt-clr-3', '#727A83');
         document.documentElement.style.setProperty('--plt-clr-4', '#23b5d3');
         document.documentElement.style.setProperty('--plt-clr-5', '#fffff0');
 
