@@ -1,49 +1,33 @@
+// visualization-routing.module.ts
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { VisualizationComponent } from './visualization.component';
-import { VisualizationHomeComponent } from './components/visualization-home/visualization-home.component';
 import { TechnicalAnalysisComponent } from '../../components/charts/technical-analysis/technical-analysis.component';
+import { JzChoroDashComponent } from '../../library/jz-choro-dash/jz-choro-dash.component';
+import { SankeyComponent } from '../../components/charts/jz-sankey/jz-sankey.component';
+import { JzBubbleChart } from '../../components/charts/jz-bubble-chart/jz-bubble-chart';
+import { JzSyncfusionChartComponent } from '../../components/charts/jz-syncfusion-chart/jz-syncfusion-chart.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: VisualizationComponent
-,
+    component: VisualizationComponent,
     children: [
-      {
-        path: '',
-        component: VisualizationHomeComponent
-      },
-      {
-        path: 'home',
-        component: VisualizationHomeComponent
-      },
-      {
-        path: 'choro-dash-loader',
-        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
-      },
+      { path: '', redirectTo: 'techanTs', pathMatch: 'full' },
 
-      {
-        path: 'techanTs',
-        component: TechnicalAnalysisComponent
-     //   loadChildren: () => import('../../components/charts/technical-analysis/technical-analysis.module').then(m => m.TechanTsModule)
-      },
-      {
-        path: 'syncfusion-chart',
-        loadChildren: () => import('../../components/charts/jz-syncfusion-chart/jz-syncfusion-chart.module').then(m => m.JzSyncfusionChartModule)
-      },
-      {
-        path: 'sankey',
-        loadChildren: () => import('../../components/charts/jz-sankey/jz-sankey.module').then(m => m.JzSankeyModule)
-      },
+      { path: 'techanTs', component: TechnicalAnalysisComponent },
+      { path: 'chorodash', component: JzChoroDashComponent }, // 👈 THIS WAS MISSING
+      { path: 'sankey', component: SankeyComponent },
+      { path: 'bubble-chart', component: JzBubbleChart },
+      { path: 'syncfusion-chart', component: JzSyncfusionChartComponent }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-
-export class VisualizationRouterModule { }
+export class VisualizationRoutingModule { }

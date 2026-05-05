@@ -10,7 +10,7 @@ import { JzChoroDashComponent } from './jz-choro-dash.component';
 import { DxRadioGroupModule } from 'devextreme-angular';
 import { RouterModule } from '@angular/router';
 
-export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy>('CountyPaintingStrategy');
+
 
 @NgModule({
   declarations: [
@@ -23,14 +23,7 @@ export const PAINTING_STRATEGY_TOKEN = new InjectionToken<CountyPaintingStrategy
     JzChoroplethsModule,
     DxRadioGroupModule
   ],
-  providers: [
-    PaintStrategyFactoryService,
-    {
-      provide: PAINTING_STRATEGY_TOKEN,
-      useFactory: (factoryService: PaintStrategyFactoryService) => factoryService.createStrategy(),
-      deps: [PaintStrategyFactoryService] // Dependency is now the factory service
-    }
-  ], 
+
   exports: [
   ],
 })

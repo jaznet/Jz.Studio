@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { VisualizationRouterModule } from './visualization-router.module';
+import { VisualizationRoutingModule } from './visualization-router.module';
 import { JzMenuModule } from '../../components/menus/jz-menu.module';
 
 @NgModule({
@@ -12,7 +12,7 @@ import { JzMenuModule } from '../../components/menus/jz-menu.module';
     CommonModule,
     JzMenuModule,
     RouterModule,
-    VisualizationRouterModule
+    VisualizationRoutingModule
   ],
   exports: [
   ],

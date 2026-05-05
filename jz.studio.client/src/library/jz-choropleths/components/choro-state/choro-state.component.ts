@@ -6,9 +6,8 @@ import { geoPath } from "d3-geo";
 import { StateLookupService } from '../../services/state-lookup.service';
 import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
-import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
-
+import { CountyPaintingStrategy } from '../../interface/county-painting-strategy.token';
+import { COUNTY_PAINTING_STRATEGY } from '../../interface/county-painting-strategy.token';
 
 @Component({
     selector: 'choro-state',
@@ -32,7 +31,7 @@ export class ChoroStateComponent {
   height: any;
 
   constructor(
-    @Inject(PAINTING_STRATEGY_TOKEN) private paintingStrategy: CountyPaintingStrategy,
+    @Inject(COUNTY_PAINTING_STRATEGY) private paintingStrategy: CountyPaintingStrategy,
     private countyDataService: CountyDataService,
     private topoService: TopoService,
     private stateLookup: StateLookupService

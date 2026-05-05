@@ -7,9 +7,9 @@ import { first, Subscription } from 'rxjs';
 import { ChoroUtilsService } from '../../services/choro-utils.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { CountyPaintingStrategy } from '../../interface/county-painting-strategy';
+import { CountyPaintingStrategy } from '../../interface/county-painting-strategy.token';
 import * as topojson from 'topojson';
-import { PAINTING_STRATEGY_TOKEN } from '../../../jz-choro-dash/jz-choro-dash.module';
+import { COUNTY_PAINTING_STRATEGY } from '../../interface/county-painting-strategy.token';
 
 
 @Component({
@@ -38,7 +38,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   private geoPath = geoPath();
 
   constructor(
-    @Inject(PAINTING_STRATEGY_TOKEN) private paintingStrategy: CountyPaintingStrategy,
+    @Inject(COUNTY_PAINTING_STRATEGY) private paintingStrategy: CountyPaintingStrategy,
     private countyDataService: CountyDataService,
     private topoService: TopoService,
     private choroUtils: ChoroUtilsService,

@@ -1,3 +1,4 @@
+// jz-choro-dash.component.ts
 
 import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
@@ -6,22 +7,29 @@ import { ChoroUsaComponent } from '../jz-choropleths/components/choro-usa/choro-
 import { UserSelectionService } from './paint-factory/services/user-selection.service';
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
 import { TopoService } from '../jz-choropleths/services/topo.service';
-import { PAINTING_STRATEGY_TOKEN } from './jz-choro-dash.module';
 import { ChoroDataService } from '../jz-choropleths/services/choro-data.service';
-
 import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { DxRadioGroupModule } from 'devextreme-angular/ui/radio-group';
+import { COUNTY_PAINTING_STRATEGY } from '../jz-choropleths/interface/county-painting-strategy.token';
+import { PaintElectionStrategy } from './paint-factory/strategies/paint-election';
 
 @Component({
-    selector: 'jz-choro-dash',
-    imports: [
+  selector: 'jz-choro-dash',
+  standalone: true,
+  imports: [
     ChoroStateComponent,
     JzChoroDashPanelComponent,
     ChoroUsaComponent,
     DxRadioGroupModule
-],
-    templateUrl: './jz-choro-dash.component.html',
-    styleUrl: './jz-choro-dash.component.css'
+  ],
+  templateUrl: './jz-choro-dash.component.html',
+  styleUrl: './jz-choro-dash.component.css',
+  providers: [
+    {
+      provide: COUNTY_PAINTING_STRATEGY,
+      useClass: PaintElectionStrategy
+    }
+  ]
 })
 export class JzChoroDashComponent implements OnInit {
   @HostBinding('class') classes = 'fit-to-parent grid-rows view-router-container';
@@ -32,13 +40,13 @@ export class JzChoroDashComponent implements OnInit {
   data: any;
 
   constructor(
-    @Inject(PAINTING_STRATEGY_TOKEN) private paintStrategy: CountyPaintingStrategy,
+    @Inject(COUNTY_PAINTING_STRATEGY) private paintStrategy: CountyPaintingStrategy,
     private topoService: TopoService,
     private strategySelect: UserSelectionService,
     private paintStrategyFactoryService: PaintStrategyFactoryService,
     private dataService: ChoroDataService
   ) {
-    
+
   }
 
   ngOnInit(): void {
@@ -64,7 +72,7 @@ export class JzChoroDashComponent implements OnInit {
     this.strategySelect.setSelection(event.value);
     this.paintStrategy = this.paintStrategyFactoryService.createStrategy();
     // Handle the value change here
-    this.data = this.paintStrategy.getData( (fetchedData: any) => {
+    this.data = this.paintStrategy.getData((fetchedData: any) => {
       console.log('fetched', fetchedData);
       this.paint(fetchedData);
     });
