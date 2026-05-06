@@ -9,7 +9,7 @@ export class PaletteMgrService {
   constructor(private events: ShellEventsService) { }
 
   InitializePalette() {
-    this.changePalette('yale');
+    this.changePalette('onyx');
   }
 
   changePalette(palette: string) { 
@@ -23,10 +23,10 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-2', '#2c2626');
         document.documentElement.style.setProperty('--plt-clr-3', '#423838');
         document.documentElement.style.setProperty('--plt-clr-4', '#584b4b');
-        document.documentElement.style.setProperty('--plt-clr-5', '#584b4b');
+        document.documentElement.style.setProperty('--plt-clr-5', '#6E5E5E');
 
         document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
-        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
+        document.documentElement.style.setProperty('--plt-txt-2', '#edb458'); // on #322020
         document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
         document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
         document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050

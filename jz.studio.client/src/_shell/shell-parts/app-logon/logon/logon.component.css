@@ -22,6 +22,10 @@
     font-weight:600;
 }
 
+.logon-button  {
+/*background:var(--plt-txt-2);*/
+}
+
 .form-group {
   flex-flow: column;
   margin-bottom: 12px;

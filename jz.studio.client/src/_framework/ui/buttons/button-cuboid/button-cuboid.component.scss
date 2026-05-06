@@ -150,7 +150,7 @@
 }
 
 :host .cuboid .zone.face > * {
-  background-color: var(--jz-bg, var(--jz-base-color));
+  background-color: var(--jz-base-color);
   color: var(--plt-txt-1);
 
   border-radius: 6px;
@@ -170,6 +170,11 @@
   white-space: normal;
   word-break: break-word;
   text-align: center;
+}
+
+:host(.logon-button) .cuboid {
+  --jz-base-color:var(--plt-txt-2);
+  --jz-text:black;
 }
 
 /* ========================================================================== */
@@ -279,7 +284,7 @@
 }
 
 :host button.jz-btn.active .cuboid .zone.face > * {
-  background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
+ // background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
   color: black;
 }
 
