@@ -15,7 +15,7 @@ import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-
     ReactiveFormsModule
     ],
     templateUrl: './logon.component.html',
-    styleUrls: ['./logon.component.css']
+    styleUrls: ['./logon.component.scss']
 })
 export class LogonComponent implements OnInit {
   @Input() text: any;

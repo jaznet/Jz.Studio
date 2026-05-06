@@ -172,7 +172,11 @@
   text-align: center;
 }
 
-:host(.logon-button) .cuboid {
+.label {
+  color: var(--jz-button-text, inherit);
+}
+
+/*:host(.logon-button) .cuboid {
   --jz-base-color:var(--plt-pop);
   --jz-text:var(--plt-pop-txt);
   color:black;
@@ -184,7 +188,7 @@
 
 jz-button-cuboid.logon-button .zone.face {
   color:pink;
-}
+}*/
 
 /* ========================================================================== */
 /*  Edge strips                                                               */
@@ -294,7 +298,7 @@ jz-button-cuboid.logon-button .zone.face {
 
 :host button.jz-btn.active .cuboid .zone.face > * {
  // background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
-  color: black;
+  color: var(--plt-txt-3);
 }
 
 :host(.is-disabled),
@@ -320,4 +324,12 @@ jz-button-cuboid.logon-button .zone.face {
     background: none;
     box-shadow: none;
   }
+}
+
+  :host(.logon-button) .label {
+  color: var(--plt-pop-txt);
+}
+
+jz-button-cuboid.logon-button button {
+  color: var(--plt-pop-txt);
 }

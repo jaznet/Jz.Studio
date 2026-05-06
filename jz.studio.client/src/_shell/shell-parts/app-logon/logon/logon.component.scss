@@ -64,12 +64,16 @@ forn-label {
   border-radius: 8px;
 }
 
-.logon-button .zone.face {color:red}
-
-:host(.logon-button) .zone.face {
+:host ::ng-deep jz-button-cuboid.logon-button .cuboid {
+  --jz-base-color: var(--plt-pop);
+  --jz-text: var(--plt-pop-txt);
   color: var(--plt-pop-txt);
 }
 
-jz-button-cuboid.logon-button .zone.face {
-  color:pink;
+:host ::ng-deep jz-button-cuboid.logon-button .zone.face .label {
+  color: var(--plt-pop-txt);
+}
+
+ :host ::ng-deep jz-button-cuboid.logon-button .label {
+  color: red !important;
 }
