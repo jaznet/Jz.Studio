@@ -178,6 +178,14 @@
   color:black;
 }
 
+:host(.logon-button) button {
+  color: var(--plt-pop-txt);
+}
+
+jz-button-cuboid.logon-button .zone.face {
+  color:pink;
+}
+
 /* ========================================================================== */
 /*  Edge strips                                                               */
 /* ========================================================================== */

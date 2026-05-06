@@ -63,3 +63,13 @@ forn-label {
   background-color: var(--plt-clr-5);
   border-radius: 8px;
 }
+
+.logon-button .zone.face {color:red}
+
+:host(.logon-button) .zone.face {
+  color: var(--plt-pop-txt);
+}
+
+jz-button-cuboid.logon-button .zone.face {
+  color:pink;
+}
