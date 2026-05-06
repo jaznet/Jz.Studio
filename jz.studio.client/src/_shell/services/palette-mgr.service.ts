@@ -19,17 +19,20 @@ export class PaletteMgrService {
 
       case 'onyx':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#161313');
-        document.documentElement.style.setProperty('--plt-clr-2', '#2c2626');
-        document.documentElement.style.setProperty('--plt-clr-3', '#423838');
-        document.documentElement.style.setProperty('--plt-clr-4', '#584b4b');
-        document.documentElement.style.setProperty('--plt-clr-5', '#6E5E5E');
+        document.documentElement.style.setProperty('--plt-clr-1', '#161313'); // deep espresso
+        document.documentElement.style.setProperty('--plt-clr-2', '#372f2f'); // dark cocoa
+        document.documentElement.style.setProperty('--plt-clr-3', '#584b4b'); // muted mocha
+        document.documentElement.style.setProperty('--plt-clr-4', '#7f6c6c'); // dusty rose taupe
+        document.documentElement.style.setProperty('--plt-clr-5', '#938080'); // warm stone
 
-        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
-        document.documentElement.style.setProperty('--plt-txt-2', '#edb458'); // on #322020
-        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
-        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
-        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
+        document.documentElement.style.setProperty('--plt-txt-1', '#f2e9e4'); // warm ivory
+        document.documentElement.style.setProperty('--plt-txt-2', '#e8ddd7'); // soft linen
+        document.documentElement.style.setProperty('--plt-txt-3', '#ddd0c9'); // light sand
+        document.documentElement.style.setProperty('--plt-txt-4', '#2a2323'); // deep umber
+        document.documentElement.style.setProperty('--plt-txt-5', '#1c1616'); // near-black coffee
+
+        document.documentElement.style.setProperty('--plt-pop', '#E0A84F'); // amber gold
+        document.documentElement.style.setProperty('--plt-pop-txt', '#2a1f0f'); // dark caramel
 
         break;
 

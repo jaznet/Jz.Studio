@@ -173,8 +173,9 @@
 }
 
 :host(.logon-button) .cuboid {
-  --jz-base-color:var(--plt-txt-2);
-  --jz-text:black;
+  --jz-base-color:var(--plt-pop);
+  --jz-text:var(--plt-pop-txt);
+  color:black;
 }
 
 /* ========================================================================== */
