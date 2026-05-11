@@ -3,7 +3,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SankeyViewComponent } from './sankey-view.component';
-import { JzSankeyModule } from '../../../../components/charts/jz-sankey/jz-sankey.module';
+import { JzSankeyModule } from '../../../../_components/charts/jz-sankey/jz-sankey.module';
 
 
 @NgModule({

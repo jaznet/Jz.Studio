@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { JzNavItem } from '../../models/jz-nav-item.model';
 import { ButtonCuboidComponent } from '../../../ui/buttons/button-cuboid/button-cuboid.component';
-import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+import { JzMenuTabComponent } from '../../../../_components/menus/jz-menu-tab/jz-menu-tab.component';
 import { CommonModule, NgFor } from '@angular/common';
 import { JzNavItemComponent } from '../jz-nav-item/jz-nav-item.component';
 

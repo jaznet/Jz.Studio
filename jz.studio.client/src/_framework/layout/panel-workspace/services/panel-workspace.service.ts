@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { PanelWorkspaceState } from '../interfaces/panel-workspace-state.interface';
 import { WorkspacePanelInstance } from '../interfaces/workspace-panel-instance.interface';
-import { DivRect } from '../../../../components/charts/technical-analysis/interfaces/common-interfaces';
-import { ChartLayoutRequest } from '../../../../components/charts/technical-analysis/interfaces/chart-layout-request.interface';
+import { DivRect } from '../../../../_components/charts/technical-analysis/interfaces/common-interfaces';
+import { ChartLayoutRequest } from '../../../../_components/charts/technical-analysis/interfaces/chart-layout-request.interface';
 
 @Injectable({
   providedIn: 'root'

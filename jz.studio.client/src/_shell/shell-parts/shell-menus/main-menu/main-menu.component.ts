@@ -2,10 +2,10 @@
 import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
 import { AppStateService } from '../../../services/shell-state.service';
 import { CommonModule } from '@angular/common';
-import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
+import { MenuBaseComponent } from '../../../../_components/menus/jz-menu-base/jz-menu-base.component';
 import { JzMenuContainerComponent }
-  from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
-import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+  from '../../../../_components/menus/jz-menu-container/jz-menu-container.component';
+import { JzMenuTabComponent } from '../../../../_components/menus/jz-menu-tab/jz-menu-tab.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
 import { Router } from '@angular/router';
 import { JzNavGroupComponent }

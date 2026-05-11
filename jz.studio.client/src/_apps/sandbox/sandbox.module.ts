@@ -10,7 +10,7 @@ import { DockingViewComponent } from './views/docking-view/docking-view.componen
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
 import { GraphicsViewComponent } from './views/graphics-view/graphics-view.component';
 import { JzGraphicsModule } from '../../library/jz-graphics/jz-graphics.module';
-import { JzMenuModule } from '../../components/menus/jz-menu.module';
+import { JzMenuModule } from '../../_components/menus/jz-menu.module';
 
 @NgModule({
   declarations: [

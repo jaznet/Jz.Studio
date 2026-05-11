@@ -9,10 +9,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\assets\css\" />
-    <Folder Include="src\components\charts\technical-analysis\engine\indicators\" />
-    <Folder Include="src\components\charts\technical-analysis\engine\rendering\" />
-    <Folder Include="src\components\jz-charts\" />
-    <Folder Include="src\components\overlays\" />
+    <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
+    <Folder Include="src\_components\charts\technical-analysis\engine\rendering\" />
+    <Folder Include="src\_components\jz-charts\" />
+    <Folder Include="src\_components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-menu\" />
     <Folder Include="src\library\jz-sine-plot\" />

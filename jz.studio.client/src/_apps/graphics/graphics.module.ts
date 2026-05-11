@@ -11,7 +11,7 @@ import { SinewaveViewComponent } from './views/sinewave-view/sinewave-view.compo
 import { JzSpirographModule } from '../../library/jz-spirograph/jz-spirograph.module';
 import { JzMathJaxDirective } from '../../library/jz-math-jax/jz-math-jax.directive';
 import { JzPlotterModule } from '../../library/jz-plotter/jz-plotter.module';
-import { JzMenuModule } from '../../components/menus/jz-menu.module';
+import { JzMenuModule } from '../../_components/menus/jz-menu.module';
 
 
 @NgModule({

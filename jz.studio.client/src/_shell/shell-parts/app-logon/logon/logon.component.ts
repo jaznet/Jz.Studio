@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
-import { JzButton3dComponent } from '../../../../components/buttons/jz-button3d/jz-button-3d.component';
-import { JzButtonBlockComponent } from '../../../../components/buttons/jz-button-block/jz-button-block';
+import { JzButton3dComponent } from '../../../../_components/buttons/jz-button3d/jz-button-3d.component';
+import { JzButtonBlockComponent } from '../../../../_components/buttons/jz-button-block/jz-button-block';
 import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
 
 @Component({

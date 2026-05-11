@@ -1,8 +1,8 @@
 
 import { Component } from '@angular/core';
-import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
-import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
-import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+import { MenuBaseComponent } from '../../../../_components/menus/jz-menu-base/jz-menu-base.component';
+import { JzMenuContainerComponent } from '../../../../_components/menus/jz-menu-container/jz-menu-container.component';
+import { JzMenuTabComponent } from '../../../../_components/menus/jz-menu-tab/jz-menu-tab.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
 import { JzNavGroupComponent } from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
 import { CommonModule } from '@angular/common';

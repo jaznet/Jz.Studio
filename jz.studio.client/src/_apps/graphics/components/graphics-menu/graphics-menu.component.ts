@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { MenuBaseComponent } from '../../../../components/menus/jz-menu-base/jz-menu-base.component';
-import { JzMenuContainerComponent } from '../../../../components/menus/jz-menu-container/jz-menu-container.component';
-import { JzMenuTabComponent } from '../../../../components/menus/jz-menu-tab/jz-menu-tab.component';
+import { MenuBaseComponent } from '../../../../_components/menus/jz-menu-base/jz-menu-base.component';
+import { JzMenuContainerComponent } from '../../../../_components/menus/jz-menu-container/jz-menu-container.component';
+import { JzMenuTabComponent } from '../../../../_components/menus/jz-menu-tab/jz-menu-tab.component';
 import { Router } from '@angular/router';
 import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
