@@ -8,8 +8,8 @@ import { ChoroUtilsService } from '../../services/choro-utils.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from '../../services/county-data.service';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy.token';
-import * as topojson from 'topojson';
 import { COUNTY_PAINTING_STRATEGY } from '../../interface/county-painting-strategy.token';
+import { feature, mesh } from 'topojson-client';
 
 
 @Component({
@@ -46,19 +46,27 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(this.paintingStrategy);
   }
 
-  ngOnInit() {
-    this.topoService.getTopology();
+  ngOnInit(): void {
+    this.topoService.getTopology().subscribe(topo => {
+      const countyFeaturesCollection = feature(topo as any, topo.objects['counties']) as any;
+      const stateFeaturesCollection = feature(topo as any, topo.objects['states']) as any;
+      const nationFeaturesCollection = feature(topo as any, topo.objects['nation']) as any;
 
-    this.topoService.dataReady$.pipe(
-      first((value: boolean) => value === true)  // Wait until the value becomes true
-    ).subscribe(() => {
-      this.createChoropleth();
-    });
+      const stateMesh = mesh(
+        topo as any,
+        topo.objects['states'],
+        (a: any, b: any) => a !== b
+      );
 
-    this.countyDataService.getCountyDataObservable().subscribe(data => {
-      if (data) {
-       // this.paintCounties(data);
-      }
+      const nationMesh = mesh(topo as any, topo.objects['nation']);
+
+      this.createChoropleth(
+        stateFeaturesCollection,
+        countyFeaturesCollection,
+        stateMesh,
+        nationFeaturesCollection,
+        nationMesh
+      );
     });
   }
 
@@ -73,13 +81,19 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.height = this.USA_Ref?.nativeElement.clientHeight - 2;
   }
 
-  createChoropleth() {
+  createChoropleth(
+    stateFeaturesCollection: any,
+    countyFeaturesCollection: any,
+    stateMesh: any,
+    nationFeaturesCollection: any,
+    nationMesh: any
+  ): void {
     console.log('createChoropleth');
     this.createChoroplethContainer();
-    this.createStatesMesh();
-    this.createCountyLayer();
-    this.createNationLayer();
-    this.createStatesTextLayer();
+    this.createStatesMesh(stateMesh);
+    this.createCountyLayer(countyFeaturesCollection);
+    this.createNationLayer(nationFeaturesCollection,nationMesh);
+    this.createStatesTextLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
 
     this.choroUSAEvent.emit(true);
@@ -104,7 +118,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stateTextLayer = this.svg.select("#state-name-layer");
   }
 
-  createStatesMesh() {
+  private createStatesMesh(stateMesh: any): void {
     console.groupCollapsed('%c  Create States', 'color:#06729D');
     //  console.log('data', this.topoService.stateMesh.coordinates);
     var that = this;
@@ -112,6 +126,8 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     const stateLayer: any = select("#state-layer")
       .attr("id", "state-layer")
       .attr("class", "state_style");
+
+    const geopath = geoPath();
 
     stateLayer
       .append("path")
@@ -123,7 +139,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
         return 'jaz';
       })
       .attr("class", "state_path")
-      .attr("d", that.geoPath(that.topoService.stateMesh))
+      .attr("d", geopath(stateMesh))
       .on('mouseenter', (d: any, event: MouseEvent) => {
         // change stroke
         console.log(d);
@@ -133,13 +149,13 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     console.groupEnd();
   }
 
-  createCountyLayer() {
+  createCountyLayer(countyFeaturesCollection: any): void {
     var that = this;
 
     this.countyLayer
       .attr("id", "county-layer")
       .selectAll("path")
-      .data(that.topoService.countyFeaturesCollection?.features)
+      .data(countyFeaturesCollection?.features)
       .enter()
       .append("path")
       .style('stroke', '#404040')
@@ -152,7 +168,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
       .attr("name", function (d: any) { return d.properties.name; })
       .attr("d", function (d: any) {
         if (d.id === "12087" || d.id === "02016" || d.id === "02050") {
-          const coord = that.geoPath(topojson.mesh(d, d.geometry.coordinates, (a: any, b: any) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0)));
+          const coord = that.geoPath(mesh(d, d.geometry.coordinates, (a: any, b: any) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0)));
         }
         return "M" + d.geometry.coordinates;
       })
@@ -188,23 +204,26 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     console.groupEnd();
   }
 
-  createNationLayer() {
+  private createNationLayer(
+    nationFeaturesCollection: any,
+    nationMesh: any
+  ): void {
     console.groupCollapsed('%c  Create Nation', 'color:#06729D');
     // console.log('data', this.topoService.nationMesh.coordinates);
     var that = this;
 
-    const t = topojson;
+   
     select("#nation-layer")
       .attr("id", "nation-layer")
       .attr("class", "nation_style")
       .selectAll("path")
-      .data(this.topoService.nationFeaturesCollection.features)
+      .data(nationFeaturesCollection.features)
       .enter()
       .append("path")
       .style('fill', 'none')
       .style('stroke', 'black')
       .style('stroke-width', '.5px')
-      .attr("d", that.geoPath(that.topoService.nationMesh))
+      .attr("d", that.geoPath(nationMesh))
       .attr("class", "nation_path");
 
     let node: SVGGElement = this.stateLayer.node();
@@ -212,7 +231,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
     console.groupEnd();
   }
 
-  createStatesTextLayer() {
+  createStatesTextLayer(stateFeaturesCollection: any): void {
     const that = this;
     const stateNameLayer: any = select("#state-name-layer")
       .attr("id", "state-name-layer")
@@ -220,7 +239,7 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
 
     stateNameLayer
       .selectAll("text")
-      .data(this.topoService.stateFeaturesCollection!.features)
+      .data(stateFeaturesCollection.features)
       .enter()
       .append("text")
       .attr("id", function (d: any) {

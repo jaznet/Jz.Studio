@@ -1,3 +1,4 @@
+/// <reference path="../../services/state-lookup.service.spec.ts" />
 
 import { Component, ElementRef, EventEmitter, HostBinding, Inject, Output, ViewChild } from '@angular/core';
 import { first, Subscription } from 'rxjs';
@@ -8,6 +9,8 @@ import { TopoService } from '../../services/topo.service';
 import { CountyDataService } from '../../services/county-data.service';
 import { CountyPaintingStrategy } from '../../interface/county-painting-strategy.token';
 import { COUNTY_PAINTING_STRATEGY } from '../../interface/county-painting-strategy.token';
+/*import topojson from 'topojson';*/
+import { feature, mesh } from 'topojson-client';
 
 @Component({
     selector: 'choro-state',
@@ -28,7 +31,11 @@ export class ChoroStateComponent {
   countyPaths: any;
   private stateFips: string = '13';
   width: any;
-  height: any;
+  height: any; private stateLayer: any;
+
+
+
+//  private stateLayer: any;
 
   constructor(
     @Inject(COUNTY_PAINTING_STRATEGY) private paintingStrategy: CountyPaintingStrategy,
@@ -38,16 +45,26 @@ export class ChoroStateComponent {
   ) { }
 
   ngOnInit(): void {
-    this.topoService.dataReady$.pipe(
-      first((value: boolean) => value === true)  // Wait until the value becomes true
-    ).subscribe(() => {
-      this.createStateChoropleth();
-    });
+    this.createStateChoroplethContainer();
 
-    this.countyDataService.getCountyDataObservable().subscribe(data => {
-      if (data) {
-      //  this.paintCounties(data);
-      }
+    this.topoService.getTopology().subscribe(topo => {
+      const stateMesh = mesh(
+        topo as any,
+        topo.objects['states'],
+        (a: any, b: any) => a !== b
+      );
+
+      const countyFeaturesCollection = feature(
+        topo as any,
+        topo.objects['counties']
+      ) as any;
+
+      this.stateLayer = this.state.append('g').attr('id', 'stateLayer');
+      this.createStateLayer(stateMesh);
+      this.createCountyLayer(countyFeaturesCollection);
+      this.adjustStateGroupSizeAndPosition();
+      this.applyRotation();
+      this.choroStateEvent.emit(true);
     });
   }
 
@@ -60,9 +77,9 @@ export class ChoroStateComponent {
     this.height = this.state_Ref?.nativeElement.clientHeight - 2;
   }
 
-  createStateChoropleth() {
+  createStateChoropleth(countyFeaturesCollection: any) {
     this.createStateChoroplethContainer();
-    this.createCountyLayer();
+    this.createCountyLayer(countyFeaturesCollection);
     this.adjustStateGroupSizeAndPosition();
     this.applyRotation();
     this.choroStateEvent.emit(true);
@@ -81,23 +98,51 @@ export class ChoroStateComponent {
     this.state = this.outerGroup.append('g').attr('id', 'state');
   }
 
-  createCountyLayer() {
-    const stateFipsCode = '13'; // Replace with dynamic state code if necessary
-    const geopath = geoPath(); // Ensure you have the correct projection set up
+  private createStateLayer(stateMesh: any): void {
+
+    const geopath = geoPath();
+
+    this.stateLayer
+      .append("path")
+      .style('fill', 'none')
+      .style('stroke', 'black')
+      .style('stroke-width', '.3')
+      .attr("id", "statemesh")
+      .attr("class", "state_path")
+      .attr("d", geopath(stateMesh))
+      .on('mouseenter', (d: any) => { 
+        console.log(d);
+      });
+  }
+
+  createCountyLayer(countyFeaturesCollection: any): void {
+    const stateFipsCode = '13';
+    const geopath = geoPath();
 
     this.counties = this.state.append('g').attr('id', 'counties');
 
-    this.counties.selectAll("path")
-      .data(this.topoService.countyFeaturesCollection.features.filter(d =>
+    this.counties.selectAll('path')
+      .data(countyFeaturesCollection.features.filter((d: any) =>
         String(d.id).slice(0, 2) === stateFipsCode
       ))
       .enter()
-      .append("path")
-      .attr("d", geopath)
+      .append('path')
+      .attr('d', geopath)
       .style('stroke', 'black')
       .style('stroke-width', '.2')
-      .style("fill", 'pink')
-    // ... rest of the styling and event handlers
+      .style('fill', 'pink');
+  }
+
+  private drawStates(stateFeatures: any): void {
+
+    // existing D3 drawing logic goes here
+
+    this.state
+      .selectAll('path')
+      .data(stateFeatures.features)
+      .enter()
+      .append('path');
+
   }
 
   adjustStateGroupSizeAndPosition() {

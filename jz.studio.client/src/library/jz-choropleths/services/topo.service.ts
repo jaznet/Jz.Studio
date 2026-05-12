@@ -1,55 +1,26 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
-import { GeoPermissibleObjects } from 'd3-geo';
+import { Injectable } from '@angular/core';
 import { json } from 'd3-fetch';
-import { Feature, Point, GeoJsonProperties, FeatureCollection } from 'geojson';
-import { BehaviorSubject } from 'rxjs';
-import * as topojson from 'topojson';
-import { GeometryCollection } from 'geojson';
+import { Observable, from } from 'rxjs';
+import { filter, shareReplay } from 'rxjs/operators';
 
-import { Topology, Objects } from 'topojson-specification';
 import { MyTopoJSON } from '../models/MyTopoJSON';
 
-
-@Injectable({  
+@Injectable({
   providedIn: 'root'
 })
 export class TopoService {
-  //albersUsaLoadedEvent = new EventEmitter<any>();
-  private albersUsaLoadedEvent = new BehaviorSubject<boolean>(false);
-  dataReady$ = this.albersUsaLoadedEvent.asObservable();
+  private readonly topologyUrl = '/assets/maps/counties-albers-10m.json';
 
-  stateMesh!: GeoPermissibleObjects;
-  countyFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
-  stateFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
-  nationFeaturesCollection!: FeatureCollection<Point, GeoJsonProperties>;
-  nationMesh!: GeoPermissibleObjects;
+  private topology$?: Observable<MyTopoJSON>;
 
-  constructor() { }
+  getTopology(): Observable<MyTopoJSON> {
+    if (!this.topology$) {
+      this.topology$ = from(json<MyTopoJSON>(this.topologyUrl)).pipe(
+        filter((topology): topology is MyTopoJSON => topology !== undefined),
+        shareReplay(1)
+      );
+    }
 
-  setDataReady(status: boolean) {
-    this.albersUsaLoadedEvent.next(status);
-  }
-
-  getTopology() {
-    json<MyTopoJSON>("/assets/maps/counties-albers-10m.json")
-      .then((topo: any) => {
-        const topology: Topology<Objects> = topo;
-        this.countyFeaturesCollection = topojson.feature(topology, topology.objects['counties']) as unknown as FeatureCollection<Point, GeoJsonProperties>;
-        this.stateFeaturesCollection = topojson.feature(topology, topology.objects['states']) as unknown as FeatureCollection<Point, GeoJsonProperties>;
-        this.stateMesh = topojson.mesh(topology, topology.objects['states'], (a:any, b) => a !== b);
-        this.nationFeaturesCollection = topojson.feature(topology, topology.objects['nation']) as unknown as FeatureCollection<Point, GeoJsonProperties>;
-        this.nationMesh = topojson.mesh(topology, topology.objects['nation']);
-        console.log('topo', topology);
-      
-        this.setDataReady(true);
-      })
-      .catch((error:string): void => {
-        console.error("An error occurred while loading the JSON data:", error);
-      })
-      
-  }
-
-  getStateFeature(stateFips: string) {
-    return this.stateFeaturesCollection.features.find(feature => String(feature.id) === stateFips);
+    return this.topology$;
   }
 }
