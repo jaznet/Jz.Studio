@@ -1,56 +1,80 @@
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  Inject,
+  OnDestroy,
+  Output,
+  ViewChild
+} from '@angular/core';
 
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { TopoService } from '../../services/topo.service';
 import { select } from 'd3-selection';
-import { geoPath} from 'd3-geo';
-import { first, Subscription } from 'rxjs';
-import { ChoroUtilsService } from '../../services/choro-utils.service';
-import { StateLookupService } from '../../services/state-lookup.service';
-import { CountyDataService } from '../../services/county-data.service';
-import { CountyPaintingStrategy } from '../../interface/county-painting-strategy.token';
-import { COUNTY_PAINTING_STRATEGY } from '../../interface/county-painting-strategy.token';
+import { geoPath } from 'd3-geo';
+import { Subscription } from 'rxjs';
 import { feature, mesh } from 'topojson-client';
 
+import { TopoService } from '../../services/topo.service';
+import { StateLookupService } from '../../services/state-lookup.service';
+import { CountyDataService } from '../../services/county-data.service';
+import {
+  CountyPaintingStrategy,
+  COUNTY_PAINTING_STRATEGY
+} from '../../interface/county-painting-strategy.token';
 
 @Component({
-    selector: 'choro-usa',
-    imports: [],
-    templateUrl: './choro-usa.component.html',
-    styleUrls: ['./choro-usa.component.css']
+  selector: 'choro-usa',
+  imports: [],
+  templateUrl: './choro-usa.component.html',
+  styleUrls: ['./choro-usa.component.css']
 })
-export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
   @Output() choroUSAEvent = new EventEmitter<any>();
 
-  private topoEventEmitterSubscription!: Subscription;
+  private topologySubscription?: Subscription;
 
-  width: any;
-  height: any;
+  width = 0;
+  height = 0;
 
-  private svg: any; 
+  private svg: any;
   private usa: any;
   private stateLayer: any;
-  /*public countyLayer!: { attr: (arg0: string, arg1: string) => { (): any; new(): any; selectAll: { (arg0: string): { (): any; new(): any; data: { (arg0: Feature<Point, GeoJsonProperties>[]): { (): any; new(): any; enter: { (): { (): any; new(): any; append: { (arg0: string): { (): any; new(): any; style: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: (d: any) => string): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => any): { (): any; new(): any; attr: { (arg0: string, arg1: string): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => any): { (): any; new(): any; attr: { (arg0: string, arg1: (d: any) => string): { (): any; new(): any; on: { (arg0: string, arg1: (m: any, d: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any, fips: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any) => void): { (): any; new(): any; on: { (arg0: string, arg1: (d: any) => void): { (): any; new(): any; append: { (arg0: string): { (): any; new(): any; text: { (arg0: (d: any) => string): { (): any; new(): any; attr: { (arg0: string, arg1: string): { (): any; new(): any; style: { (arg0: string, arg1: string): void; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; new(): any; }; }; };*/
   public countyLayer: any;
   private nationLayer: any;
   private stateTextLayer: any;
-  private geoPath = geoPath();
+
+  private readonly geoPath = geoPath();
 
   constructor(
-    @Inject(COUNTY_PAINTING_STRATEGY) private paintingStrategy: CountyPaintingStrategy,
+    @Inject(COUNTY_PAINTING_STRATEGY)
+    private paintingStrategy: CountyPaintingStrategy,
     private countyDataService: CountyDataService,
     private topoService: TopoService,
-    private choroUtils: ChoroUtilsService,
-    private stateLookup: StateLookupService) {
-    console.log(this.paintingStrategy);
-  }
+    private stateLookup: StateLookupService
+  ) { }
 
-  ngOnInit(): void {
-    this.topoService.getTopology().subscribe(topo => {
-      const countyFeaturesCollection = feature(topo as any, topo.objects['counties']) as any;
-      const stateFeaturesCollection = feature(topo as any, topo.objects['states']) as any;
-      const nationFeaturesCollection = feature(topo as any, topo.objects['nation']) as any;
+  ngAfterViewInit(): void {
+    this.width = this.USA_Ref.nativeElement.clientWidth - 2;
+    this.height = this.USA_Ref.nativeElement.clientHeight - 2;
+
+    this.topologySubscription = this.topoService.getTopology().subscribe(topo => {
+      const countyFeaturesCollection = feature(
+        topo as any,
+        topo.objects['counties']
+      ) as any;
+
+      const stateFeaturesCollection = feature(
+        topo as any,
+        topo.objects['states']
+      ) as any;
+
+      const nationFeaturesCollection = feature(
+        topo as any,
+        topo.objects['nation']
+      ) as any;
 
       const stateMesh = mesh(
         topo as any,
@@ -58,7 +82,10 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
         (a: any, b: any) => a !== b
       );
 
-      const nationMesh = mesh(topo as any, topo.objects['nation']);
+      const nationMesh = mesh(
+        topo as any,
+        topo.objects['nation']
+      );
 
       this.createChoropleth(
         stateFeaturesCollection,
@@ -71,206 +98,103 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    if (this.topoEventEmitterSubscription) {
-      this.topoEventEmitterSubscription.unsubscribe();
-    }
+    this.topologySubscription?.unsubscribe();
   }
 
-  ngAfterViewInit(): void {
-    this.width = this.USA_Ref?.nativeElement.clientWidth - 2;
-    this.height = this.USA_Ref?.nativeElement.clientHeight - 2;
-  }
-
-  createChoropleth(
+  private createChoropleth(
     stateFeaturesCollection: any,
     countyFeaturesCollection: any,
     stateMesh: any,
     nationFeaturesCollection: any,
     nationMesh: any
   ): void {
-    console.log('createChoropleth');
     this.createChoroplethContainer();
-    this.createStatesMesh(stateMesh);
     this.createCountyLayer(countyFeaturesCollection);
-    this.createNationLayer(nationFeaturesCollection,nationMesh);
+    this.createStatesMesh(stateMesh);
+    this.createNationLayer(nationMesh);
     this.createStatesTextLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
 
     this.choroUSAEvent.emit(true);
-    //   this.paintCountyData();
   }
 
-  createChoroplethContainer() {
-  
-    this.svg = select(this.USA_Ref!.nativeElement).append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-      ;
-    this.usa = this.svg.append('g').attr('id', 'usa');
-    this.usa.append('g').attr('id', 'county-layer');
-    this.usa.append('g').attr('id', 'state-layer');
-    this.usa.append('g').attr('id', 'nation-layer');
-    this.usa.append('g').attr('id', 'state-name-layer');
+  private createChoroplethContainer(): void {
+    select(this.USA_Ref.nativeElement).selectAll('*').remove();
 
-    this.stateLayer = this.svg.select("#state-layer");
-    this.countyLayer = this.svg.select("#county-layer");
-    this.nationLayer = this. svg.select("#nation-layer");
-    this.stateTextLayer = this.svg.select("#state-name-layer");
+    this.svg = select(this.USA_Ref.nativeElement)
+      .append('svg')
+      .attr('width', this.width)
+      .attr('height', this.height);
+
+    this.usa = this.svg.append('g').attr('id', 'usa');
+
+    this.countyLayer = this.usa.append('g').attr('id', 'county-layer');
+    this.stateLayer = this.usa.append('g').attr('id', 'state-layer');
+    this.nationLayer = this.usa.append('g').attr('id', 'nation-layer');
+    this.stateTextLayer = this.usa.append('g').attr('id', 'state-name-layer');
+  }
+
+  private createCountyLayer(countyFeaturesCollection: any): void {
+    this.countyLayer
+      .selectAll('path')
+      .data(countyFeaturesCollection.features)
+      .enter()
+      .append('path')
+      .attr('d', this.geoPath)
+      .attr('fips', (d: any) => d.id)
+      .attr('name', (d: any) => d.properties?.name)
+      .attr('class', 'nslx')
+      .style('stroke', '#404040')
+      .style('stroke-width', '.2')
+      .style('fill', 'pink')
+      .on('click', (_event: MouseEvent, d: any) => {
+        console.log('%c County selected GEOID:', 'color:#68b1ff', d.id);
+      })
+      .append('title')
+      .text((d: any) => `${d.properties?.name ?? ''}, `)
+      .attr('class', 'countyPopup');
   }
 
   private createStatesMesh(stateMesh: any): void {
-    console.groupCollapsed('%c  Create States', 'color:#06729D');
-    //  console.log('data', this.topoService.stateMesh.coordinates);
-    var that = this;
-
-    const stateLayer: any = select("#state-layer")
-      .attr("id", "state-layer")
-      .attr("class", "state_style");
-
-    const geopath = geoPath();
-
-    stateLayer
-      .append("path")
+    this.stateLayer
+      .append('path')
+      .attr('id', 'statemesh')
+      .attr('class', 'state_path')
+      .attr('d', this.geoPath(stateMesh))
       .style('fill', 'none')
       .style('stroke', 'black')
-      .style('stroke-width', '.3')
-      .attr("id", 'statemesh')
-      .attr('bbox', function (d: any) {
-        return 'jaz';
-      })
-      .attr("class", "state_path")
-      .attr("d", geopath(stateMesh))
-      .on('mouseenter', (d: any, event: MouseEvent) => {
-        // change stroke
-        console.log(d);
-      })
-      ;
-
-    console.groupEnd();
+      .style('stroke-width', '.3');
   }
 
-  createCountyLayer(countyFeaturesCollection: any): void {
-    var that = this;
-
-    this.countyLayer
-      .attr("id", "county-layer")
-      .selectAll("path")
-      .data(countyFeaturesCollection?.features)
-      .enter()
-      .append("path")
-      .style('stroke', '#404040')
-      .style('stroke-width', '.2')
-      .style("fill", function (d: any) {
-        return 'pink';
-      })
-      .attr("fips", function (d: any) { return d.id; })
-      .attr("class", "nslx")
-      .attr("name", function (d: any) { return d.properties.name; })
-      .attr("d", function (d: any) {
-        if (d.id === "12087" || d.id === "02016" || d.id === "02050") {
-          const coord = that.geoPath(mesh(d, d.geometry.coordinates, (a: any, b: any) => a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0)));
-        }
-        return "M" + d.geometry.coordinates;
-      })
-
-      .on("click", function (m: any, d: any) {
-        console.log('%c  County selected GEOID: ', 'color:#68b1ff', d.id);
-        //  that.choroDashService.countySelected(d.id);
-      })
-
-      .on('mouseover', function (d: any, fips: any) {
-        //let t = this.select('path');
-        //this.style("fill", "yellow");
-        // console.log(this);
-      })
-      .on('mouseenter', function (d: any) {
-        //let t = this.select('path');
-        //this.style("fill", "yellow");
-        //console.log(d.properties.NAME);
-        //   that.highlightCounty(d, this, that);
-      })
-      .on('mouseleave', function (d: any) {
-        //let t = this.select('path');
-        //this.style("fill", "yellow");
-        //   that.unhighlightCounty(d, this, that);
-      })
-
-      .append("title")
-      .text(function (d: any) {
-        return d.properties.name + ', ';// + that.choroService.countyInformationDictionary[d.properties.GEOID].State;
-      })
-      .attr('class', 'countyPopup')
-      .style('stroke', '#cc44cc');
-    console.groupEnd();
-  }
-
-  private createNationLayer(
-    nationFeaturesCollection: any,
-    nationMesh: any
-  ): void {
-    console.groupCollapsed('%c  Create Nation', 'color:#06729D');
-    // console.log('data', this.topoService.nationMesh.coordinates);
-    var that = this;
-
-   
-    select("#nation-layer")
-      .attr("id", "nation-layer")
-      .attr("class", "nation_style")
-      .selectAll("path")
-      .data(nationFeaturesCollection.features)
-      .enter()
-      .append("path")
+  private createNationLayer(nationMesh: any): void {
+    this.nationLayer
+      .append('path')
+      .attr('class', 'nation_path')
+      .attr('d', this.geoPath(nationMesh))
       .style('fill', 'none')
       .style('stroke', 'black')
-      .style('stroke-width', '.5px')
-      .attr("d", that.geoPath(nationMesh))
-      .attr("class", "nation_path");
-
-    let node: SVGGElement = this.stateLayer.node();
-
-    console.groupEnd();
+      .style('stroke-width', '.5px');
   }
 
-  createStatesTextLayer(stateFeaturesCollection: any): void {
-    const that = this;
-    const stateNameLayer: any = select("#state-name-layer")
-      .attr("id", "state-name-layer")
-      .attr("class", "small");
-
-    stateNameLayer
-      .selectAll("text")
+  private createStatesTextLayer(stateFeaturesCollection: any): void {
+    this.stateTextLayer
+      .selectAll('text')
       .data(stateFeaturesCollection.features)
       .enter()
-      .append("text")
-      .attr("id", function (d: any) {
-        return d.id;
+      .append('text')
+      .attr('id', (d: any) => d.id)
+      .attr('x', (d: any) => this.geoPath.centroid(d)[0] + (this.stateLookup.statesDictionary[d.id]?.dx ?? 0))
+      .attr('y', (d: any) => this.geoPath.centroid(d)[1] + (this.stateLookup.statesDictionary[d.id]?.dy ?? 0))
+      .attr('transform', (d: any) => {
+        const [x, y] = this.geoPath.centroid(d);
+        const lookup = this.stateLookup.statesDictionary[d.id];
+        const dx = lookup?.dx ?? 0;
+        const dy = lookup?.dy ?? 0;
+        const angle = lookup?.albersRotate ?? 0;
+
+        return `rotate(${angle * -1}, ${x + dx}, ${y + dy})`;
       })
-      .attr('bbox', function (d: any) {
-        const bbox = that.choroUtils.GetPathBounds("M" + d.geometry.coordinates);
-        const xctr = bbox[0] + ((bbox[2] - bbox[0]) / 2);
-        return bbox;
-      })
-      .attr('transform', function (d: any) {
-        const bbox = that.choroUtils.GetPathBounds("M" + d.geometry.coordinates);
-        const x = (bbox[0] + ((bbox[2] - bbox[0]) / 2)) + that.stateLookup.statesDictionary[d.id].dx;
-        const y = (bbox[1] + ((bbox[3] - bbox[1]) / 2)) + that.stateLookup.statesDictionary[d.id].dy;
-        const angle = that.stateLookup.statesDictionary[d.id].albersRotate;
-        const rotate: string = 'rotate(' + (angle * -1) + ',' + x + ',' + y + ')';
-        return rotate;
-      })
-      .attr('x', function (d: any) {
-        const bbox = that.choroUtils.GetPathBounds("M" + d.geometry.coordinates);
-        const xctr = (bbox[0] + ((bbox[2] - bbox[0]) / 2)) + that.stateLookup.statesDictionary[d.id].dx;;
-        return xctr;
-      })
-      .attr('y', function (d: any) {
-        const bbox = that.choroUtils.GetPathBounds("M" + d.geometry.coordinates);
-        const yctr = (bbox[1] + ((bbox[3] - bbox[1]) / 2)) + that.stateLookup.statesDictionary[d.id].dy;
-        return yctr;
-      })
-      .text(function (d: any) {
-        return that.stateLookup.statesDictionary[d.id].stateName;
-      })
+      .text((d: any) => this.stateLookup.statesDictionary[d.id]?.stateName ?? '')
       .attr('class', 'shadow')
       .style('text-anchor', 'middle')
       .style('fill', 'black')
@@ -279,27 +203,27 @@ export class ChoroUsaComponent implements OnInit, OnDestroy, AfterViewInit {
       .style('stroke-width', '.5px');
   }
 
-  adjustGroupSizeAndPosition() {
+  private adjustGroupSizeAndPosition(): void {
     const usaBBox = this.usa.node().getBBox();
 
-    // Calculate scaling factors for width and height
+    if (!usaBBox.width || !usaBBox.height) {
+      console.warn('USA bbox is empty', usaBBox);
+      return;
+    }
+
     const scaleX = this.width / usaBBox.width;
     const scaleY = this.height / usaBBox.height;
-
-    // Choose the smaller scaling factor to preserve aspect ratio
     const scale = Math.min(scaleX, scaleY);
 
-    // Calculate translation to center the content horizontally
-    const translateX = (this.width - usaBBox.width * scale) / 2 - usaBBox.x * scale;
-    const translateY = (this.height - usaBBox.height * scale) / 2 - usaBBox.y * scale;
+    const translateX =
+      (this.width - usaBBox.width * scale) / 2 - usaBBox.x * scale;
 
-    this.usa.attr("transform", `translate(${translateX}, ${translateY}) scale(${scale})`);
+    const translateY =
+      (this.height - usaBBox.height * scale) / 2 - usaBBox.y * scale;
+
+    this.usa.attr(
+      'transform',
+      `translate(${translateX}, ${translateY}) scale(${scale})`
+    );
   }
-
-  //paintCounties(data: any) {
-  //  // Assuming data is an array of objects, each with a 'fips' property and other properties used by getColor
-  //  this.countyLayer.selectAll("path")
-  //    .style("fill", (d: any) => this.paintingStrategy.getColor(d)); // Apply color based on strategy
-  //}
-
 }
