@@ -179,30 +179,44 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   }
 
   private createStatesTextLayer(stateFeaturesCollection: any): void {
+
     this.stateTextLayer
       .selectAll('text')
       .data(stateFeaturesCollection.features)
       .enter()
       .append('text')
+
+      .attr('class', 'state-label')
+
       .attr('id', (d: any) => d.id)
-      .attr('x', (d: any) => this.geoPath.centroid(d)[0] + (this.stateLookup.statesDictionary[d.id]?.dx ?? 0))
-      .attr('y', (d: any) => this.geoPath.centroid(d)[1] + (this.stateLookup.statesDictionary[d.id]?.dy ?? 0))
+
+      .attr('x', (d: any) =>
+        this.geoPath.centroid(d)[0] +
+        (this.stateLookup.statesDictionary[d.id]?.dx ?? 0)
+      )
+
+      .attr('y', (d: any) =>
+        this.geoPath.centroid(d)[1] +
+        (this.stateLookup.statesDictionary[d.id]?.dy ?? 0)
+      )
+
       .attr('transform', (d: any) => {
+
         const [x, y] = this.geoPath.centroid(d);
+
         const lookup = this.stateLookup.statesDictionary[d.id];
+
         const dx = lookup?.dx ?? 0;
         const dy = lookup?.dy ?? 0;
+
         const angle = lookup?.albersRotate ?? 0;
 
         return `rotate(${angle * -1}, ${x + dx}, ${y + dy})`;
       })
-      .text((d: any) => this.stateLookup.statesDictionary[d.id]?.stateName ?? '')
-      .attr('class', 'state-label')
-      .style('text-anchor', 'middle')
-      .style('fill', 'black')
-      .style('stroke', 'black')
-      .style('font-size', '15px')
-      .style('stroke-width', '.5px');
+
+      .text((d: any) =>
+        this.stateLookup.statesDictionary[d.id]?.stateName ?? ''
+      );
   }
 
   private adjustGroupSizeAndPosition(): void {
