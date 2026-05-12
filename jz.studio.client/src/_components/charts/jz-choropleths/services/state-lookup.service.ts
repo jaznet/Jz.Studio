@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { StateLookup } from '../models/state-lookup';
+import { StateLookup } from '../interface/state-lookup';
 
 @Injectable({
   providedIn: 'root'

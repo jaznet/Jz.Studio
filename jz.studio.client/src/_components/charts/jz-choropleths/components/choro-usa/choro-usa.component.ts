@@ -181,37 +181,45 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   private createStatesTextLayer(stateFeaturesCollection: any): void {
 
     this.stateTextLayer
-      .selectAll('text')
+      .selectAll('text.state-label')
       .data(stateFeaturesCollection.features)
       .enter()
       .append('text')
-
       .attr('class', 'state-label')
+      .attr('id', (d: any) => `state-label-${d.id}`)
 
-      .attr('id', (d: any) => d.id)
+      .attr('x', (d: any) => {
+        const [x] = this.geoPath.centroid(d);
+        const placement = this.stateLookup.statesDictionary[d.id];
 
-      .attr('x', (d: any) =>
-        this.geoPath.centroid(d)[0] +
-        (this.stateLookup.statesDictionary[d.id]?.dx ?? 0)
-      )
+        return x + (placement?.dx ?? 0);
+      })
 
-      .attr('y', (d: any) =>
-        this.geoPath.centroid(d)[1] +
-        (this.stateLookup.statesDictionary[d.id]?.dy ?? 0)
-      )
+      .attr('y', (d: any) => {
+        const [, y] = this.geoPath.centroid(d);
+        const placement = this.stateLookup.statesDictionary[d.id];
+
+        return y + (placement?.dy ?? 0);
+      })
 
       .attr('transform', (d: any) => {
-
         const [x, y] = this.geoPath.centroid(d);
+        const placement = this.stateLookup.statesDictionary[d.id];
 
-        const lookup = this.stateLookup.statesDictionary[d.id];
+        const dx = placement?.dx ?? 0;
+        const dy = placement?.dy ?? 0;
+        const rotate = placement?.albersRotate ?? 0;
 
-        const dx = lookup?.dx ?? 0;
-        const dy = lookup?.dy ?? 0;
+        return `rotate(${rotate * -1}, ${x + dx}, ${y + dy})`;
+      })
 
-        const angle = lookup?.albersRotate ?? 0;
+      .attr('text-anchor', (d: any) =>
+        this.stateLookup.statesDictionary[d.id]?.anchor ?? 'middle'
+      )
 
-        return `rotate(${angle * -1}, ${x + dx}, ${y + dy})`;
+      .style('font-size', (d: any) => {
+        const scale = this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
+        return `${14 * scale}px`;
       })
 
       .text((d: any) =>
