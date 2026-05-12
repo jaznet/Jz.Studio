@@ -1,3 +1,5 @@
+// choro-usa.component.ts
+
 import {
   AfterViewInit,
   Component,

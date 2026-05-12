@@ -58,4 +58,8 @@ export class LogonComponent implements OnInit {
     console.log('Button clicked!');
     this.router.navigateByUrl('/home');
   }
+
+  onButtonClick() {
+    this.router.navigateByUrl('/visualization/chorodash');
+  }
 }
