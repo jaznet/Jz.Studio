@@ -284,21 +284,17 @@ jz-button-cuboid.logon-button .zone.face {
 
 /* active class is currently on the inner button, not on the host */
 :host button.jz-btn.active > .cuboid {
-  --jz-base-color: var(--plt-clr-3);
+  --jz-base-color: var(--plt-pop);
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 28%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 22%);
 
   background-color: var(--jz-base-color);
-
-/*box-shadow:
-  0 0 0 1px rgba(22, 199, 232, 0.25),
-  0 0 10px rgba(22, 199, 232, 0.18),
-  0 0 24px rgba(22, 199, 232, 0.08);*/
+  color:var(--plt-pop-text);
 }
 
 :host button.jz-btn.active .cuboid .zone.face > * {
  // background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
-  color: var(--plt-txt-3);
+  color: var(--plt-pop-text);
 }
 
 :host(.is-disabled),
