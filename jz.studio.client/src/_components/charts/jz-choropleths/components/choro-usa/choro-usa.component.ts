@@ -29,7 +29,7 @@ import {
   selector: 'choro-usa',
   imports: [],
   templateUrl: './choro-usa.component.html',
-  styleUrls: ['./choro-usa.component.css']
+  styleUrls: ['./choro-usa.component.scss']
 })
 export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
@@ -197,7 +197,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
         return `rotate(${angle * -1}, ${x + dx}, ${y + dy})`;
       })
       .text((d: any) => this.stateLookup.statesDictionary[d.id]?.stateName ?? '')
-      .attr('class', 'shadow')
+      .attr('class', 'state-label')
       .style('text-anchor', 'middle')
       .style('fill', 'black')
       .style('stroke', 'black')

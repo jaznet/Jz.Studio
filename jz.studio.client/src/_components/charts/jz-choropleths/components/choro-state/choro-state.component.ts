@@ -29,7 +29,7 @@ import {
   selector: 'choro-state',
   imports: [],
   templateUrl: './choro-state.component.html',
-  styleUrls: ['./choro-state.component.css']
+  styleUrls: ['./choro-state.component.scss']
 })
 export class ChoroStateComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';

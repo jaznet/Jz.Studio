@@ -26,7 +26,7 @@ export class PaletteMgrService {
         document.documentElement.style.setProperty('--plt-clr-5', '#938080'); // warm stone
 
         document.documentElement.style.setProperty('--plt-txt-1', '#f2e9e4'); // warm ivory
-        document.documentElement.style.setProperty('--plt-txt-2', '#e8ddd7'); // soft linen
+        document.documentElement.style.setProperty('--plt-txt-2', '#CBB2A4'); // soft linen
         document.documentElement.style.setProperty('--plt-txt-3', '#ddd0c9'); // light sand
         document.documentElement.style.setProperty('--plt-txt-4', '#2a2323'); // deep umber
         document.documentElement.style.setProperty('--plt-txt-5', '#1c1616'); // near-black coffee
@@ -89,17 +89,52 @@ export class PaletteMgrService {
 
       case 'onyx2':
 
-        document.documentElement.style.setProperty('--plt-clr-1', '#131416');
-        document.documentElement.style.setProperty('--plt-clr-2', '#26282c');
-        document.documentElement.style.setProperty('--plt-clr-3', '#383c42');
-        document.documentElement.style.setProperty('--plt-clr-4', '#4b5058');
-        document.documentElement.style.setProperty('--plt-clr-5', '#5e646e');
+        // =========================================================
+        // ONYX 2
+        // Cinematic graphite progression
+        // subtle temperature drift:
+        // cool charcoal → graphite → slate → muted steel → warm silver
+        // =========================================================
 
-        document.documentElement.style.setProperty('--plt-txt-1', '#F1E6DC'); // on #191010
-        document.documentElement.style.setProperty('--plt-txt-2', '#E8D6C8'); // on #322020
-        document.documentElement.style.setProperty('--plt-txt-3', '#F5EBDD'); // on #4B3030
-        document.documentElement.style.setProperty('--plt-txt-4', '#FFF4E8'); // on #644040
-        document.documentElement.style.setProperty('--plt-txt-5', '#140A0A'); // on #7C5050
+        // ---------------------------------------------------------
+        // SURFACES
+        // ---------------------------------------------------------
+
+        // 1 — cool charcoal
+        document.documentElement.style.setProperty('--plt-clr-1', '#111417');
+
+        // 2 — graphite
+        document.documentElement.style.setProperty('--plt-clr-2', '#1C2126');
+
+        // 3 — slate
+        document.documentElement.style.setProperty('--plt-clr-3', '#2A3138');
+
+        // 4 — muted steel
+        document.documentElement.style.setProperty('--plt-clr-4', '#3B454F');
+
+        // 5 — faint warm silver
+        document.documentElement.style.setProperty('--plt-clr-5', '#535C65');
+
+
+        // ---------------------------------------------------------
+        // TEXT
+        // warm-neutral text to soften the cold structure
+        // ---------------------------------------------------------
+
+        document.documentElement.style.setProperty('--plt-txt-1', '#E6E2DB');
+        document.documentElement.style.setProperty('--plt-txt-2', '#D8D3CB');
+        document.documentElement.style.setProperty('--plt-txt-3', '#ECE7DF');
+        document.documentElement.style.setProperty('--plt-txt-4', '#F7F1E8');
+        document.documentElement.style.setProperty('--plt-txt-5', '#15181B');
+
+
+        // ---------------------------------------------------------
+        // OPTIONAL POP / ACCENT
+        // antique conductive gold
+        // ---------------------------------------------------------
+
+        document.documentElement.style.setProperty('--plt-pop', '#B08D57');
+        document.documentElement.style.setProperty('--plt-pop-txt', '#FFF7EA');
 
         break;
 

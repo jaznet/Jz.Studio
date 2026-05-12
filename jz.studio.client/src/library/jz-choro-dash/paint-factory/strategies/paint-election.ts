@@ -2,8 +2,8 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Subscription } from "rxjs/internal/Subscription";
 import { CountyPaintingStrategy } from "../interfaces/county-painting-strategy";
-import { ChoroDataService } from "../../../jz-choropleths/services/choro-data.service";
-import { CountyDataService } from "../../../jz-choropleths/services/county-data.service";
+import { ChoroDataService } from "../../../../_components/charts/jz-choropleths/services/choro-data.service";
+import { CountyDataService } from "../../../../_components/charts/jz-choropleths/services/county-data.service";
 import { Injectable } from "@angular/core";
 
 @Injectable()

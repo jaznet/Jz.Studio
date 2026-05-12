@@ -2,15 +2,15 @@
 
 import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
-import { ChoroStateComponent } from '../jz-choropleths/components/choro-state/choro-state.component';
-import { ChoroUsaComponent } from '../jz-choropleths/components/choro-usa/choro-usa.component';
+import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/components/choro-state/choro-state.component';
+import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
 import { UserSelectionService } from './paint-factory/services/user-selection.service';
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
-import { TopoService } from '../jz-choropleths/services/topo.service';
-import { ChoroDataService } from '../jz-choropleths/services/choro-data.service';
+import { TopoService } from '../../_components/charts/jz-choropleths/services/topo.service';
+import { ChoroDataService } from '../../_components/charts/jz-choropleths/services/choro-data.service';
 import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { DxRadioGroupModule } from 'devextreme-angular/ui/radio-group';
-import { COUNTY_PAINTING_STRATEGY } from '../jz-choropleths/interface/county-painting-strategy.token';
+import { COUNTY_PAINTING_STRATEGY } from '../../_components/charts/jz-choropleths/interface/county-painting-strategy.token';
 import { PaintElectionStrategy } from './paint-factory/strategies/paint-election';
 
 @Component({

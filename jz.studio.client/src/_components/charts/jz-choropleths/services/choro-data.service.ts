@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Population } from '../../../models/Population';
+import { Population } from '../../../../models/Population';
 import { FederalElection } from '../models/FederalElection';
 
 @Injectable({

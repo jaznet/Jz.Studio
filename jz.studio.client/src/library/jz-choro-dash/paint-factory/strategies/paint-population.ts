@@ -1,8 +1,8 @@
 
 import { HttpErrorResponse } from "@angular/common/http";
 import { CountyPaintingStrategy } from "../interfaces/county-painting-strategy";
-import { ChoroDataService } from "../../../jz-choropleths/services/choro-data.service";
-import { CountyDataService } from "../../../jz-choropleths/services/county-data.service";
+import { ChoroDataService } from "../../../../_components/charts/jz-choropleths/services/choro-data.service";
+import { CountyDataService } from "../../../../_components/charts/jz-choropleths/services/county-data.service";
 
 export class PaintPopulationStrategy implements CountyPaintingStrategy {
 

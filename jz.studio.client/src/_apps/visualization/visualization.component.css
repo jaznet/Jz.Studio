@@ -1,11 +1,11 @@
 .view-router-container {
     border-radius:9px;
-    border:1px solid var(--plt-clr-5);
+    border:1.5px solid var(--plt-pop);
     background-color:var(--plt-clr-2) ;
   
 }
 
 .app-view {
-  border: 1px solid var(--plt-clr-3);
+  border: 1.5px solid var(--plt-clr-3);
   background-color: var(--plt-clr-2);
 } 
