@@ -24,6 +24,7 @@ import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY
 } from '../../interface/county-painting-strategy.token';
+import {geoCentroid,geoAlbersUsa } from 'd3-geo';
 
 @Component({
   selector: 'choro-usa',
@@ -177,6 +178,26 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .style('stroke', 'black')
       .style('stroke-width', '.5px');
   }
+  private projection = geoAlbersUsa();
+  private getLatitudeTangentAngle(d: any): number {
+
+    // geographic center of the state: [longitude, latitude]
+    const [lon, lat] = geoCentroid(d);
+
+    const delta = 0.5; // degrees of longitude to sample left/right
+
+    const p1 = this.projection([lon - delta, lat]);
+    const p2 = this.projection([lon + delta, lat]);
+
+    if (!p1 || !p2) {
+      return 0;
+    }
+
+    const dx = p2[0] - p1[0];
+    const dy = p2[1] - p1[1];
+
+    return Math.atan2(dy, dx) * 180 / Math.PI;
+  }
 
   private createStatesTextLayer(stateFeaturesCollection: any): void {
 
@@ -208,9 +229,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
         const dx = placement?.dx ?? 0;
         const dy = placement?.dy ?? 0;
-        const rotate = placement?.albersRotate ?? 0;
 
-        return `rotate(${rotate * -1}, ${x + dx}, ${y + dy})`;
+        const rotate =
+          (placement?.albersRotate ??
+            this.getLatitudeTangentAngle(d)) * -1;
+
+        return `rotate(${rotate}, ${x + dx}, ${y + dy})`;
       })
 
       .attr('text-anchor', (d: any) =>

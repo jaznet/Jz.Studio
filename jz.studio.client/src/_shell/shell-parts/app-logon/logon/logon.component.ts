@@ -60,6 +60,6 @@ export class LogonComponent implements OnInit {
   }
 
   onButtonClick() {
-    this.router.navigateByUrl('/visualization/chorodash');
+    this.router.navigate(['/visualization/chorodash']);
   }
 }
