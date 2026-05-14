@@ -7,6 +7,7 @@ import {
   EventEmitter,
   HostBinding,
   inject,
+  Input,
   OnDestroy,
   Output,
   ViewChild
@@ -24,7 +25,8 @@ import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY
 } from '../../interface/county-painting-strategy.token';
-import {geoCentroid,geoAlbersUsa } from 'd3-geo';
+import { geoCentroid, geoAlbersUsa } from 'd3-geo';
+import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
   selector: 'choro-usa',
@@ -36,6 +38,7 @@ import {geoCentroid,geoAlbersUsa } from 'd3-geo';
 export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
+  @Input() shapeSet?: GeoShapeSet;
   @Output() choroUSAEvent = new EventEmitter<any>();
 
   private topologySubscription?: Subscription;
@@ -49,8 +52,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   public countyLayer: any;
   private nationLayer: any;
   private stateTextLayer: any;
-
-
 
   private readonly geoPath = geoPath();
 

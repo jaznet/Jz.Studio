@@ -7,23 +7,22 @@ import {
   EventEmitter,
   HostBinding,
   Inject,
-  OnDestroy,
+  Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
-import { Subscription } from 'rxjs';
-import { feature } from 'topojson-client';
 
 import { StateLookupService } from '../../services/state-lookup.service';
-import { TopoService } from '../../services/topo.service';
-import { CountyDataService } from '../../services/county-data.service';
 import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY
 } from '../../interface/county-painting-strategy.token';
+import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
   selector: 'choro-state',
@@ -31,14 +30,17 @@ import {
   templateUrl: './choro-state.component.html',
   styleUrls: ['./choro-state.component.scss']
 })
-export class ChoroStateComponent implements AfterViewInit, OnDestroy {
+export class ChoroStateComponent implements AfterViewInit, OnChanges {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
+
   @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
+
+  @Input() shapeSet?: GeoShapeSet;
+
   @Output() choroStateEvent = new EventEmitter<any>();
 
-  private topologySubscription?: Subscription;
-
   private readonly stateFips = '13'; // Georgia
+  private viewReady = false;
 
   width = 0;
   height = 0;
@@ -51,35 +53,59 @@ export class ChoroStateComponent implements AfterViewInit, OnDestroy {
   constructor(
     @Inject(COUNTY_PAINTING_STRATEGY)
     private paintingStrategy: CountyPaintingStrategy,
-    private countyDataService: CountyDataService,
-    private topoService: TopoService,
     private stateLookup: StateLookupService
   ) { }
 
   ngAfterViewInit(): void {
-    this.width = this.stateRef.nativeElement.clientWidth - 2;
-    this.height = this.stateRef.nativeElement.clientHeight - 2;
+    this.viewReady = true;
 
-    this.topologySubscription = this.topoService.getTopology().subscribe(topo => {
-      const countyFeaturesCollection = feature(
-        topo as any,
-        topo.objects['counties']
-      ) as any;
-
-      this.createStateChoropleth(countyFeaturesCollection);
-    });
+    // Let Angular/layout finish one more pass before measuring.
+    queueMicrotask(() => this.tryCreateStateChoropleth());
   }
 
-  ngOnDestroy(): void {
-    this.topologySubscription?.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['shapeSet']) {
+      this.tryCreateStateChoropleth();
+    }
   }
 
-  private createStateChoropleth(countyFeaturesCollection: any): void {
+  private tryCreateStateChoropleth(): void {
+    if (!this.viewReady) {
+      return;
+    }
+
+    if (!this.shapeSet?.features?.features?.length) {
+      return;
+    }
+
+    const rect = this.stateRef.nativeElement.getBoundingClientRect();
+
+    this.width = Math.max(0, Math.floor(rect.width));
+    this.height = Math.max(0, Math.floor(rect.height));
+
+    if (this.width <= 0 || this.height <= 0) {
+      console.warn('State choropleth skipped: invalid size', {
+        width: this.width,
+        height: this.height
+      });
+
+      return;
+    }
+
+    this.createStateChoropleth();
+  }
+
+  private createStateChoropleth(): void {
     this.createStateChoroplethContainer();
-    this.createCountyLayer(countyFeaturesCollection);
+    this.createCountyLayer();
 
-    console.log('state bbox', this.state.node().getBBox());
-    console.log('counties bbox', this.counties.node().getBBox());
+    const countyNode = this.counties?.node();
+
+    if (!countyNode) {
+      return;
+    }
+
+    console.log('counties bbox', countyNode.getBBox());
 
     this.adjustStateGroupSizeAndPosition();
     this.applyRotation();
@@ -88,42 +114,45 @@ export class ChoroStateComponent implements AfterViewInit, OnDestroy {
   }
 
   private createStateChoroplethContainer(): void {
-    select(this.stateRef.nativeElement).selectAll('*').remove();
-
     this.svg = select(this.stateRef.nativeElement)
-      .append('svg')
+      .selectAll('svg')
+      .data([null])
+      .join('svg')
       .attr('viewBox', `0 0 ${this.width} ${this.height}`)
       .style('width', '100%')
       .style('height', '100%');
 
     this.outerGroup = this.svg
-      .append('g')
-      .attr('id', 'outer-group');
+      .selectAll('g.state-outer-group')
+      .data([null])
+      .join('g')
+      .attr('class', 'state-outer-group');
 
     this.state = this.outerGroup
-      .append('g')
-      .attr('id', 'state');
+      .selectAll('g.state-group')
+      .data([null])
+      .join('g')
+      .attr('class', 'state-group');
 
     this.counties = this.state
-      .append('g')
-      .attr('id', 'counties');
+      .selectAll('g.counties-group')
+      .data([null])
+      .join('g')
+      .attr('class', 'counties-group');
   }
 
-  private createCountyLayer(countyFeaturesCollection: any): void {
+  private createCountyLayer(): void {
     const geopath = geoPath();
 
-    const stateCounties = countyFeaturesCollection.features.filter((d: any) =>
-      String(d.id).slice(0, 2) === this.stateFips
-    );
+    const stateCounties = this.shapeSet!.features.features;
 
     console.log('state county count', stateCounties.length);
 
     this.counties
       .selectAll('path')
-      .data(stateCounties)
-      .enter()
-      .append('path')
-      .attr('d', geopath)
+      .data(stateCounties, (d: any) => d.id)
+      .join('path')
+      .attr('d', geopath as any)
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
       .attr('class', 'state-county-path')
@@ -142,8 +171,12 @@ export class ChoroStateComponent implements AfterViewInit, OnDestroy {
 
     const padding = 20;
 
-    const availableWidth = this.width - padding * 2;
-    const availableHeight = this.height - padding * 2;
+    const availableWidth = Math.max(0, this.width - padding * 2);
+    const availableHeight = Math.max(0, this.height - padding * 2);
+
+    if (availableWidth <= 0 || availableHeight <= 0) {
+      return;
+    }
 
     const scaleX = availableWidth / stateBBox.width;
     const scaleY = availableHeight / stateBBox.height;

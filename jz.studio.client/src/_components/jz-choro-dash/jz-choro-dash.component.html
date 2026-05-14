@@ -13,15 +13,13 @@
     <div class="grid-col-fill choro-panels">
 
       <jz-choro-dash-panel class="grid-col-fill">
-        <choro-usa *ngIf="usaShapeSet"
-                   #choro_usa
+        <choro-usa #choro_usa
                    [shapeSet]="usaShapeSet">
         </choro-usa>
       </jz-choro-dash-panel>
 
       <jz-choro-dash-panel class="state-panel">
-        <choro-state *ngIf="stateShapeSet"
-                     #choro_state
+        <choro-state #choro_state
                      [shapeSet]="stateShapeSet">
         </choro-state>
       </jz-choro-dash-panel>
