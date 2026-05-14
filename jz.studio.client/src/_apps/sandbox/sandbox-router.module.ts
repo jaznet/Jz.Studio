@@ -21,10 +21,7 @@ const routes: Routes = [
         component: SandboxHomeComponent
       },
 
-      {
-        path: 'choro-dash-loader',
-        loadChildren: () => import('../../library/jz-choro-dash/jz-choro-dash.module').then(m => m.JzChoroDashModule)
-      },
+    
       {
         path: 'docking',
         component: DockingViewComponent 

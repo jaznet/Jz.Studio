@@ -1,0 +1,21 @@
+
+/*jz-choro-dash.component.scss*/
+
+.choro-panels {
+  display: flex;
+  flex-flow: row;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.state-panel {
+  width: 45%;
+  flex: 0 0 45%;
+  min-width: 0;
+}
+
+.grid-col-fill {
+  flex: 1 1 auto;
+  min-width: 0;
+}

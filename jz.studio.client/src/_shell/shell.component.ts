@@ -22,7 +22,7 @@ interface WeatherForecast {
 }
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-shell',
   standalone:true,
   imports: [ShellHeaderComponent, ShellFooterComponent, RouterOutlet,  ShellContentComponent ],
   templateUrl: './shell.component.html',

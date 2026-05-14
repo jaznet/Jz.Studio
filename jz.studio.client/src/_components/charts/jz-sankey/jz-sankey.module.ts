@@ -6,13 +6,13 @@ import { JzSankeyRouterModule } from './jz-sankey-router.module';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [SankeyComponent],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule,
     DxSankeyModule,
     JzSankeyRouterModule
   ],
-  exports: [SankeyComponent],
+  exports: [],
 })
 export class JzSankeyModule { }

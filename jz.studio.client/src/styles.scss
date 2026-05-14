@@ -27,16 +27,22 @@
 }
 
 html,
-body {
-  margin: 0; /* Override the default margin */
-  /* Add any other styles you need */
-  height:100%;
-  width:100%;
-  background-color: var(--plt-clr-1);
+body,
+app-root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+
+app-root {
+  display: flex;
+  flex-direction: column;
+   background-color: var(--plt-clr-1);
   font-family:varela;
 }
 
-app-root {
+app-shell {
   display: flex;
   flex-direction: column;
   height: 100%;

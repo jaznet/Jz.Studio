@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { VisualizationComponent } from './visualization.component';
 import { TechnicalAnalysisComponent } from '../../_components/charts/technical-analysis/technical-analysis.component';
-import { JzChoroDashComponent } from '../../library/jz-choro-dash/jz-choro-dash.component';
+import { JzChoroDashComponent } from '../../_components/jz-choro-dash/jz-choro-dash.component';
 import { SankeyComponent } from '../../_components/charts/jz-sankey/jz-sankey.component';
 import { JzBubbleChart } from '../../_components/charts/jz-bubble-chart/jz-bubble-chart';
 import { JzSyncfusionChartComponent } from '../../_components/charts/jz-syncfusion-chart/jz-syncfusion-chart.component';

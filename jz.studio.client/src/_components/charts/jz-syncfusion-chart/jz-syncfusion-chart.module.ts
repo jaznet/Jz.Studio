@@ -6,7 +6,7 @@ import { ChartModule, ChartAllModule } from '@syncfusion/ej2-angular-charts'
 
 @NgModule({
   declarations: [
-    JzSyncfusionChartComponent
+   
   ],
   imports: [
     CommonModule,
@@ -15,7 +15,7 @@ import { ChartModule, ChartAllModule } from '@syncfusion/ej2-angular-charts'
     ChartAllModule
   ],
   exports: [
-    JzSyncfusionChartComponent
+   
   ]
 })
 

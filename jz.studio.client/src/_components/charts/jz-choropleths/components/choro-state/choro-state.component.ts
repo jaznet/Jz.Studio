@@ -92,8 +92,9 @@ export class ChoroStateComponent implements AfterViewInit, OnDestroy {
 
     this.svg = select(this.stateRef.nativeElement)
       .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height);
+      .attr('viewBox', `0 0 ${this.width} ${this.height}`)
+      .style('width', '100%')
+      .style('height', '100%');
 
     this.outerGroup = this.svg
       .append('g')

@@ -8,8 +8,9 @@ import { JzUiControlsModule } from './library/jz-ui-controls/jz-ui-controls.modu
 import { AppWelcomeModule } from './_shell/app-welcome/app-welcome.module';
 import { SHELL_ROUTES } from './_shell/shell.routes';
 import { AppPartsModule } from './_shell/shell-parts/shell-parts.module';
+import { AppComponent } from './app.component';
 
-bootstrapApplication(ShellComponent, {
+bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(SHELL_ROUTES),
     provideHttpClient(withInterceptorsFromDi()),

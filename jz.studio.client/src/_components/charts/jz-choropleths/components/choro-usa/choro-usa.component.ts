@@ -53,15 +53,17 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     @Inject(COUNTY_PAINTING_STRATEGY)
-    private paintingStrategy: CountyPaintingStrategy,
+    private countyPaintingStrategy: CountyPaintingStrategy,
+
     private countyDataService: CountyDataService,
     private topoService: TopoService,
     private stateLookup: StateLookupService
   ) { }
 
   ngAfterViewInit(): void {
-    this.width = this.USA_Ref.nativeElement.clientWidth - 2;
-    this.height = this.USA_Ref.nativeElement.clientHeight - 2;
+    const host = this.USA_Ref.nativeElement as HTMLElement;
+    this.width = Math.max(0, host.clientWidth - 2);
+    this.height = Math.max(0, host.clientHeight - 2);
 
     this.topologySubscription = this.topoService.getTopology().subscribe(topo => {
       const countyFeaturesCollection = feature(
@@ -126,8 +128,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
     this.svg = select(this.USA_Ref.nativeElement)
       .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height);
+      .attr('viewBox', `0 0 ${this.width} ${this.height}`)
+      .style('width', '100%')
+      .style('height', '100%');
 
     this.usa = this.svg.append('g').attr('id', 'usa');
 
