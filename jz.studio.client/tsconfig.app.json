@@ -1,3 +1,6 @@
+//tsconig.app.json
+
+
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {

@@ -1,6 +1,6 @@
 // jz-choro-dash.component.ts
 
-import { Component, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, inject, OnInit, ViewChild } from '@angular/core';
 import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painting-strategy';
 import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/components/choro-state/choro-state.component';
 import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
@@ -22,7 +22,7 @@ import { PaintElectionStrategy } from './paint-factory/strategies/paint-election
     
   ],
   templateUrl: './jz-choro-dash.component.html',
-  styleUrl: './jz-choro-dash.component.scss',
+  styleUrl: './jz-choro-dash.component.css',
   providers: [
     {
       provide: COUNTY_PAINTING_STRATEGY,
@@ -38,13 +38,13 @@ export class JzChoroDashComponent implements OnInit {
   categories: string[] = ['election', 'population'];
   data: any;
 
-  constructor(
-    @Inject(COUNTY_PAINTING_STRATEGY) private paintStrategy: CountyPaintingStrategy,
-    private topoService: TopoService,
-    private strategySelect: UserSelectionService,
-    private paintStrategyFactoryService: PaintStrategyFactoryService,
-    private dataService: ChoroDataService
-  ) {
+  private paintStrategy = inject<CountyPaintingStrategy>(COUNTY_PAINTING_STRATEGY);
+  private topoService = inject(TopoService);
+  private strategySelect = inject(UserSelectionService);
+  private paintStrategyFactoryService = inject(PaintStrategyFactoryService);
+  private dataService = inject(ChoroDataService);
+
+  constructor() {
 
   }
 

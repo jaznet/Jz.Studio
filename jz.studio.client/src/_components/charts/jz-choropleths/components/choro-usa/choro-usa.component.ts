@@ -6,7 +6,7 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  Inject,
+  inject,
   OnDestroy,
   Output,
   ViewChild
@@ -30,8 +30,9 @@ import {geoCentroid,geoAlbersUsa } from 'd3-geo';
   selector: 'choro-usa',
   imports: [],
   templateUrl: './choro-usa.component.html',
-  styleUrls: ['./choro-usa.component.scss']
+  styleUrls: ['./choro-usa.component.css']
 })
+
 export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
@@ -49,16 +50,18 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   private nationLayer: any;
   private stateTextLayer: any;
 
+
+
   private readonly geoPath = geoPath();
 
-  constructor(
-    @Inject(COUNTY_PAINTING_STRATEGY)
-    private countyPaintingStrategy: CountyPaintingStrategy,
+  private countyPaintingStrategy =
+    inject<CountyPaintingStrategy>(COUNTY_PAINTING_STRATEGY);
 
-    private countyDataService: CountyDataService,
-    private topoService: TopoService,
-    private stateLookup: StateLookupService
-  ) { }
+  private countyDataService = inject(CountyDataService);
+  private topoService = inject(TopoService);
+  private stateLookup = inject(StateLookupService);
+
+  constructor() { }
 
   ngAfterViewInit(): void {
     const host = this.USA_Ref.nativeElement as HTMLElement;

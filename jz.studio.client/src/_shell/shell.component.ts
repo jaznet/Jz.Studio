@@ -14,12 +14,12 @@ import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
 import { Subject, takeUntil } from 'rxjs';
 
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+//interface WeatherForecast {
+//  date: string;
+//  temperatureC: number;
+//  temperatureF: number;
+//  summary: string;
+//}
 
 @Component({
   selector: 'app-shell',
@@ -35,7 +35,7 @@ export class ShellComponent implements OnInit {
   @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
 
   private observer?: MutationObserver;
-  public forecasts: WeatherForecast[] = [];
+ /* public forecasts: WeatherForecast[] = [];*/
 
   private doc = inject(DOCUMENT);
   private pid = inject(PLATFORM_ID);
