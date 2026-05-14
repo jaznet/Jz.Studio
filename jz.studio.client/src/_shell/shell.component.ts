@@ -28,6 +28,7 @@ interface WeatherForecast {
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.css'
 })
+
 export class ShellComponent implements OnInit {
   @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
   @ViewChild('content', { static: true }) content!: ShellContentComponent;
