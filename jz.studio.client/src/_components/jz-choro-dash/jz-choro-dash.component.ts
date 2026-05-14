@@ -9,7 +9,6 @@ import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-fact
 import { TopoService } from '../../_components/charts/jz-choropleths/services/topo.service';
 import { ChoroDataService } from '../../_components/charts/jz-choropleths/services/choro-data.service';
 import { JzChoroDashPanelComponent } from '../../_components/jz-choro-dash-panel/jz-choro-dash-panel.component';
-import { DxRadioGroupModule } from 'devextreme-angular/ui/radio-group';
 import { COUNTY_PAINTING_STRATEGY } from '../../_components/charts/jz-choropleths/interface/county-painting-strategy.token';
 import { PaintElectionStrategy } from './paint-factory/strategies/paint-election';
 
@@ -19,8 +18,8 @@ import { PaintElectionStrategy } from './paint-factory/strategies/paint-election
   imports: [
     ChoroStateComponent,
     JzChoroDashPanelComponent,
-    ChoroUsaComponent,
-    DxRadioGroupModule
+    ChoroUsaComponent
+    
   ],
   templateUrl: './jz-choro-dash.component.html',
   styleUrl: './jz-choro-dash.component.scss',
