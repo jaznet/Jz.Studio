@@ -12,6 +12,7 @@ import { ShellFooterComponent } from './shell-parts/shell-footer/shell-footer.co
 import { ShellHeaderComponent } from './shell-parts/shell-header/shell-header.component';
 import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
 import { Subject, takeUntil } from 'rxjs';
+import { ShellThemeService } from './services/shell-theme.service';
 
 
 //interface WeatherForecast {
@@ -35,7 +36,6 @@ export class ShellComponent implements OnInit {
   @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
 
   private observer?: MutationObserver;
- /* public forecasts: WeatherForecast[] = [];*/
 
   private doc = inject(DOCUMENT);
   private pid = inject(PLATFORM_ID);
@@ -44,6 +44,7 @@ export class ShellComponent implements OnInit {
   private destroy$ = new Subject<void>();
 
   constructor(
+    private shellTheme: ShellThemeService,
     private router: Router,
     private appService: AppStateService,
     private navService: JzNavService,
@@ -59,6 +60,8 @@ export class ShellComponent implements OnInit {
     console.log(this.header);
     console.log(this.content);
     console.log(this.footer);
+
+    this.shellTheme.initializeTheme();
 
     this.navService.activeItem$
       .pipe(takeUntil(this.destroy$))

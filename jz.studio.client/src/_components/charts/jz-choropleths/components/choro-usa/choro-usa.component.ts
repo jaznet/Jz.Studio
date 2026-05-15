@@ -156,7 +156,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'nslx')
       .style('stroke', '#404040')
       .style('stroke-width', '.2')
-      .style('fill', 'pink')
+      .style('fill', 'var(--ply-clr-3')
       .on('click', (_event: MouseEvent, d: any) => {
         console.log('%c County selected GEOID:', 'color:#68b1ff', d.id);
       })
