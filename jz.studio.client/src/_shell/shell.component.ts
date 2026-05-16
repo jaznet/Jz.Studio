@@ -67,11 +67,16 @@ export class ShellComponent implements OnInit, AfterViewInit {
     this.navService.activeItem$
       .pipe(takeUntil(this.destroy$))
       .subscribe(item => {
-        console.log('ACTIVE NAV ITEM:', item);
-
-        if (item?.palette) {
-          this.shellTheme.applyPalette(item.palette);
+        if (!item?.palette) {
+          return;
         }
+
+        if (!this.shellTheme.hasPalette(item.palette)) {
+          console.warn(`Nav item requested unknown palette: ${item.palette}`);
+          return;
+        }
+
+        this.shellTheme.applyPalette(item.palette);
       });
 
     window.addEventListener('load', () => {

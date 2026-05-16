@@ -37,10 +37,6 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   override ngOnInit(): void {
     this.menuType = 'main';
     console.log('MainMenuComponent initialized');
-   // this.navService.activeItem$.subscribe(...) // unless side effects
-    //this.app.menuVisibility$.subscribe(menu => {
-    //  this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
-    //});
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
       // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
