@@ -73,4 +73,14 @@ export class ShellThemeService {
     root.style.setProperty('--plt-pop', palette.pop);
     root.style.setProperty('--plt-pop-txt', palette.popTxt);
   }
+
+  hasPalette(paletteName: string): boolean {
+    return !!JZ_PALETTES[paletteName];
+  }
+
+  getPalette(paletteName: string): JzPalette | null {
+    return JZ_PALETTES[paletteName] ?? null;
+  }
+
+
 }
