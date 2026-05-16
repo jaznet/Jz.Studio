@@ -35,29 +35,42 @@ export class ShellThemeService {
     return Object.keys(JZ_PALETTES);
   }
 
+  private readonly storageKey = 'jz-shell-palette';
+
   initializeTheme(): void {
-    this.applyPalette(this.defaultPaletteName);
-  }
 
-  applyPalette(paletteName: string): void {
-    const palette = JZ_PALETTES[paletteName];
+    const savedPalette = this.getSavedPaletteName();
 
-    if (!palette) {
-      console.warn(`Palette '${paletteName}' was not found. Falling back to '${this.defaultPaletteName}'.`);
-
-      const fallbackPalette = JZ_PALETTES[this.defaultPaletteName];
-
-      if (fallbackPalette) {
-        this.applyCssVariables(fallbackPalette);
-        this.activePaletteSubject.next(fallbackPalette);
-      }
-
+    if (savedPalette && this.hasPalette(savedPalette)) {
+      this.applyPalette(savedPalette);
       return;
     }
 
+    this.applyPalette(this.defaultPaletteName);
+  }
+
+  private activatePalette(palette: JzPalette): void {
     this.applyCssVariables(palette);
     this.activePaletteSubject.next(palette);
     this.themeReadySubject.next(true);
+    this.savePaletteName(palette.name);
+  }
+
+  applyPalette(paletteName: string): void {
+    const palette = this.getPalette(paletteName);
+
+    if (palette) {
+      this.activatePalette(palette);
+      return;
+    }
+
+    console.warn(`Palette '${paletteName}' was not found. Falling back to '${this.defaultPaletteName}'.`);
+
+    const fallbackPalette = this.getPalette(this.defaultPaletteName);
+
+    if (fallbackPalette) {
+      this.activatePalette(fallbackPalette);
+    }
   }
 
   private readonly cssVariableMap: Record<string, keyof JzPalette> = {
@@ -98,5 +111,21 @@ export class ShellThemeService {
     return JZ_PALETTES[paletteName] ?? null;
   }
 
+  private getSavedPaletteName(): string | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
 
+    return localStorage.getItem(this.storageKey);
+  }
+
+
+
+  private savePaletteName(paletteName: string): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    localStorage.setItem(this.storageKey, paletteName);
+  }
 }
