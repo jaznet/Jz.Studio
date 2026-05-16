@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { JzPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,11 @@ import { JZ_PALETTES } from '../registries/jz-palette.registry';
 export class ShellThemeService {
 
   private readonly defaultPaletteName = 'onyx';
+  private readonly activePaletteSubject =
+    new BehaviorSubject<JzPalette | null>(null);
+
+  readonly activePalette$ =
+    this.activePaletteSubject.asObservable();
 
   initializeTheme(): void {
     this.applyPalette(this.defaultPaletteName);
@@ -24,12 +30,14 @@ export class ShellThemeService {
 
       if (fallbackPalette) {
         this.applyCssVariables(fallbackPalette);
+        this.activePaletteSubject.next(fallbackPalette);
       }
 
       return;
     }
 
     this.applyCssVariables(palette);
+    this.activePaletteSubject.next(palette);
   }
 
   private applyCssVariables(palette: JzPalette): void {
