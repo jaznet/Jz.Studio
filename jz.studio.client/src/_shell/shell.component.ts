@@ -12,7 +12,7 @@ import { ShellFooterComponent } from './shell-parts/shell-footer/shell-footer.co
 import { ShellHeaderComponent } from './shell-parts/shell-header/shell-header.component';
 import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
 import { Subject, takeUntil } from 'rxjs';
-import { ShellThemeService } from './services/shell-theme.service';
+import { ShellThemeService } from '../_framework/palette/services/shell-theme.service';
 
 
 //interface WeatherForecast {
