@@ -30,6 +30,10 @@ export class ShellThemeService {
     return this.themeReadySubject.value;
   }
 
+  get availablePaletteNames(): string[] {
+    return Object.keys(JZ_PALETTES);
+  }
+
   initializeTheme(): void {
     this.applyPalette(this.defaultPaletteName);
   }
@@ -55,23 +59,36 @@ export class ShellThemeService {
     this.themeReadySubject.next(true);
   }
 
+  private readonly cssVariableMap: Record<string, keyof JzPalette> = {
+    '--plt-clr-1': 'clr1',
+    '--plt-clr-2': 'clr2',
+    '--plt-clr-3': 'clr3',
+    '--plt-clr-4': 'clr4',
+    '--plt-clr-5': 'clr5',
+
+    '--plt-txt-1': 'txt1',
+    '--plt-txt-2': 'txt2',
+    '--plt-txt-3': 'txt3',
+    '--plt-txt-4': 'txt4',
+    '--plt-txt-5': 'txt5',
+
+    '--plt-pop': 'pop',
+    '--plt-pop-txt': 'popTxt'
+  };
+
   private applyCssVariables(palette: JzPalette): void {
+
     const root = document.documentElement;
 
-    root.style.setProperty('--plt-clr-1', palette.clr1);
-    root.style.setProperty('--plt-clr-2', palette.clr2);
-    root.style.setProperty('--plt-clr-3', palette.clr3);
-    root.style.setProperty('--plt-clr-4', palette.clr4);
-    root.style.setProperty('--plt-clr-5', palette.clr5);
+    Object.entries(this.cssVariableMap)
+      .forEach(([cssVar, paletteKey]) => {
 
-    root.style.setProperty('--plt-txt-1', palette.txt1);
-    root.style.setProperty('--plt-txt-2', palette.txt2);
-    root.style.setProperty('--plt-txt-3', palette.txt3);
-    root.style.setProperty('--plt-txt-4', palette.txt4);
-    root.style.setProperty('--plt-txt-5', palette.txt5);
+        const value = palette[paletteKey];
 
-    root.style.setProperty('--plt-pop', palette.pop);
-    root.style.setProperty('--plt-pop-txt', palette.popTxt);
+        if (value) {
+          root.style.setProperty(cssVar, value);
+        }
+      });
   }
 
   hasPalette(paletteName: string): boolean {
