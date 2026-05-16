@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { JzPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
 import { BehaviorSubject } from 'rxjs';
+import { JZ_PALETTE_CSS_VARIABLES } from '../registries/jz-palette-css-variable.registry';
 
 @Injectable({
   providedIn: 'root'
@@ -77,16 +78,14 @@ export class ShellThemeService {
   };
 
   private applyCssVariables(palette: JzPalette): void {
-
     const root = document.documentElement;
 
-    Object.entries(this.cssVariableMap)
-      .forEach(([cssVar, paletteKey]) => {
-
-        const value = palette[paletteKey];
+    Object.entries(JZ_PALETTE_CSS_VARIABLES)
+      .forEach(([cssVariableName, palettePropertyName]) => {
+        const value = palette[palettePropertyName];
 
         if (value) {
-          root.style.setProperty(cssVar, value);
+          root.style.setProperty(cssVariableName, value);
         }
       });
   }
