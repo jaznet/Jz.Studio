@@ -16,6 +16,20 @@ export class ShellThemeService {
   readonly activePalette$ =
     this.activePaletteSubject.asObservable();
 
+  get activePalette(): JzPalette | null {
+    return this.activePaletteSubject.value;
+  }
+
+  private readonly themeReadySubject =
+    new BehaviorSubject<boolean>(false);
+
+  readonly themeReady$ =
+    this.themeReadySubject.asObservable();
+
+  get themeReady(): boolean {
+    return this.themeReadySubject.value;
+  }
+
   initializeTheme(): void {
     this.applyPalette(this.defaultPaletteName);
   }
@@ -38,6 +52,7 @@ export class ShellThemeService {
 
     this.applyCssVariables(palette);
     this.activePaletteSubject.next(palette);
+    this.themeReadySubject.next(true);
   }
 
   private applyCssVariables(palette: JzPalette): void {
