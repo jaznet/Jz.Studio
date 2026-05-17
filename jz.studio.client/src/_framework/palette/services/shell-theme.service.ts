@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { JzPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
 import { JZ_PALETTE_CSS_VARIABLES } from '../registries/jz-palette-css-variable.registry';
+import { JzThemeState } from '../models/jz-theme-state.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,19 @@ export class ShellThemeService {
 
   get availablePaletteNames(): string[] {
     return Object.keys(JZ_PALETTES);
+  }
+
+  private readonly themeStateSubject =
+    new BehaviorSubject<JzThemeState>({
+      activePalette: null,
+      themeReady: false
+    });
+
+  readonly themeState$ =
+    this.themeStateSubject.asObservable();
+
+  get themeState(): JzThemeState {
+    return this.themeStateSubject.value;
   }
 
   initializeTheme(): void {
