@@ -8,7 +8,8 @@ import {
   PLATFORM_ID,
   DOCUMENT,
   AfterViewInit,
-  inject
+  inject,
+  HostBinding
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
@@ -39,6 +40,8 @@ export class ShellComponent implements OnInit, AfterViewInit {
   @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
   @ViewChild('content', { static: true }) content!: ShellContentComponent;
   @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
+  @HostBinding('class.theme-ready')
+  themeReady = false;
 
   private observer?: MutationObserver;
 
@@ -94,6 +97,12 @@ export class ShellComponent implements OnInit, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(e => {
         this.header.visibility = e === 'hide' ? 'collapse' : 'visible';
+      });
+
+    this.shellTheme.themeReady$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(ready => {
+        this.themeReady = ready;
       });
   }
 
