@@ -89,8 +89,15 @@ export class ShellThemeService {
 
   private activatePalette(palette: JzPalette): void {
     this.applyCssVariables(palette);
+
     this.activePaletteSubject.next(palette);
     this.themeReadySubject.next(true);
+
+    this.themeStateSubject.next({
+      activePalette: palette,
+      themeReady: true
+    });
+
     this.savePaletteName(palette.name);
   }
 
