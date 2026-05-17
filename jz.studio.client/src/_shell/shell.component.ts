@@ -46,6 +46,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
   private pid = inject(PLATFORM_ID);
 
   activeItem$ = this.navService.activeItem$;
+  themeState$ = this.shellTheme.themeState$;
   private destroy$ = new Subject<void>();
 
   constructor(
