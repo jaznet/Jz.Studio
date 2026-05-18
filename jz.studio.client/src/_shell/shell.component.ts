@@ -53,7 +53,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private shellTheme: ShellThemeService,
+    public shellTheme: ShellThemeService,
     private router: Router,
     private appService: AppStateService,
     private navService: JzNavService,

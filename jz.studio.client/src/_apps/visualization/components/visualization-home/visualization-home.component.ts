@@ -1,9 +1,6 @@
+// visualization-home.component.ts
 
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DOCUMENT, HostBinding, inject, Inject, PLATFORM_ID } from '@angular/core';
-
-
-import { PaletteMgrService } from '../../../../_shell/services/palette-mgr.service';
-
 
 @Component({
   selector: 'visualization-home',
@@ -23,7 +20,7 @@ export class VisualizationHomeComponent implements AfterViewInit {
   private pid = inject(PLATFORM_ID);
 
   constructor(
-    private palette: PaletteMgrService,
+  
   ) {
  //    palette.ChangePalette('protan');
   }

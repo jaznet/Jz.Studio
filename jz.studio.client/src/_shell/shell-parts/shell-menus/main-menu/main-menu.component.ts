@@ -10,7 +10,6 @@ import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.
 import { Router } from '@angular/router';
 import { JzNavGroupComponent }
   from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
-import { NAV_ITEMS } from '../../../../_framework/navigation/config/nav.config';
 import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({

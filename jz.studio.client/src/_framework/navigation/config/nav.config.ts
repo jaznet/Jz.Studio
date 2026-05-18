@@ -1,9 +1,11 @@
+// nav.config.ts
+
 import { JzNavItem } from "../models/jz-nav-item.model";
 
-export const NAV_ITEMS: JzNavItem[] = [
+export const MAIN_NAV_ITEMS: JzNavItem[] = [
   {
     id: 'jzhome',
-    label: 'HoXme',
+    label: 'HoXXme',
     route: '/home',
     palette: 'onyx',
     layoutType: 'blank'

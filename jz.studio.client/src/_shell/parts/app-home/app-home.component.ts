@@ -1,6 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
 import { AppStateService } from '../../services/shell-state.service';
-import { PaletteMgrService } from '../../services/palette-mgr.service';
 
 @Component({
     selector: 'app-home',
@@ -11,10 +10,10 @@ import { PaletteMgrService } from '../../services/palette-mgr.service';
 export class AppHomeComponent {
   @HostBinding('class') classes = 'fit-to-parent view-router-container';
 
-  constructor(private appService: AppStateService, private palette: PaletteMgrService,) {
+  constructor(private appService: AppStateService) {
     console.log('AppHomeComponent');
     {
-      palette.changePalette('onyx');
+     // palette.changePalette('onyx');
     }
     appService.showHeader();
     appService.showMenu();

@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
 import { normalizePalette, Palette } from '../../../../../types/palette';
-import { AppMgrService } from '../../../../services/shell-mgr.service';
-import { PaletteMgrService } from '../../../../services/palette-mgr.service';
+import { ShellThemeService } from '../../../../../_framework/palette/services/shell-theme.service';
 
 @Component({
   selector: 'jz-radio-button',
@@ -29,8 +28,7 @@ export class JzRadioButtonComponent {
   @ViewChild('circle', { static: false }) circle?: ElementRef<SVGCircleElement>;
 
   constructor(
-    private appMgr: AppMgrService,
-    private paletteMgr: PaletteMgrService,
+    private shellTheme: ShellThemeService,
     private renderer: Renderer2
   ) { }
 
@@ -39,8 +37,12 @@ export class JzRadioButtonComponent {
     if (el) this.renderer.setAttribute(el, 'fill', this.btncolor);
   }
 
-  setPalette(): void {
-    // optional: guard to be explicit
-    this.paletteMgr.changePalette(this._palette);
+  setPalette(palette:string): void {
+
+    if (palette) {
+      return;
+    }
+
+    this.shellTheme.applyPalette(palette);
   }
 }

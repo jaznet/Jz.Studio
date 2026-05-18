@@ -5,14 +5,14 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, filter } from 'rxjs';
 
 import { JzNavItem } from '../models/jz-nav-item.model';
-import { NAV_ITEMS } from '../config/nav.config';
+import { MAIN_NAV_ITEMS } from '../config/nav.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JzNavService {
 
-  private readonly itemsSubject = new BehaviorSubject<JzNavItem[]>(NAV_ITEMS);
+  private readonly itemsSubject = new BehaviorSubject<JzNavItem[]>(MAIN_NAV_ITEMS);
   readonly items$ = this.itemsSubject.asObservable();
 
   private readonly activeItemSubject = new BehaviorSubject<JzNavItem | null>(null);

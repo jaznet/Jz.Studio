@@ -1,14 +1,13 @@
 
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { JzMenuTabComponent } from './jz-menu-tab/jz-menu-tab.component';
-import { PaletteMgrService } from '../../_shell/services/palette-mgr.service';
 
 @Injectable({ providedIn: "root" })
 export class JzMenuService {
   @Output() menuItemSelectedEvent = new EventEmitter<JzMenuTabComponent>();
   @Output() menuItemDeselectedEvent = new EventEmitter<JzMenuTabComponent>();
 
-  constructor(private paletteMgr: PaletteMgrService) { }
+  constructor() { }
    
   menuItemSelected(selected: JzMenuTabComponent) {
     this.menuItemSelectedEvent.emit(selected);
@@ -17,7 +16,7 @@ export class JzMenuService {
   tabSelected(tab: JzMenuTabComponent) {
   //  console.log('tab');
     this.menuItemSelectedEvent.emit(tab);
-    this.paletteMgr.changePalette(tab.palette);
+   // this.paletteMgr.changePalette(tab.palette);
   }
 
   deselectTab(deselected: JzMenuTabComponent) {

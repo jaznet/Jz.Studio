@@ -1,13 +1,37 @@
+
+
 <div class="grid-row-fixed radio-button-container">
 
   <div class="palette-name" style="color:var(--plt-txt-1)">{{paletteName}}</div>
 
-  <jz-radio-button [palette]="'onyx'" [btncolor]="'#5e646e'"></jz-radio-button>
-  <jz-radio-button [palette]="'onyx2'" [btncolor]="'#584b4b'"></jz-radio-button>
-  <jz-radio-button [palette]="'cofffee'" [btncolor]="'#7c5050'"></jz-radio-button>
-  <jz-radio-button [palette]="'yale'" [btncolor]="'#20415A'"></jz-radio-button>
+  <jz-radio-button [palette]="'onyx'"
+                   [btncolor]="shellTheme.getPalette('onyx')?.pop ?? '#888'"
+                   (click)="setPalette('onyx')">
+  </jz-radio-button>
 
-  <jz-radio-button [palette]="'protan'" [btncolor]="'#ff9f43'"></jz-radio-button>
-  <jz-radio-button [palette]="'protan2'" [btncolor]="'#2ec4b6'"></jz-radio-button>
+  <jz-radio-button [palette]="'midnight'"
+                   [btncolor]="shellTheme.getPalette('midnight')?.pop ?? '#888'"
+                   (click)="setPalette('midnight')">
+  </jz-radio-button>
+
+  <jz-radio-button [palette]="'coffee'"
+                   [btncolor]="shellTheme.getPalette('coffee')?.pop ?? '#888'"
+                   (click)="setPalette('coffee')">
+  </jz-radio-button>
+
+  <jz-radio-button [palette]="'yale'"
+                   [btncolor]="shellTheme.getPalette('yale')?.pop ?? '#888'"
+                   (click)="setPalette('yale')">
+  </jz-radio-button>
+
+  <jz-radio-button [palette]="'protan'"
+                   [btncolor]="shellTheme.getPalette('protan')?.pop ?? '#888'"
+                   (click)="setPalette('protan')">
+  </jz-radio-button>
+
+  <jz-radio-button [palette]="'protan2'"
+                   [btncolor]="shellTheme.getPalette('protan2')?.pop ?? '#888'"
+                   (click)="setPalette('protan2')">
+  </jz-radio-button>
 
 </div>

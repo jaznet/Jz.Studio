@@ -1,37 +1,48 @@
+// palette.menu.component.ts
 
-
-import { Component, HostBinding } from '@angular/core';
-import { AppMgrService } from '../../../services/shell-mgr.service';
-import { PaletteMgrService } from '../../../services/palette-mgr.service';
-import { ShellEventsService } from '../../../services/shell-events.service';
+import { Component, HostBinding, Input } from '@angular/core';
 import { JzRadioButtonComponent } from './jz-radio-button/jz-radio-button.component';
-
+import { ShellThemeService } from '../../../../_framework/palette/services/shell-theme.service';
+import { normalizePalette } from '../../../../types/palette';
+import { Palette } from '../../../../types/palette';
 
 @Component({
   selector: 'palette-menu',
   standalone: true,
-    imports: [JzRadioButtonComponent],
-    templateUrl: './palette-menu.component.html',
-    styleUrls: ['./palette-menu.component.css']
+  imports: [JzRadioButtonComponent],
+  templateUrl: './palette-menu.component.html',
+  styleUrls: ['./palette-menu.component.css']
 })
 export class PaletteMenuComponent {
   @HostBinding('class') classes = 'fit-to-content';
 
-  paletteName: string = 'palette';
+  paletteName = 'palette';
+  paletteNames = this.shellTheme.availablePaletteNames;
 
-  constructor(
-    private events: ShellEventsService,
-    private paletteMgr:PaletteMgrService
-  ) {
-    this.events.paletteChangedEvent.subscribe(palette => {
-      this.paletteName = palette;
-    })
+  private _palette: Palette = 'coffee';
+  /** Bind with: [palette]="'feldgrau'" */
+  @Input()
+  set palette(v: string | Palette | null | undefined) {
+    this._palette = normalizePalette(v);
+  }
+  get palette(): Palette {
+    return this._palette;
   }
 
-  ngOnInit(): void { }
+  constructor(
+    public shellTheme: ShellThemeService
+  ) {
+    this.shellTheme.activePalette$.subscribe(palette => {
+      this.paletteName = palette?.name ?? 'palette';
+    });
+  }
 
-  setPalette(palette: string) {
-     this.paletteName = palette;
-    this.paletteMgr.changePalette(palette);
+  setPalette(palette:string): void {
+
+    if (!palette) {
+      return;
+    }
+
+    this.shellTheme.applyPalette(palette);
   }
 }
