@@ -34,7 +34,7 @@ import { ShellThemeService } from '../_framework/palette/services/shell-theme.se
     ShellContentComponent
   ],
   templateUrl: './shell.component.html',
-  styleUrl: './shell.component.css'
+  styleUrl: './shell.component.scss'
 })
 export class ShellComponent implements OnInit, AfterViewInit {
   @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
