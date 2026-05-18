@@ -1,19 +1,27 @@
-/* styles.scss*/
+/* styles.scss */
 
-/* You can add global styles to this file, and also import other style files */
-@font-face {
-  font-family: 'museo';
-  src: url('assets/fonts/Museo300-Regular-webfont.ttf');
-}
+:root {
 
-@font-face {
-  font-family: 'varela';
-  src: url('assets/fonts/Varela_Round/VarelaRound-Regular.ttf');
-}
+  /* =====================================================
+     semantic application variables
+     ===================================================== */
 
-@font-face {
-  font-family: 'roboto';
-  src: url('assets/fonts/Roboto/Roboto-Regular.ttf');
+  --jz-app-bg: var(--plt-clr-1);
+  --jz-shell-bg: var(--plt-clr-2);
+
+  --jz-panel-bg: var(--plt-clr-2);
+  --jz-panel-bg-alt: var(--plt-clr-3);
+
+  --jz-panel-border: var(--plt-clr-4);
+
+  --jz-text: var(--plt-txt-1);
+  --jz-text-muted: var(--plt-txt-2);
+
+  --jz-accent: var(--plt-pop);
+  --jz-accent-text: var(--plt-pop-txt);
+
+  --jz-nav-active-bg: var(--plt-pop);
+  --jz-nav-active-text: var(--plt-pop-txt);
 }
 
 @font-face {
@@ -32,75 +40,10 @@ app-root {
   height: 100%;
   width: 100%;
   margin: 0;
+  font-family: 'Open Sans', Arial, sans-serif;
 }
 
-
-app-root {
-  display: flex;
-  flex-direction: column;
-   background-color: var(--plt-clr-1);
-  font-family:varela;
-}
-
-app-shell {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-}
-
-.cdk-overlay-container {
-  z-index: 1000;
-}
-
-.cdk-overlay-backdrop {
-  z-index: 1001;
-}
-
-.cdk-overlay-pane {
-  z-index: 1002;
-}
-
-/* Quarantine: prevent global flex or other display hacks from affecting overlays */
-.cdk-overlay-container,
-.cdk-overlay-container *,
-.cdk-global-overlay-wrapper { /* add this */
-  display: revert !important;
-}
-
-
-
-.jz-popover {
-  min-width: 240px !important;
-  min-height: 96px !important;
-  outline: 2px dashed hotpink !important;
-  background: #222 !important;
-  color: #fff !important;
-}
-
-.jz-popover.visible {
-  opacity: 1 !important;
-  transform: none !important;
-  pointer-events: auto !important;
-}
-
-
-jz-nav-group.blank-view .jz-btn.active,
-jz-nav-group.blank-view button.jz-btn.active,
-jz-nav-group.blank-view jz-button-cuboid.active,
-jz-nav-group.blank-view .cuboid.active,
-jz-nav-group.blank-view .jz-btn.active .cuboid {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-jz-nav-group.sub-nav .jz-btn:first-child:not(.active),
-jz-nav-group.sub-nav jz-button-cuboid:first-child:not(.active) {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-jz-nav-group.sub-nav .jz-nav-group {
-  border-top: none;
+body {
+  background: var(--jz-app-bg);
+  color: var(--jz-text);
 }
