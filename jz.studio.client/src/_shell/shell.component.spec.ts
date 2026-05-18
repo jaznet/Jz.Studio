@@ -1,47 +1,39 @@
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ShellComponent } from './shell.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('AppComponent', () => {
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
+import { ShellComponent } from './shell.component';
+
+describe('ShellComponent', () => {
+
   let component: ShellComponent;
   let fixture: ComponentFixture<ShellComponent>;
-  let httpMock: HttpTestingController;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ShellComponent],
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
-  });
 
-  beforeEach(() => {
+    await TestBed.configureTestingModule({
+      imports: [
+        ShellComponent
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ShellComponent);
     component = fixture.componentInstance;
-    httpMock = TestBed.inject(HttpTestingController);
+
+    fixture.detectChanges();
   });
 
-  afterEach(() => {
-    httpMock.verify();
-  });
-
-  it('should create the app', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should retrieve weather forecasts from the server', () => {
-    const mockForecasts = [
-      { date: '2021-10-01', temperatureC: 20, temperatureF: 68, summary: 'Mild' },
-      { date: '2021-10-02', temperatureC: 25, temperatureF: 77, summary: 'Warm' }
-    ];
-
-    component.ngOnInit();
-
-    const req = httpMock.expectOne('/weatherforecast');
-    expect(req.request.method).toEqual('GET');
-    req.flush(mockForecasts);
-
-   // expect(component.forecasts).toEqual(mockForecasts);
+  it('should initialize the shell theme service', () => {
+    expect(component.themeState$).toBeTruthy();
   });
+
 });

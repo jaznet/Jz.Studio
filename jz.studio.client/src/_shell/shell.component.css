@@ -1,7 +1,9 @@
-body {
-    background-color:antiquewhite;
+/* shell.component.css*/
+
+:host {
+  opacity: 0.5;
 }
 
-.dx-popup-normal {
-  background-color: var(--plt-clr-3);
+:host.theme-ready {
+  opacity: 1;
 }
