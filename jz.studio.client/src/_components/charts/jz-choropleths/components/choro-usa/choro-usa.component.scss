@@ -1,35 +1,63 @@
-/* choro-usa.component.scss */
+/* ==========================================================================
+   choro-usa.component.scss
+   Chorodash USA Map Styling
+   ========================================================================== */
+
+
+/* ==========================================================================
+   Host Layout
+   ========================================================================== */
 
 :host {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+
   height: 100%;
   width: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
 #usa-div {
   display: flex;
   flex: 1 1 auto;
+
   height: 100%;
   width: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
+
+
+/* ==========================================================================
+   SVG Surface
+   ========================================================================== */
 
 :host ::ng-deep svg {
   background: transparent;
 }
 
-:host ::ng-deep .county,
-:host ::ng-deep .state {
+
+/* ==========================================================================
+   County Layer
+   TS class: nslx
+   ========================================================================== */
+
+:host ::ng-deep .nslx {
+
   fill: var(--choro-county-fill);
+
   stroke: var(--choro-county-stroke);
-  stroke-width: 1px;
+
+  stroke-width: 0.2;
+
   transition:
     fill 180ms ease,
     stroke 180ms ease,
@@ -37,33 +65,87 @@
     opacity 180ms ease;
 }
 
-:host ::ng-deep .county:hover,
-:host ::ng-deep .state:hover {
+:host ::ng-deep .nslx:hover {
+
   fill: var(--choro-hover-fill);
+
   stroke: var(--choro-hover-stroke);
-  filter: drop-shadow(0 0 8px var(--choro-hover-glow));
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      var(--choro-hover-glow)
+    );
+
   cursor: pointer;
 }
 
-:host ::ng-deep .state-border {
+
+/* ==========================================================================
+   State Boundary Layer
+   TS class: state_path
+   ========================================================================== */
+
+:host ::ng-deep .state_path {
+
   fill: none;
+
   stroke: var(--choro-state-stroke);
-  stroke-width: 1.1;
+
+  stroke-width: 0.35;
+
   pointer-events: none;
 }
 
+
+/* ==========================================================================
+   Nation Boundary Layer
+   TS class: nation_path
+   ========================================================================== */
+
+:host ::ng-deep .nation_path {
+
+  fill: none;
+
+  stroke: var(--choro-state-stroke);
+
+  stroke-width: 0.6;
+
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   State Labels
+   TS class: state-label
+   ========================================================================== */
+
 :host ::ng-deep .state-label {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 14px;
+
+  font-family:
+    'IBM Plex Sans',
+    'Inter',
+    sans-serif;
+
+  font-size: 13px;
+
   font-weight: 500;
-  letter-spacing: 0.4px;
+
+  letter-spacing: 0.35px;
 
   fill: var(--choro-label-fill);
 
   paint-order: stroke;
+
   stroke: var(--choro-label-stroke);
+
   stroke-width: 3px;
+
   stroke-linejoin: round;
 
   pointer-events: none;
+
+  user-select: none;
+
+  text-rendering: geometricPrecision;
 }

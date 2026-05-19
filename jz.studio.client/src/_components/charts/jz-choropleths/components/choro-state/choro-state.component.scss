@@ -1,35 +1,63 @@
-// choro-state.component.scss
-/* choro-state.component.scss */
+/* ==========================================================================
+   choro-state.component.scss
+   Chorodash State Map Styling
+   ========================================================================== */
+
+
+/* ==========================================================================
+   Host Layout
+   ========================================================================== */
 
 :host {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+
   height: 100%;
   width: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
 #state-div {
   display: flex;
   flex: 1 1 auto;
+
   height: 100%;
   width: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
+
+
+/* ==========================================================================
+   SVG Surface
+   ========================================================================== */
 
 :host ::ng-deep svg {
   background: transparent;
 }
 
-:host ::ng-deep .county {
-  fill: var(--choro-county-fill);
-  stroke: var(--choro-county-stroke);
-  stroke-width: 1px;
+
+/* ==========================================================================
+   County Layer
+   TS class: state-county-path
+   ========================================================================== */
+
+:host ::ng-deep .state-county-path {
+
+  fill: var(--choro-state-county-fill);
+
+  stroke: var(--choro-state-county-stroke);
+
+  stroke-width: 0.5;
+
   transition:
     fill 180ms ease,
     stroke 180ms ease,
@@ -37,16 +65,43 @@
     opacity 180ms ease;
 }
 
-:host ::ng-deep .county:hover {
+:host ::ng-deep .state-county-path:hover {
+
   fill: var(--choro-hover-fill);
+
   stroke: var(--choro-hover-stroke);
-  filter: drop-shadow(0 0 9px var(--choro-hover-glow));
+
+  filter:
+    drop-shadow(
+      0 0 9px
+      var(--choro-hover-glow)
+    );
+
   cursor: pointer;
 }
 
+
+/* ==========================================================================
+   State Surface Group
+   ========================================================================== */
+
+:host ::ng-deep .state-group {
+  opacity: 0.96;
+}
+
+
+/* ==========================================================================
+   State Outline
+   Future-ready if outline path added later
+   ========================================================================== */
+
 :host ::ng-deep .state-outline {
+
   fill: none;
+
   stroke: var(--choro-state-stroke);
-  stroke-width: 1.6;
+
+  stroke-width: 1.2;
+
   pointer-events: none;
 }
