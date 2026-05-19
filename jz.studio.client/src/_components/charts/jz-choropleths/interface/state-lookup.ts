@@ -1,14 +1,13 @@
 export interface StateLookup {
-  stateName: string;
   fips: string;
-  stateAbbr:string
+  stateName: string;
+  stateAbbr: string;
 
+  albersRotate?: number;
   dx?: number;
   dy?: number;
 
-  albersRotate?: number;
-
-  anchor?: 'start' | 'middle' | 'end';
-
   fontScale?: number;
+  anchor?: 'start' | 'middle' | 'end';
+  hidden?: boolean;
 }
