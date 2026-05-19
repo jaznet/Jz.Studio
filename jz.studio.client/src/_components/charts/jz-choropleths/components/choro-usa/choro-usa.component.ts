@@ -210,9 +210,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
     this.stateTextLayer
       .selectAll('text.state-label')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('text')
+      .data(stateFeaturesCollection.features, (d: any) => d.id)
+      .join('text')
       .attr('class', 'state-label')
       .attr('id', (d: any) => `state-label-${d.id}`)
 
@@ -249,9 +248,15 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       )
 
       .style('font-size', (d: any) => {
-        const scale = this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
+        const scale =
+          this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
+
         return `${14 * scale}px`;
       })
+
+      .style('display', (d: any) =>
+        this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
+      )
 
       .text((d: any) =>
         this.stateLookup.statesDictionary[d.id]?.stateName ?? ''
