@@ -32,7 +32,7 @@ import { GeoShapeSet } from '../../models/geo-shape-set.model';
   selector: 'choro-usa',
   imports: [],
   templateUrl: './choro-usa.component.html',
-  styleUrls: ['./choro-usa.component.css']
+  styleUrls: ['./choro-usa.component.scss']
 })
 
 export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
@@ -156,7 +156,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'nslx')
       .style('stroke', '#404040')
       .style('stroke-width', '.2')
-      .style('fill', 'var(--ply-clr-3')
+      .style('fill', 'var(--choro-state-county-fill)')
       .on('click', (_event: MouseEvent, d: any) => {
         console.log('%c County selected GEOID:', 'color:#68b1ff', d.id);
       })

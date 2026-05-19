@@ -157,8 +157,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('name', (d: any) => d.properties?.name)
       .attr('class', 'state-county-path')
       .style('stroke', 'black')
-      .style('stroke-width', '.2')
-      .style('fill', 'pink');
+      .style('stroke-width', '.5')
+      .style('fill', 'var(--choro-state-county-fill)');
   }
 
   private adjustStateGroupSizeAndPosition(): void {

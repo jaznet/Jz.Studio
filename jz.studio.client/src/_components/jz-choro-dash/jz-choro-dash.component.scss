@@ -1,7 +1,26 @@
-
-/*jz-choro-dash.component.scss*/
+/* jz-choro-dash.component.scss */
 
 :host {
+  --choro-panel-bg-1: var(--surface-raised);
+  --choro-panel-bg-2: var(--surface-base);
+  --choro-panel-border: var(--border-soft);
+
+--choro-state-county-fill: color-mix(
+  in srgb,
+  var(--surface-focus) 55%,
+  #7f909b 45%
+);
+  --choro-county-stroke: rgba(255, 255, 255, 0.08);
+
+  --choro-state-stroke: yellow;
+
+  --choro-hover-fill: var(--accent-primary);
+  --choro-hover-stroke: rgba(255, 255, 255, 0.55);
+  --choro-hover-glow: var(--accent-glow);
+
+  --choro-label-fill: var(--text-secondary);
+  --choro-label-stroke: var(--surface-void);
+
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -12,15 +31,29 @@
 .choro-panels {
   display: flex;
   flex-flow: row;
+  flex: 1 1 auto;
   min-width: 0;
   width: 100%;
   overflow: hidden;
+
+  background:
+    radial-gradient(
+      ellipse at top,
+      rgba(255, 255, 255, 0.035),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      var(--choro-panel-bg-1) 0%,
+      var(--choro-panel-bg-2) 100%
+    );
 }
 
 .state-panel {
-  width: 45%;
-  flex: 0 0 45%;
+  width: 33%;
+  flex: 0 0 33%;
   min-width: 0;
+  border-left: 1px solid var(--choro-panel-border);
 }
 
 .grid-col-fill {

@@ -1,0 +1,107 @@
+/* ==========================================================================
+   _semantic-surfaces.scss
+   JZ Studio Semantic Surface System
+   ========================================================================== */
+
+:root {
+
+  /* ==========================================================================
+     SURFACE HIERARCHY
+     ========================================================================== */
+
+  /*
+    Deep application void/background.
+    Used for:
+      - shell background
+      - app dead space
+      - cinematic outer framing
+  */
+  --surface-void: var(--plt-clr-1);
+
+  /*
+    Primary working surface.
+    Used for:
+      - dashboard hosts
+      - content backgrounds
+      - base application work areas
+  */
+  --surface-base: var(--plt-clr-2);
+
+  /*
+    Raised UI surface.
+    Used for:
+      - panels
+      - cards
+      - nav containers
+      - grouped controls
+  */
+  --surface-raised: var(--plt-clr-3);
+
+  /*
+    Focused/active/emphasized surface.
+    Used for:
+      - active maps
+      - selected regions
+      - focused workspaces
+      - hover-capable analytic surfaces
+  */
+  --surface-focus: color-mix(
+    in srgb,
+    var(--plt-clr-3) 75%,
+    var(--plt-clr-4) 25%
+  );
+
+  /*
+    Elevated/floating surfaces.
+    Used for:
+      - dialogs
+      - popovers
+      - overlays
+      - floating inspectors
+  */
+  --surface-elevated: color-mix(
+    in srgb,
+    var(--plt-clr-4) 82%,
+    white 18%
+  );
+
+  /* ==========================================================================
+     TEXT
+     ========================================================================== */
+
+  --text-primary: var(--plt-txt-1);
+
+  --text-secondary: color-mix(
+    in srgb,
+    var(--plt-txt-1) 72%,
+    transparent
+  );
+
+  --text-muted: color-mix(
+    in srgb,
+    var(--plt-txt-1) 48%,
+    transparent
+  );
+
+  /* ==========================================================================
+     BORDERS
+     ========================================================================== */
+
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  --border-medium: rgba(255, 255, 255, 0.16);
+
+  --border-strong: rgba(255, 255, 255, 0.28);
+
+  /* ==========================================================================
+     ACCENTS
+     ========================================================================== */
+
+  --accent-primary: var(--plt-pop);
+
+  --accent-glow: color-mix(
+    in srgb,
+    var(--plt-pop) 45%,
+    transparent
+  );
+}

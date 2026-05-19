@@ -1,5 +1,4 @@
-// choro-state.component.scss
-/* choro-state.component.scss */
+/* choro-usa.component.scss */
 
 :host {
   display: flex;
@@ -12,7 +11,7 @@
   overflow: hidden;
 }
 
-#state-div {
+#usa-div {
   display: flex;
   flex: 1 1 auto;
   height: 100%;
@@ -26,7 +25,8 @@
   background: transparent;
 }
 
-:host ::ng-deep .county {
+:host ::ng-deep .county,
+:host ::ng-deep .state {
   fill: var(--choro-county-fill);
   stroke: var(--choro-county-stroke);
   stroke-width: 1px;
@@ -37,16 +37,33 @@
     opacity 180ms ease;
 }
 
-:host ::ng-deep .county:hover {
+:host ::ng-deep .county:hover,
+:host ::ng-deep .state:hover {
   fill: var(--choro-hover-fill);
   stroke: var(--choro-hover-stroke);
-  filter: drop-shadow(0 0 9px var(--choro-hover-glow));
+  filter: drop-shadow(0 0 8px var(--choro-hover-glow));
   cursor: pointer;
 }
 
-:host ::ng-deep .state-outline {
+:host ::ng-deep .state-border {
   fill: none;
   stroke: var(--choro-state-stroke);
-  stroke-width: 1.6;
+  stroke-width: 1.1;
+  pointer-events: none;
+}
+
+:host ::ng-deep .state-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+
+  fill: var(--choro-label-fill);
+
+  paint-order: stroke;
+  stroke: var(--choro-label-stroke);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+
   pointer-events: none;
 }
