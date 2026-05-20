@@ -12,12 +12,14 @@ import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/com
 import { JzChoroDashPanelComponent } from './jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { COUNTY_PAINTING_STRATEGY } from '../charts/jz-choropleths/interface/county-painting-strategy.token';
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
+import { FormsModule } from '@angular/forms';
+import { select } from 'd3-selection';
 
 @Component({
   selector: 'jz-choro-dash',
   standalone: true,
   templateUrl: './jz-choro-dash.component.html',
-  imports: [CommonModule, JzChoroDashPanelComponent, ChoroUsaComponent, ChoroStateComponent],
+  imports: [CommonModule, JzChoroDashPanelComponent, ChoroUsaComponent, ChoroStateComponent, FormsModule],
   providers: [
     {
       provide: COUNTY_PAINTING_STRATEGY,
@@ -30,6 +32,8 @@ export class JzChoroDashComponent implements OnInit {
 
   usaShapeSet?: GeoShapeSet;
   stateShapeSet?: GeoShapeSet;
+  public showCentroids = true;
+  public centroidDisplayMode: 'all' | 'hover' = 'all';
 
   constructor(
     private topoService: TopoService,
@@ -49,5 +53,27 @@ export class JzChoroDashComponent implements OnInit {
         );
 
     });
+  }
+
+  public toggleCentroidLayer(): void {
+    const display = this.showCentroids ? 'block' : 'none';
+
+    select('#gStateCentroids')
+      .style('display', display);
+  }
+
+  public applyCentroidLayerDisplay(): void {
+    const layer = select('#gStateCentroids');
+
+    layer.style('display', this.showCentroids ? 'block' : 'none');
+
+    layer
+      .classed('centroid-mode-all', this.centroidDisplayMode === 'all')
+      .classed('centroid-mode-hover', this.centroidDisplayMode === 'hover');
+
+    layer
+      .selectAll('rect.state-bounds')
+      .style('opacity', this.centroidDisplayMode === 'all' ? 0.85 : 0)
+      .style('pointer-events', 'all');
   }
 }

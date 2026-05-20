@@ -289,10 +289,23 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
         const b = this.geoPath.bounds(d);
         return b[1][1] - b[0][1];
       })
-      .attr('fill', 'none')
+      .attr('fill', 'transparent')
       .attr('stroke', 'var(--plt-pop)')
       .attr('stroke-width', 0.75)
-      .attr('stroke-dasharray', '4 3');
+      .attr('stroke-dasharray', '4 3')
+      .style('opacity', 0.85)
+      .style('pointer-events', 'all')
+      .on('mouseenter', function (this: SVGRectElement) {
+        select(this).style('opacity', 0.85);
+      })
+      .on('mouseleave', function (this: SVGRectElement) {
+
+        const layer = select('#gStateCentroids');
+
+        if (layer.classed('centroid-mode-hover')) {
+          select(this).style('opacity', 0);
+        }
+      });
 
     // Centroid dots
     centroidLayer

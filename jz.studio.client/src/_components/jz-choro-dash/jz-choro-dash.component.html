@@ -6,7 +6,34 @@
                   (onValueChanged)="onValueChanged($event)">
   </dx-radio-group>-->
 
-  <div class="grid-row-fixed">USA Population</div>
+  <div class="grid-row-fixed">
+
+    <div class="toolbar">
+
+      <div class="toolbar-title">
+        USA Chorodash
+      </div>
+
+      <label class="toolbar-toggle">
+        <input type="checkbox"
+               [(ngModel)]="showCentroids"
+               (change)="toggleCentroidLayer()" />
+
+        Centroids
+      </label>
+      <input type="checkbox"
+             [(ngModel)]="showCentroids"
+             (change)="applyCentroidLayerDisplay()" />
+
+      <select [(ngModel)]="centroidDisplayMode"
+              (change)="applyCentroidLayerDisplay()">
+        <option value="all">All</option>
+        <option value="hover">Hover</option>
+      </select>
+
+    </div>
+
+  </div>
 
   <div class="grid-rows">
 
