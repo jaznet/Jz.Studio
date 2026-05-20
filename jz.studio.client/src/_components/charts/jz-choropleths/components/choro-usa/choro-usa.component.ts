@@ -121,6 +121,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     this.createCountyLayer(countyFeaturesCollection);
     this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
+    this.createStateCentroidLayer(stateFeaturesCollection);
     this.createStatesTextLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
 
@@ -185,7 +186,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .style('stroke', 'black')
       .style('stroke-width', '.5px');
   }
+
   private projection = geoAlbersUsa();
+
   private getLatitudeTangentAngle(d: any): number {
 
     // geographic center of the state: [longitude, latitude]
@@ -261,6 +264,46 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .text((d: any) =>
         this.stateLookup.statesDictionary[d.id]?.stateName ?? ''
       );
+  }
+
+  private createStateCentroidLayer(stateFeaturesCollection: any): void {
+    const centroidLayer = this.stateLayer
+      .append('g')
+      .attr('id', 'gStateCentroids')
+      .attr('class', 'state-centroid-layer');
+
+    // Bounding boxes
+    centroidLayer
+      .selectAll('rect.state-bounds')
+      .data(stateFeaturesCollection.features)
+      .enter()
+      .append('rect')
+      .attr('class', 'state-bounds')
+      .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
+      .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
+      .attr('width', (d: any) => {
+        const b = this.geoPath.bounds(d);
+        return b[1][0] - b[0][0];
+      })
+      .attr('height', (d: any) => {
+        const b = this.geoPath.bounds(d);
+        return b[1][1] - b[0][1];
+      })
+      .attr('fill', 'none')
+      .attr('stroke', 'var(--plt-pop)')
+      .attr('stroke-width', 0.75)
+      .attr('stroke-dasharray', '4 3');
+
+    // Centroid dots
+    centroidLayer
+      .selectAll('circle.state-centroid')
+      .data(stateFeaturesCollection.features)
+      .enter()
+      .append('circle')
+      .attr('class', 'state-centroid')
+      .attr('cx', (d: any) => this.geoPath.centroid(d)[0])
+      .attr('cy', (d: any) => this.geoPath.centroid(d)[1])
+      .attr('r', 3);
   }
 
   private adjustGroupSizeAndPosition(): void {
