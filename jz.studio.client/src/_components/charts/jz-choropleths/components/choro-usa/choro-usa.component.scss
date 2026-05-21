@@ -123,9 +123,10 @@
 :host ::ng-deep .state-label {
 
   font-family:
-    'IBM Plex Sans',
-    'Inter',
+ 
+    'inter-semibold',
     sans-serif;
+    fill:skyblue;
 
   font-size: 13px;
 
@@ -148,8 +149,12 @@
   user-select: none;
 
   text-rendering: geometricPrecision;
-}
+}Colorado
 
 .state-bounds {
 border-width:2px;
+}
+
+.state-label {
+fill:skyblue;
 }

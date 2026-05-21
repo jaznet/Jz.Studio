@@ -165,7 +165,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       })
       .append('title')
       .text((d: any) => `${d.properties?.name ?? ''}, `)
-      .attr('class', 'countyPopup');
+      .attr('class', 'state-label');
   }
 
   private createStatesMesh(stateMesh: any): void {
@@ -220,37 +220,24 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'state-label')
       .attr('id', (d: any) => `state-label-${d.id}`)
 
-      .attr('x', (d: any) => {
-        const [x] = this.geoPath.centroid(d);
-        const placement = this.stateLookup.statesDictionary[d.id];
-
-        return x + (placement?.dx ?? 0);
-      })
-
-      .attr('y', (d: any) => {
-        const [, y] = this.geoPath.centroid(d);
-        const placement = this.stateLookup.statesDictionary[d.id];
-
-        return y + (placement?.dy ?? 0);
-      })
+      .attr('x', (d: any) => this.geoPath.centroid(d)[0])
+      .attr('y', (d: any) => this.geoPath.centroid(d)[1])
 
       .attr('transform', (d: any) => {
         const [x, y] = this.geoPath.centroid(d);
-        const placement = this.stateLookup.statesDictionary[d.id];
 
-        const dx = placement?.dx ?? 0;
-        const dy = placement?.dy ?? 0;
+        const placement = this.stateLookup.statesDictionary[d.id];
 
         const rotate =
           (placement?.albersRotate ??
             this.getLatitudeTangentAngle(d)) * -1;
 
-        return `rotate(${rotate}, ${x + dx}, ${y + dy})`;
+        return `rotate(${rotate}, ${x}, ${y})`;
       })
 
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-
+    //  .style('font-family', 'museo')
       .style('font-size', (d: any) => {
         const scale =
           this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
@@ -261,7 +248,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .style('fill', '#050505')
       .style('stroke', 'none')
       .style('font-weight', '600')
-      .style('paint-order', null)
 
       .style('display', (d: any) =>
         this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
