@@ -41,7 +41,8 @@
 
       <jz-choro-dash-panel class="grid-col-fill">
         <choro-usa #choro_usa
-                   [shapeSet]="usaShapeSet">
+                   [shapeSet]="usaShapeSet"
+                   (choroUSAEvent)="applyCentroidLayerDisplay()">
         </choro-usa>
       </jz-choro-dash-panel>
 

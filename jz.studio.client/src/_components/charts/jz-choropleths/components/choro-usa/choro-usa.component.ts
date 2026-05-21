@@ -122,8 +122,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
     this.createStateCentroidLayer(stateFeaturesCollection);
+
     this.createStatesTextLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
+
 
     this.choroUSAEvent.emit(true);
   }
@@ -246,16 +248,20 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
         return `rotate(${rotate}, ${x + dx}, ${y + dy})`;
       })
 
-      .attr('text-anchor', (d: any) =>
-        this.stateLookup.statesDictionary[d.id]?.anchor ?? 'middle'
-      )
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
 
       .style('font-size', (d: any) => {
         const scale =
           this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
 
-        return `${14 * scale}px`;
+        return `${13 * scale}px`;
       })
+
+      .style('fill', '#050505')
+      .style('stroke', 'none')
+      .style('font-weight', '600')
+      .style('paint-order', null)
 
       .style('display', (d: any) =>
         this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
@@ -290,8 +296,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
         return b[1][1] - b[0][1];
       })
       .attr('fill', 'transparent')
-      .attr('stroke', 'var(--plt-pop)')
-      .attr('stroke-width', 0.75)
+      .attr('stroke', 'skyblue')
+      .attr('stroke-width', 2)
       .attr('stroke-dasharray', '4 3')
       .style('opacity', 0.85)
       .style('pointer-events', 'all')
