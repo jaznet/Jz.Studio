@@ -223,6 +223,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('x', (d: any) => this.geoPath.centroid(d)[0])
       .attr('y', (d: any) => this.geoPath.centroid(d)[1])
 
+   
+
+      .attr('text-anchor', 'middle')
+
+      .attr('dominant-baseline', 'central')
       .attr('transform', (d: any) => {
         const [x, y] = this.geoPath.centroid(d);
 
@@ -234,9 +239,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
         return `rotate(${rotate}, ${x}, ${y})`;
       })
-
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'central')
       .style('font-family', 'museo')
       .style('font-size', (d: any) => {
         const scale =
