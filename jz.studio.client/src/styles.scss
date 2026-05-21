@@ -2,8 +2,6 @@
 @use './theme/semantic-surfaces';
 :root {
 
-
-
   /* =====================================================
      semantic application variables
      ===================================================== */
@@ -24,6 +22,11 @@
 
   --jz-nav-active-bg: var(--plt-pop);
   --jz-nav-active-text: var(--plt-pop-txt);
+}
+
+@font-face {
+  font-family: 'museo';
+  src: url('assets/fonts/Museo300-Regular-webfont.ttf');
 }
 
 @font-face {

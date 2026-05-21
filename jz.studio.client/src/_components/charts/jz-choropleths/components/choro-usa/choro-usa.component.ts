@@ -237,7 +237,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-    //  .style('font-family', 'museo')
+      .style('font-family', 'museo')
       .style('font-size', (d: any) => {
         const scale =
           this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
