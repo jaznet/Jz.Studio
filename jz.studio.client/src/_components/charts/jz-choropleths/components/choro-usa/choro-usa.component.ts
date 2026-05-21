@@ -245,7 +245,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
         return `${13 * scale}px`;
       })
 
-      .style('fill', '#050505')
+      .style('fill', 'skyblue')
       .style('stroke', 'none')
       .style('font-weight', '600')
 
@@ -264,40 +264,54 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('id', 'gStateCentroids')
       .attr('class', 'state-centroid-layer');
 
-    // Bounding boxes
+    // Centroid dots
     centroidLayer
-      .selectAll('rect.state-bounds')
+      .selectAll('circle.state-centroid')
       .data(stateFeaturesCollection.features)
       .enter()
-      .append('rect')
-      .attr('class', 'state-bounds')
-      .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
-      .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
-      .attr('width', (d: any) => {
-        const b = this.geoPath.bounds(d);
-        return b[1][0] - b[0][0];
-      })
-      .attr('height', (d: any) => {
-        const b = this.geoPath.bounds(d);
-        return b[1][1] - b[0][1];
-      })
-      .attr('fill', 'transparent')
-      .attr('stroke', 'skyblue')
-      .attr('stroke-width', 2)
-      .attr('stroke-dasharray', '4 3')
-      .style('opacity', 0.85)
-      .style('pointer-events', 'all')
-      .on('mouseenter', function (this: SVGRectElement) {
-        select(this).style('opacity', 0.85);
-      })
-      .on('mouseleave', function (this: SVGRectElement) {
+      .append('circle')
+      .attr('class', 'state-centroid')
+      .attr('cx', (d: any) => this.geoPath.centroid(d)[0])
+      .attr('cy', (d: any) => this.geoPath.centroid(d)[1])
+      .attr('r', 3)
+      .attr('fill', 'skyblue')
+      .attr('stroke', '#101820')
+      .attr('stroke-width', 1);
 
-        const layer = select('#gStateCentroids');
+    // Bounding boxes
+    //centroidLayer
+    //  .selectAll('rect.state-bounds')
+    //  .data(stateFeaturesCollection.features)
+    //  .enter()
+    //  .append('rect')
+    //  .attr('class', 'state-bounds')
+    //  .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
+    //  .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
+    //  .attr('width', (d: any) => {
+    //    const b = this.geoPath.bounds(d);
+    //    return b[1][0] - b[0][0];
+    //  })
+    //  .attr('height', (d: any) => {
+    //    const b = this.geoPath.bounds(d);
+    //    return b[1][1] - b[0][1];
+    //  })
+    //  .attr('fill', 'transparent')
+    //  .attr('stroke', 'skyblue')
+    //  .attr('stroke-width', 2)
+    //  .attr('stroke-dasharray', '4 3')
+    //  .style('opacity', 0.85)
+    //  .style('pointer-events', 'all')
+    //  .on('mouseenter', function (this: SVGRectElement) {
+    //    select(this).style('opacity', 0.85);
+    //  })
+    //  .on('mouseleave', function (this: SVGRectElement) {
 
-        if (layer.classed('centroid-mode-hover')) {
-          select(this).style('opacity', 0);
-        }
-      });
+    //    const layer = select('#gStateCentroids');
+
+    //    if (layer.classed('centroid-mode-hover')) {
+    //      select(this).style('opacity', 0);
+    //    }
+    //  });
 
     // Centroid dots
     centroidLayer
