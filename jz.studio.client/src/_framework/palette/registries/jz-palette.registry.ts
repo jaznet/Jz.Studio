@@ -26,7 +26,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // accent
     pop: '#16C7E8', // electric cyan
-    popTxt: '#061014' // abyss teal
+    popTxt: '#061014', // abyss teal
+
+    // highlight
+    highlight: '#87CEEB',
+    highlightTxt: '#FFF7EA' 
   },
 
   // =========================================================
@@ -53,7 +57,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // accent
     pop: '#E0A84F', // antique amber
-    popTxt: '#2a1f0f' // dark caramel
+    popTxt: '#2a1f0f', // dark caramel
+
+    // highlight
+    highlight: '#87CEEB',
+    highlightTxt: '#FFF7EA' 
   },
 
   // =========================================================
@@ -80,6 +88,10 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // accent
     pop: '#B08D57', // antique brass
-    popTxt: '#FFF7EA' // warm ivory
+    popTxt: '#FFF7EA', // warm ivory
+
+    // highlight
+    highlight: '#87CEEB',
+    highlightTxt: '#FFF7EA' 
   }
 };

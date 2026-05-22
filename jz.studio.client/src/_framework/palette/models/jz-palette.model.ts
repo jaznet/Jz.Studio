@@ -16,7 +16,8 @@ export interface JzPalette {
   pop: string;
   popTxt: string;
 
-
+  highlight: string;
+  highlightTxt: string;
 }
 
 export interface JzPaletteAccents {
