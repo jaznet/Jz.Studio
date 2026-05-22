@@ -219,15 +219,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .join('text')
       .attr('class', 'state-label')
       .attr('id', (d: any) => `state-label-${d.id}`)
-
+      .attr('text-anchor', 'middle')
+      .attr('dominant-baseline', 'central')
       .attr('x', (d: any) => this.geoPath.centroid(d)[0])
       .attr('y', (d: any) => this.geoPath.centroid(d)[1])
-
-   
-
-      .attr('text-anchor', 'middle')
-
-      .attr('dominant-baseline', 'central')
       .attr('transform', (d: any) => {
         const [x, y] = this.geoPath.centroid(d);
 
@@ -239,21 +234,22 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
         return `rotate(${rotate}, ${x}, ${y})`;
       })
-      .style('font-family', 'museo')
-      .style('font-size', (d: any) => {
-        const scale =
-          this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
 
-        return `${13 * scale}px`;
-      })
+      //.style('font-family', 'museo')
+      //.style('font-size', (d: any) => {
+      //  const scale =
+      //    this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
 
-      .style('fill', 'skyblue')
-      .style('stroke', 'none')
-      .style('font-weight', '600')
+      //  return `${13 * scale}px`;
+      //})
 
-      .style('display', (d: any) =>
-        this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
-      )
+      //.style('fill', 'skyblue')
+      //.style('stroke', 'none')
+      //.style('font-weight', '600')
+
+      //.style('display', (d: any) =>
+      //  this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
+      //)
 
       .text((d: any) =>
         this.stateLookup.statesDictionary[d.id]?.stateName ?? ''

@@ -32,7 +32,7 @@ export class JzChoroDashComponent implements OnInit {
 
   usaShapeSet?: GeoShapeSet;
   stateShapeSet?: GeoShapeSet;
-  public showCentroids = true;
+  public showCentroids = false;
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
 
   constructor(

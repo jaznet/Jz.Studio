@@ -18,10 +18,14 @@
   --choro-hover-stroke: rgba(255, 255, 255, 0.55);
   --choro-hover-glow: var(--accent-glow);
 
-  --choro-label-fill: #8ea5b5;
-  --choro-label-opacity: 0.82;
-  --choro-label-stroke: var(--surface-void);
-  --choro-label-stroke-width: 0.75px;
+--choro-label-fill: color-mix(
+  in srgb,
+  var(--accent-primary) 18%,
+  var(--surface-text-muted) 82%
+);
+  --choro-label-opacity: 0.72;
+  --choro-label-stroke: rgba(0, 0, 0, 0.35);
+  --choro-label-stroke-width: 0.2px;
 
   display: flex;
   flex-direction: column;

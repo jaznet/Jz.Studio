@@ -121,30 +121,21 @@
    ========================================================================== */
 
 :host ::ng-deep .state-label {
-
-  font-family:  'sans-serif';
-
-
+  font-family: 'museo';
   font-size: 13px;
-
   font-weight: 500;
-
   letter-spacing: 0.35px;
 
   fill: var(--choro-label-fill);
-
-  paint-order: stroke;
+  fill-opacity: var(--choro-label-opacity);
 
   stroke: var(--choro-label-stroke);
-
-  stroke-width: 3px;
-
+  stroke-width: 0.25px;
   stroke-linejoin: round;
+  paint-order: stroke fill;
 
   pointer-events: none;
-
   user-select: none;
-
   text-rendering: geometricPrecision;
 }
 
@@ -152,6 +143,4 @@
 border-width:2px;
 }
 
-.state-label {
 
-}
