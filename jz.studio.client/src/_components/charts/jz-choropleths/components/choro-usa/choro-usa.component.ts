@@ -47,7 +47,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   height = 0;
 
   private svg: any;
-  private usa: any;
+  private usaLayer: any;
   private stateLayer: any;
   public countyLayer: any;
   private nationLayer: any;
@@ -119,13 +119,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
-    this.createStatesMesh(stateMesh);
+    this.createStatesLayer(stateMesh);
     this.createNationLayer(nationMesh);
     this.createStateCentroidLayer(stateFeaturesCollection);
-
     this.createStatesTextLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
-
 
     this.choroUSAEvent.emit(true);
   }
@@ -139,12 +137,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .style('width', '100%')
       .style('height', '100%');
 
-    this.usa = this.svg.append('g').attr('id', 'usa');
+    this.usaLayer = this.svg.append('g').attr('id', 'usa');
 
-    this.countyLayer = this.usa.append('g').attr('id', 'county-layer');
-    this.stateLayer = this.usa.append('g').attr('id', 'state-layer');
-    this.nationLayer = this.usa.append('g').attr('id', 'nation-layer');
-    this.stateTextLayer = this.usa.append('g').attr('id', 'state-name-layer');
+    this.countyLayer = this.usaLayer.append('g').attr('id', 'county-layer');
+    this.stateLayer = this.usaLayer.append('g').attr('id', 'state-layer');
+    this.nationLayer = this.usaLayer.append('g').attr('id', 'nation-layer');
+    this.stateTextLayer = this.usaLayer.append('g').attr('id', 'state-name-layer');
   }
 
   private createCountyLayer(countyFeaturesCollection: any): void {
@@ -168,7 +166,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'state-label');
   }
 
-  private createStatesMesh(stateMesh: any): void {
+  private createStatesLayer(stateMesh: any): void {
     this.stateLayer
       .append('path')
       .attr('id', 'statemesh')
@@ -257,10 +255,27 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   }
 
   private createStateCentroidLayer(stateFeaturesCollection: any): void {
-    const centroidLayer = this.stateLayer
+    const centroidLayer = this.usaLayer
       .append('g')
       .attr('id', 'gStateCentroids')
-      .attr('class', 'state-centroid-layer');
+      .attr('class', 'state-centroid-layer centroid-mode-all');
+    // State geographic bounds
+    centroidLayer
+      .selectAll('rect.state-geo-bbox')
+      .data(stateFeaturesCollection.features)
+      .enter()
+      .append('rect')
+      .attr('class', 'state-geo-bbox')
+      .attr('data-state-id', (d: any) => d.id)
+      .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
+      .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
+      .attr('width', (d: any) => this.geoPath.bounds(d)[1][0] - this.geoPath.bounds(d)[0][0])
+      .attr('height', (d: any) => this.geoPath.bounds(d)[1][1] - this.geoPath.bounds(d)[0][1])
+      .attr('fill', 'none')
+      .attr('stroke', 'skyblue')
+      .attr('stroke-width', 1)
+      .attr('pointer-events', 'none')
+      .style('display', 'none');
 
     // Centroid dots
     centroidLayer
@@ -275,56 +290,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('fill', 'skyblue')
       .attr('stroke', '#101820')
       .attr('stroke-width', 1);
-
-    // Bounding boxes
-    //centroidLayer
-    //  .selectAll('rect.state-bounds')
-    //  .data(stateFeaturesCollection.features)
-    //  .enter()
-    //  .append('rect')
-    //  .attr('class', 'state-bounds')
-    //  .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
-    //  .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
-    //  .attr('width', (d: any) => {
-    //    const b = this.geoPath.bounds(d);
-    //    return b[1][0] - b[0][0];
-    //  })
-    //  .attr('height', (d: any) => {
-    //    const b = this.geoPath.bounds(d);
-    //    return b[1][1] - b[0][1];
-    //  })
-    //  .attr('fill', 'transparent')
-    //  .attr('stroke', 'skyblue')
-    //  .attr('stroke-width', 2)
-    //  .attr('stroke-dasharray', '4 3')
-    //  .style('opacity', 0.85)
-    //  .style('pointer-events', 'all')
-    //  .on('mouseenter', function (this: SVGRectElement) {
-    //    select(this).style('opacity', 0.85);
-    //  })
-    //  .on('mouseleave', function (this: SVGRectElement) {
-
-    //    const layer = select('#gStateCentroids');
-
-    //    if (layer.classed('centroid-mode-hover')) {
-    //      select(this).style('opacity', 0);
-    //    }
-    //  });
-
-    // Centroid dots
-    centroidLayer
-      .selectAll('circle.state-centroid')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('circle')
-      .attr('class', 'state-centroid')
-      .attr('cx', (d: any) => this.geoPath.centroid(d)[0])
-      .attr('cy', (d: any) => this.geoPath.centroid(d)[1])
-      .attr('r', 3);
   }
 
   private adjustGroupSizeAndPosition(): void {
-    const usaBBox = this.usa.node().getBBox();
+    const usaBBox = this.usaLayer.node().getBBox();
 
     if (!usaBBox.width || !usaBBox.height) {
       console.warn('USA bbox is empty', usaBBox);
@@ -341,7 +310,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     const translateY =
       (this.height - usaBBox.height * scale) / 2 - usaBBox.y * scale;
 
-    this.usa.attr(
+    this.usaLayer.attr(
       'transform',
       `translate(${translateX}, ${translateY}) scale(${scale})`
     );
