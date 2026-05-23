@@ -52,6 +52,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   public countyLayer: any;
   private nationLayer: any;
   private stateTextLayer: any;
+  public centroidMode: 'all' | 'hover' | 'none' = 'hover';
 
   private readonly geoPath = geoPath();
 
@@ -119,10 +120,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
-    this.createStatesLayer(stateMesh);
+    this.createStatesLayer(stateFeaturesCollection,stateMesh);
     this.createNationLayer(nationMesh);
-    this.createStateCentroidLayer(stateFeaturesCollection);
     this.createStatesTextLayer(stateFeaturesCollection);
+    this.createStateCentroidLayer(stateFeaturesCollection);
     this.adjustGroupSizeAndPosition();
 
     this.choroUSAEvent.emit(true);
@@ -166,15 +167,48 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'state-label');
   }
 
-  private createStatesLayer(stateMesh: any): void {
+  private createStatesLayer(
+    stateFeaturesCollection: any,
+    stateMesh: any
+  ): void {
+    this.stateLayer = this.usaLayer
+      .append('g')
+      .attr('id', 'state-layer');
+
+    this.stateLayer
+      .selectAll('path.state')
+      .data(stateFeaturesCollection.features)
+      .enter()
+      .append('path')
+      .attr('class', 'state')
+      .attr('d', this.geoPath as any)
+      .attr('fill', 'transparent')
+      .attr('stroke', 'none')
+      .on('mouseenter', (event: MouseEvent, d: any) => {
+        if (this.centroidMode !== 'hover') return;
+
+        this.usaLayer.selectAll('rect.state-geo-bbox')
+          .style('display', 'none');
+
+        this.usaLayer
+          .selectAll(`rect.state-geo-bbox[data-state-id="${d.id}"]`)
+          .style('display', 'block');
+      })
+      .on('mouseleave', () => {
+        if (this.centroidMode !== 'hover') return;
+
+        this.usaLayer.selectAll('rect.state-geo-bbox')
+          .style('display', 'none');
+      });
+
     this.stateLayer
       .append('path')
-      .attr('id', 'statemesh')
-      .attr('class', 'state_path')
-      .attr('d', this.geoPath(stateMesh))
-      .style('fill', 'none')
-      .style('stroke', 'black')
-      .style('stroke-width', '.3');
+      .datum(stateMesh)
+      .attr('class', 'state-mesh')
+      .attr('d', this.geoPath as any)
+      .attr('fill', 'none')
+      .attr('stroke', 'black')
+      .attr('stroke-width', 0.3);
   }
 
   private createNationLayer(nationMesh: any): void {
@@ -275,7 +309,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('stroke', 'skyblue')
       .attr('stroke-width', 1)
       .attr('pointer-events', 'none')
-      .style('display', 'none');
+      .style('display', this.centroidMode === 'all' ? 'block' : 'none');
 
     // Centroid dots
     centroidLayer
