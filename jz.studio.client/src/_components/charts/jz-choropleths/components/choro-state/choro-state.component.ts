@@ -38,7 +38,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   @Output() choroStateEvent = new EventEmitter<any>();
 
 
-  private readonly stateFips = '34'; // Georgia
+  private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
   private viewReady = false;
 
   width = 0;
@@ -57,13 +57,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-
+    this.tryCreateStateChoropleth();
     // Let Angular/layout finish one more pass before measuring.
-    queueMicrotask(() => this.tryCreateStateChoropleth());
+    //queueMicrotask(() => this.tryCreateStateChoropleth());
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['shapeSet']) {
+    if (changes['shapeSet'] || changes['stateId']) {
       this.tryCreateStateChoropleth();
     }
   }
@@ -71,6 +71,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   private tryCreateStateChoropleth(): void {
 
     if (!this.viewReady) {
+      return;
+    }
+
+    if (!this.stateId) {
       return;
     }
 
@@ -91,9 +95,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
       return;
     }
-    console.log('%ctryCreateStateChoropleth', 'color:#f7f9f9');
+
+    console.log('%ctryCreateStateChoropleth - creating', 'color:#f7f9f9', {
+      stateId: this.stateId,
+      width: this.width,
+      height: this.height
+    });
+
     this.createStateChoropleth();
-    console.log('%ctryCreateStateChoropleth', 'color:#f7f9f9');
   }
 
   private createStateChoropleth(): void {
