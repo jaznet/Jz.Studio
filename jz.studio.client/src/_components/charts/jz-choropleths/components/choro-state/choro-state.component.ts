@@ -38,7 +38,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   @Output() choroStateEvent = new EventEmitter<any>();
 
 
-  private readonly stateFips = '13'; // Georgia
+  private readonly stateFips = '34'; // Georgia
   private viewReady = false;
 
   width = 0;
