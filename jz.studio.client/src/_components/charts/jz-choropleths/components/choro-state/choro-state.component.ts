@@ -32,12 +32,11 @@ import { GeoShapeSet } from '../../models/geo-shape-set.model';
 })
 export class ChoroStateComponent implements AfterViewInit, OnChanges {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
-
   @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
-
+  @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
-
   @Output() choroStateEvent = new EventEmitter<any>();
+
 
   private readonly stateFips = '13'; // Georgia
   private viewReady = false;
@@ -70,6 +69,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   }
 
   private tryCreateStateChoropleth(): void {
+
     if (!this.viewReady) {
       return;
     }
@@ -91,11 +91,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
       return;
     }
-
+    console.log('%ctryCreateStateChoropleth', 'color:#f7f9f9');
     this.createStateChoropleth();
+    console.log('%ctryCreateStateChoropleth', 'color:#f7f9f9');
   }
 
   private createStateChoropleth(): void {
+
+
     this.createStateChoroplethContainer();
     this.createCountyLayer();
 
@@ -110,10 +113,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
     this.adjustStateGroupSizeAndPosition();
     this.applyRotation();
 
+    console.log('%ccreateStateChoropleth', 'color:#f7f9f9');
     this.choroStateEvent.emit(true);
+    console.log('%cemit', 'color:#f7f9f9');
   }
 
   private createStateChoroplethContainer(): void {
+    console.log('%ccreateStateChoroplethContainer','color:#f7f9f9');
     this.svg = select(this.stateRef.nativeElement)
       .selectAll('svg')
       .data([null])
@@ -142,6 +148,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   }
 
   private createCountyLayer(): void {
+    console.log('createCountyLayer');
     const geopath = geoPath();
 
     const stateCounties = this.shapeSet!.features.features;

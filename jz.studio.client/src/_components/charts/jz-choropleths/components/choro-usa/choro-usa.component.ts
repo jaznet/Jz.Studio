@@ -27,6 +27,7 @@ import {
 } from '../../interface/county-painting-strategy.token';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { CountySelection } from '../../models/county-selection.model';
 
 @Component({
   selector: 'choro-usa',
@@ -40,6 +41,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
   @Input() shapeSet?: GeoShapeSet;
   @Output() choroUSAEvent = new EventEmitter<any>();
+  @Output() countySelected = new EventEmitter<CountySelection>();
 
   private topologySubscription?: Subscription;
 
@@ -152,6 +154,16 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .data(countyFeaturesCollection.features)
       .enter()
       .append('path')
+      .on('click', (event: MouseEvent, d: any) => {
+        const countyId = String(d.id).padStart(5, '0');
+        const stateId = countyId.substring(0, 2);
+        console.log('%cCounty CLICKED', 'color:yellow', countyId, stateId, d);
+        this.countySelected.emit({
+          countyId,
+          stateId,
+          countyFeature: d
+        });
+      })
       .attr('d', this.geoPath)
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
@@ -159,12 +171,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .style('stroke', '#404040')
       .style('stroke-width', '.2')
       .style('fill', 'var(--choro-state-county-fill)')
-      .on('click', (_event: MouseEvent, d: any) => {
-        console.log('%c County selected GEOID:', 'color:#68b1ff', d.id);
-      })
+     
       .append('title')
       .text((d: any) => `${d.properties?.name ?? ''}, `)
       .attr('class', 'state-label');
+    console.log('County count', countyFeaturesCollection.features.length);
   }
 
   private createStatesLayer(
@@ -184,22 +195,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('d', this.geoPath as any)
       .attr('fill', 'transparent')
       .attr('stroke', 'none')
-      .on('mouseenter', (event: MouseEvent, d: any) => {
-        if (this.centroidMode !== 'hover') return;
-
-        this.usaLayer.selectAll('rect.state-geo-bbox')
-          .style('display', 'none');
-
-        this.usaLayer
-          .selectAll(`rect.state-geo-bbox[data-state-id="${d.id}"]`)
-          .style('display', 'block');
-      })
-      .on('mouseleave', () => {
-        if (this.centroidMode !== 'hover') return;
-
-        this.usaLayer.selectAll('rect.state-geo-bbox')
-          .style('display', 'none');
-      });
+      .style('pointer-events', 'none');
 
     this.stateLayer
       .append('path')
@@ -208,7 +204,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('d', this.geoPath as any)
       .attr('fill', 'none')
       .attr('stroke', 'black')
-      .attr('stroke-width', 0.3);
+      .attr('stroke-width', 0.3)
+      .style('pointer-events', 'none');
   }
 
   private createNationLayer(nationMesh: any): void {
@@ -348,5 +345,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       'transform',
       `translate(${translateX}, ${translateY}) scale(${scale})`
     );
+    console.log('%cadjustGroupSizeAndPosition', 'color:#b08d57');
   }
 }

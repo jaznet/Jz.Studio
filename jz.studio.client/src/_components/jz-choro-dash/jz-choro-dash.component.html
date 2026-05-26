@@ -43,12 +43,15 @@
       <jz-choro-dash-panel class="grid-col-fill">
         <choro-usa #choro_usa
                    [shapeSet]="usaShapeSet"
+                   (countySelected)="onCountySelected($event)"
                    (choroUSAEvent)="applyCentroidLayerDisplay()">
         </choro-usa>
       </jz-choro-dash-panel>
 
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
+                     *ngIf="selectedStateId"
+                     [stateId]="selectedStateId"
                      [shapeSet]="stateShapeSet">
         </choro-state>
       </jz-choro-dash-panel>

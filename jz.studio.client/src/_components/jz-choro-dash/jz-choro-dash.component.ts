@@ -14,6 +14,7 @@ import { COUNTY_PAINTING_STRATEGY } from '../charts/jz-choropleths/interface/cou
 import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-factory.service';
 import { FormsModule } from '@angular/forms';
 import { select } from 'd3-selection';
+import { CountySelection } from '../charts/jz-choropleths/models/county-selection.model';
 
 @Component({
   selector: 'jz-choro-dash',
@@ -75,5 +76,15 @@ export class JzChoroDashComponent implements OnInit {
       .selectAll('rect.state-bounds')
       .style('opacity', this.centroidDisplayMode === 'all' ? 0.85 : 0)
       .style('pointer-events', 'all');
+  }
+
+  selectedStateId: string | null = null;
+  selectedCountyId: string | null = null;
+
+  onCountySelected(selection: CountySelection): void {
+    console.log('PARENT RECEIVED COUNTY SELECTION', selection);
+
+    this.selectedCountyId = selection.countyId;
+    this.selectedStateId = selection.stateId;
   }
 }
