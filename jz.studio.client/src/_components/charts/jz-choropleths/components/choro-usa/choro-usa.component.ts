@@ -167,10 +167,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('d', this.geoPath)
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'nslx')
-      .style('stroke', '#404040')
-      .style('stroke-width', '.2')
-      .style('fill', 'var(--choro-state-county-fill)')
+      .attr('class', 'usa-county-path')
+      .attr('vector-effect', 'non-scaling-stroke')
      
       .append('title')
       .text((d: any) => `${d.properties?.name ?? ''}, `)

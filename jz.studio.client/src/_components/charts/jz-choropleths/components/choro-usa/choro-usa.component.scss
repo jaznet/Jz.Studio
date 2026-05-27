@@ -20,7 +20,18 @@
   min-height: 0;
 
   overflow: hidden;
-}
+
+  // source palette → semantic map roles
+  --choro-map-fill: var(--plt-clr-4);
+  --choro-map-fill-focus: var(--plt-clr-5);
+
+  --choro-usa-county-fill: var(--choro-map-fill);
+  --choro-county-stroke: color-mix(in srgb, var(--plt-clr-2) 75%, black);
+  --choro-state-stroke: color-mix(in srgb, var(--plt-clr-1) 70%, black);
+
+  --choro-label-fill: color-mix(in srgb, var(--plt-txt-2) 70%, var(--plt-pop));
+  --choro-debug: var(--plt-pop);
+  }
 
 #usa-div {
   display: flex;
@@ -51,13 +62,9 @@
    ========================================================================== */
 
 :host ::ng-deep .nslx {
-
   fill: var(--choro-county-fill);
-
   stroke: var(--choro-county-stroke);
-
-  stroke-width: 0.2;
-
+  stroke-width: 1px;
   transition:
     fill 180ms ease,
     stroke 180ms ease,
@@ -66,17 +73,13 @@
 }
 
 :host ::ng-deep .nslx:hover {
-
   fill: var(--choro-hover-fill);
-
   stroke: var(--choro-hover-stroke);
-
   filter:
     drop-shadow(
       0 0 8px
       var(--choro-hover-glow)
     );
-
   cursor: pointer;
 }
 
@@ -87,13 +90,9 @@
    ========================================================================== */
 
 :host ::ng-deep .state_path {
-
   fill: none;
-
   stroke: var(--choro-state-stroke);
-
-  stroke-width: 0.35;
-
+  stroke-width: 1px;
   pointer-events: none;
 }
 
@@ -104,13 +103,9 @@
    ========================================================================== */
 
 :host ::ng-deep .nation_path {
-
   fill: none;
-
   stroke: var(--choro-state-stroke);
-
-  stroke-width: 0.6;
-
+  stroke-width: 2px;
   pointer-events: none;
 }
 
@@ -143,4 +138,9 @@
 border-width:2px;
 }
 
-
+:host ::ng-deep .usa-county-path {
+  fill: var(--choro-usa-county-fill);
+  stroke: var(--choro-usa-county-stroke);
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
