@@ -216,9 +216,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
       .attr('class', 'state-county-path')
-      .style('stroke', 'black')
-      .style('stroke-width', '.5')
-      .style('fill', 'var(--choro-state-county-fill)');
+      .attr('vector-effect', 'non-scaling-stroke');
   }
 
   private fitAndTransformState(): void {
