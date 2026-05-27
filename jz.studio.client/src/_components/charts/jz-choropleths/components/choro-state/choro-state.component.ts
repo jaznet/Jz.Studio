@@ -38,7 +38,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   @Output() choroStateEvent = new EventEmitter<any>();
 
 
-  private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
+ // private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
   private viewReady = false;
 
   width = 0;
@@ -107,9 +107,28 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
   private createStateChoropleth(): void {
 
+    const selectedStateFips =
+      String(this.stateId ?? '34').padStart(2, '0');
+
+    const selectedCountyFeatures = {
+      type: 'FeatureCollection',
+      features: this.shapeSet!.features.features.filter((county: any) => {
+        const countyFips = String(county.id).padStart(5, '0');
+        return countyFips.substring(0, 2) === selectedStateFips;
+      })
+    };
+
+    if (!selectedCountyFeatures.features.length) {
+      console.warn('No counties found for selected state', {
+        selectedStateFips,
+        stateId: this.stateId
+      });
+
+      return;
+    }
 
     this.createStateChoroplethContainer();
-    this.createCountyLayer();
+    this.createCountyLayer(selectedCountyFeatures);
 
     const countyNode = this.counties?.node();
 
@@ -122,7 +141,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
     this.adjustStateGroupSizeAndPosition();
     this.applyRotation();
 
-    console.log('%ccreateStateChoropleth', 'color:#f7f9f9');
+    console.log('%ccreateStateChoropleth', 'color:#f7f9f9', {
+      selectedStateFips,
+      countyCount: selectedCountyFeatures.features.length
+    });
+
     this.choroStateEvent.emit(true);
     console.log('%cemit', 'color:#f7f9f9');
   }
@@ -156,13 +179,21 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('class', 'counties-group');
   }
 
-  private createCountyLayer(): void {
+  private createCountyLayer(
+    countyFeaturesCollection: any
+  ): void {
+
     console.log('createCountyLayer');
+
     const geopath = geoPath();
 
-    const stateCounties = this.shapeSet!.features.features;
+    const stateCounties =
+      countyFeaturesCollection.features;
 
-    console.log('state county count', stateCounties.length);
+    console.log(
+      'state county count',
+      stateCounties.length
+    );
 
     this.counties
       .selectAll('path')
@@ -211,8 +242,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   }
 
   private applyRotation(): void {
+    const selectedStateFips = String(this.stateId ?? '34').padStart(2, '0');
     const rotationAngle =
-      this.stateLookup.statesDictionary[this.stateFips]?.albersRotate || 0;
+      this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate || 0;
 
     this.outerGroup.attr(
       'transform',

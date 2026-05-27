@@ -48,10 +48,7 @@ export class JzChoroDashComponent implements OnInit {
         this.geoFeatureService.createUsaShapeSet(topology);
 
       this.stateShapeSet =
-        this.geoFeatureService.createStateCountyShapeSet(
-          topology,
-          '34' // Georgia default
-        );
+        this.geoFeatureService.createStateCountyShapeSet(topology);
 
     });
   }
