@@ -46,6 +46,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
   svg: any;
   outerGroup: any;
+  titleLayer: any;
   state: any;
   counties: any;
 
@@ -138,8 +139,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
     console.log('counties bbox', countyNode.getBBox());
 
-    this.adjustStateGroupSizeAndPosition();
-   // this.applyRotation();
+  //  this.applyRotation();
+  //  this.adjustStateGroupSizeAndPosition();
+    this.fitAndTransformState();
+    this.placeStateTitle();
+
 
     console.log('%ccreateStateChoropleth', 'color:#f7f9f9', {
       selectedStateFips,
@@ -151,7 +155,12 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   }
 
   private createStateChoroplethContainer(): void {
-    console.log('%ccreateStateChoroplethContainer','color:#f7f9f9');
+    console.log('%ccreateStateChoroplethContainer', 'color:#f7f9f9');
+
+    select(this.stateRef.nativeElement)
+      .selectAll('*')
+      .remove();
+
     this.svg = select(this.stateRef.nativeElement)
       .selectAll('svg')
       .data([null])
@@ -165,6 +174,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .data([null])
       .join('g')
       .attr('class', 'state-outer-group');
+
+    this.titleLayer = this.svg
+      .append('g')
+      .attr('class', 'state-title-layer');
 
     this.state = this.outerGroup
       .selectAll('g.state-group')
@@ -206,6 +219,75 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .style('stroke', 'black')
       .style('stroke-width', '.5')
       .style('fill', 'var(--choro-state-county-fill)');
+  }
+
+  private fitAndTransformState(): void {
+    const countyNode = this.counties?.node();
+
+    if (!countyNode) {
+      return;
+    }
+
+    const bbox = countyNode.getBBox();
+
+    if (bbox.width <= 0 || bbox.height <= 0) {
+      return;
+    }
+
+    const selectedStateFips =
+      String(this.stateId ?? '34').padStart(2, '0');
+
+    const rotationAngle =
+      this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate ?? 0;
+
+    const padding = 6;
+
+    const availableWidth = this.width - padding * 2;
+    const availableHeight = this.height - padding * 2;
+
+    const scaleX = availableWidth / bbox.width;
+    const scaleY = availableHeight / bbox.height;
+
+    const scale = Math.min(scaleX, scaleY);
+
+    const tx =
+      padding +
+      (availableWidth - bbox.width * scale) / 2 -
+      bbox.x * scale;
+
+    const ty =
+      padding +
+      (availableHeight - bbox.height * scale) / 2 -
+      bbox.y * scale;
+
+    const cx = bbox.x + bbox.width / 2;
+    const cy = bbox.y + bbox.height / 2;
+
+    this.outerGroup.attr(
+      'transform',
+      `
+      translate(${tx}, ${ty})
+      scale(${scale})
+      rotate(${rotationAngle}, ${cx}, ${cy})
+    `
+    );
+  }
+
+  private placeStateTitle(): void {
+    const selectedStateFips = String(this.stateId ?? '34').padStart(2, '0');
+
+    const stateName =
+      this.stateLookup.statesDictionary[selectedStateFips]?.stateName ?? '';
+
+    this.titleLayer
+      .selectAll('text.state-title')
+      .data([stateName])
+      .join('text')
+      .attr('class', 'state-title')
+      .attr('x', this.width - 24)
+      .attr('y', 36)
+      .attr('text-anchor', 'end')
+      .text(stateName);
   }
 
   private adjustStateGroupSizeAndPosition(): void {

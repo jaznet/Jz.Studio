@@ -12,28 +12,21 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-
   height: 100%;
   width: 100%;
-
   min-width: 0;
   min-height: 0;
-
   overflow: hidden;
 }
 
 #state-div {
   display: flex;
   flex: 1 1 auto;
-
   height: 100%;
   width: 100%;
-
   min-width: 0;
   min-height: 0;
-
   overflow: hidden;
-
   border:1px solid white;
 }
 
@@ -53,13 +46,9 @@
    ========================================================================== */
 
 :host ::ng-deep .state-county-path {
-
   fill: var(--choro-state-county-fill);
-
   stroke: var(--choro-state-county-stroke);
-
   stroke-width: 0.5;
-
   transition:
     fill 180ms ease,
     stroke 180ms ease,
@@ -68,17 +57,13 @@
 }
 
 :host ::ng-deep .state-county-path:hover {
-
   fill: var(--choro-hover-fill);
-
   stroke: var(--choro-hover-stroke);
-
   filter:
     drop-shadow(
       0 0 9px
       var(--choro-hover-glow)
     );
-
   cursor: pointer;
 }
 
@@ -100,10 +85,14 @@
 :host ::ng-deep .state-outline {
 
   fill: none;
-
   stroke: var(--choro-state-stroke);
-
   stroke-width: 1.2;
+  pointer-events: none;
+}
 
+:host ::ng-deep .state-title {
+ fill: var(--plt-txt-1);
+  font-size: 22px;
+  font-weight: 600;
   pointer-events: none;
 }
