@@ -139,7 +139,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
     console.log('counties bbox', countyNode.getBBox());
 
     this.adjustStateGroupSizeAndPosition();
-    this.applyRotation();
+   // this.applyRotation();
 
     console.log('%ccreateStateChoropleth', 'color:#f7f9f9', {
       selectedStateFips,
@@ -209,35 +209,41 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   }
 
   private adjustStateGroupSizeAndPosition(): void {
-    const stateBBox = this.state.node().getBBox();
+    const countyNode = this.counties?.node();
 
-    if (!stateBBox.width || !stateBBox.height) {
-      console.warn('State bbox is empty', stateBBox);
+    if (!countyNode) {
       return;
     }
 
-    const padding = 20;
+    const bbox = countyNode.getBBox();
 
-    const availableWidth = Math.max(0, this.width - padding * 2);
-    const availableHeight = Math.max(0, this.height - padding * 2);
-
-    if (availableWidth <= 0 || availableHeight <= 0) {
+    if (bbox.width <= 0 || bbox.height <= 0) {
       return;
     }
 
-    const scaleX = availableWidth / stateBBox.width;
-    const scaleY = availableHeight / stateBBox.height;
+    const padding = 0;
+
+    const availableWidth = this.width - padding * 2;
+    const availableHeight = this.height - padding * 2;
+
+    const scaleX = availableWidth / bbox.width;
+    const scaleY = availableHeight / bbox.height;
+
     const scale = Math.min(scaleX, scaleY);
 
-    const translateX =
-      (this.width - stateBBox.width * scale) / 2 - stateBBox.x * scale;
+    const tx =
+      padding +
+      (availableWidth - bbox.width * scale) / 2 -
+      bbox.x * scale;
 
-    const translateY =
-      (this.height - stateBBox.height * scale) / 2 - stateBBox.y * scale;
+    const ty =
+      padding +
+      (availableHeight - bbox.height * scale) / 2 -
+      bbox.y * scale;
 
-    this.state.attr(
+    this.outerGroup.attr(
       'transform',
-      `translate(${translateX}, ${translateY}) scale(${scale})`
+      `translate(${tx}, ${ty}) scale(${scale})`
     );
   }
 
