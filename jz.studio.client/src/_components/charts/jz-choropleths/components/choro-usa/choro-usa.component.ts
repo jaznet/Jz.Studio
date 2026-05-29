@@ -122,7 +122,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
-    this.createStatesLayer(stateFeaturesCollection,stateMesh);
+    // this.createStatesLayer(stateFeaturesCollection,stateMesh);
+    this.createStateFeatureLayer(stateFeaturesCollection);
+    this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
     this.createStatesTextLayer(stateFeaturesCollection);
     this.createStateCentroidLayer(stateFeaturesCollection);
@@ -149,31 +151,46 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
   }
 
   private createCountyLayer(countyFeaturesCollection: any): void {
+
     this.countyLayer
       .selectAll('path')
       .data(countyFeaturesCollection.features)
       .enter()
       .append('path')
-      .on('click', (event: MouseEvent, d: any) => {
-        const countyId = String(d.id).padStart(5, '0');
-        const stateId = countyId.substring(0, 2);
-        console.log('%cCounty CLICKED', 'color:yellow', countyId, stateId, d);
+      .attr('d', this.geoPath)
+      .attr('fips', (d: any) => d.id)
+      .attr('name', (d: any) => d.properties?.name)
+      .attr('class', 'choro-usa-county-path')
+      .attr('vector-effect', 'non-scaling-stroke')
+      .on('click', (_event: MouseEvent, d: any) => {
+
+        const countyId =
+          String(d.id).padStart(5, '0');
+
+        const stateId =
+          countyId.substring(0, 2);
+
+        console.log(
+          '%cCounty CLICKED',
+          'color:yellow',
+          countyId,
+          stateId,
+          d
+        );
+
         this.countySelected.emit({
           countyId,
           stateId,
           countyFeature: d
         });
       })
-      .attr('d', this.geoPath)
-      .attr('fips', (d: any) => d.id)
-      .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'usa-county-path')
-      .attr('vector-effect', 'non-scaling-stroke')
-     
       .append('title')
-      .text((d: any) => `${d.properties?.name ?? ''}, `)
-      .attr('class', 'state-label');
-    console.log('County count', countyFeaturesCollection.features.length);
+      .text((d: any) => d.properties?.name ?? '');
+
+    console.log(
+      'County count',
+      countyFeaturesCollection.features.length
+    );
   }
 
   private createStatesLayer(
@@ -192,8 +209,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('class', 'state')
       .attr('d', this.geoPath as any)
       .attr('fill', 'transparent')
-      .attr('stroke', 'none')
-      .style('pointer-events', 'none');
+      .attr('stroke', 'none');
 
     this.stateLayer
       .append('path')
@@ -202,18 +218,40 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('d', this.geoPath as any)
       .attr('fill', 'none')
       .attr('stroke', 'black')
-      .attr('stroke-width', 0.3)
-      .style('pointer-events', 'none');
+      .attr('stroke-width', 0.3);
+  }
+
+  private createStateFeatureLayer(stateFeaturesCollection: any): void {
+    this.stateLayer
+      .selectAll('path.choro-usa-state-feature')
+      .data(stateFeaturesCollection.features)
+      .enter()
+      .append('path')
+      .attr('class', 'choro-usa-state-feature')
+      .attr('d', this.geoPath as any)
+      .attr('fill', 'none')
+      .attr('stroke', 'none')
+      .attr('pointer-events', 'none');
+  }
+
+  private createStatesMesh(stateMesh: any): void {
+    this.stateLayer
+      .append('path')
+      .datum(stateMesh)
+      .attr('id', 'statemesh')
+      .attr('class', 'choro-usa-state-mesh')
+      .attr('d', this.geoPath as any)
+      .attr('pointer-events', 'none');
   }
 
   private createNationLayer(nationMesh: any): void {
+
     this.nationLayer
       .append('path')
-      .attr('class', 'nation_path')
-      .attr('d', this.geoPath(nationMesh))
-      .style('fill', 'none')
-      .style('stroke', 'black')
-      .style('stroke-width', '.5px');
+      .datum(nationMesh)
+      .attr('class', 'choro-usa-nation-mesh')
+      .attr('d', this.geoPath as any)
+      .attr('pointer-events', 'none');
   }
 
   private projection = geoAlbersUsa();
@@ -244,7 +282,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .selectAll('text.state-label')
       .data(stateFeaturesCollection.features, (d: any) => d.id)
       .join('text')
-      .attr('class', 'state-label')
+      .attr('class', 'choro-usa-state-label')
       .attr('id', (d: any) => `state-label-${d.id}`)
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')

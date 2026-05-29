@@ -192,9 +192,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('class', 'counties-group');
   }
 
-  private createCountyLayer(
-    countyFeaturesCollection: any
-  ): void {
+  private createCountyLayer(countyFeaturesCollection: any ): void {
 
     console.log('createCountyLayer');
 

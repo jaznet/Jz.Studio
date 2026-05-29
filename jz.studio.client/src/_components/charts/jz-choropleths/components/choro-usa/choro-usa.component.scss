@@ -21,17 +21,39 @@
 
   overflow: hidden;
 
-  // source palette → semantic map roles
-  --choro-map-fill: var(--plt-clr-4);
-  --choro-map-fill-focus: var(--plt-clr-5);
+  // source palette → semantic Chorodash USA roles
+  --choro-usa-county-fill: var(--plt-clr-3);
 
-  --choro-usa-county-fill: var(--choro-map-fill);
-  --choro-county-stroke: color-mix(in srgb, var(--plt-clr-2) 75%, black);
-  --choro-state-stroke: color-mix(in srgb, var(--plt-clr-1) 70%, black);
+  --choro-usa-county-border:
+    color-mix(
+      in srgb,
+      var(--plt-clr-1) 75%,
+      var(--plt-clr-3)
+    );
 
-  --choro-label-fill: color-mix(in srgb, var(--plt-txt-2) 70%, var(--plt-pop));
-  --choro-debug: var(--plt-pop);
-  }
+  --choro-usa-state-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 45%,
+      var(--plt-clr-2)
+    );
+
+  --choro-usa-nation-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 60%,
+      var(--plt-clr-1)
+    );
+
+  --choro-usa-state-label:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 70%,
+      var(--plt-pop)
+    );
+
+  --choro-usa-debug: var(--plt-pop);
+}
 
 #usa-div {
   display: flex;
@@ -143,4 +165,43 @@ border-width:2px;
   stroke: var(--choro-usa-county-stroke);
   stroke-width: 1px;
   vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-usa-county-path {
+  fill: var(--choro-usa-county-fill);
+  stroke: var(--choro-usa-county-border);
+  stroke-width: 0.15px;
+  opacity: 0.75;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-usa-state-mesh {
+  fill: none;
+  stroke: var(--choro-usa-state-border);
+  stroke-width: 0.45px;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-usa-nation-mesh {
+  fill: none;
+  stroke: var(--choro-usa-nation-border);
+  stroke-width: 0.65px;
+  opacity: 0.95;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-usa-state-label {
+  fill: var(--choro-usa-state-label);
+  font-family: 'museo', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+:host ::ng-deep .choro-usa-state-feature {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
 }
