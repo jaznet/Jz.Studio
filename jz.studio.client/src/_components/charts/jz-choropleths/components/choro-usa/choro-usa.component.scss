@@ -78,32 +78,6 @@
 }
 
 
-/* ==========================================================================
-   County Layer
-   TS class: nslx
-   ========================================================================== */
-
-:host ::ng-deep .nslx {
-  fill: var(--choro-county-fill);
-  stroke: var(--choro-county-stroke);
-  stroke-width: 1px;
-  transition:
-    fill 180ms ease,
-    stroke 180ms ease,
-    filter 180ms ease,
-    opacity 180ms ease;
-}
-
-:host ::ng-deep .nslx:hover {
-  fill: var(--choro-hover-fill);
-  stroke: var(--choro-hover-stroke);
-  filter:
-    drop-shadow(
-      0 0 8px
-      var(--choro-hover-glow)
-    );
-  cursor: pointer;
-}
 
 
 /* ==========================================================================
@@ -167,12 +141,22 @@ border-width:2px;
   vector-effect: non-scaling-stroke;
 }
 
+/* ==========================================================================
+   .choro-usa-
+   ========================================================================== */
+
 :host ::ng-deep .choro-usa-county-path {
   fill: var(--choro-usa-county-fill);
   stroke: var(--choro-usa-county-border);
   stroke-width: 0.15px;
   opacity: 0.75;
   vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-usa-state-feature {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
 }
 
 :host ::ng-deep .choro-usa-state-mesh {
@@ -200,8 +184,4 @@ border-width:2px;
   pointer-events: none;
 }
 
-:host ::ng-deep .choro-usa-state-feature {
-  fill: none;
-  stroke: none;
-  pointer-events: none;
-}
+
