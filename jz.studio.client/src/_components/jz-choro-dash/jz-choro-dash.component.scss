@@ -10,15 +10,15 @@
 --choro-county-fill:
   color-mix(
     in srgb,
-    var(--plt-clr-3) 82%,
+    var(--plt-clr-3) 45%,
     var(--plt-clr-4)
   );
 
 --choro-county-border:
   color-mix(
     in srgb,
-    var(--plt-clr-1) 62%,
-    var(--plt-clr-5)
+    var(--plt-clr-1) 45%,
+    var(--plt-txt-2)
   );
 
 --choro-state-border:

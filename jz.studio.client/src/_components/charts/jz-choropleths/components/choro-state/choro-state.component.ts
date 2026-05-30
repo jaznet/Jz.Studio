@@ -130,6 +130,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
     this.createStateChoroplethContainer();
     this.createCountyLayer(selectedCountyFeatures);
+    this.createStateOutlineLayer(selectedCountyFeatures);
 
     const countyNode = this.counties?.node();
 
@@ -215,6 +216,17 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('name', (d: any) => d.properties?.name)
       .attr('class', 'state-county-path')
       .attr('vector-effect', 'non-scaling-stroke');
+  }
+
+  private createStateOutlineLayer(countyFeaturesCollection: any): void {
+    const geopath = geoPath();
+
+    this.state
+      .append('path')
+      .datum(countyFeaturesCollection)
+      .attr('class', 'choro-state-mesh')
+      .attr('d', geopath as any)
+      .attr('pointer-events', 'none');
   }
 
   private fitAndTransformState(): void {
