@@ -44,6 +44,26 @@
     var(--plt-pop)
   );
 
+  /* Shared Chorodash title semantics */
+
+--choro-title-fill:
+  color-mix(
+    in srgb,
+    var(--plt-txt-3) 80%,
+    var(--plt-pop)
+  );
+
+--choro-title-opacity: 0.95;
+
+--choro-title-font-family:
+  'museo',
+  'Segoe UI',
+  sans-serif;
+
+--choro-title-font-size: 24px;
+
+--choro-title-font-weight: 600;
+
 --choro-label-opacity: 0.92;
 
   /* Shared Chorodash interaction semantics */

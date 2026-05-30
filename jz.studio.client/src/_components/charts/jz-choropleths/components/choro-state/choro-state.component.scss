@@ -34,6 +34,21 @@
   overflow: hidden;
 }
 
+:host ::ng-deep .state-title {
+  fill: var(--choro-title-fill);
+
+  font-family: var(--choro-title-font-family);
+  font-size: var(--choro-title-font-size);
+  font-weight: var(--choro-title-font-weight);
+
+  opacity: var(--choro-title-opacity);
+
+  pointer-events: none;
+  user-select: none;
+
+  text-rendering: geometricPrecision;
+}
+
 /* ==========================================================================
    SVG Surface
    ========================================================================== */
