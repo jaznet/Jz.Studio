@@ -1,89 +1,96 @@
 /* jz-choro-dash.component.scss */
 
 :host {
+  /* Panel semantics */
   --choro-panel-bg-1: var(--surface-raised);
   --choro-panel-bg-2: var(--surface-base);
   --choro-panel-border: var(--border-soft);
 
-  --choro-state-county-fill: color-mix(
-    in srgb,
-    var(--surface-focus) 55%,
-    #7f909b 45%
-  );
+  /* Shared Chorodash map semantics */
+  --choro-county-fill: var(--plt-clr-3);
 
-  --choro-county-stroke: rgba(255, 255, 255, 0.08);
-  --choro-state-stroke: yellow;
+  --choro-county-border:
+    color-mix(
+      in srgb,
+      var(--plt-clr-1) 75%,
+      var(--plt-clr-3)
+    );
 
+  --choro-state-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 45%,
+      var(--plt-clr-2)
+    );
+
+  --choro-nation-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 60%,
+      var(--plt-clr-1)
+    );
+
+  /* Shared Chorodash label semantics */
+  --choro-state-label:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 70%,
+      var(--plt-pop)
+    );
+
+  --choro-label-opacity: 0.85;
+
+  /* Shared Chorodash interaction semantics */
   --choro-hover-fill: var(--accent-primary);
-  --choro-hover-stroke: rgba(255, 255, 255, 0.55);
+  --choro-hover-border: rgba(255, 255, 255, 0.55);
   --choro-hover-glow: var(--accent-glow);
 
---choro-label-fill: color-mix(
-  in srgb,
-  var(--accent-primary) 18%,
-  var(--surface-text-muted) 82%
-);
-  --choro-label-opacity: 0.72;
-  --choro-label-stroke: rgba(0, 0, 0, 0.35);
-  --choro-label-stroke-width: 0.2px;
+  /* Shared Chorodash diagnostic/debug semantics */
+  --choro-debug-dot: var(--plt-pop);
+  --choro-debug-bbox: var(--plt-pop);
 
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+
   min-height: 0;
   min-width: 0;
 }
+
 .choro-panels {
   display: flex;
   flex-direction: row;
   align-items: stretch;
+
   flex: 1 1 auto;
+
   width: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
-
-/*.choro-panels {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-
-  flex: 1 1 auto;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-
-  background:
-    radial-gradient(
-      ellipse at top,
-      rgba(255, 255, 255, 0.035),
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      var(--choro-panel-bg-1) 0%,
-      var(--choro-panel-bg-2) 100%
-    );
-}*/
-
 .usa-panel {
   flex: 1 1 67%;
+
   min-width: 0;
   min-height: 0;
 }
 
 .state-panel {
   flex: 0 0 33%;
+
   min-width: 0;
   min-height: 0;
+
   border-left: 1px solid var(--choro-panel-border);
 }
 
 .grid-col-fill {
   flex: 1 1 auto;
+
   min-width: 0;
   min-height: 0;
 }

@@ -3,7 +3,6 @@
    Chorodash State Map Styling
    ========================================================================== */
 
-
 /* ==========================================================================
    Host Layout
    ========================================================================== */
@@ -12,24 +11,28 @@
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  height: 100%;
+
   width: 100%;
+  height: 100%;
+
   min-width: 0;
   min-height: 0;
+
   overflow: hidden;
 }
 
 #state-div {
   display: flex;
   flex: 1 1 auto;
-  height: 100%;
+
   width: 100%;
+  height: 100%;
+
   min-width: 0;
   min-height: 0;
-  overflow: hidden;
-  border:1px solid white;
-}
 
+  overflow: hidden;
+}
 
 /* ==========================================================================
    SVG Surface
@@ -39,56 +42,58 @@
   background: transparent;
 }
 
-
 /* ==========================================================================
-   County Layer
-   TS class: state-county-path
+   State Counties
    ========================================================================== */
 
 :host ::ng-deep .state-county-path {
-  fill: var(--choro-state-county-fill);
-  stroke: black;
-  stroke-width: 1px;
+  fill: var(--choro-county-fill);
+  stroke: var(--choro-county-border);
+  stroke-width: 0.35px;
+  opacity: 0.85;
+  vector-effect: non-scaling-stroke;
 }
 
 :host ::ng-deep .state-county-path:hover {
   fill: var(--choro-hover-fill);
-  stroke: var(--choro-hover-stroke);
+  stroke: var(--choro-hover-border);
+
   filter:
     drop-shadow(
-      0 0 9px
+      0 0 8px
       var(--choro-hover-glow)
     );
+
   cursor: pointer;
 }
 
-
 /* ==========================================================================
-   State Surface Group
+   State Outline / Mesh
    ========================================================================== */
 
-:host ::ng-deep .state-group {
-  opacity: 0.96;
-}
-
-
-/* ==========================================================================
-   State Outline
-   Future-ready if outline path added later
-   ========================================================================== */
-
-:host ::ng-deep .state-outline {
-
+:host ::ng-deep .state-outline-path {
   fill: none;
-  stroke: var(--choro-state-stroke);
-  stroke-width: 1.2;
-  pointer-events: none;
+  stroke: var(--choro-state-border);
+  stroke-width: 0.75px;
+  opacity: 0.95;
+  vector-effect: non-scaling-stroke;
 }
 
-:host ::ng-deep .state-title {
- fill: var(--plt-txt-1);
-  font-size: 22px;
+/* ==========================================================================
+   State Label
+   ========================================================================== */
+
+:host ::ng-deep .state-label {
+  fill: var(--choro-state-label);
+
+  font-family: 'museo', 'Segoe UI', sans-serif;
+  font-size: 18px;
   font-weight: 600;
-  pointer-events: none;
-}
 
+  opacity: var(--choro-label-opacity);
+
+  pointer-events: none;
+  user-select: none;
+
+  text-rendering: geometricPrecision;
+}

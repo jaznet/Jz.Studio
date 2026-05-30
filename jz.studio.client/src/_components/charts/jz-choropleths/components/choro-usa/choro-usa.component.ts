@@ -160,7 +160,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .attr('d', this.geoPath)
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'choro-usa-county-path')
+      .attr('class', 'choro-county-path')
       .attr('vector-effect', 'non-scaling-stroke')
       .on('click', (_event: MouseEvent, d: any) => {
 
@@ -223,11 +223,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
 
   private createStateFeatureLayer(stateFeaturesCollection: any): void {
     this.stateLayer
-      .selectAll('path.choro-usa-state-feature')
+      .selectAll('path.choro-state-feature')
       .data(stateFeaturesCollection.features)
       .enter()
       .append('path')
-      .attr('class', 'choro-usa-state-feature')
+      .attr('class', 'choro-state-feature')
       .attr('d', this.geoPath as any)
       .attr('fill', 'none')
       .attr('stroke', 'none')
