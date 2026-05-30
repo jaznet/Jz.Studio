@@ -57,6 +57,75 @@
   min-width: 0;
 }
 
+/* ==========================================================================
+   Shared Chorodash SVG Geometry
+   ========================================================================== */
+
+:host ::ng-deep .choro-county-path {
+  fill: var(--choro-county-fill);
+  stroke: var(--choro-county-border);
+  stroke-width: 0.15px;
+  opacity: 0.75;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-county-path:hover {
+  fill: var(--choro-hover-fill);
+  stroke: var(--choro-hover-border);
+  filter:
+    drop-shadow(
+      0 0 8px
+      var(--choro-hover-glow)
+    );
+  cursor: pointer;
+}
+
+:host ::ng-deep .choro-state-feature {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
+}
+
+:host ::ng-deep .choro-state-mesh {
+  fill: none;
+  stroke: var(--choro-state-border);
+  stroke-width: 0.45px;
+  opacity: 0.9;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-nation-mesh {
+  fill: none;
+  stroke: var(--choro-nation-border);
+  stroke-width: 0.65px;
+  opacity: 0.95;
+  vector-effect: non-scaling-stroke;
+}
+
+:host ::ng-deep .choro-state-label {
+  fill: var(--choro-state-label);
+  font-family: 'museo', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: var(--choro-label-opacity);
+  pointer-events: none;
+  user-select: none;
+  text-rendering: geometricPrecision;
+}
+
+:host ::ng-deep .state-centroid {
+  fill: var(--choro-debug-dot);
+}
+
+:host ::ng-deep .state-geo-bbox {
+  fill: none;
+  stroke: var(--choro-debug-bbox);
+}
+
+/* ==========================================================================
+   Dashboard Layout
+   ========================================================================== */
+
 .choro-panels {
   display: flex;
   flex-direction: row;

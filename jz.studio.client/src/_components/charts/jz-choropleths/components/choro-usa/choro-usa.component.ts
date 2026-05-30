@@ -239,7 +239,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
       .append('path')
       .datum(stateMesh)
       .attr('id', 'statemesh')
-      .attr('class', 'choro-usa-state-mesh')
+      .attr('class', 'choro-state-mesh')
       .attr('d', this.geoPath as any)
       .attr('pointer-events', 'none');
   }
@@ -249,7 +249,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     this.nationLayer
       .append('path')
       .datum(nationMesh)
-      .attr('class', 'choro-usa-nation-mesh')
+      .attr('class', 'choro-nation-mesh')
       .attr('d', this.geoPath as any)
       .attr('pointer-events', 'none');
   }
