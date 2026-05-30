@@ -7,38 +7,44 @@
   --choro-panel-border: var(--border-soft);
 
   /* Shared Chorodash map semantics */
-  --choro-county-fill: var(--plt-clr-3);
+--choro-county-fill:
+  color-mix(
+    in srgb,
+    var(--plt-clr-3) 82%,
+    var(--plt-clr-4)
+  );
 
-  --choro-county-border:
-    color-mix(
-      in srgb,
-      var(--plt-clr-1) 75%,
-      var(--plt-clr-3)
-    );
+--choro-county-border:
+  color-mix(
+    in srgb,
+    var(--plt-clr-1) 62%,
+    var(--plt-clr-5)
+  );
 
-  --choro-state-border:
-    color-mix(
-      in srgb,
-      var(--plt-txt-2) 45%,
-      var(--plt-clr-2)
-    );
+--choro-state-border:
+  color-mix(
+    in srgb,
+    var(--plt-txt-2) 58%,
+    var(--plt-clr-2)
+  );
 
-  --choro-nation-border:
-    color-mix(
-      in srgb,
-      var(--plt-txt-2) 60%,
-      var(--plt-clr-1)
-    );
+--choro-nation-border:
+  color-mix(
+    in srgb,
+    var(--plt-txt-2) 72%,
+    var(--plt-clr-1)
+  );
 
   /* Shared Chorodash label semantics */
-  --choro-state-label:
-    color-mix(
-      in srgb,
-      var(--plt-txt-2) 70%,
-      var(--plt-pop)
-    );
+/* Shared Chorodash label semantics */
+--choro-state-label:
+  color-mix(
+    in srgb,
+    var(--plt-txt-2) 82%,
+    var(--plt-pop)
+  );
 
-  --choro-label-opacity: 0.85;
+--choro-label-opacity: 0.92;
 
   /* Shared Chorodash interaction semantics */
   --choro-hover-fill: var(--accent-primary);
