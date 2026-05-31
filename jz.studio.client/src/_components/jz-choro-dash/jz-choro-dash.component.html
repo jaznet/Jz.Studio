@@ -36,17 +36,17 @@
 
   </div>
 
-  <div class="grid-rows">
+  <div class="choro-panels">
 
-    <div class="grid-col-fill choro-panels">
+    <jz-choro-dash-panel class="usa-panel">
+      <choro-usa #choro_usa
+                 [shapeSet]="usaShapeSet"
+                 (countySelected)="onCountySelected($event)"
+                 (choroUSAEvent)="applyCentroidLayerDisplay()">
+      </choro-usa>
+    </jz-choro-dash-panel>
 
-      <jz-choro-dash-panel class="grid-col-fill">
-        <choro-usa #choro_usa
-                   [shapeSet]="usaShapeSet"
-                   (countySelected)="onCountySelected($event)"
-                   (choroUSAEvent)="applyCentroidLayerDisplay()">
-        </choro-usa>
-      </jz-choro-dash-panel>
+    <div class="state-column">
 
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
@@ -56,10 +56,10 @@
         </choro-state>
       </jz-choro-dash-panel>
 
-    </div>
+      <jz-choro-dash-panel class="state-table-panel">
+        table
+      </jz-choro-dash-panel>
 
-    <div class="grid-col-fixed" style="width:150px">
-      table
     </div>
 
   </div>
