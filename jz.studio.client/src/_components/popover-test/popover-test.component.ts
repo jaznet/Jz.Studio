@@ -23,8 +23,8 @@ import { JzPopoverPanelComponent } from '../../_framework/ui/popover/jz-popover-
     PortalModule,
     JzPopoverPanelComponent
   ],
-  templateUrl: './popover-test.html',
-  styleUrls: ['./popover-test.scss']
+  templateUrl: './popover-test.component.html',
+  styleUrls: ['./popover-test.component.scss']
 })
 export class PopoverTestComponent {
   @ViewChild('trigger', { read: ElementRef })

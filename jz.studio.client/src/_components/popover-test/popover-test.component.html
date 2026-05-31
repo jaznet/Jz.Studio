@@ -1,0 +1,24 @@
+<div class="popover-test">
+  <button #trigger type="button" (click)="togglePopover()">
+    Toggle Popover
+  </button>
+
+  <button type="button" (click)="openPopover()">
+    Open
+  </button>
+
+  <button type="button" (click)="closePopover()">
+    Close
+  </button>
+</div>
+
+<ng-template #popoverTemplate>
+  <jz-popover-panel>
+    <div class="popover-title">JZ Popover</div>
+    <div class="popover-body">Programmatic open and close are working.</div>
+
+    <button type="button" (click)="closePopover()">
+      Close Popover
+    </button>
+  </jz-popover-panel>
+</ng-template>
