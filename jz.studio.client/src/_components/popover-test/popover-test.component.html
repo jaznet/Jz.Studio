@@ -1,24 +1,33 @@
-<div class="popover-test">
-  <button #trigger type="button" (click)="togglePopover()">
-    Toggle Popover
-  </button>
+<div class="popover-test-target" #contentTarget>
 
-  <button type="button" (click)="openPopover()">
-    Open
-  </button>
+  <div class="popover-test">
 
-  <button type="button" (click)="closePopover()">
-    Close
-  </button>
+    <button type="button"
+            [jzPopover]="componentPopover"
+            [jzPopoverOrigin]="contentTarget"
+            [jzPopoverConfig]="{
+              placement: 'center',
+              offsetX: 0,
+              offsetY: 0,
+              data: 'Data passed through injector'
+            }">
+      Component Popover
+    </button>
+
+  </div>
+
 </div>
 
-<ng-template #popoverTemplate>
+<ng-template #myPopover>
   <jz-popover-panel>
-    <div class="popover-title">JZ Popover</div>
-    <div class="popover-body">Programmatic open and close are working.</div>
 
-    <button type="button" (click)="closePopover()">
-      Close Popover
-    </button>
+    <div class="popover-title">
+      JZ Popover
+    </div>
+
+    <div class="popover-body">
+      Template popover works.
+    </div>
+
   </jz-popover-panel>
 </ng-template>

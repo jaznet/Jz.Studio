@@ -10,6 +10,7 @@ import { SankeyComponent } from '../../_components/charts/jz-sankey/jz-sankey.co
 import { JzBubbleChart } from '../../_components/charts/jz-bubble-chart/jz-bubble-chart';
 import { JzSyncfusionChartComponent } from '../../_components/charts/jz-syncfusion-chart/jz-syncfusion-chart.component';
 import { VisualizationHomeComponent } from './components/visualization-home/visualization-home.component';
+import { PopoverTestComponent } from '../../_components/popover-test/popover-test.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,7 @@ const routes: Routes = [
       { path: 'chorodash', component: JzChoroDashComponent }, // 👈 THIS WAS MISSING
       { path: 'sankey', component: SankeyComponent },
       { path: 'bubble-chart', component: JzBubbleChart },
-      { path: 'syncfusion-chart', component: JzSyncfusionChartComponent }
+      { path: 'popover', component: PopoverTestComponent }
     ]
   }
 ];

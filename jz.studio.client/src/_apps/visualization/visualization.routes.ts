@@ -37,10 +37,10 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.JzBubbleChart)
       },
       {
-        path: 'syncfusion-chart',
+        path: 'popover',
         loadComponent: () =>
-          import('../../_components/charts/jz-syncfusion-chart/jz-syncfusion-chart.component')
-            .then(m => m.JzSyncfusionChartComponent)
+          import('../../_components/popover-test/popover-test.component')
+            .then(m => m.PopoverTestComponent)
       }
     ]
   }

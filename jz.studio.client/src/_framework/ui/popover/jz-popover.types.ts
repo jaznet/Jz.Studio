@@ -1,6 +1,9 @@
 import { ConnectedPosition } from '@angular/cdk/overlay';
+import { TemplateRef } from '@angular/core';
+import { Type } from '@angular/core';
 
 export type JzPopoverPlacement =
+  | 'center'
   | 'bottom-start'
   | 'bottom-end'
   | 'top-start'
@@ -20,10 +23,33 @@ export interface JzPopoverConfig {
   panelClass?: string | string[];
 }
 
+export interface JzPopoverConfig<TData = unknown> {
+  data?: TData;
+  positionMode?: JzPopoverPositionMode;
+  placement?: JzPopoverPlacement;
+  hasBackdrop?: boolean;
+  closeOnBackdropClick?: boolean;
+  closeOnEscape?: boolean;
+  offsetX?: number;
+  offsetY?: number;
+  panelClass?: string | string[];
+}
+
 export function getJzPopoverPositions(
   placement: JzPopoverPlacement = 'bottom-start'
 ): ConnectedPosition[] {
   switch (placement) {
+
+    case 'center':
+      return [
+        {
+          originX: 'center',
+          originY: 'center',
+          overlayX: 'center',
+          overlayY: 'center'
+        }
+      ];
+
     case 'bottom-start':
       return [
         { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
@@ -69,3 +95,11 @@ export function getJzPopoverPositions(
       ];
   }
 }
+
+export type JzPopoverContent<TComponent = unknown> =
+  | TemplateRef<unknown>
+  | Type<TComponent>;
+
+export type JzPopoverPositionMode =
+  | 'connected'
+  | 'container-center';

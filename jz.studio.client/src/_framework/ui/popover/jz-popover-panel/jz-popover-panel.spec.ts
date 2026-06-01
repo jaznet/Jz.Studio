@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JzPopoverPanel } from './jz-popover-panel.component';
+import { JzPopoverPanelComponent } from './jz-popover-panel.component';
 
 describe('JzPopoverPanel', () => {
-  let component: JzPopoverPanel;
-  let fixture: ComponentFixture<JzPopoverPanel>;
+  let component: JzPopoverPanelComponent;
+  let fixture: ComponentFixture<JzPopoverPanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzPopoverPanel]
+      declarations: [JzPopoverPanelComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(JzPopoverPanel);
+    fixture = TestBed.createComponent(JzPopoverPanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

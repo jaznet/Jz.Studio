@@ -21,7 +21,7 @@ export class VisualizationMenuComponent extends MenuBaseComponent {
     { id: 'chorodash', label: 'Chorodash', route: '/visualization/chorodash' },
     { id: 'sankey', label: 'Sankey', route: '/visualization/sankey' },
     { id: 'bubbleChart', label: 'Bubble Chart', route: '/visualization/bubble-chart' },
-    { id: 'syncfusionChart', label: 'Syncfusion Chart', route: '/visualization/syncfusion-chart' }
+    { id: 'popover', label: 'Popover', route: '/visualization/popover' }
   ];
 
 }
