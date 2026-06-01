@@ -40,6 +40,7 @@ export class JzPopoverService {
 
     overlayRef.attach(new TemplatePortal(templateRef, viewContainerRef));
     this.wireCloseBehavior(overlayRef, popoverRef, config);
+    this.applyContainerCenterPosition(origin, overlayRef, config);
 
     return popoverRef;
   }
@@ -69,6 +70,7 @@ export class JzPopoverService {
     );
 
     this.wireCloseBehavior(overlayRef, popoverRef, config);
+    this.applyContainerCenterPosition(origin, overlayRef, config);
 
     return popoverRef;
   }
@@ -83,6 +85,16 @@ export class JzPopoverService {
     config: JzPopoverConfig
   ): OverlayRef {
     this.closeActive();
+
+    if (config.positionMode === 'container-center') {
+      return this.overlay.create({
+        positionStrategy: this.overlay.position().global(),
+        hasBackdrop: config.hasBackdrop ?? true,
+        backdropClass: 'cdk-overlay-transparent-backdrop',
+        panelClass: config.panelClass ?? 'jz-popover-overlay-panel',
+        scrollStrategy: this.overlay.scrollStrategies.reposition()
+      });
+    }
 
     const positionStrategy = this.overlay
       .position()
@@ -100,6 +112,50 @@ export class JzPopoverService {
       panelClass: config.panelClass ?? 'jz-popover-overlay-panel',
       scrollStrategy: this.overlay.scrollStrategies.reposition()
     });
+  }
+
+  private applyContainerCenterPosition(
+    origin: ElementRef<HTMLElement> | HTMLElement,
+    overlayRef: OverlayRef,
+    config: JzPopoverConfig
+  ): void {
+    if (config.positionMode !== 'container-center') {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const originElement = this.getOriginElement(origin);
+      const originRect = originElement.getBoundingClientRect();
+      const overlayElement = overlayRef.overlayElement;
+      const overlayRect = overlayElement.getBoundingClientRect();
+
+      const left =
+        originRect.left +
+        (originRect.width - overlayRect.width) / 2 +
+        (config.offsetX ?? 0);
+
+      const top =
+        originRect.top +
+        (originRect.height - overlayRect.height) / 2 +
+        (config.offsetY ?? 0);
+
+      const positionStrategy = this.overlay
+        .position()
+        .global()
+        .left(`${left}px`)
+        .top(`${top}px`);
+
+      overlayRef.updatePositionStrategy(positionStrategy);
+      overlayRef.updatePosition();
+    });
+  }
+
+  private getOriginElement(
+    origin: ElementRef<HTMLElement> | HTMLElement
+  ): HTMLElement {
+    return origin instanceof ElementRef
+      ? origin.nativeElement
+      : origin;
   }
 
   private createPopoverRef(overlayRef: OverlayRef): JzPopoverRef {
