@@ -126,17 +126,23 @@ export class JzPopoverService {
     requestAnimationFrame(() => {
       const originElement = this.getOriginElement(origin);
       const originRect = originElement.getBoundingClientRect();
+
       const overlayElement = overlayRef.overlayElement;
-      const overlayRect = overlayElement.getBoundingClientRect();
+      const contentElement =
+        overlayElement.querySelector('jz-popover-panel') as HTMLElement
+        ?? overlayElement.firstElementChild as HTMLElement
+        ?? overlayElement;
+
+      const contentRect = contentElement.getBoundingClientRect();
 
       const left =
         originRect.left +
-        (originRect.width - overlayRect.width) / 2 +
+        (originRect.width - contentRect.width) / 2 +
         (config.offsetX ?? 0);
 
       const top =
         originRect.top +
-        (originRect.height - overlayRect.height) / 2 +
+        (originRect.height - contentRect.height) / 2 +
         (config.offsetY ?? 0);
 
       const positionStrategy = this.overlay

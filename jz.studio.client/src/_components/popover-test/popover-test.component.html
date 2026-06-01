@@ -1,20 +1,17 @@
-<div class="popover-test-target" #contentTarget>
+<div class="popover-test">
 
-  <div class="popover-test">
-
-    <button type="button"
-            [jzPopover]="componentPopover"
-            [jzPopoverOrigin]="contentTarget"
-            [jzPopoverConfig]="{
-              placement: 'center',
-              offsetX: 0,
-              offsetY: 0,
-              data: 'Data passed through injector'
-            }">
-      Component Popover
-    </button>
-
-  </div>
+  <button type="button"
+          [jzPopover]="componentPopover"
+          [jzPopoverOrigin]="viewRouterOrigin"
+          [jzPopoverConfig]="{
+            positionMode: 'container-center',
+            placement: 'center',
+            offsetX: 0,
+            offsetY: 0,
+            data: 'Data passed through injector'
+          }">
+    Component Popover
+  </button>
 
 </div>
 

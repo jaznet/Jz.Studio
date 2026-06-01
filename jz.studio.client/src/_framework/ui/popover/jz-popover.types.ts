@@ -13,16 +13,6 @@ export type JzPopoverPlacement =
   | 'left'
   | 'right';
 
-export interface JzPopoverConfig {
-  placement?: JzPopoverPlacement;
-  hasBackdrop?: boolean;
-  closeOnBackdropClick?: boolean;
-  closeOnEscape?: boolean;
-  offsetX?: number;
-  offsetY?: number;
-  panelClass?: string | string[];
-}
-
 export interface JzPopoverConfig<TData = unknown> {
   data?: TData;
   positionMode?: JzPopoverPositionMode;
