@@ -18,8 +18,6 @@
     <Folder Include="src\library\jz-sine-plot\" />
     <Folder Include="src\models\" />
     <Folder Include="src\_components\popovers\" />
-    <Folder Include="src\_framework\ui\popover\jz-popover-error\" />
-    <Folder Include="src\_framework\ui\popover\jz-popover-loading\" />
     <Folder Include="src\_framework\layout\panel-workspace\enums\" />
   </ItemGroup>
   <ItemGroup>

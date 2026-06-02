@@ -44,6 +44,9 @@ import { PanelPreference } from './interfaces/panel-preference.interface';
 import { PanelPreferenceService } from '../../../_framework/layout/panel-workspace/services/panel-preference.service';
 import { Subject } from 'rxjs';
 import { ChartScaffold } from './interfaces/chart-scafffold.interface';
+import { JzPopoverLoadingComponent } from '../../../_framework/ui/popovers/jz-popover-loading/jz-popover-loading.component';
+import { JzPopoverRef } from '../../../_framework/ui/popovers/jz-popover-ref';
+import { JzPopoverService } from '../../../_framework/ui/popovers/jz-popover.service';
 
 // #endregion imports
 
@@ -100,17 +103,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('panel3', { static: false }) panel3!: ElementRef<SVGGElement>;
   @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
 
-  // #region ohlc
-  // #endregion ohlc
-
-  // #region VOLUME
-  // #endregion VOLUME
-
-  // #region RSI
-  // #endregion RSI
-
-
-
   @Input() chartTitle: any = 'Technical Analysis Chart';
 
   // #endregion @ViewChild List
@@ -136,6 +128,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   svgContainer!: HTMLDivElement;
   xAxisDays: any;
   xAxisBottom: any;
+
+  private loadingPopoverRef?: JzPopoverRef;
   // #endregion Properties
 
   constructor(
@@ -152,7 +146,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private macdDraw: MacdDrawService,
     private panelHost: PanelHostService,
     private scaffoldSvc: ChartScaffoldService,
-    private panelPreferenceService: PanelPreferenceService
+    private panelPreferenceService: PanelPreferenceService,
+    private popoverService: JzPopoverService
   ) {
     console.log('');
     console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
@@ -168,7 +163,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.xAxisBottom = null;
   }
 
-
   ngOnInit(): void {
     this.panelPreferenceService.preferences$
       .pipe(takeUntil(this.destroyed$))
@@ -176,7 +170,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         this.applyPanelPreferences(preferences);
       });
   }
-
 
   ngOnDestroy(): void {
     this.destroyed$.next();
@@ -263,7 +256,22 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private fetchData(): void {
     console.log('%c     ✔  fetchData', 'color:#90BEE9');
-    /*    this.popover_loading.show();*/
+    const viewRouter =
+      new ElementRef(
+        document.getElementById('viewRouter') as HTMLElement
+      );
+    // show loading popover
+    this.loadingPopoverRef = this.popoverService.openComponent(
+      viewRouter,
+      JzPopoverLoadingComponent,
+      {
+        placement: 'center',
+        data: {
+          title: 'Loading Market Data',
+          message: `Loading ${this.ticker}...`
+        }
+      }
+    );
 
     this.stockPriceService.getStockPrices(this.ticker).subscribe(
       (data) => {
@@ -276,7 +284,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         this.tryCreateChart();
       },
       (error) => {
-        this.showError(error);
+       // this.showError(error);
       }
     );
   }
@@ -684,22 +692,4 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     }));
   }
 
-
-
-  showError(error: any): void {
-    //this.popover_loading.hide();
-    //this.popover_httperror.error = error.error;
-    //this.popover_httperror.headers = error.headers;
-    //this.popover_httperror.message = error.message;
-    //this.popover_httperror.name = error.name;
-    //this.popover_httperror.ok = error.ok;
-    //this.popover_httperror.status = error.status;
-    //this.popover_httperror.statusText = error.statusText;
-    //this.popover_httperror.url = error.url;
-    //this.popover_httperror.show();
-  }
-
-  drawRsi(): void {
-    // Future integration point.
-  }
 }

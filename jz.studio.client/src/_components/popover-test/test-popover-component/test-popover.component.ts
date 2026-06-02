@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 
 import { JzPopoverPanelComponent }
-  from '../../../_framework/ui/popover/jz-popover-panel/jz-popover-panel.component';
+  from '../../../_framework/ui/popovers/jz-popover-panel/jz-popover-panel.component';
 
 import { JZ_POPOVER_DATA }
-  from '../../../_framework/ui/popover/jz-popover-injector.tokens';
+  from '../../../_framework/ui/popovers/jz-popover-injector.tokens';
 
 @Component({
   selector: 'test-popover',
