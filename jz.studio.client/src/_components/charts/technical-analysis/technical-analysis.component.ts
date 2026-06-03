@@ -261,17 +261,17 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         document.getElementById('viewRouter') as HTMLElement
       );
     // show loading popover
-    //this.loadingPopoverRef = this.popoverService.openComponent(
-    //  viewRouter,
-    //  JzPopoverLoadingComponent,
-    //  {
-    //    placement: 'center',
-    //    data: {
-    //      title: 'Loading Market Data',
-    //      message: `Loading ${this.ticker}...`
-    //    }
-    //  }
-    //);
+    this.loadingPopoverRef = this.popoverService.openComponent(
+      viewRouter,
+      JzPopoverLoadingComponent,
+      {
+        placement: 'center',
+        data: {
+          title: 'Loading Market Data',
+          message: `Loading ${this.ticker}...`
+        }
+      }
+    );
 
     this.stockPriceService.getStockPrices(this.ticker).subscribe(
       (data) => {

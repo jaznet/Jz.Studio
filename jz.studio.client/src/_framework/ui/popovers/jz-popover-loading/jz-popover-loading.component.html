@@ -1,16 +1,5 @@
-<jz-popover-panel style="color:#e0e2db">
-
-  <div class="popover-title">
-    Loading Data
+<jz-popover-base [title]="data?.title ?? 'Loading'">
+  <div class="loading-body">
+    {{ data?.message ?? 'Please wait...' }}
   </div>
-
-  <div class="popover-body">
-    PopoverLoading
-  </div>
-
-  <div class="popover-data">
-    <!--{{ data }}-->
-  </div>
-
-</jz-popover-panel>
-Hello
+</jz-popover-base>
