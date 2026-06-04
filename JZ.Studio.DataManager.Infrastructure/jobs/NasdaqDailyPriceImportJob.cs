@@ -1,9 +1,16 @@
-﻿using JZ.Studio.DataManager.Infrastructure.Models;
+﻿using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace JZ.Studio.DataManager.Infrastructure.jobs;
 
 public class NasdaqDailyPriceImportJob {
+	private readonly JzStudioDbContext db;
+
+	public NasdaqDailyPriceImportJob(JzStudioDbContext db) {
+		this.db = db;
+	}
+
 	public void Execute(string filePath) {
 		Console.WriteLine($"Reading: {filePath}");
 
@@ -12,34 +19,38 @@ public class NasdaqDailyPriceImportJob {
 			return;
 		}
 
-		var prices = new List<DailySecurityPrice>();
+		var importBatch = new ImportBatch {
+			SourceName = "NASDAQ",
+			FileName = Path.GetFileName(filePath),
+			StartedAt = DateTime.UtcNow,
+			Status = "Started"
+		};
+
+		db.ImportBatches.Add(importBatch);
+		db.SaveChanges();
+
+		var prices = new List<DailyPrice>();
 
 		foreach (var line in File.ReadLines(filePath).Skip(1)) {
 			var parts = line.Split(',');
 
-			var price = new DailySecurityPrice {
-				Ticker = parts[0],
+			var symbol = parts[0];
 
-				TradeDate = DateTime.ParseExact(
-					parts[1],
-					"yyyyMMdd",
-					CultureInfo.InvariantCulture),
+			var tradeDate = DateTime.ParseExact(
+				parts[1],
+				"yyyyMMdd",
+				CultureInfo.InvariantCulture);
 
-				Open = decimal.Parse(parts[2], CultureInfo.InvariantCulture),
-				High = decimal.Parse(parts[3], CultureInfo.InvariantCulture),
-				Low = decimal.Parse(parts[4], CultureInfo.InvariantCulture),
-				Close = decimal.Parse(parts[5], CultureInfo.InvariantCulture),
-				Volume = long.Parse(parts[6], CultureInfo.InvariantCulture)
-			};
+			var open = decimal.Parse(parts[2], CultureInfo.InvariantCulture);
+			var high = decimal.Parse(parts[3], CultureInfo.InvariantCulture);
+			var low = decimal.Parse(parts[4], CultureInfo.InvariantCulture);
+			var close = decimal.Parse(parts[5], CultureInfo.InvariantCulture);
+			var volume = long.Parse(parts[6], CultureInfo.InvariantCulture);
 
-			prices.Add(price);
-		}
-
-		Console.WriteLine($"Parsed {prices.Count} price rows.");
-
-		foreach (var price in prices.Take(10)) {
 			Console.WriteLine(
-				$"{price.Ticker} {price.TradeDate:yyyy-MM-dd} O:{price.Open} H:{price.High} L:{price.Low} C:{price.Close} V:{price.Volume}");
+				$"{symbol} {tradeDate:yyyy-MM-dd} O:{open} H:{high} L:{low} C:{close} V:{volume}");
 		}
+
+		Console.WriteLine("Import complete.");
 	}
 }
