@@ -27,7 +27,7 @@ public class Worker : BackgroundService {
 		var job = new NasdaqDailyPriceImportJob();
 
 		job.Execute(
-			@"C:\MarketData\NASDAQ_20260106.txt");
+			@"D:\Data\NASDAQ\NASDAQ_2026\NASDAQ_20260102.txt");
 
 		await Task.CompletedTask;
 	}

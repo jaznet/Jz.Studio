@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using JZ.Studio.DataManager.Infrastructure.Models;
 
 namespace JZ.Studio.DataManager.Infrastructure.jobs;
 
