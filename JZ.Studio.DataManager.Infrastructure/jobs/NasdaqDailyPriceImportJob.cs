@@ -49,8 +49,51 @@ public class NasdaqDailyPriceImportJob {
 
 			Console.WriteLine(
 				$"{symbol} {tradeDate:yyyy-MM-dd} O:{open} H:{high} L:{low} C:{close} V:{volume}");
+
+			//
+			// Find or create Security
+			//
+			var security = db.Securities
+				.FirstOrDefault(s => s.Symbol == symbol);
+
+			if (security == null) {
+				security = new Security {
+					Symbol = symbol,
+					Name = symbol,
+					Exchange = "NASDAQ"
+				};
+
+				db.Securities.Add(security);
+				db.SaveChanges();
+			}
+
+			//
+			// Create DailyPrice
+			//
+			var dailyPrice = new DailyPrice {
+				SecurityId = security.SecurityId,
+				ImportBatchId = importBatch.ImportBatchId,
+
+				TradeDate = DateOnly.FromDateTime(tradeDate),
+
+				Open = open,
+				High = high,
+				Low = low,
+				Close = close,
+
+				Volume = volume
+			};
+
+			prices.Add(dailyPrice);
 		}
 
-		Console.WriteLine("Import complete.");
+		db.DailyPrices.AddRange(prices);
+
+		importBatch.Status = "Completed";
+
+		db.SaveChanges();
+
+		Console.WriteLine(
+			$"Imported {prices.Count} DailyPrice records.");
 	}
 }
