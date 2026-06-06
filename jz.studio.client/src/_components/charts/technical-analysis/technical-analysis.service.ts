@@ -10,11 +10,11 @@ import { StockPriceHistory } from '../../../models/stock-price-history.model';
 })
 export class TechnicalAnalysisService {
 
-  private apiUrl = 'https://localhost:7105/api/JazDb/stock-prices-api';  // Update with your API URL
+  private apiUrl = 'https://localhost:7105/api/market/daily-prices';
 
   constructor(private http: HttpClient) { }
 
   getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
-      return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
+    return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
   }
 }
