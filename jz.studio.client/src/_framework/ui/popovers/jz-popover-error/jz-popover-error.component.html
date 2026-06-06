@@ -1,1 +1,5 @@
-<p>jz-popover-error works!</p>
+<jz-popover-base [title]="data?.title ?? 'Error'">
+  <div class="loading-body">
+    {{ data?.message ?? 'Please wait...' }}
+  </div>
+</jz-popover-base>

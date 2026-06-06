@@ -47,6 +47,7 @@ import { ChartScaffold } from './interfaces/chart-scafffold.interface';
 import { JzPopoverLoadingComponent } from '../../../_framework/ui/popovers/jz-popover-loading/jz-popover-loading.component';
 import { JzPopoverRef } from '../../../_framework/ui/popovers/jz-popover-ref';
 import { JzPopoverService } from '../../../_framework/ui/popovers/jz-popover.service';
+import { JzPopoverErrorComponent } from '../../../_framework/ui/popovers/jz-popover-error/jz-popover-error.component';
 
 // #endregion imports
 
@@ -284,9 +285,50 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         this.tryCreateChart();
       },
       (error) => {
-       // this.showError(error);
+        this.showError(error);
       }
     );
+  }
+
+  private showError(error: any): void {
+
+    let title = "Market Data Error";
+    let message = "An unknown error occurred.";
+
+    switch (error.status) {
+
+      case 0:
+        message = "Unable to connect to the server.";
+        break;
+
+      case 404:
+        message = "Market data service not found.\n\nThe API endpoint may not have been created yet.";
+        break;
+
+      case 500:
+        message = "The server encountered an internal error.";
+        break;
+
+      default:
+        message = `HTTP ${error.status}\n${error.message}`;
+        break;
+    }
+
+    const viewRouter =
+      new ElementRef(
+        document.getElementById('viewRouter') as HTMLElement
+      );
+
+    this.popoverService.openComponent(
+      viewRouter,
+      JzPopoverErrorComponent,
+      {
+        placement: 'center',
+        data: {
+          title,
+          message
+        }
+      });
   }
 
   private tryCreateChart(): void {
