@@ -1,3 +1,5 @@
+// technical-analysis.service.ts
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -13,6 +15,6 @@ export class TechnicalAnalysisService {
   constructor(private http: HttpClient) { }
 
   getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
-    return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
+      return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
   }
 }

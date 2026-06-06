@@ -29,14 +29,63 @@ public class NasdaqDailyPriceImportJob {
 		db.ImportBatches.Add(importBatch);
 		db.SaveChanges();
 
+		//
+		// Read file once
+		//
+		var lines = File.ReadLines(filePath)
+			.Skip(1)
+			.ToList();
+
+		//
+		// Get all unique symbols from the file
+		//
+		var symbols = lines
+			.Select(line => line.Split(',')[0])
+			.Distinct()
+			.ToList();
+
+		//
+		// Load all existing securities once
+		//
+		var securityLookup = db.Securities
+			.Where(s => symbols.Contains(s.Symbol))
+			.ToDictionary(s => s.Symbol);
+
+		//
+		// Find symbols not yet in the database
+		//
+		var missingSymbols = symbols
+			.Where(symbol => !securityLookup.ContainsKey(symbol))
+			.ToList();
+
+		//
+		// Create missing securities
+		//
+		foreach (var symbol in missingSymbols) {
+			db.Securities.Add(new Security {
+				Symbol = symbol,
+				Name = symbol,
+				Exchange = "NASDAQ"
+			});
+		}
+
+		db.SaveChanges();
+
+		//
+		// Reload lookup including newly created securities
+		//
+		securityLookup = db.Securities
+			.Where(s => symbols.Contains(s.Symbol))
+			.ToDictionary(s => s.Symbol);
+
 		var prices = new List<DailyPrice>();
 
-		foreach (var line in File.ReadLines(filePath).Skip(1)) {
+		foreach (var line in lines) {
 			var parts = line.Split(',');
 
 			var symbol = parts[0];
 
-			var tradeDate = DateTime.ParseExact(
+			var tradeDate = DateOnly.ParseExact(
 				parts[1],
 				"yyyyMMdd",
 				CultureInfo.InvariantCulture);
@@ -47,34 +96,16 @@ public class NasdaqDailyPriceImportJob {
 			var close = decimal.Parse(parts[5], CultureInfo.InvariantCulture);
 			var volume = long.Parse(parts[6], CultureInfo.InvariantCulture);
 
-			Console.WriteLine(
-				$"{symbol} {tradeDate:yyyy-MM-dd} O:{open} H:{high} L:{low} C:{close} V:{volume}");
-
 			//
-			// Find or create Security
+			// Fast in-memory lookup
 			//
-			var security = db.Securities
-				.FirstOrDefault(s => s.Symbol == symbol);
+			var security = securityLookup[symbol];
 
-			if (security == null) {
-				security = new Security {
-					Symbol = symbol,
-					Name = symbol,
-					Exchange = "NASDAQ"
-				};
-
-				db.Securities.Add(security);
-				db.SaveChanges();
-			}
-
-			//
-			// Create DailyPrice
-			//
-			var dailyPrice = new DailyPrice {
+			prices.Add(new DailyPrice {
 				SecurityId = security.SecurityId,
 				ImportBatchId = importBatch.ImportBatchId,
 
-				TradeDate = DateOnly.FromDateTime(tradeDate),
+				TradeDate = tradeDate,
 
 				Open = open,
 				High = high,
@@ -82,18 +113,18 @@ public class NasdaqDailyPriceImportJob {
 				Close = close,
 
 				Volume = volume
-			};
-
-			prices.Add(dailyPrice);
+			});
 		}
 
 		db.DailyPrices.AddRange(prices);
 
 		importBatch.Status = "Completed";
+		importBatch.ImportedRowCount = prices.Count;
+		importBatch.CompletedAt = DateTime.UtcNow;
 
 		db.SaveChanges();
 
 		Console.WriteLine(
-			$"Imported {prices.Count} DailyPrice records.");
+			$"Imported {prices.Count:N0} DailyPrice records.");
 	}
 }
