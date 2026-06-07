@@ -2,6 +2,7 @@
 using Jz.Studio.Server.Data.JazDb;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 
 namespace Jz.Studio.Server {
     public class Program {
@@ -35,12 +36,17 @@ namespace Jz.Studio.Server {
 
             // Configure DbContext with SQL Server
             builder.Services.AddDbContext<JazDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("YourConnectionStringName")));
+                options.UseSqlServer(
+                builder.Configuration.GetConnectionString("YourConnectionStringName")));
 
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+			builder.Services.AddDbContext<JzStudioDbContext>(options =>
+			    options.UseSqlServer(
+				builder.Configuration.GetConnectionString("JzStudioDb")));
 
-            var app = builder.Build();
+			builder.Services.AddEndpointsApiExplorer();
+			builder.Services.AddSwaggerGen();
+
+			var app = builder.Build();
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
