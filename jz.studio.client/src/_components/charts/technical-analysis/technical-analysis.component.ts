@@ -48,6 +48,7 @@ import { JzPopoverLoadingComponent } from '../../../_framework/ui/popovers/jz-po
 import { JzPopoverRef } from '../../../_framework/ui/popovers/jz-popover-ref';
 import { JzPopoverService } from '../../../_framework/ui/popovers/jz-popover.service';
 import { JzPopoverErrorComponent } from '../../../_framework/ui/popovers/jz-popover-error/jz-popover-error.component';
+import { buildJzPopoverErrorData } from '../../../_framework/ui/popovers/jz-popover-error/jz-popover-error-utils';
 
 // #endregion imports
 
@@ -290,45 +291,22 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     );
   }
 
-  private showError(error: any): void {
+  private showError(error: unknown): void {
 
-    let title = "Market Data Error";
-    let message = "An unknown error occurred.";
+    this.loadingPopoverRef?.close();
 
-    switch (error.status) {
-
-      case 0:
-        message = "Unable to connect to the server.";
-        break;
-
-      case 404:
-        message = "Market data service not found.\n\nThe API endpoint may not have been created yet.";
-        break;
-
-      case 500:
-        message = "The server encountered an internal error.";
-        break;
-
-      default:
-        message = `HTTP ${error.status}\n${error.message}`;
-        break;
-    }
-
-    const viewRouter =
-      new ElementRef(
-        document.getElementById('viewRouter') as HTMLElement
-      );
+    const viewRouter = new ElementRef(
+      document.getElementById('viewRouter') as HTMLElement
+    );
 
     this.popoverService.openComponent(
       viewRouter,
       JzPopoverErrorComponent,
       {
         placement: 'center',
-        data: {
-          title,
-          message
-        }
-      });
+        data: buildJzPopoverErrorData(error)
+      }
+    );
   }
 
   private tryCreateChart(): void {
