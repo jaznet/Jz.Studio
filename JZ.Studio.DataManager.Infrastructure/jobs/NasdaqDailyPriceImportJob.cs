@@ -12,7 +12,7 @@ public class NasdaqDailyPriceImportJob {
 	}
 
 	public void Execute(string filePath) {
-		Console.WriteLine($"Reading: {filePath}");
+		     Console.WriteLine($"Reading: {filePath}");
 
 		if (!File.Exists(filePath)) {
 			Console.WriteLine("File not found.");

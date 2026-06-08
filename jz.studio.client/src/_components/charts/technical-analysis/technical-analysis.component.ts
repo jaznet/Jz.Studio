@@ -274,20 +274,20 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       }
     );
 
-    this.stockPriceService.getStockPrices(this.ticker).subscribe(
-      (data) => {
-        this.chartData.stockPriceHistoryData = data;
-        this.dataReady = true;
+    //this.stockPriceService.getStockPrices(this.ticker).subscribe(
+    //  (data) => {
+    //    this.chartData.stockPriceHistoryData = data;
+    //    this.dataReady = true;
 
-        console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
+    //    console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
 
-        /*     this.popover_loading.hide();*/
-        this.tryCreateChart();
-      },
-      (error) => {
-        this.showError(error);
-      }
-    );
+    //    /*     this.popover_loading.hide();*/
+    //    this.tryCreateChart();
+    //  },
+    //  (error) => {
+    //    this.showError(error);
+    //  }
+    //);
   }
 
   private showError(error: any): void {

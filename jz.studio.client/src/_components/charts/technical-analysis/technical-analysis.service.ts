@@ -14,7 +14,7 @@ export class TechnicalAnalysisService {
 
   constructor(private http: HttpClient) { }
 
-  getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
-    return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
-  }
+  //getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
+  //  return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
+  //}
 }
