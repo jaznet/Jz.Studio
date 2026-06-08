@@ -1,5 +1,26 @@
-<jz-popover-base [title]="data?.title ?? 'Error'">
-  <div class="loading-body">
-    {{ data?.message ?? 'Please wait...' }}
+<jz-popover-panel [title]="title"
+                  icon="⚠"
+                  variant="error"
+                  [showFooter]="true">
+
+  <div class="jz-error-content">
+    <div class="jz-error-message">
+      {{ message }}
+    </div>
+
+    <details *ngIf="technicalDetails" class="jz-error-details">
+      <summary>Technical details</summary>
+
+      <pre>{{ technicalDetails }}</pre>
+    </details>
   </div>
-</jz-popover-base>
+
+  <div jz-popover-footer>
+    <button type="button"
+            class="jz-popover-close-button"
+            (click)="close()">
+      Close
+    </button>
+  </div>
+
+</jz-popover-panel>
