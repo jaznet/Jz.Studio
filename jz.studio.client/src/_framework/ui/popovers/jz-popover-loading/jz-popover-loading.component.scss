@@ -1,0 +1,35 @@
+.jz-loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 280px;
+  min-height: 120px;
+
+  gap: 16px;
+}
+
+.jz-loading-spinner {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  border: 3px solid color-mix(in srgb, var(--plt-pop) 25%, transparent);
+  border-top-color: var(--plt-pop);
+
+  animation: jzLoadingSpin 900ms linear infinite;
+}
+
+.jz-loading-message {
+  color: var(--plt-txt-2);
+  font-size: 0.95rem;
+  letter-spacing: 0.2px;
+}
+
+@keyframes jzLoadingSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}

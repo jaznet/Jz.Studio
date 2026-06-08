@@ -1,5 +1,12 @@
-<jz-popover-base [title]="data?.title ?? 'Loading'">
-  <div class="loading-body">
-    {{ data?.message ?? 'Please wait...' }}
+<jz-popover-panel title="Loading"
+                  icon="⟳"
+                  variant="loading">
+
+  <div class="jz-loading-content">
+    <div class="jz-loading-spinner"></div>
+    <div class="jz-loading-message">
+      Loading market data...
+    </div>
   </div>
-</jz-popover-base>
+
+</jz-popover-panel>
