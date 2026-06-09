@@ -7,7 +7,7 @@ public partial class DailyPrice
 {
     public long DailyPriceId { get; set; }
 
-    public int SecurityId { get; set; }
+    public string Ticker { get; set; } = null!;
 
     public DateOnly TradeDate { get; set; }
 
@@ -24,6 +24,4 @@ public partial class DailyPrice
     public long? ImportBatchId { get; set; }
 
     public virtual ImportBatch? ImportBatch { get; set; }
-
-    public virtual Security Security { get; set; } = null!;
 }

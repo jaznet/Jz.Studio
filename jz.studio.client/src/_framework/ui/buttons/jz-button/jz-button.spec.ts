@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { JzButtonComponent } from './jz-button.component';
 
-import { JzButtonComponent } from './jz-button';
+
 
 describe('JzButton', () => {
   let component: JzButtonComponent;

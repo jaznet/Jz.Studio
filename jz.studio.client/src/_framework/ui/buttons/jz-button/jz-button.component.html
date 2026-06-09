@@ -1,0 +1,21 @@
+<!-- jz-button.html -->
+
+<button class="jz-button"
+        [class.jz-button-active]="active"
+        [class.jz-button-disabled]="disabled"
+        [ngClass]="[
+    'jz-button-' + variant,
+    'jz-button-' + size
+  ]"
+        [disabled]="disabled">
+
+  <span *ngIf="icon" class="jz-button-icon">
+    {{ icon }}
+  </span>
+
+  <span class="jz-button-label">
+    <ng-content></ng-content>
+    {{ label }}
+  </span>
+
+</button>

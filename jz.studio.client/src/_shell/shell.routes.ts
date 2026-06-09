@@ -46,7 +46,7 @@ export const SHELL_ROUTES: Routes = [
       },
       {
         path: 'admin',
-        component: AppHomeComponent
+        component: AppHomeComponent 
       }
     ]
   }

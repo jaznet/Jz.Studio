@@ -17,9 +17,5 @@ public partial class ImportBatch
 
     public string Status { get; set; } = null!;
 
-    public int ImportedRowCount { get; set; }
-
-    public string? ErrorMessage { get; set; }
-
     public virtual ICollection<DailyPrice> DailyPrices { get; set; } = new List<DailyPrice>();
 }

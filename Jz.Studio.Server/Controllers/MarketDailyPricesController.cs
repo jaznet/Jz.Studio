@@ -1,9 +1,7 @@
-﻿
-using Jz.Studio.Server.Dtos;
+﻿using Jz.Studio.Server.Dtos;
 using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace Jz.Studio.Server.Controllers {
 
@@ -12,20 +10,27 @@ namespace Jz.Studio.Server.Controllers {
 	public class MarketDailyPricesController : ControllerBase {
 		private readonly JzStudioDbContext db;
 
-		public MarketDailyPricesController(JzStudioDbContext db) {
+		public MarketDailyPricesController(
+			JzStudioDbContext db) {
+
 			this.db = db;
 		}
 
 		[HttpGet("{ticker}")]
-		public async Task<ActionResult<List<DailyPriceDto>>> GetDailyPrices(string ticker) {
+		public async Task<ActionResult<List<DailyPriceDto>>> GetDailyPrices(
+			string ticker) {
+
+			ticker = ticker.ToUpperInvariant();
+
 			var prices = await db.DailyPrices
 
-				.Where(x => x.Security.Symbol == ticker)
+				.Where(x => x.Ticker == ticker)
 
 				.OrderBy(x => x.TradeDate)
 
 				.Select(x => new DailyPriceDto {
-					Ticker = x.Security.Symbol,
+
+					Ticker = x.Ticker,
 
 					TradeDate = x.TradeDate,
 
