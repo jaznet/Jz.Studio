@@ -1,6 +1,6 @@
 
 using Jz.Studio.Server.Data.JazDb;
-using Jz.Studio.Server.Data.JzStudioDb;
+using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 

@@ -1,4 +1,4 @@
-using Jz.Studio.Server.Data.JzStudioDb;
+using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using JZ.Studio.DataManager.Core.contracts;
 using JZ.Studio.DataManager.Infrastructure.jobs;
 using JZ.Studio.DataManager.Worker;

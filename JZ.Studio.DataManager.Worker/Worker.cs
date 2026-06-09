@@ -1,4 +1,4 @@
-using Jz.Studio.Server.Data.JzStudioDb;
+using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using JZ.Studio.DataManager.Infrastructure.jobs;
 
 namespace JZ.Studio.DataManager.Worker;
@@ -42,7 +42,7 @@ public class Worker : BackgroundService {
 				"Importing NASDAQ file: {File}",
 				file);
 
-		//	job.Execute(file);
+			job.Execute(file);
 		}
 
 		await Task.CompletedTask;
