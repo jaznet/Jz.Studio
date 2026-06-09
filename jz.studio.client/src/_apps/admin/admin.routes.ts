@@ -8,7 +8,7 @@ export const VISUALIZATION_ROUTES: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./components/visualization-home/visualization-home.component')
+          import('../admin/components/visualization-home/visualization-home.component')
             .then(m => m.VisualizationHomeComponent)
       },
       {
