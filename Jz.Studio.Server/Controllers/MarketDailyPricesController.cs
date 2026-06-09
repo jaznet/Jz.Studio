@@ -1,5 +1,5 @@
-﻿using Jz.Studio.Server.Dtos;
-using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+﻿using Jz.Studio.Server.Data.JzStudioDb;
+using Jz.Studio.Server.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,24 +16,33 @@ namespace Jz.Studio.Server.Controllers {
 
 		[HttpGet("{ticker}")]
 		public async Task<ActionResult<List<DailyPriceDto>>> GetDailyPrices(string ticker) {
-			ticker = ticker.ToUpper();
+			var prices = await db.DailyPrices
 
-			var data =
-				await db.DailyPrices
-					.AsNoTracking()
-					.Where(p => p.Security.Symbol == ticker)
-					.OrderBy(p => p.TradeDate)
-					.Select(p => new DailyPriceDto {
-						Date = p.TradeDate.ToDateTime(TimeOnly.MinValue),
-						Open = p.Open,
-						High = p.High,
-						Low = p.Low,
-						Close = p.Close,
-						Volume = p.Volume
-					})
-					.ToListAsync();
+				.Where(x => x.Security.Symbol == ticker)
 
-			return Ok(data);
+				.OrderBy(x => x.TradeDate)
+
+				.Select(x => new DailyPriceDto {
+					Ticker = x.Security.Symbol,
+
+					TradeDate = x.TradeDate,
+
+					Open = x.Open,
+					High = x.High,
+					Low = x.Low,
+					Close = x.Close,
+
+					Volume = x.Volume
+				})
+
+				.ToListAsync();
+
+			if (!prices.Any()) {
+				return NotFound(
+					$"No daily prices found for '{ticker}'.");
+			}
+
+			return Ok(prices);
 		}
 	}
 }

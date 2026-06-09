@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+namespace Jz.Studio.Server.Data.JzStudioDb;
 
 public partial class DailyPrice
 {

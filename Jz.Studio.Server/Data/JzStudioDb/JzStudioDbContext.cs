@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+namespace Jz.Studio.Server.Data.JzStudioDb;
 
 public partial class JzStudioDbContext : DbContext
 {

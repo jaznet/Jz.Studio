@@ -1,7 +1,10 @@
 ﻿namespace Jz.Studio.Server.Dtos;
 
-public class DailyPriceDto {
-	public DateTime Date { get; set; }
+public sealed class DailyPriceDto {
+
+	public string Ticker { get; set; } = string.Empty;
+
+	public DateOnly TradeDate { get; set; }
 
 	public decimal Open { get; set; }
 

@@ -1,4 +1,4 @@
-using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+using Jz.Studio.Server.Data.JzStudioDb;
 using JZ.Studio.DataManager.Infrastructure.jobs;
 
 namespace JZ.Studio.DataManager.Worker;
@@ -16,6 +16,7 @@ public class Worker : BackgroundService {
 
 	protected override async Task ExecuteAsync(
 		CancellationToken stoppingToken) {
+
 		using var scope = _serviceProvider.CreateScope();
 
 		var db = scope.ServiceProvider
@@ -23,8 +24,26 @@ public class Worker : BackgroundService {
 
 		var job = new NasdaqDailyPriceImportJob(db);
 
-		job.Execute(
-			@"D:\Data\NASDAQ\NASDAQ_2021\NASDAQ_20210102.txt");
+		var rootFolder = @"D:\Data\NASDAQ";
+
+		var files = Directory
+			.EnumerateFiles(
+				rootFolder,
+				"NASDAQ_*.txt",
+				SearchOption.AllDirectories)
+			.OrderBy(x => x)
+			.ToList();
+
+		foreach (var file in files) {
+			if (stoppingToken.IsCancellationRequested)
+				break;
+
+			_logger.LogInformation(
+				"Importing NASDAQ file: {File}",
+				file);
+
+		//	job.Execute(file);
+		}
 
 		await Task.CompletedTask;
 	}

@@ -85,14 +85,25 @@ export class ChartDataService {
   }
 
 
-  private calculateEma(data: { date: Date; value: number }[], period: number): number[] {
-    const k = 2 / (period + 1); // Smoothing constant
-    const ema = [];
-    let previousEma = data[0].value; // Use the first data point's value as the seed value
+  private calculateEma(
+    data: { date: Date; value: number }[],
+    period: number
+  ): number[] {
+
+    if (!data || data.length === 0) {
+      return [];
+    }
+
+    const k = 2 / (period + 1);
+    const ema: number[] = [];
+
+    let previousEma = data[0].value;
 
     for (const point of data) {
       const currentEma = (point.value - previousEma) * k + previousEma;
+
       ema.push(currentEma);
+
       previousEma = currentEma;
     }
 

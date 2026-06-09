@@ -14,5 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="..\JZ.Studio.DataManager.Core\JZ.Studio.DataManager.Core.csproj" />
     <ProjectReference Include="..\JZ.Studio.DataManager.Infrastructure\JZ.Studio.DataManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\Jz.Studio.Server\Jz.Studio.Server.csproj" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 
 using Jz.Studio.Server.Data.JazDb;
+using Jz.Studio.Server.Data.JzStudioDb;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 
 namespace Jz.Studio.Server {
     public class Program {
