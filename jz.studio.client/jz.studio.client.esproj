@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\assets\css\" />
-    <Folder Include="src\_apps\administration\" />
+    <Folder Include="src\_apps\admin-component\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\rendering\" />
     <Folder Include="src\_components\jz-charts\" />
