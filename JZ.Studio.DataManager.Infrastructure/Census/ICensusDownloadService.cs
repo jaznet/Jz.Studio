@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JZ.Studio.DataManager.Infrastructure.Census;
 
-namespace JZ.Studio.DataManager.Infrastructure.Census
-{
-    interface ICensusDownloadService
-    {
-    }
+public interface ICensusDownloadService {
+	Task DownloadAsync(string key);
 }
+
