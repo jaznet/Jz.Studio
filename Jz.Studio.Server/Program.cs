@@ -1,74 +1,68 @@
-
 using Jz.Studio.Server.Data.JazDb;
+using JZ.Studio.DataManager.Infrastructure.Census;
 using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace Jz.Studio.Server {
-    public class Program {
-        public static void Main(string[] args) {
-            var invariantSetting = Environment.GetEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT");
-            Console.WriteLine($"Environment Variable DOTNET_SYSTEM_GLOBALIZATION_INVARIANT is set to: {invariantSetting}");
+	public class Program {
+		public static void Main(string[] args) {
+			var invariantSetting = Environment.GetEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT");
+			Console.WriteLine($"Environment Variable DOTNET_SYSTEM_GLOBALIZATION_INVARIANT is set to: {invariantSetting}");
 
-            CultureInfo.CurrentCulture = new CultureInfo("en-US");
-            CultureInfo.CurrentUICulture = new CultureInfo("en-US");
+			CultureInfo.CurrentCulture = new CultureInfo("en-US");
+			CultureInfo.CurrentUICulture = new CultureInfo("en-US");
 
-            var builder = WebApplication.CreateBuilder(args);
+			var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("AllowSpecificOrigin",
-                    builder => builder.WithOrigins(
-                        "https://localhost:4200",  // Angular client
-                        "https://localhost:7105"   // Swagger UI and API
-                                                   // Add other origins as needed
-                    )
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
-            });
+			builder.Services.AddCors(options => {
+				options.AddPolicy("AllowSpecificOrigin",
+					builder => builder.WithOrigins(
+						"https://localhost:4200",
+						"https://localhost:7105"
+					)
+					.AllowAnyHeader()
+					.AllowAnyMethod());
+			});
 
+			builder.Services.AddControllers();
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-            // Configure DbContext with SQL Server
-            builder.Services.AddDbContext<JazDbContext>(options =>
-                options.UseSqlServer(
-                builder.Configuration.GetConnectionString("YourConnectionStringName")));
+			builder.Services.AddDbContext<JazDbContext>(options =>
+				options.UseSqlServer(
+					builder.Configuration.GetConnectionString("YourConnectionStringName")));
 
 			builder.Services.AddDbContext<JzStudioDbContext>(options =>
-			    options.UseSqlServer(
-				builder.Configuration.GetConnectionString("JzStudioDb")));
+				options.UseSqlServer(
+					builder.Configuration.GetConnectionString("JzStudioDb")));
+
+			// Census services
+			builder.Services.AddSingleton<ICensusDatasetCatalogService, CensusDatasetCatalogService>();
+			builder.Services.AddHttpClient<ICensusDownloadService, CensusDownloadService>();
 
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 
 			var app = builder.Build();
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+			app.UseDefaultFiles();
+			app.UseStaticFiles();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment()) {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+			if (app.Environment.IsDevelopment()) {
+				app.UseSwagger();
+				app.UseSwaggerUI();
+			}
 
-            // Configure the HTTP request pipeline.
-            app.UseCors("AllowSpecificOrigin"); // Apply the CORS policy
+			app.UseCors("AllowSpecificOrigin");
 
-            app.UseHttpsRedirection();
+			app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+			app.UseAuthorization();
 
-            app.MapControllers();
+			app.MapControllers();
 
-            app.MapFallbackToFile("/index.html");
+			app.MapFallbackToFile("/index.html");
 
-              app.Run();
-        }
-    }
+			app.Run();
+		}
+	}
 }
