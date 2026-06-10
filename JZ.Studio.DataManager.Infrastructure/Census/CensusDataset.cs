@@ -5,6 +5,7 @@ public class CensusDataset {
 
 	public string Key { get; set; } = string.Empty;
 	public string Name { get; set; } = string.Empty;
+	public string Description { get; set; } = string.Empty;
 	public string Category { get; set; } = string.Empty;
 
 	public CensusSourceType SourceType { get; set; }
@@ -12,7 +13,7 @@ public class CensusDataset {
 	public int VintageYear { get; set; }
 
 	public string SourceUrl { get; set; } = string.Empty;
-	public string LocalFolder { get; set; } = string.Empty;
+	public string RelativeFolder { get; set; } = string.Empty;
 	public string LocalFileName { get; set; } = string.Empty;
 
 	public bool IsDownloaded { get; set; }
