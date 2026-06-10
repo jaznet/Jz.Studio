@@ -1,12 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace JZ.Studio.DataManager.Infrastructure.Census;
 
-namespace JZ.Studio.DataManager.Infrastructure.Census
-{
-    class CensusDatasetCatalogService
-    {
-    }
+public class CensusDatasetCatalogService
+	: ICensusDatasetCatalogService {
+	private readonly List<CensusDataset> catalog;
+
+	public CensusDatasetCatalogService() {
+		catalog = BuildCatalog();
+	}
+
+	public IReadOnlyList<CensusDataset>
+		GetDefaultCatalog() {
+		return catalog;
+	}
+
+	public CensusDataset?
+		GetByKey(string key) {
+		return catalog.FirstOrDefault(
+			x => x.Key == key);
+	}
+
+	private static List<CensusDataset>
+		BuildCatalog() {
+		return new() {
+			// we'll populate this next
+		};
+	}
 }
