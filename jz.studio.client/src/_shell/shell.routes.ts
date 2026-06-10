@@ -6,6 +6,7 @@ import { ShellComponent } from './shell.component';
 
 import { AppWelcomeComponent } from './app-welcome/app-welcome/app-welcome.component';
 import { AppHomeComponent } from './parts/app-home/app-home.component';
+import { AdminHomeComponent } from '../_apps/admin/components/admin-home/admin-home.component';
 
 export const SHELL_ROUTES: Routes = [
   {
@@ -46,7 +47,9 @@ export const SHELL_ROUTES: Routes = [
       },
       {
         path: 'admin',
-        component: AppHomeComponent 
+        loadChildren: () =>
+          import('../_apps/admin/admin.routes')
+            .then(m => m.ADMIN_ROUTES)
       }
     ]
   }
