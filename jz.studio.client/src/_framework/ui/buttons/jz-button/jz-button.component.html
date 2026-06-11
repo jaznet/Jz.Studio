@@ -1,6 +1,7 @@
 <!-- jz-button.html -->
 
 <button class="jz-button"
+        (click)="buttonClick.emit()"
         [class.jz-button-active]="active"
         [class.jz-button-disabled]="disabled"
         [ngClass]="[

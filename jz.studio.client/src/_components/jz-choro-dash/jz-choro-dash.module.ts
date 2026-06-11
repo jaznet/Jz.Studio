@@ -8,6 +8,7 @@ import { CountyPaintingStrategy } from './paint-factory/interfaces/county-painti
 import { JzChoroDashComponent } from './jz-choro-dash.component';
 import { DxRadioGroupModule } from 'devextreme-angular';
 import { RouterModule } from '@angular/router';
+import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 
 
 
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
     RouterModule,
     JzChoroDashRouterModule,
     JzChoroplethsModule,
-    DxRadioGroupModule
+    DxRadioGroupModule,
+    JzButtonComponent
   ],
 
   exports: [

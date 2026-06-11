@@ -19,6 +19,12 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.JzChoroDashComponent)
       },
       {
+        path: 'chorodash/admin',
+        loadComponent: () =>
+          import('../../_components/jz-choro-dash/admin/admin.component')
+            .then(m => m.AdminComponent)
+      },
+      {
         path: 'techanTs',
         loadComponent: () =>
           import('../../_components/charts/technical-analysis/technical-analysis.component')

@@ -15,12 +15,14 @@ import { PaintStrategyFactoryService } from './paint-factory/paint-strategy-fact
 import { FormsModule } from '@angular/forms';
 import { select } from 'd3-selection';
 import { CountySelection } from '../charts/jz-choropleths/models/county-selection.model';
+import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jz-choro-dash',
   standalone: true,
   templateUrl: './jz-choro-dash.component.html',
-  imports: [CommonModule, JzChoroDashPanelComponent, ChoroUsaComponent, ChoroStateComponent, FormsModule],
+  imports: [CommonModule, JzChoroDashPanelComponent, ChoroUsaComponent, ChoroStateComponent, FormsModule, JzButtonComponent],
   providers: [
     {
       provide: COUNTY_PAINTING_STRATEGY,
@@ -37,6 +39,7 @@ export class JzChoroDashComponent implements OnInit {
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
 
   constructor(
+    private router: Router,
     private topoService: TopoService,
     private geoFeatureService: GeoFeatureService
   ) { }
@@ -51,6 +54,10 @@ export class JzChoroDashComponent implements OnInit {
         this.geoFeatureService.createStateCountyShapeSet(topology);
 
     });
+  }
+
+  openAdmin(): void {
+    this.router.navigate(['/visualization/chorodash/admin']);
   }
 
   public toggleCentroidLayer(): void {

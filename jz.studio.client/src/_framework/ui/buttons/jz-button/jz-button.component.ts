@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export type JzButtonVariant =
@@ -26,4 +26,6 @@ export class JzButtonComponent {
   @Input() active = false;
   @Input() icon?: string;
   @Input() label?: string;
+
+  @Output() buttonClick = new EventEmitter<void>();
 }
