@@ -4,7 +4,8 @@ import { JzMenuService } from '../jz-menu.service';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { ShellEventsService } from '../../../_shell/services/shell-events.service';
-
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'jz-menu-container',
@@ -46,7 +47,8 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer2,
     menuService: JzMenuService,
-    private changeDetector: ChangeDetectorRef)
+    private changeDetector: ChangeDetectorRef,
+  private router: Router)
   {
     //console.log('Menu Container constructor', this.isSubMenu);
     this.menuService = menuService;
@@ -77,6 +79,12 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     this.menuService.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
       this.onMenuItemSelected(selectedItem);
     });
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.selectTabFromCurrentRoute();
+      });
 }
 
   ngAfterViewInit(): void {
@@ -100,4 +108,23 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     );
   }
 
+  private selectTabFromCurrentRoute(): void {
+
+    const currentUrl = this.router.url;
+
+    this.jztabs?.forEach((menuitem: JzMenuTabComponent) => {
+
+      const route =
+        menuitem.route?.startsWith('/')
+          ? menuitem.route
+          : '/' + menuitem.route;
+
+      menuitem.isSelected =
+        currentUrl === route ||
+        currentUrl.startsWith(route + '/');
+
+    });
+
+    this.changeDetector.detectChanges();
+  }
 }
