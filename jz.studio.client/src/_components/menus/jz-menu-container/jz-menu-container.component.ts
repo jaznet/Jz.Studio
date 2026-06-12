@@ -50,7 +50,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     private changeDetector: ChangeDetectorRef,
   private router: Router)
   {
-    //console.log('Menu Container constructor', this.isSubMenu);
+    console.log('🔥 JzMenuContainerComponent constructor loaded', this.menuName, this.menuType);
     this.menuService = menuService;
   }
 
@@ -95,6 +95,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
     }
 
     this.changeDetector.detectChanges();
+    this.selectTabFromCurrentRoute();
   }
 
   onMenuItemSelected(selectedItem: JzMenuTabComponent) {
@@ -109,7 +110,7 @@ export class JzMenuContainerComponent implements OnInit, AfterViewInit {
   }
 
   private selectTabFromCurrentRoute(): void {
-
+    console.log('selectTabFromCurrentRoute called', this.router.url, this.menuName);
     const currentUrl = this.router.url;
 
     this.jztabs?.forEach((menuitem: JzMenuTabComponent) => {

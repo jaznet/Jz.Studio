@@ -35,7 +35,7 @@ export class JzNavGroupComponent {
   constructor(private router: Router) { }
 
   isActive(item: JzNavItem): boolean {
-    if (!item.route) {
+    if (!item.route) {  
       return false;
     }
 
