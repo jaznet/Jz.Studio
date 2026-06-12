@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class VisualizationMenuComponent extends MenuBaseComponent {
   subNavItems: JzNavItem[] = [
-    { id: 'home', label: 'Home', route: '/visualization' },
+    { id: 'home', label: 'Home', route: '/visualization/home' },
     { id: 'techanTs', label: 'TechanTs', route: '/visualization/techanTs' },
     { id: 'chorodash', label: 'Chorodash', route: '/visualization/chorodash' },
     { id: 'sankey', label: 'Sankey', route: '/visualization/sankey' },
