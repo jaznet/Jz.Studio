@@ -4,11 +4,12 @@ import { AppStateService } from '../../services/shell-state.service';
 import { CommonModule } from '@angular/common';
 import { MainMenuComponent } from '../shell-menus/main-menu/main-menu.component';
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
+import { JzButtonComponent } from '../../../_framework/ui/buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'shell-header',
     standalone:true,
-    imports: [CommonModule, MainMenuComponent, PaletteMenuComponent],
+  imports: [CommonModule, MainMenuComponent, PaletteMenuComponent, JzButtonComponent],
     templateUrl: './shell-header.component.html',
     styleUrls: ['./shell-header.component.css']
 })
@@ -20,6 +21,7 @@ export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChe
   visibility = 'collapse';
   isLogoVisible= 'collapse';
   isMainMenuVisible = 'collapse';
+  public collapseVisible = false;
 
   constructor(private app: AppStateService, private changeDetector: ChangeDetectorRef,) { }
 
@@ -34,5 +36,14 @@ export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChe
 
   ngAfterViewChecked(): void {
     this.changeDetector.detectChanges();
+  }
+
+  public toggleShellCollapse(): void {
+    this.collapseVisible = !this.collapseVisible;
+
+    console.log(
+      "Collapse Visible:",
+      this.collapseVisible
+    );
   }
 }
