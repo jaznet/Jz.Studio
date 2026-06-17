@@ -4,7 +4,8 @@
   background-color: var(--plt-clr-1);
   border-radius: 8px 8px 0 0;
   border: 1px solid black;
-  padding: 6px;
+  padding: 6px 6px 0 6px;
+  margin-bottom: -3px;
 }
 
 .menu-container {
