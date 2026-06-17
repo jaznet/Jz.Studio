@@ -1,131 +1,158 @@
-import { AfterContentChecked, AfterViewInit, ChangeDetectorRef, Component, ContentChildren, ElementRef, HostBinding, Input, OnInit, QueryList, Renderer2, RendererFactory2, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChildren,
+  ElementRef,
+  HostBinding,
+  Input,
+  OnDestroy,
+  OnInit,
+  QueryList,
+  Renderer2,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
+
 import { JzMenuService } from '../jz-menu.service';
 import { JzMenuTabComponent } from '../jz-menu-tab/jz-menu-tab.component';
 import { normalizeMenuType, type MenuType } from '../../../types/menu';
 import { ShellEventsService } from '../../../_shell/services/shell-events.service';
-import { Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
 
 @Component({
-    selector: 'jz-menu-container',
-    imports: [CommonModule],
-    inputs: ['menuType'],
-    templateUrl: './jz-menu-container.component.html',
-    styleUrls: ['./jz-menu-container.component.css']
+  selector: 'jz-menu-container',
+  imports: [CommonModule],
+  inputs: ['menuType'],
+  templateUrl: './jz-menu-container.component.html',
+  styleUrls: ['./jz-menu-container.component.css']
 })
-
-
-export class JzMenuContainerComponent implements OnInit, AfterViewInit {
-
+export class JzMenuContainerComponent implements OnInit, AfterContentInit, OnDestroy {
   @HostBinding('class') classes = 'menu-container';
-  @ViewChild('menuPanel', { static: false }) menuPanelRef: ElementRef | any;
+  @ViewChild('menuPanel', { static: false }) menuPanelRef!: ElementRef;
 
   @ContentChildren(JzMenuTabComponent) jztabs!: QueryList<JzMenuTabComponent>;
 
   @Input() menuName: string | any;
   @Input() direction: string = 'horizontal';
- 
+
   @Input() tabs: boolean = true;
   @Input() isHorizontal: boolean = true;
-  isSubMenu: boolean = false;
+
+  isSubMenu = false;
+  flexflow = 'row';
+
+  currentTemplate: TemplateRef<any> | any;
+  menuContainer: HTMLDivElement | any;
+
+  private readonly subscriptions = new Subscription();
 
   private _menuType: MenuType = 'main';
+
   @Input() set menuType(v: MenuType | string | null | undefined) {
     this._menuType = normalizeMenuType(v);
   }
-  get menuType(): MenuType { return this._menuType; }
 
-  flexflow: string = 'row';
- 
-  currentTemplate: TemplateRef<any> | any;
-  menuService: JzMenuService | any;
-  menuContainer: HTMLDivElement | any;
+  get menuType(): MenuType {
+    return this._menuType;
+  }
 
   constructor(
     private appEvents: ShellEventsService,
     private elementRef: ElementRef,
     private renderer: Renderer2,
-    menuService: JzMenuService,
+    private menuService: JzMenuService,
     private changeDetector: ChangeDetectorRef,
-  private router: Router)
-  {
+    private router: Router
+  ) {
     console.log('🔥 JzMenuContainerComponent constructor loaded', this.menuName, this.menuType);
-    this.menuService = menuService;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     console.log('Menu Container ngOnInit', this.menuType);
-    switch (this.direction) {
-      case 'horizontal':
-        this.flexflow = 'row';
-        break;
-      case 'vertical':
-        this.flexflow = 'column';
-        break;
-      default:
-        this.flexflow = 'row';
-        break;
-    }
 
-    this.appEvents.viewSelectedEvent.subscribe((view: any) => {
-      this.renderer.addClass(this.menuPanelRef.nativeElement, view);
-    });
+    this.flexflow = this.direction === 'vertical'
+      ? 'column'
+      : 'row';
 
-    this.menuService.menuItemSelectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
-      this.onMenuItemSelected(selectedItem);
-    });
+    this.isSubMenu = this.menuType === 'sub';
 
-    this.menuService.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
-      this.onMenuItemSelected(selectedItem);
-    });
+    this.subscriptions.add(
+      this.appEvents.viewSelectedEvent.subscribe((view: any) => {
+        if (this.menuPanelRef?.nativeElement) {
+          this.renderer.addClass(this.menuPanelRef.nativeElement, view);
+        }
+      })
+    );
 
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.selectTabFromCurrentRoute();
-      });
-}
+    this.subscriptions.add(
+      this.menuService.menuItemSelectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
+        this.onMenuItemSelected(selectedItem);
+      })
+    );
 
-  ngAfterViewInit(): void {
-    console.log('Menu Container ngAfterViewInit', this.menuType, this.menuService.isSubMenu, this.jztabs.length);
+    this.subscriptions.add(
+      this.menuService.menuItemDeselectedEvent.subscribe((selectedItem: JzMenuTabComponent) => {
+        this.onMenuItemSelected(selectedItem);
+      })
+    );
 
-    if (this.menuType === 'sub') {
-      this.isSubMenu = true;
-    }
-
-    this.changeDetector.detectChanges();
-    this.selectTabFromCurrentRoute();
-  }
-
-  onMenuItemSelected(selectedItem: JzMenuTabComponent) {
-    if (selectedItem.menuName !== this.menuName) return;
-    this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
-      menuitem.isSelected = false;
-      if (menuitem.tabId === selectedItem.tabId) {
-        menuitem.isSelected = true;
-      }
-    }
+    this.subscriptions.add(
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          this.selectTabFromCurrentRoute();
+        })
     );
   }
 
+  ngAfterContentInit(): void {
+    this.selectTabFromCurrentRoute();
+
+    this.subscriptions.add(
+      this.jztabs.changes.subscribe(() => {
+        this.selectTabFromCurrentRoute();
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  onMenuItemSelected(selectedItem: JzMenuTabComponent): void {
+    if (selectedItem.menuName !== this.menuName) {
+      return;
+    }
+
+    this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+      menuitem.isSelected = menuitem.tabId === selectedItem.tabId;
+    });
+
+    this.changeDetector.markForCheck();
+  }
+
   private selectTabFromCurrentRoute(): void {
+    if (!this.jztabs) {
+      return;
+    }
+
     console.log('selectTabFromCurrentRoute called', this.router.url, this.menuName);
+
     const currentUrl = this.router.url;
 
-    this.jztabs?.forEach((menuitem: JzMenuTabComponent) => {
-
-      const route =
-        menuitem.route?.startsWith('/')
-          ? menuitem.route
-          : '/' + menuitem.route;
+    this.jztabs.forEach((menuitem: JzMenuTabComponent) => {
+      const route = menuitem.route?.startsWith('/')
+        ? menuitem.route
+        : '/' + menuitem.route;
 
       menuitem.isSelected =
         currentUrl === route ||
         currentUrl.startsWith(route + '/');
-
     });
 
-    this.changeDetector.detectChanges();
+    this.changeDetector.markForCheck();
   }
 }

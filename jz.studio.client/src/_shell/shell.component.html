@@ -1,17 +1,29 @@
 <!--shell.component.html-->
-<div class='shell grid-rows  app-root-content'
-       [class.shell-collapsed]="shellCollapsed">
+<!-- shell.component.html -->
+
+<div class="shell grid-rows app-root-content">
+
   <shell-header #header
                 class="grid-row-fixed"
-                [ngClass]="{ 'menu-collapsed': shellCollapsed }"
+                [ngClass]="{
+      'solution-menu-collapsed': solutionMenuCollapsed
+    }"
                 (shellCollapseToggled)="toggleShellCollapse()">
   </shell-header>
 
-  <shell-content #content class="grid-row-fill">
+  <shell-content #content
+                 class="grid-row-fill"
+                 [ngClass]="{
+      'module-menu-collapsed': moduleMenuCollapsed
+    }">
+
     <router-outlet></router-outlet>
+
   </shell-content>
 
-  <shell-footer #footer class="grid-row-fixed"></shell-footer>
-</div>
+  <shell-footer #footer
+                class="grid-row-fixed">
+  </shell-footer>
 
+</div>
 

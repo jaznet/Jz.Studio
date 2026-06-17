@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   Component,
   OnInit,
+  OnDestroy,
   ViewChild,
   PLATFORM_ID,
   DOCUMENT,
@@ -12,7 +13,7 @@ import {
   HostBinding
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Router, RouterOutlet,  NavigationEnd } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { Subject, takeUntil, filter } from 'rxjs';
 
 import { NavigationListenerService } from './services/navigation-listener.service';
@@ -41,10 +42,11 @@ import { JzButtonComponent } from '../_framework/ui/buttons/jz-button/jz-button.
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss'
 })
-export class ShellComponent implements OnInit, AfterViewInit {
+export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('header', { static: true }) header!: ShellHeaderComponent;
   @ViewChild('content', { static: true }) content!: ShellContentComponent;
   @ViewChild('footer', { static: true }) footer!: ShellFooterComponent;
+
   @HostBinding('class.theme-ready')
   themeReady = false;
 
@@ -55,7 +57,19 @@ export class ShellComponent implements OnInit, AfterViewInit {
 
   activeItem$ = this.navService.activeItem$;
   themeState$ = this.shellTheme.themeState$;
+
   private destroy$ = new Subject<void>();
+
+  private _solutionMenuCollapsed = false;
+  private _moduleMenuCollapsed = false;
+
+  public get solutionMenuCollapsed(): boolean {
+    return this._solutionMenuCollapsed;
+  }
+
+  public get moduleMenuCollapsed(): boolean {
+    return this._moduleMenuCollapsed;
+  }
 
   constructor(
     public shellTheme: ShellThemeService,
@@ -107,6 +121,17 @@ export class ShellComponent implements OnInit, AfterViewInit {
     this.destroy$.complete();
 
     this.observer?.disconnect();
+  }
+
+  public toggleShellCollapse(): void {
+    const nextState =
+      !(this._solutionMenuCollapsed && this._moduleMenuCollapsed);
+
+    this._solutionMenuCollapsed = nextState;
+    this._moduleMenuCollapsed = nextState;
+
+    console.log('Solution Menu Collapsed:', this._solutionMenuCollapsed);
+    console.log('Module Menu Collapsed:', this._moduleMenuCollapsed);
   }
 
   private listenForShellModeChanges(): void {
@@ -170,20 +195,5 @@ export class ShellComponent implements OnInit, AfterViewInit {
       .subscribe(ready => {
         this.themeReady = ready;
       });
-  }
-
-  private _shellCollapsed = false;
-
-  public get shellCollapsed(): boolean {
-    return this._shellCollapsed;
-  }
-
-  public toggleShellCollapse(): void {
-    this._shellCollapsed = !this._shellCollapsed;
-
-    console.log(
-      'Shell Collapsed:',
-      this._shellCollapsed
-    );
   }
 }

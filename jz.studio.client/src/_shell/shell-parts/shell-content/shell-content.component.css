@@ -2,3 +2,17 @@
 .app-component {
     background-color: orangered;
 }
+
+visualization-menu {
+  display: flex;
+  max-width: 160px;
+  opacity: 1;
+  overflow: hidden;
+  transition: max-width 220ms ease, opacity 160ms ease;
+}
+
+:host(.module-menu-collapsed) visualization-menu {
+  max-width: 0;
+  opacity: 0;
+  pointer-events: none;
+}

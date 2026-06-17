@@ -16,7 +16,7 @@ export class GraphicsMenuComponent extends MenuBaseComponent {
   @Input() override menuName: string = '';
 
   constructor(router: Router, navService: JzNavService) {
-    super(router, navService);
+    super();
     this.menuType = 'sub';
     this.direction = 'vertical';
   }

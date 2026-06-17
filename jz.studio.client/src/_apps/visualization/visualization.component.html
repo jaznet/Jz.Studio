@@ -1,25 +1,7 @@
-<!--dataviz.component.html-->
-
-<div class="side-menu-panel" style="background-color:var(--plt-clr-1);height:100%;margin-left:8px">
-  <visualization-menu style="background-color:var(--plt-clr-1);height:fit-content;margin-top:32px">
-
-  </visualization-menu>
+<div class="side-menu-panel">
+  <visualization-menu></visualization-menu>
 </div>
 
-<div #viewRouter id="viewRouter" class="grid-col-fill view-router-container ">
+<div #viewRouter id="viewRouter" class="grid-col-fill view-router-container">
   <router-outlet></router-outlet>
 </div>
-
-<!-- The toggle button -->
-<!--<button #btn (click)="togglePopover(btn)">
-  {{ isPopoverVisible ? 'Hide Popover' : 'Show Popover' }}
-</button>
-
-<ng-template #popoverTpl>
-  <div class="jz" style="max-width:220px">
-    <strong>Popover Title</strong><br />
-    Content injected through TemplateRef.
-  </div>
-</ng-template>-->
-
-

@@ -26,12 +26,16 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
   @Input() override menuName: string = '';
   isMainMenuVisible = 'collapse';
   //  override menuType: string = 'main-menu';yelloe
-
-  constructor(router: Router,  navService: JzNavService, private app: AppStateService) {
-    super(router, navService);
+  items$ = this.navService.items$;
+  activeItem$ = this.navService.activeItem$;
+  constructor(private router: Router, private navService: JzNavService, private app: AppStateService) {
+    super();
   }
+    ngAfterViewInit(): void {
+ //       throw new Error('Method not implemented.');
+    }
 
-  override ngOnInit(): void {
+   ngOnInit(): void {
     this.menuType = 'main';
     console.log('MainMenuComponent initialized');
 
@@ -41,14 +45,16 @@ export class MainMenuComponent extends MenuBaseComponent implements AfterViewIni
     })
   }
    
-  override ngAfterViewInit(): void {
-    console.log('direction:', this.direction);
+  //override ngAfterViewInit(): void {
+  //  console.log('direction:', this.direction);
    
-  }
-
-  //onNavSelected(item: JzNavItem): void {
-  //  // for now
-  //  this.router.navigateByUrl(item.route);
   //}
- 
+
+  onNavSelected(item: JzNavItem): void {
+    if (!item?.route) {
+      return;
+    }
+
+    this.router.navigateByUrl(item.route);
+  }
 }

@@ -1,5 +1,5 @@
-
-.app-header {
+:host {
+  display: block;
   color: var(--plt-txt-1);
   background-color: var(--plt-clr-1);
   border-radius: 8px 8px 0 0;
@@ -12,7 +12,7 @@
   overflow: hidden;
 }
 
-  .menu-container main-menu {
+  .menu-container > main-menu {
     display: flex;
     overflow: hidden;
     max-height: 48px;
@@ -20,7 +20,7 @@
     transition: max-height 220ms ease, opacity 160ms ease;
   }
 
-:host(.menu-collapsed) .menu-container main-menu {
+:host(.solution-menu-collapsed) .menu-container > main-menu {
   max-height: 0;
   opacity: 0;
   pointer-events: none;
