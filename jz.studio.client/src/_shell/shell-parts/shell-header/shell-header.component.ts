@@ -1,34 +1,54 @@
-
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Host, HostBinding, OnInit, ViewChild } from '@angular/core';
-import { AppStateService } from '../../services/shell-state.service';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { AppStateService } from '../../services/shell-state.service';
 import { MainMenuComponent } from '../shell-menus/main-menu/main-menu.component';
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
 import { JzButtonComponent } from '../../../_framework/ui/buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'shell-header',
-    standalone:true,
-  imports: [CommonModule, MainMenuComponent, PaletteMenuComponent, JzButtonComponent],
-    templateUrl: './shell-header.component.html',
-    styleUrls: ['./shell-header.component.css']
+  standalone: true,
+  imports: [
+    CommonModule,
+    MainMenuComponent,
+    PaletteMenuComponent,
+    JzButtonComponent
+  ],
+  templateUrl: './shell-header.component.html',
+  styleUrls: ['./shell-header.component.css']
 })
-
 export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChecked {
   @HostBinding('class') classes = 'app-header';
+
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
-  visibility = 'collapse';
-  isLogoVisible= 'collapse';
-  isMainMenuVisible = 'collapse';
-  public collapseVisible = false;
+  @Output()
+  shellCollapseToggled = new EventEmitter<void>();
 
-  constructor(private app: AppStateService, private changeDetector: ChangeDetectorRef,) { }
+  visibility = 'collapse';
+  isLogoVisible = 'collapse';
+  isMainMenuVisible = 'collapse';
+
+  constructor(
+    private app: AppStateService,
+    private changeDetector: ChangeDetectorRef
+  ) { }
 
   ngOnInit(): void { }
 
   ngAfterViewInit(): void {
-
     this.visibility = 'visible';
     this.isLogoVisible = 'visible';
     this.isMainMenuVisible = 'visible';
@@ -39,11 +59,6 @@ export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChe
   }
 
   public toggleShellCollapse(): void {
-    this.collapseVisible = !this.collapseVisible;
-
-    console.log(
-      "Collapse Visible:",
-      this.collapseVisible
-    );
+    this.shellCollapseToggled.emit();
   }
 }

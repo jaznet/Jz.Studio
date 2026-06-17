@@ -11,5 +11,5 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./shell-content.component.css']
 })
 export class ShellContentComponent {
-
+  public shellCollapsed = false;
 }

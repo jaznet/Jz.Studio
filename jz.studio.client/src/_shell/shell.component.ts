@@ -138,7 +138,6 @@ export class ShellComponent implements OnInit, AfterViewInit {
       });
   }
 
-
   private listenForPaletteChanges(): void {
     this.navService.activeItem$
       .pipe(takeUntil(this.destroy$))
@@ -172,8 +171,18 @@ export class ShellComponent implements OnInit, AfterViewInit {
       });
   }
 
-  private onDxLicenseFound(el: HTMLElement): void {
-    console.log('<dx-license> appeared:', el);
-    console.log('is correct element?', el.tagName === 'DX-LICENSE');
+  private _shellCollapsed = false;
+
+  public get shellCollapsed(): boolean {
+    return this._shellCollapsed;
+  }
+
+  public toggleShellCollapse(): void {
+    this._shellCollapsed = !this._shellCollapsed;
+
+    console.log(
+      'Shell Collapsed:',
+      this._shellCollapsed
+    );
   }
 }

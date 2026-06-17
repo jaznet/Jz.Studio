@@ -1,12 +1,16 @@
 <!--shell.component.html-->
-<div class='grid-rows app-root-content'>
-  <shell-header #header class="grid-row-fixed"></shell-header>
+<div class='shell grid-rows  app-root-content'
+       [class.shell-collapsed]="shellCollapsed">
+  <shell-header #header
+                class="grid-row-fixed"
+                (shellCollapseToggled)="toggleShellCollapse()">
+  </shell-header>
+
   <shell-content #content class="grid-row-fill">
     <router-outlet></router-outlet>
   </shell-content>
-  <!--<app-content class="view-container app-component fit-to-parent grid-rows"></app-content>-->
+
   <shell-footer #footer class="grid-row-fixed"></shell-footer>
 </div>
 
-<!--<pop-up-loading #popUpLoadingComponent></pop-up-loading>-->
-<!--<pop-over-loading #popOverLoadingComponent></pop-over-loading>-->
+
