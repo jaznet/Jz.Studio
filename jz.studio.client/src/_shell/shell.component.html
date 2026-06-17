@@ -3,6 +3,7 @@
        [class.shell-collapsed]="shellCollapsed">
   <shell-header #header
                 class="grid-row-fixed"
+                [ngClass]="{ 'menu-collapsed': shellCollapsed }"
                 (shellCollapseToggled)="toggleShellCollapse()">
   </shell-header>
 

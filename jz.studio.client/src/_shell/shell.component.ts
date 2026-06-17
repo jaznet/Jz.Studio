@@ -11,7 +11,7 @@ import {
   inject,
   HostBinding
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { Router, RouterOutlet,  NavigationEnd } from '@angular/router';
 import { Subject, takeUntil, filter } from 'rxjs';
 
@@ -31,6 +31,7 @@ import { JzButtonComponent } from '../_framework/ui/buttons/jz-button/jz-button.
   selector: 'app-shell',
   standalone: true,
   imports: [
+    CommonModule,
     ShellHeaderComponent,
     ShellFooterComponent,
     RouterOutlet,

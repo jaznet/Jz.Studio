@@ -30,7 +30,8 @@ import { JzButtonComponent } from '../../../_framework/ui/buttons/jz-button/jz-b
   styleUrls: ['./shell-header.component.css']
 })
 export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChecked {
-  @HostBinding('class') classes = 'app-header';
+  @HostBinding('class.app-header')
+  appHeaderClass = true;
 
   @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
 
