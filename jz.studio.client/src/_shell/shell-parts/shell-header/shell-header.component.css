@@ -13,7 +13,7 @@
 }
 
   .menu-container main-menu {
-    display: block;
+    display: flex;
     overflow: hidden;
     max-height: 48px;
     opacity: 1;
