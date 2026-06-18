@@ -85,7 +85,7 @@ app-shell {
 }
 
 
-jz-nav-group.blank-view .jz-btn.active,
+/*jz-nav-group.blank-view .jz-btn.active,
 jz-nav-group.blank-view button.jz-btn.active,
 jz-nav-group.blank-view jz-button-cuboid.active,
 jz-nav-group.blank-view .cuboid.active,
@@ -95,12 +95,12 @@ jz-nav-group.blank-view .jz-btn.active .cuboid {
   box-shadow: none !important;
 }
 
-jz-nav-group.sub-nav .jz-btn:first-child:not(.active),
-jz-nav-group.sub-nav jz-button-cuboid:first-child:not(.active) {
+jz-nav-group.model-nav .jz-btn:first-child:not(.active),
+jz-nav-group.model-nav jz-button-cuboid:first-child:not(.active) {
   border: none !important;
   box-shadow: none !important;
 }
 
-jz-nav-group.sub-nav .jz-nav-group {
+jz-nav-group.model-nav .jz-nav-group {
   border-top: none;
-}
+}*/
