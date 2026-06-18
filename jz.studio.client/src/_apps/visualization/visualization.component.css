@@ -10,7 +10,7 @@
   background-color: var(--plt-clr-2);
 }
 
-.side-menu-panel {
+.modules-menu-panel {
   display: flex;
   flex: 0 0 auto;
   min-width: 0;
@@ -22,14 +22,14 @@
   padding: 16px 0 0 0;
 }
 
-.side-menu-panel--collapsed {
+.modules-menu-panel--collapsed {
   flex-basis: 0;
   width: 0;
   min-width: 0;
   margin-left: 0;
 }
 
-:host-context(.module-menu-collapsed) .side-menu-panel {
+:host-context(.module-menu-collapsed) .modules-menu-panel {
   flex: 0 0 0;
   width: 0;
   min-width: 0;

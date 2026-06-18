@@ -15,7 +15,7 @@
   background-color: var(--plt-clr-2);
 }
 
-.side-menu-panel {
+.modules-menu-panel {
   display: flex;
   flex: 0 0 auto;
   min-width: 0;
@@ -26,7 +26,7 @@
   overflow: hidden;
 }
 
-:host-context(.module-menu-collapsed) .side-menu-panel {
+:host-context(.module-menu-collapsed) .modules-menu-panel {
   flex: 0 0 0;
   width: 0;
   min-width: 0;
