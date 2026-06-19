@@ -13,13 +13,13 @@ import { JzNavGroupComponent }
 import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
 
 @Component({
-  selector: 'main-menu',
+  selector: 'solutions-menu',
   standalone: true,
   imports: [CommonModule, JzMenuTabComponent, JzMenuContainerComponent, JzNavGroupComponent],
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.css']
+  templateUrl: './solutions-menu.component.html',
+  styleUrls: ['./solutions-menu.component.css']
 })
-export class MainMenuComponent extends MenuBaseComponent implements AfterViewInit, OnInit {
+export class SolutionsMenuComponent extends MenuBaseComponent implements AfterViewInit, OnInit {
   @HostBinding('class') classes = 'fit-to-parent centered';
 
   @Input() tabs: boolean = true;
