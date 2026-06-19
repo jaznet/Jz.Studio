@@ -1,7 +1,7 @@
+/*jz-nav-group.component.scss*/
 
-
-/*:host {
-  display: block;
+:host(.modules-nav) {
+    margin-right:-3px
 }
 
 .jz-nav-group {
@@ -9,21 +9,20 @@
   gap: 0.5rem;
 }
 
-.jz-nav-group.horizontal {
-  flex-direction: row;
-  align-items: center;
-  position: relative;
-  z-index: 101;
-}
+  .jz-nav-group.horizontal {
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+ 
+  }
 
 .jz-nav-group.vertical { 
   flex-direction: column;
   align-items: stretch;
-  margin-right:-1px;
-  position: relative;
-  z-index: 101;
+ margin-right:-2px
 }
 
 jz-nav-group.blank-view nav.jz-nav-group .jz-nav-item.active {
  border:none
-}*/
+}

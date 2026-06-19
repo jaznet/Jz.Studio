@@ -5,12 +5,13 @@
   border-radius: 8px 8px 0 0;
   border: 1px solid black;
   padding: 6px 6px 0 6px;
-  margin-bottom: -3px;
+
 }
 
 .menu-container {
   display: flex;
   overflow: hidden;
+  margin-bottom: -2.5px;
 }
 
   .menu-container > main-menu {
