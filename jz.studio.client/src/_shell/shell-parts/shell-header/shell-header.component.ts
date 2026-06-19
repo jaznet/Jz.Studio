@@ -33,7 +33,7 @@ export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChe
   @HostBinding('class.app-header')
   appHeaderClass = true;
 
-  @ViewChild('mainMenuContainer') mainMenuContainer!: ElementRef;
+  @ViewChild('solutionMenuContainer') solutionMenuContainer!: ElementRef;
 
   @Output()
   shellCollapseToggled = new EventEmitter<void>();
