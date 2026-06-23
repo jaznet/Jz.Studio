@@ -1,6 +1,6 @@
-<!-- main-menu.component.html -->
+<!-- solutions-menu.component.html -->
 
-<div #menuContainer
+<div #solutionsMenuContainer
      class="solutions-menu-container"
      [ngStyle]="{ visibility: isMainMenuVisible }">
 
@@ -11,13 +11,5 @@
                 orientation="horizontal"
                 (selected)="onNavSelected($event)">
   </jz-nav-group>
-
-  <!--<jz-nav-group *ngIf="items$ | async as items"
-                class="main-menu menu-horizontal menu-view"
-       style="margin-left:8px;margin-bottom:-2px;z-index:100"
-                [items]="items"
-                [orientation]="'horizontal'"
-                (selected)="onNavSelected($event)">
-  </jz-nav-group>-->
 
 </div>

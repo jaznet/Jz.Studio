@@ -1,7 +1,7 @@
 /*jz-nav-group.component.scss*/
 
 :host(.modules-nav) {
-    margin-right:-3px
+ 
 }
 
 .jz-nav-group {
@@ -13,14 +13,11 @@
     flex-direction: row;
     align-items: center;
     position: relative;
-    z-index: 10;
- 
   }
 
 .jz-nav-group.vertical { 
   flex-direction: column;
   align-items: stretch;
- margin-right:-2px
 }
 
 jz-nav-group.blank-view nav.jz-nav-group .jz-nav-item.active {

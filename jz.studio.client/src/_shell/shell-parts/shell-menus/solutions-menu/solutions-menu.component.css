@@ -1,19 +1,12 @@
-.menu-container {
-       margin-bottom:-2px;
+.solutions-menu-container {
+  margin-bottom: -2px;
+  z-index:100;
 }
 
-.menu-container.main-menu {
-   /* border:1px solid var(--plt-clr-2);*/
+.solutions-menu-container.main-menu {
+  /* border:1px solid var(--plt-clr-2);*/
 }
 
-  .menu-container.sub-menu {
-    border: 1px solid var(--plt-clr-3);
-  }
-
-/*:host ::ng-deep .main-nav.blank-view button.jz-btn.active,
-:host ::ng-deep .main-nav.blank-view jz-button-cuboid.active,
-:host ::ng-deep .main-nav.blank-view .jz-btn.active {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}*/
+.solutions-menu-container.sub-menu {
+  border: 1px solid var(--plt-clr-3);
+}

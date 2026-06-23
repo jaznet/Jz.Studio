@@ -1,8 +1,12 @@
-              /* global styles.scss, or the sub-menu component scss if it owns this markup */
+/*visualization-menu.component.css*/
 
-jz-nav-group.model-nav jz-nav-item:first-child:not(.active),
-jz-nav-group.model-nav jz-button-cuboid:first-child:not(.active),
-jz-nav-group.model-nav .jz-btn:first-child:not(.active) {
+.modules-menu-container {
+  margin-right: -2px;
+}
+
+jz-nav-group.modules-nav jz-nav-item:first-child:not(.active),
+jz-nav-group.modules-nav jz-button-cuboid:first-child:not(.active),
+jz-nav-group.modules-nav .jz-btn:first-child:not(.active) {
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
