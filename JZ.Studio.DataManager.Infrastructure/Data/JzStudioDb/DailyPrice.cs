@@ -24,4 +24,5 @@ public partial class DailyPrice
     public long? ImportBatchId { get; set; }
 
     public virtual ImportBatch? ImportBatch { get; set; }
+
 }
