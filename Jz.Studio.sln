@@ -14,17 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JZ.Studio.DataManager.Worker", "JZ.Studio.DataManager.Worker\JZ.Studio.DataManager.Worker.csproj", "{4BA5D67B-BD12-4AA3-9BFD-46DA9E2B886A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D9E7BE8D-E3D5-41AC-9CAC-91043D67F372}"
-	ProjectSection(SolutionItems) = preProject
-		00-Vision.md = 00-Vision.md
-		01-Architecture.md = 01-Architecture.md
-		02-Terminology.md = 02-Terminology.md
-		03-SystemArchitecture.md = 03-SystemArchitecture.md
-		04-JzStudioShell.md = 04-JzStudioShell.md
-		05-ChoroDash.md = 05-ChoroDash.md
-		06-DataManager.md = 06-DataManager.md
-		07-UI-Principles.md = 07-UI-Principles.md
-		99-DecisionLog.md = 99-DecisionLog.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
