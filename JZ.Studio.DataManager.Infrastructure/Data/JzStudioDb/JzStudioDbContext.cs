@@ -4,15 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 
-public partial class JzStudioDbContext : DbContext
-{
-    public JzStudioDbContext()
-    {
+public partial class JzStudioDbContext : DbContext {
+    public JzStudioDbContext() {
     }
 
     public JzStudioDbContext(DbContextOptions<JzStudioDbContext> options)
-        : base(options)
-    {
+        : base(options) {
     }
 
     public virtual DbSet<DailyPrice> DailyPrices { get; set; }
@@ -23,10 +20,8 @@ public partial class JzStudioDbContext : DbContext
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=tcp:jazdbserver.database.windows.net,1433;Initial Catalog=JzStudioDb;Persist Security Info=False;User ID=jziemian;Password=Jaz@8454;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<DailyPrice>(entity =>
-        {
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<DailyPrice>(entity => {
             entity.HasKey(e => e.DailyPriceId).HasName("PK__DailyPri__6363912A06CAACCB");
 
             entity.ToTable("DailyPrice", "Market");
@@ -44,8 +39,7 @@ public partial class JzStudioDbContext : DbContext
                 .HasConstraintName("FK_DailyPrice_ImportBatch");
         });
 
-        modelBuilder.Entity<ImportBatch>(entity =>
-        {
+        modelBuilder.Entity<ImportBatch>(entity => {
             entity.HasKey(e => e.ImportBatchId).HasName("PK__ImportBa__FD5DD5CE16BD9892");
 
             entity.ToTable("ImportBatch", "SystemData");

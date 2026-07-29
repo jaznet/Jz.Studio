@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     component: VisualizationComponent,
     children: [
-    /*  { path: '', redirectTo: 'techanTs', pathMatch: 'full' },*/
+      /*  { path: '', redirectTo: 'techanTs', pathMatch: 'full' },*/
       { path: '', component: VisualizationHomeComponent },
       { path: 'techanTs', component: TechnicalAnalysisComponent },
       { path: 'chorodash', component: JzChoroDashComponent }, // 👈 THIS WAS MISSING
