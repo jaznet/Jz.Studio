@@ -1,167 +1,147 @@
-﻿# JZ Studio Architecture
+﻿# Architectural Principles
 
-## Overview
-
-JZ Studio is a modular platform for acquiring, managing, analyzing, and visualizing data.
-
-Rather than being a single application, JZ Studio provides a common architecture that hosts multiple applications within a unified shell. Each application shares common navigation, routing, user interface components, and data services while remaining independently developed.
-
-The architecture is designed around separation of responsibilities, reusable components, and clearly defined boundaries between presentation, application logic, and data management.
+The architecture follows a small set of guiding principles that influence every design decision throughout JZ Studio.
 
 ---
 
-# Architectural Layers
+## Separation of Concerns (SoC)
 
-JZ Studio is organized into several logical layers.
+Every class, service, component, and subsystem should have a single, well-defined concern.
+
+Responsibilities should be assigned to the component that naturally owns them rather than accumulated in orchestration or presentation classes.
+
+Examples:
+
+| Concern | Owner |
+|---------|-------|
+| Presentation | MainViewModel |
+| Analysis workflow | AnalysisPipeline |
+| Solution analysis | SolutionAnalyzer |
+| Solution tree construction | SolutionTreeBuilder |
+| Project node construction | ProjectTreeBuilder |
+| Directory node construction | DirectoryNodeBuilder |
+| File node construction | FileNodeBuilder |
+| Directory statistics | DirectoryStatisticsBuilder |
+| Extension statistics | ExtensionStatisticsBuilder |
+| Exclusion rules | ExclusionService |
+
+Separation of Concerns is the primary architectural principle governing the organization of the codebase.
+
+---
+
+## Single Responsibility Principle (SRP)
+
+Each class should have one primary reason to change.
+
+When a class begins changing for unrelated reasons, it should be reviewed for responsibility extraction.
+
+---
+
+## Responsibility Extraction
+
+Responsibility Extraction is the preferred refactoring technique used throughout JZ Studio.
+
+Responsibility extraction is the primary mechanism used to improve Separation of Concerns while preserving existing behavior.
+
+The preferred process is:
+
+1. Identify a cohesive responsibility.
+2. Create the destination class.
+3. Copy the implementation.
+4. Compile and verify.
+5. Redirect callers.
+6. Compile and verify.
+7. Remove the original implementation.
+8. Compile and verify.
+
+Architectural improvements should be implemented incrementally rather than through large rewrites.
+
+---
+
+## Pipeline-Oriented Processing
+
+When an operation consists of multiple sequential stages, prefer expressing the workflow as a pipeline rather than a large orchestration method.
+
+Example:
 
 ```text
-┌──────────────────────────────────────────────┐
-│                  JZ Studio                   │
-├──────────────────────────────────────────────┤
-│ Shell                                        │
-├──────────────────────────────────────────────┤
-│ Applications                                 │
-├──────────────────────────────────────────────┤
-│ Shared Framework                             │
-├──────────────────────────────────────────────┤
-│ Data Manager                                 │
-├──────────────────────────────────────────────┤
-│ Database                                     │
-└──────────────────────────────────────────────┘
+Load Solution
+
+↓
+
+Analyze Solution
+
+↓
+
+Build Tree
+
+↓
+
+Generate Statistics
+
+↓
+
+Return Analysis Result
 ```
 
-Each layer has a distinct responsibility.
+The pipeline owns the workflow.
+
+Presentation layers initiate pipelines and consume their results but do not own processing logic.
 
 ---
-
-# Shell
-
-The Shell is the application's primary host.
-
-Responsibilities include:
-
-- Global layout
-- Routing
-- Navigation
-- Shared UI
-- Theme management
-- Hosting applications
-
-Applications execute inside the shell rather than creating their own top-level layout.
-
----
-
-# Applications
-
-Applications provide user-facing functionality.
-
-Current applications include:
-
-- Choro Dashboard
-- Technical Analysis
-
-Future applications can be added without changing the shell architecture.
-
-Applications are independent but leverage common services and infrastructure.
-
----
-
-# Shared Framework
-
-The shared framework contains reusable functionality used throughout the platform.
-
-Examples include:
-
-- Navigation
-- UI components
-- Popovers
-- Layout components
-- Routing helpers
-- Common models
-- Shared services
-
-This minimizes duplication and establishes consistent behavior across applications.
-
----
-
-# Data Manager
-
-The Data Manager is responsible for acquiring and preparing data.
-
-Responsibilities include:
-
-- Downloading datasets
-- Importing files
-- Validation
-- Normalization
-- Transformation
-- Database import
-
-Business rules are implemented in application code rather than database objects.
-
----
-
-# Database
-
-The database serves as the platform's persistent storage layer.
-
-Data is organized into schemas representing functional domains.
-
-Examples include:
-
-- Market
-- Choro
-- Geo
-- SystemData
-
-The database stores data but is not considered the source of business logic.
-
----
-
-# Design Principles
-
-The architecture follows several guiding principles.
-
-## Separation of Responsibilities
-
-Each subsystem has a clearly defined purpose.
 
 ## Reuse Before Duplication
 
-Common functionality belongs in shared components and services.
+Shared functionality belongs in reusable services, builders, and framework components.
 
-## Code Becomes the Source of Truth
-
-Business rules are implemented in source code rather than hidden inside stored procedures.
-
-## Modular Growth
-
-Applications should be added without requiring significant changes to the existing platform.
-
-## Living Documentation
-
-Documentation evolves alongside the implementation and reflects the current architecture.
+Prefer improving an existing reusable component over duplicating logic.
 
 ---
 
-# High-Level System View
+## 300-Line Heuristic
 
-```text
-                     JZ Studio
-                          │
-        ┌─────────────────┴─────────────────┐
-        │                                   │
-      Shell                          Data Manager
-        │                                   │
-        │                             Import Pipelines
-        │                                   │
-        ├──────────────┬──────────────┐      │
-        │              │              │      │
-   ChoroDash     Technical Analysis   ...    │
-        │              │                     │
-        └──────────────┴─────────────────────┘
-                       │
-                 JzStudioDb
-```
+The 300-line heuristic is not a hard limit.
 
-This modular organization allows the platform to evolve by adding new applications and new data sources while preserving a consistent architecture.
+It is a review trigger.
+
+When a class approaches approximately 300 lines, review whether it is accumulating multiple concerns.
+
+If so, consider responsibility extraction.
+
+This heuristic encourages architectural review rather than arbitrary decomposition.
+
+---
+
+## Code Becomes the Source of Truth
+
+Business rules, processing logic, and architectural intent belong in source code rather than hidden inside databases, stored procedures, or configuration whenever practical.
+
+Documentation explains intent.
+
+Code expresses behavior.
+
+Tests verify behavior.
+
+The codebase remains the authoritative source of truth.
+
+---
+
+## Modular Growth
+
+Applications should be added without requiring significant architectural changes to the existing platform.
+
+The shell hosts applications.
+
+Applications own application behavior.
+
+Shared services provide common infrastructure.
+
+---
+
+## Living Documentation
+
+Documentation evolves alongside the implementation.
+
+Documentation should explain architectural intent and design decisions rather than duplicate implementation details.
+
+Code remains the authoritative description of system behavior.

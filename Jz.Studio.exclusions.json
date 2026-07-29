@@ -1,0 +1,290 @@
+[
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.angular",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Core",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Core",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.angular\\cache",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\jsconfig.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\package-lock.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\libs",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\src\\assets",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Core\\Class1.cs",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Infrastructure",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Worker",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\Jz.Studio.Server",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\docs",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.editorconfig",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.gitignore",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\angular.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\aspnetcore-https.js",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\jz.studio.client.esproj",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\README.md",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.vscode",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.angular\\cache\\20.3.5",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.angular\\cache\\20.3.5\\jz.studio.client",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\jz.studio.client.esproj.user",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\03-SystemArchitecture.md",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\karma.conf.js",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\localhost\u002B2-key.pem",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\localhost\u002B2.pem",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\nuget.config",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\package.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\tsconfig.app.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\tsconfig.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\tsconfig.spec.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\.backup",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\obj",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\spec",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.DataManager.Core\\JZ.Studio.DataManager.Core.csproj",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  }
+]
