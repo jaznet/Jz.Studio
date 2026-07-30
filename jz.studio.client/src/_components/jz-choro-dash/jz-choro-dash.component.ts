@@ -16,12 +16,20 @@ import { select } from 'd3-selection';
 import { CountySelection } from '../charts/jz-choropleths/models/county-selection.model';
 import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 import { Router } from '@angular/router';
+import { JzChoroDashPanelComponent } from '../../../dist/jz-choro-dash';
 
 @Component({
   selector: 'jz-choro-dash',
   standalone: true,
   templateUrl: './jz-choro-dash.component.html',
-  imports: [CommonModule, ChoroUsaComponent, ChoroStateComponent, FormsModule, JzButtonComponent],
+  imports: [
+    CommonModule,
+    JzChoroDashPanelComponent,
+    ChoroUsaComponent,
+    ChoroStateComponent,
+    FormsModule,
+    JzButtonComponent
+  ],
   providers: [
     {
       provide: COUNTY_PAINTING_STRATEGY,
