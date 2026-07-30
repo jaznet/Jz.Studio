@@ -286,5 +286,13 @@
     "FileCount": 0,
     "LineCount": 0,
     "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\dist",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
   }
 ]
