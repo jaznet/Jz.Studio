@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'jz-jz-choro-dash',
+  selector: 'jz-choro-dash',
   imports: [],
   template: `
     <p>
