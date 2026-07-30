@@ -127,6 +127,36 @@
           }
         }
       }
+    },
+    "jz-choro-dash": {
+      "projectType": "library",
+      "root": "projects/apps/jz-choro-dash",
+      "sourceRoot": "projects/apps/jz-choro-dash/src",
+      "prefix": "jz",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/apps/jz-choro-dash/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/apps/jz-choro-dash/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/apps/jz-choro-dash/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

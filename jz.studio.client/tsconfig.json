@@ -14,6 +14,11 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
+    "paths": {
+      "jz-choro-dash": [
+        "./dist/jz-choro-dash"
+      ]
+    },
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -40,5 +45,13 @@
   "include": [
     "src/**/*.ts",
     "src/types/**/*.d.ts"
+  ],
+  "references": [
+    {
+      "path": "./projects/apps/jz-choro-dash/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/apps/jz-choro-dash/tsconfig.spec.json"
+    }
   ]
 }
