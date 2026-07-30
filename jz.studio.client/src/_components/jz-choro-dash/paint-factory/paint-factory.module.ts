@@ -1,7 +1,7 @@
 
 import { InjectionToken, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CountyPaintingStrategy } from './interfaces/county-painting-strategy';
+import { CountyPaintingStrategy } from 'jz-choro-dash';
 
 
 

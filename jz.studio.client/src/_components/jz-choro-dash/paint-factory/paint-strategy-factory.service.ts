@@ -3,7 +3,7 @@ import { UserSelectionService } from "./services/user-selection.service";
 import { PaintElectionStrategy } from "./strategies/paint-election";
 import { PaintPopulationStrategy } from "./strategies/paint-population";
 import { PaintTestPatternStrategy } from "./strategies/paint-test-pattern";
-import { CountyPaintingStrategy } from "./interfaces/county-painting-strategy";
+import { CountyPaintingStrategy } from 'jz-choro-dash';
 import { ChoroDataService } from "../../../_components/charts/jz-choropleths/services/choro-data.service";
 import { CountyDataService } from "../../../_components/charts/jz-choropleths/services/county-data.service";
 
