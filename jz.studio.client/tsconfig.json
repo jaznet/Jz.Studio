@@ -48,10 +48,10 @@
   ],
   "references": [
     {
-      "path": "./projects/apps/jz-choro-dash/tsconfig.lib.json"
+      "path": "./libraries/apps/jz-choro-dash/tsconfig.lib.json"
     },
     {
-      "path": "./projects/apps/jz-choro-dash/tsconfig.spec.json"
+      "path": "./libraries/apps/jz-choro-dash/tsconfig.spec.json"
     }
   ]
 }
