@@ -14,6 +14,7 @@
     <Folder Include="src\_components\jz-choro-dash\geo\" />
     <Folder Include="src\_components\jz-choro-dash\jz-choro-dash-panel\" />
     <Folder Include="src\_components\jz-choro-dash\paint-factory\interfaces\" />
+    <Folder Include="src\_components\jz-choro-dash\paint-factory\services\" />
     <Folder Include="src\_components\jz-choro-dash\paint-factory\strategies\" />
     <Folder Include="src\_components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
