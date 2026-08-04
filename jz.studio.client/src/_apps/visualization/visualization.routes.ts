@@ -14,7 +14,6 @@ export const VISUALIZATION_ROUTES: Routes = [
         pathMatch: 'full'
       },
 
-      // Visualization Home
       {
         path: 'home',
         loadComponent: () =>
@@ -22,23 +21,13 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.VisualizationHomeComponent)
       },
 
-      // Chorodash
       {
         path: 'chorodash',
         loadComponent: () =>
-          import('../../_components/jz-choro-dash/jz-choro-dash.component')
-            .then(m => m.JzChoroDashComponent)
+          import('jz-choro-dash')
+            .then(m => m.JzChoroDash)
       },
 
-      // Chorodash
-      // {
-      //   path: 'chorodash',
-      //   loadComponent: () =>
-      //     import('jz-choro-dash')
-      //       .then(m => m.JzChoroDash)
-      // },
-
-      // Chorodash Administration
       {
         path: 'chorodash/admin',
         loadComponent: () =>
@@ -46,7 +35,6 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.AdminComponent)
       },
 
-      // Technical Analysis
       {
         path: 'techanTs',
         loadComponent: () =>
@@ -54,7 +42,6 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.TechnicalAnalysisComponent)
       },
 
-      // Sankey
       {
         path: 'sankey',
         loadComponent: () =>
@@ -62,7 +49,6 @@ export const VISUALIZATION_ROUTES: Routes = [
             .then(m => m.SankeyComponent)
       },
 
-      // Bubble Chart
       {
         path: 'bubble-chart',
         loadComponent: () =>
