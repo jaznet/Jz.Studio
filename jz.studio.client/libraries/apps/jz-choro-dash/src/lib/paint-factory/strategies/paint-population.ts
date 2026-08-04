@@ -1,11 +1,8 @@
 
-import { HttpErrorResponse } from "@angular/common/http";
-
-import {
-  ChoroDataService,
-  CountyDataService,
-  CountyPaintingStrategy
-} from 'jz-choro-dash';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CountyPaintingStrategy } from '../county-painting-strategy';
+import { ChoroDataService } from '../../services/choro-data.service';
+import { CountyDataService } from '../../services/county-data.service';
 
 export class PaintPopulationStrategy implements CountyPaintingStrategy {
 

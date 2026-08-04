@@ -2,11 +2,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Subscription } from "rxjs/internal/Subscription";
 import { Injectable } from "@angular/core";
-import {
-  ChoroDataService,
-  CountyDataService,
-  CountyPaintingStrategy
-} from 'jz-choro-dash';
+import { ChoroDataService } from '../../services/choro-data.service';
+import { CountyDataService } from '../../services/county-data.service';
+import { CountyPaintingStrategy } from "../../../public-api";
 
 @Injectable()
 export class PaintElectionStrategy implements CountyPaintingStrategy {
