@@ -1,8 +1,8 @@
 
 import { rgb } from "d3-color";
-import { ChoroDataService } from "../../../../_components/charts/jz-choropleths/services/choro-data.service";
 
 import {
+  ChoroDataService,
   CountyDataService,
   CountyPaintingStrategy
 } from 'jz-choro-dash';

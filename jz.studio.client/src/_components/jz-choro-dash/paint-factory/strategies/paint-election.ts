@@ -1,9 +1,9 @@
 
 import { HttpErrorResponse } from "@angular/common/http";
 import { Subscription } from "rxjs/internal/Subscription";
-import { ChoroDataService } from "../../../../_components/charts/jz-choropleths/services/choro-data.service";
 import { Injectable } from "@angular/core";
 import {
+  ChoroDataService,
   CountyDataService,
   CountyPaintingStrategy
 } from 'jz-choro-dash';

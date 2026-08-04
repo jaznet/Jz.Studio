@@ -4,8 +4,8 @@ import { PaintElectionStrategy } from "./strategies/paint-election";
 import { PaintPopulationStrategy } from "./strategies/paint-population";
 import { PaintTestPatternStrategy } from "./strategies/paint-test-pattern";
 
-import { ChoroDataService } from "../../../_components/charts/jz-choropleths/services/choro-data.service";
 import {
+  ChoroDataService,
   CountyDataService,
   CountyPaintingStrategy
 } from 'jz-choro-dash';
