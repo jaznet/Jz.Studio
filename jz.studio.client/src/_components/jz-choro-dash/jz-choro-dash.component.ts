@@ -16,7 +16,7 @@ import { select } from 'd3-selection';
 import { CountySelection } from '../charts/jz-choropleths/models/county-selection.model';
 import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 import { Router } from '@angular/router';
-import { JzChoroDashPanelComponent } from '../../../dist/jz-choro-dash';
+import { JzChoroDashPanelComponent } from 'jz-choro-dash';
 
 @Component({
   selector: 'jz-choro-dash',

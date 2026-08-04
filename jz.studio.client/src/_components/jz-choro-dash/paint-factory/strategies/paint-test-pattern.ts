@@ -1,8 +1,11 @@
 
 import { rgb } from "d3-color";
-import { CountyPaintingStrategy } from 'jz-choro-dash';
 import { ChoroDataService } from "../../../../_components/charts/jz-choropleths/services/choro-data.service";
-import { CountyDataService } from "../../../../_components/charts/jz-choropleths/services/county-data.service";
+
+import {
+  CountyDataService,
+  CountyPaintingStrategy
+} from 'jz-choro-dash';
 
 export class PaintTestPatternStrategy implements CountyPaintingStrategy {
 
