@@ -12,7 +12,6 @@
     <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\rendering\" />
     <Folder Include="src\_components\jz-choro-dash\geo\" />
-    <Folder Include="src\_components\jz-choro-dash\jz-choro-dash-panel\" />
     <Folder Include="src\_components\jz-choro-dash\paint-factory\interfaces\" />
     <Folder Include="src\_components\jz-choro-dash\paint-factory\services\" />
     <Folder Include="src\_components\jz-choro-dash\paint-factory\strategies\" />
