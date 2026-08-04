@@ -11,3 +11,4 @@ export * from './lib/models/population';
 export * from './lib/models/federal-election';
 export * from './lib/services/choro-data.service';
 export * from './lib/paint-factory/strategies/paint-election';
+export * from './lib/paint-factory/strategies/paint-test-pattern';
