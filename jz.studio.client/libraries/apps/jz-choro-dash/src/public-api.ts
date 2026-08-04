@@ -7,3 +7,6 @@ export * from './lib/components/jz-choro-dash-panel/jz-choro-dash-panel.componen
 export * from './lib/paint-factory/interfaces/county-painting-strategy';
 export * from './lib/services/user-selection.service';
 export * from './lib/services/county-data.service';
+export * from './lib/models/population';
+export * from './lib/models/federal-election';
+export * from './lib/services/choro-data.service';
