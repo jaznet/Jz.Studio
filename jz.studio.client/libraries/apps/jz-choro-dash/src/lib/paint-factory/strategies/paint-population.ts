@@ -1,6 +1,6 @@
 
 import { HttpErrorResponse } from '@angular/common/http';
-import { CountyPaintingStrategy } from '../county-painting-strategy';
+import { CountyPaintingStrategy } from '../interfaces/county-painting-strategy';
 import { ChoroDataService } from '../../services/choro-data.service';
 import { CountyDataService } from '../../services/county-data.service';
 

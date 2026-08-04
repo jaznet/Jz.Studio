@@ -1,4 +1,4 @@
-import { PaintStrategyFactoryService } from './paint-strategy-factory.service';
+import { PaintStrategyFactoryService } from '../../../../libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service';
 
 describe('PaintStrategyFactoryService', () => {
   it('should create an instance', () => {

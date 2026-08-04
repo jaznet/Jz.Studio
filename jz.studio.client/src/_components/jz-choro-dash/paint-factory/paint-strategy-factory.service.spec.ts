@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PaintStrategyFactoryService } from './paint-strategy-factory.service';
+import { PaintStrategyFactoryService } from '../../../../libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service';
 
 describe('PaintStrategyFactoryService', () => {
   let service: PaintStrategyFactoryService;
