@@ -13,3 +13,4 @@ export * from './lib/services/choro-data.service';
 export * from './lib/paint-factory/strategies/paint-election';
 export * from './lib/paint-factory/strategies/paint-test-pattern';
 export * from './lib/paint-factory/strategies/paint-population';
+export * from './lib/paint-factory/paint-strategy-factory.service';
