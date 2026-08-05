@@ -17,7 +17,7 @@ import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 import { Subscription } from 'rxjs';
 import { feature, mesh } from 'topojson-client';
-import { TopoService } from '../../services/topo.service';
+import { TopoService } from 'jz-choro-dash';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from 'jz-choro-dash';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
