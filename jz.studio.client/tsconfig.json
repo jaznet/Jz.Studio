@@ -45,7 +45,7 @@
   "include": [
     "src/**/*.ts",
     "src/types/**/*.d.ts"
-, "libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service.ts"  ],
+, "libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service.ts", "libraries/apps/jz-choro-dash/src/lib/models/county-selection.model.ts"  ],
   "references": [
     {
       "path": "./libraries/apps/jz-choro-dash/tsconfig.lib.json"

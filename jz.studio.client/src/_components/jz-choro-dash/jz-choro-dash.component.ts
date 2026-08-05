@@ -13,7 +13,7 @@ import { COUNTY_PAINTING_STRATEGY } from '../charts/jz-choropleths/interface/cou
 import { PaintStrategyFactoryService } from 'jz-choro-dash';
 import { FormsModule } from '@angular/forms';
 import { select } from 'd3-selection';
-import { CountySelection } from '../charts/jz-choropleths/models/county-selection.model';
+import { CountySelection } from '../../../libraries/apps/jz-choro-dash/src/lib/models/county-selection.model';
 import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 import { Router } from '@angular/router';
 import { JzChoroDashPanelComponent } from 'jz-choro-dash';

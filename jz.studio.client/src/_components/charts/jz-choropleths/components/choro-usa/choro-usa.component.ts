@@ -27,7 +27,7 @@ import {
 } from '../../interface/county-painting-strategy.token';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
 import { GeoShapeSet } from 'jz-choro-dash';
-import { CountySelection } from '../../models/county-selection.model';
+import { CountySelection } from '../../../../../../libraries/apps/jz-choro-dash/src/lib/models/county-selection.model';
 
 @Component({
   selector: 'choro-usa',
