@@ -22,7 +22,7 @@ import { StateLookupService } from 'jz-choro-dash';
 import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY
-} from '../../interface/county-painting-strategy.token';
+} from '../../../../../../libraries/apps/jz-choro-dash/src/lib/interfaces/county-painting-strategy.token';
 
 import { GeoShapeSet } from 'jz-choro-dash';
 

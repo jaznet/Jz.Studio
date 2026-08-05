@@ -45,7 +45,7 @@
   "include": [
     "src/**/*.ts",
     "src/types/**/*.d.ts"
-, "libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service.ts", "libraries/apps/jz-choro-dash/src/lib/models/county-selection.model.ts", "libraries/apps/jz-choro-dash/src/lib/services/geo-feature.service.ts", "libraries/apps/jz-choro-dash/src/lib/services/choro-utils.service.ts", "libraries/apps/jz-choro-dash/src/lib/services/state-lookup.service.ts", "libraries/apps/jz-choro-dash/src/lib/interfaces/state-lookup.ts"  ],
+, "libraries/apps/jz-choro-dash/src/lib/paint-factory/paint-strategy-factory.service.ts", "libraries/apps/jz-choro-dash/src/lib/models/county-selection.model.ts", "libraries/apps/jz-choro-dash/src/lib/services/geo-feature.service.ts", "libraries/apps/jz-choro-dash/src/lib/services/choro-utils.service.ts", "libraries/apps/jz-choro-dash/src/lib/services/state-lookup.service.ts", "libraries/apps/jz-choro-dash/src/lib/interfaces/state-lookup.ts", "libraries/apps/jz-choro-dash/src/lib/interfaces/county-painting-strategy.token.ts"  ],
   "references": [
     {
       "path": "./libraries/apps/jz-choro-dash/tsconfig.lib.json"
