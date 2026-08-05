@@ -21,3 +21,4 @@ export * from './lib/paint-factory/strategies/paint-test-pattern';
 export * from './lib/services/choro-data.service';
 export * from './lib/services/county-data.service';
 export * from './lib/services/user-selection.service';
+export * from './lib/services/topo.service';
