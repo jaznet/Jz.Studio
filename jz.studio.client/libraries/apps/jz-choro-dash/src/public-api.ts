@@ -23,3 +23,4 @@ export * from './lib/services/county-data.service';
 export * from './lib/services/user-selection.service';
 export * from './lib/services/topo.service';
 export * from './lib/services/geo-feature.service';
+export * from './lib/services/choro-utils.service';
