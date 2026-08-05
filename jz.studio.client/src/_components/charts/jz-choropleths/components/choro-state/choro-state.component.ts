@@ -22,7 +22,8 @@ import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY
 } from '../../interface/county-painting-strategy.token';
-import { GeoShapeSet } from '../../models/geo-shape-set.model';
+
+import { GeoShapeSet } from 'jz-choro-dash';
 
 @Component({
   selector: 'choro-state',

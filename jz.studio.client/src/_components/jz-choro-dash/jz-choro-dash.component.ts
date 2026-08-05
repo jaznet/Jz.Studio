@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 import { TopoService } from '../../_components/charts/jz-choropleths/services/topo.service';
 import { GeoFeatureService } from '../../_components/charts/jz-choropleths/services/geo-feature.service';
-import { GeoShapeSet } from '../../_components/charts/jz-choropleths/models/geo-shape-set.model';
+import { GeoShapeSet } from 'jz-choro-dash';
 
 import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
 import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/components/choro-state/choro-state.component';

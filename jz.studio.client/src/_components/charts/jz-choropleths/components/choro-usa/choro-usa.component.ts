@@ -26,7 +26,7 @@ import {
   COUNTY_PAINTING_STRATEGY
 } from '../../interface/county-painting-strategy.token';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
-import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { GeoShapeSet } from 'jz-choro-dash';
 import { CountySelection } from '../../models/county-selection.model';
 
 @Component({
