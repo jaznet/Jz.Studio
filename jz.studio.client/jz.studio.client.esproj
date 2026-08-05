@@ -10,6 +10,7 @@
   <ItemGroup>
     <Folder Include="src\assets\css\" />
     <Folder Include="src\_components\charts\jz-choropleths\models\" />
+    <Folder Include="src\_components\charts\jz-choropleths\services\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\rendering\" />
     <Folder Include="src\_components\jz-choro-dash\geo\" />
