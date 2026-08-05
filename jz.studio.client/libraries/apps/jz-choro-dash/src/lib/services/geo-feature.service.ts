@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { feature, mesh } from 'topojson-client';
-import { GeoShapeSet } from 'jz-choro-dash';
+import { GeoShapeSet } from '../models/geo-shape-set.model';
 
 @Injectable({
   providedIn: 'root'
