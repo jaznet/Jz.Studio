@@ -3,7 +3,7 @@ import { json } from 'd3-fetch';
 import { Observable, from } from 'rxjs';
 import { filter, shareReplay } from 'rxjs/operators';
 
-import { MyTopoJSON } from '../models/MyTopoJSON';
+import { MyTopoJSON } from 'jz-choro-dash';
 
 @Injectable({
   providedIn: 'root'
