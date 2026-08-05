@@ -17,7 +17,7 @@ import {
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
-import { StateLookupService } from '../../services/state-lookup.service';
+import { StateLookupService } from '../../../../../../libraries/apps/jz-choro-dash/src/lib/services/state-lookup.service';
 import {
   CountyPaintingStrategy,
   COUNTY_PAINTING_STRATEGY

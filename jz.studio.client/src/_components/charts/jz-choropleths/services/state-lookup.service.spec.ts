@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StateLookupService } from './state-lookup.service';
+import { StateLookupService } from '../../../../../libraries/apps/jz-choro-dash/src/lib/services/state-lookup.service';
 
 describe('StateLookupService', () => {
   let service: StateLookupService;
