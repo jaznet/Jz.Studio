@@ -17,17 +17,13 @@ import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 import { Subscription } from 'rxjs';
 import { feature, mesh } from 'topojson-client';
-
 import { TopoService } from '../../services/topo.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { CountyDataService } from 'jz-choro-dash';
-import {
-  CountyPaintingStrategy,
-  COUNTY_PAINTING_STRATEGY
-} from '../../interface/county-painting-strategy.token';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
 import { GeoShapeSet } from 'jz-choro-dash';
-import { CountySelection } from '../../../../../../libraries/apps/jz-choro-dash/src/lib/models/county-selection.model';
+import { CountySelection } from 'jz-choro-dash';
+import {  CountyPaintingStrategy,  COUNTY_PAINTING_STRATEGY} from '../../interface/county-painting-strategy.token';
 
 @Component({
   selector: 'choro-usa',

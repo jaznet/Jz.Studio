@@ -2,18 +2,16 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { TopoService } from '../../_components/charts/jz-choropleths/services/topo.service';
 import { GeoFeatureService } from '../../_components/charts/jz-choropleths/services/geo-feature.service';
 import { GeoShapeSet } from 'jz-choro-dash';
-
 import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
 import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/components/choro-state/choro-state.component';
 import { COUNTY_PAINTING_STRATEGY } from '../charts/jz-choropleths/interface/county-painting-strategy.token';
 import { PaintStrategyFactoryService } from 'jz-choro-dash';
 import { FormsModule } from '@angular/forms';
 import { select } from 'd3-selection';
-import { CountySelection } from '../../../libraries/apps/jz-choro-dash/src/lib/models/county-selection.model';
+import { CountySelection } from 'jz-choro-dash';
 import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 import { Router } from '@angular/router';
 import { JzChoroDashPanelComponent } from 'jz-choro-dash';
