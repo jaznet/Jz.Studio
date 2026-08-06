@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { TopoService } from 'jz-choro-dash';
 import { GeoFeatureService } from 'jz-choro-dash';
 import { GeoShapeSet } from 'jz-choro-dash';
-import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
+import { ChoroUsaComponent } from 'jz-choro-dash';
 import { ChoroStateComponent } from 'jz-choro-dash';
 import { COUNTY_PAINTING_STRATEGY } from 'jz-choro-dash';
 import { PaintStrategyFactoryService } from 'jz-choro-dash';

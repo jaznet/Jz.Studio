@@ -13,20 +13,22 @@ import {
   ViewChild
 } from '@angular/core';
 
+import {
+  geoAlbersUsa,
+  geoCentroid,
+  geoPath
+} from 'd3-geo';
+
 import { select } from 'd3-selection';
-import { geoPath } from 'd3-geo';
 import { Subscription } from 'rxjs';
 import { feature, mesh } from 'topojson-client';
-import { TopoService } from 'jz-choro-dash';
-import { StateLookupService } from 'jz-choro-dash';
-import { CountyDataService } from 'jz-choro-dash';
-import { geoCentroid, geoAlbersUsa } from 'd3-geo';
-import { GeoShapeSet } from 'jz-choro-dash';
-import { CountySelection } from 'jz-choro-dash';
-import {
-  COUNTY_PAINTING_STRATEGY,
-  CountyPaintingStrategy
-} from 'jz-choro-dash';
+import { COUNTY_PAINTING_STRATEGY } from '../../interfaces/county-painting-strategy.token';
+import { CountySelection } from '../../models/county-selection.model';
+import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { CountyPaintingStrategy } from '../../paint-factory/interfaces/county-painting-strategy';
+import { CountyDataService } from '../../services/county-data.service';
+import { StateLookupService } from '../../services/state-lookup.service';
+import { TopoService } from '../../services/topo.service';
 
 @Component({
   selector: 'choro-usa',
