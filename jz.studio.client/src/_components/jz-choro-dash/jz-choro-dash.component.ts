@@ -7,7 +7,7 @@ import { GeoFeatureService } from 'jz-choro-dash';
 import { GeoShapeSet } from 'jz-choro-dash';
 import { ChoroUsaComponent } from '../../_components/charts/jz-choropleths/components/choro-usa/choro-usa.component';
 import { ChoroStateComponent } from '../../_components/charts/jz-choropleths/components/choro-state/choro-state.component';
-import { COUNTY_PAINTING_STRATEGY } from '../../../libraries/apps/jz-choro-dash/src/lib/interfaces/county-painting-strategy.token';
+import { COUNTY_PAINTING_STRATEGY } from 'jz-choro-dash';
 import { PaintStrategyFactoryService } from 'jz-choro-dash';
 import { FormsModule } from '@angular/forms';
 import { select } from 'd3-selection';
