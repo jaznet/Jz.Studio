@@ -17,14 +17,12 @@ import {
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
-import { StateLookupService } from 'jz-choro-dash';
+import { StateLookupService } from '../../services/state-lookup.service';
 
-import {
-  COUNTY_PAINTING_STRATEGY,
-  CountyPaintingStrategy
-} from 'jz-choro-dash';
+import { COUNTY_PAINTING_STRATEGY } from '../../interfaces/county-painting-strategy.token';
+import { CountyPaintingStrategy } from '../../paint-factory/interfaces/county-painting-strategy';
 
-import { GeoShapeSet } from 'jz-choro-dash';
+import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
   selector: 'choro-state',
