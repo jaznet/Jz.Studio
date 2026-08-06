@@ -23,7 +23,10 @@ import { CountyDataService } from 'jz-choro-dash';
 import { geoCentroid, geoAlbersUsa } from 'd3-geo';
 import { GeoShapeSet } from 'jz-choro-dash';
 import { CountySelection } from 'jz-choro-dash';
-import {  CountyPaintingStrategy,  COUNTY_PAINTING_STRATEGY} from '../../../../../../libraries/apps/jz-choro-dash/src/lib/interfaces/county-painting-strategy.token';
+import {
+  COUNTY_PAINTING_STRATEGY,
+  CountyPaintingStrategy
+} from 'jz-choro-dash';
 
 @Component({
   selector: 'choro-usa',

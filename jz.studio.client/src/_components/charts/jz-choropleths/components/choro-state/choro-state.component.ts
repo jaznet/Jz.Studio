@@ -20,9 +20,9 @@ import { geoPath } from 'd3-geo';
 import { StateLookupService } from 'jz-choro-dash';
 
 import {
-  CountyPaintingStrategy,
-  COUNTY_PAINTING_STRATEGY
-} from '../../../../../../libraries/apps/jz-choro-dash/src/lib/interfaces/county-painting-strategy.token';
+  COUNTY_PAINTING_STRATEGY,
+  CountyPaintingStrategy
+} from 'jz-choro-dash';
 
 import { GeoShapeSet } from 'jz-choro-dash';
 

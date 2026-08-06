@@ -6,6 +6,8 @@ export * from './lib/jz-choro-dash';
 
 export * from './lib/components/jz-choro-dash-panel/jz-choro-dash-panel.component';
 
+export * from './lib/interfaces/county-painting-strategy.token';
+
 export * from './lib/models/county-selection.model';
 export * from './lib/models/federal-election';
 export * from './lib/models/geo-shape-set.model';
