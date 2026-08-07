@@ -8,15 +8,15 @@
             id="rChartTitle"
             class="rChartTitle"
             x="0" y="0" width="0" height="0"
-            [attr.width]="chartScaffold?.width ?? 0"
-            [attr.height]="chartScaffold?.titleHeight ?? 0"
+            [attr.width]="chartScaffold.width"
+            [attr.height]="chartScaffold.titleHeight"
         
             rx="8" ry="8">
       </rect>
 
       <text #tChartTitleText id="tChartTitleText" class="chart-title-text"
-            [attr.x]="(chartScaffold?.width ?? 0) / 2"
-            [attr.y]="(chartScaffold?.titleHeight ?? 0) / 2"
+            [attr.x]="(chartScaffold.width ) / 2"
+            [attr.y]="(chartScaffold.titleHeight) / 2"
             text-anchor="middle"
             dominant-baseline="middle"
             color=var(--chart-title-color)>

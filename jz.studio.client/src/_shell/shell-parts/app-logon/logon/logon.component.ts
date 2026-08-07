@@ -1,8 +1,7 @@
+// logon.component.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-import { JzButton3dComponent } from '../../../../_components/buttons/jz-button3d/jz-button-3d.component';
-import { JzButtonBlockComponent } from '../../../../_components/buttons/jz-button-block/jz-button-block';
+import {  Router } from '@angular/router';
 import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
 
 @Component({
@@ -10,8 +9,6 @@ import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-
   standalone: true,
   imports: [
     ButtonCuboidComponent,
-    JzButton3dComponent,
-    JzButtonBlockComponent,
     ReactiveFormsModule
     ],
     templateUrl: './logon.component.html',

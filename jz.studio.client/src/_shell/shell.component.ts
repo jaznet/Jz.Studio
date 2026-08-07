@@ -26,7 +26,6 @@ import { JzNavService } from '../_framework/navigation/services/jz-nav.service';
 import { ShellThemeService } from '../_framework/palette/services/shell-theme.service';
 import { ShellMode } from './models/shell-mode';
 import { ShellLayoutService } from './services/shell-layout.service';
-import { JzButtonComponent } from '../_framework/ui/buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'app-shell',
@@ -36,8 +35,7 @@ import { JzButtonComponent } from '../_framework/ui/buttons/jz-button/jz-button.
     ShellHeaderComponent,
     ShellFooterComponent,
     RouterOutlet,
-    ShellContentComponent,
-    JzButtonComponent
+    ShellContentComponent
   ],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss'

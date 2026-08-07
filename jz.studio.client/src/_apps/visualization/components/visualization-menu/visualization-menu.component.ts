@@ -1,10 +1,8 @@
+// visualization-menu.component.ts
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
 import { MenuBaseComponent } from '../../../../_components/menus/jz-menu-base/jz-menu-base.component';
-import { JzMenuContainerComponent } from '../../../../_components/menus/jz-menu-container/jz-menu-container.component';
-import { JzMenuTabComponent } from '../../../../_components/menus/jz-menu-tab/jz-menu-tab.component';
 import { JzNavGroupComponent } from '../../../../_framework/navigation/components/jz-nav-group-component/jz-nav-group.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
 import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.service';
@@ -14,8 +12,6 @@ import { JzNavService } from '../../../../_framework/navigation/services/jz-nav.
   standalone: true,
   imports: [
     CommonModule,
-    JzMenuContainerComponent,
-    JzMenuTabComponent,
     JzNavGroupComponent
   ],
   templateUrl: './visualization-menu.component.html',
