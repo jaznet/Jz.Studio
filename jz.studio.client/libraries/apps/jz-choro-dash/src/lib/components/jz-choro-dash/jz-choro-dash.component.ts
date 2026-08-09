@@ -3,36 +3,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { select } from 'd3-selection';
-
-import { COUNTY_PAINTING_STRATEGY } from
-  '../../interfaces/county-painting-strategy.token';
-
-import { CountySelection } from
-  '../../models/county-selection.model';
-
-import { GeoShapeSet } from
-  '../../models/geo-shape-set.model';
-
-import { PaintStrategyFactoryService } from
-  '../../paint-factory/paint-strategy-factory.service';
-
-import { GeoFeatureService } from
-  '../../services/geo-feature.service';
-
-import { TopoService } from
-  '../../services/topo.service';
-
-import { ChoroStateComponent } from
-  '../choro-state/choro-state.component';
-
-import { ChoroUsaComponent } from
-  '../choro-usa/choro-usa.component';
-
-import { JzChoroDashPanelComponent } from
-  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
-
+import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-strategy.token';
+import { CountySelection } from  '../../models/county-selection.model';
+import { GeoShapeSet } from  '../../models/geo-shape-set.model';
+import { PaintStrategyFactoryService } from  '../../paint-factory/paint-strategy-factory.service';
+import { GeoFeatureService } from  '../../services/geo-feature.service';
+import { TopoService } from  '../../services/topo.service';
+import { ChoroStateComponent } from  '../choro-state/choro-state.component';
+import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
+import { JzChoroDashPanelComponent } from  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { JzButtonComponent } from 'jz-ui';
 
 @Component({
@@ -68,6 +49,7 @@ export class JzChoroDashComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private topoService: TopoService,
     private geoFeatureService: GeoFeatureService
   ) { }
@@ -83,7 +65,10 @@ export class JzChoroDashComponent implements OnInit {
   }
 
   openAdmin(): void {
-    this.router.navigate(['/visualization/chorodash/admin']);
+    this.router.navigate(
+      ['admin'],
+      { relativeTo: this.route }
+    );
   }
 
   public toggleCentroidLayer(): void {
