@@ -1,20 +1,40 @@
 // jz-choro-dash.component.ts
 
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopoService } from 'jz-choro-dash';
-import { GeoFeatureService } from 'jz-choro-dash';
-import { GeoShapeSet } from 'jz-choro-dash';
-import { ChoroUsaComponent } from 'jz-choro-dash';
-import { ChoroStateComponent } from 'jz-choro-dash';
-import { COUNTY_PAINTING_STRATEGY } from 'jz-choro-dash';
-import { PaintStrategyFactoryService } from 'jz-choro-dash';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { select } from 'd3-selection';
-import { CountySelection } from 'jz-choro-dash';
-import { JzButtonComponent } from '../../_framework/ui/buttons/jz-button/jz-button.component';
 import { Router } from '@angular/router';
-import { JzChoroDashPanelComponent } from 'jz-choro-dash';
+import { select } from 'd3-selection';
+
+import { COUNTY_PAINTING_STRATEGY } from
+  '../../interfaces/county-painting-strategy.token';
+
+import { CountySelection } from
+  '../../models/county-selection.model';
+
+import { GeoShapeSet } from
+  '../../models/geo-shape-set.model';
+
+import { PaintStrategyFactoryService } from
+  '../../paint-factory/paint-strategy-factory.service';
+
+import { GeoFeatureService } from
+  '../../services/geo-feature.service';
+
+import { TopoService } from
+  '../../services/topo.service';
+
+import { ChoroStateComponent } from
+  '../choro-state/choro-state.component';
+
+import { ChoroUsaComponent } from
+  '../choro-usa/choro-usa.component';
+
+import { JzChoroDashPanelComponent } from
+  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
+
+import { JzButtonComponent } from
+  '../../_framework/ui/buttons/jz-button/jz-button.component';
 
 @Component({
   selector: 'jz-choro-dash',
@@ -40,8 +60,12 @@ export class JzChoroDashComponent implements OnInit {
 
   usaShapeSet?: GeoShapeSet;
   stateShapeSet?: GeoShapeSet;
+
   public showCentroids = false;
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
+
+  selectedStateId: string | null = null;
+  selectedCountyId: string | null = null;
 
   constructor(
     private router: Router,
@@ -51,13 +75,11 @@ export class JzChoroDashComponent implements OnInit {
 
   ngOnInit(): void {
     this.topoService.getTopology().subscribe(topology => {
-
       this.usaShapeSet =
         this.geoFeatureService.createUsaShapeSet(topology);
 
       this.stateShapeSet =
         this.geoFeatureService.createStateCountyShapeSet(topology);
-
     });
   }
 
@@ -78,20 +100,29 @@ export class JzChoroDashComponent implements OnInit {
     layer.style('display', this.showCentroids ? 'block' : 'none');
 
     layer
-      .classed('centroid-mode-all', this.centroidDisplayMode === 'all')
-      .classed('centroid-mode-hover', this.centroidDisplayMode === 'hover');
+      .classed(
+        'centroid-mode-all',
+        this.centroidDisplayMode === 'all'
+      )
+      .classed(
+        'centroid-mode-hover',
+        this.centroidDisplayMode === 'hover'
+      );
 
     layer
       .selectAll('rect.state-bounds')
-      .style('opacity', this.centroidDisplayMode === 'all' ? 0.85 : 0)
+      .style(
+        'opacity',
+        this.centroidDisplayMode === 'all' ? 0.85 : 0
+      )
       .style('pointer-events', 'all');
   }
 
-  selectedStateId: string | null = null;
-  selectedCountyId: string | null = null;
-
   onCountySelected(selection: CountySelection): void {
-    console.log('PARENT RECEIVED COUNTY SELECTION', selection);
+    console.log(
+      'PARENT RECEIVED COUNTY SELECTION',
+      selection
+    );
 
     this.selectedCountyId = selection.countyId;
     this.selectedStateId = selection.stateId;
