@@ -24,14 +24,14 @@ export const VISUALIZATION_ROUTES: Routes = [
       {
         path: 'chorodash',
         loadComponent: () =>
-          import('jz-choro-dash')
-            .then(m => m.JzChoroDash)
+          import('../../_components/jz-choro-dash/jz-choro-dash.component')
+            .then(m => m.JzChoroDashComponent)
       },
 
       {
         path: 'chorodash/admin',
         loadComponent: () =>
-          import('../../_components/jz-choro-dash/admin/admin.component')
+          import('jz-choro-dash')
             .then(m => m.AdminComponent)
       },
 
