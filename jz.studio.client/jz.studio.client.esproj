@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.128-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.128-alpha">
   <PropertyGroup>
     <StartupCommand>npm start</StartupCommand>
     <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
@@ -12,8 +12,6 @@
     <Folder Include="src\_components\charts\jz-choropleths\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\rendering\" />
-    <Folder Include="src\_components\jz-choro-dash\geo\" />
-    <Folder Include="src\_components\jz-choro-dash\paint-factory\" />
     <Folder Include="src\_components\overlays\" />
     <Folder Include="src\library\jz-docking\dock-spawn\classes\" />
     <Folder Include="src\library\jz-menu\" />
