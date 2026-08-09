@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 
 import { AppStateService } from '../../services/shell-state.service';
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
-import { JzButtonComponent } from '../../../_framework/ui/buttons/jz-button/jz-button.component';
+import { JzButtonComponent } from 'jz-ui';
 import { SolutionsMenuComponent } from '../shell-menus/solutions-menu/solutions-menu.component';
 
 @Component({
