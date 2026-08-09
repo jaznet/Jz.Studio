@@ -33,8 +33,7 @@ import { ChoroUsaComponent } from
 import { JzChoroDashPanelComponent } from
   '../jz-choro-dash-panel/jz-choro-dash-panel.component';
 
-import { JzButtonComponent } from
-  '../../_framework/ui/buttons/jz-button/jz-button.component';
+import { JzButtonComponent } from 'jz-ui';
 
 @Component({
   selector: 'jz-choro-dash',
