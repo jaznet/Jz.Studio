@@ -17,6 +17,9 @@
     "paths": {
       "jz-choro-dash": [
         "./dist/jz-choro-dash"
+      ],
+      "jz-ui": [
+        "./dist/jz-ui"
       ]
     },
     "noFallthroughCasesInSwitch": true,
@@ -52,6 +55,12 @@
     },
     {
       "path": "./libraries/apps/jz-choro-dash/tsconfig.spec.json"
+    },
+    {
+      "path": "./libraries/framework/jz-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./libraries/framework/jz-ui/tsconfig.spec.json"
     }
   ]
 }

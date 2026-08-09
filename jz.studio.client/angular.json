@@ -157,6 +157,36 @@
           }
         }
       }
+    },
+    "jz-ui": {
+      "projectType": "library",
+      "root": "libraries/framework/jz-ui",
+      "sourceRoot": "libraries/framework/jz-ui/src",
+      "prefix": "jz",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libraries/framework/jz-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libraries/framework/jz-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "libraries/framework/jz-ui/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
