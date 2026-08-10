@@ -1,5 +1,5 @@
 
-import { GeometryObject, GeometryCollection, GeoJsonProperties, Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon } from 'geojson';
+import type { GeometryObject, GeometryCollection, GeoJsonProperties, Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon } from 'geojson';
 import type { Topology, Objects, Transform } from 'topojson-specification';
 
 
