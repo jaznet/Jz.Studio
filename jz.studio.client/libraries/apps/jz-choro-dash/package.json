@@ -5,6 +5,10 @@
     "@angular/common": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "d3-color": "^3.1.0",
+    "d3-fetch": "^3.0.1",
+    "d3-geo": "^3.1.1",
+    "d3-selection": "^3.0.0",
     "jz-ui": "^0.0.1"
   },
   "dependencies": {

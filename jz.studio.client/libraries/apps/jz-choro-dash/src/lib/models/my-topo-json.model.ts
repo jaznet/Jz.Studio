@@ -1,6 +1,6 @@
 
 import { GeometryObject, GeometryCollection, GeoJsonProperties, Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon } from 'geojson';
-import { Topology, Objects, Transform } from 'topojson-specification';
+import type { Topology, Objects, Transform } from 'topojson-specification';
 
 
 export interface MyTopoJSON extends Topology<Objects<any>> {
