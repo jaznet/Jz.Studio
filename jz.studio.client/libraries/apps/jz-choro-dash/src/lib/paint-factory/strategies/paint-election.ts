@@ -4,7 +4,7 @@ import { Subscription } from "rxjs/internal/Subscription";
 import { Injectable } from "@angular/core";
 import { ChoroDataService } from '../../services/choro-data.service';
 import { CountyDataService } from '../../services/county-data.service';
-import { CountyPaintingStrategy } from "../../../public-api";
+import type { CountyPaintingStrategy } from '../interfaces/county-painting-strategy';
 
 @Injectable()
 export class PaintElectionStrategy implements CountyPaintingStrategy {
