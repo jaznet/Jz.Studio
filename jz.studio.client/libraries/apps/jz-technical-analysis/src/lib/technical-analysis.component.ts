@@ -17,17 +17,29 @@ import {
 
 // #region imports
 
-import { take, takeUntil } from 'rxjs/operators';
-import { Axis, axisBottom, axisTop } from 'd3-axis';
-import { select, Selection } from 'd3-selection';
-import { scaleBand, type ScaleBand } from 'd3-scale';
-import { timeFormat } from 'd3-time-format';
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { DivRect } from './interfaces/common-interfaces';
-import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
+import { Axis, axisBottom, axisTop } from 'd3-axis';
+import { scaleBand, type ScaleBand } from 'd3-scale';
+import { select, Selection } from 'd3-selection';
+import { timeFormat } from 'd3-time-format';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { ChartType } from './enums/chart-type';
+
+import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
+import { ChartScaffold } from './interfaces/chart-scafffold.interface';
+import { DivRect } from './interfaces/common-interfaces';
+import type {
+  PanelAttributes,
+  PanelDefinition,
+  PanelViewModel
+} from './interfaces/panel-interfaces';
+import { PanelPreference } from './interfaces/panel-preference.interface';
+
 import { ChartComponentMap } from './maps/chart-component-map';
+
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { MacdDrawService } from './services/charts/macd/macd-draw.service';
@@ -35,20 +47,16 @@ import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
 import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
 import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
 import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
-import { PanelLayoutService } from './engine/layout/panel-layout.service';
-import { TechnicalAnalysisService } from './technical-analysis.service';
-import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
-import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
+
+import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
-import { PanelPreference } from './interfaces/panel-preference.interface';
 import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
-import { Subject } from 'rxjs';
-import { ChartScaffold } from './interfaces/chart-scafffold.interface';
+import { JzPopoverErrorComponent } from './support/popovers/jz-popover-error/jz-popover-error.component';
+import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-popover-error-utils';
 import { JzPopoverLoadingComponent } from './support/popovers/jz-popover-loading/jz-popover-loading.component';
 import { JzPopoverRef } from './support/popovers/jz-popover-ref';
 import { JzPopoverService } from './support/popovers/jz-popover.service';
-import { JzPopoverErrorComponent } from './support/popovers/jz-popover-error/jz-popover-error.component';
-import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-popover-error-utils';
+import { TechnicalAnalysisService } from './technical-analysis.service';
 
 // #endregion imports
 
