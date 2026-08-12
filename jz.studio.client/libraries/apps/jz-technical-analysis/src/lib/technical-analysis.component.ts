@@ -38,6 +38,8 @@ import { PanelPreference } from './interfaces/panel-preference.interface';
 
 import { ChartComponentMap } from './maps/chart-component-map';
 
+import { StockPriceHistory } from './models/stock-price-history.model';
+
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { MacdDrawService } from './services/charts/macd/macd-draw.service';
@@ -54,7 +56,6 @@ import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-
 import { JzPopoverLoadingComponent } from './support/popovers/jz-popover-loading/jz-popover-loading.component';
 import { JzPopoverRef } from './support/popovers/jz-popover-ref';
 import { JzPopoverService } from './support/popovers/jz-popover.service';
-import { TechnicalAnalysisService } from './technical-analysis.service';
 
 // #endregion imports
 
@@ -157,7 +158,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
-    private stockPriceService: TechnicalAnalysisService,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
     private ohlcLayout: OhlcChartLayoutService,
@@ -201,7 +201,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     this.updateSvgSize();
     window.addEventListener('resize', this.updateSvgSize.bind(this));
-    this.fetchData();
+
 
     this.viewReady = true;
     this.initializeChartWhenReady();
@@ -452,7 +452,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       titleWidth: this.svgContainer.clientWidth,
       width: this.svgContainer.clientWidth,
       height: 400,
-     margins,
+      margins,
       xAxisTop: 30,
       xAxisBottom: 30,
       //yAxisLeft: 40,
@@ -709,7 +709,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('width', d => Math.max(0, d.panelRect.width))
       .attr('height', d => Math.max(0, d.panelRect.height))
       .attr('fill', 'rgba(0, 128, 255, 0.1)');
-   //   .attr('stroke', 'yellow');
+    //   .attr('stroke', 'yellow');
   }
 
   private buildPanelDefinitions(
