@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  ComponentRef,
   ElementRef,
   HostBinding,
   Input,
@@ -51,11 +52,6 @@ import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
 import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
-import { JzPopoverErrorComponent } from './support/popovers/jz-popover-error/jz-popover-error.component';
-import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-popover-error-utils';
-import { JzPopoverLoadingComponent } from './support/popovers/jz-popover-loading/jz-popover-loading.component';
-import { JzPopoverRef } from './support/popovers/jz-popover-ref';
-import { JzPopoverService } from './support/popovers/jz-popover.service';
 
 // #endregion imports
 
@@ -114,11 +110,23 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   @Input() chartTitle: any = 'Technical Analysis Chart';
 
+  @Input()
+  set stockPriceHistoryData(value: StockPriceHistory[] | null | undefined) {
+    this.loadData(value ?? []);
+  }
+
+  get stockPriceHistoryData(): StockPriceHistory[] {
+    return this.chartData.stockPriceHistoryData;
+  }
+
   // #endregion @ViewChild List
 
   // #region Properties
   ChartType = ChartType;
   private readonly destroyed$ = new Subject<void>();
+  private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
+  private readonly resizeHandler = (): void => this.updateSvgSize();
+
   width = 0;
 
   chartScaffold: ChartScaffold = {
@@ -140,7 +148,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   dataReady = false;
   viewReady = false;
   hydrated = false;
-  ticker = 'NVDA';
 
   dateScaleX!: ScaleBand<Date>;
 
@@ -151,7 +158,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   xAxisDays: any;
   xAxisBottom: any;
 
-  private loadingPopoverRef?: JzPopoverRef;
   // #endregion Properties
 
   constructor(
@@ -167,8 +173,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private macdDraw: MacdDrawService,
     private panelHost: PanelHostService,
     private scaffoldSvc: ChartScaffoldService,
-    private panelPreferenceService: PanelPreferenceService,
-    private popoverService: JzPopoverService
+    private panelPreferenceService: PanelPreferenceService
   ) {
     console.log('');
     console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
@@ -193,18 +198,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnDestroy(): void {
+    window.removeEventListener('resize', this.resizeHandler);
+    this.destroyChartComponents();
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
   ngAfterViewInit(): void {
-
     this.updateSvgSize();
-    window.addEventListener('resize', this.updateSvgSize.bind(this));
-
+    window.addEventListener('resize', this.resizeHandler);
 
     this.viewReady = true;
-    this.initializeChartWhenReady();
+    this.tryCreateChart();
 
     console.log('%c   🔵 ngAfterViewInit TechanTsComponent', 'color:##EDF6F9');
   }
@@ -275,57 +280,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('height', scaffold.xAxisBottom);
   }
 
-  private fetchData(): void {
-    console.log('%c     ✔  fetchData', 'color:#90BEE9');
-    const viewRouter =
-      new ElementRef(
-        document.getElementById('viewRouter') as HTMLElement
-      );
-    // show loading popover
-    this.loadingPopoverRef = this.popoverService.openComponent(
-      viewRouter,
-      JzPopoverLoadingComponent,
-      {
-        placement: 'center',
-        data: {
-          title: 'Loading Market Data',
-          message: `Loading ${this.ticker}...`
-        }
-      }
-    );
+  private loadData(data: StockPriceHistory[]): void {
+    this.destroyChartComponents();
+    this.chartData.stockPriceHistoryData = [...data];
+    this.dataReady = data.length > 0;
+    this.hydrated = false;
 
-    this.stockPriceService.getStockPrices(this.ticker).subscribe(
-      (data) => {
-        this.chartData.stockPriceHistoryData = data;
-        this.dataReady = true;
-
-        console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
-
-        /*     this.popover_loading.hide();*/
-        this.tryCreateChart();
-      },
-      (error) => {
-        this.showError(error);
-      }
-    );
-  }
-
-  private showError(error: unknown): void {
-
-    this.loadingPopoverRef?.close();
-
-    const viewRouter = new ElementRef(
-      document.getElementById('viewRouter') as HTMLElement
-    );
-
-    this.popoverService.openComponent(
-      viewRouter,
-      JzPopoverErrorComponent,
-      {
-        placement: 'center',
-        data: buildJzPopoverErrorData(error)
-      }
-    );
+    if (this.dataReady) {
+      this.tryCreateChart();
+    }
   }
 
   private tryCreateChart(): void {
@@ -389,6 +352,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         pref.chartType,
         chartComponent
       );
+      this.chartComponentRefs.push(compRef as ComponentRef<unknown>);
 
       compRef.setInput('data', this.chartData.stockPriceHistoryData);
       compRef.setInput('dateScaleX', this.dateScaleX);
@@ -403,6 +367,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
       compRef.changeDetectorRef.detectChanges();
     });
+  }
+
+  private destroyChartComponents(): void {
+    while (this.chartComponentRefs.length > 0) {
+      const ref = this.chartComponentRefs.pop();
+      if (ref) this.panelHost.destroy(ref);
+    }
   }
 
   //private injectChartsFromConfig(): void {

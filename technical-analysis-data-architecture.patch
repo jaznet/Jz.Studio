@@ -1,0 +1,342 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+index 06e0cde..f60f0b1 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -5,6 +5,7 @@ import {
+   AfterViewInit,
+   ChangeDetectorRef,
+   Component,
++  ComponentRef,
+   ElementRef,
+   HostBinding,
+   Input,
+@@ -42,9 +43,4 @@ import { HtmlElementOverlayContainer } from './support/overlays/html-element-over
+ import { PanelHostService } from './support/panel-workspace/panel-host.service';
+ import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
+-import { JzPopoverErrorComponent } from './support/popovers/jz-popover-error/jz-popover-error.component';
+-import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-popover-error-utils';
+-import { JzPopoverLoadingComponent } from './support/popovers/jz-popover-loading/jz-popover-loading.component';
+-import { JzPopoverRef } from './support/popovers/jz-popover-ref';
+-import { JzPopoverService } from './support/popovers/jz-popover.service';
+ 
+ // #endregion imports
+@@ -101,4 +96,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+ 
+   @Input() chartTitle: any = 'Technical Analysis Chart';
+ 
++  @Input()
++  set stockPriceHistoryData(value: StockPriceHistory[] | null | undefined) {
++    this.loadData(value ?? []);
++  }
++
++  get stockPriceHistoryData(): StockPriceHistory[] {
++    return this.chartData.stockPriceHistoryData;
++  }
++
+   // #endregion @ViewChild List
+@@ -110,3 +115,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   ChartType = ChartType;
+   private readonly destroyed$ = new Subject<void>();
++  private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
++  private readonly resizeHandler = (): void => this.updateSvgSize();
++
+   width = 0;
+@@ -137,6 +145,5 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   dataReady = false;
+   viewReady = false;
+   hydrated = false;
+-  ticker = 'NVDA';
+ 
+   dateScaleX!: ScaleBand<Date>;
+@@ -150,5 +156,4 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   xAxisDays: any;
+   xAxisBottom: any;
+ 
+-  private loadingPopoverRef?: JzPopoverRef;
+   // #endregion Properties
+@@ -171,5 +175,4 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     private panelHost: PanelHostService,
+     private scaffoldSvc: ChartScaffoldService,
+-    private panelPreferenceService: PanelPreferenceService,
+-    private popoverService: JzPopoverService
++    private panelPreferenceService: PanelPreferenceService
+   ) {
+@@ -200,18 +203,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   }
+ 
+   ngOnDestroy(): void {
++    window.removeEventListener('resize', this.resizeHandler);
++    this.destroyChartComponents();
+     this.destroyed$.next();
+     this.destroyed$.complete();
+   }
+ 
+   ngAfterViewInit(): void {
+-
+     this.updateSvgSize();
+-    window.addEventListener('resize', this.updateSvgSize.bind(this));
+-
++    window.addEventListener('resize', this.resizeHandler);
+ 
+     this.viewReady = true;
+-    this.initializeChartWhenReady();
++    this.tryCreateChart();
+ 
+     console.log('%c   🔵 ngAfterViewInit TechanTsComponent', 'color:##EDF6F9');
+   }
+@@ -273,57 +278,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+       .attr('height', scaffold.xAxisBottom);
+   }
+ 
+-  private fetchData(): void {
+-    console.log('%c     ✔  fetchData', 'color:#90BEE9');
+-    const viewRouter =
+-      new ElementRef(
+-        document.getElementById('viewRouter') as HTMLElement
+-      );
+-    // show loading popover
+-    this.loadingPopoverRef = this.popoverService.openComponent(
+-      viewRouter,
+-      JzPopoverLoadingComponent,
+-      {
+-        placement: 'center',
+-        data: {
+-          title: 'Loading Market Data',
+-          message: `Loading ${this.ticker}...`
+-        }
+-      }
+-    );
+-
+-    this.stockPriceService.getStockPrices(this.ticker).subscribe(
+-      (data) => {
+-        this.chartData.stockPriceHistoryData = data;
+-        this.dataReady = true;
+-
+-        console.log('%c     ✔ Data Fetched', 'color:#90BEE9');
+-
+-        /*     this.popover_loading.hide();*/
+-        this.tryCreateChart();
+-      },
+-      (error) => {
+-        this.showError(error);
+-      }
+-    );
+-  }
+-
+-  private showError(error: unknown): void {
+-
+-    this.loadingPopoverRef?.close();
+-
+-    const viewRouter = new ElementRef(
+-      document.getElementById('viewRouter') as HTMLElement
+-    );
+-
+-    this.popoverService.openComponent(
+-      viewRouter,
+-      JzPopoverErrorComponent,
+-      {
+-        placement: 'center',
+-        data: buildJzPopoverErrorData(error)
+-      }
+-    );
++  private loadData(data: StockPriceHistory[]): void {
++    this.destroyChartComponents();
++    this.chartData.stockPriceHistoryData = [...data];
++    this.dataReady = data.length > 0;
++    this.hydrated = false;
++
++    if (this.dataReady) {
++      this.tryCreateChart();
++    }
+   }
+ 
+   private tryCreateChart(): void {
+@@ -400,4 +370,5 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+         chartComponent
+       );
++      this.chartComponentRefs.push(compRef as ComponentRef<unknown>);
+ 
+       compRef.setInput('data', this.chartData.stockPriceHistoryData);
+@@ -420,4 +391,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     });
+   }
+ 
++  private destroyChartComponents(): void {
++    while (this.chartComponentRefs.length > 0) {
++      const ref = this.chartComponentRefs.pop();
++      if (ref) this.panelHost.destroy(ref);
++    }
++  }
++
+   //private injectChartsFromConfig(): void {
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.service.ts
+deleted file mode 100644
+index cd75239..0000000
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.service.ts
++++ /dev/null
+@@ -1,20 +0,0 @@
+-// technical-analysis.service.ts
+-
+-import { Injectable } from '@angular/core';
+-import { HttpClient } from '@angular/common/http';
+-import { Observable } from 'rxjs';
+-import { StockPriceHistory } from './models/stock-price-history.model';
+-
+-@Injectable({
+-  providedIn: 'root'
+-})
+-export class TechnicalAnalysisService {
+-
+-  private apiUrl = 'https://localhost:7105/api/market/daily-prices';
+-
+-  constructor(private http: HttpClient) { }
+-
+-  getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
+-    return this.http.get<StockPriceHistory[]>(`${this.apiUrl}/${ticker}`);
+-  }
+-}
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/public-api.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/public-api.ts
+index f8f7096..b184136 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/public-api.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/public-api.ts
+@@ -6,3 +6,2 @@ export * from './lib/models/daily-price.dto';
+ export * from './lib/models/stock-price-history.model';
+ export * from './lib/services/chart-data.service';
+-export * from './lib/technical-analysis.service';
+diff --git a/jz.studio.client/src/_apps/visualization/services/market-price.service.ts b/jz.studio.client/src/_apps/visualization/services/market-price.service.ts
+new file mode 100644
+index 0000000..91d6d45
+--- /dev/null
++++ b/jz.studio.client/src/_apps/visualization/services/market-price.service.ts
+@@ -0,0 +1,33 @@
++import { HttpClient } from '@angular/common/http';
++import { Injectable } from '@angular/core';
++import { DailyPriceDto, StockPriceHistory } from 'jz-technical-analysis';
++import { map, Observable } from 'rxjs';
++
++@Injectable({ providedIn: 'root' })
++export class MarketPriceService {
++  private readonly apiUrl = '/api/market/daily-prices';
++
++  constructor(private readonly http: HttpClient) { }
++
++  getStockPrices(ticker: string): Observable<StockPriceHistory[]> {
++    return this.http.get<DailyPriceDto[]>(`${this.apiUrl}/${ticker}`).pipe(
++      map(prices => prices.map((price, index) => this.toStockPriceHistory(price, index)))
++    );
++  }
++
++  private toStockPriceHistory(price: DailyPriceDto, index: number): StockPriceHistory {
++    const date = new Date(price.tradeDate);
++
++    return {
++      id: index,
++      timestamp: date,
++      ticker: price.ticker,
++      date,
++      open: price.open,
++      high: price.high,
++      low: price.low,
++      close: price.close,
++      volume: price.volume
++    };
++  }
++}
+diff --git a/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts
+new file mode 100644
+index 0000000..d01fe7c
+--- /dev/null
++++ b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts
+@@ -0,0 +1,79 @@
++import { HttpErrorResponse } from '@angular/common/http';
++import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
++import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-analysis';
++import { Subject, takeUntil } from 'rxjs';
++
++import { MarketPriceService } from '../../services/market-price.service';
++
++@Component({
++  selector: 'technical-analysis-host',
++  standalone: true,
++  imports: [TechnicalAnalysisComponent],
++  template: `
++    @if (loading) {
++      <div class="status">Loading {{ ticker }} market data...</div>
++    } @else if (errorMessage) {
++      <div class="status status--error">{{ errorMessage }}</div>
++    } @else {
++      <techanTs
++        [chartTitle]="chartTitle"
++        [stockPriceHistoryData]="stockPriceHistoryData" />
++    }
++  `,
++  styles: [`
++    :host {
++      display: block;
++      width: 100%;
++      height: 100%;
++      min-width: 0;
++      min-height: 0;
++    }
++
++    .status {
++      display: grid;
++      width: 100%;
++      height: 100%;
++      place-items: center;
++      color: var(--plt-txt-2);
++      background: var(--plt-clr-2);
++    }
++
++    .status--error {
++      color: var(--plt-pop);
++    }
++  `]
++})
++export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
++  @HostBinding('class') classes = 'fit-to-parent';
++
++  readonly ticker = 'NVDA';
++  readonly chartTitle = `${this.ticker} Technical Analysis`;
++
++  stockPriceHistoryData: StockPriceHistory[] = [];
++  loading = true;
++  errorMessage = '';
++
++  private readonly destroyed$ = new Subject<void>();
++
++  constructor(private readonly marketPriceService: MarketPriceService) { }
++
++  ngOnInit(): void {
++    this.marketPriceService.getStockPrices(this.ticker)
++      .pipe(takeUntil(this.destroyed$))
++      .subscribe({
++        next: data => {
++          this.stockPriceHistoryData = data;
++          this.loading = false;
++        },
++        error: (error: HttpErrorResponse) => {
++          this.errorMessage = error.message || `Unable to load ${this.ticker} market data.`;
++          this.loading = false;
++        }
++      });
++  }
++
++  ngOnDestroy(): void {
++    this.destroyed$.next();
++    this.destroyed$.complete();
++  }
++}
+diff --git a/jz.studio.client/src/_apps/visualization/visualization.routes.ts b/jz.studio.client/src/_apps/visualization/visualization.routes.ts
+index 53f522d..4bfb2d1 100644
+--- a/jz.studio.client/src/_apps/visualization/visualization.routes.ts
++++ b/jz.studio.client/src/_apps/visualization/visualization.routes.ts
+@@ -37,6 +37,6 @@ export const VISUALIZATION_ROUTES: Routes = [
+       {
+         path: 'techanTs',
+         loadComponent: () =>
+-          import('jz-technical-analysis')
+-            .then(m => m.TechnicalAnalysisComponent)
++          import('./components/technical-analysis-host/technical-analysis-host.component')
++            .then(m => m.TechnicalAnalysisHostComponent)
+       },
