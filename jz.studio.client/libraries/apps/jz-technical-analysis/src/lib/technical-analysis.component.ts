@@ -15,8 +15,6 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 
-// #region imports
-
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Axis, axisBottom, axisTop } from 'd3-axis';
 import { scaleBand, type ScaleBand } from 'd3-scale';
