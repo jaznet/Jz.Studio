@@ -1,0 +1,16 @@
+{
+  "name": "jz-technical-analysis",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/cdk": "^20.2.0",
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "d3": "^7.9.0",
+    "rxjs": "~7.8.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

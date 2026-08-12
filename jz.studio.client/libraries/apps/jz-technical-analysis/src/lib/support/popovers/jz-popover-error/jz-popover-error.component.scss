@@ -1,0 +1,71 @@
+.jz-error-content {
+  min-width: 420px;
+  max-width: 680px;
+}
+
+.jz-error-message {
+  color: var(--plt-txt-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.jz-error-details {
+  margin-top: 16px;
+
+  border-radius: 7px;
+
+  background: rgba(0, 0, 0, 0.22);
+
+  border: 1px solid color-mix(in srgb, var(--border-soft) 75%, transparent);
+
+  overflow: hidden;
+}
+
+.jz-error-details summary {
+  cursor: pointer;
+
+  padding: 10px 12px;
+
+  color: var(--plt-txt-1);
+
+  font-size: 0.86rem;
+  font-weight: 600;
+
+  background: color-mix(in srgb, var(--plt-clr-3) 84%, black);
+}
+
+.jz-error-details pre {
+  margin: 0;
+  padding: 12px;
+
+  max-height: 260px;
+  overflow: auto;
+
+  color: var(--plt-txt-2);
+
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.82rem;
+  line-height: 1.45;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.jz-popover-close-button {
+  min-width: 78px;
+
+  padding: 7px 14px;
+
+  border-radius: 6px;
+
+  border: 1px solid var(--border-soft);
+
+  background: var(--plt-clr-3);
+  color: var(--plt-txt-1);
+
+  cursor: pointer;
+}
+
+.jz-popover-close-button:hover {
+  background: color-mix(in srgb, var(--plt-clr-3) 82%, var(--plt-pop));
+}

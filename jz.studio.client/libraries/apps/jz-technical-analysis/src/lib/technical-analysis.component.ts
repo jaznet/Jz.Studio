@@ -24,7 +24,7 @@ import { scaleBand, type ScaleBand } from 'd3-scale';
 import { timeFormat } from 'd3-time-format';
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { DivRect } from './interfaces/common-interfaces';
-import { HtmlElementOverlayContainer } from '../../overlays/html-element-overlay-container'
+import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 
 import { ChartType } from './enums/chart-type';
 import { ChartComponentMap } from './maps/chart-component-map';
@@ -39,16 +39,16 @@ import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { TechnicalAnalysisService } from './technical-analysis.service';
 import type { PanelAttributes, PanelDefinition, PanelViewModel } from './interfaces/panel-interfaces';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
-import { PanelHostService } from '../../../_framework/layout/panel-workspace/services/panel-host.service';
+import { PanelHostService } from './support/panel-workspace/panel-host.service';
 import { PanelPreference } from './interfaces/panel-preference.interface';
-import { PanelPreferenceService } from '../../../_framework/layout/panel-workspace/services/panel-preference.service';
+import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
 import { Subject } from 'rxjs';
 import { ChartScaffold } from './interfaces/chart-scafffold.interface';
-import { JzPopoverLoadingComponent } from '../../../_framework/ui/popovers/jz-popover-loading/jz-popover-loading.component';
-import { JzPopoverRef } from '../../../_framework/ui/popovers/jz-popover-ref';
-import { JzPopoverService } from '../../../_framework/ui/popovers/jz-popover.service';
-import { JzPopoverErrorComponent } from '../../../_framework/ui/popovers/jz-popover-error/jz-popover-error.component';
-import { buildJzPopoverErrorData } from '../../../_framework/ui/popovers/jz-popover-error/jz-popover-error-utils';
+import { JzPopoverLoadingComponent } from './support/popovers/jz-popover-loading/jz-popover-loading.component';
+import { JzPopoverRef } from './support/popovers/jz-popover-ref';
+import { JzPopoverService } from './support/popovers/jz-popover.service';
+import { JzPopoverErrorComponent } from './support/popovers/jz-popover-error/jz-popover-error.component';
+import { buildJzPopoverErrorData } from './support/popovers/jz-popover-error/jz-popover-error-utils';
 
 // #endregion imports
 
@@ -114,7 +114,20 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly destroyed$ = new Subject<void>();
   width = 0;
 
-  chartScaffold!: ChartScaffold;
+  chartScaffold: ChartScaffold = {
+    titleWidth: 0,
+    titleHeight: 0,
+    width: 0,
+    height: 0,
+    xAxisTop: 0,
+    xAxisBottom: 0,
+    margins: {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    }
+  };
   panelViewModels: PanelViewModel[] = [];
 
   dataReady = false;

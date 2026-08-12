@@ -158,6 +158,26 @@
         }
       }
     },
+    "jz-technical-analysis": {
+      "projectType": "library",
+      "root": "libraries/apps/jz-technical-analysis",
+      "sourceRoot": "libraries/apps/jz-technical-analysis/src",
+      "prefix": "jz",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libraries/apps/jz-technical-analysis/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libraries/apps/jz-technical-analysis/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
     "jz-ui": {
       "projectType": "library",
       "root": "libraries/framework/jz-ui",

@@ -38,7 +38,7 @@ export const VISUALIZATION_ROUTES: Routes = [
       {
         path: 'techanTs',
         loadComponent: () =>
-          import('../../_components/charts/technical-analysis/technical-analysis.component')
+          import('jz-technical-analysis')
             .then(m => m.TechnicalAnalysisComponent)
       },
 

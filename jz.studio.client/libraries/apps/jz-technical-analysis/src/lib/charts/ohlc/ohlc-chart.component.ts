@@ -7,8 +7,8 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-import { select } from 'd3-selection';
-import { scaleLinear, scaleBand } from 'd3-scale';
+import { select, type Selection } from 'd3-selection';
+import { scaleLinear, scaleBand, type ScaleLinear } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { format as d3format } from 'd3-format';
 import { line as d3line, curveLinear } from 'd3-shape';
@@ -160,7 +160,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       );
   }
 
-  private drawSmaOverlays(g: d3.Selection<SVGGElement, unknown, null, undefined>, dates: Date[], y: d3.ScaleLinear<number, number>) {
+  private drawSmaOverlays(g: Selection<SVGGElement, unknown, null, undefined>, dates: Date[], y: ScaleLinear<number, number>) {
     const closes = this.data.map(d => d.close);
     const group = g.selectAll('g.sma-overlays').data([0]).join('g').attr('class', 'sma-overlays');
 

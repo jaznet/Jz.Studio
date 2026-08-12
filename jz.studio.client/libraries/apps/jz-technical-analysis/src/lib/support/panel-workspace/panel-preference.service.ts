@@ -2,8 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PanelPreference } from '../../../../_components/charts/technical-analysis/interfaces/panel-preference.interface';
-import { DEFAULT_PANEL_PREFERENCES } from '../../../../_components/charts/technical-analysis/technical-analysis-panel-preferences';
+import { PanelPreference } from '../../interfaces/panel-preference.interface';
+import { DEFAULT_PANEL_PREFERENCES } from '../../technical-analysis-panel-preferences';
 
 @Injectable({
   providedIn: 'root'

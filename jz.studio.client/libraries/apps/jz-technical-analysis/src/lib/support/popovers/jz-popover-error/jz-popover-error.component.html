@@ -1,0 +1,26 @@
+<jz-popover-panel [title]="title"
+                  icon="⚠"
+                  variant="error"
+                  [showFooter]="true">
+
+  <div class="jz-error-content">
+    <div class="jz-error-message">
+      {{ message }}
+    </div>
+
+    <details *ngIf="technicalDetails" class="jz-error-details">
+      <summary>Technical details</summary>
+
+      <pre>{{ technicalDetails }}</pre>
+    </details>
+  </div>
+
+  <div jz-popover-footer>
+    <button type="button"
+            class="jz-popover-close-button"
+            (click)="close()">
+      Close
+    </button>
+  </div>
+
+</jz-popover-panel>

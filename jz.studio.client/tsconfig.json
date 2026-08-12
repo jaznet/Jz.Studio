@@ -18,6 +18,9 @@
       "jz-choro-dash": [
         "./dist/jz-choro-dash"
       ],
+      "jz-technical-analysis": [
+        "./dist/jz-technical-analysis"
+      ],
       "jz-ui": [
         "./dist/jz-ui"
       ]
@@ -55,6 +58,9 @@
     },
     {
       "path": "./libraries/apps/jz-choro-dash/tsconfig.spec.json"
+    },
+    {
+      "path": "./libraries/apps/jz-technical-analysis/tsconfig.lib.json"
     },
     {
       "path": "./libraries/framework/jz-ui/tsconfig.lib.json"

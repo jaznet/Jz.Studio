@@ -1,0 +1,25 @@
+<div class="jz-popover-panel"
+     [class.loading]="variant === 'loading'"
+     [class.info]="variant === 'info'"
+     [class.success]="variant === 'success'"
+     [class.warning]="variant === 'warning'"
+     [class.error]="variant === 'error'">
+
+  <div class="jz-popover-accent"></div>
+
+  <div *ngIf="title" class="jz-popover-header">
+    <div class="jz-popover-title">
+      <span *ngIf="icon" class="jz-popover-icon">{{ icon }}</span>
+      <span>{{ title }}</span>
+    </div>
+  </div>
+
+  <div class="jz-popover-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div *ngIf="showFooter" class="jz-popover-footer">
+    <ng-content select="[jz-popover-footer]"></ng-content>
+  </div>
+
+</div>
