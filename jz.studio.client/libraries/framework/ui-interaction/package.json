@@ -2,8 +2,10 @@
   "name": "ui-interaction",
   "version": "0.0.1",
   "peerDependencies": {
+    "@angular/cdk": "^20.2.0",
     "@angular/common": "^20.3.0",
-    "@angular/core": "^20.3.0"
+    "@angular/core": "^20.3.0",
+    "rxjs": "~7.8.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

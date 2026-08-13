@@ -1,20 +1,14 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, HostBinding, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-analysis';
+import {
+  buildJzPopoverErrorData,
+  JzPopoverErrorComponent,
+  JzPopoverService
+} from 'ui-interaction';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MarketPriceService } from '../../services/market-price.service';
-
-
-
-import { JzPopoverErrorComponent } from
-  '../../../../_framework/ui/popovers/jz-popover-error/jz-popover-error.component';
-
-import { buildJzPopoverErrorData } from
-  '../../../../_framework/ui/popovers/jz-popover-error/jz-popover-error-utils';
-
-import { JzPopoverService } from
-  '../../../../_framework/ui/popovers/jz-popover.service';
 
 @Component({
   selector: 'technical-analysis-host',

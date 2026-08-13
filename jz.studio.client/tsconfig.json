@@ -23,6 +23,9 @@
       ],
       "jz-ui": [
         "./dist/jz-ui"
+      ],
+      "ui-interaction": [
+        "./dist/ui-interaction"
       ]
     },
     "noFallthroughCasesInSwitch": true,
@@ -67,6 +70,9 @@
     },
     {
       "path": "./libraries/framework/jz-ui/tsconfig.spec.json"
+    },
+    {
+      "path": "./libraries/framework/ui-interaction/tsconfig.lib.json"
     }
   ]
 }
