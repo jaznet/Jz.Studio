@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 
-import { JzPopoverPanelComponent } from '../../_framework/ui/popovers/jz-popover-panel/jz-popover-panel.component';
-import { JzPopoverDirective } from '../../_framework/ui/popovers/jz-popover.directive';
+import {
+  JzPopoverDirective,
+  JzPopoverPanelComponent
+} from 'ui-interaction';
 import { TestPopoverComponent } from './test-popover-component/test-popover.component';
 
 @Component({
