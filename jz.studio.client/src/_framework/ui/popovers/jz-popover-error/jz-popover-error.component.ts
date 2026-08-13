@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
-import { JzPopoverPanelComponent } from '../jz-popover-panel/jz-popover-panel.component';
+
 import { JZ_POPOVER_DATA } from '../jz-popover-injector.tokens';
+import { JzPopoverPanelComponent } from '../jz-popover-panel/jz-popover-panel.component';
 import { JzPopoverRef } from '../jz-popover-ref';
-//import { JZ_POPOVER_DATA } from '../tokens/jz-popover.tokens';
-//import { JzPopoverRef } from '../models/jz-popover-ref';
 
 export interface JzPopoverErrorData {
   title?: string;
   message?: string;
   technicalDetails?: string;
+  allowRetry?: boolean;
 }
 
 @Component({
@@ -23,15 +23,14 @@ export interface JzPopoverErrorData {
   styleUrls: ['./jz-popover-error.component.scss']
 })
 export class JzPopoverErrorComponent {
-
   constructor(
-    @Optional() @Inject(JZ_POPOVER_DATA)
+    @Optional()
+    @Inject(JZ_POPOVER_DATA)
     public data: JzPopoverErrorData | null,
 
     @Optional()
-    private popoverRef: JzPopoverRef
-  ) {
-  }
+    private readonly popoverRef: JzPopoverRef
+  ) { }
 
   get title(): string {
     return this.data?.title || 'Error';
@@ -45,7 +44,15 @@ export class JzPopoverErrorComponent {
     return this.data?.technicalDetails || '';
   }
 
-  close(): void {
-    this.popoverRef?.close();
+  get allowRetry(): boolean {
+    return this.data?.allowRetry === true;
+  }
+
+  ok(): void {
+    this.popoverRef?.close('ok');
+  }
+
+  retry(): void {
+    this.popoverRef?.close('retry');
   }
 }

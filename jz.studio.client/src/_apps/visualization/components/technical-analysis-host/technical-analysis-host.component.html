@@ -1,0 +1,9 @@
+@if (loading) {
+<div class="status">
+  Loading {{ ticker }} market data...
+</div>
+} @else {
+<techanTs [chartTitle]="chartTitle"
+          [stockPriceHistoryData]="stockPriceHistoryData">
+</techanTs>
+}

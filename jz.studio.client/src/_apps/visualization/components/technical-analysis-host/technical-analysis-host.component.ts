@@ -1,47 +1,26 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-analysis';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MarketPriceService } from '../../services/market-price.service';
 
+
+
+import { JzPopoverErrorComponent } from
+  '../../../../_framework/ui/popovers/jz-popover-error/jz-popover-error.component';
+
+import { buildJzPopoverErrorData } from
+  '../../../../_framework/ui/popovers/jz-popover-error/jz-popover-error-utils';
+
+import { JzPopoverService } from
+  '../../../../_framework/ui/popovers/jz-popover.service';
+
 @Component({
   selector: 'technical-analysis-host',
   standalone: true,
   imports: [TechnicalAnalysisComponent],
-  template: `
-    @if (loading) {
-      <div class="status">Loading {{ ticker }} market data...</div>
-    } @else if (errorMessage) {
-      <div class="status status--error">{{ errorMessage }}</div>
-    } @else {
-      <techanTs
-        [chartTitle]="chartTitle"
-        [stockPriceHistoryData]="stockPriceHistoryData" />
-    }
-  `,
-  styles: [`
-    :host {
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-width: 0;
-      min-height: 0;
-    }
-
-    .status {
-      display: grid;
-      width: 100%;
-      height: 100%;
-      place-items: center;
-      color: var(--plt-txt-2);
-      background: var(--plt-clr-2);
-    }
-
-    .status--error {
-      color: var(--plt-pop);
-    }
-  `]
+  templateUrl: './technical-analysis-host.component.html'
 })
 export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
@@ -51,13 +30,22 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   stockPriceHistoryData: StockPriceHistory[] = [];
   loading = true;
-  errorMessage = '';
 
   private readonly destroyed$ = new Subject<void>();
 
-  constructor(private readonly marketPriceService: MarketPriceService) { }
+  constructor(
+    private readonly elementRef: ElementRef<HTMLElement>,
+    private readonly marketPriceService: MarketPriceService,
+    private readonly popoverService: JzPopoverService
+  ) { }
 
-  ngOnInit(): void {
+ngOnInit(): void {
+  this.loadMarketData();
+  }
+
+  private loadMarketData(): void {
+    this.loading = true;
+
     this.marketPriceService.getStockPrices(this.ticker)
       .pipe(takeUntil(this.destroyed$))
       .subscribe({
@@ -66,8 +54,32 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         error: (error: HttpErrorResponse) => {
-          this.errorMessage = error.message || `Unable to load ${this.ticker} market data.`;
           this.loading = false;
+          this.showError(error);
+        }
+      });
+  }
+
+  private showError(error: HttpErrorResponse): void {
+    const errorData = {
+      ...buildJzPopoverErrorData(error),
+      allowRetry: true
+    };
+
+    const popoverRef = this.popoverService.openComponent(
+      this.elementRef,
+      JzPopoverErrorComponent,
+      {
+        positionMode: 'container-center',
+        data: errorData
+      }
+    );
+
+    popoverRef.afterClosed$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(result => {
+        if (result === 'retry') {
+          this.loadMarketData();
         }
       });
   }

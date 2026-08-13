@@ -2,20 +2,21 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Observable, Subject } from 'rxjs';
 
 export class JzPopoverRef {
-  private readonly closedSubject = new Subject<void>();
+  private readonly closedSubject = new Subject<unknown>();
 
-  readonly afterClosed$: Observable<void> = this.closedSubject.asObservable();
+  readonly afterClosed$: Observable<unknown> =
+    this.closedSubject.asObservable();
 
   constructor(private readonly overlayRef: OverlayRef) { }
 
-  close(): void {
+  close(result?: unknown): void {
     if (this.overlayRef.hasAttached()) {
       this.overlayRef.detach();
     }
 
     this.overlayRef.dispose();
 
-    this.closedSubject.next();
+    this.closedSubject.next(result);
     this.closedSubject.complete();
   }
 

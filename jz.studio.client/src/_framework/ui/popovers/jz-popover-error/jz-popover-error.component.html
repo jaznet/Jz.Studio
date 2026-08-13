@@ -16,10 +16,17 @@
   </div>
 
   <div jz-popover-footer>
+    <button *ngIf="allowRetry"
+            type="button"
+            class="jz-popover-close-button"
+            (click)="retry()">
+      Retry
+    </button>
+
     <button type="button"
             class="jz-popover-close-button"
-            (click)="close()">
-      Close
+            (click)="ok()">
+      OK
     </button>
   </div>
 

@@ -10,6 +10,7 @@ export interface JzPopoverErrorData {
   title?: string;
   message?: string;
   technicalDetails?: string;
+  allowRetry?: boolean;
 }
 
 @Component({
@@ -45,7 +46,15 @@ export class JzPopoverErrorComponent {
     return this.data?.technicalDetails || '';
   }
 
-  close(): void {
-    this.popoverRef?.close();
+  get allowRetry(): boolean {
+    return this.data?.allowRetry === true;
+  }
+
+  ok(): void {
+    this.popoverRef?.close('ok');
+  }
+
+  retry(): void {
+    this.popoverRef?.close('retry');
   }
 }
