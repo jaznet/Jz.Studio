@@ -207,6 +207,26 @@
           }
         }
       }
+    },
+    "ui-interaction": {
+      "projectType": "library",
+      "root": "libraries/framework/ui-interaction",
+      "sourceRoot": "libraries/framework/ui-interaction/src",
+      "prefix": "ui",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libraries/framework/ui-interaction/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libraries/framework/ui-interaction/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
     }
   },
   "cli": {
