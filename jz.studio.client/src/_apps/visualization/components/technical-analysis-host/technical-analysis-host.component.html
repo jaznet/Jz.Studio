@@ -1,8 +1,4 @@
-@if (loading) {
-<div class="status">
-  Loading {{ ticker }} market data...
-</div>
-} @else {
+@if (!loading) {
 <techanTs [chartTitle]="chartTitle"
           [stockPriceHistoryData]="stockPriceHistoryData">
 </techanTs>

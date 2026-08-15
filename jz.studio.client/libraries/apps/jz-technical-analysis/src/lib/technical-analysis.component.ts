@@ -282,8 +282,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private loadData(data: StockPriceHistory[]): void {
     this.destroyChartComponents();
-    this.chartData.stockPriceHistoryData = [...data];
-    this.dataReady = data.length > 0;
+    this.chartData.load(data);
+    this.dataReady = this.chartData.stockPriceHistoryData.length > 0;
     this.hydrated = false;
 
     if (this.dataReady) {
@@ -312,7 +312,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
 
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      this.chartData.scrubData();
       this.createChartScaffold();
       this.renderOuterScaffoldOnce();
       this.sizeChartElements();

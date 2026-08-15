@@ -1,0 +1,95 @@
+diff --git a/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.html b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.html
+index f7dbee4..e24c6ce 100644
+--- a/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.html
++++ b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.html
+@@ -1,9 +1,5 @@
+-@if (loading) {
+-<div class="status">
+-  Loading {{ ticker }} market data...
+-</div>
+-} @else {
++@if (!loading) {
+ <techanTs [chartTitle]="chartTitle"
+           [stockPriceHistoryData]="stockPriceHistoryData">
+ </techanTs>
+ }
+diff --git a/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts
+index 40ddeac..f57e070 100644
+--- a/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts
++++ b/jz.studio.client/src/_apps/visualization/components/technical-analysis-host/technical-analysis-host.component.ts
+@@ -4,6 +4,8 @@ import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-anal
+ import {
+   buildJzPopoverErrorData,
+   JzPopoverErrorComponent,
++  JzPopoverLoadingComponent,
++  JzPopoverRef,
+   JzPopoverService
+ } from 'ui-interaction';
+ import { Subject, takeUntil } from 'rxjs';
+@@ -24,6 +26,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
+   loading = true;
+ 
+   private readonly destroyed$ = new Subject<void>();
++  private loadingPopoverRef?: JzPopoverRef;
+ 
+   constructor(
+     private readonly elementRef: ElementRef<HTMLElement>,
+@@ -32,12 +35,13 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
+     private readonly popoverService: JzPopoverService
+   ) { }
+ 
+-ngOnInit(): void {
+-  this.loadMarketData();
++  ngOnInit(): void {
++    this.loadMarketData();
+   }
+ 
+   private loadMarketData(): void {
+     this.loading = true;
++    this.openLoadingPopover();
+ 
+     this.marketPriceService.getStockPrices(this.ticker)
+       .pipe(takeUntil(this.destroyed$))
+@@ -45,9 +49,11 @@ ngOnInit(): void {
+         next: data => {
+           this.stockPriceHistoryData = data;
+           this.loading = false;
++          this.closeLoadingPopover();
+         },
+         error: (error: HttpErrorResponse) => {
+           this.loading = false;
++          this.closeLoadingPopover();
+           this.showError(error);
+         }
+       });
+@@ -83,8 +89,30 @@ ngOnInit(): void {
+       });
+   }
+ 
++  private openLoadingPopover(): void {
++    this.closeLoadingPopover();
++
++    this.loadingPopoverRef = this.popoverService.openComponent(
++      this.elementRef,
++      JzPopoverLoadingComponent,
++      {
++        positionMode: 'container-center',
++        hasBackdrop: true,
++        closeOnBackdropClick: false,
++        closeOnEscape: false
++      }
++    );
++  }
++
++  private closeLoadingPopover(): void {
++    const loadingPopoverRef = this.loadingPopoverRef;
++    this.loadingPopoverRef = undefined;
++    loadingPopoverRef?.close();
++  }
++
+   ngOnDestroy(): void {
++    this.closeLoadingPopover();
+     this.destroyed$.next();
+     this.destroyed$.complete();
+   }
+ }

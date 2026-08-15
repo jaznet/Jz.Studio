@@ -4,6 +4,8 @@ import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-anal
 import {
   buildJzPopoverErrorData,
   JzPopoverErrorComponent,
+  JzPopoverLoadingComponent,
+  JzPopoverRef,
   JzPopoverService
 } from 'ui-interaction';
 import { Subject, takeUntil } from 'rxjs';
@@ -26,6 +28,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   loading = true;
 
   private readonly destroyed$ = new Subject<void>();
+  private loadingPopoverRef?: JzPopoverRef;
 
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
@@ -33,12 +36,13 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     private readonly popoverService: JzPopoverService
   ) { }
 
-ngOnInit(): void {
-  this.loadMarketData();
+  ngOnInit(): void {
+    this.loadMarketData();
   }
 
   private loadMarketData(): void {
     this.loading = true;
+    this.openLoadingPopover();
 
     this.marketPriceService.getStockPrices(this.ticker)
       .pipe(takeUntil(this.destroyed$))
@@ -46,9 +50,11 @@ ngOnInit(): void {
         next: data => {
           this.stockPriceHistoryData = data;
           this.loading = false;
+          this.closeLoadingPopover();
         },
         error: (error: HttpErrorResponse) => {
           this.loading = false;
+          this.closeLoadingPopover();
           this.showError(error);
         }
       });
@@ -78,7 +84,29 @@ ngOnInit(): void {
       });
   }
 
+  private openLoadingPopover(): void {
+    this.closeLoadingPopover();
+
+    this.loadingPopoverRef = this.popoverService.openComponent(
+      this.elementRef,
+      JzPopoverLoadingComponent,
+      {
+        positionMode: 'container-center',
+        hasBackdrop: true,
+        closeOnBackdropClick: false,
+        closeOnEscape: false
+      }
+    );
+  }
+
+  private closeLoadingPopover(): void {
+    const loadingPopoverRef = this.loadingPopoverRef;
+    this.loadingPopoverRef = undefined;
+    loadingPopoverRef?.close();
+  }
+
   ngOnDestroy(): void {
+    this.closeLoadingPopover();
     this.destroyed$.next();
     this.destroyed$.complete();
   }
