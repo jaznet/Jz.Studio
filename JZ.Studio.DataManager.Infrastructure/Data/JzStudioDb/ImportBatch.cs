@@ -17,5 +17,7 @@ public partial class ImportBatch
 
     public string Status { get; set; } = null!;
 
+    public virtual ICollection<CorporateAction> CorporateActions { get; set; } = new List<CorporateAction>();
+
     public virtual ICollection<DailyPrice> DailyPrices { get; set; } = new List<DailyPrice>();
 }

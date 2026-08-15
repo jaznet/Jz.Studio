@@ -12,6 +12,8 @@ public partial class JzStudioDbContext : DbContext {
         : base(options) {
     }
 
+    public virtual DbSet<CorporateAction> CorporateActions { get; set; }
+
     public virtual DbSet<DailyPrice> DailyPrices { get; set; }
 
     public virtual DbSet<ImportBatch> ImportBatches { get; set; }
@@ -21,6 +23,36 @@ public partial class JzStudioDbContext : DbContext {
         => optionsBuilder.UseSqlServer("Server=tcp:jazdbserver.database.windows.net,1433;Initial Catalog=JzStudioDb;Persist Security Info=False;User ID=jziemian;Password=Jaz@8454;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        modelBuilder.Entity<CorporateAction>(entity => {
+            entity.HasKey(e => e.CorporateActionId)
+                .HasName("PK_CorporateAction");
+
+            entity.ToTable("CorporateAction", "Market");
+
+            entity.HasIndex(
+                    e => new {
+                        e.ExchangeCode,
+                        e.Ticker,
+                        e.ActionType,
+                        e.ActionDate
+                    },
+                    "UX_CorporateAction_Identity")
+                .IsUnique();
+
+            entity.Property(e => e.ActionType).HasMaxLength(20);
+            entity.Property(e => e.Amount).HasColumnType("decimal(18, 6)");
+            entity.Property(e => e.ExchangeCode).HasMaxLength(20);
+            entity.Property(e => e.Multiplier).HasColumnType("decimal(18, 8)");
+            entity.Property(e => e.Ratio).HasMaxLength(30);
+            entity.Property(e => e.Source).HasMaxLength(100);
+            entity.Property(e => e.Ticker).HasMaxLength(20);
+
+            entity.HasOne(d => d.ImportBatch)
+                .WithMany(p => p.CorporateActions)
+                .HasForeignKey(d => d.ImportBatchId)
+                .HasConstraintName("FK_CorporateAction_ImportBatch");
+        });
+
         modelBuilder.Entity<DailyPrice>(entity => {
             entity.HasKey(e => e.DailyPriceId).HasName("PK__DailyPri__6363912A06CAACCB");
 
