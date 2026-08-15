@@ -54,7 +54,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
         },
         error: (error: HttpErrorResponse) => {
           this.loading = false;
-          this.closeLoadingPopover();
+          this.loadingPopoverRef = undefined;
           this.showError(error);
         }
       });

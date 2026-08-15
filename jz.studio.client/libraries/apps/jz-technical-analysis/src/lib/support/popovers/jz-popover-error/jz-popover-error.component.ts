@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 import { JzPopoverPanelComponent } from '../jz-popover-panel/jz-popover-panel.component';
-import { JZ_POPOVER_DATA } from '../jz-popover-injector.tokens';
+import {
+  JZ_POPOVER_DATA,
+  JZ_POPOVER_REF
+} from '../jz-popover-injector.tokens';
 import { JzPopoverRef } from '../jz-popover-ref';
 //import { JZ_POPOVER_DATA } from '../tokens/jz-popover.tokens';
 //import { JzPopoverRef } from '../models/jz-popover-ref';
@@ -30,7 +33,7 @@ export class JzPopoverErrorComponent {
     public data: JzPopoverErrorData | null,
 
     @Optional()
-    private popoverRef: JzPopoverRef
+    private readonly popoverRef: JzPopoverRef
   ) {
   }
 
