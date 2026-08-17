@@ -30,7 +30,7 @@ public sealed class EodDataClient : IEodDataClient {
         CancellationToken cancellationToken = default) {
         var parameters = new List<KeyValuePair<string, string?>> {
             new("Interval", "d"),
-            new("ApiKey", options.ApiKey),
+            new("apiKey", options.ApiKey),
             new("FromDateStamp", FormatDate(fromDate)),
             new("ToDateStamp", FormatDate(toDate))
         };
@@ -75,7 +75,7 @@ public sealed class EodDataClient : IEodDataClient {
     }
 
     private IEnumerable<KeyValuePair<string, string?>> ApiKeyParameter() {
-        yield return new KeyValuePair<string, string?>("ApiKey", options.ApiKey);
+        yield return new KeyValuePair<string, string?>("apiKey", options.ApiKey);
     }
 
     private static string BuildRequestUri(

@@ -1,5 +1,6 @@
 using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
 using JZ.Studio.DataManager.Core.contracts;
+using JZ.Studio.DataManager.Infrastructure.EodData;
 using JZ.Studio.DataManager.Infrastructure.jobs;
 using JZ.Studio.DataManager.Worker;
 
@@ -7,9 +8,20 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddHostedService<Worker>();
+builder.Services.AddHostedService<EodDataCorporateActionWorker>();
 
 builder.Services.AddScoped<IEtlJob, DummyEtlJob>();
+
+var eodDataOptions = new EodDataOptions {
+    BaseUrl = builder.Configuration["EodData:BaseUrl"]
+        ?? "https://api.eoddata.com",
+    ApiKey = builder.Configuration["EodData:ApiKey"]
+        ?? string.Empty
+};
+
+builder.Services.AddSingleton(eodDataOptions);
+builder.Services.AddHttpClient<IEodDataClient, EodDataClient>();
+builder.Services.AddScoped<EodDataCorporateActionImportJob>();
 
 builder.Services.AddDbContext<JzStudioDbContext>(options =>
 	options.UseSqlServer(
