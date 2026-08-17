@@ -26,6 +26,7 @@ export class JzButtonComponent {
   @Input() active = false;
   @Input() icon?: string;
   @Input() label?: string;
+  @Input() height?: string;
 
   @Output() buttonClick = new EventEmitter<void>();
 }

@@ -2,18 +2,14 @@
 <div #appHeader [ngStyle]="{'visibility': visibility}">
 
   <!--Column 1: Logo-->
-  <!--<div class="grid-col-fixed logo-container">
-    <img src="../assets/logos/JazLogoMaster-00.svg" />
-  </div>-->
+  <div class="grid-col-fixed logo-container">
+    <img src="../assets/logos/jazlogomaster-00.svg" />
+  </div>
 
   <div class="grid-col-fill">
     <div class="grid-cols" style="margin-right:16px;margin-top:8px;justify-content:flex-end">
       <div class="grid-col-fill" style="text-align:center">JZ Studio</div>
-      <jz-button variant="glass"
-                 icon="▣"
-                 (buttonClick)="toggleShellCollapse()">
-                  Collapse
-      </jz-button>
+    
       <palette-menu class="grid-row-fixed"></palette-menu>
     </div>
 
