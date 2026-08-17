@@ -8,6 +8,20 @@
 
 }
 
+.logo-container {
+  height: 100%;
+  min-height: 0;
+  width:150px;
+  border:1px solid white;
+}
+
+.logo {
+  display: block;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
 .menu-container {
   display: flex;
   overflow: hidden;
