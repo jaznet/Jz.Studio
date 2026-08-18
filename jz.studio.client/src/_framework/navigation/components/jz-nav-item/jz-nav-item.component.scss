@@ -1,22 +1,16 @@
 // jz-nav-item.component.scss
 
 #jzhome {
-border-color: none;
-}ok
+  border: none;
+}
 
 .jz-nav-item {
-  padding:0 8px 0 8px;
+  position: relative;
+  padding: 0 8px;
 }
 
-:host-context(jz-nav-group.blank-view)
-:host-context(nav.jz-nav-group.horizontal)
-.jz-nav-item.active {
- padding:8px;
-  border: none;
-  background-color: transparent;
-}
+/* HORIZONTAL */
 
-/*HORIZONTAL*/
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item {
   padding: 8px;
   border-bottom-color: var(--plt-clr-2);
@@ -24,14 +18,34 @@ border-color: none;
   background-color: var(--plt-clr-1);
 }
 
-:host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
-padding:8px;
-border: 1.5px solid var(--plt-pop);
-border-bottom-color: var(--plt-clr-2);
-border-radius: 8px 8px 0 0;
-background-color: var(--plt-clr-2);
-}
-/*VERTICAL*/
+  /* Preserve the content border behind inactive tabs. */
+  :host-context(nav.jz-nav-group.horizontal) .jz-nav-item::after {
+    position: absolute;
+    right: -2px;
+    bottom: -2px;
+    left: -2px;
+    height: 3px;
+    background-color: var(--plt-pop);
+    content: '';
+    pointer-events: none;
+  }
+
+  :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
+    z-index: 2;
+    padding: 8px;
+    border: 1.5px solid var(--plt-pop);
+    border-bottom-color: var(--plt-clr-2);
+    border-radius: 8px 8px 0 0;
+    background-color: var(--plt-clr-2);
+  }
+
+    /* Open the content border beneath the active tab. */
+    :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
+      background-color: var(--plt-clr-2);
+    }
+
+/* VERTICAL */
+
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
   padding: 8px;
   border: 1.5px solid var(--plt-clr-1);
@@ -40,10 +54,44 @@ background-color: var(--plt-clr-2);
   background-color: var(--plt-clr-1);
 }
 
-:host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
-padding: 8px;
-border: 1.5px solid var(--plt-pop);
-border-right-color: var(--plt-clr-2);
-border-radius:  8px 0 0 8px;
-background-color: var(--plt-clr-2);
+  /* Preserve the content border behind inactive tabs. */
+  :host-context(nav.jz-nav-group.vertical) .jz-nav-item::after {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    width: 3px;
+    background-color: var(--plt-pop);
+    content: '';
+    pointer-events: none;
+  }
+
+  :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
+    z-index: 2;
+    padding: 8px;
+    border: 1.5px solid var(--plt-pop);
+    border-right-color: var(--plt-clr-2);
+    border-radius: 8px 0 0 8px;
+    background-color: var(--plt-clr-2);
+  }
+
+    /* Open the content border beside the active tab. */
+    :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
+      background-color: var(--plt-clr-2);
+    }
+
+/* BLANK VIEW */
+
+:host-context(jz-nav-group.blank-view)
+:host-context(nav.jz-nav-group.horizontal)
+.jz-nav-item.active {
+  padding: 8px;
+  border: none;
+  background-color: transparent;
 }
+
+  :host-context(jz-nav-group.blank-view)
+  :host-context(nav.jz-nav-group.horizontal)
+  .jz-nav-item.active::after {
+    display: none;
+  }

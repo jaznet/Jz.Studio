@@ -1,25 +1,20 @@
 /* styles.scss */
 @use './theme/semantic-surfaces';
 :root {
-
   /* =====================================================
      semantic application variables
      ===================================================== */
+  --border-width: 2px;
 
   --jz-app-bg: var(--plt-clr-1);
   --jz-shell-bg: var(--plt-clr-2);
-
   --jz-panel-bg: var(--plt-clr-2);
   --jz-panel-bg-alt: var(--plt-clr-3);
-
   --jz-panel-border: var(--plt-clr-4);
-
   --jz-text: var(--plt-txt-1);
   --jz-text-muted: var(--plt-txt-2);
-
   --jz-accent: var(--plt-pop);
   --jz-accent-text: var(--plt-pop-txt);
-
   --jz-nav-active-bg: var(--plt-pop);
   --jz-nav-active-text: var(--plt-pop-txt);
 }
