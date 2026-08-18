@@ -21,7 +21,7 @@
   background-color: var(--plt-clr-1);
   /* allow overlap onto the content border */
   overflow: visible;
-  padding: 16px 0 0 0;
+  padding: 24px 0 0 0;
   position: relative;
   z-index: 20;
 }

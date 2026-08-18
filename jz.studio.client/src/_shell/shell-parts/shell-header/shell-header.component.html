@@ -1,5 +1,5 @@
 
-<div #appHeader [ngStyle]="{'visibility': visibility}">
+<div class="grid-cols" #appHeader [ngStyle]="{'visibility': visibility}">
 
   <!--Column 1: Logo-->
   <div class="grid-col-fixed logo-container">
@@ -10,17 +10,20 @@
 
   <!--Column 2: Title and Menu-->
   <div class="grid-col-fill">
-    <div class="grid-rows" style="margin-right:16px;margin-top:8px;justify-content:flex-end">
-      <div class="grid-row-fixed" style="text-align:center">JZ Studio</div>
+    <div class="grid-rows">
 
-      <palette-menu class="grid-row-fixed"></palette-menu>
-    </div>
+      <div class="grid-row-fixed" style="margin-right:16px;margin-top:8px;justify-content:flex-end">
 
-    <div #solutionMenuContainer class="grid-row-fixed solutions-menu-container">
-      <solutions-menu #mainMenu></solutions-menu>
+        <div class="grid-col-fill" style="text-align:center">JZ Studio</div>
+        <palette-menu class="grid-col-fixed"></palette-menu>
+      </div>
+
+      <div #solutionMenuContainer class="grid-row-fixed solutions-menu-container">
+        <solutions-menu #mainMenu></solutions-menu>
+      </div>
+
     </div>
   </div>
-
 </div>
 
 

@@ -11,9 +11,17 @@ border-color: none;
 :host-context(jz-nav-group.blank-view)
 :host-context(nav.jz-nav-group.horizontal)
 .jz-nav-item.active {
-padding:8px;
+ padding:8px;
   border: none;
   background-color: transparent;
+}
+
+/*HORIZONTAL*/
+:host-context(nav.jz-nav-group.horizontal) .jz-nav-item {
+  padding: 8px;
+  border-bottom-color: var(--plt-clr-2);
+  border-radius: 8px 8px 0 0;
+  background-color: var(--plt-clr-1);
 }
 
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
@@ -23,8 +31,14 @@ border-bottom-color: var(--plt-clr-2);
 border-radius: 8px 8px 0 0;
 background-color: var(--plt-clr-2);
 }
-
-
+/*VERTICAL*/
+:host-context(nav.jz-nav-group.vertical) .jz-nav-item {
+  padding: 8px;
+  border: 1.5px solid var(--plt-clr-1);
+  border-right-color: var(--plt-pop);
+  border-radius: 8px 0 0 8px;
+  background-color: var(--plt-clr-1);
+}
 
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
 padding: 8px;

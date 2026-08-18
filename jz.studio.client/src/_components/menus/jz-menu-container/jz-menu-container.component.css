@@ -14,8 +14,8 @@
 }
 
 .menu-tab-panel.vertical {
-  margin-right: -1px;
-  z-index: 10;
+  margin-right: 2px;
+  z-index: 100;
   position: relative;
 }
 
