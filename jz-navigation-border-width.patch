@@ -1,0 +1,98 @@
+diff --git a/jz.studio.client/src/styles.scss b/jz.studio.client/src/styles.scss
+index 947a404..0000000 100644
+--- a/jz.studio.client/src/styles.scss
++++ b/jz.studio.client/src/styles.scss
+@@ -4,7 +4,7 @@
+   /* =====================================================
+      semantic application variables
+      ===================================================== */
+-  --border-width: 2px;
++  --border-width: 1.5px;
+ 
+   --jz-app-bg: var(--plt-clr-1);
+   --jz-shell-bg: var(--plt-clr-2);
+diff --git a/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss b/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
+index 218c83c..0000000 100644
+--- a/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
++++ b/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
+@@ -22,10 +22,10 @@
+   /* Preserve the content border behind inactive tabs. */
+   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item::after {
+     position: absolute;
+-    right: -2px;
+-    bottom: -2px;
+-    left: -2px;
+-    height: 3px;
++    right: calc(-1 * var(--border-width));
++    bottom: calc(-1 * var(--border-width));
++    left: calc(-1 * var(--border-width));
++    height: calc(2 * var(--border-width));
+     background-color: var(--plt-pop);
+     content: '';
+     pointer-events: none;
+@@ -35,7 +35,7 @@
+   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
+     z-index: 2;
+     padding: 8px;
+-    border: 1.5px solid var(--plt-pop);
++    border: var(--border-width) solid var(--plt-pop);
+     border-bottom-color: var(--plt-clr-2);
+     border-radius: 8px 8px 0 0;
+     background-color: var(--plt-clr-2);
+@@ -53,7 +53,7 @@
+ 
+ :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
+   padding: 8px;
+-  border: 1.5px solid var(--plt-clr-1);
++  border: var(--border-width) solid var(--plt-clr-1);
+   border-right-color: var(--plt-pop);
+   border-radius: 8px 0 0 8px;
+   background-color: var(--plt-clr-1);
+@@ -62,10 +62,10 @@
+   /* Preserve the content border behind inactive tabs. */
+   :host-context(nav.jz-nav-group.vertical) .jz-nav-item::after {
+     position: absolute;
+-    top: -2px;
+-    right: -2px;
+-    bottom: -2px;
+-    width: 3px;
++    top: calc(-1 * var(--border-width));
++    right: calc(-1 * var(--border-width));
++    bottom: calc(-1 * var(--border-width));
++    width: calc(2 * var(--border-width));
+     background-color: var(--plt-pop);
+     content: '';
+     pointer-events: none;
+@@ -75,7 +75,7 @@
+   :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
+     z-index: 2;
+     padding: 8px;
+-    border: 1.5px solid var(--plt-pop);
++    border: var(--border-width) solid var(--plt-pop);
+     border-right-color: var(--plt-clr-2);
+     border-radius: 8px 0 0 8px;
+     background-color: var(--plt-clr-2);
+diff --git a/jz.studio.client/src/_apps/visualization/components/visualization-menu/visualization-menu.component.css b/jz.studio.client/src/_apps/visualization/components/visualization-menu/visualization-menu.component.css
+index 813a142..0000000 100644
+--- a/jz.studio.client/src/_apps/visualization/components/visualization-menu/visualization-menu.component.css
++++ b/jz.studio.client/src/_apps/visualization/components/visualization-menu/visualization-menu.component.css
+@@ -1,7 +1,7 @@
+ /*visualization-menu.component.css*/
+ 
+ .modules-menu-container {
+-  margin-right: -1.5px;
++  margin-right: calc(-1 * var(--border-width));
+ }
+ 
+ jz-nav-group.modules-nav jz-nav-item:first-child:not(.active),
+diff --git a/jz.studio.client/src/_shell/shell-parts/shell-menus/solutions-menu/solutions-menu.component.css b/jz.studio.client/src/_shell/shell-parts/shell-menus/solutions-menu/solutions-menu.component.css
+index 49fae5a..0000000 100644
+--- a/jz.studio.client/src/_shell/shell-parts/shell-menus/solutions-menu/solutions-menu.component.css
++++ b/jz.studio.client/src/_shell/shell-parts/shell-menus/solutions-menu/solutions-menu.component.css
+@@ -1,5 +1,5 @@
+ .solutions-menu-container {
+-  margin-bottom: -2.5px;
++  margin-bottom: calc(-1 * var(--border-width));
+   z-index:100;
+ }
+ 

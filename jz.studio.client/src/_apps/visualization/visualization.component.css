@@ -2,12 +2,12 @@
   position: relative;
   z-index: 10;
   border-radius: 9px;
-  border: 1.5px solid var(--plt-pop);
+  border: var(--border-width) solid var(--plt-pop);
   background-color: var(--plt-clr-2);
 }
 
 .app-view {
-  border: 1.5px solid var(--plt-clr-3);
+  border: var(--border-width) solid var(--plt-clr-3);
   background-color: var(--plt-clr-2);
 }
 

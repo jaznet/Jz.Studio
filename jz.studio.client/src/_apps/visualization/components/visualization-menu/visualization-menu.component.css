@@ -1,7 +1,7 @@
 /*visualization-menu.component.css*/
 
 .modules-menu-container {
-  margin-right: -1.5px;
+  margin-right: calc(-1 * var(--border-width));
 }
 
 jz-nav-group.modules-nav jz-nav-item:first-child:not(.active),
