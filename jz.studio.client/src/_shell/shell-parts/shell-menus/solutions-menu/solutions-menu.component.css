@@ -1,5 +1,4 @@
 .solutions-menu-container {
-  margin-bottom: calc(-1 * var(--border-width));
   z-index:100;
 }
 

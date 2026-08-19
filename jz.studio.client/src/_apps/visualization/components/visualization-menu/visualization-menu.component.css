@@ -1,9 +1,5 @@
 /*visualization-menu.component.css*/
 
-.modules-menu-container {
-  margin-right: calc(-1 * var(--border-width));
-}
-
 jz-nav-group.modules-nav jz-nav-item:first-child:not(.active),
 jz-nav-group.modules-nav jz-button-cuboid:first-child:not(.active),
 jz-nav-group.modules-nav .jz-btn:first-child:not(.active) {

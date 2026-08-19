@@ -18,18 +18,6 @@
   background-color: var(--plt-clr-1);
 }
 
-  /* Preserve the content border behind inactive tabs. */
-  :host-context(nav.jz-nav-group.horizontal) .jz-nav-item::after {
-    position: absolute;
-    right: calc(-1 * var(--border-width));
-    bottom: calc(-1 * var(--border-width));
-    left: calc(-1 * var(--border-width));
-    height: calc(2 * var(--border-width));
-    background-color: var(--plt-pop);
-    content: '';
-    pointer-events: none;
-  }
-
   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
     z-index: 2;
     padding: 8px;
@@ -39,9 +27,19 @@
     background-color: var(--plt-clr-2);
   }
 
-    /* Open the content border beneath the active tab. */
+    /* Active horizontal tab bridge */
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
+      position: absolute;
+      right: calc(-1 * var(--border-width));
+      bottom: calc(-2 * var(--border-width));
+      left: calc(-1 * var(--border-width));
+      height: calc(2 * var(--border-width));
+      box-sizing: border-box;
+      border-right: var(--border-width) solid var(--plt-pop);
+      border-left: var(--border-width) solid var(--plt-pop);
       background-color: var(--plt-clr-2);
+      content: '';
+      pointer-events: none;
     }
 
 /* VERTICAL */
@@ -49,22 +47,10 @@
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
   padding: 8px;
   border: var(--border-width) solid var(--plt-clr-1);
-  border-right-color: var(--plt-pop);
+
   border-radius: 8px 0 0 8px;
   background-color: var(--plt-clr-1);
 }
-
-  /* Preserve the content border behind inactive tabs. */
-  :host-context(nav.jz-nav-group.vertical) .jz-nav-item::after {
-    position: absolute;
-    top: calc(-1 * var(--border-width));
-    right: calc(-1 * var(--border-width));
-    bottom: calc(-1 * var(--border-width));
-    width: calc(2 * var(--border-width));
-    background-color: var(--plt-pop);
-    content: '';
-    pointer-events: none;
-  }
 
   :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
     z-index: 2;
@@ -75,9 +61,19 @@
     background-color: var(--plt-clr-2);
   }
 
-    /* Open the content border beside the active tab. */
+    /* Active vertical tab bridge */
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
+      position: absolute;
+      top: calc(-1 * var(--border-width));
+      right: calc(-2 * var(--border-width));
+      bottom: calc(-1 * var(--border-width));
+      width: calc(2 * var(--border-width));
+      box-sizing: border-box;
+      border-top: var(--border-width) solid var(--plt-pop);
+      border-bottom: var(--border-width) solid var(--plt-pop);
       background-color: var(--plt-clr-2);
+      content: '';
+      pointer-events: none;
     }
 
 /* BLANK VIEW */

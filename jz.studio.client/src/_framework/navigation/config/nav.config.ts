@@ -5,7 +5,7 @@ import { JzNavItem } from "../models/jz-nav-item.model";
 export const MAIN_NAV_ITEMS: JzNavItem[] = [
   {
     id: 'jzhome',
-    label: 'HoXXme',
+    label: 'Home',
     route: '/home',
     palette: 'onyx',
     layoutType: 'blank'
