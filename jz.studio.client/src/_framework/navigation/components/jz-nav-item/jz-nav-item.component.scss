@@ -19,8 +19,8 @@
 }
 
   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
-    padding: 8px;
     z-index: 2;
+    padding: 8px;
     border: var(--border-width) solid var(--plt-pop);
     border-bottom-color: var(--plt-clr-2);
     background-color: var(--plt-clr-2);
@@ -28,35 +28,25 @@
   }
 
     /* Active horizontal tab inverted corners */
+
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::before,
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
       position: absolute;
-      box-sizing: border-box;
       bottom: calc(-2 * var(--border-width));
       width: var(--tab-inverted-corner-radius);
       height: var(--tab-inverted-corner-radius);
-      border-bottom: var(--border-width) solid var(--plt-pop);
-      background-color: var(--plt-clr-2);
       content: '';
       pointer-events: none;
     }
 
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::before {
       left: calc(-1 * var(--tab-inverted-corner-radius));
-      border-right: var(--border-width) solid var(--plt-pop);
-      border-bottom-right-radius: var(--tab-inverted-corner-radius);
-      box-shadow:
-        var(--border-width) 0 0 var(--plt-clr-2),
-        0 calc(2 * var(--border-width)) 0 var(--plt-clr-2);
+      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-pop) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
       right: calc(-1 * var(--tab-inverted-corner-radius));
-      border-left: var(--border-width) solid var(--plt-pop);
-      border-bottom-left-radius: var(--tab-inverted-corner-radius);
-      box-shadow:
-        calc(-1 * var(--border-width)) 0 0 var(--plt-clr-2),
-        0 calc(2 * var(--border-width)) 0 var(--plt-clr-2);
+      background: radial-gradient( circle at top right, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-pop) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
 /* VERTICAL */
@@ -64,7 +54,6 @@
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
   padding: 0 8px;
   border: var(--border-width) solid var(--plt-clr-1);
-
   border-radius: 8px 0 0 8px;
   background-color: var(--plt-clr-1);
 }
@@ -80,35 +69,25 @@
   }
 
     /* Active vertical tab inverted corners */
+
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::before,
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
       position: absolute;
-      box-sizing: border-box;
-      right: calc(-2 * var(--border-width));
+      right: calc(-1.75 * var(--border-width));
       width: var(--tab-inverted-corner-radius);
       height: var(--tab-inverted-corner-radius);
-      border-right: var(--border-width) solid var(--plt-pop);
-      background-color: var(--plt-clr-2);
       content: '';
       pointer-events: none;
     }
 
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::before {
       top: calc(-1 * var(--tab-inverted-corner-radius));
-      border-bottom: var(--border-width) solid var(--plt-pop);
-      border-bottom-right-radius: var(--tab-inverted-corner-radius);
-      box-shadow:
-        0 var(--border-width) 0 var(--plt-clr-2),
-        calc(2 * var(--border-width)) 0 0 var(--plt-clr-2);
+      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-pop) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
       bottom: calc(-1 * var(--tab-inverted-corner-radius));
-      border-top: var(--border-width) solid var(--plt-pop);
-      border-top-right-radius: var(--tab-inverted-corner-radius);
-      box-shadow:
-        0 calc(-1 * var(--border-width)) 0 var(--plt-clr-2),
-        calc(2 * var(--border-width)) 0 0 var(--plt-clr-2);
+      background: radial-gradient( circle at bottom left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-pop) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
 /* BLANK VIEW */
