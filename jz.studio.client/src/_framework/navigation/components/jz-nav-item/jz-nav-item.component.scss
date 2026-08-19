@@ -12,18 +12,17 @@
 /* HORIZONTAL */
 
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item {
-  padding: 8px;
+  padding: 8px 0;
   border-bottom-color: var(--plt-clr-2);
   border-radius: 8px 8px 0 0;
   background-color: var(--plt-clr-1);
 }
 
   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
-    z-index: 2;
     padding: 8px;
+    z-index: 2;
     border: var(--border-width) solid var(--plt-pop);
     border-bottom-color: var(--plt-clr-2);
-    border-radius: 8px 8px 0 0;
     background-color: var(--plt-clr-2);
   }
 
@@ -45,7 +44,7 @@
 /* VERTICAL */
 
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
-  padding: 8px;
+  padding: 0 8px;
   border: var(--border-width) solid var(--plt-clr-1);
 
   border-radius: 8px 0 0 8px;
