@@ -1,0 +1,52 @@
+diff --git a/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss b/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
+index 7f108b8..d57db86 100644
+--- a/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
++++ b/jz.studio.client/src/_framework/navigation/components/jz-nav-item/jz-nav-item.component.scss
+@@ -31,7 +31,7 @@
+     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
+       position: absolute;
+       box-sizing: border-box;
+-      bottom: calc(-1 * var(--border-width));
++      bottom: calc(-2 * var(--border-width));
+       width: var(--tab-inverted-corner-radius);
+       height: var(--tab-inverted-corner-radius);
+       border-bottom: var(--border-width) solid var(--plt-pop);
+@@ -44,12 +44,14 @@
+       left: calc(-1 * var(--tab-inverted-corner-radius));
+       border-right: var(--border-width) solid var(--plt-pop);
+       border-bottom-right-radius: var(--tab-inverted-corner-radius);
++      box-shadow: var(--border-width) 0 0 var(--plt-clr-2);
+     }
+ 
+     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
+       right: calc(-1 * var(--tab-inverted-corner-radius));
+       border-left: var(--border-width) solid var(--plt-pop);
+       border-bottom-left-radius: var(--tab-inverted-corner-radius);
++      box-shadow: calc(-1 * var(--border-width)) 0 0 var(--plt-clr-2);
+     }
+ 
+ /* VERTICAL */
+@@ -76,7 +78,7 @@
+     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
+       position: absolute;
+       box-sizing: border-box;
+-      right: calc(-1 * var(--border-width));
++      right: calc(-2 * var(--border-width));
+       width: var(--tab-inverted-corner-radius);
+       height: var(--tab-inverted-corner-radius);
+       border-right: var(--border-width) solid var(--plt-pop);
+@@ -89,12 +91,14 @@
+       top: calc(-1 * var(--tab-inverted-corner-radius));
+       border-bottom: var(--border-width) solid var(--plt-pop);
+       border-bottom-right-radius: var(--tab-inverted-corner-radius);
++      box-shadow: 0 var(--border-width) 0 var(--plt-clr-2);
+     }
+ 
+     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
+       bottom: calc(-1 * var(--tab-inverted-corner-radius));
+       border-top: var(--border-width) solid var(--plt-pop);
+       border-top-right-radius: var(--tab-inverted-corner-radius);
++      box-shadow: 0 calc(-1 * var(--border-width)) 0 var(--plt-clr-2);
+     }
+ 
+ /* BLANK VIEW */
