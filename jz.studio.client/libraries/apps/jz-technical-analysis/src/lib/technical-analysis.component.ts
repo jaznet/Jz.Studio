@@ -26,7 +26,6 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { ChartType } from './enums/chart-type';
-
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
@@ -36,14 +35,10 @@ import type {
   PanelViewModel
 } from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
-
 import { ChartComponentMap } from './maps/chart-component-map';
-
 import { StockPriceHistory } from './models/stock-price-history.model';
-
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
-
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
 import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
