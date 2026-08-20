@@ -1,0 +1,63 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/interfaces/chart-scafffold.interface.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/interfaces/chart-scaffold.interface.ts
+similarity index 100%
+rename from jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/interfaces/chart-scafffold.interface.ts
+rename to jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/interfaces/chart-scaffold.interface.ts
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+@@ -6,3 +6,3 @@
+ import { select } from 'd3-selection';
+-import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
+ //import { axisRight } from 'd3';
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/layout/panel-layout.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/layout/panel-layout.service.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/layout/panel-layout.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/layout/panel-layout.service.ts
+@@ -7,3 +7,3 @@
+ import { DivRect } from '../../interfaces/common-interfaces';
+-import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
+ import { Margins } from '../../interfaces/techan-interfaces';
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-scaffold.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-scaffold.service.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-scaffold.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-scaffold.service.ts
+@@ -2,6 +2,6 @@
+ 
+ import { Injectable } from '@angular/core';
+ import { BehaviorSubject } from 'rxjs';
+-import { ChartScaffold } from '../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../interfaces/chart-scaffold.interface';
+ 
+ @Injectable({ providedIn: 'root' })
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/macd/macd-draw.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/macd/macd-draw.service.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/macd/macd-draw.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/macd/macd-draw.service.ts
+@@ -7,3 +7,3 @@
+ import { BaseChartLayoutService } from '../base/base-chart-layout-service';
+-import { ChartScaffold } from '../../../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
+ 
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/rsi/rsi-chart.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/rsi/rsi-chart.service.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/rsi/rsi-chart.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/rsi/rsi-chart.service.ts
+@@ -9,3 +9,3 @@
+ import { ChartType } from '../../../enums/chart-type';
+-import { ChartScaffold } from '../../../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
+ 
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/volume/volume-chart.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/volume/volume-chart.service.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/volume/volume-chart.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/charts/volume/volume-chart.service.ts
+@@ -9,3 +9,3 @@
+ import { ChartType } from '../../../enums/chart-type';
+-import { ChartScaffold } from '../../../interfaces/chart-scafffold.interface';
++import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
+ 
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -30,3 +30,3 @@
+ import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
+-import { ChartScaffold } from './interfaces/chart-scafffold.interface';
++import { ChartScaffold } from './interfaces/chart-scaffold.interface';
+ import { DivRect } from './interfaces/common-interfaces';
