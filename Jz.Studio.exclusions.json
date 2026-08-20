@@ -294,5 +294,13 @@
     "FileCount": 0,
     "LineCount": 0,
     "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\libraries",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
   }
 ]
