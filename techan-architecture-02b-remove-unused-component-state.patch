@@ -1,0 +1,69 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -21,3 +21,3 @@
+ import { scaleBand, type ScaleBand } from 'd3-scale';
+-import { select, Selection } from 'd3-selection';
++import { select } from 'd3-selection';
+ import { timeFormat } from 'd3-time-format';
+@@ -25,7 +25,6 @@ import { Subject } from 'rxjs';
+ import { take, takeUntil } from 'rxjs/operators';
+ 
+ import { PanelLayoutService } from './engine/layout/panel-layout.service';
+-import { ChartType } from './enums/chart-type';
+ 
+ import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
+ import { ChartScaffold } from './interfaces/chart-scaffold.interface';
+@@ -88,9 +87,6 @@
+   @ViewChild('gAxisTop', { static: false }) gAxisTop!: ElementRef<SVGGElement>;
+   @ViewChild('rAxisTop', { static: false }) rAxisTop!: ElementRef<SVGRectElement>;
+-  @ViewChild('rAxisTopMonths', { static: false }) rAxisTopMonths!: ElementRef<SVGRectElement>;
+-  @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
+   @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
+-  @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
+ 
+   @ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
+   @ViewChild('rAxisBottom', { static: false }) rAxisBottom!: ElementRef<SVGRectElement>;
+@@ -101,13 +97,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDestro
+   @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
+   @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
+ 
+-  @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
+-
+-  @ViewChild('panel1', { static: false }) panel1!: ElementRef<SVGGElement>;
+-  @ViewChild('panel2', { static: false }) panel2!: ElementRef<SVGGElement>;
+-  @ViewChild('panel3', { static: false }) panel3!: ElementRef<SVGGElement>;
+-  @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
+-
+   @Input() chartTitle: any = 'Technical Analysis Chart';
+ 
+   @Input()
+@@ -122,11 +111,8 @@
+   // #endregion @ViewChild List
+ 
+   // #region Properties
+-  ChartType = ChartType;
+   private readonly destroyed$ = new Subject<void>();
+   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
+   private readonly resizeHandler = (): void => this.updateSvgSize();
+ 
+-  width = 0;
+-
+   chartScaffold: ChartScaffold = {
+@@ -154,8 +140,5 @@
+   chartXaxisMonthsTop!: Axis<Date>;
+   chartXaxisMonthsBottom!: Axis<Date>;
+-  xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
+   svgContainer!: HTMLDivElement;
+-  xAxisDays: any;
+-  xAxisBottom: any;
+ 
+   // #endregion Properties
+@@ -185,7 +168,4 @@
+     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
+     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
+     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
+-
+-    this.xAxisDays = null;
+-    this.xAxisBottom = null;
+   }
