@@ -302,5 +302,21 @@
     "FileCount": 0,
     "LineCount": 0,
     "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "Directory",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\libraries\\apps\\jz-choro-dash",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": false,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\libraries\\apps\\jz-choro-dash\\ng-package.json",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
   }
 ]
