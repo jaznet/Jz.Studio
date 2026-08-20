@@ -8,6 +8,7 @@
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist\jz.studio.client\</PublishAssetsDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="libraries\apps\jz-technical-analysis\src\lib\components\" />
     <Folder Include="src\assets\css\" />
     <Folder Include="src\_components\charts\jz-choropleths\" />
     <Folder Include="src\_components\charts\technical-analysis\engine\indicators\" />
