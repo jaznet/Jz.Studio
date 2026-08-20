@@ -6,21 +6,25 @@
 
 .jz-nav-item {
   position: relative;
-  padding: 0 8px;
+}
+
+/* Reduce the decorative bevel only for navigation buttons. */
+
+:host-context(nav.jz-nav-group) .jz-nav-item jz-button-cuboid {
+  --jz-bevel: 2px;
 }
 
 /* HORIZONTAL */
 
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item {
-  padding: 8px 0;
+  padding: 4px;
   border-bottom-color: var(--plt-clr-2);
   border-radius: 8px 8px 0 0;
   background-color: var(--plt-clr-1);
 }
 
   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
-    z-index: 2;
-    padding: 8px;
+    padding: 6px 6px 4px 6px;
     border: var(--border-width) solid var(--plt-pop);
     border-bottom-color: var(--plt-clr-2);
     background-color: var(--plt-clr-2);
@@ -52,15 +56,14 @@
 /* VERTICAL */
 
 :host-context(nav.jz-nav-group.vertical) .jz-nav-item {
-  padding: 0 8px;
+  padding: 0 4px;
   border: var(--border-width) solid var(--plt-clr-1);
   border-radius: 8px 0 0 8px;
   background-color: var(--plt-clr-1);
 }
 
   :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
-    z-index: 2;
-    padding: 8px;
+    padding: 6px 4px 6px 6px;
     border: var(--border-width) solid var(--plt-pop);
     border-right-color: var(--plt-clr-2);
     border-radius: 8px 0 0 8px;
@@ -95,7 +98,7 @@
 :host-context(jz-nav-group.blank-view)
 :host-context(nav.jz-nav-group.horizontal)
 .jz-nav-item.active {
-  padding: 8px;
+  padding: 0 8px;
   border: none;
   background-color: transparent;
   box-shadow: none;
