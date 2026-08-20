@@ -7,7 +7,7 @@ import { scaleLinear, ScaleBand, ScaleLinear } from 'd3-scale';
 import { ChartDataService } from '../../chart-data.service';
 import { RsiChartLayoutService } from './rsi-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { ChartScaffold } from '../../../interfaces/chart-scafffold.interface';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 
 @Injectable({
   providedIn: 'root',

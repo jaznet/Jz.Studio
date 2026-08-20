@@ -28,7 +28,7 @@ import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { ChartType } from './enums/chart-type';
 
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
-import { ChartScaffold } from './interfaces/chart-scafffold.interface';
+import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
 import type {
   PanelAttributes,

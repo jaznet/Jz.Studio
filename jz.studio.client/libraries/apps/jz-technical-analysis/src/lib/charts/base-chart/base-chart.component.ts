@@ -4,7 +4,7 @@ import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, 
 import { ChartType } from '../../enums/chart-type';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
-import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
+import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 //import { axisRight } from 'd3';
 //import { axisRight } from 'd3';
 

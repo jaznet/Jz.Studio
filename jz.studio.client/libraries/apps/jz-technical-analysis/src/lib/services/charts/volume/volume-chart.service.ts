@@ -7,7 +7,7 @@ import { Axis, AxisDomain, axisLeft, axisRight } from 'd3-axis';
 import { ChartDataService } from '../../chart-data.service';
 import { VolumeChartLayoutService } from './volume-chart-layout.service';
 import { ChartType } from '../../../enums/chart-type';
-import { ChartScaffold } from '../../../interfaces/chart-scafffold.interface';
+import { ChartScaffold } from '../../../interfaces/chart-scaffold.interface';
 
 @Injectable({
   providedIn: 'root',

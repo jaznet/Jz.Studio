@@ -5,7 +5,7 @@ import { ChartType } from '../../enums/chart-type';
 import { ChartLayoutRequest } from '../../interfaces/chart-layout-request.interface';
 import { PanelAttributes, PanelViewModel } from '../../interfaces/panel-interfaces';
 import { DivRect } from '../../interfaces/common-interfaces';
-import { ChartScaffold } from '../../interfaces/chart-scafffold.interface';
+import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { Margins } from '../../interfaces/techan-interfaces';
 @Injectable({
   providedIn: 'root'
