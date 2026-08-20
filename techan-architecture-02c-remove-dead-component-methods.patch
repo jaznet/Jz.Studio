@@ -1,0 +1,74 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -294,38 +294,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDes
+     }
+   }
+ 
+-  //private injectChartsFromConfig(): void {
+-  //  console.log('%c     ✔  injectChartsFromConfig', 'color:#90BEE9');
+-  //  const panelRefs = [this.panel1, this.panel2, this.panel3, this.panel4];
+-
+-  //  chartConfig.forEach((configEntry, index) => {
+-  //    if (!configEntry.include) return;
+-
+-  //    const chartComponent = ChartComponentMap[configEntry.type];
+-  //    const panelRef = panelRefs[index];
+-
+-  //    if (!chartComponent || !panelRef) return;
+-
+-  //    const compRef = this.panelHost.injectChartComponent(
+-  //      panelRef.nativeElement,
+-  //      configEntry.type,
+-  //      chartComponent
+-  //    );
+-
+-  //    compRef.setInput('data', this.chartData.stockPriceHistoryData);
+-  //    compRef.setInput('dateScaleX', this.dateScaleX);
+-  ////    compRef.setInput('scaffold', this.scaffold);
+-
+-  //    compRef.instance.markReadyAndDraw({
+-  //      dataReady: true,
+-  //      inputsInitialized: true,
+-  //      caller: 'injectChartsFromConfig'
+-  //    });
+-
+-  //    compRef.changeDetectorRef.detectChanges();
+-  //  });
+-  //}
+-
+   private createChartScaffold(): void {
+     console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
+ 
+@@ -476,31 +444,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDes
+     select(this.gAxisBottomMonths.nativeElement).call(this.chartXaxisMonthsBottom);
+   }
+ 
+-  private sizeAndPlacePanels(): void {
+-
+-    const preferences = this.panelPreferenceService.getPreferences();
+-    const panelDefinitions = this.buildPanelDefinitions(preferences);
+-
+-    const request: ChartLayoutRequest = {
+-      width: this.chartScaffold.width,
+-      height: this.chartScaffold.height,
+-      margins: this.chartScaffold.margins,
+-      titleWidth: this.chartScaffold.titleWidth,
+-      titleHeight: this.chartScaffold.titleHeight,
+-      axisLeftWidth: this.chartScaffold.margins.left,
+-      axisRightWidth: this.chartScaffold.margins.right,
+-      xAxisTopHeight: this.chartScaffold.xAxisTop,
+-      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
+-      panelGap: 0,
+-      panels: panelDefinitions
+-    };
+-
+-    const resolved = this.layoutService.buildScaffold(request);
+-
+-    this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
+-    this.chartScaffold.chartMap = resolved.chartMap;
+-  }
+-
+   private applyPanelPreferences(preferences: PanelPreference[]): void {
+     if (!this.chartScaffold?.width || !this.chartScaffold?.height) return;
+ 
