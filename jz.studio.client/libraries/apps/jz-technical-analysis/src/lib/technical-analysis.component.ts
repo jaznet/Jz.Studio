@@ -60,7 +60,7 @@ export function createHtmlElementOverlayContainer(host: ElementRef): OverlayCont
 }
 
 @Component({ // TechnicalAnalysisComponent
-  selector: 'techanTs',
+  selector: 'jz-technical-analysis',
   imports: [],
   templateUrl: './technical-analysis.component.html',
   styleUrls: ['./technical-analysis.component.scss'],
@@ -211,7 +211,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.viewReady = true;
     this.tryCreateChart();
 
-    console.log('%c   🔵 ngAfterViewInit TechanTsComponent', 'color:##EDF6F9');
+    console.log('%c   🔵 ngAfterViewInit TechnicalAnalysisComponent', 'color:##EDF6F9');
   }
 
   private updateSvgSize(): void {
