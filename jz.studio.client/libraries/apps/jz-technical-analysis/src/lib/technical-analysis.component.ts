@@ -43,11 +43,6 @@ import { StockPriceHistory } from './models/stock-price-history.model';
 
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
-import { MacdDrawService } from './services/charts/macd/macd-draw.service';
-import { MacdLayoutService } from './services/charts/macd/macd-layout.service';
-import { OhlcChartLayoutService } from './services/charts/ohlc/ohlc-chart-layout.service';
-import { RsiChartLayoutService } from './services/charts/rsi/rsi-chart-layout.service';
-import { VolumeChartLayoutService } from './services/charts/volume/volume-chart-layout.service';
 
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
@@ -161,16 +156,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   // #endregion Properties
 
   constructor(
-    private cdRef: ChangeDetectorRef,
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
-    private ohlcLayout: OhlcChartLayoutService,
-    private volumeLayout: VolumeChartLayoutService,
-    private rsiLayout: RsiChartLayoutService,
-    private macdLayout: MacdLayoutService,
-    private macdDraw: MacdDrawService,
     private panelHost: PanelHostService,
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService
