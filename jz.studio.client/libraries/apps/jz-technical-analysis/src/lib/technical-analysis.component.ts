@@ -24,13 +24,13 @@ import { timeFormat } from 'd3-time-format';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
 import type {
   PanelAttributes,
-  PanelDefinition,
   PanelViewModel
 } from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
@@ -138,6 +138,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private changeDetector: ChangeDetectorRef,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
+    private panelDefinitionBuilder: PanelDefinitionBuilderService,
     private panelHost: PanelHostService,
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService
@@ -522,7 +523,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private applyPanelPreferences(preferences: PanelPreference[]): void {
     if (!this.chartScaffold?.width || !this.chartScaffold?.height) return;
 
-    const panelDefinitions = this.buildPanelDefinitions(preferences);
+    const panelDefinitions = this.panelDefinitionBuilder.build(preferences);
 
     const request: ChartLayoutRequest = {
       width: this.chartScaffold.width,
@@ -587,25 +588,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .attr('height', d => Math.max(0, d.panelRect.height))
       .attr('fill', 'rgba(0, 128, 255, 0.1)');
     //   .attr('stroke', 'yellow');
-  }
-
-  private buildPanelDefinitions(
-    preferences: PanelPreference[]
-  ): PanelDefinition[] {
-    const visiblePrefs = preferences
-      .filter(p => p.visible)
-      .sort((a, b) => a.order - b.order);
-
-    return visiblePrefs.map((pref, index) => ({
-      id: pref.id,
-      chartType: pref.chartType,
-      ratio: pref.ratio,
-      showAxisLeft: pref.showAxisLeft ?? true,
-      showAxisRight: pref.showAxisRight ?? false,
-      showXAxisTop: pref.showXAxisTop ?? false,
-      showXAxisBottom:
-        pref.showXAxisBottom ?? index === visiblePrefs.length - 1
-    }));
   }
 
 }
