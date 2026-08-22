@@ -26,11 +26,11 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
+import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
 import type {
-  PanelAttributes,
   PanelViewModel
 } from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
@@ -140,6 +140,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     public layoutService: PanelLayoutService,
     private panelDefinitionBuilder: PanelDefinitionBuilderService,
     private panelHost: PanelHostService,
+    private panelHostRenderer: PanelHostRendererService,
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService
   ) {
@@ -547,47 +548,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.renderOuterScaffoldOnce();
     this.sizeChartElements();
     this.alignMainChartElements();
-    this.renderPanelHosts();
-  }
-
-  private renderPanelHosts(): void {
-    const panelsMap = this.chartScaffold?.chartMap;
-    if (!panelsMap) return;
-
-    const panels = Object.values(panelsMap).filter(
-      (panel): panel is PanelAttributes => !!panel
+    this.panelHostRenderer.render(
+      this.gPanelHostsContainer.nativeElement,
+      this.chartScaffold.chartMap
     );
-
-    const container = select(this.gPanelHostsContainer.nativeElement);
-
-    const hosts = container
-      .selectAll<SVGGElement, PanelAttributes>('g.panel-host')
-      .data(panels, (d: PanelAttributes) => d.id);
-
-    hosts.exit().remove();
-
-    const enter = hosts
-      .enter()
-      .append('g')
-      .attr('class', 'panel-host');
-
-    enter.append('rect')
-      .attr('class', 'panel-debug');
-
-    const merged = enter.merge(hosts as any);
-
-    merged
-      .attr('id', d => `panel-host-${d.id}`)
-      .attr('data-panel-id', d => d.id)
-      .attr('transform', d => `translate(${d.panelRect.x}, ${d.panelRect.y})`);
-
-    merged.select<SVGRectElement>('rect.panel-debug')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('width', d => Math.max(0, d.panelRect.width))
-      .attr('height', d => Math.max(0, d.panelRect.height))
-      .attr('fill', 'rgba(0, 128, 255, 0.1)');
-    //   .attr('stroke', 'yellow');
   }
 
 }
