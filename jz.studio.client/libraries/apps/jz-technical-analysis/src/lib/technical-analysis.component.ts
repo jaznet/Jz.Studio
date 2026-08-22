@@ -115,8 +115,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
   private readonly resizeHandler = (): void => this.updateSvgSize();
 
-  width = 0;
-
   chartScaffold: ChartScaffold = {
     titleWidth: 0,
     titleHeight: 0,
