@@ -19,7 +19,7 @@ import {
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Axis, axisBottom, axisTop } from 'd3-axis';
 import { scaleBand, type ScaleBand } from 'd3-scale';
-import { select, Selection } from 'd3-selection';
+import { select } from 'd3-selection';
 import { timeFormat } from 'd3-time-format';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -76,10 +76,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   @ViewChild('gAxisTop', { static: false }) gAxisTop!: ElementRef<SVGGElement>;
   @ViewChild('rAxisTop', { static: false }) rAxisTop!: ElementRef<SVGRectElement>;
-  @ViewChild('rAxisTopMonths', { static: false }) rAxisTopMonths!: ElementRef<SVGRectElement>;
-  @ViewChild('xAxisTopRect', { static: false }) xAxisTopRect!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
-  @ViewChild('xAxisDays', { static: false }) xAxisDaysRef!: ElementRef<SVGGElement>;
 
   @ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
   @ViewChild('rAxisBottom', { static: false }) rAxisBottom!: ElementRef<SVGRectElement>;
@@ -89,13 +86,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
   @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
-
-  @ViewChild('yAxisGroupLeft', { static: false }) gYaxisGroupLeftRef!: ElementRef<SVGGElement>;
-
-  @ViewChild('panel1', { static: false }) panel1!: ElementRef<SVGGElement>;
-  @ViewChild('panel2', { static: false }) panel2!: ElementRef<SVGGElement>;
-  @ViewChild('panel3', { static: false }) panel3!: ElementRef<SVGGElement>;
-  @ViewChild('panel4', { static: false }) panel4!: ElementRef<SVGGElement>;
 
   @Input() chartTitle: any = 'Technical Analysis Chart';
 
@@ -139,7 +129,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   chartXaxisMonthsTop!: Axis<Date>;
   chartXaxisMonthsBottom!: Axis<Date>;
-  xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   svgContainer!: HTMLDivElement;
 
   // #endregion Properties
