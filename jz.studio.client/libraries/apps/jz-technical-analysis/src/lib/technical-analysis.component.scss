@@ -1,9 +1,9 @@
 /*technical-analysis.component.scss*/
 
-techants {
+jz-technical-analysis {
   --chart-title-color: #c6c5b9;
   --axis-tick-color: #c6c5b9;
-  --axis-line-color:#c6c5b9;
+  --axis-line-color: #c6c5b9;
   --axis-label-color: #c6c5b9;
 }
 
@@ -17,7 +17,7 @@ techants {
 }
 
 .chart-title-text {
-fill:var(--chart-title-color);
+  fill: #c6c5b9 !important;
 }
 
 .panels-container {
@@ -80,10 +80,11 @@ fill:transparent;
   stroke: var(--axis-line-color);
 }
 
-.tick text {
-  fill: var(--axis-label-color);
-  stroke:none;
-}
+  .tick text {
+    fill: #c6c5b9 !important;
+    stroke: none;
+    font-size: 10px;
+  }
 
 .x-axis {
 /*  color: var(--plt-chart-2);
