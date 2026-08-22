@@ -25,7 +25,6 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
-import { ChartType } from './enums/chart-type';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
@@ -112,7 +111,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   // #endregion @ViewChild List
 
   // #region Properties
-  ChartType = ChartType;
   private readonly destroyed$ = new Subject<void>();
   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
   private readonly resizeHandler = (): void => this.updateSvgSize();
