@@ -17,15 +17,14 @@ import {
 } from '@angular/core';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Axis, axisBottom, axisTop } from 'd3-axis';
-import { scaleBand, type ScaleBand } from 'd3-scale';
+import type { ScaleBand } from 'd3-scale';
 import { select } from 'd3-selection';
-import { timeFormat } from 'd3-time-format';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
+import { ChartXAxisService } from './engine/rendering/chart-x-axis.service';
 import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
@@ -126,9 +125,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   hydrated = false;
 
   dateScaleX!: ScaleBand<Date>;
-
-  chartXaxisMonthsTop!: Axis<Date>;
-  chartXaxisMonthsBottom!: Axis<Date>;
   svgContainer!: HTMLDivElement;
 
   // #endregion Properties
@@ -140,6 +136,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     public layoutService: PanelLayoutService,
     private panelDefinitionBuilder: PanelDefinitionBuilderService,
     private panelHost: PanelHostService,
+    private chartXAxis: ChartXAxisService,
     private panelHostRenderer: PanelHostRendererService,
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService
@@ -281,8 +278,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       this.createChartScaffold();
       this.renderOuterScaffoldOnce();
       this.sizeChartElements();
-      this.createScales();
-      this.drawAxes();
+      this.dateScaleX = this.chartXAxis.createScale(
+        this.chartData.stockPriceHistoryData,
+        this.chartScaffold
+      );
+      this.chartXAxis.renderMonthlyAxes(
+        this.gAxisTopMonths.nativeElement,
+        this.gAxisBottomMonths.nativeElement,
+        this.dateScaleX
+      );
 
       this.applyPanelPreferences(this.panelPreferenceService.getPreferences());
 
@@ -432,93 +436,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
         'transform',
         `translate(${this.chartScaffold.margins.left}, ${this.chartScaffold.height - this.chartScaffold.xAxisBottom})`
       );
-  }
-
-  private createScales(): void {
-
-    const contentWidth = Math.max(0, this.chartScaffold.width ?? 0);
-
-    const raw = this.chartData.stockPriceHistoryData ?? [];
-    const dates: Date[] = raw.map(d =>
-      d.date instanceof Date ? d.date : new Date(d.date)
-    );
-
-    this.dateScaleX = scaleBand<Date>()
-      .domain(dates)
-      .range([0, contentWidth - this.chartScaffold.margins.left - this.chartScaffold.margins.right])
-      .paddingInner(0.2)
-      .paddingOuter(0.1)
-      .align(0.5);
-  }
-
-  private drawAxes(): void {
-    console.log('%c     ✔  drawAxes', 'color:#90BEE9');
-
-    // this.gAxisBottomMonths = select(this.gAxisBottomMonths.nativeElement);
-
-    const dateFormatterMajor = timeFormat('%b %Y');
-
-    let lastMonthTop = -1;
-    let lastYearTop = -1;
-
-    let lastMonthBottom = -1;
-    let lastYearBottom = -1;
-
-    type CustomAxisDomain = string | number | Date | { valueOf(): number };
-
-    this.chartXaxisMonthsTop = axisTop(this.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain) => {
-        let date: Date;
-
-        if (typeof domainValue === 'string') {
-          date = new Date(domainValue);
-        } else if (domainValue instanceof Date) {
-          date = domainValue;
-        } else if (typeof domainValue === 'number') {
-          date = new Date(domainValue);
-        } else {
-          return '';
-        }
-
-        const currentMonth = date.getMonth();
-        const currentYear = date.getFullYear();
-
-        if (currentMonth !== lastMonthTop || currentYear !== lastYearTop) {
-          lastMonthTop = currentMonth;
-          lastYearTop = currentYear;
-          return `${dateFormatterMajor(date)}`;
-        }
-
-        return '';
-      });
-
-    this.chartXaxisMonthsBottom = axisBottom(this.dateScaleX)
-      .tickFormat((domainValue: CustomAxisDomain) => {
-        let date: Date;
-
-        if (typeof domainValue === 'string') {
-          date = new Date(domainValue);
-        } else if (domainValue instanceof Date) {
-          date = domainValue;
-        } else if (typeof domainValue === 'number') {
-          date = new Date(domainValue);
-        } else {
-          return '';
-        }
-
-        const currentMonth = date.getMonth();
-        const currentYear = date.getFullYear();
-
-        if (currentMonth !== lastMonthBottom || currentYear !== lastYearBottom) {
-          lastMonthBottom = currentMonth;
-          lastYearBottom = currentYear;
-          return `${dateFormatterMajor(date)}`;
-        }
-        return '';
-      });
-
-    select(this.gAxisTopMonths.nativeElement).call(this.chartXaxisMonthsTop);
-    select(this.gAxisBottomMonths.nativeElement).call(this.chartXaxisMonthsBottom);
   }
 
   private applyPanelPreferences(preferences: PanelPreference[]): void {
