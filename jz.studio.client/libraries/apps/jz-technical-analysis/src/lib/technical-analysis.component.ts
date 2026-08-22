@@ -141,8 +141,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   chartXaxisMonthsBottom!: Axis<Date>;
   xAxisMonthsBottom!: Selection<SVGGElement, unknown, null, undefined>;
   svgContainer!: HTMLDivElement;
-  xAxisDays: any;
-  xAxisBottom: any;
 
   // #endregion Properties
 
@@ -164,9 +162,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
     document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
     document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
-
-    this.xAxisDays = null;
-    this.xAxisBottom = null;
   }
 
   ngOnInit(): void {
