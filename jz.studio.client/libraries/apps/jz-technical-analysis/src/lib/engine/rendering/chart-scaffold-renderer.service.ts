@@ -17,6 +17,20 @@ export interface ChartScaffoldElements {
 
 @Injectable({ providedIn: 'root' })
 export class ChartScaffoldRendererService {
+  sizeViewport(
+    container: HTMLDivElement,
+    svg: SVGSVGElement,
+    background: SVGRectElement
+  ): void {
+    select(svg)
+      .attr('width', container.clientWidth - 5)
+      .attr('height', container.clientHeight - 2);
+
+    select(background)
+      .attr('width', container.clientWidth)
+      .attr('height', container.clientHeight);
+  }
+
   renderOuter(
     elements: ChartScaffoldElements,
     scaffold: ChartScaffold,

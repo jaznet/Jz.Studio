@@ -18,7 +18,6 @@ import {
 
 import { OverlayContainer } from '@angular/cdk/overlay';
 import type { ScaleBand } from 'd3-scale';
-import { select } from 'd3-selection';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -185,15 +184,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private updateSvgSize(): void {
 
     this.svgContainer = this.divSvgContainer.nativeElement;
-
-    select(this.svgElement.nativeElement)
-      .attr('width', this.divSvgContainer.nativeElement.clientWidth - 5)
-      .attr('height', this.divSvgContainer.nativeElement.clientHeight - 2);
-
-    select(this.rSvgElement.nativeElement)
-      .attr('width', this.divSvgContainer.nativeElement.clientWidth)
-      .attr('height', this.divSvgContainer.nativeElement.clientHeight);
-
+    this.chartScaffoldRenderer.sizeViewport(
+      this.svgContainer,
+      this.svgElement.nativeElement,
+      this.rSvgElement.nativeElement
+    );
 
     console.log('%c     svgElement ', 'color:#8fb996', this.svgElement, ' x ',
       this.svgElement.nativeElement.clientWidth, this.svgElement.nativeElement.clientHeight);
