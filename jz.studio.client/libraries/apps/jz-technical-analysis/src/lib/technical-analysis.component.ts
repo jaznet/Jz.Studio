@@ -22,13 +22,11 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ChartScaffoldBuilderService } from './engine/layout/chart-scaffold-builder.service';
-import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
-import { PanelLayoutService } from './engine/layout/panel-layout.service';
+import { PanelWorkspaceLayoutService } from './engine/layout/panel-workspace-layout.service';
 import { ChartPanelRendererService } from './engine/rendering/chart-panel-renderer.service';
 import { ChartScaffoldRendererService } from './engine/rendering/chart-scaffold-renderer.service';
 import { ChartXAxisService } from './engine/rendering/chart-x-axis.service';
 import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
-import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { DivRect } from './interfaces/common-interfaces';
 import type {
@@ -134,9 +132,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private ngZone: NgZone,
     private changeDetector: ChangeDetectorRef,
     public chartData: ChartDataService,
-    public layoutService: PanelLayoutService,
     private chartScaffoldBuilder: ChartScaffoldBuilderService,
-    private panelDefinitionBuilder: PanelDefinitionBuilderService,
+    private panelWorkspaceLayout: PanelWorkspaceLayoutService,
     private panelHost: PanelHostService,
     private chartPanelRenderer: ChartPanelRendererService,
     private chartScaffoldRenderer: ChartScaffoldRendererService,
@@ -280,26 +277,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private applyPanelPreferences(preferences: PanelPreference[]): void {
     if (!this.chartScaffold?.width || !this.chartScaffold?.height) return;
 
-    const panelDefinitions = this.panelDefinitionBuilder.build(preferences);
-
-    const request: ChartLayoutRequest = {
-      width: this.chartScaffold.width,
-      height: this.chartScaffold.height,
-      margins: this.chartScaffold.margins,
-      titleWidth: this.chartScaffold.titleWidth,
-      titleHeight: this.chartScaffold.titleHeight,
-      axisLeftWidth: this.chartScaffold.margins.left,
-      axisRightWidth: this.chartScaffold.margins.right,
-      xAxisTopHeight: this.chartScaffold.xAxisTop,
-      xAxisBottomHeight: this.chartScaffold.xAxisBottom,
-      panelGap: 0,
-      panels: panelDefinitions
-    };
-
-    const resolved = this.layoutService.buildScaffold(request);
-
-    this.chartScaffold.panelHostsContainer = resolved.panelHostsContainer;
-    this.chartScaffold.chartMap = resolved.chartMap;
+    this.panelWorkspaceLayout.applyPreferences(
+      this.chartScaffold,
+      preferences
+    );
 
     this.chartScaffoldRenderer.renderOuter(
       this.scaffoldElements,
