@@ -24,6 +24,7 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
+import { ChartPanelRendererService } from './engine/rendering/chart-panel-renderer.service';
 import { ChartXAxisService } from './engine/rendering/chart-x-axis.service';
 import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
 import { ChartLayoutRequest } from './interfaces/chart-layout-request.interface';
@@ -33,7 +34,6 @@ import type {
   PanelViewModel
 } from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
-import { ChartComponentMap } from './maps/chart-component-map';
 import { StockPriceHistory } from './models/stock-price-history.model';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
@@ -136,6 +136,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     public layoutService: PanelLayoutService,
     private panelDefinitionBuilder: PanelDefinitionBuilderService,
     private panelHost: PanelHostService,
+    private chartPanelRenderer: ChartPanelRendererService,
     private chartXAxis: ChartXAxisService,
     private panelHostRenderer: PanelHostRendererService,
     private scaffoldSvc: ChartScaffoldService,
@@ -296,46 +297,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private injectConfiguredPanels(): void {
-    const chartMap = this.chartScaffold?.chartMap;
-    if (!chartMap) return;
-
-    const preferences = this.panelPreferenceService.getPreferences()
-      .filter(p => p.visible)
-      .sort((a, b) => a.order - b.order);
-
-    preferences.forEach(pref => {
-      const panel = chartMap[pref.chartType];
-      if (!panel) return;
-
-      const host = this.gPanelHostsContainer.nativeElement.querySelector(
-        `#panel-host-${panel.id}`
-      ) as SVGGElement | null;
-
-      if (!host) return;
-
-      const chartComponent = ChartComponentMap[pref.chartType];
-      if (!chartComponent) return;
-
-      const compRef = this.panelHost.injectChartComponent(
-        host,
-        pref.chartType,
-        chartComponent
-      );
-      this.chartComponentRefs.push(compRef as ComponentRef<unknown>);
-
-      compRef.setInput('data', this.chartData.stockPriceHistoryData);
-      compRef.setInput('dateScaleX', this.dateScaleX);
-      compRef.setInput('panel', panel);
-      compRef.setInput('scaffold', this.chartScaffold);
-
-      compRef.instance.markReadyAndDraw({
-        dataReady: true,
-        inputsInitialized: true,
-        caller: 'injectConfiguredPanels'
-      });
-
-      compRef.changeDetectorRef.detectChanges();
+    const refs = this.chartPanelRenderer.render({
+      containerElement: this.gPanelHostsContainer.nativeElement,
+      scaffold: this.chartScaffold,
+      preferences: this.panelPreferenceService.getPreferences(),
+      data: this.chartData.stockPriceHistoryData,
+      dateScaleX: this.dateScaleX
     });
+
+    this.chartComponentRefs.push(...refs);
   }
 
   private destroyChartComponents(): void {
