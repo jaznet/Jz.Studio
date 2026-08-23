@@ -22,6 +22,7 @@ import { select } from 'd3-selection';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { ChartScaffoldBuilderService } from './engine/layout/chart-scaffold-builder.service';
 import { PanelDefinitionBuilderService } from './engine/layout/panel-definition-builder.service';
 import { PanelLayoutService } from './engine/layout/panel-layout.service';
 import { ChartPanelRendererService } from './engine/rendering/chart-panel-renderer.service';
@@ -134,6 +135,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private changeDetector: ChangeDetectorRef,
     public chartData: ChartDataService,
     public layoutService: PanelLayoutService,
+    private chartScaffoldBuilder: ChartScaffoldBuilderService,
     private panelDefinitionBuilder: PanelDefinitionBuilderService,
     private panelHost: PanelHostService,
     private chartPanelRenderer: ChartPanelRendererService,
@@ -276,7 +278,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
 
     this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      this.createChartScaffold();
+      this.chartScaffold = this.chartScaffoldBuilder.build(
+        this.svgContainer.clientWidth,
+        this.svgContainer.clientHeight
+      );
       this.renderOuterScaffoldOnce();
       this.sizeChartElements();
       this.dateScaleX = this.chartXAxis.createScale(
@@ -313,48 +318,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       const ref = this.chartComponentRefs.pop();
       if (ref) this.panelHost.destroy(ref);
     }
-  }
-
-  private createChartScaffold(): void {
-    console.log('%c     ✔  createChartScaffold', 'color:#90BEE9');
-
-    const margins = {
-      bottom: 30,
-      left: 40,
-      right: 40,
-      top: 30,
-    };
-
-    this.chartScaffold = {
-      titleHeight: 36,
-      titleWidth: this.svgContainer.clientWidth,
-      width: this.svgContainer.clientWidth,
-      height: 400,
-      margins,
-      xAxisTop: 30,
-      xAxisBottom: 30,
-      //yAxisLeft: 40,
-      //yAxisRight: 40,
-      panelHostsContainer: {
-        x: 0,
-        y: 0,
-        width: 0,
-        height: 0
-      },
-      chartMap: undefined
-    };
-
-    this.chartScaffold.width = this.svgContainer.clientWidth;
-    this.chartScaffold.height = this.svgContainer.clientHeight;
-    this.chartScaffold.panelHostsContainer!.width = this.svgContainer.clientWidth;
-
-    //  console.log(
-    //    '%c     ✔ create ChartScaffold',
-    //    'color:#90BEE9',
-    //    this.chartScaffold.width,
-    //    'x',
-    //    this.chartScaffold.height
-    //  );
   }
 
   private sizeChartElements(): void {
