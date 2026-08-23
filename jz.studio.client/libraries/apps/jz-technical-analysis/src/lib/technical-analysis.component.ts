@@ -28,10 +28,6 @@ import { ChartScaffoldRendererService } from './engine/rendering/chart-scaffold-
 import { ChartXAxisService } from './engine/rendering/chart-x-axis.service';
 import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
-import { DivRect } from './interfaces/common-interfaces';
-import type {
-  PanelViewModel
-} from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
 import { StockPriceHistory } from './models/stock-price-history.model';
 import { ChartDataService } from './services/chart-data.service';
@@ -68,7 +64,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGSVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
-  @ViewChild('gChartTitle', { static: false }) gChartTitle!: ElementRef<SVGGElement>;
   @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
   @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
 
@@ -79,8 +74,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
   @ViewChild('rAxisBottom', { static: false }) rAxisBottom!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisBottomMonths', { static: false }) gAxisBottomMonths!: ElementRef<SVGGElement>;
-  //@ViewChild('gAxisBottom', { static: false }) gAxisBottom!: ElementRef<SVGGElement>;
-  /*  @ViewChild('xAxisGroupBottom', { static: false }) gXaxisGroupBottomRef!: ElementRef<SVGGElement>;*/
 
   @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
   @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
@@ -117,8 +110,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       left: 0
     }
   };
-  panelViewModels: PanelViewModel[] = [];
-
   dataReady = false;
   viewReady = false;
   hydrated = false;
@@ -213,7 +204,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  private initializeChartWhenReady(attempt = 0): void {
+  private initializeChartWhenReady(): void {
     console.log('%c     ✔  initializeChartWhenReady', 'color:#90BEE9');
     if (!this.viewReady || !this.dataReady) {
       console.log('%c     ❌ NOT READY', 'color:red');
