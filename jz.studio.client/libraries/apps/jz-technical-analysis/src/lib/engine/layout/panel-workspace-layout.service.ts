@@ -21,8 +21,6 @@ export class PanelWorkspaceLayoutService {
       width: scaffold.width,
       height: scaffold.height,
       margins: scaffold.margins,
-      titleWidth: scaffold.titleWidth,
-      titleHeight: scaffold.titleHeight,
       axisLeftWidth: scaffold.margins.left,
       axisRightWidth: scaffold.margins.right,
       xAxisTopHeight: scaffold.xAxisTop,

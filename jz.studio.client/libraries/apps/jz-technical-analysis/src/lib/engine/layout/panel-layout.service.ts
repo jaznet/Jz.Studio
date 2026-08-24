@@ -34,8 +34,6 @@ export class PanelLayoutService {
     );
 
     return {
-      titleWidth: request.titleWidth,
-      titleHeight: request.titleHeight,
       width: request.width,
       height: request.height,
       xAxisTop: request.xAxisTopHeight,
@@ -48,14 +46,13 @@ export class PanelLayoutService {
 
   private buildPanelHostsContainer(request: ChartLayoutRequest): DivRect {
     const x = 0;
-    const y = request.titleHeight + request.xAxisTopHeight;
+    const y = request.xAxisTopHeight;
 
     const width = request.width;
 
     const height = Math.max(
       0,
       request.height
-      - request.titleHeight
       - request.xAxisTopHeight
       - request.xAxisBottomHeight
     );

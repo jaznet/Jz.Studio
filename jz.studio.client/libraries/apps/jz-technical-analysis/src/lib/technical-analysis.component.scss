@@ -1,7 +1,6 @@
 /*technical-analysis.component.scss*/
 
 jz-technical-analysis {
-  --chart-title-color: #c6c5b9;
   --axis-tick-color: #c6c5b9;
   --axis-line-color: #c6c5b9;
   --axis-label-color: #c6c5b9;
@@ -16,21 +15,12 @@ jz-technical-analysis {
      border-radius:8px;
 }
 
-.chart-title-text {
-  fill: #c6c5b9 !important;
-}
-
 .panels-container {
   fill: var(--plt-clr-2);
 }
 
 .chart-container{
     fill:var(--plt-clr-2);
-}
-
-.rChartTitle {
-  fill: var(--plt-clr-2);
-  stroke-width: 1;     
 }
 
 .chart-panel {
@@ -52,11 +42,6 @@ fill:transparent;
   /*fill: none !important;*/ /* don’t paint over real things */
   /*pointer-events: none !important;*/ /* don’t eat mouse events */
   /*stroke: none;*/
-}
-
-.chart-title {
-  font-size: 18px;
-  text-anchor: middle;
 }
 
 .axis-panel{

@@ -65,9 +65,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @ViewChild('svgElement', { static: false }) svgElement!: ElementRef<SVGSVGElement>;
   @ViewChild('rSvgElement', { static: false }) rSvgElement!: ElementRef<SVGRectElement>;
 
-  @ViewChild('rChartTitle', { static: false }) rChartTitle!: ElementRef<SVGRectElement>;
-  @ViewChild('tChartTitleText', { static: false }) tChartTitleText!: ElementRef<SVGTextElement>;
-
   @ViewChild('gAxisTop', { static: false }) gAxisTop!: ElementRef<SVGGElement>;
   @ViewChild('rAxisTop', { static: false }) rAxisTop!: ElementRef<SVGRectElement>;
   @ViewChild('gAxisTopMonths', { static: false }) gAxisTopMonths!: ElementRef<SVGGElement>;
@@ -78,8 +75,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   @ViewChild('gPanelHostsContainer', { static: false }) gPanelHostsContainer!: ElementRef<SVGGElement>;
   @ViewChild('rPanelHostsContainer', { static: false }) rPanelHostsContainer!: ElementRef<SVGRectElement>;
-
-  @Input() chartTitle: any = 'Technical Analysis Chart';
 
   @Input()
   set dataWindow(value: TechnicalAnalysisDataWindow | undefined) {
@@ -106,8 +101,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private visibleWindow?: TechnicalAnalysisDataWindow;
 
   chartScaffold: ChartScaffold = {
-    titleWidth: 0,
-    titleHeight: 0,
     width: 0,
     height: 0,
     xAxisTop: 0,
@@ -232,8 +225,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       );
       this.chartScaffoldRenderer.renderOuter(
         this.scaffoldElements,
-        this.chartScaffold,
-        this.chartTitle
+        this.chartScaffold
       );
       this.chartScaffoldRenderer.size(
         this.scaffoldElements,
@@ -286,8 +278,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     this.chartScaffoldRenderer.renderOuter(
       this.scaffoldElements,
-      this.chartScaffold,
-      this.chartTitle
+      this.chartScaffold
     );
     this.chartScaffoldRenderer.size(
       this.scaffoldElements,
@@ -305,8 +296,6 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   private get scaffoldElements() {
     return {
-      rChartTitle: this.rChartTitle.nativeElement,
-      tChartTitleText: this.tChartTitleText.nativeElement,
       gAxisTop: this.gAxisTop.nativeElement,
       gAxisTopMonths: this.gAxisTopMonths.nativeElement,
       rAxisTop: this.rAxisTop.nativeElement,

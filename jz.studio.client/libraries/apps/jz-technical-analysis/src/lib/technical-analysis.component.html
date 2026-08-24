@@ -3,27 +3,6 @@
 <div #divSvgContainer id="divSvgContainer" class="grid-rows" style="border-radius:8px">
   <svg #svgElement id="svgElement">
     <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
-    <g id="gChartTitle">
-      <rect #rChartTitle
-            id="rChartTitle"
-            class="rChartTitle"
-            x="0" y="0" width="0" height="0"
-            [attr.width]="chartScaffold?.width ?? 0"
-            [attr.height]="chartScaffold.titleHeight"
-        
-            rx="8" ry="8">
-      </rect>
-
-      <text #tChartTitleText id="tChartTitleText" class="chart-title-text"
-            [attr.x]="(chartScaffold.width ) / 2"
-            [attr.y]="(chartScaffold.titleHeight) / 2"
-            text-anchor="middle"
-            dominant-baseline="middle"
-            color=var(--chart-title-color)>
-        {{ chartTitle }}
-      </text>
-    </g>
-
     <!-- X AXIS TOP -->
     <g #gAxisTop id="gAxisTop" class="x-axis-group">
       <rect #rAxisTop id="rAxisTop" class="axis-panel" width="0" height="0" x="0" y="0"></rect>
@@ -43,5 +22,4 @@
 
   </svg>
 </div>
-
 

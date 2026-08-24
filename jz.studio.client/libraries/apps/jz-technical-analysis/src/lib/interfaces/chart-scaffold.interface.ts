@@ -6,8 +6,6 @@ import { PanelAttributes } from './panel-interfaces';
 import { Margins } from './techan-interfaces';
 
 export interface ChartScaffold {
-  titleWidth: number;
-  titleHeight: number;
   width: number;
   height: number;
   xAxisTop: number;

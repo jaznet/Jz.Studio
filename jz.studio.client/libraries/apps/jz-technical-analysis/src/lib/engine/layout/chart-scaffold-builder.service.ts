@@ -6,8 +6,6 @@ import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 export class ChartScaffoldBuilderService {
   build(width: number, height: number): ChartScaffold {
     return {
-      titleHeight: 36,
-      titleWidth: width,
       width,
       height,
       margins: {
