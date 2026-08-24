@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, HostBinding, OnDestroy, OnInit, ElementRef } from '@angular/core';
-import { StockPriceHistory, TechnicalAnalysisComponent } from 'jz-technical-analysis';
+import {
+  StockPriceHistory,
+  TechnicalAnalysisComponent,
+  TechnicalAnalysisDataWindow
+} from 'jz-technical-analysis';
 import {
   buildJzPopoverErrorData,
   JzPopoverErrorComponent,
@@ -16,13 +20,18 @@ import { MarketPriceService } from '../../services/market-price.service';
   selector: 'technical-analysis-host',
   standalone: true,
   imports: [TechnicalAnalysisComponent],
-  templateUrl: './technical-analysis-host.component.html'
+  templateUrl: './technical-analysis-host.component.html',
+  styleUrl: './technical-analysis-host.component.scss'
 })
 export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  readonly ticker = 'NVDA';
-  readonly chartTitle = `${this.ticker} Technical Analysis`;
+  ticker = 'NVDA';
+  symbolInput = this.ticker;
+  visibleStartInput: string;
+  visibleEndInput: string;
+  dataWindow?: TechnicalAnalysisDataWindow;
+  validationMessage = '';
 
   stockPriceHistoryData: StockPriceHistory[] = [];
   loading = true;
@@ -34,10 +43,59 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     private readonly elementRef: ElementRef<HTMLElement>,
     private readonly marketPriceService: MarketPriceService,
     private readonly popoverService: JzPopoverService
-  ) { }
+  ) {
+    const visibleEnd = new Date();
+    visibleEnd.setHours(0, 0, 0, 0);
+    const visibleStart = this.addMonths(visibleEnd, -12);
+
+    this.visibleStartInput = this.toDateInput(visibleStart);
+    this.visibleEndInput = this.toDateInput(visibleEnd);
+    this.dataWindow = { visibleStart, visibleEnd };
+  }
 
   ngOnInit(): void {
     this.loadMarketData();
+  }
+
+  applySelection(): void {
+    const symbol = this.symbolInput.trim().toUpperCase();
+    if (!/^[A-Z0-9.-]+$/.test(symbol)) {
+      this.validationMessage = 'Enter a valid stock symbol.';
+      return;
+    }
+
+    const visibleStart = this.parseDate(this.visibleStartInput);
+    const visibleEnd = this.parseDate(this.visibleEndInput);
+
+    if (
+      (this.visibleStartInput && !visibleStart) ||
+      (this.visibleEndInput && !visibleEnd)
+    ) {
+      this.validationMessage = 'Enter valid start and end dates.';
+      return;
+    }
+
+    if (
+      this.visibleStartInput &&
+      this.visibleEndInput &&
+      visibleStart &&
+      visibleEnd &&
+      visibleStart > visibleEnd
+    ) {
+      this.validationMessage = 'The start date must be before the end date.';
+      return;
+    }
+
+    this.validationMessage = '';
+    this.symbolInput = symbol;
+    this.dataWindow = {};
+    if (visibleStart) this.dataWindow.visibleStart = visibleStart;
+    if (visibleEnd) this.dataWindow.visibleEnd = visibleEnd;
+
+    if (symbol !== this.ticker) {
+      this.ticker = symbol;
+      this.loadMarketData();
+    }
   }
 
   private loadMarketData(): void {
@@ -58,6 +116,38 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
           this.showError(error);
         }
       });
+  }
+
+  private parseDate(value: string): Date | undefined {
+    if (!value) return undefined;
+
+    const date = new Date(`${value}T00:00:00`);
+    return Number.isNaN(date.getTime()) ? undefined : date;
+  }
+
+  private addMonths(date: Date, months: number): Date {
+    const result = new Date(date);
+    const day = result.getDate();
+
+    result.setDate(1);
+    result.setMonth(result.getMonth() + months);
+
+    const lastDay = new Date(
+      result.getFullYear(),
+      result.getMonth() + 1,
+      0
+    ).getDate();
+    result.setDate(Math.min(day, lastDay));
+
+    return result;
+  }
+
+  private toDateInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   private showError(error: HttpErrorResponse): void {

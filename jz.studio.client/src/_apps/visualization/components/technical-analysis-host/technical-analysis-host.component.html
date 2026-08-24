@@ -1,5 +1,44 @@
-@if (!loading) {
-<jz-technical-analysis [chartTitle]="chartTitle"
-                       [stockPriceHistoryData]="stockPriceHistoryData">
-</jz-technical-analysis>
-}
+<div class="analysis-host">
+  <form class="analysis-controls" (submit)="$event.preventDefault(); applySelection()">
+    <label>
+      Symbol
+      <input #symbol
+             type="text"
+             maxlength="12"
+             autocomplete="off"
+             [value]="symbolInput"
+             (input)="symbolInput = symbol.value.toUpperCase()">
+    </label>
+
+    <label>
+      From
+      <input #visibleStart
+             type="date"
+             [value]="visibleStartInput"
+             (input)="visibleStartInput = visibleStart.value">
+    </label>
+
+    <label>
+      To
+      <input #visibleEnd
+             type="date"
+             [value]="visibleEndInput"
+             (input)="visibleEndInput = visibleEnd.value">
+    </label>
+
+    <button type="submit" [disabled]="loading">Apply</button>
+
+    @if (validationMessage) {
+      <span class="validation-message">{{ validationMessage }}</span>
+    }
+  </form>
+
+  <div class="analysis-chart">
+    @if (!loading) {
+      <jz-technical-analysis 
+                             [dataWindow]="dataWindow"
+                             [stockPriceHistoryData]="stockPriceHistoryData">
+      </jz-technical-analysis>
+    }
+  </div>
+</div>
