@@ -9,9 +9,14 @@ import {
   TechnicalAnalysisDataWindow,
   TechnicalAnalysisDataPoint
 } from '../models/technical-analysis-data.model';
+import { TechnicalIndicatorCalculatorService } from './indicators/technical-indicator-calculator.service';
 
 @Injectable({ providedIn: 'root' })
 export class TechnicalAnalysisDataPreparer {
+  constructor(
+    private readonly indicatorCalculator: TechnicalIndicatorCalculatorService
+  ) {}
+
   prepare(
     source: readonly StockPriceHistory[],
     window?: TechnicalAnalysisDataWindow
@@ -49,10 +54,35 @@ export class TechnicalAnalysisDataPreparer {
       points,
       macd: this.calculateMacd(calculationPoints, 12, 26, 9)
         .filter(item => this.isVisible(item.date, window)),
+      indicators: this.filterIndicators(
+        this.indicatorCalculator.calculate(calculationPoints),
+        window
+      ),
       dateExtent: extent(points, item => item.date) as [Date, Date],
       minPrice: min(priceValues),
       maxPrice: max(priceValues),
       maxVolume: max(points, item => item.volume)
+    };
+  }
+
+  private filterIndicators(
+    indicators: TechnicalAnalysisDataModel['indicators'],
+    window?: TechnicalAnalysisDataWindow
+  ): TechnicalAnalysisDataModel['indicators'] {
+    const visible = <T extends { date: Date }>(points: readonly T[]): T[] =>
+      points.filter(point => this.isVisible(point.date, window));
+    return {
+      ema: visible(indicators.ema),
+      atr: visible(indicators.atr),
+      stochastic: visible(indicators.stochastic),
+      momentum: visible(indicators.momentum),
+      roc: visible(indicators.roc),
+      sroc: visible(indicators.sroc),
+      moneyFlow: visible(indicators.moneyFlow),
+      williamsR: visible(indicators.williamsR),
+      vwap: visible(indicators.vwap),
+      atrTrailingStop: visible(indicators.atrTrailingStop),
+      ichimoku: visible(indicators.ichimoku)
     };
   }
 
