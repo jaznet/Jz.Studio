@@ -1,6 +1,7 @@
 import { Injectable, type ComponentRef } from '@angular/core';
 import type { ScaleBand } from 'd3-scale';
 
+import { ChartType } from '../../enums/chart-type';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { PanelPreference } from '../../interfaces/panel-preference.interface';
 import { ChartComponentMap } from '../../maps/chart-component-map';
@@ -11,6 +12,7 @@ interface ChartPanelRenderRequest {
   containerElement: SVGGElement;
   scaffold: ChartScaffold;
   preferences: readonly PanelPreference[];
+  calculationData: readonly StockPriceHistory[];
   data: readonly StockPriceHistory[];
   dateScaleX: ScaleBand<Date>;
 }
@@ -46,6 +48,9 @@ export class ChartPanelRendererService {
         chartComponent
       );
 
+      if (preference.chartType === ChartType.OHLC) {
+        componentRef.setInput('calculationData', request.calculationData);
+      }
       componentRef.setInput('data', request.data);
       componentRef.setInput('dateScaleX', request.dateScaleX);
       componentRef.setInput('panel', panel);

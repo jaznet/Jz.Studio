@@ -261,6 +261,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       containerElement: this.gPanelHostsContainer.nativeElement,
       scaffold: this.chartScaffold,
       preferences: this.panelPreferenceService.getPreferences(),
+      calculationData: this.chartData.calculationData,
       data: this.chartData.stockPriceHistoryData,
       dateScaleX: this.dateScaleX
     });

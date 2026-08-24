@@ -31,6 +31,7 @@ import { BaseChartComponent } from '../base-chart/base-chart.component';
 export class OhlcChartComponent extends BaseChartComponent implements OnChanges {
 
   //@Input() rOhlcSectionRef!: ElementRef<SVGRectElement>;
+  @Input() calculationData: ohlcData[] = [];
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
@@ -86,7 +87,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
     console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
 
-    const dates = this.data.map(d => asDate(d.date)); // Date[]
     const bw = this.dateScaleX.bandwidth();
     const candleWidth = Math.max(1, bw * 0.99);
 
@@ -121,7 +121,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
 
     console.log(`✅ OHLC drawn (${caller})`);
 
-    this.drawSmaOverlays(g, dates, yScale);
+    this.drawSmaOverlays(g, yScale);
 
     this.drawYAxes(panel, yScale); // ✅ child-controlled axes
   }
@@ -160,8 +160,18 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       );
   }
 
-  private drawSmaOverlays(g: Selection<SVGGElement, unknown, null, undefined>, dates: Date[], y: ScaleLinear<number, number>) {
-    const closes = this.data.map(d => d.close);
+  private drawSmaOverlays(
+    g: Selection<SVGGElement, unknown, null, undefined>,
+    y: ScaleLinear<number, number>
+  ): void {
+    const calculationData = this.calculationData.length > 0
+      ? this.calculationData
+      : this.data;
+    const closes = calculationData.map(d => d.close);
+    const dates = calculationData.map(d => asDate(d.date));
+    const visibleDates = new Set(
+      this.data.map(d => asDate(d.date).getTime())
+    );
     const group = g.selectAll('g.sma-overlays').data([0]).join('g').attr('class', 'sma-overlays');
 
     const lineGen = d3line<{ dt: Date; v: Num }>()
@@ -172,7 +182,9 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
 
     this.smaLines.forEach(({ period, color }) => {
       const series = sma(closes, period);                         // (number|null)[]
-      const pathData = dates.map((dt, i) => ({ dt, v: series[i] as Num }));
+      const pathData = dates
+        .map((dt, i) => ({ dt, v: series[i] as Num }))
+        .filter(item => visibleDates.has(item.dt.getTime()));
 
       group
         .selectAll(`path.sma-${period}`)
