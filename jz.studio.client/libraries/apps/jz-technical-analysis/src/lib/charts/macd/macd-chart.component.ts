@@ -21,6 +21,7 @@ type Num = number | null | undefined;
     standalone: false
 })
 export class MacdChartComponent extends BaseChartComponent implements OnChanges {
+  @Input() calculationData: ohlcData[] = [];
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;              // ← typed to Date
 
@@ -54,7 +55,10 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   private buildSeries() {
-    const closes = this.data.map(d => d.close);
+    const calculationData = this.calculationData.length > 0
+      ? this.calculationData
+      : this.data;
+    const closes = calculationData.map(d => d.close);
     const ema12 = this.ema(closes, 12);
     const ema26 = this.ema(closes, 26);
     const macd: Num[] = closes.map((_, i) =>
@@ -71,8 +75,24 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       v != null && signal[i] != null ? (v as number) - (signal[i] as number) : null
     );
 
-    const dates = this.data.map(d => asDate(d.date)); // ← Date array for the x-scale
-    return { dates, macd, signal, hist };
+    const visibleDates = new Set(
+      this.data.map(d => asDate(d.date).getTime())
+    );
+    const visibleSeries = calculationData
+      .map((item, index) => ({
+        date: asDate(item.date),
+        macd: macd[index],
+        signal: signal[index],
+        hist: hist[index]
+      }))
+      .filter(item => visibleDates.has(item.date.getTime()));
+
+    return {
+      dates: visibleSeries.map(item => item.date),
+      macd: visibleSeries.map(item => item.macd),
+      signal: visibleSeries.map(item => item.signal),
+      hist: visibleSeries.map(item => item.hist)
+    };
   }
 
   protected override createChart(caller: string): void {

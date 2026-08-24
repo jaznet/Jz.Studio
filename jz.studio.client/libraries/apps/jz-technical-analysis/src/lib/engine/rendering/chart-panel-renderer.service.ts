@@ -48,7 +48,11 @@ export class ChartPanelRendererService {
         chartComponent
       );
 
-      if (preference.chartType === ChartType.OHLC) {
+      if (
+        preference.chartType === ChartType.OHLC ||
+        preference.chartType === ChartType.MACD ||
+        preference.chartType === ChartType.RSI
+      ) {
         componentRef.setInput('calculationData', request.calculationData);
       }
       componentRef.setInput('data', request.data);

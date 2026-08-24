@@ -22,6 +22,7 @@ type Num = number | null;
     standalone: false
 })
 export class RsiChartComponent extends BaseChartComponent implements OnChanges {
+  @Input() calculationData: ohlcData[] = [];
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: ScaleBand<Date>;            // ← typed to Date
   @Input() period = 14;
@@ -74,9 +75,22 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
     const bandW = this.dateScaleX.bandwidth();
     const cx = (dt: Date) => (this.dateScaleX(dt) ?? 0) + bandW / 2;
 
-    const closes = this.data.map(d => d.close);
-    const dates = this.data.map(d => asDate(d.date));   // ← Date array for x
-    const rsiVals = this.rsi(closes, this.period);
+    const calculationData = this.calculationData.length > 0
+      ? this.calculationData
+      : this.data;
+    const closes = calculationData.map(d => d.close);
+    const rsiValues = this.rsi(closes, this.period);
+    const visibleDates = new Set(
+      this.data.map(d => asDate(d.date).getTime())
+    );
+    const visibleSeries = calculationData
+      .map((item, index) => ({
+        date: asDate(item.date),
+        value: rsiValues[index]
+      }))
+      .filter(item => visibleDates.has(item.date.getTime()));
+    const dates = visibleSeries.map(item => item.date);
+    const rsiVals = visibleSeries.map(item => item.value);
 
     const y = scaleLinear().domain([0, 100]).range([this.innerHeight, 0]);
 
