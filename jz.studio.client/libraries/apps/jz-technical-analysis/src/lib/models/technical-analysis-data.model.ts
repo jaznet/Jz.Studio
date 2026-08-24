@@ -12,7 +12,13 @@ export interface MacdPoint {
   histogram: number;
 }
 
+export interface TechnicalAnalysisDataWindow {
+  visibleStart?: Date;
+  visibleEnd?: Date;
+}
+
 export interface TechnicalAnalysisDataModel {
+  calculationPoints: readonly TechnicalAnalysisDataPoint[];
   points: readonly TechnicalAnalysisDataPoint[];
   macd: readonly MacdPoint[];
   dateExtent: [Date, Date] | [undefined, undefined];
@@ -22,6 +28,7 @@ export interface TechnicalAnalysisDataModel {
 }
 
 export const EMPTY_TECHNICAL_ANALYSIS_DATA: TechnicalAnalysisDataModel = {
+  calculationPoints: [],
   points: [],
   macd: [],
   dateExtent: [undefined, undefined],

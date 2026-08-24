@@ -30,6 +30,7 @@ import { PanelHostRendererService } from './engine/rendering/panel-host-renderer
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
 import { PanelPreference } from './interfaces/panel-preference.interface';
 import { StockPriceHistory } from './models/stock-price-history.model';
+import { TechnicalAnalysisDataWindow } from './models/technical-analysis-data.model';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
@@ -81,6 +82,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   @Input() chartTitle: any = 'Technical Analysis Chart';
 
   @Input()
+  set dataWindow(value: TechnicalAnalysisDataWindow | undefined) {
+    this.visibleWindow = value;
+    this.loadData(this.sourceData);
+  }
+
+  @Input()
   set stockPriceHistoryData(value: StockPriceHistory[] | null | undefined) {
     this.loadData(value ?? []);
   }
@@ -95,6 +102,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly destroyed$ = new Subject<void>();
   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
   private readonly resizeHandler = (): void => this.updateSvgSize();
+  private sourceData: StockPriceHistory[] = [];
+  private visibleWindow?: TechnicalAnalysisDataWindow;
 
   chartScaffold: ChartScaffold = {
     titleWidth: 0,
@@ -185,8 +194,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   private loadData(data: StockPriceHistory[]): void {
+    this.sourceData = [...data];
     this.destroyChartComponents();
-    this.chartData.load(data);
+    this.chartData.load(this.sourceData, this.visibleWindow);
     this.dataReady = this.chartData.stockPriceHistoryData.length > 0;
     this.hydrated = false;
 

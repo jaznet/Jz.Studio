@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StockPriceHistory } from '../models/stock-price-history.model';
 import {
   MacdPoint,
+  TechnicalAnalysisDataWindow,
   TechnicalAnalysisDataPoint
 } from '../models/technical-analysis-data.model';
 import { TechnicalAnalysisDataPreparer } from './technical-analysis-data-preparer.service';
@@ -17,8 +18,15 @@ export class ChartDataService {
     private readonly store: TechnicalAnalysisDataStore
   ) { }
 
-  load(source: readonly StockPriceHistory[]): void {
-    this.store.set(this.preparer.prepare(source));
+  load(
+    source: readonly StockPriceHistory[],
+    window?: TechnicalAnalysisDataWindow
+  ): void {
+    this.store.set(this.preparer.prepare(source, window));
+  }
+
+  get calculationData(): TechnicalAnalysisDataPoint[] {
+    return [...this.store.model.calculationPoints];
   }
 
   get stockPriceHistoryData(): TechnicalAnalysisDataPoint[] {
