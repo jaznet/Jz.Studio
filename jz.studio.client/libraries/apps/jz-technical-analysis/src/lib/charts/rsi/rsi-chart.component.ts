@@ -135,10 +135,12 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
   }
 
   protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
-    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
+    const tickValues = [30, 50, 70];
 
-    const ticks = [0, 30, 50, 70, 100];
-    select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).tickValues(ticks).tickSizeOuter(0));
-    select(this.gAxisRight.nativeElement).call(axisRight(yScale).tickValues(ticks).tickSizeOuter(0));
+    this.renderYAxes(
+      panel,
+      axisLeft(yScale).tickValues(tickValues).tickSize(5).tickSizeOuter(0),
+      axisRight(yScale).tickValues(tickValues).tickSize(5).tickSizeOuter(0)
+    );
   }
 }

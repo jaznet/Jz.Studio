@@ -46,6 +46,8 @@ export interface PanelViewModel {
 export interface PanelAttributes {
   id: string;
   index: number;
+  showAxisLeft: boolean;
+  showAxisRight: boolean;
   panelRect: DivRect;
   titleRect: DivRect;
   axisLeftRect: DivRect;

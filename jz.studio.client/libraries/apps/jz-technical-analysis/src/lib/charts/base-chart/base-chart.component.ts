@@ -178,4 +178,42 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   protected yTickCount(height: number): number {
     return Math.max(2, Math.floor(height / 40));
   }
+
+  protected interiorYTicks(
+    yScale: { ticks(count?: number): number[]; (value: number): number },
+    height: number,
+    count: number,
+    edgePadding = 10
+  ): number[] {
+    return yScale
+      .ticks(count)
+      .filter(value => {
+        const y = yScale(value);
+        return y >= edgePadding && y <= height - edgePadding;
+      });
+  }
+
+  protected renderYAxes(
+    panel: PanelAttributes,
+    leftAxis: any,
+    rightAxis: any
+  ): void {
+    const left = select(this.gAxisLeft.nativeElement);
+    const right = select(this.gAxisRight.nativeElement);
+
+    left.style('display', panel.showAxisLeft ? '' : 'none');
+    right.style('display', panel.showAxisRight ? '' : 'none');
+
+    if (panel.showAxisLeft) {
+      left.call(leftAxis);
+    } else {
+      left.selectAll('*').remove();
+    }
+
+    if (panel.showAxisRight) {
+      right.call(rightAxis);
+    } else {
+      right.selectAll('*').remove();
+    }
+  }
 }

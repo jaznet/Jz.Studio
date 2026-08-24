@@ -75,11 +75,12 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
     const g = select(this.gChart.nativeElement);
     console.log(`[${this.chartType}] Drawing chart in panel`, panel);
 
+    const dataLow = Math.min(...this.data.map(d => d.low));
+    const dataHigh = Math.max(...this.data.map(d => d.high));
+    const domainPadding = Math.max((dataHigh - dataLow) * 0.04, 1);
+
     const yScale = scaleLinear()
-      .domain([
-        Math.min(...this.data.map(d => d.low)),
-        Math.max(...this.data.map(d => d.high))
-      ])
+      .domain([dataLow - domainPadding, dataHigh + domainPadding])
       .range([panel.innerHeight, 0])
       .nice();
 
@@ -136,37 +137,15 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
-    if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
+    const tickCount = this.yTickCount(panel.innerHeight);
+    const tickValues = this.interiorYTicks(yScale, panel.innerHeight, tickCount);
+    const tickFormat = d3format('~f');
 
-    // OHLC-specific axis policy (tune as you like)
-    const tickCount = Math.max(2, Math.floor(panel.innerHeight / 40));
-    const tickFormat = d3format('~f');     // or d3format(',.2f') / currency
-
-    // LEFT (price)
-    select(this.gAxisGroupLeft.nativeElement)
-      .attr('transform', `translate(0,0)`)
-      .classed('y-axis', true);
-
-    select(this.gAxisLeft.nativeElement)
-      .call(
-        axisLeft(yScale)
-          .ticks(tickCount)
-          .tickFormat(tickFormat as any)
-          .tickSizeOuter(0)
-      );
-
-    // RIGHT (mirror)
-    //select(this.gAxisGroupRight.nativeElement)
-    //  .attr('transform', `translate(${panel.innerWidth},0)`)
-    //  .classed('y-axis', true);
-
-    select(this.gAxisRight.nativeElement)
-      .call(
-        axisRight(yScale)
-          .ticks(tickCount)
-          .tickFormat(tickFormat as any)
-          .tickSizeOuter(0)
-      );
+    this.renderYAxes(
+      panel,
+      axisLeft(yScale).tickValues(tickValues).tickFormat(tickFormat as any).tickSize(5).tickSizeOuter(0),
+      axisRight(yScale).tickValues(tickValues).tickFormat(tickFormat as any).tickSize(5).tickSizeOuter(0)
+    );
   }
 
   private drawSmaOverlays(

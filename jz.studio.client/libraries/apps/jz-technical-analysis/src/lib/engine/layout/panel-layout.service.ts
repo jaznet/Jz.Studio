@@ -137,6 +137,8 @@ export class PanelLayoutService {
       result[def.chartType] = {
         id: def.id,
         index,
+        showAxisLeft: def.showAxisLeft === true,
+        showAxisRight: def.showAxisRight === true,
         panelRect,
         titleRect,
         axisLeftRect,

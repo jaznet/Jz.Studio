@@ -4,6 +4,7 @@ import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
 import { line as d3line, curveLinear } from 'd3-shape';
+import { format as d3format } from 'd3-format';
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
 import { asDate } from '../../utils/date-utils';      // ← use Date helper, not ISO strings
@@ -166,10 +167,18 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
   }
 
   protected override drawYAxes(panel: PanelAttributes, yScale: any): void {
-    //if (!this.gAxisGroupLeft || !this.gAxisLeft || !this.gAxisGroupRight || !this.gAxisRight) return;
-    const innerH = Math.max(0, panel.innerHeight);
-    const ticks = this.yTickCount(innerH);
-    select(this.gAxisLeft.nativeElement).call(axisLeft(yScale).ticks(ticks).tickSizeOuter(0));
-    select(this.gAxisRight.nativeElement).call(axisRight(yScale).ticks(ticks).tickSizeOuter(0));
+    const innerHeight = Math.max(0, panel.innerHeight);
+    const tickCount = this.yTickCount(innerHeight);
+    const tickValues = this.interiorYTicks(yScale, innerHeight, tickCount);
+    const tickFormat = (value: number): string =>
+      Math.abs(value) >= 1
+        ? d3format('.2~f')(value)
+        : d3format('.2~g')(value);
+
+    this.renderYAxes(
+      panel,
+      axisLeft(yScale).tickValues(tickValues).tickFormat(value => tickFormat(value as number)).tickSize(5).tickSizeOuter(0),
+      axisRight(yScale).tickValues(tickValues).tickFormat(value => tickFormat(value as number)).tickSize(5).tickSizeOuter(0)
+    );
   }
 }

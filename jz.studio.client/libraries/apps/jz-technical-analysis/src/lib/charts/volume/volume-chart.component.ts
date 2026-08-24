@@ -67,7 +67,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
     const maxVol = Math.max(...this.data.map(d => d.volume ?? 0), 0);
 
     const yScale = scaleLinear()
-      .domain([0, maxVol])
+      .domain([0, maxVol * 1.06])
       .range([contentHeight, 0])
       .nice();
 
@@ -97,20 +97,12 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
     const compactVolume = (value: number): string =>
       value === 0 ? '0' : d3format('.2~s')(value).replace('G', 'B');
 
-    select(this.gAxisLeft.nativeElement)
-      .call(
-        axisLeft(yScale)
-          .ticks(ticks)
-          .tickFormat(value => compactVolume(value as number))
-          .tickSizeOuter(0)
-      );
+    const tickValues = this.interiorYTicks(yScale, contentHeight, ticks);
 
-    select(this.gAxisRight.nativeElement)
-      .call(
-        axisRight(yScale)
-          .ticks(ticks)
-          .tickFormat(value => compactVolume(value as number))
-          .tickSizeOuter(0)
-      );
+    this.renderYAxes(
+      panel,
+      axisLeft(yScale).tickValues(tickValues).tickFormat(value => compactVolume(value as number)).tickSize(5).tickSizeOuter(0),
+      axisRight(yScale).tickValues(tickValues).tickFormat(value => compactVolume(value as number)).tickSize(5).tickSizeOuter(0)
+    );
   }
 }
