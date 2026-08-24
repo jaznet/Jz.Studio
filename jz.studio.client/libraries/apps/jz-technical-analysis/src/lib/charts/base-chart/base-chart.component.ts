@@ -50,6 +50,12 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   chartType: ChartType = ChartType.Base;
 
+  get panelLabel(): string {
+    return this.chartType === ChartType.OHLC
+      ? 'PRICE'
+      : this.chartType;
+  }
+
   ngAfterViewInit(): void {
     this.viewInitialized = true;
     this.checkAndDraw('ngAfterViewInit');

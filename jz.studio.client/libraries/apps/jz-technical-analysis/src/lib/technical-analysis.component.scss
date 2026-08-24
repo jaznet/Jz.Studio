@@ -92,14 +92,24 @@ fill:transparent;
 }
 
 .x-axis > .tick {
-  color: var(--plt-chart-2);
+  color: var(--axis-line-color);
   stroke-width: 1;
 }
 
-  .x-axis > .domain {
-    stroke: var(--axis-line-color);
-    stroke-width: 1;
-  }
+.x-axis > .tick line {
+  stroke-opacity: .58;
+}
+
+.x-axis > .tick text {
+  font-size: 10px;
+  letter-spacing: .01em;
+}
+
+.x-axis > .domain {
+  stroke: var(--axis-line-color);
+  stroke-opacity: .72;
+  stroke-width: 1;
+}
 
 .y-axis {
   color: var(--axis-color, var(--chart-axis));
@@ -121,6 +131,15 @@ fill:transparent;
   stroke: var(--chart-separator);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
+}
+
+.panel-label {
+  fill: color-mix(in srgb, var(--chart-label) 62%, transparent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .12em;
+  pointer-events: none;
+  text-transform: uppercase;
 }
 
 .price-grid {

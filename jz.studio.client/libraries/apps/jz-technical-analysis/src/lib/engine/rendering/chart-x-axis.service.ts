@@ -7,8 +7,6 @@ import { timeFormat } from 'd3-time-format';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { StockPriceHistory } from '../../models/stock-price-history.model';
 
-type AxisDomainValue = string | number | Date | { valueOf(): number };
-
 @Injectable({ providedIn: 'root' })
 export class ChartXAxisService {
   createScale(
@@ -36,44 +34,46 @@ export class ChartXAxisService {
     bottomElement: SVGGElement,
     scale: ScaleBand<Date>
   ): void {
-    const topAxis = axisTop(scale).tickFormat(this.createAdaptiveFormatter(scale));
-    const bottomAxis = axisBottom(scale).tickFormat(this.createAdaptiveFormatter(scale));
-
-    select(topElement).call(topAxis);
-    select(bottomElement).call(bottomAxis);
-  }
-
-  private createAdaptiveFormatter(
-    scale: ScaleBand<Date>
-  ): (value: AxisDomainValue) => string {
     const dates = scale.domain();
-    if (dates.length === 0) return () => '';
+    if (dates.length === 0) return;
 
-    const firstDate = dates[0];
-    const lastDate = dates[dates.length - 1];
-    const spanDays = Math.max(
-      1,
-      (lastDate.getTime() - firstDate.getTime()) / 86_400_000
-    );
-    const labelDates = this.selectLabelDates(dates, scale, spanDays);
-    const formatLabel = spanDays <= 120
+    const spanDays = this.spanDays(dates);
+    const tickValues = this.selectLabelDates(dates, scale, spanDays);
+    const tickFormat = spanDays <= 120
       ? timeFormat('%b %-d')
       : spanDays <= 730
         ? timeFormat('%b %Y')
         : timeFormat('%Y');
 
-    return value => {
-      const date = this.toDate(value);
-      if (!date) return '';
-      return labelDates.has(date.getTime()) ? formatLabel(date) : '';
-    };
+    const topAxis = axisTop(scale)
+      .tickValues(tickValues)
+      .tickFormat(tickFormat)
+      .tickSize(5)
+      .tickSizeOuter(0);
+    const bottomAxis = axisBottom(scale)
+      .tickValues(tickValues)
+      .tickFormat(tickFormat)
+      .tickSize(5)
+      .tickSizeOuter(0);
+
+    select(topElement).call(topAxis);
+    select(bottomElement).call(bottomAxis);
+  }
+
+  private spanDays(dates: readonly Date[]): number {
+    const firstDate = dates[0];
+    const lastDate = dates[dates.length - 1];
+    return Math.max(
+      1,
+      (lastDate.getTime() - firstDate.getTime()) / 86_400_000
+    );
   }
 
   private selectLabelDates(
     dates: readonly Date[],
     scale: ScaleBand<Date>,
     spanDays: number
-  ): ReadonlySet<number> {
+  ): Date[] {
     const candidates = dates.filter((date, index) => {
       if (index === 0) return true;
 
@@ -107,7 +107,7 @@ export class ChartXAxisService {
       }
     }
 
-    return new Set(selected.map(date => date.getTime()));
+    return selected;
   }
 
   private weekKey(date: Date): string {
@@ -115,13 +115,5 @@ export class ChartXAxisService {
     startOfWeek.setHours(0, 0, 0, 0);
     startOfWeek.setDate(date.getDate() - date.getDay());
     return startOfWeek.toISOString().slice(0, 10);
-  }
-
-  private toDate(value: AxisDomainValue): Date | null {
-    if (value instanceof Date) return value;
-    if (typeof value === 'string' || typeof value === 'number') {
-      return new Date(value);
-    }
-    return null;
   }
 }
