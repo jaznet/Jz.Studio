@@ -123,7 +123,7 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .data([0])
       .join('line')
       .attr('class', 'macd-baseline')
-      .attr('x1', 0).attr('x2', panel.panelRect.width)
+      .attr('x1', 0).attr('x2', panel.innerWidth)
       .attr('y1', y(0)).attr('y2', y(0));
 
     // histogram bars
@@ -132,11 +132,12 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .data(dates.map((dt, i) => ({ dt, v: hist[i] })))
       .join('rect')
       .attr('class', 'macd-hist')
+      .classed('macd-hist--positive', d => (d.v ?? 0) >= 0)
+      .classed('macd-hist--negative', d => (d.v ?? 0) < 0)
       .attr('x', d => cx(d.dt) - barW / 2)
       .attr('width', barW)
       .attr('y', d => d.v == null ? y(0) : Math.min(y(0), y(d.v)))
-      .attr('height', d => d.v == null ? 0 : Math.abs(y(d.v) - y(0)))
-      .attr('fill', d => (d.v ?? 0) >= 0 ? '#66bb6a' : '#ef5350');
+      .attr('height', d => d.v == null ? 0 : Math.abs(y(d.v) - y(0)));
 
     // MACD & signal lines
     const lineGen = d3line<{ dt: Date; v: Num }>()
@@ -151,7 +152,6 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .attr('class', 'macd-line')
       .attr('d', lineGen as any)
       .attr('fill', 'none')
-      .attr('stroke', '#4E59D0')
       .attr('stroke-width', 1.5);
 
     g.selectAll('.signal-line')
@@ -160,7 +160,6 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .attr('class', 'signal-line')
       .attr('d', lineGen as any)
       .attr('fill', 'none')
-      .attr('stroke', '#F1FEC6')
       .attr('stroke-width', 1.5);
 
     this.drawYAxes(panel, y);

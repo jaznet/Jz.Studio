@@ -4,6 +4,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
+import { format as d3format } from 'd3-format';
 
 import { ChartType } from '../../enums/chart-type';
 import { ohlcData } from '../../interfaces/techan-interfaces';
@@ -76,11 +77,12 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
       .data(this.data)
       .join('rect')
       .attr('class', 'vol-bar')
+      .classed('vol-bar--up', d => d.close >= d.open)
+      .classed('vol-bar--down', d => d.close < d.open)
       .attr('x', d => this.dateScaleX(asDate(d.date)) ?? 0)
       .attr('y', d => yScale(d.volume ?? 0))
       .attr('width', barW)
-      .attr('height', d => Math.max(1, contentHeight - yScale(d.volume ?? 0)))
-      .attr('fill', d => (d.close >= d.open ? '#5AA469' : '#D46A6A'));
+      .attr('height', d => Math.max(1, contentHeight - yScale(d.volume ?? 0)));
 
     this.drawYAxes(panel, yScale);
   }
@@ -92,11 +94,14 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
     this.innerHeight = contentHeight;
 
     const ticks = this.yTickCount(contentHeight);
+    const compactVolume = (value: number): string =>
+      value === 0 ? '0' : d3format('.2~s')(value).replace('G', 'B');
 
     select(this.gAxisLeft.nativeElement)
       .call(
         axisLeft(yScale)
           .ticks(ticks)
+          .tickFormat(value => compactVolume(value as number))
           .tickSizeOuter(0)
       );
 
@@ -104,6 +109,7 @@ export class VolumeChartComponent extends BaseChartComponent implements OnChange
       .call(
         axisRight(yScale)
           .ticks(ticks)
+          .tickFormat(value => compactVolume(value as number))
           .tickSizeOuter(0)
       );
   }

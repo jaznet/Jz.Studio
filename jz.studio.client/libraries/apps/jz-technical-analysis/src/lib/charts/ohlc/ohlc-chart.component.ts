@@ -35,10 +35,10 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
   @Input() data!: ohlcData[];
   @Input() dateScaleX!: any;
 
-  smaLines: Array<{ period: number; color: string }> = [
-    { period: 20, color: '#ff0000' },
-    { period: 50, color: '#00ff00' },
-    { period: 150, color: '#0000ff' },
+  smaLines: Array<{ period: number }> = [
+    { period: 20 },
+    { period: 50 },
+    { period: 150 },
   ];
 
   override chartType = ChartType.OHLC;
@@ -83,6 +83,15 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       .range([panel.innerHeight, 0])
       .nice();
 
+    g.selectAll<SVGLineElement, number>('.price-grid')
+      .data(yScale.ticks(Math.max(2, Math.floor(panel.innerHeight / 56))))
+      .join('line')
+      .attr('class', 'price-grid')
+      .attr('x1', 0)
+      .attr('x2', panel.innerWidth)
+      .attr('y1', value => yScale(value))
+      .attr('y2', value => yScale(value));
+
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
     console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
@@ -105,19 +114,19 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       .attr('x2', d => x0(d) + bw / 2)
       .attr('y1', d => yScale(d.high))
       .attr('y2', d => yScale(d.low))
-      .attr('stroke', '#B0BEC5')
-      .attr('stroke-width', 2);
+      .attr('class', 'wick');
 
     // Body
     g.selectAll('.body')
       .data(this.data)
       .join('rect')
       .attr('class', 'body')
+      .classed('body--up', d => d.close >= d.open)
+      .classed('body--down', d => d.close < d.open)
       .attr('x', d => x0(d) + (bw - candleWidth) / 2) // center in band
       .attr('y', d => yScale(Math.max(d.open, d.close)))
       .attr('width', candleWidth)
-      .attr('height', d => Math.max(1, Math.abs(yScale(d.open) - yScale(d.close))))
-      .attr('fill', d => (d.close >= d.open ? '#66bb6a' : '#ef5350'));
+      .attr('height', d => Math.max(1, Math.abs(yScale(d.open) - yScale(d.close))));
 
     console.log(`✅ OHLC drawn (${caller})`);
 
@@ -180,7 +189,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
       .y(d => y(d.v as number))
       .curve(curveLinear);
 
-    this.smaLines.forEach(({ period, color }) => {
+    this.smaLines.forEach(({ period }) => {
       const series = sma(closes, period);                         // (number|null)[]
       const pathData = dates
         .map((dt, i) => ({ dt, v: series[i] as Num }))
@@ -193,7 +202,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
         .attr('class', `sma-line sma-${period}`)
         .attr('d', lineGen as any)
         .attr('fill', 'none')
-        .attr('stroke', color)
         .attr('stroke-width', 1.5);
     });
   }

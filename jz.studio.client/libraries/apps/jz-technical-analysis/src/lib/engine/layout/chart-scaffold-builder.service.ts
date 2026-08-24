@@ -10,8 +10,8 @@ export class ChartScaffoldBuilderService {
       height,
       margins: {
         bottom: 30,
-        left: 40,
-        right: 40,
+        left: 58,
+        right: 58,
         top: 30
       },
       xAxisTop: 30,

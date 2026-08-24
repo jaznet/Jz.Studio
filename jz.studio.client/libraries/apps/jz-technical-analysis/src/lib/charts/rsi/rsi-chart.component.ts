@@ -129,7 +129,6 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
       .attr('class', 'rsi-line')
       .attr('d', lineGen as any)
       .attr('fill', 'none')
-      .attr('stroke', '#85ad90')
       .attr('stroke-width', 1.5);
 
     this.drawYAxes(panel, y);

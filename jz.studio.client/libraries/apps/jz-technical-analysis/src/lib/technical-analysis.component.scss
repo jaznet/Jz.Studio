@@ -1,9 +1,26 @@
 /*technical-analysis.component.scss*/
 
 jz-technical-analysis {
-  --axis-tick-color: #c6c5b9;
-  --axis-line-color: #c6c5b9;
-  --axis-label-color: #c6c5b9;
+  --chart-surface: var(--plt-clr-2);
+  --chart-separator: color-mix(in srgb, var(--plt-txt-2) 18%, transparent);
+  --chart-grid: color-mix(in srgb, var(--plt-txt-2) 11%, transparent);
+  --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
+  --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
+
+  --chart-bullish: #68b77a;
+  --chart-bearish: #dc6b6b;
+  --chart-wick: #aab8c2;
+  --chart-overlay-fast: #e6ad51;
+  --chart-overlay-medium: #49b3a7;
+  --chart-overlay-slow: #7889d8;
+  --chart-macd: #7889d8;
+  --chart-signal: #d8dca8;
+  --chart-rsi: #8eb59a;
+  --chart-reference: color-mix(in srgb, var(--plt-txt-2) 24%, transparent);
+
+  --axis-tick-color: var(--chart-axis);
+  --axis-line-color: var(--chart-axis);
+  --axis-label-color: var(--chart-label);
 }
 
 .svg-container{
@@ -11,7 +28,7 @@ jz-technical-analysis {
 }
 
 .rSvgElement {
-     fill:var(--plt-clr-2);
+     fill: var(--chart-surface);
      border-radius:8px;
 }
 
@@ -57,19 +74,17 @@ fill:transparent;
   font-size: 12px;
 }
 
-.tick {
-  stroke:rebeccapurple ;
-}
-                                                                                                                                                                      
 .tick line {
   stroke: var(--axis-line-color);
+  stroke-opacity: .42;
 }
 
-  .tick text {
-    fill: #c6c5b9 !important;
-    stroke: none;
-    font-size: 10px;
-  }
+.tick text {
+  fill: var(--axis-label-color) !important;
+  stroke: none;
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
 
 .x-axis {
 /*  color: var(--plt-chart-2);
@@ -82,22 +97,83 @@ fill:transparent;
 }
 
   .x-axis > .domain {
-    color: red;
     stroke: var(--axis-line-color);
     stroke-width: 1;
   }
 
 .y-axis {
-  color: var(--axis-color, #98d0f6);
+  color: var(--axis-color, var(--chart-axis));
 }
 
 .y-axis .domain,
 .y-axis .tick line {
-  stroke-opacity: .35;
+  stroke: var(--axis-line-color);
+  stroke-opacity: .36;
 }
 
 .y-axis .tick text {
   font-size: 10px;
+}
+
+
+.panel-host > .panel-debug {
+  fill: transparent !important;
+  stroke: var(--chart-separator);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.price-grid {
+  stroke: var(--chart-grid);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+  pointer-events: none;
+}
+
+.wick {
+  stroke: var(--chart-wick);
+  stroke-width: 1.25;
+}
+
+.body--up,
+.vol-bar--up,
+.macd-hist--positive { fill: var(--chart-bullish); }
+
+.body--down,
+.vol-bar--down,
+.macd-hist--negative { fill: var(--chart-bearish); }
+
+.vol-bar { opacity: .78; }
+.macd-hist { opacity: .86; }
+
+.sma-line,
+.macd-line,
+.signal-line,
+.rsi-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.sma-20 { stroke: var(--chart-overlay-fast); }
+.sma-50 { stroke: var(--chart-overlay-medium); }
+.sma-150 { stroke: var(--chart-overlay-slow); }
+.macd-line { stroke: var(--chart-macd); }
+.signal-line { stroke: var(--chart-signal); }
+.rsi-line { stroke: var(--chart-rsi); }
+
+.macd-baseline,
+.rsi-guide {
+  stroke: var(--chart-reference);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.rsi-band-ob,
+.rsi-band-os {
+  fill: var(--chart-bearish);
+  opacity: .035;
 }
 
 .title-text {
