@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, HostBinding, OnDestroy, OnInit, ElementRef } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import {
   StockPriceHistory,
   TechnicalAnalysisComponent,
   TechnicalAnalysisDataWindow
 } from 'jz-technical-analysis';
 import {
-  buildJzPopoverErrorData,
   JzPopoverErrorComponent,
+  JzPopoverErrorService,
   JzPopoverLoadingComponent,
   JzPopoverRef,
   JzPopoverService
@@ -42,6 +42,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
     private readonly marketPriceService: MarketPriceService,
+    private readonly popoverErrorService: JzPopoverErrorService,
     private readonly popoverService: JzPopoverService
   ) {
     const visibleEnd = new Date();
@@ -152,7 +153,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   private showError(error: HttpErrorResponse): void {
     const errorData = {
-      ...buildJzPopoverErrorData(error),
+      ...this.popoverErrorService.build(error),
       allowRetry: true
     };
 

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { JzPopoverErrorData } from '../models/jz-popover-error-data';
 
@@ -17,24 +17,25 @@ export class JzPopoverErrorService {
       return {
         title: 'Application Error',
         message: error.message,
-        details: error.stack
+        technicalDetails: error.stack
       };
     }
 
     return {
       title: 'Unexpected Error',
       message: 'An unexpected error occurred.',
-      details: this.safeStringify(error)
+      technicalDetails: this.safeStringify(error)
     };
   }
 
   private buildFromHttpError(error: HttpErrorResponse): JzPopoverErrorData {
     const serverMessage = this.getServerMessage(error);
+    const message = serverMessage ?? error.message ?? 'The request failed.';
 
     return {
       title: this.getHttpTitle(error),
-      message: serverMessage ?? error.message ?? 'The request failed.',
-      details: this.buildHttpDetails(error),
+      message: this.getFriendlyMessage(message),
+      technicalDetails: this.buildHttpDetails(error),
       status: error.status,
       statusText: error.statusText,
       url: error.url ?? undefined
@@ -70,6 +71,24 @@ export class JzPopoverErrorService {
       ?? error.error.title
       ?? error.error.detail
       ?? undefined;
+  }
+
+  private getFriendlyMessage(message: string): string {
+    const text = message.toLowerCase();
+
+    if (
+      text.includes('monthly free amount allowance') ||
+      text.includes('database has reached') ||
+      text.includes('is paused')
+    ) {
+      return 'Azure SQL has paused the database because the monthly free allowance has been reached.';
+    }
+
+    if (text.includes('internal server error') || text.includes('500')) {
+      return 'The server encountered an internal error.';
+    }
+
+    return message;
   }
 
   private buildHttpDetails(error: HttpErrorResponse): string {

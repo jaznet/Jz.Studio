@@ -2,15 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, Optional } from '@angular/core';
 
 import { JZ_POPOVER_DATA, JZ_POPOVER_REF } from '../jz-popover-injector.tokens';
+import { JzPopoverErrorData } from '../models/jz-popover-error-data';
 import { JzPopoverPanelComponent } from '../jz-popover-panel/jz-popover-panel.component';
 import { JzPopoverRef } from '../jz-popover-ref';
-
-export interface JzPopoverErrorData {
-  title?: string;
-  message?: string;
-  technicalDetails?: string;
-  allowRetry?: boolean;
-}
 
 @Component({
   selector: 'jz-popover-error',
