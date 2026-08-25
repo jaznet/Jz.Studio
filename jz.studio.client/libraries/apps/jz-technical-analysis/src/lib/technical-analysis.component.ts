@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 
 import { OverlayContainer } from '@angular/cdk/overlay';
-import type { ScaleBand } from 'd3-scale';
+import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -28,7 +28,9 @@ import { ChartPanelRendererService } from './engine/rendering/chart-panel-render
 import { ChartScaffoldRendererService } from './engine/rendering/chart-scaffold-renderer.service';
 import { ChartXAxisService } from './engine/rendering/chart-x-axis.service';
 import { PanelHostRendererService } from './engine/rendering/panel-host-renderer.service';
+import { ChartType } from './enums/chart-type';
 import { ChartScaffold } from './interfaces/chart-scaffold.interface';
+import { PanelAttributes } from './interfaces/panel-interfaces';
 import { PanelPreference } from './interfaces/panel-preference.interface';
 import { StockPriceHistory } from './models/stock-price-history.model';
 import { TechnicalAnalysisDataWindow } from './models/technical-analysis-data.model';
@@ -125,6 +127,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   crosshairBottom = 0;
   crosshairLeft = 0;
   crosshairRight = 0;
+  crosshairDateLabel = '';
+  crosshairDateLabelX = 0;
+  crosshairDateLabelY = 0;
+  crosshairValueLabel = '';
+  crosshairValueLabelX = 0;
+  crosshairValueLabelY = 0;
 
   dateScaleX!: ScaleBand<Date>;
   svgContainer!: HTMLDivElement;
@@ -221,19 +229,27 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     svgPoint.y = event.clientY;
 
     const pointer = svgPoint.matrixTransform(matrix.inverse());
-    const panels = Object.values(panelsMap).filter(panel => !!panel);
+    const panelEntries = Object.entries(panelsMap).filter(
+      (entry): entry is [ChartType, PanelAttributes] => !!entry[1]
+    );
+    const panels = panelEntries.map(([, panel]) => panel);
     const plotLeft = this.chartScaffold.margins.left;
     const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
 
-    const activePanel = panels.find(panel => {
-      if (!panel) return false;
-
+    const activePanelEntry = panelEntries.find(([, panel]) => {
       const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
       const contentBottom = contentTop + panel.contentRect.height;
       return pointer.y >= contentTop && pointer.y <= contentBottom;
     });
+    const activePanel = activePanelEntry?.[1];
+    const activeChartType = activePanelEntry?.[0];
 
-    if (pointer.x < plotLeft || pointer.x > plotRight || !activePanel) {
+    if (
+      pointer.x < plotLeft
+      || pointer.x > plotRight
+      || !activePanel
+      || !activeChartType
+    ) {
       this.hideCrosshair();
       return;
     }
@@ -278,6 +294,14 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.crosshairBottom = Math.max(this.crosshairTop, ...contentBottoms);
     this.crosshairLeft = plotLeft;
     this.crosshairRight = plotRight;
+    this.updateCrosshairCallouts(
+      nearestDate,
+      pointer.y,
+      activeChartType,
+      activePanel,
+      plotLeft,
+      plotRight
+    );
     this.crosshairVisible = true;
     this.crosshairService.show(
       { date: nearestDate, value: readout.close },
@@ -288,6 +312,114 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   hideCrosshair(): void {
     this.crosshairVisible = false;
     this.crosshairService.hide();
+  }
+
+  private updateCrosshairCallouts(
+    date: Date,
+    pointerY: number,
+    chartType: ChartType,
+    panel: PanelAttributes,
+    plotLeft: number,
+    plotRight: number
+  ): void {
+    const dateLabelWidth = 82;
+    const valueLabelWidth = 58;
+    const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
+    const contentBottom = contentTop + panel.contentRect.height;
+    const value = this.valueAtPointer(chartType, panel, pointerY - contentTop);
+
+    this.crosshairDateLabel = date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+    this.crosshairDateLabelX = Math.min(
+      Math.max(this.crosshairX - dateLabelWidth / 2, plotLeft),
+      plotRight - dateLabelWidth
+    );
+    this.crosshairDateLabelY = Math.min(
+      this.chartScaffold.height - 20,
+      this.crosshairBottom + 8
+    );
+
+    this.crosshairValueLabel = this.formatAxisValue(chartType, value);
+    this.crosshairValueLabelX = Math.min(
+      plotRight + 4,
+      this.chartScaffold.width - valueLabelWidth - 4
+    );
+    this.crosshairValueLabelY = Math.min(
+      Math.max(pointerY, contentTop + 10),
+      contentBottom - 10
+    );
+  }
+
+  private valueAtPointer(
+    chartType: ChartType,
+    panel: PanelAttributes,
+    localY: number
+  ): number {
+    const contentHeight = Math.max(1, panel.contentRect.height);
+    const clampedY = Math.min(contentHeight, Math.max(0, localY));
+
+    switch (chartType) {
+      case ChartType.OHLC: {
+        const dataLow = Math.min(...this.stockPriceHistoryData.map(item => item.low));
+        const dataHigh = Math.max(...this.stockPriceHistoryData.map(item => item.high));
+        const padding = Math.max((dataHigh - dataLow) * 0.04, 1);
+        return scaleLinear()
+          .domain([dataLow - padding, dataHigh + padding])
+          .range([contentHeight, 0])
+          .nice()
+          .invert(clampedY);
+      }
+      case ChartType.VOLUME: {
+        const maxVolume = Math.max(
+          ...this.stockPriceHistoryData.map(item => item.volume ?? 0),
+          0
+        );
+        return scaleLinear()
+          .domain([0, maxVolume * 1.06])
+          .range([contentHeight, 0])
+          .nice()
+          .invert(clampedY);
+      }
+      case ChartType.MACD: {
+        const values = this.chartData.macdData.flatMap(item => [
+          item.macd,
+          item.signal,
+          item.histogram
+        ]).filter((value): value is number => value !== undefined);
+        const minimum = Math.min(0, ...values);
+        const maximum = Math.max(0, ...values);
+        const padding = (maximum - minimum) * 0.1 || 1;
+        const scaleHeight = Math.max(1, panel.panelRect.height);
+        const scaledY = clampedY * scaleHeight / contentHeight;
+        return scaleLinear()
+          .domain([minimum - padding, maximum + padding])
+          .range([scaleHeight, 0])
+          .nice()
+          .invert(scaledY);
+      }
+      case ChartType.RSI:
+        return scaleLinear()
+          .domain([0, 100])
+          .range([contentHeight, 0])
+          .invert(clampedY);
+      default:
+        return 0;
+    }
+  }
+
+  private formatAxisValue(chartType: ChartType, value: number): string {
+    if (chartType === ChartType.VOLUME) {
+      if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(2)}B`;
+      if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+      if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+      return value.toFixed(0);
+    }
+
+    if (chartType === ChartType.RSI) return value.toFixed(1);
+    return value.toFixed(2);
   }
 
   private updateSvgSize(): void {

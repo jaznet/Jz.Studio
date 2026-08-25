@@ -40,6 +40,32 @@
               [attr.y1]="crosshairY"
               [attr.y2]="crosshairY">
         </line>
+        <g class="crosshair-callout crosshair-callout--value">
+          <rect [attr.x]="crosshairValueLabelX"
+                [attr.y]="crosshairValueLabelY - 9"
+                width="58"
+                height="18"
+                rx="3"
+                ry="3">
+          </rect>
+          <text [attr.x]="crosshairValueLabelX + 29"
+                [attr.y]="crosshairValueLabelY">
+            {{ crosshairValueLabel }}
+          </text>
+        </g>
+        <g class="crosshair-callout crosshair-callout--date">
+          <rect [attr.x]="crosshairDateLabelX"
+                [attr.y]="crosshairDateLabelY"
+                width="82"
+                height="18"
+                rx="3"
+                ry="3">
+          </rect>
+          <text [attr.x]="crosshairDateLabelX + 41"
+                [attr.y]="crosshairDateLabelY + 9">
+            {{ crosshairDateLabel }}
+          </text>
+        </g>
       </g>
     }
 

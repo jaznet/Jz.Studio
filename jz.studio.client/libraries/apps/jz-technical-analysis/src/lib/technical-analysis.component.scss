@@ -155,6 +155,31 @@ fill:transparent;
   stroke-opacity: .48;
 }
 
+.crosshair-callout rect {
+  fill: color-mix(in srgb, var(--chart-surface) 92%, var(--plt-txt-2));
+  stroke: color-mix(in srgb, var(--chart-axis) 72%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.crosshair-callout text {
+  fill: var(--chart-label);
+  font-size: 9px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
+.chart-crosshair--pinned .crosshair-callout rect {
+  stroke: color-mix(in srgb, var(--plt-pop) 76%, var(--chart-axis));
+}
+
+.chart-crosshair--pinned .crosshair-callout text {
+  fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
+}
+
 .panel-host > .panel-debug {
   fill: transparent !important;
   stroke: var(--chart-separator);
