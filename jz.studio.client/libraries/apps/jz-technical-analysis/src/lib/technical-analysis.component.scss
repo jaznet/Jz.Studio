@@ -6,6 +6,7 @@ jz-technical-analysis {
   --chart-grid: color-mix(in srgb, var(--plt-txt-2) 11%, transparent);
   --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
   --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
+  --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
 
   --chart-bullish: #68b77a;
   --chart-bearish: #dc6b6b;
@@ -125,6 +126,25 @@ fill:transparent;
   font-size: 10px;
 }
 
+
+.chart-crosshair {
+  pointer-events: none;
+}
+
+.crosshair-line {
+  stroke: var(--chart-crosshair);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.crosshair-line--vertical {
+  stroke-opacity: .72;
+}
+
+.crosshair-line--horizontal {
+  stroke-dasharray: 3 3;
+  stroke-opacity: .48;
+}
 
 .panel-host > .panel-debug {
   fill: transparent !important;

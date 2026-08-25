@@ -115,6 +115,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   dataReady = false;
   viewReady = false;
   hydrated = false;
+  crosshairVisible = false;
+  crosshairX = 0;
+  crosshairY = 0;
+  crosshairTop = 0;
+  crosshairBottom = 0;
+  crosshairLeft = 0;
+  crosshairRight = 0;
 
   dateScaleX!: ScaleBand<Date>;
   svgContainer!: HTMLDivElement;
@@ -169,6 +176,75 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.tryCreateChart();
 
     console.log('%c   🔵 ngAfterViewInit TechnicalAnalysisComponent', 'color:##EDF6F9');
+  }
+
+  onChartPointerMove(event: PointerEvent): void {
+    const svg = this.svgElement?.nativeElement;
+    const panelsMap = this.chartScaffold.chartMap;
+    const matrix = svg?.getScreenCTM();
+
+    if (!svg || !matrix || !panelsMap || !this.dateScaleX) {
+      this.hideCrosshair();
+      return;
+    }
+
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+
+    const pointer = svgPoint.matrixTransform(matrix.inverse());
+    const panels = Object.values(panelsMap).filter(panel => !!panel);
+    const plotLeft = this.chartScaffold.margins.left;
+    const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
+
+    const activePanel = panels.find(panel => {
+      if (!panel) return false;
+
+      const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
+      const contentBottom = contentTop + panel.contentRect.height;
+      return pointer.y >= contentTop && pointer.y <= contentBottom;
+    });
+
+    if (pointer.x < plotLeft || pointer.x > plotRight || !activePanel) {
+      this.hideCrosshair();
+      return;
+    }
+
+    const bandwidth = this.dateScaleX.bandwidth();
+    let nearestX = pointer.x;
+    let nearestDistance = Number.POSITIVE_INFINITY;
+
+    this.dateScaleX.domain().forEach(date => {
+      const bandX = this.dateScaleX(date);
+      if (bandX === undefined) return;
+
+      const centerX = plotLeft + bandX + bandwidth / 2;
+      const distance = Math.abs(pointer.x - centerX);
+      if (distance < nearestDistance) {
+        nearestDistance = distance;
+        nearestX = centerX;
+      }
+    });
+
+    const contentBottoms = panels
+      .filter(panel => !!panel)
+      .map(panel =>
+        this.chartScaffold.xAxisTop
+        + panel!.contentRect.y
+        + panel!.contentRect.height
+      );
+
+    this.crosshairX = nearestX;
+    this.crosshairY = pointer.y;
+    this.crosshairTop = this.chartScaffold.xAxisTop;
+    this.crosshairBottom = Math.max(this.crosshairTop, ...contentBottoms);
+    this.crosshairLeft = plotLeft;
+    this.crosshairRight = plotRight;
+    this.crosshairVisible = true;
+  }
+
+  hideCrosshair(): void {
+    this.crosshairVisible = false;
   }
 
   private updateSvgSize(): void {

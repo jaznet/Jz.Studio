@@ -1,7 +1,10 @@
 <!--techanTs.component.html-->
 
 <div #divSvgContainer id="divSvgContainer" class="grid-rows" style="border-radius:8px">
-  <svg #svgElement id="svgElement">
+  <svg #svgElement
+       id="svgElement"
+       (pointermove)="onChartPointerMove($event)"
+       (pointerleave)="hideCrosshair()">
     <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
     <!-- X AXIS TOP -->
     <g #gAxisTop id="gAxisTop" class="x-axis-group">
@@ -19,6 +22,23 @@
       <rect #rAxisBottom id="rAxisBottom" width="0" height="0"></rect>
       <g #gAxisBottomMonths id="gAxisBottomMonths" class="x-axis"></g>
     </g>
+
+    @if (crosshairVisible) {
+      <g class="chart-crosshair" aria-hidden="true">
+        <line class="crosshair-line crosshair-line--vertical"
+              [attr.x1]="crosshairX"
+              [attr.x2]="crosshairX"
+              [attr.y1]="crosshairTop"
+              [attr.y2]="crosshairBottom">
+        </line>
+        <line class="crosshair-line crosshair-line--horizontal"
+              [attr.x1]="crosshairLeft"
+              [attr.x2]="crosshairRight"
+              [attr.y1]="crosshairY"
+              [attr.y2]="crosshairY">
+        </line>
+      </g>
+    }
 
   </svg>
 </div>

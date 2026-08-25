@@ -1,0 +1,169 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+@@ -1,7 +1,10 @@
+ <!--techanTs.component.html-->
+ 
+ <div #divSvgContainer id="divSvgContainer" class="grid-rows" style="border-radius:8px">
+-  <svg #svgElement id="svgElement">
++  <svg #svgElement
++       id="svgElement"
++       (pointermove)="onChartPointerMove($event)"
++       (pointerleave)="hideCrosshair()">
+     <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
+     <!-- X AXIS TOP -->
+     <g #gAxisTop id="gAxisTop" class="x-axis-group">
+@@ -22,5 +25,22 @@
+       <g #gAxisBottomMonths id="gAxisBottomMonths" class="x-axis"></g>
+     </g>
+ 
++    @if (crosshairVisible) {
++      <g class="chart-crosshair" aria-hidden="true">
++        <line class="crosshair-line crosshair-line--vertical"
++              [attr.x1]="crosshairX"
++              [attr.x2]="crosshairX"
++              [attr.y1]="crosshairTop"
++              [attr.y2]="crosshairBottom">
++        </line>
++        <line class="crosshair-line crosshair-line--horizontal"
++              [attr.x1]="crosshairLeft"
++              [attr.x2]="crosshairRight"
++              [attr.y1]="crosshairY"
++              [attr.y2]="crosshairY">
++        </line>
++      </g>
++    }
++
+   </svg>
+ </div>
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+@@ -5,6 +5,7 @@ jz-technical-analysis {
+   --chart-grid: color-mix(in srgb, var(--plt-txt-2) 11%, transparent);
+   --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
+   --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
++  --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
+ 
+   --chart-bullish: #68b77a;
+   --chart-bearish: #dc6b6b;
+@@ -124,7 +125,26 @@ fill:transparent;
+ .y-axis .tick text {
+   font-size: 10px;
+ }
+ 
+ 
++.chart-crosshair {
++  pointer-events: none;
++}
++
++.crosshair-line {
++  stroke: var(--chart-crosshair);
++  stroke-width: 1;
++  vector-effect: non-scaling-stroke;
++}
++
++.crosshair-line--vertical {
++  stroke-opacity: .72;
++}
++
++.crosshair-line--horizontal {
++  stroke-dasharray: 3 3;
++  stroke-opacity: .48;
++}
++
+ .panel-host > .panel-debug {
+   fill: transparent !important;
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -100,6 +100,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   dataReady = false;
+   viewReady = false;
+   hydrated = false;
++  crosshairVisible = false;
++  crosshairX = 0;
++  crosshairY = 0;
++  crosshairTop = 0;
++  crosshairBottom = 0;
++  crosshairLeft = 0;
++  crosshairRight = 0;
+ 
+   dateScaleX!: ScaleBand<Date>;
+   svgContainer!: HTMLDivElement;
+@@ -132,6 +139,75 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     console.log('%c   🔵 ngAfterViewInit TechnicalAnalysisComponent', 'color:##EDF6F9');
+   }
+ 
++  onChartPointerMove(event: PointerEvent): void {
++    const svg = this.svgElement?.nativeElement;
++    const panelsMap = this.chartScaffold.chartMap;
++    const matrix = svg?.getScreenCTM();
++
++    if (!svg || !matrix || !panelsMap || !this.dateScaleX) {
++      this.hideCrosshair();
++      return;
++    }
++
++    const svgPoint = svg.createSVGPoint();
++    svgPoint.x = event.clientX;
++    svgPoint.y = event.clientY;
++
++    const pointer = svgPoint.matrixTransform(matrix.inverse());
++    const panels = Object.values(panelsMap).filter(panel => !!panel);
++    const plotLeft = this.chartScaffold.margins.left;
++    const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
++
++    const activePanel = panels.find(panel => {
++      if (!panel) return false;
++
++      const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
++      const contentBottom = contentTop + panel.contentRect.height;
++      return pointer.y >= contentTop && pointer.y <= contentBottom;
++    });
++
++    if (pointer.x < plotLeft || pointer.x > plotRight || !activePanel) {
++      this.hideCrosshair();
++      return;
++    }
++
++    const bandwidth = this.dateScaleX.bandwidth();
++    let nearestX = pointer.x;
++    let nearestDistance = Number.POSITIVE_INFINITY;
++
++    this.dateScaleX.domain().forEach(date => {
++      const bandX = this.dateScaleX(date);
++      if (bandX === undefined) return;
++
++      const centerX = plotLeft + bandX + bandwidth / 2;
++      const distance = Math.abs(pointer.x - centerX);
++      if (distance < nearestDistance) {
++        nearestDistance = distance;
++        nearestX = centerX;
++      }
++    });
++
++    const contentBottoms = panels
++      .filter(panel => !!panel)
++      .map(panel =>
++        this.chartScaffold.xAxisTop
++        + panel!.contentRect.y
++        + panel!.contentRect.height
++      );
++
++    this.crosshairX = nearestX;
++    this.crosshairY = pointer.y;
++    this.crosshairTop = this.chartScaffold.xAxisTop;
++    this.crosshairBottom = Math.max(this.crosshairTop, ...contentBottoms);
++    this.crosshairLeft = plotLeft;
++    this.crosshairRight = plotRight;
++    this.crosshairVisible = true;
++  }
++
++  hideCrosshair(): void {
++    this.crosshairVisible = false;
++  }
++
+   private updateSvgSize(): void {
+ 
+     this.svgContainer = this.divSvgContainer.nativeElement;
