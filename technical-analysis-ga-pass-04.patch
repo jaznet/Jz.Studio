@@ -1,0 +1,132 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.html b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.html
+index fdb49de35c84549c23e0b2c35d2e0512fb6dc310..b3578448539300a0a7c57232f4ede37dd5c9d410 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.html
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.html
+@@ -13,7 +13,21 @@
+     <g #gContent id="gContent">
+       <rect #rContent id="rContent" width="0" height="0"></rect>
+       <g #gChart id="gChart"></g>
+-      <text class="panel-label" x="8" y="14">{{ panelLabel }}</text>
++      <g class="panel-badge"
++         [attr.transform]="'translate(' + panelBadgeX + ', 6)'">
++        <rect [attr.x]="-panelBadgeWidth"
++              y="0"
++              [attr.width]="panelBadgeWidth"
++              height="18"
++              rx="4"
++              ry="4">
++        </rect>
++        <text [attr.x]="-panelBadgeWidth + 7" y="12">
++          @for (item of panelLegendItems; track item.label) {
++            <tspan [attr.class]="item.className">{{ item.label }}</tspan>
++          }
++        </text>
++      </g>
+     </g>
+ 
+     <g #gAxisGroupRight id="gAxisGroupRight">
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+index 952c75b46d8df5d3c4e668c8fb9922d61de99897..b2d6f2501b8913ad00775b5af81660acd9c4f819 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+@@ -50,10 +50,38 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+ 
+   chartType: ChartType = ChartType.Base;
+ 
+-  get panelLabel(): string {
+-    return this.chartType === ChartType.OHLC
+-      ? 'PRICE'
+-      : this.chartType;
++  get panelBadgeX(): number {
++    return Math.max(this.panelBadgeWidth + 8, this.getPanel()?.innerWidth ?? 0);
++  }
++
++  get panelBadgeWidth(): number {
++    switch (this.chartType) {
++      case ChartType.OHLC: return 224;
++      case ChartType.MACD: return 126;
++      case ChartType.RSI: return 58;
++      default: return 72;
++    }
++  }
++
++  get panelLegendItems(): ReadonlyArray<{ label: string; className: string }> {
++    switch (this.chartType) {
++      case ChartType.OHLC:
++        return [
++          { label: 'PRICE', className: 'legend-title' },
++          { label: '  SMA 20', className: 'legend-sma-20' },
++          { label: '  SMA 50', className: 'legend-sma-50' },
++          { label: '  SMA 150', className: 'legend-sma-150' }
++        ];
++      case ChartType.MACD:
++        return [
++          { label: 'MACD', className: 'legend-macd' },
++          { label: '  SIGNAL', className: 'legend-signal' }
++        ];
++      case ChartType.RSI:
++        return [{ label: 'RSI 14', className: 'legend-rsi' }];
++      default:
++        return [{ label: this.chartType, className: 'legend-title' }];
++    }
+   }
+ 
+   ngAfterViewInit(): void {
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+index 32195da0e63c587b895a97fa2b857d8c282ca20c..dea05e74506df5153af76df72c952e61d5da7a18 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+@@ -133,13 +133,48 @@ fill:transparent;
+   vector-effect: non-scaling-stroke;
+ }
+ 
+-.panel-label {
+-  fill: color-mix(in srgb, var(--chart-label) 62%, transparent);
++.panel-badge {
++  pointer-events: none;
++}
++
++.panel-badge rect {
++  fill: color-mix(in srgb, var(--chart-surface) 88%, transparent);
++  stroke: color-mix(in srgb, var(--chart-separator) 72%, transparent);
++  stroke-width: 1;
++}
++
++.panel-badge text {
+   font-size: 9px;
+   font-weight: 600;
+-  letter-spacing: .12em;
+-  pointer-events: none;
+-  text-transform: uppercase;
++  letter-spacing: .08em;
++}
++
++.panel-badge .legend-title {
++  fill: color-mix(in srgb, var(--chart-label) 72%, transparent);
++}
++
++.panel-badge .legend-sma-20 {
++  fill: var(--chart-overlay-fast);
++}
++
++.panel-badge .legend-sma-50 {
++  fill: var(--chart-overlay-medium);
++}
++
++.panel-badge .legend-sma-150 {
++  fill: var(--chart-overlay-slow);
++}
++
++.panel-badge .legend-macd {
++  fill: var(--chart-macd);
++}
++
++.panel-badge .legend-signal {
++  fill: var(--chart-signal);
++}
++
++.panel-badge .legend-rsi {
++  fill: var(--chart-rsi);
+ }
+ 
+ .price-grid {
