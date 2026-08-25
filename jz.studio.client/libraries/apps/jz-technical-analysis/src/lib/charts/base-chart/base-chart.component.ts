@@ -51,7 +51,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   chartType: ChartType = ChartType.Base;
 
   get panelBadgeX(): number {
-    return Math.max(this.panelBadgeWidth + 8, this.getPanel()?.innerWidth ?? 0);
+    return this.panelBadgeWidth + 8;
   }
 
   get panelBadgeWidth(): number {
