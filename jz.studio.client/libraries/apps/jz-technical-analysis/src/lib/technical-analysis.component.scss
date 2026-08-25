@@ -141,6 +141,11 @@ fill:transparent;
   stroke-opacity: .72;
 }
 
+.chart-crosshair--pinned .crosshair-line--vertical {
+  stroke: color-mix(in srgb, var(--plt-pop) 76%, var(--chart-crosshair));
+  stroke-opacity: .92;
+}
+
 .crosshair-line--horizontal {
   stroke-dasharray: 3 3;
   stroke-opacity: .48;

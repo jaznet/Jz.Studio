@@ -1,0 +1,111 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+index 864216f..21e99c6 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+@@ -4,7 +4,8 @@
+   <svg #svgElement
+        id="svgElement"
+        (pointermove)="onChartPointerMove($event)"
+-       (pointerleave)="hideCrosshair()">
++       (pointerleave)="onChartPointerLeave()"
++       (click)="onChartClick($event)">
+     <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
+     <!-- X AXIS TOP -->
+     <g #gAxisTop id="gAxisTop" class="x-axis-group">
+@@ -24,7 +25,9 @@
+     </g>
+ 
+     @if (crosshairVisible) {
+-      <g class="chart-crosshair" aria-hidden="true">
++      <g class="chart-crosshair"
++         [class.chart-crosshair--pinned]="crosshairPinned"
++         aria-hidden="true">
+         <line class="crosshair-line crosshair-line--vertical"
+               [attr.x1]="crosshairX"
+               [attr.x2]="crosshairX"
+@@ -42,4 +45,3 @@
+ 
+   </svg>
+ </div>
+-
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+index dad7d96..a34f41a 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+@@ -141,6 +141,11 @@ fill:transparent;
+   stroke-opacity: .72;
+ }
+ 
++.chart-crosshair--pinned .crosshair-line--vertical {
++  stroke: color-mix(in srgb, var(--plt-pop) 76%, var(--chart-crosshair));
++  stroke-opacity: .92;
++}
++
+ .crosshair-line--horizontal {
+   stroke-dasharray: 3 3;
+   stroke-opacity: .48;
+@@ -258,4 +263,4 @@ fill:transparent;
+ 
+ .title-text {
+   fill: lightgray;
+-}
+\ No newline at end of file
++}
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+index 6d16b1f..d9fd127 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -8,6 +8,7 @@ import {
+   ComponentRef,
+   ElementRef,
+   HostBinding,
++  HostListener,
+   Input,
+   NgZone,
+   OnDestroy,
+@@ -117,6 +118,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   viewReady = false;
+   hydrated = false;
+   crosshairVisible = false;
++  crosshairPinned = false;
+   crosshairX = 0;
+   crosshairY = 0;
+   crosshairTop = 0;
+@@ -181,6 +183,30 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   }
+ 
+   onChartPointerMove(event: PointerEvent): void {
++    if (this.crosshairPinned) return;
++    this.updateCrosshair(event);
++  }
++
++  onChartClick(event: MouseEvent): void {
++    this.crosshairPinned = false;
++    this.updateCrosshair(event);
++    this.crosshairPinned = this.crosshairVisible;
++  }
++
++  onChartPointerLeave(): void {
++    if (!this.crosshairPinned) {
++      this.hideCrosshair();
++    }
++  }
++
++  @HostListener('window:keydown.escape')
++  releasePinnedCrosshair(): void {
++    if (!this.crosshairPinned) return;
++    this.crosshairPinned = false;
++    this.hideCrosshair();
++  }
++
++  private updateCrosshair(event: MouseEvent): void {
+     const svg = this.svgElement?.nativeElement;
+     const panelsMap = this.chartScaffold.chartMap;
+     const matrix = svg?.getScreenCTM();
+@@ -399,4 +425,4 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     };
+   }
+ 
+-}
+\ No newline at end of file
++}

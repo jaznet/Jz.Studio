@@ -8,6 +8,7 @@ import {
   ComponentRef,
   ElementRef,
   HostBinding,
+  HostListener,
   Input,
   NgZone,
   OnDestroy,
@@ -117,6 +118,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   viewReady = false;
   hydrated = false;
   crosshairVisible = false;
+  crosshairPinned = false;
   crosshairX = 0;
   crosshairY = 0;
   crosshairTop = 0;
@@ -181,6 +183,30 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   onChartPointerMove(event: PointerEvent): void {
+    if (this.crosshairPinned) return;
+    this.updateCrosshair(event);
+  }
+
+  onChartClick(event: MouseEvent): void {
+    this.crosshairPinned = false;
+    this.updateCrosshair(event);
+    this.crosshairPinned = this.crosshairVisible;
+  }
+
+  onChartPointerLeave(): void {
+    if (!this.crosshairPinned) {
+      this.hideCrosshair();
+    }
+  }
+
+  @HostListener('window:keydown.escape')
+  releasePinnedCrosshair(): void {
+    if (!this.crosshairPinned) return;
+    this.crosshairPinned = false;
+    this.hideCrosshair();
+  }
+
+  private updateCrosshair(event: MouseEvent): void {
     const svg = this.svgElement?.nativeElement;
     const panelsMap = this.chartScaffold.chartMap;
     const matrix = svg?.getScreenCTM();

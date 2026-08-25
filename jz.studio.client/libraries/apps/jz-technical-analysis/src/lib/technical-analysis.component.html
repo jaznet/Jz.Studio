@@ -4,7 +4,8 @@
   <svg #svgElement
        id="svgElement"
        (pointermove)="onChartPointerMove($event)"
-       (pointerleave)="hideCrosshair()">
+       (pointerleave)="onChartPointerLeave()"
+       (click)="onChartClick($event)">
     <rect #rSvgElement id="rSvgElement" class="rSvgElement" x="0" y="0" width="0" height="0" rx="8" ry="8" s></rect>
     <!-- X AXIS TOP -->
     <g #gAxisTop id="gAxisTop" class="x-axis-group">
@@ -24,7 +25,9 @@
     </g>
 
     @if (crosshairVisible) {
-      <g class="chart-crosshair" aria-hidden="true">
+      <g class="chart-crosshair"
+         [class.chart-crosshair--pinned]="crosshairPinned"
+         aria-hidden="true">
         <line class="crosshair-line crosshair-line--vertical"
               [attr.x1]="crosshairX"
               [attr.x2]="crosshairX"
@@ -42,4 +45,3 @@
 
   </svg>
 </div>
-
