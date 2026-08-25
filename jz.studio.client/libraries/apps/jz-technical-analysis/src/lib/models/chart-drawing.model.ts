@@ -3,6 +3,19 @@ export interface ChartCoordinate {
   value: number;
 }
 
+export interface CrosshairReadout {
+  date: Date;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  macd?: number;
+  signal?: number;
+  histogram?: number;
+  rsi?: number;
+}
+
 export interface TrendLine {
   id: string;
   start: ChartCoordinate;
@@ -26,6 +39,7 @@ export interface TradeMarker {
 export interface CrosshairState {
   visible: boolean;
   coordinate?: ChartCoordinate;
+  readout?: CrosshairReadout;
 }
 
 export interface ChartDrawingState {

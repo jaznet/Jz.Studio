@@ -33,6 +33,7 @@ import { StockPriceHistory } from './models/stock-price-history.model';
 import { TechnicalAnalysisDataWindow } from './models/technical-analysis-data.model';
 import { ChartDataService } from './services/chart-data.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
+import { ChartCrosshairService } from './services/interactions/chart-crosshair.service';
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
 import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
@@ -140,7 +141,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private chartXAxis: ChartXAxisService,
     private panelHostRenderer: PanelHostRendererService,
     private scaffoldSvc: ChartScaffoldService,
-    private panelPreferenceService: PanelPreferenceService
+    private panelPreferenceService: PanelPreferenceService,
+    private crosshairService: ChartCrosshairService
   ) {
     console.log('');
     console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
@@ -212,6 +214,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     const bandwidth = this.dateScaleX.bandwidth();
     let nearestX = pointer.x;
+    let nearestDate: Date | undefined;
     let nearestDistance = Number.POSITIVE_INFINITY;
 
     this.dateScaleX.domain().forEach(date => {
@@ -223,8 +226,17 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       if (distance < nearestDistance) {
         nearestDistance = distance;
         nearestX = centerX;
+        nearestDate = date;
       }
     });
+
+    const readout = nearestDate
+      ? this.chartData.getCrosshairReadout(nearestDate)
+      : undefined;
+    if (!nearestDate || !readout) {
+      this.hideCrosshair();
+      return;
+    }
 
     const contentBottoms = panels
       .filter(panel => !!panel)
@@ -241,10 +253,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.crosshairLeft = plotLeft;
     this.crosshairRight = plotRight;
     this.crosshairVisible = true;
+    this.crosshairService.show(
+      { date: nearestDate, value: readout.close },
+      readout
+    );
   }
 
   hideCrosshair(): void {
     this.crosshairVisible = false;
+    this.crosshairService.hide();
   }
 
   private updateSvgSize(): void {

@@ -197,6 +197,12 @@ fill:transparent;
   fill: var(--chart-rsi);
 }
 
+.panel-badge .legend-value {
+  fill: var(--chart-label);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: .02em;
+}
+
 .price-grid {
   stroke: var(--chart-grid);
   stroke-width: 1;

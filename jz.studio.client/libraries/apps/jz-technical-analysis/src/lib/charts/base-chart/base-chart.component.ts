@@ -1,12 +1,11 @@
 // base-chart.component.ts
 
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
-//import { axisRight } from 'd3';
-//import { axisRight } from 'd3';
+import { ChartCrosshairService } from '../../services/interactions/chart-crosshair.service';
 
 @Component({
   selector: 'base-chart',
@@ -15,6 +14,7 @@ import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
   styleUrl: './base-chart.component.scss'
 })
 export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+  private readonly crosshairService = inject(ChartCrosshairService);
 
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
@@ -55,6 +55,15 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   }
 
   get panelBadgeWidth(): number {
+    if (this.crosshairService.state().readout) {
+      switch (this.chartType) {
+        case ChartType.OHLC: return 302;
+        case ChartType.VOLUME: return 126;
+        case ChartType.MACD: return 196;
+        case ChartType.RSI: return 92;
+      }
+    }
+
     switch (this.chartType) {
       case ChartType.OHLC: return 224;
       case ChartType.MACD: return 126;
@@ -64,6 +73,37 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   }
 
   get panelLegendItems(): ReadonlyArray<{ label: string; className: string }> {
+    const readout = this.crosshairService.state().readout;
+    if (readout) {
+      switch (this.chartType) {
+        case ChartType.OHLC:
+          return [
+            { label: this.formatDate(readout.date), className: 'legend-title' },
+            { label: `  O ${this.formatValue(readout.open)}`, className: 'legend-value' },
+            { label: `  H ${this.formatValue(readout.high)}`, className: 'legend-value' },
+            { label: `  L ${this.formatValue(readout.low)}`, className: 'legend-value' },
+            { label: `  C ${this.formatValue(readout.close)}`, className: 'legend-value' }
+          ];
+        case ChartType.VOLUME:
+          return [
+            { label: 'VOLUME', className: 'legend-title' },
+            { label: `  ${this.formatVolume(readout.volume)}`, className: 'legend-value' }
+          ];
+        case ChartType.MACD:
+          return [
+            { label: 'MACD', className: 'legend-macd' },
+            { label: `  ${this.formatSigned(readout.macd)}`, className: 'legend-value' },
+            { label: '  SIGNAL', className: 'legend-signal' },
+            { label: `  ${this.formatSigned(readout.signal)}`, className: 'legend-value' }
+          ];
+        case ChartType.RSI:
+          return [
+            { label: 'RSI', className: 'legend-rsi' },
+            { label: `  ${this.formatValue(readout.rsi)}`, className: 'legend-value' }
+          ];
+      }
+    }
+
     switch (this.chartType) {
       case ChartType.OHLC:
         return [
@@ -82,6 +122,27 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
     }
+  }
+
+  private formatDate(date: Date): string {
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  private formatValue(value: number | undefined): string {
+    return value === undefined ? '—' : value.toFixed(2);
+  }
+
+  private formatSigned(value: number | undefined): string {
+    if (value === undefined) return '—';
+    const formatted = value.toFixed(2);
+    return value > 0 ? `+${formatted}` : formatted;
+  }
+
+  private formatVolume(value: number): string {
+    if (value >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(2)}B`;
+    if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+    if (value >= 1_000) return `${(value / 1_000).toFixed(1)}K`;
+    return value.toFixed(0);
   }
 
   ngAfterViewInit(): void {
