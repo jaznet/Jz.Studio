@@ -50,10 +50,38 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   chartType: ChartType = ChartType.Base;
 
-  get panelLabel(): string {
-    return this.chartType === ChartType.OHLC
-      ? 'PRICE'
-      : this.chartType;
+  get panelBadgeX(): number {
+    return Math.max(this.panelBadgeWidth + 8, this.getPanel()?.innerWidth ?? 0);
+  }
+
+  get panelBadgeWidth(): number {
+    switch (this.chartType) {
+      case ChartType.OHLC: return 224;
+      case ChartType.MACD: return 126;
+      case ChartType.RSI: return 58;
+      default: return 72;
+    }
+  }
+
+  get panelLegendItems(): ReadonlyArray<{ label: string; className: string }> {
+    switch (this.chartType) {
+      case ChartType.OHLC:
+        return [
+          { label: 'PRICE', className: 'legend-title' },
+          { label: '  SMA 20', className: 'legend-sma-20' },
+          { label: '  SMA 50', className: 'legend-sma-50' },
+          { label: '  SMA 150', className: 'legend-sma-150' }
+        ];
+      case ChartType.MACD:
+        return [
+          { label: 'MACD', className: 'legend-macd' },
+          { label: '  SIGNAL', className: 'legend-signal' }
+        ];
+      case ChartType.RSI:
+        return [{ label: 'RSI 14', className: 'legend-rsi' }];
+      default:
+        return [{ label: this.chartType, className: 'legend-title' }];
+    }
   }
 
   ngAfterViewInit(): void {

@@ -133,13 +133,48 @@ fill:transparent;
   vector-effect: non-scaling-stroke;
 }
 
-.panel-label {
-  fill: color-mix(in srgb, var(--chart-label) 62%, transparent);
+.panel-badge {
+  pointer-events: none;
+}
+
+.panel-badge rect {
+  fill: color-mix(in srgb, var(--chart-surface) 88%, transparent);
+  stroke: color-mix(in srgb, var(--chart-separator) 72%, transparent);
+  stroke-width: 1;
+}
+
+.panel-badge text {
   font-size: 9px;
   font-weight: 600;
-  letter-spacing: .12em;
-  pointer-events: none;
-  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.panel-badge .legend-title {
+  fill: color-mix(in srgb, var(--chart-label) 72%, transparent);
+}
+
+.panel-badge .legend-sma-20 {
+  fill: var(--chart-overlay-fast);
+}
+
+.panel-badge .legend-sma-50 {
+  fill: var(--chart-overlay-medium);
+}
+
+.panel-badge .legend-sma-150 {
+  fill: var(--chart-overlay-slow);
+}
+
+.panel-badge .legend-macd {
+  fill: var(--chart-macd);
+}
+
+.panel-badge .legend-signal {
+  fill: var(--chart-signal);
+}
+
+.panel-badge .legend-rsi {
+  fill: var(--chart-rsi);
 }
 
 .price-grid {

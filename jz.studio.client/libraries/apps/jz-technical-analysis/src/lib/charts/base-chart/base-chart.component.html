@@ -13,7 +13,21 @@
     <g #gContent id="gContent">
       <rect #rContent id="rContent" width="0" height="0"></rect>
       <g #gChart id="gChart"></g>
-      <text class="panel-label" x="8" y="14">{{ panelLabel }}</text>
+      <g class="panel-badge"
+         [attr.transform]="'translate(' + panelBadgeX + ', 6)'">
+        <rect [attr.x]="-panelBadgeWidth"
+              y="0"
+              [attr.width]="panelBadgeWidth"
+              height="18"
+              rx="4"
+              ry="4">
+        </rect>
+        <text [attr.x]="-panelBadgeWidth + 7" y="12">
+          @for (item of panelLegendItems; track item.label) {
+            <tspan [attr.class]="item.className">{{ item.label }}</tspan>
+          }
+        </text>
+      </g>
     </g>
 
     <g #gAxisGroupRight id="gAxisGroupRight">
