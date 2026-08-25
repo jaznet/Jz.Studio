@@ -1,6 +1,14 @@
+:host {
+  display: block;
+  max-width: min(720px, calc(100vw - 48px));
+  max-height: min(620px, calc(100vh - 48px));
+}
+
 .jz-error-content {
   min-width: 420px;
   max-width: 680px;
+  max-height: 480px;
+  overflow: auto;
 }
 
 .jz-error-message {

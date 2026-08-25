@@ -1,0 +1,19 @@
+diff --git aa/jz.studio.client/libraries/framework/ui-interaction/src/lib/popovers/jz-popover-error/jz-popover-error.component.scss bb/jz.studio.client/libraries/framework/ui-interaction/src/lib/popovers/jz-popover-error/jz-popover-error.component.scss
+index b153620..d566dfb 100644
+--- aa/jz.studio.client/libraries/framework/ui-interaction/src/lib/popovers/jz-popover-error/jz-popover-error.component.scss
++++ bb/jz.studio.client/libraries/framework/ui-interaction/src/lib/popovers/jz-popover-error/jz-popover-error.component.scss
+@@ -1,6 +1,14 @@
++:host {
++  display: block;
++  max-width: min(720px, calc(100vw - 48px));
++  max-height: min(620px, calc(100vh - 48px));
++}
++
+ .jz-error-content {
+   min-width: 420px;
+   max-width: 680px;
++  max-height: 480px;
++  overflow: auto;
+ }
+ 
+ .jz-error-message {

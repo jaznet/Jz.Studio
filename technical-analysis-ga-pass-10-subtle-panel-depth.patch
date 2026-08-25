@@ -1,0 +1,96 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/rendering/panel-host-renderer.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/rendering/panel-host-renderer.service.ts
+index 4a1960b..6e83120 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/rendering/panel-host-renderer.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/engine/rendering/panel-host-renderer.service.ts
+@@ -29,6 +29,15 @@ export class PanelHostRendererService {
+       .append('g')
+       .attr('class', 'panel-host');
+ 
++    enter.append('rect')
++      .attr('class', 'panel-surface');
++
++    enter.append('line')
++      .attr('class', 'panel-edge panel-edge--top');
++
++    enter.append('line')
++      .attr('class', 'panel-edge panel-edge--bottom');
++
+     enter.append('rect')
+       .attr('class', 'panel-debug');
+ 
+@@ -37,10 +46,29 @@ export class PanelHostRendererService {
+     merged
+       .attr('id', panel => `panel-host-${panel.id}`)
+       .attr('data-panel-id', panel => panel.id)
++      .attr('data-panel-order', (_, index) => index)
+       .attr('transform', panel =>
+         `translate(${panel.panelRect.x}, ${panel.panelRect.y})`
+       );
+ 
++    merged.select<SVGRectElement>('rect.panel-surface')
++      .attr('x', 0)
++      .attr('y', 0)
++      .attr('width', panel => Math.max(0, panel.panelRect.width))
++      .attr('height', panel => Math.max(0, panel.panelRect.height));
++
++    merged.select<SVGLineElement>('line.panel-edge--top')
++      .attr('x1', 0)
++      .attr('x2', panel => Math.max(0, panel.panelRect.width))
++      .attr('y1', 0.5)
++      .attr('y2', 0.5);
++
++    merged.select<SVGLineElement>('line.panel-edge--bottom')
++      .attr('x1', 0)
++      .attr('x2', panel => Math.max(0, panel.panelRect.width))
++      .attr('y1', panel => Math.max(0, panel.panelRect.height - 0.5))
++      .attr('y2', panel => Math.max(0, panel.panelRect.height - 0.5));
++
+     merged.select<SVGRectElement>('rect.panel-debug')
+       .attr('x', 0)
+       .attr('y', 0)
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+index a34f41a..13769bd 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+@@ -7,6 +7,10 @@ jz-technical-analysis {
+   --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
+   --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
+   --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
++  --chart-panel-surface: color-mix(in srgb, var(--chart-surface) 98%, var(--plt-txt-2));
++  --chart-panel-surface-alt: color-mix(in srgb, var(--chart-surface) 96.5%, var(--plt-txt-2));
++  --chart-panel-highlight: color-mix(in srgb, var(--plt-txt-1) 7%, transparent);
++  --chart-panel-shadow: color-mix(in srgb, #000 24%, transparent);
+ 
+   --chart-bullish: #68b77a;
+   --chart-bearish: #dc6b6b;
+@@ -158,6 +162,30 @@ fill:transparent;
+   vector-effect: non-scaling-stroke;
+ }
+ 
++.panel-host > .panel-surface {
++  fill: var(--chart-panel-surface);
++  pointer-events: none;
++}
++
++.panel-host[data-panel-order='1'] > .panel-surface,
++.panel-host[data-panel-order='3'] > .panel-surface {
++  fill: var(--chart-panel-surface-alt);
++}
++
++.panel-host > .panel-edge {
++  pointer-events: none;
++  stroke-width: 1;
++  vector-effect: non-scaling-stroke;
++}
++
++.panel-host > .panel-edge--top {
++  stroke: var(--chart-panel-highlight);
++}
++
++.panel-host > .panel-edge--bottom {
++  stroke: var(--chart-panel-shadow);
++}
++
+ .panel-badge {
+   pointer-events: none;
+ }

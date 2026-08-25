@@ -7,6 +7,10 @@ jz-technical-analysis {
   --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
   --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
   --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
+  --chart-panel-surface: color-mix(in srgb, var(--chart-surface) 98%, var(--plt-txt-2));
+  --chart-panel-surface-alt: color-mix(in srgb, var(--chart-surface) 96.5%, var(--plt-txt-2));
+  --chart-panel-highlight: color-mix(in srgb, var(--plt-txt-1) 7%, transparent);
+  --chart-panel-shadow: color-mix(in srgb, #000 24%, transparent);
 
   --chart-bullish: #68b77a;
   --chart-bearish: #dc6b6b;
@@ -156,6 +160,30 @@ fill:transparent;
   stroke: var(--chart-separator);
   stroke-width: 1;
   vector-effect: non-scaling-stroke;
+}
+
+.panel-host > .panel-surface {
+  fill: var(--chart-panel-surface);
+  pointer-events: none;
+}
+
+.panel-host[data-panel-order='1'] > .panel-surface,
+.panel-host[data-panel-order='3'] > .panel-surface {
+  fill: var(--chart-panel-surface-alt);
+}
+
+.panel-host > .panel-edge {
+  pointer-events: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.panel-host > .panel-edge--top {
+  stroke: var(--chart-panel-highlight);
+}
+
+.panel-host > .panel-edge--bottom {
+  stroke: var(--chart-panel-shadow);
 }
 
 .panel-badge {
