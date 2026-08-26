@@ -1,0 +1,82 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+index c508050..3694796 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.ts
+@@ -57,7 +57,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+   get panelBadgeWidth(): number {
+     if (this.crosshairService.state().readout) {
+       switch (this.chartType) {
+-        case ChartType.OHLC: return 430;
++        case ChartType.OHLC: return 540;
+         case ChartType.VOLUME: return 126;
+         case ChartType.MACD: return 196;
+         case ChartType.RSI: return 92;
+@@ -84,9 +84,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+             { label: `  H ${this.formatValue(readout.high)}`, className: 'legend-value' },
+             { label: `  L ${this.formatValue(readout.low)}`, className: 'legend-value' },
+             { label: `  C ${this.formatValue(readout.close)}`, className: 'legend-value' },
+-            { label: '  SMA 20', className: 'legend-sma-20' },
+-            { label: '  SMA 50', className: 'legend-sma-50' },
+-            { label: '  SMA 150', className: 'legend-sma-150' }
++            { label: `  SMA 20 ${this.formatValue(readout.sma20)}`, className: 'legend-sma-20' },
++            { label: `  SMA 50 ${this.formatValue(readout.sma50)}`, className: 'legend-sma-50' },
++            { label: `  SMA 150 ${this.formatValue(readout.sma150)}`, className: 'legend-sma-150' }
+           ];
+         case ChartType.VOLUME:
+           return [
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/models/chart-drawing.model.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/models/chart-drawing.model.ts
+index b2e7ca5..107bd62 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/models/chart-drawing.model.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/models/chart-drawing.model.ts
+@@ -10,6 +10,9 @@ export interface CrosshairReadout {
+   low: number;
+   close: number;
+   volume: number;
++  sma20?: number;
++  sma50?: number;
++  sma150?: number;
+   macd?: number;
+   signal?: number;
+   histogram?: number;
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-data.service.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-data.service.ts
+index 8144ba5..a56772a 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-data.service.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/services/chart-data.service.ts
+@@ -7,6 +7,7 @@ import {
+   TechnicalAnalysisDataWindow,
+   TechnicalAnalysisDataPoint
+ } from '../models/technical-analysis-data.model';
++import { sma } from '../utils/ta-math';
+ import { TechnicalAnalysisDataPreparer } from './technical-analysis-data-preparer.service';
+ import { TechnicalAnalysisDataStore } from './technical-analysis-data.store';
+ 
+@@ -76,6 +77,9 @@ export class ChartDataService {
+       low: point.low,
+       close: point.close,
+       volume: point.volume,
++      sma20: this.calculateSmaAt(timestamp, 20),
++      sma50: this.calculateSmaAt(timestamp, 50),
++      sma150: this.calculateSmaAt(timestamp, 150),
+       macd: macd?.macd,
+       signal: macd?.signal,
+       histogram: macd?.histogram,
+@@ -83,6 +87,19 @@ export class ChartDataService {
+     };
+   }
+ 
++  private calculateSmaAt(timestamp: number, period: number): number | undefined {
++    const points = this.store.model.calculationPoints;
++    const selectedIndex = points.findIndex(
++      item => item.date.getTime() === timestamp
++    );
++    if (selectedIndex < 0) return undefined;
++
++    return sma(
++      points.map(item => item.close),
++      period
++    )[selectedIndex] ?? undefined;
++  }
++
+   private calculateRsiAt(timestamp: number, period: number): number | undefined {
+     const points = this.store.model.calculationPoints;
+     const selectedIndex = points.findIndex(

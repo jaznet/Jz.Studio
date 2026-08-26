@@ -57,7 +57,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   get panelBadgeWidth(): number {
     if (this.crosshairService.state().readout) {
       switch (this.chartType) {
-        case ChartType.OHLC: return 430;
+        case ChartType.OHLC: return 540;
         case ChartType.VOLUME: return 126;
         case ChartType.MACD: return 196;
         case ChartType.RSI: return 92;
@@ -84,9 +84,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: `  H ${this.formatValue(readout.high)}`, className: 'legend-value' },
             { label: `  L ${this.formatValue(readout.low)}`, className: 'legend-value' },
             { label: `  C ${this.formatValue(readout.close)}`, className: 'legend-value' },
-            { label: '  SMA 20', className: 'legend-sma-20' },
-            { label: '  SMA 50', className: 'legend-sma-50' },
-            { label: '  SMA 150', className: 'legend-sma-150' }
+            { label: `  SMA 20 ${this.formatValue(readout.sma20)}`, className: 'legend-sma-20' },
+            { label: `  SMA 50 ${this.formatValue(readout.sma50)}`, className: 'legend-sma-50' },
+            { label: `  SMA 150 ${this.formatValue(readout.sma150)}`, className: 'legend-sma-150' }
           ];
         case ChartType.VOLUME:
           return [

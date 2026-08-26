@@ -318,5 +318,13 @@
     "FileCount": 0,
     "LineCount": 0,
     "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "File",
+    "Value": "D:\\JzStudio\\Jz.Studio\\jz.studio.client\\src\\favicon.ico",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
   }
 ]

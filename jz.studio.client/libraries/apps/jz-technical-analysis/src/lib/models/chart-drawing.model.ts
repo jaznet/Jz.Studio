@@ -10,6 +10,9 @@ export interface CrosshairReadout {
   low: number;
   close: number;
   volume: number;
+  sma20?: number;
+  sma50?: number;
+  sma150?: number;
   macd?: number;
   signal?: number;
   histogram?: number;

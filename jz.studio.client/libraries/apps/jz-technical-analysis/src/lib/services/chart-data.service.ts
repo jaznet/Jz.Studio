@@ -7,6 +7,7 @@ import {
   TechnicalAnalysisDataWindow,
   TechnicalAnalysisDataPoint
 } from '../models/technical-analysis-data.model';
+import { sma } from '../utils/ta-math';
 import { TechnicalAnalysisDataPreparer } from './technical-analysis-data-preparer.service';
 import { TechnicalAnalysisDataStore } from './technical-analysis-data.store';
 
@@ -76,11 +77,27 @@ export class ChartDataService {
       low: point.low,
       close: point.close,
       volume: point.volume,
+      sma20: this.calculateSmaAt(timestamp, 20),
+      sma50: this.calculateSmaAt(timestamp, 50),
+      sma150: this.calculateSmaAt(timestamp, 150),
       macd: macd?.macd,
       signal: macd?.signal,
       histogram: macd?.histogram,
       rsi: this.calculateRsiAt(timestamp, 14)
     };
+  }
+
+  private calculateSmaAt(timestamp: number, period: number): number | undefined {
+    const points = this.store.model.calculationPoints;
+    const selectedIndex = points.findIndex(
+      item => item.date.getTime() === timestamp
+    );
+    if (selectedIndex < 0) return undefined;
+
+    return sma(
+      points.map(item => item.close),
+      period
+    )[selectedIndex] ?? undefined;
   }
 
   private calculateRsiAt(timestamp: number, period: number): number | undefined {
