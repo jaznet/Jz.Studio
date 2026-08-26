@@ -82,12 +82,16 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   @Input()
   set dataWindow(value: TechnicalAnalysisDataWindow | undefined) {
+    this.configuredWindow = value;
     this.visibleWindow = value;
+    this.maximumViewportDays = undefined;
     this.loadData(this.sourceData);
   }
 
   @Input()
   set stockPriceHistoryData(value: StockPriceHistory[] | null | undefined) {
+    this.visibleWindow = this.configuredWindow;
+    this.maximumViewportDays = undefined;
     this.loadData(value ?? []);
   }
 
@@ -102,12 +106,17 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
   private readonly resizeHandler = (): void => this.updateSvgSize();
   private sourceData: StockPriceHistory[] = [];
+  private configuredWindow?: TechnicalAnalysisDataWindow;
   private visibleWindow?: TechnicalAnalysisDataWindow;
+  private maximumViewportDays?: number;
   private activeCrosshairChartType?: ChartType;
   private activeCrosshairPanel?: PanelAttributes;
   private wheelZoomTimer?: number;
   private wheelZoomDelta = 0;
   private wheelZoomAnchorRatio = 0.5;
+  private viewportDragPointerId?: number;
+  private viewportDragStartX = 0;
+  private suppressNextChartClick = false;
 
   chartScaffold: ChartScaffold = {
     width: 0,
@@ -138,6 +147,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   crosshairValueLabel = '';
   crosshairValueLabelX = 0;
   crosshairValueLabelY = 0;
+  viewportPannable = false;
+  viewportDragging = false;
 
   dateScaleX!: ScaleBand<Date>;
   svgContainer!: HTMLDivElement;
@@ -199,23 +210,70 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   onChartPointerMove(event: PointerEvent): void {
+    if (this.viewportDragPointerId !== undefined) {
+      this.updateViewportDrag(event);
+      return;
+    }
     if (this.crosshairPinned) return;
     this.updateCrosshair(event);
   }
 
+  onChartPointerDown(event: PointerEvent): void {
+    if (
+      !this.viewportPannable
+      || event.button !== 0
+      || !this.isPointerOverPlot(event)
+    ) {
+      return;
+    }
+
+    this.viewportDragPointerId = event.pointerId;
+    this.viewportDragStartX = event.clientX;
+    this.viewportDragging = false;
+    this.svgElement.nativeElement.setPointerCapture(event.pointerId);
+  }
+
+  onChartPointerUp(event: PointerEvent): void {
+    if (event.pointerId !== this.viewportDragPointerId) return;
+
+    const dragDistance = event.clientX - this.viewportDragStartX;
+    const wasDragging = this.viewportDragging;
+    this.endViewportDrag(event.pointerId);
+
+    if (!wasDragging) return;
+
+    this.suppressNextChartClick = true;
+    window.setTimeout(() => {
+      this.suppressNextChartClick = false;
+    });
+    this.applyViewportPan(dragDistance);
+  }
+
+  onChartPointerCancel(event: PointerEvent): void {
+    if (event.pointerId === this.viewportDragPointerId) {
+      this.endViewportDrag(event.pointerId);
+    }
+  }
+
   onChartClick(event: MouseEvent): void {
+    if (this.suppressNextChartClick) {
+      this.suppressNextChartClick = false;
+      return;
+    }
     this.crosshairPinned = false;
     this.updateCrosshair(event);
     this.crosshairPinned = this.crosshairVisible;
   }
 
   onChartPointerLeave(): void {
+    if (this.viewportDragPointerId !== undefined) return;
     if (!this.crosshairPinned) {
       this.hideCrosshair();
     }
   }
 
   onChartWheel(event: WheelEvent): void {
+    if (this.viewportDragPointerId !== undefined) return;
     const svg = this.svgElement?.nativeElement;
     const matrix = svg?.getScreenCTM();
     const panelsMap = this.chartScaffold.chartMap;
@@ -328,11 +386,15 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     const allDates = this.chartData.calculationData.map(item => item.date);
     if (visibleDates.length === 0 || allDates.length === 0) return;
 
-    const minimumVisibleDays = Math.min(30, allDates.length);
+    const maximumVisibleDays = Math.min(
+      this.maximumViewportDays ?? allDates.length,
+      allDates.length
+    );
+    const minimumVisibleDays = Math.min(30, maximumVisibleDays);
     const zoomSteps = Math.max(-4, Math.min(4, delta / 100));
     const zoomFactor = Math.pow(1.2, zoomSteps);
     const nextCount = Math.min(
-      allDates.length,
+      maximumVisibleDays,
       Math.max(minimumVisibleDays, Math.round(visibleDates.length * zoomFactor))
     );
     if (nextCount === visibleDates.length) return;
@@ -356,13 +418,99 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     this.crosshairPinned = false;
     this.hideCrosshair();
-    this.visibleWindow = nextCount === allDates.length
-      ? undefined
+    this.viewportPannable = nextCount < maximumVisibleDays;
+    this.visibleWindow = nextCount === maximumVisibleDays
+      ? this.configuredWindow
       : {
           visibleStart: allDates[nextStartIndex],
           visibleEnd: allDates[nextEndIndex]
         };
     this.loadData(this.sourceData);
+  }
+
+  private updateViewportDrag(event: PointerEvent): void {
+    if (event.pointerId !== this.viewportDragPointerId) return;
+
+    if (Math.abs(event.clientX - this.viewportDragStartX) >= 5) {
+      if (!this.viewportDragging) {
+        this.viewportDragging = true;
+        this.crosshairPinned = false;
+        this.hideCrosshair();
+      }
+      event.preventDefault();
+    }
+  }
+
+  private endViewportDrag(pointerId: number): void {
+    const svg = this.svgElement?.nativeElement;
+    if (svg?.hasPointerCapture(pointerId)) {
+      svg.releasePointerCapture(pointerId);
+    }
+    this.viewportDragPointerId = undefined;
+    this.viewportDragging = false;
+  }
+
+  private applyViewportPan(dragDistance: number): void {
+    const visibleDates = this.dateScaleX?.domain() ?? [];
+    const allDates = this.chartData.calculationData.map(item => item.date);
+    if (visibleDates.length === 0 || allDates.length === 0) return;
+
+    const svgWidth = Math.max(
+      1,
+      this.svgElement.nativeElement.getBoundingClientRect().width
+    );
+    const plotWidth = Math.max(
+      1,
+      this.chartScaffold.width
+      - this.chartScaffold.margins.left
+      - this.chartScaffold.margins.right
+    );
+    const plotClientWidth = plotWidth * svgWidth / this.chartScaffold.width;
+    const dayShift = Math.round(
+      -dragDistance / plotClientWidth * visibleDates.length
+    );
+    if (dayShift === 0) return;
+
+    const currentStartTimestamp = visibleDates[0].getTime();
+    const currentStartIndex = allDates.findIndex(
+      date => date.getTime() === currentStartTimestamp
+    );
+    if (currentStartIndex < 0) return;
+
+    const nextStartIndex = Math.min(
+      allDates.length - visibleDates.length,
+      Math.max(0, currentStartIndex + dayShift)
+    );
+    if (nextStartIndex === currentStartIndex) return;
+
+    const nextEndIndex = nextStartIndex + visibleDates.length - 1;
+    this.visibleWindow = {
+      visibleStart: allDates[nextStartIndex],
+      visibleEnd: allDates[nextEndIndex]
+    };
+    this.loadData(this.sourceData);
+  }
+
+  private isPointerOverPlot(event: MouseEvent): boolean {
+    const svg = this.svgElement?.nativeElement;
+    const matrix = svg?.getScreenCTM();
+    const panelsMap = this.chartScaffold.chartMap;
+    if (!svg || !matrix || !panelsMap) return false;
+
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const pointer = svgPoint.matrixTransform(matrix.inverse());
+    const plotLeft = this.chartScaffold.margins.left;
+    const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
+    if (pointer.x < plotLeft || pointer.x > plotRight) return false;
+
+    return Object.values(panelsMap).some(panel => {
+      if (!panel) return false;
+      const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
+      const contentBottom = contentTop + panel.contentRect.height;
+      return pointer.y >= contentTop && pointer.y <= contentBottom;
+    });
   }
 
   private updateCrosshair(event: MouseEvent): void {
@@ -596,6 +744,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.sourceData = [...data];
     this.destroyChartComponents();
     this.chartData.load(this.sourceData, this.visibleWindow);
+    if (
+      this.maximumViewportDays === undefined
+      && this.chartData.stockPriceHistoryData.length > 0
+    ) {
+      this.maximumViewportDays = this.chartData.stockPriceHistoryData.length;
+    }
     this.dataReady = this.chartData.stockPriceHistoryData.length > 0;
     this.hydrated = false;
 

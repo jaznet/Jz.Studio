@@ -3,7 +3,12 @@
 <div #divSvgContainer id="divSvgContainer" class="grid-rows" style="border-radius:8px">
   <svg #svgElement
        id="svgElement"
+       [class.chart-viewport--pannable]="viewportPannable"
+       [class.chart-viewport--dragging]="viewportDragging"
+       (pointerdown)="onChartPointerDown($event)"
        (pointermove)="onChartPointerMove($event)"
+       (pointerup)="onChartPointerUp($event)"
+       (pointercancel)="onChartPointerCancel($event)"
        (pointerleave)="onChartPointerLeave()"
        (wheel)="onChartWheel($event)"
        (click)="onChartClick($event)">

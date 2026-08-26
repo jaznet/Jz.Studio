@@ -135,6 +135,15 @@ fill:transparent;
   pointer-events: none;
 }
 
+#svgElement.chart-viewport--pannable {
+  cursor: grab;
+  touch-action: none;
+}
+
+#svgElement.chart-viewport--dragging {
+  cursor: grabbing;
+}
+
 .crosshair-line {
   stroke: var(--chart-crosshair);
   stroke-width: 1;
