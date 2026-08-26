@@ -103,6 +103,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private readonly resizeHandler = (): void => this.updateSvgSize();
   private sourceData: StockPriceHistory[] = [];
   private visibleWindow?: TechnicalAnalysisDataWindow;
+  private activeCrosshairChartType?: ChartType;
+  private activeCrosshairPanel?: PanelAttributes;
 
   chartScaffold: ChartScaffold = {
     width: 0,
@@ -207,11 +209,69 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     }
   }
 
-  @HostListener('window:keydown.escape')
+  @HostListener('window:keydown', ['$event'])
+  onWindowKeydown(event: KeyboardEvent): void {
+    if (event.key === 'Escape') {
+      this.releasePinnedCrosshair();
+      return;
+    }
+
+    if (
+      !this.crosshairPinned
+      || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    this.movePinnedCrosshair(event.key === 'ArrowLeft' ? -1 : 1);
+  }
+
   releasePinnedCrosshair(): void {
     if (!this.crosshairPinned) return;
     this.crosshairPinned = false;
     this.hideCrosshair();
+  }
+
+  private movePinnedCrosshair(direction: -1 | 1): void {
+    const currentDate = this.crosshairService.state().coordinate?.date;
+    const panel = this.activeCrosshairPanel;
+    const chartType = this.activeCrosshairChartType;
+    if (!currentDate || !panel || !chartType || !this.dateScaleX) return;
+
+    const dates = this.dateScaleX.domain();
+    const currentIndex = dates.findIndex(
+      date => date.getTime() === currentDate.getTime()
+    );
+    if (currentIndex < 0) return;
+
+    const nextIndex = Math.min(
+      dates.length - 1,
+      Math.max(0, currentIndex + direction)
+    );
+    if (nextIndex === currentIndex) return;
+
+    const nextDate = dates[nextIndex];
+    const bandX = this.dateScaleX(nextDate);
+    const readout = this.chartData.getCrosshairReadout(nextDate);
+    if (bandX === undefined || !readout) return;
+
+    const plotLeft = this.chartScaffold.margins.left;
+    const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
+
+    this.crosshairX = plotLeft + bandX + this.dateScaleX.bandwidth() / 2;
+    this.updateCrosshairCallouts(
+      nextDate,
+      this.crosshairY,
+      chartType,
+      panel,
+      plotLeft,
+      plotRight
+    );
+    this.crosshairService.show(
+      { date: nextDate, value: readout.close },
+      readout
+    );
   }
 
   private updateCrosshair(event: MouseEvent): void {
@@ -294,6 +354,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.crosshairBottom = Math.max(this.crosshairTop, ...contentBottoms);
     this.crosshairLeft = plotLeft;
     this.crosshairRight = plotRight;
+    this.activeCrosshairChartType = activeChartType;
+    this.activeCrosshairPanel = activePanel;
     this.updateCrosshairCallouts(
       nearestDate,
       pointer.y,
@@ -311,6 +373,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   hideCrosshair(): void {
     this.crosshairVisible = false;
+    this.activeCrosshairChartType = undefined;
+    this.activeCrosshairPanel = undefined;
     this.crosshairService.hide();
   }
 
