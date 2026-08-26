@@ -105,6 +105,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   private visibleWindow?: TechnicalAnalysisDataWindow;
   private activeCrosshairChartType?: ChartType;
   private activeCrosshairPanel?: PanelAttributes;
+  private wheelZoomTimer?: number;
+  private wheelZoomDelta = 0;
+  private wheelZoomAnchorRatio = 0.5;
 
   chartScaffold: ChartScaffold = {
     width: 0,
@@ -177,6 +180,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnDestroy(): void {
     window.removeEventListener('resize', this.resizeHandler);
+    if (this.wheelZoomTimer !== undefined) {
+      window.clearTimeout(this.wheelZoomTimer);
+    }
     this.destroyChartComponents();
     this.destroyed$.next();
     this.destroyed$.complete();
@@ -207,6 +213,43 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     if (!this.crosshairPinned) {
       this.hideCrosshair();
     }
+  }
+
+  onChartWheel(event: WheelEvent): void {
+    const svg = this.svgElement?.nativeElement;
+    const matrix = svg?.getScreenCTM();
+    const panelsMap = this.chartScaffold.chartMap;
+    if (!svg || !matrix || !panelsMap || !this.dateScaleX) return;
+
+    const svgPoint = svg.createSVGPoint();
+    svgPoint.x = event.clientX;
+    svgPoint.y = event.clientY;
+    const pointer = svgPoint.matrixTransform(matrix.inverse());
+
+    const plotLeft = this.chartScaffold.margins.left;
+    const plotRight = this.chartScaffold.width - this.chartScaffold.margins.right;
+    const overPanel = Object.values(panelsMap).some(panel => {
+      if (!panel) return false;
+      const contentTop = this.chartScaffold.xAxisTop + panel.contentRect.y;
+      const contentBottom = contentTop + panel.contentRect.height;
+      return pointer.y >= contentTop && pointer.y <= contentBottom;
+    });
+
+    if (pointer.x < plotLeft || pointer.x > plotRight || !overPanel) return;
+
+    event.preventDefault();
+    this.wheelZoomDelta += event.deltaY;
+    this.wheelZoomAnchorRatio = Math.min(
+      1,
+      Math.max(0, (pointer.x - plotLeft) / Math.max(1, plotRight - plotLeft))
+    );
+
+    if (this.wheelZoomTimer !== undefined) {
+      window.clearTimeout(this.wheelZoomTimer);
+    }
+    this.wheelZoomTimer = window.setTimeout(() => {
+      this.applyWheelZoom();
+    }, 60);
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -272,6 +315,54 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       { date: nextDate, value: readout.close },
       readout
     );
+  }
+
+  private applyWheelZoom(): void {
+    const delta = this.wheelZoomDelta;
+    const anchorRatio = this.wheelZoomAnchorRatio;
+    this.wheelZoomDelta = 0;
+    this.wheelZoomTimer = undefined;
+    if (delta === 0 || !this.dateScaleX) return;
+
+    const visibleDates = this.dateScaleX.domain();
+    const allDates = this.chartData.calculationData.map(item => item.date);
+    if (visibleDates.length === 0 || allDates.length === 0) return;
+
+    const minimumVisibleDays = Math.min(30, allDates.length);
+    const zoomSteps = Math.max(-4, Math.min(4, delta / 100));
+    const zoomFactor = Math.pow(1.2, zoomSteps);
+    const nextCount = Math.min(
+      allDates.length,
+      Math.max(minimumVisibleDays, Math.round(visibleDates.length * zoomFactor))
+    );
+    if (nextCount === visibleDates.length) return;
+
+    const visibleStartTimestamp = visibleDates[0].getTime();
+    const currentStartIndex = Math.max(
+      0,
+      allDates.findIndex(date => date.getTime() === visibleStartTimestamp)
+    );
+    const anchorIndex = currentStartIndex + Math.round(
+      anchorRatio * Math.max(0, visibleDates.length - 1)
+    );
+    const unclampedStart = Math.round(
+      anchorIndex - anchorRatio * Math.max(0, nextCount - 1)
+    );
+    const nextStartIndex = Math.min(
+      allDates.length - nextCount,
+      Math.max(0, unclampedStart)
+    );
+    const nextEndIndex = nextStartIndex + nextCount - 1;
+
+    this.crosshairPinned = false;
+    this.hideCrosshair();
+    this.visibleWindow = nextCount === allDates.length
+      ? undefined
+      : {
+          visibleStart: allDates[nextStartIndex],
+          visibleEnd: allDates[nextEndIndex]
+        };
+    this.loadData(this.sourceData);
   }
 
   private updateCrosshair(event: MouseEvent): void {
