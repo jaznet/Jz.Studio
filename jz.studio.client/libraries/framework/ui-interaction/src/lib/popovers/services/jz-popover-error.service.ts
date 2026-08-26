@@ -84,11 +84,19 @@ export class JzPopoverErrorService {
       return 'Azure SQL has paused the database because the monthly free allowance has been reached.';
     }
 
+    if (
+      text.includes('connection timeout expired') ||
+      text.includes('timeout period elapsed') ||
+      text.includes('wait operation timed out')
+    ) {
+      return 'Unable to retrieve market data. The database connection timed out.';
+    }
+
     if (text.includes('internal server error') || text.includes('500')) {
       return 'The server encountered an internal error.';
     }
 
-    return message;
+    return 'Unable to retrieve market data.';
   }
 
   private buildHttpDetails(error: HttpErrorResponse): string {
