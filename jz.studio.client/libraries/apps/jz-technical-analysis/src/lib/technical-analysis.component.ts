@@ -322,6 +322,23 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     }, 60);
   }
 
+  onChartDoubleClick(event: MouseEvent): void {
+    if (!this.viewportPannable || !this.isPointerOverPlot(event)) return;
+
+    event.preventDefault();
+    if (this.wheelZoomTimer !== undefined) {
+      window.clearTimeout(this.wheelZoomTimer);
+      this.wheelZoomTimer = undefined;
+      this.wheelZoomDelta = 0;
+    }
+
+    this.crosshairPinned = false;
+    this.hideCrosshair();
+    this.viewportPannable = false;
+    this.visibleWindow = this.configuredWindow;
+    this.loadData(this.sourceData);
+  }
+
   @HostListener('window:keydown', ['$event'])
   onWindowKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape') {
