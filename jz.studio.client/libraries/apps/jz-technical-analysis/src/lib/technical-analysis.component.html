@@ -31,6 +31,23 @@
       <g #gAxisBottomMonths id="gAxisBottomMonths" class="x-axis"></g>
     </g>
 
+    @if (viewportPannable) {
+      <g class="chart-reset-control"
+         role="button"
+         tabindex="0"
+         aria-label="Reset chart view"
+         [attr.transform]="'translate('
+           + (chartScaffold.width - chartScaffold.margins.right - 90)
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+         (pointerdown)="$event.stopPropagation()"
+         (click)="onResetViewControl($event)"
+         (keydown.enter)="onResetViewControl($event)"
+         (keydown.space)="onResetViewControl($event)">
+        <rect width="82" height="18" rx="3" ry="3"></rect>
+        <text x="41" y="9">RESET VIEW</text>
+      </g>
+    }
+
     @if (crosshairVisible) {
       <g class="chart-crosshair"
          [class.chart-crosshair--pinned]="crosshairPinned"

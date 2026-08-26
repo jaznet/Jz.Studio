@@ -326,6 +326,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     if (!this.viewportPannable || !this.isPointerOverPlot(event)) return;
 
     event.preventDefault();
+    this.resetViewport();
+  }
+
+  onResetViewControl(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.resetViewport();
+  }
+
+  private resetViewport(): void {
+    if (!this.viewportPannable) return;
+
     if (this.wheelZoomTimer !== undefined) {
       window.clearTimeout(this.wheelZoomTimer);
       this.wheelZoomTimer = undefined;

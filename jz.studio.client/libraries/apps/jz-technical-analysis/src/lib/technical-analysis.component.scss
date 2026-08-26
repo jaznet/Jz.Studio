@@ -144,6 +144,34 @@ fill:transparent;
   cursor: grabbing;
 }
 
+.chart-reset-control {
+  cursor: pointer;
+  outline: none;
+}
+
+.chart-reset-control rect {
+  fill: color-mix(in srgb, var(--chart-surface) 92%, var(--plt-txt-2));
+  stroke: color-mix(in srgb, var(--chart-axis) 72%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-reset-control text {
+  fill: var(--chart-label);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  dominant-baseline: middle;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.chart-reset-control:hover rect,
+.chart-reset-control:focus rect {
+  fill: color-mix(in srgb, var(--chart-surface) 82%, var(--plt-pop));
+  stroke: color-mix(in srgb, var(--plt-pop) 72%, var(--chart-axis));
+}
+
 .crosshair-line {
   stroke: var(--chart-crosshair);
   stroke-width: 1;
