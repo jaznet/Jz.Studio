@@ -39,7 +39,7 @@
          [attr.transform]="'translate('
            + (chartScaffold.width - chartScaffold.margins.right - 90)
            + ',' + (chartScaffold.xAxisTop + 8) + ')'"
-         (pointerdown)="$event.stopPropagation()"
+         (pointerdown)="onResetViewPointerDown($event)"
          (click)="onResetViewControl($event)"
          (keydown.enter)="onResetViewControl($event)"
          (keydown.space)="onResetViewControl($event)">

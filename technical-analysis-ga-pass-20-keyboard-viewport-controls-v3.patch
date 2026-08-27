@@ -1,0 +1,88 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+index 1eaa4a5..0f7abd5 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+@@ -39,7 +39,7 @@
+          [attr.transform]="'translate('
+            + (chartScaffold.width - chartScaffold.margins.right - 90)
+            + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+-         (pointerdown)="$event.stopPropagation()"
++         (pointerdown)="onResetViewPointerDown($event)"
+          (click)="onResetViewControl($event)"
+          (keydown.enter)="onResetViewControl($event)"
+          (keydown.space)="onResetViewControl($event)">
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+index 9a54ab7..d70948b 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -335,6 +335,16 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     this.resetViewport();
+   }
+ 
++  onResetViewPointerDown(event: PointerEvent): void {
++    event.preventDefault();
++    event.stopPropagation();
++    this.suppressNextChartClick = true;
++    this.resetViewport();
++    window.setTimeout(() => {
++      this.suppressNextChartClick = false;
++    });
++  }
++
+   private resetViewport(): void {
+     if (!this.viewportPannable) return;
+ 
+@@ -358,6 +368,30 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+       return;
+     }
+ 
++    if (
++      this.isEditableKeyboardTarget(event.target)
++      || event.ctrlKey
++      || event.altKey
++      || event.metaKey
++    ) {
++      return;
++    }
++
++    if (event.key === 'Home') {
++      if (!this.viewportPannable) return;
++      event.preventDefault();
++      this.resetViewport();
++      return;
++    }
++
++    if (
++      event.key === '+' || event.key === '=' || event.key === '-'
++    ) {
++      event.preventDefault();
++      this.applyViewportZoom(event.key === '-' ? 100 : -100, 0.5);
++      return;
++    }
++
+     if (
+       !this.crosshairPinned
+       || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+@@ -421,6 +455,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     const anchorRatio = this.wheelZoomAnchorRatio;
+     this.wheelZoomDelta = 0;
+     this.wheelZoomTimer = undefined;
++    this.applyViewportZoom(delta, anchorRatio);
++  }
++
++  private applyViewportZoom(delta: number, anchorRatio: number): void {
+     if (delta === 0 || !this.dateScaleX) return;
+ 
+     const visibleDates = this.dateScaleX.domain();
+@@ -469,6 +507,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     this.loadData(this.sourceData);
+   }
+ 
++  private isEditableKeyboardTarget(target: EventTarget | null): boolean {
++    return target instanceof HTMLElement
++      && !!target.closest('input, textarea, select, button, [contenteditable="true"]');
++  }
++
+   private updateViewportDrag(event: PointerEvent): void {
+     if (event.pointerId !== this.viewportDragPointerId) return;
+ 

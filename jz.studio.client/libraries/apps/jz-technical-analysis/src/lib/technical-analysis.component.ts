@@ -335,6 +335,16 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.resetViewport();
   }
 
+  onResetViewPointerDown(event: PointerEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.suppressNextChartClick = true;
+    this.resetViewport();
+    window.setTimeout(() => {
+      this.suppressNextChartClick = false;
+    });
+  }
+
   private resetViewport(): void {
     if (!this.viewportPannable) return;
 
@@ -355,6 +365,30 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   onWindowKeydown(event: KeyboardEvent): void {
     if (event.key === 'Escape') {
       this.releasePinnedCrosshair();
+      return;
+    }
+
+    if (
+      this.isEditableKeyboardTarget(event.target)
+      || event.ctrlKey
+      || event.altKey
+      || event.metaKey
+    ) {
+      return;
+    }
+
+    if (event.key === 'Home') {
+      if (!this.viewportPannable) return;
+      event.preventDefault();
+      this.resetViewport();
+      return;
+    }
+
+    if (
+      event.key === '+' || event.key === '=' || event.key === '-'
+    ) {
+      event.preventDefault();
+      this.applyViewportZoom(event.key === '-' ? 100 : -100, 0.5);
       return;
     }
 
@@ -421,6 +455,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     const anchorRatio = this.wheelZoomAnchorRatio;
     this.wheelZoomDelta = 0;
     this.wheelZoomTimer = undefined;
+    this.applyViewportZoom(delta, anchorRatio);
+  }
+
+  private applyViewportZoom(delta: number, anchorRatio: number): void {
     if (delta === 0 || !this.dateScaleX) return;
 
     const visibleDates = this.dateScaleX.domain();
@@ -467,6 +505,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
           visibleEnd: allDates[nextEndIndex]
         };
     this.loadData(this.sourceData);
+  }
+
+  private isEditableKeyboardTarget(target: EventTarget | null): boolean {
+    return target instanceof HTMLElement
+      && !!target.closest('input, textarea, select, button, [contenteditable="true"]');
   }
 
   private updateViewportDrag(event: PointerEvent): void {
