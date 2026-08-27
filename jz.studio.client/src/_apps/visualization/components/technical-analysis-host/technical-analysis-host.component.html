@@ -43,6 +43,34 @@
     @if (validationMessage) {
       <span class="validation-message">{{ validationMessage }}</span>
     }
+
+    <div class="interaction-help">
+      <button type="button"
+              class="interaction-help-toggle"
+              aria-label="Chart interaction help"
+              title="Chart interaction help"
+              [attr.aria-expanded]="interactionHelpVisible"
+              (click)="toggleInteractionHelp($event)"
+              (keydown.enter)="toggleInteractionHelpFromKeyboard($event)"
+              (keydown.space)="toggleInteractionHelpFromKeyboard($event)">
+        ?
+      </button>
+
+      @if (interactionHelpVisible) {
+        <div class="interaction-help-panel" role="dialog" aria-label="Chart controls">
+          <h2>Chart controls</h2>
+          <dl>
+            <div><dt>Wheel or + / −</dt><dd>Zoom</dd></div>
+            <div><dt>Drag</dt><dd>Pan dates</dd></div>
+            <div><dt>Click</dt><dd>Pin crosshair</dd></div>
+            <div><dt>← / →</dt><dd>Move pinned day</dd></div>
+            <div><dt>Escape</dt><dd>Release crosshair</dd></div>
+            <div><dt>Double-click / Home</dt><dd>Reset view</dd></div>
+            <div><dt>RESET VIEW</dt><dd>Restore toolbar range</dd></div>
+          </dl>
+        </div>
+      }
+    </div>
   </form>
 
   <div class="analysis-chart">

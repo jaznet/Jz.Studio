@@ -14,6 +14,8 @@
 }
 
 .analysis-controls {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -86,7 +88,97 @@
   font-size: 12px;
 }
 
+.interaction-help {
+  position: relative;
+  margin-left: auto;
+}
+
+.analysis-controls .interaction-help-toggle {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: var(--border-width) solid var(--border-soft);
+  border-radius: 50%;
+  place-items: center;
+  color: var(--plt-txt-2);
+  background: var(--plt-clr-1);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.analysis-controls .interaction-help-toggle:hover,
+.analysis-controls .interaction-help-toggle:focus-visible,
+.analysis-controls .interaction-help-toggle[aria-expanded='true'] {
+  border-color: var(--plt-pop);
+  color: var(--plt-pop);
+  outline: none;
+}
+
+.interaction-help-panel {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  display: grid;
+  width: 300px;
+  box-sizing: border-box;
+  gap: 8px;
+  padding: 10px 12px;
+  border: var(--border-width) solid var(--border-soft);
+  border-radius: 6px;
+  color: var(--plt-txt-2);
+  background: color-mix(in srgb, var(--plt-clr-2) 94%, black);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 38%);
+  white-space: normal;
+}
+
+.interaction-help-panel h2 {
+  margin: 0;
+  color: var(--plt-pop);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.interaction-help-panel dl {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+}
+
+.interaction-help-panel dl div {
+  display: grid;
+  grid-template-columns: 125px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.interaction-help-panel dt,
+.interaction-help-panel dd {
+  margin: 0;
+  font-size: 11px;
+}
+
+.interaction-help-panel dt {
+  color: var(--plt-txt-1);
+  font-weight: 600;
+}
+
+.interaction-help-panel dd {
+  color: var(--plt-txt-2);
+}
+
+.interaction-help-panel dt,
+.interaction-help-panel dd {
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
 .analysis-chart {
+  position: relative;
+  z-index: 1;
   min-width: 0;
   min-height: 0;
 }

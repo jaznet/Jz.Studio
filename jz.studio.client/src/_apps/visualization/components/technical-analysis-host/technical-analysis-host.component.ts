@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit } from '@angular/core';
 import {
   StockPriceHistory,
   TechnicalAnalysisComponent,
@@ -39,6 +39,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   visibleEndInput: string;
   dataWindow?: TechnicalAnalysisDataWindow;
   validationMessage = '';
+  interactionHelpVisible = false;
 
   stockPriceHistoryData: StockPriceHistory[] = [];
   loading = true;
@@ -73,6 +74,32 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadMarketData();
+  }
+
+  toggleInteractionHelp(event: MouseEvent): void {
+    event.stopPropagation();
+    this.interactionHelpVisible = !this.interactionHelpVisible;
+  }
+
+  toggleInteractionHelpFromKeyboard(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.interactionHelpVisible = !this.interactionHelpVisible;
+  }
+
+  @HostListener('document:pointerdown', ['$event'])
+  onDocumentPointerDown(event: PointerEvent): void {
+    if (!this.interactionHelpVisible) return;
+
+    const target = event.target;
+    if (!(target instanceof Element) || !target.closest('.interaction-help')) {
+      this.interactionHelpVisible = false;
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  closeInteractionHelp(): void {
+    this.interactionHelpVisible = false;
   }
 
   selectRangePreset(months: number): void {
