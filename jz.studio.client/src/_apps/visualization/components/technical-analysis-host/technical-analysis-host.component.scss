@@ -254,9 +254,17 @@
   }
 
   .interaction-help {
+    position: static;
     grid-area: help;
     align-self: center;
     margin-left: 0;
+  }
+
+  .interaction-help-panel {
+    top: calc(100% + 4px);
+    right: 10px;
+    z-index: 3;
+    max-width: calc(100% - 20px);
   }
 }
 
