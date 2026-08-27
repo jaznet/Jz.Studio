@@ -44,6 +44,8 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   loading = true;
 
   private readonly destroyed$ = new Subject<void>();
+  private appliedVisibleStartInput: string;
+  private appliedVisibleEndInput: string;
   private loadingPopoverRef?: JzPopoverRef;
 
   constructor(
@@ -58,7 +60,15 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
     this.visibleStartInput = this.toDateInput(visibleStart);
     this.visibleEndInput = this.toDateInput(visibleEnd);
+    this.appliedVisibleStartInput = this.visibleStartInput;
+    this.appliedVisibleEndInput = this.visibleEndInput;
     this.dataWindow = { visibleStart, visibleEnd };
+  }
+
+  get applyPending(): boolean {
+    return this.symbolInput.trim().toUpperCase() !== this.ticker
+      || this.visibleStartInput !== this.appliedVisibleStartInput
+      || this.visibleEndInput !== this.appliedVisibleEndInput;
   }
 
   ngOnInit(): void {
@@ -76,6 +86,8 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     this.selectedRangeMonths = months;
     const visibleStart = this.addMonths(visibleEnd, -months);
     this.visibleStartInput = this.toDateInput(visibleStart);
+    this.appliedVisibleStartInput = this.visibleStartInput;
+    this.appliedVisibleEndInput = this.visibleEndInput;
     this.dataWindow = { visibleStart, visibleEnd };
     this.validationMessage = '';
   }
@@ -124,6 +136,8 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     this.dataWindow = {};
     if (visibleStart) this.dataWindow.visibleStart = visibleStart;
     if (visibleEnd) this.dataWindow.visibleEnd = visibleEnd;
+    this.appliedVisibleStartInput = this.visibleStartInput;
+    this.appliedVisibleEndInput = this.visibleEndInput;
 
     if (symbol !== this.ticker) {
       this.ticker = symbol;

@@ -38,7 +38,7 @@
              (input)="onVisibleEndInput(visibleEnd.value)">
     </label>
 
-    <button type="submit" [disabled]="loading">Apply</button>
+    <button type="submit" [disabled]="loading || !applyPending">Apply</button>
 
     @if (validationMessage) {
       <span class="validation-message">{{ validationMessage }}</span>
