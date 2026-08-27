@@ -104,7 +104,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   // #region Properties
   private readonly destroyed$ = new Subject<void>();
   private readonly chartComponentRefs: ComponentRef<unknown>[] = [];
-  private readonly resizeHandler = (): void => this.updateSvgSize();
+  private resizeObserver?: ResizeObserver;
+  private resizeFrame?: number;
+  private viewportWidth = 0;
+  private viewportHeight = 0;
   private sourceData: StockPriceHistory[] = [];
   private configuredWindow?: TechnicalAnalysisDataWindow;
   private visibleWindow?: TechnicalAnalysisDataWindow;
@@ -193,7 +196,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('resize', this.resizeHandler);
+    this.resizeObserver?.disconnect();
+    if (this.resizeFrame !== undefined) {
+      window.cancelAnimationFrame(this.resizeFrame);
+    }
     if (this.wheelZoomTimer !== undefined) {
       window.clearTimeout(this.wheelZoomTimer);
     }
@@ -207,7 +213,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   ngAfterViewInit(): void {
     this.updateSvgSize();
-    window.addEventListener('resize', this.resizeHandler);
+    this.viewportWidth = this.svgContainer.clientWidth;
+    this.viewportHeight = this.svgContainer.clientHeight;
+    this.resizeObserver = new ResizeObserver(() => this.queueChartResize());
+    this.resizeObserver.observe(this.svgContainer);
 
     this.viewReady = true;
     this.tryCreateChart();
@@ -897,34 +906,66 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     console.log('%c     ✔ initialize ChartWhenReady', 'color:#90BEE9');
 
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => {
-      this.chartScaffold = this.chartScaffoldBuilder.build(
-        this.svgContainer.clientWidth,
-        this.svgContainer.clientHeight
-      );
-      this.chartScaffoldRenderer.renderOuter(
-        this.scaffoldElements,
-        this.chartScaffold
-      );
-      this.chartScaffoldRenderer.size(
-        this.scaffoldElements,
-        this.chartScaffold
-      );
-      this.dateScaleX = this.chartXAxis.createScale(
-        this.chartData.stockPriceHistoryData,
-        this.chartScaffold
-      );
-      this.chartXAxis.renderMonthlyAxes(
-        this.gAxisTopMonths.nativeElement,
-        this.gAxisBottomMonths.nativeElement,
-        this.dateScaleX
-      );
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => this.renderChart());
+  }
 
-      this.applyPanelPreferences(this.panelPreferenceService.getPreferences());
+  private queueChartResize(): void {
+    if (this.resizeFrame !== undefined) return;
 
-      this.scaffoldSvc.scaffold = this.chartScaffold;
-      this.injectConfiguredPanels();
+    this.resizeFrame = window.requestAnimationFrame(() => {
+      this.resizeFrame = undefined;
+      this.resizeChart();
     });
+  }
+
+  private resizeChart(): void {
+    const width = this.svgContainer.clientWidth;
+    const height = this.svgContainer.clientHeight;
+    if (
+      width <= 0
+      || height <= 0
+      || (width === this.viewportWidth && height === this.viewportHeight)
+    ) {
+      return;
+    }
+
+    this.viewportWidth = width;
+    this.viewportHeight = height;
+    this.updateSvgSize();
+    if (!this.viewReady || !this.dataReady || !this.hydrated) return;
+
+    this.hideCrosshair();
+    this.destroyChartComponents();
+    this.renderChart();
+  }
+
+  private renderChart(): void {
+    this.chartScaffold = this.chartScaffoldBuilder.build(
+      this.svgContainer.clientWidth,
+      this.svgContainer.clientHeight
+    );
+    this.chartScaffoldRenderer.renderOuter(
+      this.scaffoldElements,
+      this.chartScaffold
+    );
+    this.chartScaffoldRenderer.size(
+      this.scaffoldElements,
+      this.chartScaffold
+    );
+    this.dateScaleX = this.chartXAxis.createScale(
+      this.chartData.stockPriceHistoryData,
+      this.chartScaffold
+    );
+    this.chartXAxis.renderMonthlyAxes(
+      this.gAxisTopMonths.nativeElement,
+      this.gAxisBottomMonths.nativeElement,
+      this.dateScaleX
+    );
+
+    this.applyPanelPreferences(this.panelPreferenceService.getPreferences());
+
+    this.scaffoldSvc.scaffold = this.chartScaffold;
+    this.injectConfiguredPanels();
   }
 
   private injectConfiguredPanels(): void {
