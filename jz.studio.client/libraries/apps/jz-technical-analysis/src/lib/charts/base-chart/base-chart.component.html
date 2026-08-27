@@ -28,6 +28,28 @@
           }
         </text>
       </g>
+
+      @if (showSmaControls) {
+        <g class="sma-toggle-controls"
+           [attr.transform]="'translate(' + smaToggleStartX + ', 6)'">
+          @for (item of smaToggleItems; track item.period; let index = $index) {
+            <g class="sma-toggle-control"
+               [class.sma-toggle-control--hidden]="!isSmaVisible(item.period)"
+               [attr.transform]="'translate(' + (index * smaToggleWidth) + ', 0)'"
+               role="button"
+               tabindex="0"
+               [attr.aria-label]="'Toggle SMA ' + item.period"
+               [attr.aria-pressed]="isSmaVisible(item.period)"
+               (pointerdown)="stopSmaTogglePointer($event, item.period)"
+               (click)="toggleSma($event, item.period)"
+               (keydown.enter)="toggleSma($event, item.period)"
+               (keydown.space)="toggleSma($event, item.period)">
+              <rect x="0" y="0" [attr.width]="smaToggleWidth" height="18" rx="3" ry="3"></rect>
+              <text x="4" y="12" [attr.class]="item.className">{{ item.label }}</text>
+            </g>
+          }
+        </g>
+      }
     </g>
 
     <g #gAxisGroupRight id="gAxisGroupRight">

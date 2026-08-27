@@ -6,6 +6,7 @@ import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { ChartCrosshairService } from '../../services/interactions/chart-crosshair.service';
+import { SmaPeriod, SmaVisibilityService } from '../../services/charts/sma/sma-visibility.service';
 
 @Component({
   selector: 'base-chart',
@@ -15,6 +16,7 @@ import { ChartCrosshairService } from '../../services/interactions/chart-crossha
 })
 export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   private readonly crosshairService = inject(ChartCrosshairService);
+  protected readonly smaVisibilityService = inject(SmaVisibilityService);
 
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
@@ -72,7 +74,10 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  get panelLegendItems(): ReadonlyArray<{ label: string; className: string }> {
+  get panelLegendItems(): ReadonlyArray<{
+    label: string;
+    className: string;
+  }> {
     const readout = this.crosshairService.state().readout;
     if (readout) {
       switch (this.chartType) {
@@ -83,10 +88,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: `  O ${this.formatValue(readout.open)}`, className: 'legend-value' },
             { label: `  H ${this.formatValue(readout.high)}`, className: 'legend-value' },
             { label: `  L ${this.formatValue(readout.low)}`, className: 'legend-value' },
-            { label: `  C ${this.formatValue(readout.close)}`, className: 'legend-value' },
-            { label: `  SMA 20 ${this.formatValue(readout.sma20)}`, className: 'legend-sma-20' },
-            { label: `  SMA 50 ${this.formatValue(readout.sma50)}`, className: 'legend-sma-50' },
-            { label: `  SMA 150 ${this.formatValue(readout.sma150)}`, className: 'legend-sma-150' }
+            { label: `  C ${this.formatValue(readout.close)}`, className: 'legend-value' }
           ];
         case ChartType.VOLUME:
           return [
@@ -111,10 +113,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     switch (this.chartType) {
       case ChartType.OHLC:
         return [
-          { label: 'PRICE', className: 'legend-title' },
-          { label: '  SMA 20', className: 'legend-sma-20' },
-          { label: '  SMA 50', className: 'legend-sma-50' },
-          { label: '  SMA 150', className: 'legend-sma-150' }
+          { label: 'PRICE', className: 'legend-title' }
         ];
       case ChartType.MACD:
         return [
@@ -126,6 +125,59 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
     }
+  }
+
+  get showSmaControls(): boolean {
+    return this.chartType === ChartType.OHLC;
+  }
+
+  get smaToggleStartX(): number {
+    return this.crosshairService.state().readout ? 270 : 43;
+  }
+
+  get smaToggleWidth(): number {
+    return this.crosshairService.state().readout ? 90 : 60;
+  }
+
+  get smaToggleItems(): ReadonlyArray<{
+    period: SmaPeriod;
+    label: string;
+    className: string;
+  }> {
+    const readout = this.crosshairService.state().readout;
+    return [
+      {
+        period: 20,
+        label: `SMA 20${readout ? ` ${this.formatValue(readout.sma20)}` : ''}`,
+        className: 'legend-sma-20'
+      },
+      {
+        period: 50,
+        label: `SMA 50${readout ? ` ${this.formatValue(readout.sma50)}` : ''}`,
+        className: 'legend-sma-50'
+      },
+      {
+        period: 150,
+        label: `SMA 150${readout ? ` ${this.formatValue(readout.sma150)}` : ''}`,
+        className: 'legend-sma-150'
+      }
+    ];
+  }
+
+  isSmaVisible(period: SmaPeriod): boolean {
+    return this.smaVisibilityService.isVisible(period);
+  }
+
+  stopSmaTogglePointer(event: Event, period?: SmaPeriod): void {
+    if (!period) return;
+    event.stopPropagation();
+  }
+
+  toggleSma(event: Event, period?: SmaPeriod): void {
+    if (!period) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.smaVisibilityService.toggle(period);
   }
 
   private formatDate(date: Date): string {

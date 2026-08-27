@@ -1,5 +1,6 @@
 import {
   Component,
+  effect,
   Input,
   OnChanges,
   SimpleChanges,
@@ -48,7 +49,16 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
     scaffoldSvc: ChartScaffoldService,
     private smaService: SmaChartService,
     hostEl: ElementRef<SVGGElement>
-  ) { super(); }
+  ) {
+    super();
+    effect(() => {
+      this.smaVisibilityService.visibility();
+      if (!this.viewInitialized) return;
+
+      this.drawAttempted = false;
+      this.checkAndDraw('sma visibility');
+    });
+  }
 
 
 
@@ -179,6 +189,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
         .data([pathData])
         .join('path')
         .attr('class', `sma-line sma-${period}`)
+        .style('display', this.smaVisibilityService.isVisible(period as 20 | 50 | 150) ? '' : 'none')
         .attr('d', lineGen as any)
         .attr('fill', 'none')
         .attr('stroke-width', 1.5);

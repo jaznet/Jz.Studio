@@ -300,6 +300,48 @@ fill:transparent;
   fill: var(--chart-overlay-slow);
 }
 
+.sma-toggle-control {
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+}
+
+.sma-toggle-control rect {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.sma-toggle-control text {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.sma-toggle-control .legend-sma-20 {
+  fill: var(--chart-overlay-fast);
+}
+
+.sma-toggle-control .legend-sma-50 {
+  fill: var(--chart-overlay-medium);
+}
+
+.sma-toggle-control .legend-sma-150 {
+  fill: var(--chart-overlay-slow);
+}
+
+.sma-toggle-control:hover rect,
+.sma-toggle-control:focus-visible rect {
+  fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
+  stroke: color-mix(in srgb, var(--chart-label) 30%, transparent);
+}
+
+.sma-toggle-control--hidden text {
+  opacity: .32;
+  text-decoration: line-through;
+}
+
 .panel-badge .legend-macd {
   fill: var(--chart-macd);
 }
