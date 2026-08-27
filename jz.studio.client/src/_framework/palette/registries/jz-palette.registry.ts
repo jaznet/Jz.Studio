@@ -3,6 +3,68 @@ import { JzPalette } from '../models/jz-palette.model';
 export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
   // =========================================================
+  // ONYX
+  // graphite / slate cinematic neutral palette
+  // =========================================================
+
+  onyx: {
+    name: 'onyx',
+
+    // surfaces
+    clr1: '#111417', // cool charcoal
+    clr2: '#1C2126', // graphite
+    clr3: '#2A3138', // slate iron
+    clr4: '#3B454F', // muted steel
+    clr5: '#535C65', // weathered silver
+
+    // text
+    txt1: '#E6E2DB', // soft ivory
+    txt2: '#D8D3CB', // warm parchment
+    txt3: '#ECE7DF', // pale bone
+    txt4: '#F7F1E8', // porcelain white
+    txt5: '#15181B', // carbon black
+
+    // accent
+    pop: '#B08D57', // antique brass
+    popTxt: '#FFF7EA', // warm ivory
+
+    // highlight
+    highlight: '#87CEEB',
+    highlightTxt: '#FFF7EA'
+  },
+
+  // =========================================================
+  // CHARCOAL
+  // graphite / slate cinematic neutral palette
+  // =========================================================
+
+  charcoal: {
+    name: 'charcoal',
+
+    // surfaces
+    clr1: '#2e2e2e', // cool charcoal
+    clr2: '#1C2126', // graphite
+    clr3: '#2A3138', // slate iron
+    clr4: '#3B454F', // muted steel
+    clr5: '#535C65', // weathered silver
+
+    // text
+    txt1: '#E6E2DB', // soft ivory
+    txt2: '#D8D3CB', // warm parchment
+    txt3: '#ECE7DF', // pale bone
+    txt4: '#F7F1E8', // porcelain white
+    txt5: '#15181B', // carbon black
+
+    // accent
+    pop: '#b8860b', // antique brass
+    popTxt: '#FFF7EA', // warm ivory
+
+    // highlight
+    highlight: '#87CEEB',
+    highlightTxt: '#FFF7EA'
+  },
+
+  // =========================================================
   // MIDNIGHT
   // cool blue-black cinematic palette
   // =========================================================
@@ -64,34 +126,5 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlightTxt: '#FFF7EA' 
   },
 
-  // =========================================================
-  // ONYX
-  // graphite / slate cinematic neutral palette
-  // =========================================================
 
-  onyx: {
-    name: 'onyx',
-
-    // surfaces
-    clr1: '#111417', // cool charcoal
-    clr2: '#1C2126', // graphite
-    clr3: '#2A3138', // slate iron
-    clr4: '#3B454F', // muted steel
-    clr5: '#535C65', // weathered silver
-
-    // text
-    txt1: '#E6E2DB', // soft ivory
-    txt2: '#D8D3CB', // warm parchment
-    txt3: '#ECE7DF', // pale bone
-    txt4: '#F7F1E8', // porcelain white
-    txt5: '#15181B', // carbon black
-
-    // accent
-    pop: '#B08D57', // antique brass
-    popTxt: '#FFF7EA', // warm ivory
-
-    // highlight
-    highlight: '#87CEEB',
-    highlightTxt: '#FFF7EA' 
-  }
 };

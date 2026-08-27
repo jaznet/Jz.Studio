@@ -9,6 +9,11 @@
                    (click)="setPalette('onyx')">
   </jz-radio-button>
 
+  <jz-radio-button [palette]="'charcoal'"
+                   [btncolor]="shellTheme.getPalette('charcoal')?.pop ?? '#888'"
+                   (click)="setPalette('charcoal')">
+  </jz-radio-button>
+
   <jz-radio-button [palette]="'midnight'"
                    [btncolor]="shellTheme.getPalette('midnight')?.pop ?? '#888'"
                    (click)="setPalette('midnight')">
