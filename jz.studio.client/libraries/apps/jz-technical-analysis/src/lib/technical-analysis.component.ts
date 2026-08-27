@@ -151,6 +151,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   crosshairValueLabelY = 0;
   viewportPannable = false;
   viewportDragging = false;
+  viewportRangeLabel = '';
 
   dateScaleX!: ScaleBand<Date>;
   svgContainer!: HTMLDivElement;
@@ -847,6 +848,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.sourceData = [...data];
     this.destroyChartComponents();
     this.chartData.load(this.sourceData, this.visibleWindow);
+    this.viewportRangeLabel = this.formatViewportRangeLabel(
+      this.chartData.stockPriceHistoryData
+    );
     if (
       this.maximumViewportDays === undefined
       && this.chartData.stockPriceHistoryData.length > 0
@@ -859,6 +863,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     if (this.dataReady) {
       this.tryCreateChart();
     }
+  }
+
+  private formatViewportRangeLabel(data: StockPriceHistory[]): string {
+    if (data.length === 0) return '';
+
+    const formatDate = (date: Date): string => date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+
+    return `${formatDate(data[0].date)} – ${formatDate(data[data.length - 1].date)}`;
   }
 
   private tryCreateChart(): void {

@@ -1,0 +1,92 @@
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+index 0f7abd5..71e72c1 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.html
+@@ -32,6 +32,15 @@
+     </g>
+ 
+     @if (viewportPannable) {
++      <g class="chart-viewport-range"
++         aria-hidden="true"
++         [attr.transform]="'translate('
++           + (chartScaffold.width - chartScaffold.margins.right - 264)
++           + ',' + (chartScaffold.xAxisTop + 8) + ')'">
++        <rect width="166" height="18" rx="3" ry="3"></rect>
++        <text x="83" y="9">{{ viewportRangeLabel }}</text>
++      </g>
++
+       <g class="chart-reset-control"
+          role="button"
+          tabindex="0"
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+index c830cdc..31054de 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.scss
+@@ -172,6 +172,26 @@ fill:transparent;
+   stroke: color-mix(in srgb, var(--plt-pop) 72%, var(--chart-axis));
+ }
+ 
++.chart-viewport-range {
++  pointer-events: none;
++}
++
++.chart-viewport-range rect {
++  fill: color-mix(in srgb, var(--chart-surface) 96%, var(--plt-txt-2));
++  stroke: color-mix(in srgb, var(--chart-axis) 48%, transparent);
++  stroke-width: 1;
++  vector-effect: non-scaling-stroke;
++}
++
++.chart-viewport-range text {
++  fill: color-mix(in srgb, var(--chart-label) 78%, var(--chart-surface));
++  font-size: 9px;
++  font-weight: 500;
++  letter-spacing: .02em;
++  dominant-baseline: middle;
++  text-anchor: middle;
++}
++
+ .crosshair-line {
+   stroke: var(--chart-crosshair);
+   stroke-width: 1;
+diff --git a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+index d70948b..35af938 100644
+--- a/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
++++ b/jz.studio.client/libraries/apps/jz-technical-analysis/src/lib/technical-analysis.component.ts
+@@ -151,6 +151,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+   crosshairValueLabelY = 0;
+   viewportPannable = false;
+   viewportDragging = false;
++  viewportRangeLabel = '';
+ 
+   dateScaleX!: ScaleBand<Date>;
+   svgContainer!: HTMLDivElement;
+@@ -847,6 +848,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     this.sourceData = [...data];
+     this.destroyChartComponents();
+     this.chartData.load(this.sourceData, this.visibleWindow);
++    this.viewportRangeLabel = this.formatViewportRangeLabel(
++      this.chartData.stockPriceHistoryData
++    );
+     if (
+       this.maximumViewportDays === undefined
+       && this.chartData.stockPriceHistoryData.length > 0
+@@ -861,6 +865,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
+     }
+   }
+ 
++  private formatViewportRangeLabel(data: StockPriceHistory[]): string {
++    if (data.length === 0) return '';
++
++    const formatDate = (date: Date): string => date.toLocaleDateString('en-US', {
++      month: 'short',
++      day: 'numeric',
++      year: 'numeric'
++    });
++
++    return `${formatDate(data[0].date)} – ${formatDate(data[data.length - 1].date)}`;
++  }
++
+   private tryCreateChart(): void {
+     console.log('%c     ✔  tryCreateChart', 'color:#90BEE9');
+     if (this.viewReady && this.dataReady && !this.hydrated) {

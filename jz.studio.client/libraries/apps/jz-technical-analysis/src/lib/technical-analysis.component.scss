@@ -172,6 +172,26 @@ fill:transparent;
   stroke: color-mix(in srgb, var(--plt-pop) 72%, var(--chart-axis));
 }
 
+.chart-viewport-range {
+  pointer-events: none;
+}
+
+.chart-viewport-range rect {
+  fill: color-mix(in srgb, var(--chart-surface) 96%, var(--plt-txt-2));
+  stroke: color-mix(in srgb, var(--chart-axis) 48%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-viewport-range text {
+  fill: color-mix(in srgb, var(--chart-label) 78%, var(--chart-surface));
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  dominant-baseline: middle;
+  text-anchor: middle;
+}
+
 .crosshair-line {
   stroke: var(--chart-crosshair);
   stroke-width: 1;

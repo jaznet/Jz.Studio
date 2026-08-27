@@ -32,6 +32,15 @@
     </g>
 
     @if (viewportPannable) {
+      <g class="chart-viewport-range"
+         aria-hidden="true"
+         [attr.transform]="'translate('
+           + (chartScaffold.width - chartScaffold.margins.right - 264)
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'">
+        <rect width="166" height="18" rx="3" ry="3"></rect>
+        <text x="83" y="9">{{ viewportRangeLabel }}</text>
+      </g>
+
       <g class="chart-reset-control"
          role="button"
          tabindex="0"
