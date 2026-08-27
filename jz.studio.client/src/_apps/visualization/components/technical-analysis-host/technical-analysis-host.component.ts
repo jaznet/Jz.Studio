@@ -28,6 +28,13 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   ticker = 'NVDA';
   symbolInput = this.ticker;
+  readonly rangePresets = [
+    { label: '6M', months: 6 },
+    { label: '1Y', months: 12 },
+    { label: '3Y', months: 36 },
+    { label: '5Y', months: 60 }
+  ] as const;
+  selectedRangeMonths: number | undefined = 12;
   visibleStartInput: string;
   visibleEndInput: string;
   dataWindow?: TechnicalAnalysisDataWindow;
@@ -56,6 +63,31 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadMarketData();
+  }
+
+  selectRangePreset(months: number): void {
+    const visibleEnd = this.parseDate(this.visibleEndInput);
+    if (!visibleEnd) {
+      this.selectedRangeMonths = undefined;
+      this.validationMessage = 'Enter a valid end date before selecting a range.';
+      return;
+    }
+
+    this.selectedRangeMonths = months;
+    const visibleStart = this.addMonths(visibleEnd, -months);
+    this.visibleStartInput = this.toDateInput(visibleStart);
+    this.dataWindow = { visibleStart, visibleEnd };
+    this.validationMessage = '';
+  }
+
+  onVisibleStartInput(value: string): void {
+    this.visibleStartInput = value;
+    this.selectedRangeMonths = undefined;
+  }
+
+  onVisibleEndInput(value: string): void {
+    this.visibleEndInput = value;
+    this.selectedRangeMonths = undefined;
   }
 
   applySelection(): void {

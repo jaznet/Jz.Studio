@@ -50,6 +50,26 @@
   width: 70px;
 }
 
+.range-presets {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.analysis-controls .range-presets label {
+  gap: 3px;
+  cursor: pointer;
+}
+
+.analysis-controls .range-presets input {
+  width: 12px;
+  height: 12px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--plt-pop);
+  cursor: pointer;
+}
+
 .analysis-controls button {
   padding: 1px 12px;
   cursor: pointer;

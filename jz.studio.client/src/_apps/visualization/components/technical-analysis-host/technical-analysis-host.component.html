@@ -10,12 +10,24 @@
              (input)="symbolInput = symbol.value.toUpperCase()">
     </label>
 
+    <div class="range-presets" role="radiogroup" aria-label="Date range presets">
+      @for (preset of rangePresets; track preset.months) {
+        <label>
+          <input type="radio"
+                 name="dateRangePreset"
+                 [checked]="selectedRangeMonths === preset.months"
+                 (change)="selectRangePreset(preset.months)">
+          {{ preset.label }}
+        </label>
+      }
+    </div>
+
     <label>
       From
       <input #visibleStart
              type="date"
              [value]="visibleStartInput"
-             (input)="visibleStartInput = visibleStart.value">
+             (input)="onVisibleStartInput(visibleStart.value)">
     </label>
 
     <label>
@@ -23,7 +35,7 @@
       <input #visibleEnd
              type="date"
              [value]="visibleEndInput"
-             (input)="visibleEndInput = visibleEnd.value">
+             (input)="onVisibleEndInput(visibleEnd.value)">
     </label>
 
     <button type="submit" [disabled]="loading">Apply</button>
