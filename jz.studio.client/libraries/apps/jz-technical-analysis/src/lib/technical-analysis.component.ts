@@ -156,6 +156,33 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   viewportDragging = false;
   viewportRangeLabel = '';
 
+  readonly indicatorPanels = [
+    { chartType: ChartType.VOLUME, label: 'VOLUME' },
+    { chartType: ChartType.MACD, label: 'MACD' },
+    { chartType: ChartType.RSI, label: 'RSI 14' }
+  ] as const;
+
+  get hiddenIndicatorControls(): ReadonlyArray<{
+    chartType: ChartType;
+    label: string;
+  }> {
+    const preferences = this.panelPreferenceService.getPreferences();
+    return this.indicatorPanels.filter(control =>
+      preferences.some(preference =>
+        preference.chartType === control.chartType && !preference.visible
+      )
+    );
+  }
+
+  get indicatorRestoreControlsX(): number {
+    const occupiedByViewportControls = this.viewportPannable ? 272 : 0;
+    return this.chartScaffold.width
+      - this.chartScaffold.margins.right
+      - occupiedByViewportControls
+      - (this.hiddenIndicatorControls.length * 82)
+      - 8;
+  }
+
   dateScaleX!: ScaleBand<Date>;
   svgContainer!: HTMLDivElement;
 
@@ -191,8 +218,32 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.panelPreferenceService.preferences$
       .pipe(takeUntil(this.destroyed$))
       .subscribe(preferences => {
+        if (this.viewReady && this.dataReady && this.hydrated) {
+          this.hideCrosshair();
+          this.destroyChartComponents();
+          this.applyPanelPreferences(preferences);
+          this.injectConfiguredPanels();
+          this.changeDetector.detectChanges();
+          return;
+        }
+
         this.applyPanelPreferences(preferences);
       });
+  }
+
+  restoreIndicatorPanel(event: Event, chartType: ChartType): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const preference = this.panelPreferenceService.getPreferences()
+      .find(item => item.chartType === chartType);
+    if (!preference) return;
+
+    this.panelPreferenceService.updatePreference(preference.id, { visible: true });
+  }
+
+  stopIndicatorRestorePointer(event: Event): void {
+    event.stopPropagation();
   }
 
   ngOnDestroy(): void {

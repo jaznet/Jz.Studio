@@ -29,6 +29,26 @@
         </text>
       </g>
 
+      @if (showPanelToggle) {
+        <g class="panel-toggle-control"
+           role="button"
+           tabindex="0"
+           [attr.aria-label]="panelToggleLabel"
+           [attr.transform]="'translate(8, 6)'"
+           (pointerdown)="stopPanelTogglePointer($event)"
+           (click)="togglePanel($event)"
+           (keydown.enter)="togglePanel($event)"
+           (keydown.space)="togglePanel($event)">
+          <rect x="0"
+                y="0"
+                [attr.width]="panelBadgeWidth"
+                height="18"
+                rx="4"
+                ry="4">
+          </rect>
+        </g>
+      }
+
       @if (showSmaControls) {
         <g class="sma-toggle-controls"
            [attr.transform]="'translate(' + smaToggleStartX + ', 6)'">

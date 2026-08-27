@@ -272,6 +272,59 @@ fill:transparent;
   pointer-events: none;
 }
 
+.panel-toggle-control {
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+}
+
+.panel-toggle-control rect {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.panel-toggle-control:hover rect,
+.panel-toggle-control:focus-visible rect {
+  fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
+  stroke: color-mix(in srgb, var(--chart-label) 30%, transparent);
+}
+
+.indicator-restore-controls {
+  pointer-events: auto;
+}
+
+.indicator-restore-control {
+  cursor: pointer;
+  outline: none;
+}
+
+.indicator-restore-control rect {
+  fill: color-mix(in srgb, var(--chart-surface) 90%, transparent);
+  stroke: color-mix(in srgb, var(--chart-separator) 82%, transparent);
+  stroke-width: 1;
+}
+
+.indicator-restore-control text {
+  fill: color-mix(in srgb, var(--chart-label) 72%, transparent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.indicator-restore-control:hover rect,
+.indicator-restore-control:focus-visible rect {
+  fill: color-mix(in srgb, var(--plt-pop) 10%, var(--chart-surface));
+  stroke: color-mix(in srgb, var(--plt-pop) 52%, var(--chart-separator));
+}
+
+.indicator-restore-control:hover text,
+.indicator-restore-control:focus-visible text {
+  fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
+}
+
 .panel-badge rect {
   fill: color-mix(in srgb, var(--chart-surface) 88%, transparent);
   stroke: color-mix(in srgb, var(--chart-separator) 72%, transparent);
@@ -409,8 +462,12 @@ fill:transparent;
 
 .rsi-band-ob,
 .rsi-band-os {
-  fill: var(--chart-bearish);
+  fill: var(--chart-rsi);
   opacity: .035;
+}
+
+.rsi-band-neutral {
+  fill: transparent;
 }
 
 .title-text {

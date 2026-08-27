@@ -7,6 +7,7 @@ import { select } from 'd3-selection';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { ChartCrosshairService } from '../../services/interactions/chart-crosshair.service';
 import { SmaPeriod, SmaVisibilityService } from '../../services/charts/sma/sma-visibility.service';
+import { PanelPreferenceService } from '../../support/panel-workspace/panel-preference.service';
 
 @Component({
   selector: 'base-chart',
@@ -16,6 +17,7 @@ import { SmaPeriod, SmaVisibilityService } from '../../services/charts/sma/sma-v
 })
 export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   private readonly crosshairService = inject(ChartCrosshairService);
+  private readonly panelPreferenceService = inject(PanelPreferenceService);
   protected readonly smaVisibilityService = inject(SmaVisibilityService);
 
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
@@ -129,6 +131,38 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   get showSmaControls(): boolean {
     return this.chartType === ChartType.OHLC;
+  }
+
+  get showPanelToggle(): boolean {
+    return this.chartType === ChartType.VOLUME
+      || this.chartType === ChartType.MACD
+      || this.chartType === ChartType.RSI;
+  }
+
+  get panelToggleLabel(): string {
+    switch (this.chartType) {
+      case ChartType.VOLUME: return 'Collapse Volume panel';
+      case ChartType.MACD: return 'Collapse MACD panel';
+      case ChartType.RSI: return 'Collapse RSI panel';
+      default: return 'Collapse indicator panel';
+    }
+  }
+
+  togglePanel(event: Event): void {
+    if (!this.showPanelToggle) return;
+    event.preventDefault();
+    event.stopPropagation();
+
+    const preference = this.panelPreferenceService.getPreferences()
+      .find(item => item.chartType === this.chartType);
+    if (!preference) return;
+
+    this.panelPreferenceService.updatePreference(preference.id, { visible: false });
+  }
+
+  stopPanelTogglePointer(event: Event): void {
+    if (!this.showPanelToggle) return;
+    event.stopPropagation();
   }
 
   get smaToggleStartX(): number {

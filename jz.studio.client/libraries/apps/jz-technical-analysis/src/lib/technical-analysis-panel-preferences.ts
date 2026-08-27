@@ -47,6 +47,6 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showAxisLeft: true,
     showAxisRight: false,
     showXAxisTop: false,
-    showXAxisBottom: true
+    showXAxisBottom: false
   }
 ];

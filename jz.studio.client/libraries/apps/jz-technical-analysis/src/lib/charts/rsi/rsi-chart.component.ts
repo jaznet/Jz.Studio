@@ -108,6 +108,14 @@ export class RsiChartComponent extends BaseChartComponent implements OnChanges {
       .attr('x', 0).attr('width', panel.innerWidth)
       .attr('y', y30).attr('height', Math.max(0, this.innerHeight - y30));
 
+    g.selectAll('.rsi-band-neutral')
+      .data([0]).join('rect')
+      .attr('class', 'rsi-band-neutral')
+      .attr('x', 0)
+      .attr('width', panel.innerWidth)
+      .attr('y', y70)
+      .attr('height', Math.max(0, y30 - y70));
+
     // guide lines
     const guides = [70, 50, 30];
     g.selectAll('.rsi-guide')
