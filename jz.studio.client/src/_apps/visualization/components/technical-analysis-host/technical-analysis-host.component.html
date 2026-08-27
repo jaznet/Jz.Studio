@@ -45,7 +45,8 @@
     }
 
     <div class="interaction-help">
-      <button type="button"
+      <button #interactionHelpToggle
+              type="button"
               class="interaction-help-toggle"
               aria-label="Chart interaction help"
               title="Chart interaction help"
@@ -57,8 +58,21 @@
       </button>
 
       @if (interactionHelpVisible) {
-        <div class="interaction-help-panel" role="dialog" aria-label="Chart controls">
-          <h2>Chart controls</h2>
+        <div #interactionHelpPanel
+             class="interaction-help-panel"
+             role="dialog"
+             aria-modal="false"
+             aria-labelledby="chart-controls-title"
+             tabindex="-1">
+          <div class="interaction-help-header">
+            <h2 id="chart-controls-title">Chart controls</h2>
+            <button type="button"
+                    class="interaction-help-close"
+                    aria-label="Close chart controls"
+                    (click)="closeInteractionHelp($event)">
+              ×
+            </button>
+          </div>
           <dl>
             <div><dt>Wheel or + / −</dt><dd>Zoom</dd></div>
             <div><dt>Drag</dt><dd>Pan dates</dd></div>

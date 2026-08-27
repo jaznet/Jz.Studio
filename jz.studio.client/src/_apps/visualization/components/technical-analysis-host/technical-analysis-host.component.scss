@@ -133,6 +133,17 @@
   white-space: normal;
 }
 
+.interaction-help-panel:focus {
+  outline: none;
+}
+
+.interaction-help-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .interaction-help-panel h2 {
   margin: 0;
   color: var(--plt-pop);
@@ -140,6 +151,27 @@
   font-weight: 600;
   letter-spacing: .06em;
   text-transform: uppercase;
+}
+
+.analysis-controls .interaction-help-close {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  place-items: center;
+  color: var(--plt-txt-2);
+  background: transparent;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.analysis-controls .interaction-help-close:hover,
+.analysis-controls .interaction-help-close:focus-visible {
+  color: var(--plt-pop);
+  background: color-mix(in srgb, var(--plt-pop) 10%, transparent);
+  outline: var(--border-width) solid var(--plt-pop);
 }
 
 .interaction-help-panel dl {

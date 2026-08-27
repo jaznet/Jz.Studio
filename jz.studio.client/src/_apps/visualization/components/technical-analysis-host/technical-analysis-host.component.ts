@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   StockPriceHistory,
   TechnicalAnalysisComponent,
@@ -25,6 +25,8 @@ import { MarketPriceService } from '../../services/market-price.service';
 })
 export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
+  @ViewChild('interactionHelpToggle') private interactionHelpToggle?: ElementRef<HTMLButtonElement>;
+  @ViewChild('interactionHelpPanel') private interactionHelpPanel?: ElementRef<HTMLElement>;
 
   ticker = 'NVDA';
   symbolInput = this.ticker;
@@ -48,6 +50,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   private appliedVisibleStartInput: string;
   private appliedVisibleEndInput: string;
   private loadingPopoverRef?: JzPopoverRef;
+  private interactionHelpFocusTimer?: ReturnType<typeof setTimeout>;
 
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
@@ -78,13 +81,13 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   toggleInteractionHelp(event: MouseEvent): void {
     event.stopPropagation();
-    this.interactionHelpVisible = !this.interactionHelpVisible;
+    this.setInteractionHelpVisible(!this.interactionHelpVisible);
   }
 
   toggleInteractionHelpFromKeyboard(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.interactionHelpVisible = !this.interactionHelpVisible;
+    this.setInteractionHelpVisible(!this.interactionHelpVisible);
   }
 
   @HostListener('document:pointerdown', ['$event'])
@@ -93,13 +96,33 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
     const target = event.target;
     if (!(target instanceof Element) || !target.closest('.interaction-help')) {
-      this.interactionHelpVisible = false;
+      this.setInteractionHelpVisible(false);
     }
   }
 
   @HostListener('document:keydown.escape')
-  closeInteractionHelp(): void {
-    this.interactionHelpVisible = false;
+  closeInteractionHelp(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
+    this.setInteractionHelpVisible(false);
+  }
+
+  private setInteractionHelpVisible(visible: boolean): void {
+    if (this.interactionHelpVisible === visible) return;
+
+    this.interactionHelpVisible = visible;
+    if (this.interactionHelpFocusTimer) {
+      clearTimeout(this.interactionHelpFocusTimer);
+    }
+
+    this.interactionHelpFocusTimer = setTimeout(() => {
+      this.interactionHelpFocusTimer = undefined;
+      if (visible) {
+        this.interactionHelpPanel?.nativeElement.focus();
+      } else {
+        this.interactionHelpToggle?.nativeElement.focus();
+      }
+    });
   }
 
   selectRangePreset(months: number): void {
@@ -270,6 +293,9 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.interactionHelpFocusTimer) {
+      clearTimeout(this.interactionHelpFocusTimer);
+    }
     this.closeLoadingPopover();
     this.destroyed$.next();
     this.destroyed$.complete();
