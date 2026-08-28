@@ -418,7 +418,8 @@ fill:transparent;
 }
 
 .sma-toggle-control:hover rect,
-.sma-toggle-control:focus-visible rect {
+.sma-toggle-control:focus-visible rect,
+.sma-toggle-control--focused rect {
   fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
   stroke: color-mix(in srgb, var(--chart-label) 30%, transparent);
 }
@@ -477,6 +478,10 @@ fill:transparent;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+
+.sma-line {
+  transition: opacity 120ms ease, stroke-width 120ms ease;
 }
 
 .sma-20 { stroke: var(--chart-overlay-fast); }

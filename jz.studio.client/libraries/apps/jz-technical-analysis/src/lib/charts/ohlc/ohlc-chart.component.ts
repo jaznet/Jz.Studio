@@ -53,6 +53,7 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
     super();
     effect(() => {
       this.smaVisibilityService.visibility();
+      this.smaVisibilityService.focusedPeriod();
       if (!this.viewInitialized) return;
 
       this.drawAttempted = false;
@@ -184,15 +185,21 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
         .map((dt, i) => ({ dt, v: series[i] as Num }))
         .filter(item => visibleDates.has(item.dt.getTime()));
 
+      const smaPeriod = period as 20 | 50 | 150;
+      const focusedPeriod = this.smaVisibilityService.focusedPeriod();
+      const isFocused = focusedPeriod === smaPeriod;
+      const isDeemphasized = focusedPeriod !== null && !isFocused;
+
       group
         .selectAll(`path.sma-${period}`)
         .data([pathData])
         .join('path')
         .attr('class', `sma-line sma-${period}`)
-        .style('display', this.smaVisibilityService.isVisible(period as 20 | 50 | 150) ? '' : 'none')
+        .style('display', this.smaVisibilityService.isVisible(smaPeriod) ? '' : 'none')
+        .style('opacity', isDeemphasized ? 0.28 : 1)
         .attr('d', lineGen as any)
         .attr('fill', 'none')
-        .attr('stroke-width', 1.5);
+        .attr('stroke-width', isFocused ? 2.5 : 1.5);
     });
   }
 

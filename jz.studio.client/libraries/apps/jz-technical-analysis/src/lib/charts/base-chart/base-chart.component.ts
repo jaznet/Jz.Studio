@@ -202,6 +202,18 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return this.smaVisibilityService.isVisible(period);
   }
 
+  isSmaFocused(period: SmaPeriod): boolean {
+    return this.smaVisibilityService.focusedPeriod() === period;
+  }
+
+  focusSma(period: SmaPeriod): void {
+    this.smaVisibilityService.focus(period);
+  }
+
+  clearSmaFocus(period: SmaPeriod): void {
+    this.smaVisibilityService.clearFocus(period);
+  }
+
   stopSmaTogglePointer(event: Event, period?: SmaPeriod): void {
     if (!period) return;
     event.stopPropagation();

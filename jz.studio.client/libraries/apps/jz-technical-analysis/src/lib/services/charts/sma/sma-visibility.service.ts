@@ -14,6 +14,7 @@ export class SmaVisibilityService {
   };
 
   readonly visibility = signal<SmaVisibility>(this.loadVisibility());
+  readonly focusedPeriod = signal<SmaPeriod | null>(null);
 
   isVisible(period: SmaPeriod): boolean {
     return this.visibility()[period];
@@ -25,7 +26,22 @@ export class SmaVisibilityService {
       [period]: !this.visibility()[period]
     };
     this.visibility.set(next);
+    if (!next[period] && this.focusedPeriod() === period) {
+      this.focusedPeriod.set(null);
+    }
     this.persist(next);
+  }
+
+  focus(period: SmaPeriod): void {
+    if (this.isVisible(period)) {
+      this.focusedPeriod.set(period);
+    }
+  }
+
+  clearFocus(period?: SmaPeriod): void {
+    if (period === undefined || this.focusedPeriod() === period) {
+      this.focusedPeriod.set(null);
+    }
   }
 
   hasHidden(): boolean {
@@ -35,6 +51,7 @@ export class SmaVisibilityService {
   restoreAll(): void {
     const next = { ...this.defaultVisibility };
     this.visibility.set(next);
+    this.focusedPeriod.set(null);
     this.persist(next);
   }
 
