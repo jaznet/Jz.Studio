@@ -79,6 +79,23 @@
       </g>
     }
 
+    @if (anyIndicatorHidden) {
+      <g class="indicator-reset-control"
+         role="button"
+         tabindex="0"
+         aria-label="Restore all chart indicators"
+         [attr.transform]="'translate('
+           + restoreIndicatorsX
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+         (pointerdown)="stopIndicatorRestorePointer($event)"
+         (click)="restoreAllIndicators($event)"
+         (keydown.enter)="restoreAllIndicators($event)"
+         (keydown.space)="restoreAllIndicators($event)">
+        <rect width="118" height="18" rx="3" ry="3"></rect>
+        <text x="59" y="9">RESTORE INDICATORS</text>
+      </g>
+    }
+
     @if (crosshairVisible) {
       <g class="chart-crosshair"
          [class.chart-crosshair--pinned]="crosshairPinned"

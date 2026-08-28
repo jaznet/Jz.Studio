@@ -35,6 +35,7 @@ import { PanelPreference } from './interfaces/panel-preference.interface';
 import { StockPriceHistory } from './models/stock-price-history.model';
 import { TechnicalAnalysisDataWindow } from './models/technical-analysis-data.model';
 import { ChartDataService } from './services/chart-data.service';
+import { SmaVisibilityService } from './services/charts/sma/sma-visibility.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { ChartCrosshairService } from './services/interactions/chart-crosshair.service';
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
@@ -175,12 +176,21 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   }
 
   get indicatorRestoreControlsX(): number {
+    return this.restoreIndicatorsX
+      - (this.hiddenIndicatorControls.length * 82);
+  }
+
+  get anyIndicatorHidden(): boolean {
+    return this.smaVisibilityService.hasHidden()
+      || this.panelPreferenceService.hasHiddenIndicators();
+  }
+
+  get restoreIndicatorsX(): number {
     const occupiedByViewportControls = this.viewportPannable ? 272 : 0;
     return this.chartScaffold.width
       - this.chartScaffold.margins.right
       - occupiedByViewportControls
-      - (this.hiddenIndicatorControls.length * 82)
-      - 8;
+      - 126;
   }
 
   dateScaleX!: ScaleBand<Date>;
@@ -201,6 +211,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private panelHostRenderer: PanelHostRendererService,
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService,
+    private smaVisibilityService: SmaVisibilityService,
     private crosshairService: ChartCrosshairService
   ) {
     console.log('');
@@ -244,6 +255,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   stopIndicatorRestorePointer(event: Event): void {
     event.stopPropagation();
+  }
+
+  restoreAllIndicators(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.panelPreferenceService.restoreIndicatorVisibility();
+    this.smaVisibilityService.restoreAll();
   }
 
   ngOnDestroy(): void {

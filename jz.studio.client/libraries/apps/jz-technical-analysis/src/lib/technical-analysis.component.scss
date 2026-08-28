@@ -325,6 +325,39 @@ fill:transparent;
   fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
 }
 
+.indicator-reset-control {
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+}
+
+.indicator-reset-control rect {
+  fill: color-mix(in srgb, var(--chart-surface) 92%, transparent);
+  stroke: color-mix(in srgb, var(--plt-pop) 36%, var(--chart-separator));
+  stroke-width: 1;
+}
+
+.indicator-reset-control text {
+  fill: color-mix(in srgb, var(--chart-label) 68%, transparent);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.indicator-reset-control:hover rect,
+.indicator-reset-control:focus-visible rect {
+  fill: color-mix(in srgb, var(--plt-pop) 10%, var(--chart-surface));
+  stroke: color-mix(in srgb, var(--plt-pop) 60%, var(--chart-separator));
+}
+
+.indicator-reset-control:hover text,
+.indicator-reset-control:focus-visible text {
+  fill: color-mix(in srgb, var(--plt-pop) 68%, var(--chart-label));
+}
+
 .panel-badge rect {
   fill: color-mix(in srgb, var(--chart-surface) 88%, transparent);
   stroke: color-mix(in srgb, var(--chart-separator) 72%, transparent);
