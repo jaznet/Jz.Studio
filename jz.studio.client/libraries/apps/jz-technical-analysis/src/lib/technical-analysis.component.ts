@@ -36,6 +36,7 @@ import { StockPriceHistory } from './models/stock-price-history.model';
 import { TechnicalAnalysisDataWindow } from './models/technical-analysis-data.model';
 import { ChartDataService } from './services/chart-data.service';
 import { SmaVisibilityService } from './services/charts/sma/sma-visibility.service';
+import { MacdVisibilityService } from './services/charts/macd/macd-visibility.service';
 import { ChartScaffoldService } from './services/chart-scaffold.service';
 import { ChartCrosshairService } from './services/interactions/chart-crosshair.service';
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
@@ -182,6 +183,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
   get anyIndicatorHidden(): boolean {
     return this.smaVisibilityService.hasHidden()
+      || this.macdVisibilityService.hasHidden()
       || this.panelPreferenceService.hasHiddenIndicators();
   }
 
@@ -212,6 +214,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private scaffoldSvc: ChartScaffoldService,
     private panelPreferenceService: PanelPreferenceService,
     private smaVisibilityService: SmaVisibilityService,
+    private macdVisibilityService: MacdVisibilityService,
     private crosshairService: ChartCrosshairService
   ) {
     console.log('');
@@ -250,6 +253,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       .find(item => item.chartType === chartType);
     if (!preference) return;
 
+    if (chartType === ChartType.MACD) {
+      this.macdVisibilityService.restoreAll();
+    }
+
     this.panelPreferenceService.updatePreference(preference.id, { visible: true });
   }
 
@@ -262,6 +269,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     event.stopPropagation();
     this.panelPreferenceService.restoreIndicatorVisibility();
     this.smaVisibilityService.restoreAll();
+    this.macdVisibilityService.restoreAll();
   }
 
   ngOnDestroy(): void {

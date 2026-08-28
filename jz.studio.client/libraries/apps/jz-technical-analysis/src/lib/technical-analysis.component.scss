@@ -283,6 +283,14 @@ fill:transparent;
   stroke: transparent;
 }
 
+.panel-toggle-control .panel-collapse-glyph {
+  fill: color-mix(in srgb, var(--chart-label) 76%, transparent);
+  font-size: 12px;
+  font-weight: 700;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
 .panel-toggle-control:hover rect,
 .panel-toggle-control:focus-visible rect {
   fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
@@ -429,6 +437,49 @@ fill:transparent;
   text-decoration: line-through;
 }
 
+.macd-toggle-control {
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+}
+
+.macd-toggle-control rect {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.macd-toggle-control text {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.macd-toggle-control .legend-macd {
+  fill: var(--chart-macd);
+}
+
+.macd-toggle-control .legend-signal {
+  fill: var(--chart-signal);
+}
+
+.macd-toggle-control .legend-histogram {
+  fill: color-mix(in srgb, var(--chart-bullish) 82%, var(--chart-label));
+}
+
+.macd-toggle-control:hover rect,
+.macd-toggle-control:focus-visible rect,
+.macd-toggle-control--focused rect {
+  fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
+  stroke: color-mix(in srgb, var(--chart-label) 30%, transparent);
+}
+
+.macd-toggle-control--hidden text {
+  opacity: .32;
+  text-decoration: line-through;
+}
+
 .panel-badge .legend-macd {
   fill: var(--chart-macd);
 }
@@ -481,6 +532,12 @@ fill:transparent;
 }
 
 .sma-line {
+  transition: opacity 120ms ease, stroke-width 120ms ease;
+}
+
+.macd-line,
+.signal-line,
+.macd-hist {
   transition: opacity 120ms ease, stroke-width 120ms ease;
 }
 

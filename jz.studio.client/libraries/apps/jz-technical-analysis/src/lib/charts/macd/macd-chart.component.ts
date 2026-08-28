@@ -1,5 +1,5 @@
 // macd-chart.component.ts
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, effect, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { select } from 'd3-selection';
 import { scaleLinear, type ScaleBand } from 'd3-scale';
 import { axisLeft, axisRight } from 'd3-axis';
@@ -30,6 +30,14 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
 
   constructor() {
     super();
+    effect(() => {
+      this.macdVisibilityService.visibility();
+      this.macdVisibilityService.focusedSeries();
+      if (!this.viewInitialized) return;
+
+      this.drawAttempted = false;
+      this.checkAndDraw('macd visibility');
+    });
   }
 
   override ngOnChanges(_: SimpleChanges): void {
@@ -108,6 +116,9 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
     const cx = (dt: Date) => (this.dateScaleX(dt) ?? 0) + bandW / 2;
 
     const { dates, macd, signal, hist } = this.buildSeries();
+    const focusedSeries = this.macdVisibilityService.focusedSeries();
+    const opacityFor = (series: 'macd' | 'signal' | 'histogram') =>
+      focusedSeries !== null && focusedSeries !== series ? 0.28 : 1;
 
     // y-domain from macd/signal/hist + zero with padding
     let minV = 0, maxV = 0;
@@ -133,6 +144,8 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .data(dates.map((dt, i) => ({ dt, v: hist[i] })))
       .join('rect')
       .attr('class', 'macd-hist')
+      .style('display', this.macdVisibilityService.isVisible('histogram') ? '' : 'none')
+      .style('opacity', opacityFor('histogram'))
       .classed('macd-hist--positive', d => (d.v ?? 0) >= 0)
       .classed('macd-hist--negative', d => (d.v ?? 0) < 0)
       .attr('x', d => cx(d.dt) - barW / 2)
@@ -151,17 +164,21 @@ export class MacdChartComponent extends BaseChartComponent implements OnChanges 
       .data([dates.map((dt, i) => ({ dt, v: macd[i] }))])
       .join('path')
       .attr('class', 'macd-line')
+      .style('display', this.macdVisibilityService.isVisible('macd') ? '' : 'none')
+      .style('opacity', opacityFor('macd'))
       .attr('d', lineGen as any)
       .attr('fill', 'none')
-      .attr('stroke-width', 1.5);
+      .attr('stroke-width', focusedSeries === 'macd' ? 2.5 : 1.5);
 
     g.selectAll('.signal-line')
       .data([dates.map((dt, i) => ({ dt, v: signal[i] }))])
       .join('path')
       .attr('class', 'signal-line')
+      .style('display', this.macdVisibilityService.isVisible('signal') ? '' : 'none')
+      .style('opacity', opacityFor('signal'))
       .attr('d', lineGen as any)
       .attr('fill', 'none')
-      .attr('stroke-width', 1.5);
+      .attr('stroke-width', focusedSeries === 'signal' ? 2.5 : 1.5);
 
     this.drawYAxes(panel, y);
   }

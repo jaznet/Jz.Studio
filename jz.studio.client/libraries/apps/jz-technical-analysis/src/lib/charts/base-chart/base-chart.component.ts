@@ -7,6 +7,7 @@ import { select } from 'd3-selection';
 import { ChartScaffold } from '../../interfaces/chart-scaffold.interface';
 import { ChartCrosshairService } from '../../services/interactions/chart-crosshair.service';
 import { SmaPeriod, SmaVisibilityService } from '../../services/charts/sma/sma-visibility.service';
+import { MacdSeries, MacdVisibilityService } from '../../services/charts/macd/macd-visibility.service';
 import { PanelPreferenceService } from '../../support/panel-workspace/panel-preference.service';
 
 @Component({
@@ -19,6 +20,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   private readonly crosshairService = inject(ChartCrosshairService);
   private readonly panelPreferenceService = inject(PanelPreferenceService);
   protected readonly smaVisibilityService = inject(SmaVisibilityService);
+  protected readonly macdVisibilityService = inject(MacdVisibilityService);
 
   @ViewChild('rSvg', { static: false }) rSvg!: ElementRef<SVGRectElement>;
   @ViewChild('gContent', { static: false }) gContent!: ElementRef<SVGGElement>;
@@ -63,14 +65,14 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       switch (this.chartType) {
         case ChartType.OHLC: return 540;
         case ChartType.VOLUME: return 126;
-        case ChartType.MACD: return 196;
+        case ChartType.MACD: return 288;
         case ChartType.RSI: return 92;
       }
     }
 
     switch (this.chartType) {
       case ChartType.OHLC: return 224;
-      case ChartType.MACD: return 126;
+      case ChartType.MACD: return 210;
       case ChartType.RSI: return 58;
       default: return 72;
     }
@@ -131,6 +133,57 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   get showSmaControls(): boolean {
     return this.chartType === ChartType.OHLC;
+  }
+
+  get showMacdControls(): boolean {
+    return this.chartType === ChartType.MACD;
+  }
+
+  get macdToggleItems(): ReadonlyArray<{
+    series: MacdSeries;
+    label: string;
+    className: string;
+    x: number;
+    width: number;
+  }> {
+    const readout = this.crosshairService.state().readout;
+    return readout
+      ? [
+          { series: 'macd', label: `MACD ${this.formatSigned(readout.macd)}`, className: 'legend-macd', x: 0, width: 88 },
+          { series: 'signal', label: `SIGNAL ${this.formatSigned(readout.signal)}`, className: 'legend-signal', x: 88, width: 98 },
+          { series: 'histogram', label: 'HISTOGRAM', className: 'legend-histogram', x: 186, width: 74 }
+        ]
+      : [
+          { series: 'macd', label: 'MACD', className: 'legend-macd', x: 0, width: 45 },
+          { series: 'signal', label: 'SIGNAL', className: 'legend-signal', x: 45, width: 58 },
+          { series: 'histogram', label: 'HISTOGRAM', className: 'legend-histogram', x: 103, width: 79 }
+        ];
+  }
+
+  isMacdVisible(series: MacdSeries): boolean {
+    return this.macdVisibilityService.isVisible(series);
+  }
+
+  isMacdFocused(series: MacdSeries): boolean {
+    return this.macdVisibilityService.focusedSeries() === series;
+  }
+
+  focusMacd(series: MacdSeries): void {
+    this.macdVisibilityService.focus(series);
+  }
+
+  clearMacdFocus(series: MacdSeries): void {
+    this.macdVisibilityService.clearFocus(series);
+  }
+
+  stopMacdTogglePointer(event: Event): void {
+    event.stopPropagation();
+  }
+
+  toggleMacd(event: Event, series: MacdSeries): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.macdVisibilityService.toggle(series);
   }
 
   get showPanelToggle(): boolean {

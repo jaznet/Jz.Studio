@@ -22,11 +22,13 @@
               rx="4"
               ry="4">
         </rect>
-        <text [attr.x]="-panelBadgeWidth + 7" y="12">
-          @for (item of panelLegendItems; track item.label) {
-            <tspan [attr.class]="item.className">{{ item.label }}</tspan>
-          }
-        </text>
+        @if (!showMacdControls) {
+          <text [attr.x]="-panelBadgeWidth + 7" y="12">
+            @for (item of panelLegendItems; track item.label) {
+              <tspan [attr.class]="item.className">{{ item.label }}</tspan>
+            }
+          </text>
+        }
       </g>
 
       @if (showPanelToggle) {
@@ -46,6 +48,35 @@
                 rx="4"
                 ry="4">
           </rect>
+          @if (showMacdControls) {
+            <text class="panel-collapse-glyph" x="10" y="12">−</text>
+          }
+        </g>
+      }
+
+      @if (showMacdControls) {
+        <g class="macd-toggle-controls" transform="translate(35, 6)">
+          @for (item of macdToggleItems; track item.series) {
+            <g class="macd-toggle-control"
+               [class.macd-toggle-control--hidden]="!isMacdVisible(item.series)"
+               [class.macd-toggle-control--focused]="isMacdFocused(item.series)"
+               [attr.transform]="'translate(' + item.x + ', 0)'"
+               role="button"
+               tabindex="0"
+               [attr.aria-label]="'Toggle ' + item.label"
+               [attr.aria-pressed]="isMacdVisible(item.series)"
+               (pointerenter)="focusMacd(item.series)"
+               (pointerleave)="clearMacdFocus(item.series)"
+               (focus)="focusMacd(item.series)"
+               (blur)="clearMacdFocus(item.series)"
+               (pointerdown)="stopMacdTogglePointer($event)"
+               (click)="toggleMacd($event, item.series)"
+               (keydown.enter)="toggleMacd($event, item.series)"
+               (keydown.space)="toggleMacd($event, item.series)">
+              <rect x="0" y="0" [attr.width]="item.width" height="18" rx="3" ry="3"></rect>
+              <text x="4" y="12" [attr.class]="item.className">{{ item.label }}</text>
+            </g>
+          }
         </g>
       }
 
