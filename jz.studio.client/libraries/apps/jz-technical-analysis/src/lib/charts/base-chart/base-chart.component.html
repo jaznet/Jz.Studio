@@ -23,7 +23,7 @@
               ry="4">
         </rect>
         @if (!showMacdControls) {
-          <text [attr.x]="-panelBadgeWidth + 7" y="12">
+          <text [attr.x]="panelLegendX" y="12">
             @for (item of panelLegendItems; track item.label) {
               <tspan [attr.class]="item.className">{{ item.label }}</tspan>
             }
@@ -48,9 +48,7 @@
                 rx="4"
                 ry="4">
           </rect>
-          @if (showMacdControls) {
-            <text class="panel-collapse-glyph" x="10" y="12">−</text>
-          }
+          <text class="panel-collapse-glyph" x="10" y="12">−</text>
         </g>
       }
 

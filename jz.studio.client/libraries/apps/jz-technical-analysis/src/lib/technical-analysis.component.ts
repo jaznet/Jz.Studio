@@ -187,6 +187,37 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       || this.panelPreferenceService.hasHiddenIndicators();
   }
 
+  get crosshairPanelLabelExclusions(): ReadonlyArray<{
+    chartType: ChartType;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }> {
+    const readoutVisible = !!this.crosshairService.state().readout;
+    const widths: Partial<Record<ChartType, number>> = {
+      [ChartType.OHLC]: readoutVisible ? 540 : 224,
+      [ChartType.VOLUME]: readoutVisible ? 146 : 92,
+      [ChartType.MACD]: readoutVisible ? 288 : 210,
+      [ChartType.RSI]: readoutVisible ? 112 : 78
+    };
+
+    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI] as const)
+      .flatMap(chartType => {
+        const panel = this.chartScaffold.chartMap?.[chartType];
+        const width = widths[chartType];
+        if (!panel || !width) return [];
+
+        return [{
+          chartType,
+          x: panel.contentRect.x + 7,
+          y: this.chartScaffold.xAxisTop + panel.contentRect.y + 5,
+          width: width + 2,
+          height: 20
+        }];
+      });
+  }
+
   get restoreIndicatorsX(): number {
     const occupiedByViewportControls = this.viewportPannable ? 272 : 0;
     return this.chartScaffold.width

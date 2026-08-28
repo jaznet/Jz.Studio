@@ -97,21 +97,48 @@
     }
 
     @if (crosshairVisible) {
+      <defs>
+        <mask id="crosshair-panel-label-mask"
+              maskUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              [attr.width]="chartScaffold.width"
+              [attr.height]="chartScaffold.height">
+          <rect x="0"
+                y="0"
+                [attr.width]="chartScaffold.width"
+                [attr.height]="chartScaffold.height"
+                fill="white">
+          </rect>
+          @for (area of crosshairPanelLabelExclusions; track area.chartType) {
+            <rect [attr.x]="area.x"
+                  [attr.y]="area.y"
+                  [attr.width]="area.width"
+                  [attr.height]="area.height"
+                  rx="5"
+                  ry="5"
+                  fill="black">
+            </rect>
+          }
+        </mask>
+      </defs>
       <g class="chart-crosshair"
          [class.chart-crosshair--pinned]="crosshairPinned"
          aria-hidden="true">
-        <line class="crosshair-line crosshair-line--vertical"
-              [attr.x1]="crosshairX"
-              [attr.x2]="crosshairX"
-              [attr.y1]="crosshairTop"
-              [attr.y2]="crosshairBottom">
-        </line>
-        <line class="crosshair-line crosshair-line--horizontal"
-              [attr.x1]="crosshairLeft"
-              [attr.x2]="crosshairRight"
-              [attr.y1]="crosshairY"
-              [attr.y2]="crosshairY">
-        </line>
+        <g mask="url(#crosshair-panel-label-mask)">
+          <line class="crosshair-line crosshair-line--vertical"
+                [attr.x1]="crosshairX"
+                [attr.x2]="crosshairX"
+                [attr.y1]="crosshairTop"
+                [attr.y2]="crosshairBottom">
+          </line>
+          <line class="crosshair-line crosshair-line--horizontal"
+                [attr.x1]="crosshairLeft"
+                [attr.x2]="crosshairRight"
+                [attr.y1]="crosshairY"
+                [attr.y2]="crosshairY">
+          </line>
+        </g>
         <g class="crosshair-callout crosshair-callout--value">
           <rect [attr.x]="crosshairValueLabelX"
                 [attr.y]="crosshairValueLabelY - 9"

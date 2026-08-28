@@ -60,20 +60,25 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return this.panelBadgeWidth + 8;
   }
 
+  get panelLegendX(): number {
+    return -this.panelBadgeWidth + (this.showPanelToggle ? 27 : 7);
+  }
+
   get panelBadgeWidth(): number {
     if (this.crosshairService.state().readout) {
       switch (this.chartType) {
         case ChartType.OHLC: return 540;
-        case ChartType.VOLUME: return 126;
+        case ChartType.VOLUME: return 146;
         case ChartType.MACD: return 288;
-        case ChartType.RSI: return 92;
+        case ChartType.RSI: return 112;
       }
     }
 
     switch (this.chartType) {
       case ChartType.OHLC: return 224;
       case ChartType.MACD: return 210;
-      case ChartType.RSI: return 58;
+      case ChartType.VOLUME: return 92;
+      case ChartType.RSI: return 78;
       default: return 72;
     }
   }
