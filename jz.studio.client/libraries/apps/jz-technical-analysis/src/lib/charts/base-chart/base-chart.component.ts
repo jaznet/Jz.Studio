@@ -456,6 +456,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     const left = select(this.gAxisLeft.nativeElement);
     const right = select(this.gAxisRight.nativeElement);
 
+    left.classed('y-axis', true);
+    right.classed('y-axis', true);
+
     left.style('display', panel.showAxisLeft ? '' : 'none');
     right.style('display', panel.showAxisRight ? '' : 'none');
 

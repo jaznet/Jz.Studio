@@ -23,7 +23,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     visible: true,
     ratio: 0.2,
     showAxisLeft: true,
-    showAxisRight: false,
+    showAxisRight: true,
     showXAxisTop: false,
     showXAxisBottom: false
   },
@@ -34,7 +34,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     visible: true,
     ratio: 0.13,
     showAxisLeft: true,
-    showAxisRight: false,
+    showAxisRight: true,
     showXAxisTop: false,
     showXAxisBottom: false
   },
@@ -45,7 +45,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     visible: true,
     ratio: 0.17,
     showAxisLeft: true,
-    showAxisRight: false,
+    showAxisRight: true,
     showXAxisTop: false,
     showXAxisBottom: false
   }
