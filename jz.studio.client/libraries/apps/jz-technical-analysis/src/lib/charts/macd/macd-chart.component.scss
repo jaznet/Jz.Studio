@@ -1,0 +1,10 @@
+@use '../../styles/chart-axis';
+
+.chart-component-surface {
+  fill: var(--chart-indicator-surface);
+}
+
+.chart-layout-rect {
+  fill: transparent;
+  stroke: none;
+}

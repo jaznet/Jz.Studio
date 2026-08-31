@@ -1,0 +1,24 @@
+.y-axis {
+  color: var(--axis-line-color);
+}
+
+.y-axis .domain {
+  stroke: var(--axis-line-color);
+  stroke-opacity: var(--chart-domain-opacity);
+  stroke-width: var(--chart-domain-width);
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+
+.y-axis .tick line {
+  stroke: var(--axis-tick-color);
+  stroke-opacity: .58;
+  stroke-width: 1;
+}
+
+.y-axis .tick text {
+  fill: var(--axis-label-color);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+  stroke: none;
+}

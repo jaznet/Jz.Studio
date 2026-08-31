@@ -2,15 +2,19 @@
 
 jz-technical-analysis {
   --chart-surface: var(--plt-clr-2);
-  --chart-separator: color-mix(in srgb, var(--plt-txt-2) 18%, transparent);
+  --chart-separator: color-mix(in srgb, var(--plt-txt-2) 30%, transparent);
   --chart-grid: color-mix(in srgb, var(--plt-txt-2) 11%, transparent);
   --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
   --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
   --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
-  --chart-panel-surface: color-mix(in srgb, var(--chart-surface) 98%, var(--plt-txt-2));
-  --chart-panel-surface-alt: color-mix(in srgb, var(--chart-surface) 96.5%, var(--plt-txt-2));
-  --chart-panel-highlight: color-mix(in srgb, var(--plt-txt-1) 7%, transparent);
-  --chart-panel-shadow: color-mix(in srgb, #000 24%, transparent);
+  --chart-price-surface: color-mix(in srgb, var(--chart-surface) 90%, var(--plt-txt-2));
+  --chart-indicator-surface: color-mix(in srgb, var(--chart-surface) 93%, #000);
+  --chart-panel-highlight: color-mix(in srgb, var(--plt-txt-1) 15%, transparent);
+  --chart-panel-shadow: color-mix(in srgb, #000 55%, transparent);
+  --chart-depth-highlight: color-mix(in srgb, var(--plt-txt-1) 24%, transparent);
+  --chart-depth-shadow: color-mix(in srgb, #000 62%, transparent);
+  --chart-domain-opacity: .76;
+  --chart-domain-width: 1;
 
   --chart-bullish: #68b77a;
   --chart-bearish: #dc6b6b;
@@ -112,18 +116,28 @@ fill:transparent;
 
 .x-axis > .domain {
   stroke: var(--axis-line-color);
-  stroke-opacity: .72;
-  stroke-width: 1;
+  stroke-opacity: var(--chart-domain-opacity);
+  stroke-width: var(--chart-domain-width);
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
 }
 
 .y-axis {
   color: var(--axis-color, var(--chart-axis));
 }
 
-.y-axis .domain,
-.y-axis .tick line {
+.y-axis .domain {
   stroke: var(--axis-line-color);
-  stroke-opacity: .36;
+  stroke-opacity: var(--chart-domain-opacity);
+  stroke-width: var(--chart-domain-width);
+  shape-rendering: crispEdges;
+  vector-effect: non-scaling-stroke;
+}
+
+.y-axis .tick line {
+  stroke: var(--axis-tick-color);
+  stroke-opacity: .58;
+  stroke-width: 1;
 }
 
 .y-axis .tick text {
@@ -239,24 +253,22 @@ fill:transparent;
 
 .panel-host > .panel-debug {
   fill: transparent !important;
-  stroke: var(--chart-separator);
-  stroke-width: 1;
+  stroke: none;
   vector-effect: non-scaling-stroke;
 }
 
 .panel-host > .panel-surface {
-  fill: var(--chart-panel-surface);
+  fill: transparent;
   pointer-events: none;
 }
 
-.panel-host[data-panel-order='1'] > .panel-surface,
-.panel-host[data-panel-order='3'] > .panel-surface {
-  fill: var(--chart-panel-surface-alt);
+.panel-host[data-panel-order='0'] > .panel-surface {
+  fill: transparent;
 }
 
 .panel-host > .panel-edge {
   pointer-events: none;
-  stroke-width: 1;
+  stroke-width: .75;
   vector-effect: non-scaling-stroke;
 }
 
@@ -266,6 +278,10 @@ fill:transparent;
 
 .panel-host > .panel-edge--bottom {
   stroke: var(--chart-panel-shadow);
+}
+
+.panel-depth-seam {
+  pointer-events: none;
 }
 
 .panel-badge {

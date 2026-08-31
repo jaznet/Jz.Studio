@@ -144,6 +144,14 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return this.chartType === ChartType.MACD;
   }
 
+  get showDepthSeam(): boolean {
+    return this.chartType === ChartType.VOLUME;
+  }
+
+  get isPricePanel(): boolean {
+    return this.chartType === ChartType.OHLC;
+  }
+
   get macdToggleItems(): ReadonlyArray<{
     series: MacdSeries;
     label: string;

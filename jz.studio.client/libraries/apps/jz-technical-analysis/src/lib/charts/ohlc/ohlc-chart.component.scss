@@ -1,14 +1,18 @@
-.y-axis {
-  color: var(--axis-color, #cbd5e1);
+@use '../../styles/chart-axis';
+
+.chart-component-surface {
+  fill: var(--chart-indicator-surface);
 }
 
-.y-axis .domain,
-.y-axis .tick line {
-  stroke-opacity: .35;
+.chart-component-surface--price {
+  fill: var(--chart-price-surface);
 }
 
-.y-axis .tick text {
-  font-size: 10px;
+.chart-layout-rect {
+  fill: transparent;
+  stroke: none;
 }
 
-
+.panel-depth-seam {
+  pointer-events: none;
+}

@@ -1,17 +1,39 @@
 <!-- base-chart.component.html-->
 
 <svg>
-<rect #rSvg width="0" height="0"></rect>
+<rect #rSvg
+      class="chart-component-surface"
+      [class.chart-component-surface--price]="isPricePanel"
+      width="0"
+      height="0">
+</rect>
   <g #gSection id="gSection">
-    <rect #rSection id="rSection" width="0" height="0"></rect>
+    <rect #rSection id="rSection" class="chart-layout-rect" width="0" height="0"></rect>
+
+    @if (showDepthSeam) {
+      <defs>
+        <linearGradient id="volume-depth-seam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--chart-depth-highlight)"></stop>
+          <stop offset="22%" stop-color="var(--chart-depth-shadow)"></stop>
+          <stop offset="100%" stop-color="transparent"></stop>
+        </linearGradient>
+      </defs>
+      <rect class="panel-depth-seam"
+            x="0"
+            y="0"
+            [attr.width]="panel?.panelRect?.width ?? 0"
+            height="7"
+            fill="url(#volume-depth-seam)">
+      </rect>
+    }
 
     <g #gAxisGroupLeft id="gAxisGroupLeft">
-      <rect #rAxisGroupLeft id="rAxisGroupLeft" width="0" height="0"></rect>
+      <rect #rAxisGroupLeft id="rAxisGroupLeft" class="chart-layout-rect" width="0" height="0"></rect>
       <g #gAxisLeft id="gAxisLeft"></g>
     </g>
 
     <g #gContent id="gContent">
-      <rect #rContent id="rContent" width="0" height="0"></rect>
+      <rect #rContent id="rContent" class="chart-layout-rect" width="0" height="0"></rect>
       <g #gChart id="gChart"></g>
       <g class="panel-badge"
          [attr.transform]="'translate(' + panelBadgeX + ', 6)'">
@@ -107,7 +129,7 @@
     </g>
 
     <g #gAxisGroupRight id="gAxisGroupRight">
-      <rect #rAxisGroupRight id="rAxisGroupRight" width="0" height="0"></rect>
+      <rect #rAxisGroupRight id="rAxisGroupRight" class="chart-layout-rect" width="0" height="0"></rect>
       <g #gAxisRight id="gAxisRight"></g>
     </g>
   </g>
