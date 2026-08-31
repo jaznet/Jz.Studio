@@ -1,14 +1,14 @@
 /*technical-analysis.component.scss*/
 
 jz-technical-analysis {
-  --chart-surface: var(--plt-clr-2);
-  --chart-separator: color-mix(in srgb, var(--plt-txt-2) 30%, transparent);
-  --chart-grid: color-mix(in srgb, var(--plt-txt-2) 11%, transparent);
-  --chart-axis: color-mix(in srgb, var(--plt-txt-2) 56%, transparent);
-  --chart-label: color-mix(in srgb, var(--plt-txt-1) 76%, transparent);
-  --chart-crosshair: color-mix(in srgb, var(--plt-txt-1) 48%, transparent);
-  --chart-price-surface: color-mix(in srgb, var(--chart-surface) 90%, var(--plt-txt-2));
-  --chart-indicator-surface: color-mix(in srgb, var(--chart-surface) 93%, #000);
+  --chart-surface: var(--jz-ta-workspace, var(--plt-clr-2));
+  --chart-separator: var(--jz-ta-seam, color-mix(in srgb, var(--plt-txt-2) 30%, transparent));
+  --chart-grid: var(--jz-ta-grid, color-mix(in srgb, var(--plt-txt-2) 11%, transparent));
+  --chart-axis: var(--jz-ta-axis, color-mix(in srgb, var(--plt-txt-2) 56%, transparent));
+  --chart-label: var(--jz-ta-label-primary, color-mix(in srgb, var(--plt-txt-1) 76%, transparent));
+  --chart-crosshair: var(--jz-ta-crosshair, color-mix(in srgb, var(--plt-txt-1) 48%, transparent));
+  --chart-price-surface: var(--jz-ta-price-surface, color-mix(in srgb, var(--chart-surface) 90%, var(--plt-txt-2)));
+  --chart-indicator-surface: var(--jz-ta-indicator-surface, color-mix(in srgb, var(--chart-surface) 93%, #000));
   --chart-panel-highlight: color-mix(in srgb, var(--plt-txt-1) 15%, transparent);
   --chart-panel-shadow: color-mix(in srgb, #000 55%, transparent);
   --chart-depth-highlight: color-mix(in srgb, var(--plt-txt-1) 24%, transparent);
@@ -16,16 +16,16 @@ jz-technical-analysis {
   --chart-domain-opacity: .76;
   --chart-domain-width: 1;
 
-  --chart-bullish: #68b77a;
-  --chart-bearish: #dc6b6b;
-  --chart-wick: #aab8c2;
-  --chart-overlay-fast: #e6ad51;
-  --chart-overlay-medium: #49b3a7;
-  --chart-overlay-slow: #7889d8;
-  --chart-macd: #7889d8;
-  --chart-signal: #d8dca8;
-  --chart-rsi: #8eb59a;
-  --chart-reference: color-mix(in srgb, var(--plt-txt-2) 24%, transparent);
+  --chart-bullish: var(--jz-ta-bullish, #68b77a);
+  --chart-bearish: var(--jz-ta-bearish, #dc6b6b);
+  --chart-wick: var(--jz-ta-wick, #aab8c2);
+  --chart-overlay-fast: var(--jz-ta-sma-20, #e6ad51);
+  --chart-overlay-medium: var(--jz-ta-sma-50, #49b3a7);
+  --chart-overlay-slow: var(--jz-ta-sma-150, #7889d8);
+  --chart-macd: var(--jz-ta-macd, #7889d8);
+  --chart-signal: var(--jz-ta-signal, #d8dca8);
+  --chart-rsi: var(--jz-ta-rsi, #8eb59a);
+  --chart-reference: var(--jz-ta-reference, color-mix(in srgb, var(--plt-txt-2) 24%, transparent));
 
   --axis-tick-color: var(--chart-axis);
   --axis-line-color: var(--chart-axis);
@@ -526,13 +526,15 @@ fill:transparent;
   stroke-width: 1.25;
 }
 
-.body--up,
-.vol-bar--up,
-.macd-hist--positive { fill: var(--chart-bullish); }
+.body--up { fill: var(--chart-bullish); }
 
-.body--down,
-.vol-bar--down,
-.macd-hist--negative { fill: var(--chart-bearish); }
+.body--down { fill: var(--chart-bearish); }
+
+.vol-bar--up { fill: var(--jz-ta-volume-bullish, var(--chart-bullish)); }
+.vol-bar--down { fill: var(--jz-ta-volume-bearish, var(--chart-bearish)); }
+
+.macd-hist--positive { fill: var(--jz-ta-histogram-positive, var(--chart-bullish)); }
+.macd-hist--negative { fill: var(--jz-ta-histogram-negative, var(--chart-bearish)); }
 
 .vol-bar { opacity: .78; }
 .macd-hist { opacity: .86; }

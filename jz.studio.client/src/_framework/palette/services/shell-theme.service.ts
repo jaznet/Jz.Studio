@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { JzPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
 import { JZ_PALETTE_CSS_VARIABLES } from '../registries/jz-palette-css-variable.registry';
+import { JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES } from '../registries/jz-technical-analysis-css-variable.registry';
 import { JzThemeState } from '../models/jz-theme-state.model';
 
 @Injectable({
@@ -89,6 +90,7 @@ export class ShellThemeService {
 
   private activatePalette(palette: JzPalette): void {
     this.applyCssVariables(palette);
+    this.applyTechnicalAnalysisCssVariables(palette);
 
     this.activePaletteSubject.next(palette);
     this.themeReadySubject.next(true);
@@ -107,6 +109,25 @@ export class ShellThemeService {
     Object.entries(JZ_PALETTE_CSS_VARIABLES)
       .forEach(([cssVariableName, palettePropertyName]) => {
         const value = palette[palettePropertyName];
+
+        if (value) {
+          root.style.setProperty(cssVariableName, value);
+        }
+      });
+  }
+
+  private applyTechnicalAnalysisCssVariables(palette: JzPalette): void {
+    const technicalAnalysis = palette.technicalAnalysis;
+
+    if (!technicalAnalysis) {
+      return;
+    }
+
+    const root = document.documentElement;
+
+    Object.entries(JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES)
+      .forEach(([cssVariableName, selectColor]) => {
+        const value = selectColor(technicalAnalysis);
 
         if (value) {
           root.style.setProperty(cssVariableName, value);
