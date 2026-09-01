@@ -1,5 +1,11 @@
 
 
+:host {
+  position: relative;
+  z-index: 2100;
+  overflow: visible;
+}
+
 .palette-name {
       font-size:9px;
 }
@@ -8,6 +14,8 @@
   border-radius: 9px;
   padding: 4px;
   border: .5px solid var(--plt-clr-x);
+  position: relative;
+  overflow: visible;
 }
 
 jz-radio-button {

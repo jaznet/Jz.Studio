@@ -1,6 +1,5 @@
-import { Component, ElementRef, HostBinding, Input, Renderer2, ViewChild } from '@angular/core';
+import { Component, HostBinding, Input } from '@angular/core';
 import { normalizePalette, Palette } from '../../../../../types/palette';
-import { ShellThemeService } from '../../../../../_framework/palette/services/shell-theme.service';
 
 @Component({
   selector: 'jz-radio-button',
@@ -22,27 +21,17 @@ export class JzRadioButtonComponent {
     return this._palette;
   }
 
-  @Input() btncolor = '#172626';
-  @Input() stroke = 'red';
-
-  @ViewChild('circle', { static: false }) circle?: ElementRef<SVGCircleElement>;
-
-  constructor(
-    private shellTheme: ShellThemeService,
-    private renderer: Renderer2
-  ) { }
-
-  ngAfterViewInit(): void {
-    const el = this.circle?.nativeElement;
-    if (el) this.renderer.setAttribute(el, 'fill', this.btncolor);
-  }
-
-  setPalette(palette:string): void {
-
-    if (palette) {
-      return;
-    }
-
-    this.shellTheme.applyPalette(palette);
-  }
+  @Input() btncolor = '#888888';
+  @Input() accentColor = '#666666';
+  @Input() borderColor = '#111111';
+  @Input() selectedColor = '#FFFFFF';
+  @Input() selected = false;
+  @Input() previewLabel = 'palette';
+  @Input() previewClr1 = '#222222';
+  @Input() previewClr2 = '#333333';
+  @Input() previewClr3 = '#444444';
+  @Input() previewClr4 = '#555555';
+  @Input() previewClr5 = '#666666';
+  @Input() previewTxt1 = '#FFFFFF';
+  @Input() previewTxt2 = '#DDDDDD';
 }

@@ -1,42 +1,26 @@
-
-
 <div class="grid-row-fixed radio-button-container">
 
   <div class="palette-name" style="color:var(--plt-txt-1)">{{paletteName}}</div>
 
-  <jz-radio-button [palette]="'onyx'"
-                   [btncolor]="shellTheme.getPalette('onyx')?.pop ?? '#888'"
-                   (click)="setPalette('onyx')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'charcoal'"
-                   [btncolor]="shellTheme.getPalette('charcoal')?.pop ?? '#888'"
-                   (click)="setPalette('charcoal')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'midnight'"
-                   [btncolor]="shellTheme.getPalette('midnight')?.pop ?? '#888'"
-                   (click)="setPalette('midnight')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'coffee'"
-                   [btncolor]="shellTheme.getPalette('coffee')?.pop ?? '#888'"
-                   (click)="setPalette('coffee')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'yale'"
-                   [btncolor]="shellTheme.getPalette('yale')?.pop ?? '#888'"
-                   (click)="setPalette('yale')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'protan'"
-                   [btncolor]="shellTheme.getPalette('protan')?.pop ?? '#888'"
-                   (click)="setPalette('protan')">
-  </jz-radio-button>
-
-  <jz-radio-button [palette]="'protan2'"
-                   [btncolor]="shellTheme.getPalette('protan2')?.pop ?? '#888'"
-                   (click)="setPalette('protan2')">
-  </jz-radio-button>
+  @for (candidateName of paletteNames; track candidateName) {
+    <jz-radio-button
+      [palette]="candidateName"
+      [btncolor]="shellTheme.getPalette(candidateName)?.clr3 ?? '#888'"
+      [accentColor]="shellTheme.getPalette(candidateName)?.pop ?? '#666'"
+      [borderColor]="shellTheme.getPalette(candidateName)?.clr1 ?? '#111'"
+      [selectedColor]="shellTheme.getPalette(candidateName)?.highlight ?? '#fff'"
+      [selected]="candidateName === paletteName"
+      [previewLabel]="candidateName"
+      [previewClr1]="shellTheme.getPalette(candidateName)?.clr1 ?? '#222'"
+      [previewClr2]="shellTheme.getPalette(candidateName)?.clr2 ?? '#333'"
+      [previewClr3]="shellTheme.getPalette(candidateName)?.clr3 ?? '#444'"
+      [previewClr4]="shellTheme.getPalette(candidateName)?.clr4 ?? '#555'"
+      [previewClr5]="shellTheme.getPalette(candidateName)?.clr5 ?? '#666'"
+      [previewTxt1]="shellTheme.getPalette(candidateName)?.txt1 ?? '#fff'"
+      [previewTxt2]="shellTheme.getPalette(candidateName)?.txt2 ?? '#ddd'"
+      [attr.aria-label]="'Select ' + candidateName + ' palette'"
+      (click)="setPalette(candidateName)">
+    </jz-radio-button>
+  }
 
 </div>

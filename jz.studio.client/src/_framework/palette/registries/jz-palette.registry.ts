@@ -103,6 +103,75 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
   },
 
   // =========================================================
+  // GRAPHITE LIGHT
+  // dark-gray light palette with crisp near-black typography
+  // =========================================================
+
+  graphiteLight: {
+    name: 'graphiteLight',
+
+    // surfaces
+    clr1: '#747980', // deepest structural gray
+    clr2: '#80858C', // shell workspace
+    clr3: '#8C9198', // dominant application surface
+    clr4: '#9A9FA6', // raised controls
+    clr5: '#AAAFB5', // highest surface
+
+    // text
+    txt1: '#111315', // primary graphite black
+    txt2: '#202428', // secondary ink
+    txt3: '#30353A', // tertiary charcoal
+    txt4: '#050607', // maximum emphasis
+    txt5: '#F7F8F9', // inverse text
+
+    // accent
+    pop: '#8A6200', // deep ochre
+    popTxt: '#FFFFFF',
+
+    // highlight
+    highlight: '#006C87', // deep cyan
+    highlightTxt: '#FFFFFF',
+
+    technicalAnalysis: {
+      structure: {
+        workspace: '#858A91',
+        priceSurface: '#AEB2B6',
+        indicatorSurface: '#989DA2',
+        toolbar: '#A3A8AD',
+        border: '#555B61',
+        seam: '#444A50',
+        grid: '#858A8F',
+        axis: '#3D4348',
+        labelPrimary: '#111416',
+        labelSecondary: '#343A3F'
+      },
+      data: {
+        bullish: '#006F93',
+        bearish: '#A84822',
+        wick: '#3D4850',
+        sma20: '#007C9F',
+        sma50: '#9A6000',
+        sma150: '#684887',
+        volumeBullish: '#27758D',
+        volumeBearish: '#985134',
+        macd: '#007C9F',
+        signal: '#9A6000',
+        histogramPositive: '#27758D',
+        histogramNegative: '#985134',
+        rsi: '#684887',
+        reference: '#687077'
+      },
+      interaction: {
+        crosshair: '#252A2E',
+        selection: '#006C87',
+        focus: '#004F66',
+        warning: '#875A00',
+        error: '#9D2F2F'
+      }
+    }
+  },
+
+  // =========================================================
   // MIDNIGHT
   // cool blue-black cinematic palette
   // =========================================================

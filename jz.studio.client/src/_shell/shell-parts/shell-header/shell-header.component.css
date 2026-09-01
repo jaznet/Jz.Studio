@@ -1,5 +1,8 @@
 :host {
   display: block;
+  position: relative;
+  z-index: 1000;
+  overflow: visible;
   color: var(--plt-txt-1);
   background-color: var(--plt-clr-1);
   border-radius: 8px 8px 0 0;

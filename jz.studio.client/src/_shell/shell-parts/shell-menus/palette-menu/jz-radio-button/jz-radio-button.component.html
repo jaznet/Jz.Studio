@@ -1,6 +1,61 @@
 
 <div>
-  <svg width="12" height="12">
-    <circle #circle  cx="6" cy="6" r="6" fill="btncolor" stroke="black"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+    <circle
+      cx="8" cy="8" r="6.75"
+      [attr.fill]="btncolor"
+      [attr.stroke]="selected ? selectedColor : borderColor"
+      [attr.stroke-width]="selected ? 2.5 : 1.5" />
+    <circle
+      cx="8" cy="8" r="2.5"
+      [attr.fill]="accentColor"
+      [attr.stroke]="borderColor"
+      stroke-width="0.5" />
   </svg>
+</div>
+
+<div class="palette-preview"
+     [style.background-color]="previewClr3"
+     [style.border-color]="previewClr1">
+  <div class="preview-shell">
+    <div class="preview-header" [style.background-color]="previewClr1">
+      <span class="preview-brand" [style.background-color]="accentColor"></span>
+      <span class="preview-title" [style.color]="previewTxt1">{{ previewLabel }}</span>
+      <span class="preview-header-button" [style.background-color]="previewClr4"></span>
+      <span class="preview-header-button" [style.background-color]="previewClr5"></span>
+    </div>
+    <div class="preview-sidebar" [style.background-color]="previewClr2">
+      <span class="preview-nav selected" [style.background-color]="accentColor"></span>
+      <span class="preview-nav" [style.background-color]="previewClr4"></span>
+      <span class="preview-nav" [style.background-color]="previewClr4"></span>
+      <span class="preview-nav short" [style.background-color]="previewClr5"></span>
+    </div>
+    <div class="preview-content" [style.background-color]="previewClr3">
+      <div class="preview-toolbar" [style.background-color]="previewClr4">
+        <span [style.background-color]="previewClr5"></span>
+        <span [style.background-color]="previewClr5"></span>
+        <span class="preview-action" [style.background-color]="accentColor"></span>
+      </div>
+      <div class="preview-dashboard">
+        <div class="preview-metric" [style.background-color]="previewClr5">
+          <span [style.background-color]="previewTxt1"></span>
+          <strong [style.color]="previewTxt1">24</strong>
+        </div>
+        <div class="preview-metric" [style.background-color]="previewClr4">
+          <span [style.background-color]="previewTxt2"></span>
+          <strong [style.color]="previewTxt1">68</strong>
+        </div>
+        <div class="preview-chart" [style.background-color]="previewClr2">
+          <i [style.border-color]="previewClr4"></i>
+          <svg viewBox="0 0 100 28" preserveAspectRatio="none">
+            <polyline points="0,23 13,18 25,21 39,11 53,15 67,7 81,10 100,3"
+                      fill="none"
+                      [attr.stroke]="accentColor"
+                      stroke-width="3" />
+          </svg>
+          <span [style.background-color]="previewTxt2"></span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
