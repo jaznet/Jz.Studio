@@ -93,6 +93,31 @@
       background: radial-gradient( circle at bottom left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-pop) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.horizontal)
+.jz-nav-item.active,
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.vertical)
+.jz-nav-item.active {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.horizontal)
+.jz-nav-item.active::before,
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.horizontal)
+.jz-nav-item.active::after,
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.vertical)
+.jz-nav-item.active::before,
+:host-context(.shell-borders-hidden)
+:host-context(nav.jz-nav-group.vertical)
+.jz-nav-item.active::after {
+  display: none;
+}
+
 /* BLANK VIEW */
 
 :host-context(jz-nav-group.blank-view)

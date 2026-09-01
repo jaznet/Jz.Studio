@@ -106,7 +106,6 @@ export class OhlcChartComponent extends BaseChartComponent implements OnChanges 
 
     console.log('Wick data', this.data);
     console.log('📏 xScale range:', this.dateScaleX?.range?.());
-    console.log('📏 xScale domain:', this.dateScaleX?.domain?.());
 
     const bw = this.dateScaleX.bandwidth();
     const candleWidth = Math.max(1, bw * 0.99);

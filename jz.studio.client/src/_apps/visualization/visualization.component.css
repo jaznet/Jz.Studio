@@ -11,6 +11,11 @@
   background-color: var(--plt-clr-2);
 }
 
+:host-context(.shell-borders-hidden) .view-router-container,
+:host-context(.shell-borders-hidden) .app-view {
+  border-color: transparent;
+}
+
 .modules-menu-panel {
   display: flex;
   flex: 0 0 auto;
