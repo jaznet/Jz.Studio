@@ -58,11 +58,11 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  private _solutionMenuCollapsed = false;
+  private _suiteMenuCollapsed = false;
   private _moduleMenuCollapsed = false;
 
-  public get solutionMenuCollapsed(): boolean {
-    return this._solutionMenuCollapsed;
+  public get suiteMenuCollapsed(): boolean {
+    return this._suiteMenuCollapsed;
   }
 
   public get moduleMenuCollapsed(): boolean {
@@ -123,12 +123,12 @@ export class ShellComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public toggleShellCollapse(): void {
     const nextState =
-      !(this._solutionMenuCollapsed && this._moduleMenuCollapsed);
+      !(this._suiteMenuCollapsed && this._moduleMenuCollapsed);
 
-    this._solutionMenuCollapsed = nextState;
+    this._suiteMenuCollapsed = nextState;
     this._moduleMenuCollapsed = nextState;
 
-    console.log('Solution Menu Collapsed:', this._solutionMenuCollapsed);
+    console.log('Suite Menu Collapsed:', this._suiteMenuCollapsed);
     console.log('Module Menu Collapsed:', this._moduleMenuCollapsed);
   }
 

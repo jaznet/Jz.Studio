@@ -48,7 +48,7 @@
     transition: max-height 220ms ease, opacity 160ms ease;
   }
 
-:host(.solution-menu-collapsed) .menu-container > main-menu {
+:host(.suite-menu-collapsed) .menu-container > main-menu {
   max-height: 0;
   opacity: 0;
   pointer-events: none;

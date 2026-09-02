@@ -15,14 +15,14 @@ import { CommonModule } from '@angular/common';
 import { AppStateService } from '../../services/shell-state.service';
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
 import { JzButtonComponent } from 'jz-ui';
-import { SolutionsMenuComponent } from '../shell-menus/solutions-menu/solutions-menu.component';
+import { SuitesMenuComponent } from '../shell-menus/suites-menu/suites-menu.component';
 
 @Component({
   selector: 'shell-header',
   standalone: true,
   imports: [
     CommonModule,
-    SolutionsMenuComponent,
+    SuitesMenuComponent,
     PaletteMenuComponent,
     JzButtonComponent
   ],
@@ -33,7 +33,7 @@ export class ShellHeaderComponent implements OnInit, AfterViewInit, AfterViewChe
   @HostBinding('class.app-header')
   appHeaderClass = true;
 
-  @ViewChild('solutionMenuContainer') solutionMenuContainer!: ElementRef;
+  @ViewChild('suiteMenuContainer') suiteMenuContainer!: ElementRef;
 
   @Output()
   shellCollapseToggled = new EventEmitter<void>();

@@ -1,11 +1,11 @@
-.solutions-menu-container {
+.suites-menu-container {
   z-index:100;
 }
 
-.solutions-menu-container.main-menu {
+.suites-menu-container.main-menu {
   /* border:1px solid var(--plt-clr-2);*/
 }
 
-.solutions-menu-container.sub-menu {
+.suites-menu-container.sub-menu {
   border: 1px solid var(--plt-clr-3);
 }
