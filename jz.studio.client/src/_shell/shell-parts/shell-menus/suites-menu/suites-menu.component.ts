@@ -20,7 +20,7 @@ export class SuitesMenuComponent extends MenuBaseComponent implements AfterViewI
 
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
-  isMainMenuVisible = 'collapse';
+  isSuiteMenuVisible = 'collapse';
   //  override menuType: string = 'main-menu';yelloe
   items$ = this.navService.items$;
   activeItem$ = this.navService.activeItem$;
@@ -33,11 +33,11 @@ export class SuitesMenuComponent extends MenuBaseComponent implements AfterViewI
 
    ngOnInit(): void {
     this.menuType = 'main';
-    console.log('MainMenuComponent initialized');
+    console.log('SuitesMenuComponent initialized');
 
     this.app.toggleMenuEvent.subscribe((menu: any) => {
       // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
-      this.isMainMenuVisible = menu === 'show' ? 'visible' : 'collapse';
+      this.isSuiteMenuVisible = menu === 'show' ? 'visible' : 'collapse';
     })
   }
    
