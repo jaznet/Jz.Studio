@@ -54,7 +54,7 @@ Applications are rendered inside the Application View.
 Navigation is hierarchical.
 
 ```text
-Solution
+Suite
     │
     ├── Module
     │       │
@@ -67,9 +67,9 @@ Each level has a distinct responsibility.
 
 ---
 
-## Solution Menu
+## Suite Menu
 
-The Solution Menu provides access to the major functional areas of JZ Studio.
+The Suite Menu provides access to the major functional families of JZ Studio.
 
 Examples include:
 
@@ -80,15 +80,15 @@ Examples include:
 - Architecture
 - Administration
 
-The Solution Menu occupies the highest level of navigation.
+The Suite Menu occupies the highest level of navigation.
 
 ---
 
 ## Module Menu
 
-The Module Menu displays the applications available within the currently selected solution area.
+The Module Menu displays the applications available within the currently selected suite.
 
-For example, the Visualization module contains applications such as:
+For example, the Visualization suite contains applications such as:
 
 - Choro Dashboard
 - Technical Analysis
@@ -134,7 +134,7 @@ The Shell owns the state of shared navigation elements.
 
 Examples include:
 
-- Solution menu visibility
+- Suite menu visibility
 - Module menu visibility
 - Shell collapse state
 

@@ -65,9 +65,9 @@ Applications execute inside the Shell.
 
 ---
 
-## Module
+## Suite
 
-A major functional area within the platform.
+A major functional family within the platform.
 
 Examples include:
 
@@ -76,13 +76,13 @@ Examples include:
 - Sandbox
 - Architecture
 
-Each module groups related applications.
+Each suite groups related applications.
 
 ---
 
 ## Application
 
-A self-contained feature hosted within a module.
+A self-contained feature hosted within a suite.
 
 Examples include:
 
@@ -126,11 +126,11 @@ Examples include:
 
 JZ Studio uses a hierarchical navigation model.
 
-## Solution Menu
+## Suite Menu
 
 Level 1 navigation.
 
-Provides access to the platform's major modules.
+Provides access to the platform's suites.
 
 ---
 
@@ -138,7 +138,7 @@ Provides access to the platform's major modules.
 
 Level 2 navigation.
 
-Displays the applications available within the selected module.
+Displays the applications available within the selected suite.
 
 ---
 
