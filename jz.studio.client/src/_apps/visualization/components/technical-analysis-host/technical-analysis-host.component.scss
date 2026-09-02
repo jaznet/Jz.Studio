@@ -86,7 +86,7 @@
   height: 12px;
   margin: 0;
   padding: 0;
-  accent-color: var(--plt-pop);
+  accent-color: var(--plt-highlight);
   cursor: pointer;
 }
 
@@ -102,7 +102,7 @@
 
 .validation-message {
   align-self: center;
-  color: var(--plt-pop);
+  color: var(--plt-highlight);
   font-size: 12px;
 }
 
@@ -129,8 +129,8 @@
 .analysis-controls .interaction-help-toggle:hover,
 .analysis-controls .interaction-help-toggle:focus-visible,
 .analysis-controls .interaction-help-toggle[aria-expanded='true'] {
-  border-color: var(--plt-pop);
-  color: var(--plt-pop);
+  border-color: var(--plt-highlight);
+  color: var(--plt-highlight);
   outline: none;
 }
 
@@ -164,7 +164,7 @@
 
 .interaction-help-panel h2 {
   margin: 0;
-  color: var(--plt-pop);
+  color: var(--plt-highlight);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .06em;
@@ -187,9 +187,9 @@
 
 .analysis-controls .interaction-help-close:hover,
 .analysis-controls .interaction-help-close:focus-visible {
-  color: var(--plt-pop);
-  background: color-mix(in srgb, var(--plt-pop) 10%, transparent);
-  outline: var(--border-width) solid var(--plt-pop);
+  color: var(--plt-highlight);
+  background: color-mix(in srgb, var(--plt-highlight) 10%, transparent);
+  outline: var(--border-width) solid var(--plt-highlight);
 }
 
 .interaction-help-panel dl {

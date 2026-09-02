@@ -182,8 +182,8 @@ fill:transparent;
 
 .chart-reset-control:hover rect,
 .chart-reset-control:focus rect {
-  fill: color-mix(in srgb, var(--chart-surface) 82%, var(--plt-pop));
-  stroke: color-mix(in srgb, var(--plt-pop) 72%, var(--chart-axis));
+  fill: color-mix(in srgb, var(--chart-surface) 82%, var(--plt-highlight));
+  stroke: color-mix(in srgb, var(--plt-highlight) 72%, var(--chart-axis));
 }
 
 .chart-viewport-range {
@@ -217,7 +217,7 @@ fill:transparent;
 }
 
 .chart-crosshair--pinned .crosshair-line--vertical {
-  stroke: color-mix(in srgb, var(--plt-pop) 76%, var(--chart-crosshair));
+  stroke: color-mix(in srgb, var(--plt-highlight) 76%, var(--chart-crosshair));
   stroke-opacity: .92;
 }
 
@@ -244,11 +244,11 @@ fill:transparent;
 }
 
 .chart-crosshair--pinned .crosshair-callout rect {
-  stroke: color-mix(in srgb, var(--plt-pop) 76%, var(--chart-axis));
+  stroke: color-mix(in srgb, var(--plt-highlight) 76%, var(--chart-axis));
 }
 
 .chart-crosshair--pinned .crosshair-callout text {
-  fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
+  fill: color-mix(in srgb, var(--plt-highlight) 64%, var(--chart-label));
 }
 
 .panel-host > .panel-debug {
@@ -340,13 +340,13 @@ fill:transparent;
 
 .indicator-restore-control:hover rect,
 .indicator-restore-control:focus-visible rect {
-  fill: color-mix(in srgb, var(--plt-pop) 10%, var(--chart-surface));
-  stroke: color-mix(in srgb, var(--plt-pop) 52%, var(--chart-separator));
+  fill: color-mix(in srgb, var(--plt-highlight) 10%, var(--chart-surface));
+  stroke: color-mix(in srgb, var(--plt-highlight) 52%, var(--chart-separator));
 }
 
 .indicator-restore-control:hover text,
 .indicator-restore-control:focus-visible text {
-  fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
+  fill: color-mix(in srgb, var(--plt-highlight) 64%, var(--chart-label));
 }
 
 .indicator-reset-control {
@@ -357,7 +357,7 @@ fill:transparent;
 
 .indicator-reset-control rect {
   fill: color-mix(in srgb, var(--chart-surface) 92%, transparent);
-  stroke: color-mix(in srgb, var(--plt-pop) 36%, var(--chart-separator));
+  stroke: color-mix(in srgb, var(--plt-highlight) 36%, var(--chart-separator));
   stroke-width: 1;
 }
 
@@ -373,13 +373,13 @@ fill:transparent;
 
 .indicator-reset-control:hover rect,
 .indicator-reset-control:focus-visible rect {
-  fill: color-mix(in srgb, var(--plt-pop) 10%, var(--chart-surface));
-  stroke: color-mix(in srgb, var(--plt-pop) 60%, var(--chart-separator));
+  fill: color-mix(in srgb, var(--plt-highlight) 10%, var(--chart-surface));
+  stroke: color-mix(in srgb, var(--plt-highlight) 60%, var(--chart-separator));
 }
 
 .indicator-reset-control:hover text,
 .indicator-reset-control:focus-visible text {
-  fill: color-mix(in srgb, var(--plt-pop) 68%, var(--chart-label));
+  fill: color-mix(in srgb, var(--plt-highlight) 68%, var(--chart-label));
 }
 
 .panel-badge rect {

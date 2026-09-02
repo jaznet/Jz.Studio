@@ -16,5 +16,8 @@ export const JZ_PALETTE_CSS_VARIABLES: Readonly<Record<string, JzPaletteColorPro
   '--plt-txt-5': 'txt5',
 
   '--plt-pop': 'pop',
-  '--plt-pop-txt': 'popTxt'
+  '--plt-pop-txt': 'popTxt',
+
+  '--plt-highlight': 'highlight',
+  '--plt-highlight-txt': 'highlightTxt'
 };

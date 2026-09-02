@@ -16,8 +16,8 @@
 
   border-radius: 50%;
 
-  border: 3px solid color-mix(in srgb, var(--plt-pop) 25%, transparent);
-  border-top-color: var(--plt-pop);
+  border: 3px solid color-mix(in srgb, var(--plt-highlight) 25%, transparent);
+  border-top-color: var(--plt-highlight);
 
   animation: jzLoadingSpin 900ms linear infinite;
 }
