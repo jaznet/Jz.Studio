@@ -74,6 +74,25 @@
         </g>
       }
 
+      @if (showIndicatorSelector) {
+        <foreignObject class="indicator-slot-selector"
+                       x="8"
+                       y="28"
+                       width="92"
+                       height="22">
+          <select xmlns="http://www.w3.org/1999/xhtml"
+                  [attr.aria-label]="'Select indicator for ' + preferenceId"
+                  [value]="chartType"
+                  (pointerdown)="$event.stopPropagation()"
+                  (click)="$event.stopPropagation()"
+                  (change)="selectIndicator($event)">
+            @for (choice of indicatorChoices; track choice.chartType) {
+              <option [value]="choice.chartType">{{ choice.label }}</option>
+            }
+          </select>
+        </foreignObject>
+      }
+
       @if (showMacdControls) {
         <g class="macd-toggle-controls" transform="translate(35, 6)">
           @for (item of macdToggleItems; track item.series) {

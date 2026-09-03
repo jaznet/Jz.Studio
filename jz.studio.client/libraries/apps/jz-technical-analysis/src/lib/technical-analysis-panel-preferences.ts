@@ -17,7 +17,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisBottom: false
   },
   {
-    id: 'volume',
+    id: 'slot-1',
     chartType: ChartType.VOLUME,
     order: 2,
     visible: true,
@@ -28,7 +28,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisBottom: false
   },
   {
-    id: 'macd',
+    id: 'slot-2',
     chartType: ChartType.MACD,
     order: 3,
     visible: true,
@@ -39,7 +39,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
     showXAxisBottom: false
   },
   {
-    id: 'rsi',
+    id: 'slot-3',
     chartType: ChartType.RSI,
     order: 4,
     visible: true,

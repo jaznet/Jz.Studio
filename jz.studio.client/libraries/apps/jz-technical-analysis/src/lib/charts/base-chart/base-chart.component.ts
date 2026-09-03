@@ -45,6 +45,13 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     this.checkAndDraw('scaffold@Input');
   }
   @Input() panel?: PanelAttributes;
+  @Input() preferenceId = '';
+
+  readonly indicatorChoices = [
+    { chartType: ChartType.VOLUME, label: 'VOLUME' },
+    { chartType: ChartType.MACD, label: 'MACD' },
+    { chartType: ChartType.RSI, label: 'RSI 14' }
+  ] as const;
 
   protected viewInitialized = false;
   protected inputsInitialized = false;
@@ -152,6 +159,16 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return this.chartType === ChartType.OHLC;
   }
 
+  get showIndicatorSelector(): boolean {
+    return !this.isPricePanel && !!this.preferenceId;
+  }
+
+  selectIndicator(event: Event): void {
+    event.stopPropagation();
+    const chartType = (event.target as HTMLSelectElement).value as ChartType;
+    this.panelPreferenceService.assignIndicator(this.preferenceId, chartType);
+  }
+
   get macdToggleItems(): ReadonlyArray<{
     series: MacdSeries;
     label: string;
@@ -220,7 +237,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     event.stopPropagation();
 
     const preference = this.panelPreferenceService.getPreferences()
-      .find(item => item.chartType === this.chartType);
+      .find(item => item.id === this.preferenceId);
     if (!preference) return;
 
     this.panelPreferenceService.updatePreference(preference.id, { visible: false });

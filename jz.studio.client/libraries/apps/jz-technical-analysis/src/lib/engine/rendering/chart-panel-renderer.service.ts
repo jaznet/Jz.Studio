@@ -56,6 +56,7 @@ export class ChartPanelRendererService {
         componentRef.setInput('calculationData', request.calculationData);
       }
       componentRef.setInput('data', request.data);
+      componentRef.setInput('preferenceId', preference.id);
       componentRef.setInput('dateScaleX', request.dateScaleX);
       componentRef.setInput('panel', panel);
       componentRef.setInput('scaffold', request.scaffold);

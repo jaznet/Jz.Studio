@@ -32,6 +32,29 @@ jz-technical-analysis {
   --axis-label-color: var(--chart-label);
 }
 
+.indicator-slot-selector {
+  overflow: visible;
+}
+
+.indicator-slot-selector select {
+  width: 92px;
+  height: 20px;
+  padding: 0 4px;
+  border: 1px solid var(--chart-separator);
+  border-radius: 3px;
+  color: var(--chart-label);
+  background: var(--chart-indicator-surface);
+  font: 600 9px/18px Arial, sans-serif;
+  letter-spacing: .04em;
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+.indicator-slot-selector select:focus-visible {
+  border-color: var(--plt-highlight);
+  outline: none;
+}
+
 .svg-container{
     border:4px;
 }
