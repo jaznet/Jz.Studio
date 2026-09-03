@@ -1,0 +1,32 @@
+:host {
+  display: inline-block;
+  width: 100%;
+  aspect-ratio: 780 / 200;
+  line-height: 0;
+}
+
+.jz-studio-logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+
+
+
+.jz-studio-logo__j {
+  stroke-width: 31;
+}
+
+.jz-studio-logo__z {
+  stroke-width: 27;
+}
+
+.jz-studio-logo__initials {
+  stroke: var(--plt-logo);
+}
+
+.jz-studio-logo__word {
+  stroke: var(--plt-logo-txt);
+}

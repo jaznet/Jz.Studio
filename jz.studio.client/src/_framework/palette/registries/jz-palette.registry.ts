@@ -32,8 +32,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#87CEEB',
     highlightTxt: '#FFF7EA',
 
-    logo: 'yellow',
-    logoTxt: 'violet',
+    logo: '#111923',
+    logoTxt: 'white',
 
     // active tab/content boundary
     activeBoundary: '#87CEEB',
@@ -70,8 +70,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#4F5C66',
     highlightTxt: '#FFF7EA',
 
-    logo: 'yellow',
-    logoTxt:'violet',
+    logo: '#1C2126',
+    logoTxt: '#2A3138',
 
     // active tab/content boundary
     activeBoundary: '#4F5C66',
@@ -146,8 +146,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#006C87', // deep cyan
     highlightTxt: '#FFFFFF',
 
-    logo: 'yellow',
-    logoTxt: 'violet',
+    logo: '#111923',
+    logoTxt: '#1B2633',
 
     // active tab/content boundary
     activeBoundary: '#006C87',
@@ -222,8 +222,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#005D82', // ocean blue
     highlightTxt: '#FFFFFF',
 
-    logo: 'yellow',
-    logoTxt: 'violet',
+    logo: '#111923',
+    logoTxt: '#1B2633',
 
     // active tab/content boundary
     activeBoundary: '#005D82',
@@ -298,8 +298,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#87CEEB',
     highlightTxt: '#FFF7EA',
 
-    logo: 'yellow',
-    logoTxt: 'violet',
+    logo: '#111923',
+    logoTxt: '#1B2633',
 
     // active tab/content boundary
     activeBoundary: '#87CEEB',

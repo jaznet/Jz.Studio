@@ -1,56 +1,24 @@
 
-<div class="grid-cols" #appHeader [ngStyle]="{'visibility': visibility}">
 
-  <!--Column 1: Logo-->
-  <!--<div class="grid-col-fixed logo-container">
-    <img class="logo"
-         src="assets/logos/JZ-Header.svg"
-         alt="JZ Studio" />
-  </div>-->
+  <!-- Row 1: permanent shell toolbar -->
+  <div class="grid-row-fixed shell-toolbar">
 
-  <!--Column 2: Title and Menu-->
-  <div class="grid-col-fill">
-    <div class="grid-rows">
-
-      <div class="grid-row-fixed app-title-row">
-
-        <div class="grid-col-fill app-title">
-          <svg class="header-logo"
-               viewBox="0 0 860 200"
-               preserveAspectRatio="xMinYMid meet"
-               role="img"
-               aria-label="JZ Studio">
-            <g class="jz-header-initials"
-               fill="none"
-               stroke-linecap="round"
-               stroke-linejoin="round">
-              <path class="jz-header-j"
-                    d="M 82 38 V 126 C 82 159 42 172 22 145" />
-              <path class="jz-header-z"
-                    d="M 137 43 H 270 L 151 157 H 270" />
-            </g>
-            <g class="jz-header-studio"
-               fill="none"
-               stroke-linecap="round"
-               stroke-linejoin="round">
-              <path d="M 415 61 C 397 41 354 44 350 76 C 347 101 375 107 395 115 C 416 123 425 136 421 154 C 415 182 372 185 350 163" />
-              <path d="M 463 65 V 153 C 463 169 471 177 483 177 M 446 97 H 484" />
-              <path d="M 511 100 V 143 C 511 185 560 185 560 143 V 100" />
-              <path d="M 638 52 V 177 M 635 116 C 624 93 585 91 581 131 C 577 172 619 186 638 158" />
-              <path d="M 678 100 V 177 M 678 68 L 678 69" />
-              <path d="M 718 138 C 718 91 777 91 777 138 C 777 185 718 185 718 138 Z" />
-            </g>
-          </svg>
-        </div>
-        <palette-menu class="grid-col-fixed palette-menu"></palette-menu>
-      </div>
-
-      <div #suiteMenuContainer class="grid-row-fixed suites-menu-container">
-        <suites-menu #suiteMenu></suites-menu>
-      </div>
-
+    <div class="logo-container">
+      <img class="shell-logo"
+           src="assets/logos/JZ-Header.svg"
+           alt="JZ Studio" />
     </div>
+
+    <div class="shell-toolbar-fill"></div>
+
+    <palette-menu class="shell-palette-menu"></palette-menu>
+
   </div>
-</div>
+
+  <!-- Row 2: collapsible suites menu -->
+  <div #suiteMenuContainer
+       class="grid-row-fixed suites-menu-container">
+    <suites-menu #suiteMenu></suites-menu>
+  </div>
 
 

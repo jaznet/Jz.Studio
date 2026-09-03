@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="860"
+     width="780"
      height="200"
-     viewBox="0 0 860 200"
+     viewBox="0 0 780 200"
      role="img"
      aria-labelledby="title description">
   <title id="title">JZ Studio header wordmark</title>
@@ -21,22 +21,22 @@
      stroke="#b8860b"
      stroke-linecap="round"
      stroke-linejoin="round">
-    <path id="J" stroke-width="34" d="M 82 38 V 126 C 82 159 42 172 22 145"/>
-    <path id="Z" stroke-width="29" d="M 137 43 H 270 L 151 157 H 270"/>
+    <path id="J" stroke-width="31" d="M 76 46 V 145 C 76 176 40 184 22 160"/>
+    <path id="Z" stroke-width="27" d="M 105 56 H 230 L 105 186 H 230"/>
   </g>
 
   <g id="Studio"
      class="jz-header-secondary"
      fill="none"
      stroke="#87ceeb"
-     stroke-width="15"
+     stroke-width="14"
      stroke-linecap="round"
      stroke-linejoin="round">
-    <path id="S" d="M 415 61 C 397 41 354 44 350 76 C 347 101 375 107 395 115 C 416 123 425 136 421 154 C 415 182 372 185 350 163"/>
-    <path id="t" d="M 463 65 V 153 C 463 169 471 177 483 177 M 446 97 H 484"/>
-    <path id="u" d="M 511 100 V 143 C 511 185 560 185 560 143 V 100"/>
-    <path id="d" d="M 638 52 V 177 M 635 116 C 624 93 585 91 581 131 C 577 172 619 186 638 158"/>
-    <path id="i" d="M 678 100 V 177 M 678 68 L 678 69"/>
-    <path id="o" d="M 718 138 C 718 91 777 91 777 138 C 777 185 718 185 718 138 Z"/>
+    <path id="S" d="M 350 96 C 330 76 275 79 269 108 C 264 132 299 136 322 144 C 347 152 357 164 352 178 C 344 194 294 196 268 178"/>
+    <path id="t" d="M 401 96 V 171 C 401 186 411 193 425 193 M 381 124 H 427"/>
+    <path id="u" d="M 452 125 V 166 C 452 201 510 201 510 166 V 125"/>
+    <path id="d" d="M 612 81 V 193 M 609 137 C 596 115 547 114 542 153 C 537 190 590 201 612 176"/>
+    <path id="i" d="M 651 125 V 193 M 651 96 L 651 97"/>
+    <path id="o" d="M 691 159 C 691 114 754 114 754 159 C 754 204 691 204 691 159 Z"/>
   </g>
 </svg>
