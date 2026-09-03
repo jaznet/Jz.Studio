@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
-     width="1000"
-     height="240"
-     viewBox="0 0 1000 240"
+     width="860"
+     height="200"
+     viewBox="0 0 860 200"
      role="img"
      aria-labelledby="title description">
   <title id="title">JZ Studio header wordmark</title>
@@ -18,33 +18,25 @@
   <g id="JZ"
      class="jz-header-primary"
      fill="none"
-     stroke="#eadbc7"
+     stroke="#b8860b"
      stroke-linecap="round"
      stroke-linejoin="round">
-    <path id="J" stroke-width="48" d="M 90 45 V 145 C 90 183 44 190 30 162"/>
-    <path id="Z" stroke-width="42" d="M 163 48 H 292 L 170 182 H 292"/>
+    <path id="J" stroke-width="34" d="M 82 38 V 126 C 82 159 42 172 22 145"/>
+    <path id="Z" stroke-width="29" d="M 137 43 H 270 L 151 157 H 270"/>
   </g>
-
-  <path id="Divider"
-        class="jz-header-accent"
-        d="M 347 57 V 173"
-        fill="none"
-        stroke="#35b8c7"
-        stroke-width="10"
-        stroke-linecap="round"/>
 
   <g id="Studio"
      class="jz-header-secondary"
      fill="none"
-     stroke="#eadbc7"
-     stroke-width="20"
+     stroke="#87ceeb"
+     stroke-width="15"
      stroke-linecap="round"
      stroke-linejoin="round">
-    <path id="S" d="M 470 64 C 451 41 402 43 397 78 C 393 106 425 112 447 120 C 471 129 481 143 477 162 C 470 193 421 196 397 172"/>
-    <path id="t" d="M 518 67 V 161 C 518 178 527 186 540 186 M 499 101 H 540"/>
-    <path id="u" d="M 568 104 V 151 C 568 197 622 197 622 151 V 104"/>
-    <path id="d" d="M 706 52 V 186 M 703 122 C 691 96 648 94 643 137 C 638 181 684 197 706 167"/>
-    <path id="i" d="M 748 104 V 186 M 748 69 L 748 70"/>
-    <path id="o" d="M 790 145 C 790 94 854 94 854 145 C 854 196 790 196 790 145 Z"/>
+    <path id="S" d="M 415 61 C 397 41 354 44 350 76 C 347 101 375 107 395 115 C 416 123 425 136 421 154 C 415 182 372 185 350 163"/>
+    <path id="t" d="M 463 65 V 153 C 463 169 471 177 483 177 M 446 97 H 484"/>
+    <path id="u" d="M 511 100 V 143 C 511 185 560 185 560 143 V 100"/>
+    <path id="d" d="M 638 52 V 177 M 635 116 C 624 93 585 91 581 131 C 577 172 619 186 638 158"/>
+    <path id="i" d="M 678 100 V 177 M 678 68 L 678 69"/>
+    <path id="o" d="M 718 138 C 718 91 777 91 777 138 C 777 185 718 185 718 138 Z"/>
   </g>
 </svg>

@@ -64,7 +64,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     popTxt: '#FFF7EA', // warm ivory
 
     // highlight
-    highlight: '#87CEEB',
+    highlight: '#4F5C66',
     highlightTxt: '#FFF7EA',
 
     // active tab/content boundary

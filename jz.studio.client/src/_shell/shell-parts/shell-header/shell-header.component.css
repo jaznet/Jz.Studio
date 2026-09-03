@@ -20,17 +20,55 @@
   border: 0px dotted gray;
 }
 
-.app-title {
-    font-size:16px;
+.app-title-row {
+  height: 20px;
+  min-height: 20px;
+  display: flex;
+  align-items: stretch;
 }
 
-.logo {
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
+.app-title {
+  min-width: 0;
   height: 100%;
-  object-fit: contain;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+}
+
+.header-logo {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  flex: 0 0 auto;
+  margin: 0 auto 0 0;
+  overflow: visible;
+  shape-rendering: geometricPrecision;
+}
+
+.jz-header-initials {
+  stroke: var(--plt-pop);
+}
+
+.jz-header-j {
+  stroke-width: 34;
+}
+
+.jz-header-z {
+  stroke-width: 29;
+}
+
+.jz-header-studio {
+  stroke: var(--plt-highlight);
+  stroke-width: 15;
+}
+
+.palette-menu {
+  flex: 0 0 auto;
+  align-self: center;
 }
 
 
