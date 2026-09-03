@@ -21,6 +21,9 @@ export const JZ_PALETTE_CSS_VARIABLES: Readonly<Record<string, JzPaletteColorPro
   '--plt-highlight': 'highlight',
   '--plt-highlight-txt': 'highlightTxt',
 
+  '--plt-logo': 'logo',
+  '--plt-logo-txt': 'logoTxt',
+
   '--plt-active-boundary': 'activeBoundary',
   '--plt-active-boundary-txt': 'activeBoundaryTxt'
 };

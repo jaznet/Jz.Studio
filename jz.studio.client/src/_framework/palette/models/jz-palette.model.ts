@@ -22,6 +22,9 @@ export interface JzPalette {
   activeBoundary: string;
   activeBoundaryTxt: string;
 
+  logo: string;
+  logoTxt: string;
+
   technicalAnalysis?: JzTechnicalAnalysisPalette;
 }
 

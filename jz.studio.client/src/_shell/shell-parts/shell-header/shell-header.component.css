@@ -50,7 +50,7 @@
 }
 
 .jz-header-initials {
-  stroke: var(--plt-pop);
+  stroke: var(--plt-logo);
 }
 
 .jz-header-j {
@@ -62,7 +62,7 @@
 }
 
 .jz-header-studio {
-  stroke: var(--plt-highlight);
+  stroke: var(--plt-logo-txt);
   stroke-width: 15;
 }
 
