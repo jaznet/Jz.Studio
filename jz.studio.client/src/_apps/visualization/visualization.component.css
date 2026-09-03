@@ -2,7 +2,7 @@
   position: relative;
   z-index: 10;
   border-radius: 9px;
-  border: var(--border-width) solid var(--plt-highlight);
+  border: var(--border-width) solid var(--plt-active-boundary);
   background-color: var(--plt-clr-2);
 }
 

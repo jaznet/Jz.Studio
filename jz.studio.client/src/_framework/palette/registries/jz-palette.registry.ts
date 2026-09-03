@@ -30,7 +30,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // highlight
     highlight: '#87CEEB',
-    highlightTxt: '#FFF7EA'
+    highlightTxt: '#FFF7EA',
+
+    // active tab/content boundary
+    activeBoundary: '#87CEEB',
+    activeBoundaryTxt: '#15181B'
   },
 
   // =========================================================
@@ -62,6 +66,10 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     // highlight
     highlight: '#87CEEB',
     highlightTxt: '#FFF7EA',
+
+    // active tab/content boundary
+    activeBoundary: '#4F5C66',
+    activeBoundaryTxt: '#F2F4F5',
 
     technicalAnalysis: {
       structure: {
@@ -132,6 +140,10 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#006C87', // deep cyan
     highlightTxt: '#FFFFFF',
 
+    // active tab/content boundary
+    activeBoundary: '#006C87',
+    activeBoundaryTxt: '#FFFFFF',
+
     technicalAnalysis: {
       structure: {
         workspace: '#858A91',
@@ -201,6 +213,10 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#005D82', // ocean blue
     highlightTxt: '#FFFFFF',
 
+    // active tab/content boundary
+    activeBoundary: '#005D82',
+    activeBoundaryTxt: '#FFFFFF',
+
     technicalAnalysis: {
       structure: {
         workspace: '#7D8892',
@@ -268,7 +284,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // highlight
     highlight: '#87CEEB',
-    highlightTxt: '#FFF7EA' 
+    highlightTxt: '#FFF7EA',
+
+    // active tab/content boundary
+    activeBoundary: '#87CEEB',
+    activeBoundaryTxt: '#061014'
   },
 
   // =========================================================
@@ -299,7 +319,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // highlight
     highlight: '#87CEEB',
-    highlightTxt: '#FFF7EA' 
+    highlightTxt: '#FFF7EA',
+
+    // active tab/content boundary
+    activeBoundary: '#87CEEB',
+    activeBoundaryTxt: '#191010'
   },
 
 

@@ -65,13 +65,13 @@ forn-label {
 }
 
 :host ::ng-deep jz-button-cuboid.logon-button .cuboid {
-  --jz-base-color: var(--plt-highlight);
-  --jz-text: var(--plt-highlight-txt);
-  color: var(--plt-highlight-txt);
+  --jz-base-color: var(--plt-pop);
+  --jz-text: var(--plt-pop-txt);
+  color: var(--plt-pop-txt);
 }
 
 :host ::ng-deep jz-button-cuboid.logon-button .zone.face .label {
-  color: var(--plt-highlight-txt);
+  color: var(--plt-pop-txt);
 }
 
  :host ::ng-deep jz-button-cuboid.logon-button .label {

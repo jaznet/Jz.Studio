@@ -27,12 +27,12 @@
 
 .jz-popover-accent {
   height: 4px;
-  background: var(--plt-highlight);
+  background: var(--plt-pop);
 }
 
 .jz-popover-panel.loading .jz-popover-accent,
 .jz-popover-panel.info .jz-popover-accent {
-  background: var(--plt-highlight);
+  background: var(--plt-pop);
 }
 
 .jz-popover-panel.success .jz-popover-accent {
@@ -69,7 +69,7 @@
 }
 
 .jz-popover-icon {
-  color: var(--plt-highlight);
+  color: var(--plt-pop);
 }
 
 .jz-popover-body {

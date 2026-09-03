@@ -177,13 +177,13 @@
 }
 
 /*:host(.logon-button) .cuboid {
-  --jz-base-color:var(--plt-highlight);
-  --jz-text:var(--plt-highlight-txt);
+  --jz-base-color:var(--plt-pop);
+  --jz-text:var(--plt-pop-txt);
   color:black;
 }
 
 :host(.logon-button) button {
-  color: var(--plt-highlight-txt);
+  color: var(--plt-pop-txt);
 }
 
 jz-button-cuboid.logon-button .zone.face {
@@ -284,17 +284,17 @@ jz-button-cuboid.logon-button .zone.face {
 
 /* active class is currently on the inner button, not on the host */
 :host button.jz-btn.active > .cuboid {
-  --jz-base-color: var(--plt-highlight);
+  --jz-base-color: var(--plt-active-boundary);
   --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 28%);
   --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 22%);
 
   background-color: var(--jz-base-color);
-  color:var(--plt-highlight-txt);
+  color: var(--plt-active-boundary-txt);
 }
 
 :host button.jz-btn.active .cuboid .zone.face > * {
  // background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
-  color: var(--plt-highlight-txt);
+  color: var(--plt-active-boundary-txt);
 }
 
 :host(.is-disabled),
@@ -323,9 +323,9 @@ jz-button-cuboid.logon-button .zone.face {
 }
 
   :host(.logon-button) .label {
-  color: var(--plt-highlight-txt);
+  color: var(--plt-pop-txt);
 }
 
 jz-button-cuboid.logon-button button {
-  color: var(--plt-highlight-txt);
+  color: var(--plt-pop-txt);
 }

@@ -25,7 +25,7 @@
 
   :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active {
     padding: 6px 6px 4px 6px;
-    border: var(--border-width) solid var(--plt-highlight);
+    border: var(--border-width) solid var(--plt-active-boundary);
     border-bottom-color: var(--plt-clr-2);
     background-color: var(--plt-clr-2);
     box-shadow: 0 calc(2 * var(--border-width)) 0 var(--plt-clr-2);
@@ -45,12 +45,12 @@
 
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::before {
       left: calc(-1 * var(--tab-inverted-corner-radius));
-      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-highlight) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
+      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-active-boundary) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
     :host-context(nav.jz-nav-group.horizontal) .jz-nav-item.active::after {
       right: calc(-1 * var(--tab-inverted-corner-radius));
-      background: radial-gradient( circle at top right, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-highlight) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
+      background: radial-gradient( circle at top right, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-active-boundary) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
 /* VERTICAL */
@@ -64,7 +64,7 @@
 
   :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active {
     padding: 6px 4px 6px 6px;
-    border: var(--border-width) solid var(--plt-highlight);
+    border: var(--border-width) solid var(--plt-active-boundary);
     border-right-color: var(--plt-clr-2);
     border-radius: 8px 0 0 8px;
     background-color: var(--plt-clr-2);
@@ -85,12 +85,12 @@
 
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::before {
       top: calc(-1 * var(--tab-inverted-corner-radius));
-      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-highlight) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
+      background: radial-gradient( circle at top left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-active-boundary) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
     :host-context(nav.jz-nav-group.vertical) .jz-nav-item.active::after {
       bottom: calc(-1 * var(--tab-inverted-corner-radius));
-      background: radial-gradient( circle at bottom left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-highlight) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
+      background: radial-gradient( circle at bottom left, transparent 0 calc( var(--tab-inverted-corner-radius) - var(--border-width) ), var(--plt-active-boundary) calc( var(--tab-inverted-corner-radius) - var(--border-width) ) var(--tab-inverted-corner-radius), var(--plt-clr-2) var(--tab-inverted-corner-radius) 100% );
     }
 
 :host-context(.shell-borders-hidden)

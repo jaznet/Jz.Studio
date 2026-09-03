@@ -19,6 +19,9 @@ export interface JzPalette {
   highlight: string;
   highlightTxt: string;
 
+  activeBoundary: string;
+  activeBoundaryTxt: string;
+
   technicalAnalysis?: JzTechnicalAnalysisPalette;
 }
 
@@ -73,4 +76,3 @@ export interface JzTechnicalAnalysisInteractionPalette {
   warning: string;
   error: string;
 }
-

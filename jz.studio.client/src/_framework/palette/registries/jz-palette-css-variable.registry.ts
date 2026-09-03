@@ -19,5 +19,8 @@ export const JZ_PALETTE_CSS_VARIABLES: Readonly<Record<string, JzPaletteColorPro
   '--plt-pop-txt': 'popTxt',
 
   '--plt-highlight': 'highlight',
-  '--plt-highlight-txt': 'highlightTxt'
+  '--plt-highlight-txt': 'highlightTxt',
+
+  '--plt-active-boundary': 'activeBoundary',
+  '--plt-active-boundary-txt': 'activeBoundaryTxt'
 };

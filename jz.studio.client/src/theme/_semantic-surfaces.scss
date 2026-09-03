@@ -73,7 +73,7 @@
 
   --text-secondary: color-mix(
     in srgb,
-    var(--plt-highlight) 72%,
+    var(--plt-pop) 72%,
     transparent
   );
 
@@ -97,11 +97,11 @@
      ACCENTS
      ========================================================================== */
 
-  --accent-primary: var(--plt-highlight);
+  --accent-primary: var(--plt-pop);
 
   --accent-glow: color-mix(
     in srgb,
-    var(--plt-highlight) 45%,
+    var(--plt-pop) 45%,
     transparent
   );
 }

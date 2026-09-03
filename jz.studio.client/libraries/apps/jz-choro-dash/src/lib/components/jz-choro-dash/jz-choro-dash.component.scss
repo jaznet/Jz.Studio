@@ -41,7 +41,7 @@
   color-mix(
     in srgb,
     var(--plt-txt-2) 82%,
-    var(--plt-highlight)
+    var(--plt-pop)
   );
 
   /* Shared Chorodash title semantics */
@@ -50,7 +50,7 @@
   color-mix(
     in srgb,
     var(--plt-txt-3) 80%,
-    var(--plt-highlight)
+    var(--plt-pop)
   );
 
 --choro-title-opacity: 0.95;
@@ -72,8 +72,8 @@
   --choro-hover-glow: var(--accent-glow);
 
   /* Shared Chorodash diagnostic/debug semantics */
-  --choro-debug-dot: var(--plt-highlight);
-  --choro-debug-bbox: var(--plt-highlight);
+  --choro-debug-dot: var(--plt-pop);
+  --choro-debug-bbox: var(--plt-pop);
 
   display: flex;
   flex-direction: column;
