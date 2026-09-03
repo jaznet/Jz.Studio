@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1000"
+     height="240"
+     viewBox="0 0 1000 240"
+     role="img"
+     aria-labelledby="title description">
+  <title id="title">JZ Studio header wordmark</title>
+  <desc id="description">An editable rounded-line JZ Studio wordmark.</desc>
+
+  <!--
+    Illustrator notes:
+    - Every character is an independent path inside a named group.
+    - No fonts, filters, masks, gradients, clipping paths, or raster images.
+    - Expand strokes in Illustrator only when final outlines are required.
+  -->
+
+  <g id="JZ"
+     class="jz-header-primary"
+     fill="none"
+     stroke="#eadbc7"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+    <path id="J" stroke-width="48" d="M 90 45 V 145 C 90 183 44 190 30 162"/>
+    <path id="Z" stroke-width="42" d="M 163 48 H 292 L 170 182 H 292"/>
+  </g>
+
+  <path id="Divider"
+        class="jz-header-accent"
+        d="M 347 57 V 173"
+        fill="none"
+        stroke="#35b8c7"
+        stroke-width="10"
+        stroke-linecap="round"/>
+
+  <g id="Studio"
+     class="jz-header-secondary"
+     fill="none"
+     stroke="#eadbc7"
+     stroke-width="20"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+    <path id="S" d="M 470 64 C 451 41 402 43 397 78 C 393 106 425 112 447 120 C 471 129 481 143 477 162 C 470 193 421 196 397 172"/>
+    <path id="t" d="M 518 67 V 161 C 518 178 527 186 540 186 M 499 101 H 540"/>
+    <path id="u" d="M 568 104 V 151 C 568 197 622 197 622 151 V 104"/>
+    <path id="d" d="M 706 52 V 186 M 703 122 C 691 96 648 94 643 137 C 638 181 684 197 706 167"/>
+    <path id="i" d="M 748 104 V 186 M 748 69 L 748 70"/>
+    <path id="o" d="M 790 145 C 790 94 854 94 854 145 C 854 196 790 196 790 145 Z"/>
+  </g>
+</svg>

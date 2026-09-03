@@ -2,11 +2,11 @@
 <div class="grid-cols" #appHeader [ngStyle]="{'visibility': visibility}">
 
   <!--Column 1: Logo-->
-  <div class="grid-col-fixed logo-container">JZ Studio
-    <!--<img class="logo"
-         src="assets/logos/JazLogoMaster-00.svg"
-         alt="JZ Studio" />-->
-  </div>
+  <!--<div class="grid-col-fixed logo-container">
+    <img class="logo"
+         src="assets/logos/JZ-Header.svg"
+         alt="JZ Studio" />
+  </div>-->
 
   <!--Column 2: Title and Menu-->
   <div class="grid-col-fill">
@@ -14,7 +14,11 @@
 
       <div class="grid-row-fixed" style="">
 
-        <div class="grid-col-fill app-title" style="text-align:center">JZ Studio</div>
+        <div class="grid-col-fill app-title" style="text-align:center">
+          <img class="logo"
+               src="assets/logos/JZ-Header.svg"
+               alt="JZ Studio" />
+        </div>
         <palette-menu class="grid-col-fixed"></palette-menu>
       </div>
 
