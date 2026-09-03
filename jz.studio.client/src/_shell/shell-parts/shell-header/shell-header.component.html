@@ -1,24 +1,18 @@
+<!-- Row 1: permanent shell toolbar -->
+<div class="grid-row-fixed shell-toolbar">
 
-
-  <!-- Row 1: permanent shell toolbar -->
-  <div class="grid-row-fixed shell-toolbar">
-
-    <div class="logo-container">
-      <img class="shell-logo"
-           src="assets/logos/JZ-Header.svg"
-           alt="JZ Studio" />
-    </div>
-
-    <div class="shell-toolbar-fill"></div>
-
-    <palette-menu class="shell-palette-menu"></palette-menu>
-
+  <div class="logo-container">
+    <jz-studio-logo class="shell-logo"></jz-studio-logo>
   </div>
 
-  <!-- Row 2: collapsible suites menu -->
-  <div #suiteMenuContainer
-       class="grid-row-fixed suites-menu-container">
-    <suites-menu #suiteMenu></suites-menu>
-  </div>
+  <div class="shell-toolbar-fill"></div>
 
+  <palette-menu class="shell-palette-menu"></palette-menu>
 
+</div>
+
+<!-- Row 2: collapsible suites menu -->
+<div #suiteMenuContainer
+     class="grid-row-fixed suites-menu-container">
+  <suites-menu #suiteMenu></suites-menu>
+</div>

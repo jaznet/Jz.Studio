@@ -13,8 +13,6 @@
   shape-rendering: geometricPrecision;
 }
 
-
-
 .jz-studio-logo__j {
   stroke-width: 31;
 }
@@ -29,4 +27,5 @@
 
 .jz-studio-logo__word {
   stroke: var(--plt-logo-txt);
+  stroke-width: 14;
 }

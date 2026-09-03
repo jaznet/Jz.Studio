@@ -16,6 +16,7 @@ import { AppStateService } from '../../services/shell-state.service';
 import { PaletteMenuComponent } from '../shell-menus/palette-menu/palette-menu.component';
 import { JzButtonComponent } from 'jz-ui';
 import { SuitesMenuComponent } from '../shell-menus/suites-menu/suites-menu.component';
+import { JzStudioLogoComponent } from '../../../_framework/branding/jz-studio-logo/jz-studio-logo.component';
 
 @Component({
   selector: 'shell-header',
@@ -24,7 +25,8 @@ import { SuitesMenuComponent } from '../shell-menus/suites-menu/suites-menu.comp
     CommonModule,
     SuitesMenuComponent,
     PaletteMenuComponent,
-    JzButtonComponent
+    JzButtonComponent,
+    JzStudioLogoComponent
   ],
   templateUrl: './shell-header.component.html',
   styleUrls: ['./shell-header.component.css']

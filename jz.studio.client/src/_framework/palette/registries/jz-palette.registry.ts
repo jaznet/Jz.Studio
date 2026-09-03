@@ -32,7 +32,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#87CEEB',
     highlightTxt: '#FFF7EA',
 
-    logo: '#111923',
+    logo: 'seagreen',
     logoTxt: 'white',
 
     // active tab/content boundary

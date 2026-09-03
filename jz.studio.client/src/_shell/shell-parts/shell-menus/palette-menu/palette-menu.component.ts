@@ -6,6 +6,7 @@ import { ShellThemeService } from '../../../../_framework/palette/services/shell
 import { normalizePalette } from '../../../../types/palette';
 import { Palette } from '../../../../types/palette';
 
+
 @Component({
   selector: 'palette-menu',
   standalone: true,
