@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CrosshairReadout } from '../models/chart-drawing.model';
+import { DatedValuePoint } from '../models/indicator-points.model';
 import { StockPriceHistory } from '../models/stock-price-history.model';
 import {
   MacdPoint,
@@ -43,6 +44,10 @@ export class ChartDataService {
     return [...this.store.model.macd];
   }
 
+  get atrData(): DatedValuePoint[] {
+    return [...this.store.model.indicators.atr];
+  }
+
   get dateExtent(): [Date, Date] | [undefined, undefined] {
     return this.store.model.dateExtent;
   }
@@ -69,6 +74,9 @@ export class ChartDataService {
     const macd = this.store.model.macd.find(
       item => item.date.getTime() === timestamp
     );
+    const atr = this.store.model.indicators.atr.find(
+      item => item.date.getTime() === timestamp
+    );
 
     return {
       date: point.date,
@@ -83,7 +91,8 @@ export class ChartDataService {
       macd: macd?.macd,
       signal: macd?.signal,
       histogram: macd?.histogram,
-      rsi: this.calculateRsiAt(timestamp, 14)
+      rsi: this.calculateRsiAt(timestamp, 14),
+      atr: atr?.value
     };
   }
 
