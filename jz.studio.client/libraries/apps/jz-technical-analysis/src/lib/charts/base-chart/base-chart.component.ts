@@ -1,6 +1,6 @@
 // base-chart.component.ts
 
-import { AfterViewInit, Component, ElementRef, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, inject, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartType } from '../../enums/chart-type';
 import { PanelAttributes } from '../../interfaces/panel-interfaces';
 import { select } from 'd3-selection';
@@ -47,6 +47,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   @Input() panel?: PanelAttributes;
   @Input() preferenceId = '';
 
+  indicatorMenuOpen = false;
+
   readonly indicatorChoices = [
     { chartType: ChartType.VOLUME, label: 'VOLUME' },
     { chartType: ChartType.MACD, label: 'MACD' },
@@ -68,24 +70,24 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   }
 
   get panelLegendX(): number {
-    return -this.panelBadgeWidth + (this.showPanelToggle ? 27 : 7);
+    return -this.panelBadgeWidth + (this.showPanelToggle ? 49 : 7);
   }
 
   get panelBadgeWidth(): number {
     if (this.crosshairService.state().readout) {
       switch (this.chartType) {
         case ChartType.OHLC: return 540;
-        case ChartType.VOLUME: return 146;
-        case ChartType.MACD: return 288;
-        case ChartType.RSI: return 112;
+        case ChartType.VOLUME: return 168;
+        case ChartType.MACD: return 310;
+        case ChartType.RSI: return 134;
       }
     }
 
     switch (this.chartType) {
       case ChartType.OHLC: return 224;
-      case ChartType.MACD: return 210;
-      case ChartType.VOLUME: return 92;
-      case ChartType.RSI: return 78;
+      case ChartType.MACD: return 232;
+      case ChartType.VOLUME: return 114;
+      case ChartType.RSI: return 100;
       default: return 72;
     }
   }
@@ -163,10 +165,35 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return !this.isPricePanel && !!this.preferenceId;
   }
 
-  selectIndicator(event: Event): void {
+  toggleIndicatorMenu(event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
-    const chartType = (event.target as HTMLSelectElement).value as ChartType;
+    this.indicatorMenuOpen = !this.indicatorMenuOpen;
+  }
+
+  selectIndicator(event: Event, chartType: ChartType): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.indicatorMenuOpen = false;
     this.panelPreferenceService.assignIndicator(this.preferenceId, chartType);
+  }
+
+  isCurrentIndicator(chartType: ChartType): boolean {
+    return this.chartType === chartType;
+  }
+
+  stopIndicatorMenuPointer(event: Event): void {
+    event.stopPropagation();
+  }
+
+  @HostListener('document:pointerdown')
+  closeIndicatorMenu(): void {
+    this.indicatorMenuOpen = false;
+  }
+
+  @HostListener('document:keydown.escape')
+  closeIndicatorMenuOnEscape(): void {
+    this.indicatorMenuOpen = false;
   }
 
   get macdToggleItems(): ReadonlyArray<{

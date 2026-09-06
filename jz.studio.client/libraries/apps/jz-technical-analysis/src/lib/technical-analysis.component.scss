@@ -32,26 +32,79 @@ jz-technical-analysis {
   --axis-label-color: var(--chart-label);
 }
 
-.indicator-slot-selector {
-  overflow: visible;
+.indicator-menu-control {
+  pointer-events: all;
 }
 
-.indicator-slot-selector select {
-  width: 92px;
-  height: 20px;
-  padding: 0 4px;
-  border: 1px solid var(--chart-separator);
-  border-radius: 3px;
-  color: var(--chart-label);
-  background: var(--chart-indicator-surface);
-  font: 600 9px/18px Arial, sans-serif;
-  letter-spacing: .04em;
-  color-scheme: dark;
+.indicator-menu-button {
+  cursor: pointer;
+  outline: none !important;
+}
+
+.indicator-menu-button rect {
+  fill: color-mix(in srgb, var(--chart-label) 7%, transparent);
+  stroke: color-mix(in srgb, var(--chart-label) 30%, transparent);
+}
+
+.indicator-menu-button path {
+  fill: none;
+  stroke: var(--chart-label);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+.indicator-menu-button:hover rect,
+.indicator-menu-button:focus-visible rect,
+.indicator-menu-control--open .indicator-menu-button rect {
+  stroke: var(--plt-highlight);
+}
+
+.indicator-menu-button:focus,
+.indicator-menu-button:focus-visible {
+  outline: none !important;
+}
+
+.indicator-menu-popup > rect {
+  fill: color-mix(in srgb, var(--chart-indicator-surface) 94%, #000);
+  stroke: var(--chart-separator);
+  filter: drop-shadow(0 5px 8px rgb(0 0 0 / 45%));
+}
+
+.indicator-menu-item {
   cursor: pointer;
 }
 
-.indicator-slot-selector select:focus-visible {
-  border-color: var(--plt-highlight);
+.indicator-menu-item rect {
+  fill: transparent;
+}
+
+.indicator-menu-item:hover rect,
+.indicator-menu-item:focus-visible rect {
+  fill: color-mix(in srgb, var(--plt-highlight) 14%, transparent);
+}
+
+.indicator-menu-item text {
+  fill: var(--chart-label);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  pointer-events: none;
+}
+
+.indicator-menu-item--current rect {
+  fill: color-mix(in srgb, var(--chart-label) 9%, transparent);
+}
+
+.indicator-menu-item--current text {
+  fill: var(--chart-label);
+}
+
+.indicator-menu-item--current text:first-of-type {
+  fill: var(--plt-highlight);
+}
+
+.indicator-menu-item:focus-visible {
   outline: none;
 }
 

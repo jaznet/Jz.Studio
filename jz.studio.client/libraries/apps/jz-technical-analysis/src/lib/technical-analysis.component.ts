@@ -197,9 +197,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     const readoutVisible = !!this.crosshairService.state().readout;
     const widths: Partial<Record<ChartType, number>> = {
       [ChartType.OHLC]: readoutVisible ? 540 : 224,
-      [ChartType.VOLUME]: readoutVisible ? 146 : 92,
-      [ChartType.MACD]: readoutVisible ? 288 : 210,
-      [ChartType.RSI]: readoutVisible ? 112 : 78
+      [ChartType.VOLUME]: readoutVisible ? 168 : 114,
+      [ChartType.MACD]: readoutVisible ? 310 : 232,
+      [ChartType.RSI]: readoutVisible ? 134 : 100
     };
 
     return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI] as const)
