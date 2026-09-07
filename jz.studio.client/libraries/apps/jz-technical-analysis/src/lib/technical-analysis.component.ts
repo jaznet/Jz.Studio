@@ -188,22 +188,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     return !this.panelPreferenceService.isDefaultLayout();
   }
 
-  get resetIndicatorLayoutX(): number {
-    return this.indicatorRestoreControlsX - 100;
-  }
-
-  get saveDefaultLayoutX(): number {
-    return this.resetIndicatorLayoutX - 100;
-  }
-
   get userDefaultLayoutSaved(): boolean {
     return this.panelPreferenceService.hasUserDefault();
-  }
-
-  get factoryLayoutX(): number {
-    return this.indicatorRestoreControlsX
-      - (this.indicatorLayoutCustomized ? 200 : 0)
-      - 100;
   }
 
   get anyIndicatorHidden(): boolean {
@@ -331,21 +317,21 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.macdVisibilityService.restoreAll();
   }
 
-  resetIndicatorLayout(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  resetIndicatorLayout(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
     this.panelPreferenceService.resetToDefaults();
   }
 
-  saveDefaultLayout(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  saveDefaultLayout(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
     this.panelPreferenceService.saveCurrentAsDefault();
   }
 
-  restoreFactoryLayout(event: Event): void {
-    event.preventDefault();
-    event.stopPropagation();
+  restoreFactoryLayout(event?: Event): void {
+    event?.preventDefault();
+    event?.stopPropagation();
     this.panelPreferenceService.restoreFactoryDefaults();
   }
 

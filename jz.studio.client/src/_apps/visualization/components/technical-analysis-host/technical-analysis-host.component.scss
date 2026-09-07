@@ -48,12 +48,15 @@
 }
 
 .analysis-controls input,
+.analysis-controls select,
 .analysis-controls button {
   height: 26px;
   border: var(--border-width) solid var(--border-soft);
   border-radius: 5px;
   color: var(--plt-txt-2);
   background: color-mix(in srgb, var(--analysis-toolbar-surface) 96%, var(--plt-txt-1));
+  font-family: inherit;
+  font-size: 12px;
 }
 
 .analysis-controls input {
@@ -103,9 +106,19 @@
   font-size: 12px;
 }
 
-.interaction-help {
+.layout-menu {
   position: relative;
   margin-left: auto;
+}
+
+.analysis-controls .layout-menu select {
+  width: 82px;
+  padding-inline: 8px;
+  color-scheme: dark;
+}
+
+.interaction-help {
+  position: relative;
 }
 
 .analysis-controls .interaction-help-toggle {

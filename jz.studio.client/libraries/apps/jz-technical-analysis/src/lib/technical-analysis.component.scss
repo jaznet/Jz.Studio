@@ -431,22 +431,19 @@ fill:transparent;
   fill: color-mix(in srgb, var(--plt-pop) 64%, var(--chart-label));
 }
 
-.indicator-reset-control,
-.indicator-layout-reset-control {
+.indicator-reset-control {
   pointer-events: auto;
   cursor: pointer;
   outline: none;
 }
 
-.indicator-reset-control rect,
-.indicator-layout-reset-control rect {
+.indicator-reset-control rect {
   fill: color-mix(in srgb, var(--chart-surface) 92%, transparent);
   stroke: color-mix(in srgb, var(--plt-pop) 36%, var(--chart-separator));
   stroke-width: 1;
 }
 
-.indicator-reset-control text,
-.indicator-layout-reset-control text {
+.indicator-reset-control text {
   fill: color-mix(in srgb, var(--chart-label) 68%, transparent);
   font-size: 8px;
   font-weight: 600;
@@ -457,17 +454,13 @@ fill:transparent;
 }
 
 .indicator-reset-control:hover rect,
-.indicator-reset-control:focus-visible rect,
-.indicator-layout-reset-control:hover rect,
-.indicator-layout-reset-control:focus-visible rect {
+.indicator-reset-control:focus-visible rect {
   fill: color-mix(in srgb, var(--plt-pop) 10%, var(--chart-surface));
   stroke: color-mix(in srgb, var(--plt-pop) 60%, var(--chart-separator));
 }
 
 .indicator-reset-control:hover text,
-.indicator-reset-control:focus-visible text,
-.indicator-layout-reset-control:hover text,
-.indicator-layout-reset-control:focus-visible text {
+.indicator-reset-control:focus-visible text {
   fill: color-mix(in srgb, var(--plt-pop) 68%, var(--chart-label));
 }
 

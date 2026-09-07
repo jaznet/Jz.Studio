@@ -27,6 +27,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent';
   @ViewChild('interactionHelpToggle') private interactionHelpToggle?: ElementRef<HTMLButtonElement>;
   @ViewChild('interactionHelpPanel') private interactionHelpPanel?: ElementRef<HTMLElement>;
+  @ViewChild(TechnicalAnalysisComponent) private technicalAnalysis?: TechnicalAnalysisComponent;
 
   ticker = 'NVDA';
   symbolInput = this.ticker;
@@ -42,6 +43,14 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   dataWindow?: TechnicalAnalysisDataWindow;
   validationMessage = '';
   interactionHelpVisible = false;
+
+  get indicatorLayoutCustomized(): boolean {
+    return this.technicalAnalysis?.indicatorLayoutCustomized ?? false;
+  }
+
+  get userDefaultLayoutSaved(): boolean {
+    return this.technicalAnalysis?.userDefaultLayoutSaved ?? false;
+  }
 
   stockPriceHistoryData: StockPriceHistory[] = [];
   loading = true;
@@ -92,10 +101,9 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
 
   @HostListener('document:pointerdown', ['$event'])
   onDocumentPointerDown(event: PointerEvent): void {
-    if (!this.interactionHelpVisible) return;
-
     const target = event.target;
-    if (!(target instanceof Element) || !target.closest('.interaction-help')) {
+    if (this.interactionHelpVisible
+      && (!(target instanceof Element) || !target.closest('.interaction-help'))) {
       this.setInteractionHelpVisible(false);
     }
   }
@@ -105,6 +113,20 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     event?.preventDefault();
     event?.stopPropagation();
     this.setInteractionHelpVisible(false);
+  }
+
+  selectLayoutAction(action: string): void {
+    switch (action) {
+      case 'save-default':
+        this.technicalAnalysis?.saveDefaultLayout();
+        break;
+      case 'restore-default':
+        this.technicalAnalysis?.resetIndicatorLayout();
+        break;
+      case 'restore-factory':
+        this.technicalAnalysis?.restoreFactoryLayout();
+        break;
+    }
   }
 
   private setInteractionHelpVisible(visible: boolean): void {

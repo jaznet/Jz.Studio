@@ -48,6 +48,24 @@
       <span class="validation-message">{{ validationMessage }}</span>
     }
 
+    <div class="layout-menu">
+      <select #layoutAction
+              aria-label="Indicator layout actions"
+              value=""
+              (change)="selectLayoutAction(layoutAction.value); layoutAction.value = ''">
+        <option value="" disabled>Layout</option>
+        <option value="save-default" [disabled]="!indicatorLayoutCustomized">
+          Save Current as Default
+        </option>
+        <option value="restore-default" [disabled]="!indicatorLayoutCustomized">
+          Restore Default Layout
+        </option>
+        <option value="restore-factory" [disabled]="!userDefaultLayoutSaved">
+          Restore Factory Layout
+        </option>
+      </select>
+    </div>
+
     <div class="interaction-help">
       <button #interactionHelpToggle
               type="button"
