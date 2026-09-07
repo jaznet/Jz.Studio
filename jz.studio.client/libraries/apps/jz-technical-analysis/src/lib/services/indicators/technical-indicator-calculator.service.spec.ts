@@ -38,6 +38,41 @@ describe('TechnicalIndicatorCalculatorService ATR', () => {
   });
 });
 
+describe('TechnicalIndicatorCalculatorService Stochastic', () => {
+  let service: TechnicalIndicatorCalculatorService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(TechnicalIndicatorCalculatorService);
+  });
+
+  it('calculates %K and its simple moving-average %D signal', () => {
+    const points = [
+      point('2026-01-05', 5, 10, 0, 5),
+      point('2026-01-06', 10, 12, 2, 10),
+      point('2026-01-07', 12, 14, 4, 12),
+      point('2026-01-08', 15, 16, 6, 15)
+    ];
+
+    const stochastic = service.stochastic(points, 3, 2);
+
+    expect(stochastic.length).toBe(1);
+    expect(stochastic[0].date).toEqual(points[3].date);
+    expect(stochastic[0].k).toBeCloseTo(650 / 7, 8);
+    expect(stochastic[0].d).toBeCloseTo(625 / 7, 8);
+  });
+
+  it('returns no values before both lookback periods are available', () => {
+    const points = [
+      point('2026-01-05', 5, 10, 0, 5),
+      point('2026-01-06', 10, 12, 2, 10),
+      point('2026-01-07', 12, 14, 4, 12)
+    ];
+
+    expect(service.stochastic(points, 3, 2)).toEqual([]);
+  });
+});
+
 function point(
   dateText: string,
   open: number,

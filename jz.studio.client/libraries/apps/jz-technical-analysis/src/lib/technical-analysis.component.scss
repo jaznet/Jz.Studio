@@ -26,6 +26,8 @@ jz-technical-analysis {
   --chart-signal: var(--jz-ta-signal, #d8dca8);
   --chart-rsi: var(--jz-ta-rsi, #8eb59a);
   --chart-atr: var(--jz-ta-atr, #d09a5b);
+  --chart-stochastic-k: var(--jz-ta-stochastic-k, #49a9cf);
+  --chart-stochastic-d: var(--jz-ta-stochastic-d, #d69d42);
   --chart-reference: var(--jz-ta-reference, color-mix(in srgb, var(--plt-txt-2) 24%, transparent));
 
   --axis-tick-color: var(--chart-axis);
@@ -589,6 +591,14 @@ fill:transparent;
   fill: var(--chart-atr);
 }
 
+.panel-badge .legend-stochastic-k {
+  fill: var(--chart-stochastic-k);
+}
+
+.panel-badge .legend-stochastic-d {
+  fill: var(--chart-stochastic-d);
+}
+
 .panel-badge .legend-value {
   fill: var(--chart-label);
   font-variant-numeric: tabular-nums;
@@ -624,7 +634,9 @@ fill:transparent;
 .macd-line,
 .signal-line,
 .rsi-line,
-.atr-line {
+.atr-line,
+.stochastic-k-line,
+.stochastic-d-line {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -648,9 +660,17 @@ fill:transparent;
 .signal-line { stroke: var(--chart-signal); }
 .rsi-line { stroke: var(--chart-rsi); }
 .atr-line { stroke: var(--chart-atr); }
+.stochastic-k-line { stroke: var(--chart-stochastic-k); }
+.stochastic-d-line { stroke: var(--chart-stochastic-d); }
 
 .macd-baseline,
 .rsi-guide {
+  stroke: var(--chart-reference);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+.stochastic-guide {
   stroke: var(--chart-reference);
   stroke-width: 1;
   shape-rendering: crispEdges;

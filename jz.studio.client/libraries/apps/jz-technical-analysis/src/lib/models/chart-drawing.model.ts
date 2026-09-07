@@ -18,6 +18,8 @@ export interface CrosshairReadout {
   histogram?: number;
   rsi?: number;
   atr?: number;
+  stochasticK?: number;
+  stochasticD?: number;
 }
 
 export interface TrendLine {

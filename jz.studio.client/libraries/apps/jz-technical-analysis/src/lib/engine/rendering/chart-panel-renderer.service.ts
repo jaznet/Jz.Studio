@@ -52,7 +52,8 @@ export class ChartPanelRendererService {
         preference.chartType === ChartType.OHLC ||
         preference.chartType === ChartType.MACD ||
         preference.chartType === ChartType.RSI ||
-        preference.chartType === ChartType.ATR
+        preference.chartType === ChartType.ATR ||
+        preference.chartType === ChartType.STOCHASTIC
       ) {
         componentRef.setInput('calculationData', request.calculationData);
       }

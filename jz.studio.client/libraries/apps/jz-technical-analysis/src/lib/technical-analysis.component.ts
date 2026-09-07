@@ -162,7 +162,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     { chartType: ChartType.VOLUME, label: 'VOLUME' },
     { chartType: ChartType.MACD, label: 'MACD' },
     { chartType: ChartType.RSI, label: 'RSI 14' },
-    { chartType: ChartType.ATR, label: 'ATR 14' }
+    { chartType: ChartType.ATR, label: 'ATR 14' },
+    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' }
   ] as const;
 
   get hiddenIndicatorControls(): ReadonlyArray<{
@@ -201,10 +202,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       [ChartType.VOLUME]: readoutVisible ? 168 : 114,
       [ChartType.MACD]: readoutVisible ? 310 : 232,
       [ChartType.RSI]: readoutVisible ? 134 : 100,
-      [ChartType.ATR]: readoutVisible ? 134 : 100
+      [ChartType.ATR]: readoutVisible ? 134 : 100,
+      [ChartType.STOCHASTIC]: readoutVisible ? 222 : 148
     };
 
-    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR] as const)
+    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR, ChartType.STOCHASTIC] as const)
       .flatMap(chartType => {
         const panel = this.chartScaffold.chartMap?.[chartType];
         const width = widths[chartType];
@@ -949,6 +951,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
           .nice()
           .invert(clampedY);
       }
+      case ChartType.STOCHASTIC:
+        return scaleLinear()
+          .domain([0, 100])
+          .range([contentHeight, 0])
+          .invert(clampedY);
       default:
         return 0;
     }
@@ -962,7 +969,9 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       return value.toFixed(0);
     }
 
-    if (chartType === ChartType.RSI) return value.toFixed(1);
+    if (chartType === ChartType.RSI || chartType === ChartType.STOCHASTIC) {
+      return value.toFixed(1);
+    }
     return value.toFixed(2);
   }
 

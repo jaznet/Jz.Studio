@@ -17,6 +17,7 @@ import { PanelPreferenceService } from '../../support/panel-workspace/panel-pref
   styleUrl: './base-chart.component.scss'
 })
 export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+  protected readonly Math = Math;
   private readonly hostElement = inject(ElementRef<SVGGElement>);
   private readonly crosshairService = inject(ChartCrosshairService);
   private readonly panelPreferenceService = inject(PanelPreferenceService);
@@ -54,7 +55,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     { chartType: ChartType.VOLUME, label: 'VOLUME' },
     { chartType: ChartType.MACD, label: 'MACD' },
     { chartType: ChartType.RSI, label: 'RSI 14' },
-    { chartType: ChartType.ATR, label: 'ATR 14' }
+    { chartType: ChartType.ATR, label: 'ATR 14' },
+    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' }
   ] as const;
 
   protected viewInitialized = false;
@@ -83,6 +85,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         case ChartType.MACD: return 310;
         case ChartType.RSI: return 134;
         case ChartType.ATR: return 134;
+        case ChartType.STOCHASTIC: return 222;
       }
     }
 
@@ -92,6 +95,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.VOLUME: return 114;
       case ChartType.RSI: return 100;
       case ChartType.ATR: return 100;
+      case ChartType.STOCHASTIC: return 148;
       default: return 72;
     }
   }
@@ -134,6 +138,13 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: 'ATR', className: 'legend-atr' },
             { label: `  ${this.formatValue(readout.atr)}`, className: 'legend-value' }
           ];
+        case ChartType.STOCHASTIC:
+          return [
+            { label: '%K', className: 'legend-stochastic-k' },
+            { label: `  ${this.formatValue(readout.stochasticK)}`, className: 'legend-value' },
+            { label: '  %D', className: 'legend-stochastic-d' },
+            { label: `  ${this.formatValue(readout.stochasticD)}`, className: 'legend-value' }
+          ];
       }
     }
 
@@ -151,6 +162,11 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         return [{ label: 'RSI 14', className: 'legend-rsi' }];
       case ChartType.ATR:
         return [{ label: 'ATR 14', className: 'legend-atr' }];
+      case ChartType.STOCHASTIC:
+        return [
+          { label: 'STOCHASTIC %K', className: 'legend-stochastic-k' },
+          { label: '  %D', className: 'legend-stochastic-d' }
+        ];
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
     }
@@ -271,7 +287,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     return this.chartType === ChartType.VOLUME
       || this.chartType === ChartType.MACD
       || this.chartType === ChartType.RSI
-      || this.chartType === ChartType.ATR;
+      || this.chartType === ChartType.ATR
+      || this.chartType === ChartType.STOCHASTIC;
   }
 
   get panelToggleLabel(): string {
@@ -280,6 +297,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.MACD: return 'Collapse MACD panel';
       case ChartType.RSI: return 'Collapse RSI panel';
       case ChartType.ATR: return 'Collapse ATR panel';
+      case ChartType.STOCHASTIC: return 'Collapse Stochastic panel';
       default: return 'Collapse indicator panel';
     }
   }

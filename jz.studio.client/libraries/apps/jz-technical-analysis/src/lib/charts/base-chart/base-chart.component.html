@@ -152,8 +152,8 @@
                (pointerdown)="stopIndicatorMenuPointer($event)"
                (pointerenter)="suppressIndicatorMenuCrosshair($event)"
                (pointermove)="suppressIndicatorMenuCrosshair($event)">
-              <rect width="112"
-                    [attr.height]="indicatorChoices.length * 18"
+              <rect width="224"
+                    [attr.height]="Math.ceil(indicatorChoices.length / 2) * 18"
                     rx="4"
                     ry="4">
               </rect>
@@ -163,7 +163,7 @@
                    role="menuitemradio"
                    tabindex="0"
                    [attr.aria-checked]="isCurrentIndicator(choice.chartType)"
-                   [attr.transform]="'translate(0, ' + (index * 18) + ')'"
+                   [attr.transform]="'translate(' + ((index % 2) * 112) + ', ' + (Math.floor(index / 2) * 18) + ')'"
                    (click)="selectIndicator($event, choice.chartType)"
                    (keydown.enter)="selectIndicator($event, choice.chartType)"
                    (keydown.space)="selectIndicator($event, choice.chartType)">
