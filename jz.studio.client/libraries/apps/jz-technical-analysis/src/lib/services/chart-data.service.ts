@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CrosshairReadout } from '../models/chart-drawing.model';
-import { DatedValuePoint, StochasticPoint } from '../models/indicator-points.model';
+import { AdxPoint, DatedValuePoint, StochasticPoint } from '../models/indicator-points.model';
 import { StockPriceHistory } from '../models/stock-price-history.model';
 import {
   MacdPoint,
@@ -52,6 +52,10 @@ export class ChartDataService {
     return [...this.store.model.indicators.stochastic];
   }
 
+  get adxData(): AdxPoint[] {
+    return [...this.store.model.indicators.adx];
+  }
+
   get dateExtent(): [Date, Date] | [undefined, undefined] {
     return this.store.model.dateExtent;
   }
@@ -84,6 +88,9 @@ export class ChartDataService {
     const stochastic = this.store.model.indicators.stochastic.find(
       item => item.date.getTime() === timestamp
     );
+    const adx = this.store.model.indicators.adx.find(
+      item => item.date.getTime() === timestamp
+    );
 
     return {
       date: point.date,
@@ -101,7 +108,10 @@ export class ChartDataService {
       rsi: this.calculateRsiAt(timestamp, 14),
       atr: atr?.value,
       stochasticK: stochastic?.k,
-      stochasticD: stochastic?.d
+      stochasticD: stochastic?.d,
+      adx: adx?.adx,
+      plusDi: adx?.plusDi,
+      minusDi: adx?.minusDi
     };
   }
 

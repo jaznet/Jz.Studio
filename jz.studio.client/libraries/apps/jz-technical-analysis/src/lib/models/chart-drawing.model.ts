@@ -20,6 +20,9 @@ export interface CrosshairReadout {
   atr?: number;
   stochasticK?: number;
   stochasticD?: number;
+  adx?: number;
+  plusDi?: number;
+  minusDi?: number;
 }
 
 export interface TrendLine {

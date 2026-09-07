@@ -56,7 +56,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     { chartType: ChartType.MACD, label: 'MACD' },
     { chartType: ChartType.RSI, label: 'RSI 14' },
     { chartType: ChartType.ATR, label: 'ATR 14' },
-    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' }
+    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' },
+    { chartType: ChartType.ADX, label: 'ADX 14' }
   ] as const;
 
   protected viewInitialized = false;
@@ -86,6 +87,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         case ChartType.RSI: return 134;
         case ChartType.ATR: return 134;
         case ChartType.STOCHASTIC: return 222;
+        case ChartType.ADX: return 306;
       }
     }
 
@@ -96,6 +98,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.RSI: return 100;
       case ChartType.ATR: return 100;
       case ChartType.STOCHASTIC: return 148;
+      case ChartType.ADX: return 176;
       default: return 72;
     }
   }
@@ -145,6 +148,15 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: '  %D', className: 'legend-stochastic-d' },
             { label: `  ${this.formatValue(readout.stochasticD)}`, className: 'legend-value' }
           ];
+        case ChartType.ADX:
+          return [
+            { label: 'ADX', className: 'legend-adx' },
+            { label: `  ${this.formatValue(readout.adx)}`, className: 'legend-value' },
+            { label: '  +DI', className: 'legend-plus-di' },
+            { label: `  ${this.formatValue(readout.plusDi)}`, className: 'legend-value' },
+            { label: '  −DI', className: 'legend-minus-di' },
+            { label: `  ${this.formatValue(readout.minusDi)}`, className: 'legend-value' }
+          ];
       }
     }
 
@@ -166,6 +178,12 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         return [
           { label: 'STOCHASTIC %K', className: 'legend-stochastic-k' },
           { label: '  %D', className: 'legend-stochastic-d' }
+        ];
+      case ChartType.ADX:
+        return [
+          { label: 'ADX 14', className: 'legend-adx' },
+          { label: '  +DI', className: 'legend-plus-di' },
+          { label: '  −DI', className: 'legend-minus-di' }
         ];
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
@@ -288,7 +306,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       || this.chartType === ChartType.MACD
       || this.chartType === ChartType.RSI
       || this.chartType === ChartType.ATR
-      || this.chartType === ChartType.STOCHASTIC;
+      || this.chartType === ChartType.STOCHASTIC
+      || this.chartType === ChartType.ADX;
   }
 
   get panelToggleLabel(): string {
@@ -298,6 +317,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.RSI: return 'Collapse RSI panel';
       case ChartType.ATR: return 'Collapse ATR panel';
       case ChartType.STOCHASTIC: return 'Collapse Stochastic panel';
+      case ChartType.ADX: return 'Collapse ADX panel';
       default: return 'Collapse indicator panel';
     }
   }

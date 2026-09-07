@@ -6,6 +6,7 @@ import {
 } from '../../interfaces/indicator-options.interface';
 import {
   AtrTrailingStopPoint,
+  AdxPoint,
   DatedValuePoint,
   IchimokuPoint,
   MoneyFlowPoint,
@@ -26,6 +27,7 @@ export class TechnicalIndicatorCalculatorService {
       ema: this.ema(points, s.emaPeriod),
       atr: this.atr(points, s.atrPeriod),
       stochastic: this.stochastic(points, s.stochasticPeriod, s.stochasticSignalPeriod),
+      adx: this.adx(points, s.adxPeriod),
       momentum: this.change(points, s.momentumPeriod, false),
       roc: this.change(points, s.rocPeriod, true),
       sroc: this.sroc(points, s.srocPeriod, s.srocSmoothingPeriod),
@@ -74,6 +76,62 @@ export class TechnicalIndicatorCalculatorService {
       k[index] === null || d[index] === null
         ? [] : [{ date: point.date, k: k[index]!, d: d[index]! }]
     );
+  }
+
+  adx(points: readonly TechnicalAnalysisDataPoint[], period: number): AdxPoint[] {
+    if (period <= 0 || points.length < period * 2) return [];
+
+    const trueRange = Array<number>(points.length).fill(0);
+    const plusDm = Array<number>(points.length).fill(0);
+    const minusDm = Array<number>(points.length).fill(0);
+    for (let index = 1; index < points.length; index++) {
+      const upward = points[index].high - points[index - 1].high;
+      const downward = points[index - 1].low - points[index].low;
+      plusDm[index] = upward > downward && upward > 0 ? upward : 0;
+      minusDm[index] = downward > upward && downward > 0 ? downward : 0;
+      trueRange[index] = Math.max(
+        points[index].high - points[index].low,
+        Math.abs(points[index].high - points[index - 1].close),
+        Math.abs(points[index].low - points[index - 1].close)
+      );
+    }
+
+    const plusDi = Array<number | null>(points.length).fill(null);
+    const minusDi = Array<number | null>(points.length).fill(null);
+    const dx = Array<number | null>(points.length).fill(null);
+    let smoothedRange = trueRange.slice(1, period + 1).reduce((sum, value) => sum + value, 0);
+    let smoothedPlus = plusDm.slice(1, period + 1).reduce((sum, value) => sum + value, 0);
+    let smoothedMinus = minusDm.slice(1, period + 1).reduce((sum, value) => sum + value, 0);
+
+    for (let index = period; index < points.length; index++) {
+      if (index > period) {
+        smoothedRange = smoothedRange - smoothedRange / period + trueRange[index];
+        smoothedPlus = smoothedPlus - smoothedPlus / period + plusDm[index];
+        smoothedMinus = smoothedMinus - smoothedMinus / period + minusDm[index];
+      }
+      plusDi[index] = smoothedRange === 0 ? 0 : 100 * smoothedPlus / smoothedRange;
+      minusDi[index] = smoothedRange === 0 ? 0 : 100 * smoothedMinus / smoothedRange;
+      const total = plusDi[index]! + minusDi[index]!;
+      dx[index] = total === 0 ? 0 : 100 * Math.abs(plusDi[index]! - minusDi[index]!) / total;
+    }
+
+    const firstAdxIndex = period * 2 - 1;
+    let currentAdx = dx.slice(period, firstAdxIndex + 1)
+      .reduce<number>((sum, value) => sum + (value ?? 0), 0) / period;
+
+    const result: AdxPoint[] = [];
+    for (let index = firstAdxIndex; index < points.length; index++) {
+      if (index > firstAdxIndex) {
+        currentAdx = ((currentAdx * (period - 1)) + (dx[index] ?? 0)) / period;
+      }
+      result.push({
+        date: points[index].date,
+        adx: currentAdx,
+        plusDi: plusDi[index] ?? 0,
+        minusDi: minusDi[index] ?? 0
+      });
+    }
+    return result;
   }
 
   change(

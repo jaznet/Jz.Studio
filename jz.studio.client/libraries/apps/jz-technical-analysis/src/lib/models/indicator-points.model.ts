@@ -1,5 +1,6 @@
 export interface DatedValuePoint { date: Date; value: number; }
 export interface StochasticPoint { date: Date; k: number; d: number; }
+export interface AdxPoint { date: Date; adx: number; plusDi: number; minusDi: number; }
 export interface MoneyFlowPoint { date: Date; value: number; }
 export interface AtrTrailingStopPoint {
   date: Date;
@@ -18,6 +19,7 @@ export interface TechnicalIndicatorSet {
   ema: readonly DatedValuePoint[];
   atr: readonly DatedValuePoint[];
   stochastic: readonly StochasticPoint[];
+  adx: readonly AdxPoint[];
   momentum: readonly DatedValuePoint[];
   roc: readonly DatedValuePoint[];
   sroc: readonly DatedValuePoint[];
@@ -32,6 +34,7 @@ export const EMPTY_TECHNICAL_INDICATORS: TechnicalIndicatorSet = {
   ema: [],
   atr: [],
   stochastic: [],
+  adx: [],
   momentum: [],
   roc: [],
   sroc: [],

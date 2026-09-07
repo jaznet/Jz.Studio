@@ -163,7 +163,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     { chartType: ChartType.MACD, label: 'MACD' },
     { chartType: ChartType.RSI, label: 'RSI 14' },
     { chartType: ChartType.ATR, label: 'ATR 14' },
-    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' }
+    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' },
+    { chartType: ChartType.ADX, label: 'ADX 14' }
   ] as const;
 
   get hiddenIndicatorControls(): ReadonlyArray<{
@@ -203,10 +204,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       [ChartType.MACD]: readoutVisible ? 310 : 232,
       [ChartType.RSI]: readoutVisible ? 134 : 100,
       [ChartType.ATR]: readoutVisible ? 134 : 100,
-      [ChartType.STOCHASTIC]: readoutVisible ? 222 : 148
+      [ChartType.STOCHASTIC]: readoutVisible ? 222 : 148,
+      [ChartType.ADX]: readoutVisible ? 306 : 176
     };
 
-    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR, ChartType.STOCHASTIC] as const)
+    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR, ChartType.STOCHASTIC, ChartType.ADX] as const)
       .flatMap(chartType => {
         const panel = this.chartScaffold.chartMap?.[chartType];
         const width = widths[chartType];
@@ -956,6 +958,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
           .domain([0, 100])
           .range([contentHeight, 0])
           .invert(clampedY);
+      case ChartType.ADX:
+        return scaleLinear()
+          .domain([0, 100])
+          .range([contentHeight, 0])
+          .invert(clampedY);
       default:
         return 0;
     }
@@ -969,7 +976,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       return value.toFixed(0);
     }
 
-    if (chartType === ChartType.RSI || chartType === ChartType.STOCHASTIC) {
+    if (chartType === ChartType.RSI || chartType === ChartType.STOCHASTIC || chartType === ChartType.ADX) {
       return value.toFixed(1);
     }
     return value.toFixed(2);

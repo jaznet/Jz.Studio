@@ -8,6 +8,7 @@ export enum ChartType {
   EMA = 'EMA',
   BOLLINGER_BANDS = 'bollingerBands',
   STOCHASTIC = 'stochastic',
+  ADX = 'ADX',
   ATR = 'ATR',
   MOMENTUM = 'momentum',
   ROC = 'roc',

@@ -53,7 +53,8 @@ export class ChartPanelRendererService {
         preference.chartType === ChartType.MACD ||
         preference.chartType === ChartType.RSI ||
         preference.chartType === ChartType.ATR ||
-        preference.chartType === ChartType.STOCHASTIC
+        preference.chartType === ChartType.STOCHASTIC ||
+        preference.chartType === ChartType.ADX
       ) {
         componentRef.setInput('calculationData', request.calculationData);
       }
