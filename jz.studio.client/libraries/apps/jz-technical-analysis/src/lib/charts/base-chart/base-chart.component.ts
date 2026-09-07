@@ -17,6 +17,7 @@ import { PanelPreferenceService } from '../../support/panel-workspace/panel-pref
   styleUrl: './base-chart.component.scss'
 })
 export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
+  private readonly hostElement = inject(ElementRef<SVGGElement>);
   private readonly crosshairService = inject(ChartCrosshairService);
   private readonly panelPreferenceService = inject(PanelPreferenceService);
   protected readonly smaVisibilityService = inject(SmaVisibilityService);
@@ -52,7 +53,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   readonly indicatorChoices = [
     { chartType: ChartType.VOLUME, label: 'VOLUME' },
     { chartType: ChartType.MACD, label: 'MACD' },
-    { chartType: ChartType.RSI, label: 'RSI 14' }
+    { chartType: ChartType.RSI, label: 'RSI 14' },
+    { chartType: ChartType.ATR, label: 'ATR 14' }
   ] as const;
 
   protected viewInitialized = false;
@@ -80,6 +82,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         case ChartType.VOLUME: return 168;
         case ChartType.MACD: return 310;
         case ChartType.RSI: return 134;
+        case ChartType.ATR: return 134;
       }
     }
 
@@ -88,6 +91,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.MACD: return 232;
       case ChartType.VOLUME: return 114;
       case ChartType.RSI: return 100;
+      case ChartType.ATR: return 100;
       default: return 72;
     }
   }
@@ -125,6 +129,11 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: 'RSI', className: 'legend-rsi' },
             { label: `  ${this.formatValue(readout.rsi)}`, className: 'legend-value' }
           ];
+        case ChartType.ATR:
+          return [
+            { label: 'ATR', className: 'legend-atr' },
+            { label: `  ${this.formatValue(readout.atr)}`, className: 'legend-value' }
+          ];
       }
     }
 
@@ -140,6 +149,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         ];
       case ChartType.RSI:
         return [{ label: 'RSI 14', className: 'legend-rsi' }];
+      case ChartType.ATR:
+        return [{ label: 'ATR 14', className: 'legend-atr' }];
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
     }
@@ -154,7 +165,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   }
 
   get showDepthSeam(): boolean {
-    return this.chartType === ChartType.VOLUME;
+    return this.preferenceId === 'slot-1';
   }
 
   get isPricePanel(): boolean {
@@ -168,7 +179,11 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   toggleIndicatorMenu(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.indicatorMenuOpen = !this.indicatorMenuOpen;
+    const opening = !this.indicatorMenuOpen;
+    this.indicatorMenuOpen = opening;
+    if (opening) {
+      this.suppressIndicatorMenuCrosshair(event);
+    }
   }
 
   selectIndicator(event: Event, chartType: ChartType): void {
@@ -184,6 +199,15 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   stopIndicatorMenuPointer(event: Event): void {
     event.stopPropagation();
+  }
+
+  suppressIndicatorMenuCrosshair(event: Event): void {
+    event.stopPropagation();
+    this.crosshairService.hide();
+    this.hostElement.nativeElement.dispatchEvent(new CustomEvent(
+      'indicator-menu-opened',
+      { bubbles: true }
+    ));
   }
 
   @HostListener('document:pointerdown')
@@ -246,7 +270,8 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
   get showPanelToggle(): boolean {
     return this.chartType === ChartType.VOLUME
       || this.chartType === ChartType.MACD
-      || this.chartType === ChartType.RSI;
+      || this.chartType === ChartType.RSI
+      || this.chartType === ChartType.ATR;
   }
 
   get panelToggleLabel(): string {
@@ -254,6 +279,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.VOLUME: return 'Collapse Volume panel';
       case ChartType.MACD: return 'Collapse MACD panel';
       case ChartType.RSI: return 'Collapse RSI panel';
+      case ChartType.ATR: return 'Collapse ATR panel';
       default: return 'Collapse indicator panel';
     }
   }

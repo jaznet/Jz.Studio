@@ -161,7 +161,8 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
   readonly indicatorPanels = [
     { chartType: ChartType.VOLUME, label: 'VOLUME' },
     { chartType: ChartType.MACD, label: 'MACD' },
-    { chartType: ChartType.RSI, label: 'RSI 14' }
+    { chartType: ChartType.RSI, label: 'RSI 14' },
+    { chartType: ChartType.ATR, label: 'ATR 14' }
   ] as const;
 
   get hiddenIndicatorControls(): ReadonlyArray<{
@@ -199,10 +200,11 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       [ChartType.OHLC]: readoutVisible ? 540 : 224,
       [ChartType.VOLUME]: readoutVisible ? 168 : 114,
       [ChartType.MACD]: readoutVisible ? 310 : 232,
-      [ChartType.RSI]: readoutVisible ? 134 : 100
+      [ChartType.RSI]: readoutVisible ? 134 : 100,
+      [ChartType.ATR]: readoutVisible ? 134 : 100
     };
 
-    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI] as const)
+    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR] as const)
       .flatMap(chartType => {
         const panel = this.chartScaffold.chartMap?.[chartType];
         const width = widths[chartType];
@@ -519,6 +521,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
 
     event.preventDefault();
     this.movePinnedCrosshair(event.key === 'ArrowLeft' ? -1 : 1);
+  }
+
+  @HostListener('indicator-menu-opened')
+  onIndicatorMenuOpened(): void {
+    this.crosshairPinned = false;
+    this.hideCrosshair();
   }
 
   releasePinnedCrosshair(): void {
@@ -929,6 +937,18 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
           .domain([0, 100])
           .range([contentHeight, 0])
           .invert(clampedY);
+      case ChartType.ATR: {
+        const values = this.chartData.atrData.map(item => item.value);
+        if (values.length === 0) return 0;
+        const minimum = Math.min(...values);
+        const maximum = Math.max(...values);
+        const padding = (maximum - minimum) * 0.08 || Math.max(maximum * 0.08, 0.1);
+        return scaleLinear()
+          .domain([Math.max(0, minimum - padding), maximum + padding])
+          .range([contentHeight, 0])
+          .nice()
+          .invert(clampedY);
+      }
       default:
         return 0;
     }

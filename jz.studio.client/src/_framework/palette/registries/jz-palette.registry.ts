@@ -70,8 +70,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     highlight: '#4F5C66',
     highlightTxt: '#FFF7EA',
 
-    logo: '#1C2126',
-    logoTxt: '#2A3138',
+    logo: '#fff275',
+    logoTxt: '#4c86a8',
 
     // active tab/content boundary
     activeBoundary: '#4F5C66',

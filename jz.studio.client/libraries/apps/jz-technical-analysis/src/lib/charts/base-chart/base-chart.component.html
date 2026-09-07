@@ -137,6 +137,8 @@
              [attr.aria-label]="'Select indicator for ' + preferenceId"
              [attr.aria-expanded]="indicatorMenuOpen"
              (pointerdown)="stopIndicatorMenuPointer($event)"
+             (pointerenter)="suppressIndicatorMenuCrosshair($event)"
+             (pointermove)="suppressIndicatorMenuCrosshair($event)"
              (click)="toggleIndicatorMenu($event)"
              (keydown.enter)="toggleIndicatorMenu($event)"
              (keydown.space)="toggleIndicatorMenu($event)">
@@ -147,9 +149,11 @@
           @if (indicatorMenuOpen) {
             <g class="indicator-menu-popup"
                transform="translate(0, 22)"
-               (pointerdown)="stopIndicatorMenuPointer($event)">
+               (pointerdown)="stopIndicatorMenuPointer($event)"
+               (pointerenter)="suppressIndicatorMenuCrosshair($event)"
+               (pointermove)="suppressIndicatorMenuCrosshair($event)">
               <rect width="112"
-                    [attr.height]="indicatorChoices.length * 22"
+                    [attr.height]="indicatorChoices.length * 18"
                     rx="4"
                     ry="4">
               </rect>
@@ -159,13 +163,13 @@
                    role="menuitemradio"
                    tabindex="0"
                    [attr.aria-checked]="isCurrentIndicator(choice.chartType)"
-                   [attr.transform]="'translate(0, ' + (index * 22) + ')'"
+                   [attr.transform]="'translate(0, ' + (index * 18) + ')'"
                    (click)="selectIndicator($event, choice.chartType)"
                    (keydown.enter)="selectIndicator($event, choice.chartType)"
                    (keydown.space)="selectIndicator($event, choice.chartType)">
-                  <rect x="2" y="2" width="108" height="18" rx="3" ry="3"></rect>
-                  <text x="9" y="14">{{ isCurrentIndicator(choice.chartType) ? '✓' : '' }}</text>
-                  <text x="27" y="14">{{ choice.label }}</text>
+                  <rect x="2" y="1" width="108" height="16" rx="3" ry="3"></rect>
+                  <text x="9" y="13">{{ isCurrentIndicator(choice.chartType) ? '✓' : '' }}</text>
+                  <text x="27" y="13">{{ choice.label }}</text>
                 </g>
               }
             </g>

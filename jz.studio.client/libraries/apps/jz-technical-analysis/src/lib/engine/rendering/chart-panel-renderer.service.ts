@@ -51,7 +51,8 @@ export class ChartPanelRendererService {
       if (
         preference.chartType === ChartType.OHLC ||
         preference.chartType === ChartType.MACD ||
-        preference.chartType === ChartType.RSI
+        preference.chartType === ChartType.RSI ||
+        preference.chartType === ChartType.ATR
       ) {
         componentRef.setInput('calculationData', request.calculationData);
       }
