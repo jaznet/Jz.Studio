@@ -65,6 +65,16 @@ export class PanelPreferenceService {
     this.setPreferences([...DEFAULT_PANEL_PREFERENCES]);
   }
 
+  isDefaultLayout(): boolean {
+    return DEFAULT_PANEL_PREFERENCES.every(defaultPreference => {
+      const preference = this._preferences.value.find(item =>
+        item.id === defaultPreference.id
+      );
+      return preference?.chartType === defaultPreference.chartType
+        && preference.visible === defaultPreference.visible;
+    });
+  }
+
   hasHiddenIndicators(): boolean {
     return this._preferences.value.some(preference =>
       preference.chartType !== ChartType.OHLC && !preference.visible

@@ -184,6 +184,14 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       - (this.hiddenIndicatorControls.length * 82);
   }
 
+  get indicatorLayoutCustomized(): boolean {
+    return !this.panelPreferenceService.isDefaultLayout();
+  }
+
+  get resetIndicatorLayoutX(): number {
+    return this.indicatorRestoreControlsX - 100;
+  }
+
   get anyIndicatorHidden(): boolean {
     return this.smaVisibilityService.hasHidden()
       || this.macdVisibilityService.hasHidden()
@@ -307,6 +315,12 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     this.panelPreferenceService.restoreIndicatorVisibility();
     this.smaVisibilityService.restoreAll();
     this.macdVisibilityService.restoreAll();
+  }
+
+  resetIndicatorLayout(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.panelPreferenceService.resetToDefaults();
   }
 
   ngOnDestroy(): void {

@@ -96,6 +96,23 @@
       </g>
     }
 
+    @if (indicatorLayoutCustomized) {
+      <g class="indicator-layout-reset-control"
+         role="button"
+         tabindex="0"
+         aria-label="Reset indicator layout to Volume, MACD, and RSI"
+         [attr.transform]="'translate('
+           + resetIndicatorLayoutX
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+         (pointerdown)="stopIndicatorRestorePointer($event)"
+         (click)="resetIndicatorLayout($event)"
+         (keydown.enter)="resetIndicatorLayout($event)"
+         (keydown.space)="resetIndicatorLayout($event)">
+        <rect width="92" height="18" rx="3" ry="3"></rect>
+        <text x="46" y="9">RESET LAYOUT</text>
+      </g>
+    }
+
     @if (crosshairVisible) {
       <defs>
         <mask id="crosshair-panel-label-mask"
