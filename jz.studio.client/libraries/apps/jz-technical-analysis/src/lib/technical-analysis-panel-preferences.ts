@@ -3,6 +3,14 @@
 import { ChartType } from "./enums/chart-type";
 import { PanelPreference } from "./interfaces/panel-preference.interface";
 
+export const DEFAULT_INDICATOR_SLOTS: Readonly<Record<
+  'slot-1' | 'slot-2' | 'slot-3',
+  ChartType
+>> = {
+  'slot-1': ChartType.VOLUME,
+  'slot-2': ChartType.MACD,
+  'slot-3': ChartType.RSI
+};
 
 export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
   {
@@ -18,7 +26,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
   },
   {
     id: 'slot-1',
-    chartType: ChartType.VOLUME,
+    chartType: DEFAULT_INDICATOR_SLOTS['slot-1'],
     order: 2,
     visible: true,
     ratio: 0.2,
@@ -29,7 +37,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
   },
   {
     id: 'slot-2',
-    chartType: ChartType.MACD,
+    chartType: DEFAULT_INDICATOR_SLOTS['slot-2'],
     order: 3,
     visible: true,
     ratio: 0.13,
@@ -40,7 +48,7 @@ export const DEFAULT_PANEL_PREFERENCES: PanelPreference[] = [
   },
   {
     id: 'slot-3',
-    chartType: ChartType.RSI,
+    chartType: DEFAULT_INDICATOR_SLOTS['slot-3'],
     order: 4,
     visible: true,
     ratio: 0.17,

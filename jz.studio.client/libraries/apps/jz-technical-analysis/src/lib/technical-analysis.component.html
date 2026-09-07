@@ -100,7 +100,7 @@
       <g class="indicator-layout-reset-control"
          role="button"
          tabindex="0"
-         aria-label="Reset indicator layout to Volume, MACD, and RSI"
+         aria-label="Restore the default indicator layout"
          [attr.transform]="'translate('
            + resetIndicatorLayoutX
            + ',' + (chartScaffold.xAxisTop + 8) + ')'"
@@ -109,7 +109,39 @@
          (keydown.enter)="resetIndicatorLayout($event)"
          (keydown.space)="resetIndicatorLayout($event)">
         <rect width="92" height="18" rx="3" ry="3"></rect>
-        <text x="46" y="9">RESET LAYOUT</text>
+        <text x="46" y="9">DEFAULT LAYOUT</text>
+      </g>
+
+      <g class="indicator-layout-reset-control"
+         role="button"
+         tabindex="0"
+         aria-label="Save the current indicator layout as the default"
+         [attr.transform]="'translate('
+           + saveDefaultLayoutX
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+         (pointerdown)="stopIndicatorRestorePointer($event)"
+         (click)="saveDefaultLayout($event)"
+         (keydown.enter)="saveDefaultLayout($event)"
+         (keydown.space)="saveDefaultLayout($event)">
+        <rect width="92" height="18" rx="3" ry="3"></rect>
+        <text x="46" y="9">SAVE DEFAULT</text>
+      </g>
+    }
+
+    @if (userDefaultLayoutSaved) {
+      <g class="indicator-layout-reset-control"
+         role="button"
+         tabindex="0"
+         aria-label="Restore the factory indicator layout"
+         [attr.transform]="'translate('
+           + factoryLayoutX
+           + ',' + (chartScaffold.xAxisTop + 8) + ')'"
+         (pointerdown)="stopIndicatorRestorePointer($event)"
+         (click)="restoreFactoryLayout($event)"
+         (keydown.enter)="restoreFactoryLayout($event)"
+         (keydown.space)="restoreFactoryLayout($event)">
+        <rect width="92" height="18" rx="3" ry="3"></rect>
+        <text x="46" y="9">FACTORY LAYOUT</text>
       </g>
     }
 

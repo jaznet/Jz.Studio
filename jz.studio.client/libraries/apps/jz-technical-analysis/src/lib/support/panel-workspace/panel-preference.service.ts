@@ -11,7 +11,9 @@ import { ChartType } from '../../enums/chart-type';
 })
 export class PanelPreferenceService {
   private readonly storageKey = 'jz.technical-analysis.panel-slots.v1';
+  private readonly defaultStorageKey = 'jz.technical-analysis.panel-slot-defaults.v1';
   private readonly legacyVisibilityKey = 'jz.technical-analysis.panel-visibility.v1';
+  private userDefaultPreferences = this.loadUserDefaultPreferences();
   private readonly _preferences = new BehaviorSubject<PanelPreference[]>(
     this.loadPreferences()
   );
@@ -62,12 +64,36 @@ export class PanelPreferenceService {
   }
 
   resetToDefaults(): void {
+    this.setPreferences(this.userDefaultPreferences
+      ?? [...DEFAULT_PANEL_PREFERENCES]);
+  }
+
+  saveCurrentAsDefault(): void {
+    this.userDefaultPreferences = this.getPreferences();
+    this.persistPreferences(this.defaultStorageKey, this.userDefaultPreferences);
+  }
+
+  restoreFactoryDefaults(): void {
     this.setPreferences([...DEFAULT_PANEL_PREFERENCES]);
   }
 
+  hasUserDefault(): boolean {
+    return this.userDefaultPreferences !== undefined;
+  }
+
   isDefaultLayout(): boolean {
-    return DEFAULT_PANEL_PREFERENCES.every(defaultPreference => {
-      const preference = this._preferences.value.find(item =>
+    return this.layoutsMatch(
+      this._preferences.value,
+      this.userDefaultPreferences ?? DEFAULT_PANEL_PREFERENCES
+    );
+  }
+
+  private layoutsMatch(
+    preferences: readonly PanelPreference[],
+    defaults: readonly PanelPreference[]
+  ): boolean {
+    return defaults.every(defaultPreference => {
+      const preference = preferences.find(item =>
         item.id === defaultPreference.id
       );
       return preference?.chartType === defaultPreference.chartType
@@ -115,6 +141,13 @@ export class PanelPreferenceService {
   }
 
   private persistVisibility(preferences: readonly PanelPreference[]): void {
+    this.persistPreferences(this.storageKey, preferences);
+  }
+
+  private persistPreferences(
+    storageKey: string,
+    preferences: readonly PanelPreference[]
+  ): void {
     try {
       const slots = Object.fromEntries(
         preferences.map(preference => [preference.id, {
@@ -122,9 +155,32 @@ export class PanelPreferenceService {
           visible: preference.visible
         }])
       );
-      localStorage.setItem(this.storageKey, JSON.stringify(slots));
+      localStorage.setItem(storageKey, JSON.stringify(slots));
     } catch {
       // Storage can be unavailable in restricted browser contexts.
+    }
+  }
+
+  private loadUserDefaultPreferences(): PanelPreference[] | undefined {
+    try {
+      const stored = localStorage.getItem(this.defaultStorageKey);
+      if (!stored) return undefined;
+
+      const saved = JSON.parse(stored) as Record<string, {
+        chartType?: ChartType;
+        visible?: boolean;
+      }>;
+      return DEFAULT_PANEL_PREFERENCES.map(preference => ({
+        ...preference,
+        chartType: preference.chartType === ChartType.OHLC
+          ? ChartType.OHLC
+          : saved[preference.id]?.chartType ?? preference.chartType,
+        visible: preference.chartType === ChartType.OHLC
+          ? true
+          : saved[preference.id]?.visible ?? preference.visible
+      }));
+    } catch {
+      return undefined;
     }
   }
 
