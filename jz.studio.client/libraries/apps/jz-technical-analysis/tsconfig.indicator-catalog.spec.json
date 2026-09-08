@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "files": [
+    "src/lib/services/indicators/indicator-panel-catalog.spec.ts"
+  ],
+  "include": []
+}

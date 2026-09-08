@@ -10,6 +10,18 @@ import { SmaPeriod, SmaVisibilityService } from '../../services/charts/sma/sma-v
 import { MacdSeries, MacdVisibilityService } from '../../services/charts/macd/macd-visibility.service';
 import { PanelPreferenceService } from '../../support/panel-workspace/panel-preference.service';
 
+export const INDICATOR_PANEL_CHOICES = [
+  { chartType: ChartType.VOLUME, label: 'VOLUME' },
+  { chartType: ChartType.MACD, label: 'MACD' },
+  { chartType: ChartType.RSI, label: 'RSI 14' },
+  { chartType: ChartType.ATR, label: 'ATR 14', catalogId: 'atr' },
+  { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC', catalogId: 'stochastic' },
+  { chartType: ChartType.ADX, label: 'ADX 14', catalogId: 'adx' },
+  { chartType: ChartType.AROON, label: 'AROON 25', catalogId: 'aroon' },
+  { chartType: ChartType.WILLIAMS_R, label: 'WILLIAMS %R', catalogId: 'williams-r' },
+  { chartType: ChartType.BOLLINGER_WIDTH, label: 'BB WIDTH', catalogId: 'bollinger-width' }
+] as const;
+
 @Component({
   selector: 'base-chart',
   standalone: true,
@@ -51,17 +63,7 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
 
   indicatorMenuOpen = false;
 
-  readonly indicatorChoices = [
-    { chartType: ChartType.VOLUME, label: 'VOLUME' },
-    { chartType: ChartType.MACD, label: 'MACD' },
-    { chartType: ChartType.RSI, label: 'RSI 14' },
-    { chartType: ChartType.ATR, label: 'ATR 14' },
-    { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' },
-    { chartType: ChartType.ADX, label: 'ADX 14' },
-    { chartType: ChartType.AROON, label: 'AROON 25' },
-    { chartType: ChartType.WILLIAMS_R, label: 'WILLIAMS %R' },
-    { chartType: ChartType.BOLLINGER_WIDTH, label: 'BB WIDTH' }
-  ] as const;
+  readonly indicatorChoices = INDICATOR_PANEL_CHOICES;
 
   protected viewInitialized = false;
   protected inputsInitialized = false;
