@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:technical-analysis:regression": "ng test jz-technical-analysis --watch=false --ts-config=libraries/apps/jz-technical-analysis/tsconfig.regression.spec.json --include=libraries/apps/jz-technical-analysis/src/lib/services/indicators/technical-indicator-calculator.service.spec.ts --include=libraries/apps/jz-technical-analysis/src/lib/support/panel-workspace/panel-preference.service.spec.ts --include=libraries/apps/jz-technical-analysis/src/lib/charts/base-chart/base-chart.component.spec.ts --include=libraries/apps/jz-technical-analysis/src/lib/services/indicators/indicator-panel-catalog.spec.ts",
     "prestart": "node aspnetcore-https",
     "start:windows": "ng serve --ssl --ssl-cert \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem\" --ssl-key \"%APPDATA%\\ASP.NET\\https\\%npm_package_name%.key\" --host localhost",
     "start:default": "ng serve --ssl --ssl-cert \"$HOME/.aspnet/https/${npm_package_name}.pem\" --ssl-key \"$HOME/.aspnet/https/${npm_package_name}.key\" --host localhost"

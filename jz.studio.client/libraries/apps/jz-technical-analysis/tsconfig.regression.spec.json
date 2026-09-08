@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "files": [
+    "src/lib/services/indicators/technical-indicator-calculator.service.spec.ts",
+    "src/lib/support/panel-workspace/panel-preference.service.spec.ts",
+    "src/lib/charts/base-chart/base-chart.component.spec.ts",
+    "src/lib/services/indicators/indicator-panel-catalog.spec.ts"
+  ],
+  "include": []
+}
