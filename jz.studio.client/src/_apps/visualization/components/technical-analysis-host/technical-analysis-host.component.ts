@@ -43,6 +43,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   dataWindow?: TechnicalAnalysisDataWindow;
   validationMessage = '';
   interactionHelpVisible = false;
+  layoutSettingsVisible = false;
 
   get indicatorLayoutCustomized(): boolean {
     return this.technicalAnalysis?.indicatorLayoutCustomized ?? false;
@@ -106,6 +107,10 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
       && (!(target instanceof Element) || !target.closest('.interaction-help'))) {
       this.setInteractionHelpVisible(false);
     }
+    if (this.layoutSettingsVisible
+      && (!(target instanceof Element) || !target.closest('.layout-settings'))) {
+      this.layoutSettingsVisible = false;
+    }
   }
 
   @HostListener('document:keydown.escape')
@@ -113,6 +118,16 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     event?.preventDefault();
     event?.stopPropagation();
     this.setInteractionHelpVisible(false);
+    this.layoutSettingsVisible = false;
+  }
+
+  toggleLayoutSettings(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.layoutSettingsVisible = !this.layoutSettingsVisible;
+    if (this.layoutSettingsVisible) {
+      this.setInteractionHelpVisible(false);
+    }
   }
 
   selectLayoutAction(action: string): void {
@@ -127,6 +142,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
         this.technicalAnalysis?.restoreFactoryLayout();
         break;
     }
+    this.layoutSettingsVisible = false;
   }
 
   private setInteractionHelpVisible(visible: boolean): void {

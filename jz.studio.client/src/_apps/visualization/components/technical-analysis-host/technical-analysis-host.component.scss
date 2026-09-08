@@ -48,7 +48,6 @@
 }
 
 .analysis-controls input,
-.analysis-controls select,
 .analysis-controls button {
   height: 26px;
   border: var(--border-width) solid var(--border-soft);
@@ -106,15 +105,33 @@
   font-size: 12px;
 }
 
-.layout-menu {
+.layout-settings {
   position: relative;
   margin-left: auto;
 }
 
-.analysis-controls .layout-menu select {
-  width: 82px;
-  padding-inline: 8px;
-  color-scheme: dark;
+.layout-settings-panel {
+  width: 190px;
+  gap: 0;
+  padding: 4px;
+}
+
+.analysis-controls .layout-settings-toggle {
+  font-size: 14px;
+}
+
+.analysis-controls .layout-settings-panel button {
+  width: 100%;
+  border: 0;
+  text-align: left;
+  background: transparent;
+}
+
+.analysis-controls .layout-settings-panel button:hover:not(:disabled),
+.analysis-controls .layout-settings-panel button:focus-visible {
+  color: var(--plt-pop);
+  background: color-mix(in srgb, var(--plt-pop) 10%, transparent);
+  outline: none;
 }
 
 .interaction-help {
