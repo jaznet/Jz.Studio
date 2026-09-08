@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "files": [
+    "src/lib/support/panel-workspace/panel-preference.service.spec.ts"
+  ],
+  "include": []
+}
