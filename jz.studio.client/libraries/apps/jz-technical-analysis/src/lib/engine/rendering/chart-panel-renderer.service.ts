@@ -55,6 +55,9 @@ export class ChartPanelRendererService {
         preference.chartType === ChartType.ATR ||
         preference.chartType === ChartType.STOCHASTIC ||
         preference.chartType === ChartType.ADX
+        || preference.chartType === ChartType.AROON
+        || preference.chartType === ChartType.WILLIAMS_R
+        || preference.chartType === ChartType.BOLLINGER_WIDTH
       ) {
         componentRef.setInput('calculationData', request.calculationData);
       }

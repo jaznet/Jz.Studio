@@ -7,6 +7,7 @@ import {
 import {
   AtrTrailingStopPoint,
   AdxPoint,
+  AroonPoint,
   DatedValuePoint,
   IchimokuPoint,
   MoneyFlowPoint,
@@ -28,6 +29,8 @@ export class TechnicalIndicatorCalculatorService {
       atr: this.atr(points, s.atrPeriod),
       stochastic: this.stochastic(points, s.stochasticPeriod, s.stochasticSignalPeriod),
       adx: this.adx(points, s.adxPeriod),
+      aroon: this.aroon(points, s.aroonPeriod),
+      bollingerWidth: this.bollingerWidth(points, s.bollingerPeriod),
       momentum: this.change(points, s.momentumPeriod, false),
       roc: this.change(points, s.rocPeriod, true),
       sroc: this.sroc(points, s.srocPeriod, s.srocSmoothingPeriod),
@@ -132,6 +135,39 @@ export class TechnicalIndicatorCalculatorService {
       });
     }
     return result;
+  }
+
+  aroon(points: readonly TechnicalAnalysisDataPoint[], period: number): AroonPoint[] {
+    if (period <= 0) return [];
+    return points.slice(period - 1).map((point, offset) => {
+      const end = offset + period;
+      const window = points.slice(offset, end);
+      let highIndex = 0, lowIndex = 0;
+      window.forEach((item, index) => {
+        if (item.high >= window[highIndex].high) highIndex = index;
+        if (item.low <= window[lowIndex].low) lowIndex = index;
+      });
+      return {
+        date: point.date,
+        up: 100 * highIndex / (period - 1 || 1),
+        down: 100 * lowIndex / (period - 1 || 1)
+      };
+    });
+  }
+
+  bollingerWidth(
+    points: readonly TechnicalAnalysisDataPoint[], period: number
+  ): DatedValuePoint[] {
+    if (period <= 1) return [];
+    return points.slice(period - 1).flatMap((point, offset) => {
+      const values = points.slice(offset, offset + period).map(item => item.close);
+      const average = values.reduce((sum, value) => sum + value, 0) / period;
+      if (average === 0) return [];
+      const deviation = Math.sqrt(values.reduce(
+        (sum, value) => sum + Math.pow(value - average, 2), 0
+      ) / period);
+      return [{ date: point.date, value: 400 * deviation / average }];
+    });
   }
 
   change(

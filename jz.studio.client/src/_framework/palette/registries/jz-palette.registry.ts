@@ -50,8 +50,79 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
 
     // surfaces
     clr1: '#2e2e2e', // cool charcoal
-    clr2: '#1C2126', // graphite
-    clr3: '#2A3138', // slate iron
+    clr2: '#2A3138', // graphite
+    clr3: '#1c2126', // slate iron
+    clr4: '#3B454F', // muted steel
+    clr5: '#535C65', // weathered silver
+
+    // text
+    txt1: '#E6E2DB', // soft ivory
+    txt2: '#D8D3CB', // warm parchment
+    txt3: '#ECE7DF', // pale bone
+    txt4: '#F7F1E8', // porcelain white
+    txt5: '#15181B', // carbon black
+
+    // accent
+    pop: '#b8860b', // antique brass
+    popTxt: '#FFF7EA', // warm ivory
+
+    // highlight
+    highlight: '#4F5C66',
+    highlightTxt: '#FFF7EA',
+
+    logo: '#fff275',
+    logoTxt: '#4c86a8',
+
+    // active tab/content boundary
+    activeBoundary: '#4F5C66',
+    activeBoundaryTxt: '#F2F4F5',
+
+    technicalAnalysis: {
+      structure: {
+        workspace: '#111111',
+        priceSurface: '#202020',
+        indicatorSurface: '#161616',
+        toolbar: '#262626',
+        border: '#414141',
+        seam: '#525252',
+        grid: '#363636',
+        axis: '#777777',
+        labelPrimary: '#D8D8D5',
+        labelSecondary: '#999996'
+      },
+      data: {
+        bullish: '#4BA2C8',
+        bearish: '#D77F55',
+        wick: '#AAB8C2',
+        sma20: '#54A7C7',
+        sma50: '#D6A451',
+        sma150: '#A58AC5',
+        volumeBullish: '#397A96',
+        volumeBearish: '#A76043',
+        macd: '#54A7C7',
+        signal: '#D6A451',
+        histogramPositive: '#397A96',
+        histogramNegative: '#A76043',
+        rsi: '#A58AC5',
+        reference: '#596166'
+      },
+      interaction: {
+        crosshair: '#C6CED2',
+        selection: '#87CEEB',
+        focus: '#A9DDF2',
+        warning: '#E0A84E',
+        error: '#E06C5C'
+      }
+    }
+  },
+
+  ebony: {
+    name: 'ebony',
+
+    // surfaces
+    clr1: '#494937', // cool charcoal
+    clr2: '#1b2021', // graphite
+    clr3: '#a5ae9e', // slate iron
     clr4: '#3B454F', // muted steel
     clr5: '#535C65', // weathered silver
 

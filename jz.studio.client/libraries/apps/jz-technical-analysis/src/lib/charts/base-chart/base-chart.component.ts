@@ -57,7 +57,10 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     { chartType: ChartType.RSI, label: 'RSI 14' },
     { chartType: ChartType.ATR, label: 'ATR 14' },
     { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' },
-    { chartType: ChartType.ADX, label: 'ADX 14' }
+    { chartType: ChartType.ADX, label: 'ADX 14' },
+    { chartType: ChartType.AROON, label: 'AROON 25' },
+    { chartType: ChartType.WILLIAMS_R, label: 'WILLIAMS %R' },
+    { chartType: ChartType.BOLLINGER_WIDTH, label: 'BB WIDTH' }
   ] as const;
 
   protected viewInitialized = false;
@@ -88,6 +91,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
         case ChartType.ATR: return 134;
         case ChartType.STOCHASTIC: return 222;
         case ChartType.ADX: return 306;
+        case ChartType.AROON: return 238;
+        case ChartType.WILLIAMS_R: return 158;
+        case ChartType.BOLLINGER_WIDTH: return 178;
       }
     }
 
@@ -99,6 +105,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.ATR: return 100;
       case ChartType.STOCHASTIC: return 148;
       case ChartType.ADX: return 176;
+      case ChartType.AROON: return 180;
+      case ChartType.WILLIAMS_R: return 132;
+      case ChartType.BOLLINGER_WIDTH: return 146;
       default: return 72;
     }
   }
@@ -157,6 +166,17 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
             { label: '  −DI', className: 'legend-minus-di' },
             { label: `  ${this.formatValue(readout.minusDi)}`, className: 'legend-value' }
           ];
+        case ChartType.AROON:
+          return [
+            { label: 'AROON UP', className: 'legend-aroon-up' },
+            { label: `  ${this.formatValue(readout.aroonUp)}`, className: 'legend-value' },
+            { label: '  DOWN', className: 'legend-aroon-down' },
+            { label: `  ${this.formatValue(readout.aroonDown)}`, className: 'legend-value' }
+          ];
+        case ChartType.WILLIAMS_R:
+          return [{ label: 'WILLIAMS %R', className: 'legend-williams-r' }, { label: `  ${this.formatValue(readout.williamsR)}`, className: 'legend-value' }];
+        case ChartType.BOLLINGER_WIDTH:
+          return [{ label: 'BB WIDTH', className: 'legend-bollinger-width' }, { label: `  ${this.formatValue(readout.bollingerWidth)}`, className: 'legend-value' }];
       }
     }
 
@@ -185,6 +205,12 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
           { label: '  +DI', className: 'legend-plus-di' },
           { label: '  −DI', className: 'legend-minus-di' }
         ];
+      case ChartType.AROON:
+        return [{ label: 'AROON UP', className: 'legend-aroon-up' }, { label: '  DOWN', className: 'legend-aroon-down' }];
+      case ChartType.WILLIAMS_R:
+        return [{ label: 'WILLIAMS %R', className: 'legend-williams-r' }];
+      case ChartType.BOLLINGER_WIDTH:
+        return [{ label: 'BB WIDTH 20', className: 'legend-bollinger-width' }];
       default:
         return [{ label: this.chartType, className: 'legend-title' }];
     }
@@ -249,6 +275,13 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
     this.indicatorMenuOpen = false;
   }
 
+  @HostListener('document:indicator-menu-opened', ['$event'])
+  closeOtherIndicatorMenu(event: Event): void {
+    if (event.target !== this.hostElement.nativeElement) {
+      this.indicatorMenuOpen = false;
+    }
+  }
+
   @HostListener('document:keydown.escape')
   closeIndicatorMenuOnEscape(): void {
     this.indicatorMenuOpen = false;
@@ -307,7 +340,10 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       || this.chartType === ChartType.RSI
       || this.chartType === ChartType.ATR
       || this.chartType === ChartType.STOCHASTIC
-      || this.chartType === ChartType.ADX;
+      || this.chartType === ChartType.ADX
+      || this.chartType === ChartType.AROON
+      || this.chartType === ChartType.WILLIAMS_R
+      || this.chartType === ChartType.BOLLINGER_WIDTH;
   }
 
   get panelToggleLabel(): string {
@@ -318,6 +354,9 @@ export abstract class BaseChartComponent implements OnChanges, AfterViewInit {
       case ChartType.ATR: return 'Collapse ATR panel';
       case ChartType.STOCHASTIC: return 'Collapse Stochastic panel';
       case ChartType.ADX: return 'Collapse ADX panel';
+      case ChartType.AROON: return 'Collapse Aroon panel';
+      case ChartType.WILLIAMS_R: return 'Collapse Williams %R panel';
+      case ChartType.BOLLINGER_WIDTH: return 'Collapse Bollinger Band Width panel';
       default: return 'Collapse indicator panel';
     }
   }

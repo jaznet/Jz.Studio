@@ -9,6 +9,8 @@ export enum ChartType {
   BOLLINGER_BANDS = 'bollingerBands',
   STOCHASTIC = 'stochastic',
   ADX = 'ADX',
+  AROON = 'aroon',
+  BOLLINGER_WIDTH = 'bollingerWidth',
   ATR = 'ATR',
   MOMENTUM = 'momentum',
   ROC = 'roc',

@@ -164,7 +164,10 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     { chartType: ChartType.RSI, label: 'RSI 14' },
     { chartType: ChartType.ATR, label: 'ATR 14' },
     { chartType: ChartType.STOCHASTIC, label: 'STOCHASTIC' },
-    { chartType: ChartType.ADX, label: 'ADX 14' }
+    { chartType: ChartType.ADX, label: 'ADX 14' },
+    { chartType: ChartType.AROON, label: 'AROON 25' },
+    { chartType: ChartType.WILLIAMS_R, label: 'WILLIAMS %R' },
+    { chartType: ChartType.BOLLINGER_WIDTH, label: 'BB WIDTH' }
   ] as const;
 
   get hiddenIndicatorControls(): ReadonlyArray<{
@@ -213,10 +216,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       [ChartType.RSI]: readoutVisible ? 134 : 100,
       [ChartType.ATR]: readoutVisible ? 134 : 100,
       [ChartType.STOCHASTIC]: readoutVisible ? 222 : 148,
-      [ChartType.ADX]: readoutVisible ? 306 : 176
+      [ChartType.ADX]: readoutVisible ? 306 : 176,
+      [ChartType.AROON]: readoutVisible ? 238 : 180,
+      [ChartType.WILLIAMS_R]: readoutVisible ? 158 : 132,
+      [ChartType.BOLLINGER_WIDTH]: readoutVisible ? 178 : 146
     };
 
-    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR, ChartType.STOCHASTIC, ChartType.ADX] as const)
+    return ([ChartType.OHLC, ChartType.VOLUME, ChartType.MACD, ChartType.RSI, ChartType.ATR, ChartType.STOCHASTIC, ChartType.ADX, ChartType.AROON, ChartType.WILLIAMS_R, ChartType.BOLLINGER_WIDTH] as const)
       .flatMap(chartType => {
         const panel = this.chartScaffold.chartMap?.[chartType];
         const width = widths[chartType];
@@ -989,6 +995,17 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
           .domain([0, 100])
           .range([contentHeight, 0])
           .invert(clampedY);
+      case ChartType.AROON:
+        return scaleLinear().domain([0, 100]).range([contentHeight, 0]).invert(clampedY);
+      case ChartType.WILLIAMS_R:
+        return scaleLinear().domain([-100, 0]).range([contentHeight, 0]).invert(clampedY);
+      case ChartType.BOLLINGER_WIDTH: {
+        const values = this.chartData.bollingerWidthData.map(item => item.value);
+        if (!values.length) return 0;
+        const minimum = Math.min(...values), maximum = Math.max(...values);
+        const padding = (maximum - minimum) * .08 || .1;
+        return scaleLinear().domain([Math.max(0, minimum - padding), maximum + padding]).range([contentHeight, 0]).nice().invert(clampedY);
+      }
       default:
         return 0;
     }
@@ -1002,7 +1019,7 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
       return value.toFixed(0);
     }
 
-    if (chartType === ChartType.RSI || chartType === ChartType.STOCHASTIC || chartType === ChartType.ADX) {
+    if (chartType === ChartType.RSI || chartType === ChartType.STOCHASTIC || chartType === ChartType.ADX || chartType === ChartType.AROON || chartType === ChartType.WILLIAMS_R) {
       return value.toFixed(1);
     }
     return value.toFixed(2);

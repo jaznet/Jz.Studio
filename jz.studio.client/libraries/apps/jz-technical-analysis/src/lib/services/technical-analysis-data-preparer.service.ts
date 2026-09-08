@@ -76,6 +76,8 @@ export class TechnicalAnalysisDataPreparer {
       atr: visible(indicators.atr),
       stochastic: visible(indicators.stochastic),
       adx: visible(indicators.adx),
+      aroon: visible(indicators.aroon),
+      bollingerWidth: visible(indicators.bollingerWidth),
       momentum: visible(indicators.momentum),
       roc: visible(indicators.roc),
       sroc: visible(indicators.sroc),

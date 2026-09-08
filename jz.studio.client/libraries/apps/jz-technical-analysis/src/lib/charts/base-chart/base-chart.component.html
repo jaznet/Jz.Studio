@@ -152,8 +152,8 @@
                (pointerdown)="stopIndicatorMenuPointer($event)"
                (pointerenter)="suppressIndicatorMenuCrosshair($event)"
                (pointermove)="suppressIndicatorMenuCrosshair($event)">
-              <rect width="224"
-                    [attr.height]="Math.ceil(indicatorChoices.length / 2) * 18"
+              <rect width="420"
+                    [attr.height]="Math.ceil(indicatorChoices.length / 3) * 18"
                     rx="4"
                     ry="4">
               </rect>
@@ -163,11 +163,11 @@
                    role="menuitemradio"
                    tabindex="0"
                    [attr.aria-checked]="isCurrentIndicator(choice.chartType)"
-                   [attr.transform]="'translate(' + ((index % 2) * 112) + ', ' + (Math.floor(index / 2) * 18) + ')'"
+                   [attr.transform]="'translate(' + ((index % 3) * 140) + ', ' + (Math.floor(index / 3) * 18) + ')'"
                    (click)="selectIndicator($event, choice.chartType)"
                    (keydown.enter)="selectIndicator($event, choice.chartType)"
                    (keydown.space)="selectIndicator($event, choice.chartType)">
-                  <rect x="2" y="1" width="108" height="16" rx="3" ry="3"></rect>
+                  <rect x="2" y="1" width="136" height="16" rx="3" ry="3"></rect>
                   <text x="9" y="13">{{ isCurrentIndicator(choice.chartType) ? '✓' : '' }}</text>
                   <text x="27" y="13">{{ choice.label }}</text>
                 </g>

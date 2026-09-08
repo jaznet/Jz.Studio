@@ -23,6 +23,10 @@ export interface CrosshairReadout {
   adx?: number;
   plusDi?: number;
   minusDi?: number;
+  aroonUp?: number;
+  aroonDown?: number;
+  williamsR?: number;
+  bollingerWidth?: number;
 }
 
 export interface TrendLine {

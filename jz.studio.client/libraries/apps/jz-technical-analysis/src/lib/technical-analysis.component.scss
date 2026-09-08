@@ -31,6 +31,10 @@ jz-technical-analysis {
   --chart-adx: var(--jz-ta-adx, #d6b85a);
   --chart-plus-di: var(--jz-ta-plus-di, #55b68a);
   --chart-minus-di: var(--jz-ta-minus-di, #d87967);
+  --chart-aroon-up: var(--jz-ta-aroon-up, #4fbca0);
+  --chart-aroon-down: var(--jz-ta-aroon-down, #d87967);
+  --chart-williams-r: var(--jz-ta-williams-r, #a98bd2);
+  --chart-bollinger-width: var(--jz-ta-bollinger-width, #63acd1);
   --chart-reference: var(--jz-ta-reference, color-mix(in srgb, var(--plt-txt-2) 24%, transparent));
 
   --axis-tick-color: var(--chart-axis);
@@ -605,6 +609,10 @@ fill:transparent;
 .panel-badge .legend-adx { fill: var(--chart-adx); }
 .panel-badge .legend-plus-di { fill: var(--chart-plus-di); }
 .panel-badge .legend-minus-di { fill: var(--chart-minus-di); }
+.panel-badge .legend-aroon-up { fill: var(--chart-aroon-up); }
+.panel-badge .legend-aroon-down { fill: var(--chart-aroon-down); }
+.panel-badge .legend-williams-r { fill: var(--chart-williams-r); }
+.panel-badge .legend-bollinger-width { fill: var(--chart-bollinger-width); }
 
 .panel-badge .legend-value {
   fill: var(--chart-label);
@@ -646,7 +654,11 @@ fill:transparent;
 .stochastic-d-line,
 .adx-line,
 .plus-di-line,
-.minus-di-line {
+.minus-di-line,
+.aroon-up-line,
+.aroon-down-line,
+.williams-r-line,
+.bollinger-width-line {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -675,6 +687,10 @@ fill:transparent;
 .adx-line { stroke: var(--chart-adx); }
 .plus-di-line { stroke: var(--chart-plus-di); }
 .minus-di-line { stroke: var(--chart-minus-di); }
+.aroon-up-line { stroke: var(--chart-aroon-up); }
+.aroon-down-line { stroke: var(--chart-aroon-down); }
+.williams-r-line { stroke: var(--chart-williams-r); }
+.bollinger-width-line { stroke: var(--chart-bollinger-width); }
 
 .macd-baseline,
 .rsi-guide {
@@ -683,7 +699,8 @@ fill:transparent;
   shape-rendering: crispEdges;
 }
 
-.stochastic-guide {
+.stochastic-guide,
+.williams-guide {
   stroke: var(--chart-reference);
   stroke-width: 1;
   shape-rendering: crispEdges;

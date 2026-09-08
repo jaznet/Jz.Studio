@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CrosshairReadout } from '../models/chart-drawing.model';
-import { AdxPoint, DatedValuePoint, StochasticPoint } from '../models/indicator-points.model';
+import { AdxPoint, AroonPoint, DatedValuePoint, StochasticPoint } from '../models/indicator-points.model';
 import { StockPriceHistory } from '../models/stock-price-history.model';
 import {
   MacdPoint,
@@ -56,6 +56,10 @@ export class ChartDataService {
     return [...this.store.model.indicators.adx];
   }
 
+  get aroonData(): AroonPoint[] { return [...this.store.model.indicators.aroon]; }
+  get williamsRData(): DatedValuePoint[] { return [...this.store.model.indicators.williamsR]; }
+  get bollingerWidthData(): DatedValuePoint[] { return [...this.store.model.indicators.bollingerWidth]; }
+
   get dateExtent(): [Date, Date] | [undefined, undefined] {
     return this.store.model.dateExtent;
   }
@@ -91,6 +95,9 @@ export class ChartDataService {
     const adx = this.store.model.indicators.adx.find(
       item => item.date.getTime() === timestamp
     );
+    const aroon = this.store.model.indicators.aroon.find(item => item.date.getTime() === timestamp);
+    const williamsR = this.store.model.indicators.williamsR.find(item => item.date.getTime() === timestamp);
+    const bollingerWidth = this.store.model.indicators.bollingerWidth.find(item => item.date.getTime() === timestamp);
 
     return {
       date: point.date,
@@ -111,7 +118,11 @@ export class ChartDataService {
       stochasticD: stochastic?.d,
       adx: adx?.adx,
       plusDi: adx?.plusDi,
-      minusDi: adx?.minusDi
+      minusDi: adx?.minusDi,
+      aroonUp: aroon?.up,
+      aroonDown: aroon?.down,
+      williamsR: williamsR?.value,
+      bollingerWidth: bollingerWidth?.value
     };
   }
 
