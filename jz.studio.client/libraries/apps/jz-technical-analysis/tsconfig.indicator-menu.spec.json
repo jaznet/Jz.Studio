@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "files": [
+    "src/lib/charts/base-chart/base-chart.component.spec.ts"
+  ],
+  "include": []
+}
