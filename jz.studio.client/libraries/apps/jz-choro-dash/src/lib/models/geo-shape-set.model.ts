@@ -8,7 +8,6 @@ import type {
 
 export interface GeoShapeSet {
   features: FeatureCollection;
-  detailFeatures?: FeatureCollection;
   mesh?: any;
   outline?: any;
   selectedFeature?: any;
