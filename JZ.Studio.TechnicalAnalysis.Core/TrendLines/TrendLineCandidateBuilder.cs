@@ -2,7 +2,7 @@ using JZ.Studio.TechnicalAnalysis.Core.SwingPoints;
 
 namespace JZ.Studio.TechnicalAnalysis.Core.TrendLines;
 
-public sealed class TrendLineCandidateBuilder
+public sealed class TrendLineCandidateBuilder : ITrendLineCandidateBuilder
 {
     public IReadOnlyList<TrendLineCandidate> Build(
         IReadOnlyList<SwingPoint> swingPoints,
