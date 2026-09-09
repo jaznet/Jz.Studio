@@ -16,15 +16,27 @@ export class GeoFeatureService {
       topology.objects['states']
     ) as any;
 
+    const counties = feature(
+      topology,
+      topology.objects['counties']
+    ) as any;
+
     const stateMesh = mesh(
       topology,
       topology.objects['states'],
       (a: any, b: any) => a !== b
     );
 
+    const nationOutline = mesh(
+      topology,
+      topology.objects['nation']
+    );
+
     return {
       features: states,
-      mesh: stateMesh
+      detailFeatures: counties,
+      mesh: stateMesh,
+      outline: nationOutline
     };
   }
 

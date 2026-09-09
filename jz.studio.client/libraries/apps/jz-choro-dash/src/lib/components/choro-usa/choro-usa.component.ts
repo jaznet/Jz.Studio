@@ -8,8 +8,9 @@ import {
   HostBinding,
   inject,
   Input,
-  OnDestroy,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild
 } from '@angular/core';
 
@@ -20,15 +21,12 @@ import {
 } from 'd3-geo';
 
 import { select } from 'd3-selection';
-import { Subscription } from 'rxjs';
-import { feature, mesh } from 'topojson-client';
 import { COUNTY_PAINTING_STRATEGY } from '../../interfaces/county-painting-strategy.token';
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { CountyPaintingStrategy } from '../../paint-factory/interfaces/county-painting-strategy';
 import { CountyDataService } from '../../services/county-data.service';
 import { StateLookupService } from '../../services/state-lookup.service';
-import { TopoService } from '../../services/topo.service';
 
 @Component({
   selector: 'choro-usa',
@@ -37,14 +35,14 @@ import { TopoService } from '../../services/topo.service';
   styleUrls: ['./choro-usa.component.scss']
 })
 
-export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
+export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
   @Input() shapeSet?: GeoShapeSet;
   @Output() choroUSAEvent = new EventEmitter<any>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
-  private topologySubscription?: Subscription;
+  private viewReady = false;
 
   width = 0;
   height = 0;
@@ -63,7 +61,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     inject<CountyPaintingStrategy>(COUNTY_PAINTING_STRATEGY);
 
   private countyDataService = inject(CountyDataService);
-  private topoService = inject(TopoService);
   private stateLookup = inject(StateLookupService);
 
   constructor() { }
@@ -73,52 +70,44 @@ export class ChoroUsaComponent implements AfterViewInit, OnDestroy {
     this.width = Math.max(0, host.clientWidth - 2);
     this.height = Math.max(0, host.clientHeight - 2);
 
-    this.topologySubscription = this.topoService.getTopology().subscribe(topo => {
-      const countyFeaturesCollection = feature(
-        topo as any,
-        topo.objects['counties']
-      ) as any;
-
-      const stateFeaturesCollection = feature(
-        topo as any,
-        topo.objects['states']
-      ) as any;
-
-      const nationFeaturesCollection = feature(
-        topo as any,
-        topo.objects['nation']
-      ) as any;
-
-      const stateMesh = mesh(
-        topo as any,
-        topo.objects['states'],
-        (a: any, b: any) => a !== b
-      );
-
-      const nationMesh = mesh(
-        topo as any,
-        topo.objects['nation']
-      );
-
-      this.createChoropleth(
-        stateFeaturesCollection,
-        countyFeaturesCollection,
-        stateMesh,
-        nationFeaturesCollection,
-        nationMesh
-      );
-    });
+    this.viewReady = true;
+    this.tryCreateChoropleth();
   }
 
-  ngOnDestroy(): void {
-    this.topologySubscription?.unsubscribe();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['shapeSet']) {
+      this.tryCreateChoropleth();
+    }
+  }
+
+  private tryCreateChoropleth(): void {
+    if (!this.viewReady) {
+      return;
+    }
+
+    const shapeSet = this.shapeSet;
+
+    if (
+      !shapeSet?.features?.features?.length ||
+      !shapeSet.detailFeatures?.features?.length ||
+      !shapeSet.mesh ||
+      !shapeSet.outline
+    ) {
+      return;
+    }
+
+    this.createChoropleth(
+      shapeSet.features,
+      shapeSet.detailFeatures,
+      shapeSet.mesh,
+      shapeSet.outline
+    );
   }
 
   private createChoropleth(
     stateFeaturesCollection: any,
     countyFeaturesCollection: any,
     stateMesh: any,
-    nationFeaturesCollection: any,
     nationMesh: any
   ): void {
     this.createChoroplethContainer();
