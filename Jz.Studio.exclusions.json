@@ -254,5 +254,21 @@
     "FileCount": 0,
     "LineCount": 0,
     "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.TechnicalAnalysis.Core",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
+  },
+  {
+    "IsExcluded": true,
+    "Type": "Project",
+    "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.TechnicalAnalysis.Core.Tests",
+    "FileCount": 0,
+    "LineCount": 0,
+    "TotalSize": 0
   }
 ]
