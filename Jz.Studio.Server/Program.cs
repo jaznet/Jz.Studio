@@ -1,6 +1,8 @@
 using Jz.Studio.Server.Data.JazDb;
 using JZ.Studio.DataManager.Infrastructure.Census;
 using JZ.Studio.DataManager.Infrastructure.Data.JzStudioDb;
+using JZ.Studio.TechnicalAnalysis.Core.SwingPoints;
+using JZ.Studio.TechnicalAnalysis.Core.TrendLines;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
@@ -34,6 +36,15 @@ namespace Jz.Studio.Server {
 			builder.Services.AddDbContext<JzStudioDbContext>(options =>
 				options.UseSqlServer(
 					builder.Configuration.GetConnectionString("JzStudioDb")));
+
+			// Technical Analysis services
+			builder.Services.AddSingleton<ISwingPointDetector>(
+				_ => new FractalSwingPointDetector());
+			builder.Services.AddSingleton<ITrendLineCandidateBuilder, TrendLineCandidateBuilder>();
+			builder.Services.AddSingleton<ITrendLineCandidateEvaluator>(
+				_ => new TrendLineCandidateEvaluator());
+			builder.Services.AddSingleton<ITrendLineSelector, TrendLineSelector>();
+			builder.Services.AddSingleton<ITrendLineAnalysisPipeline, TrendLineAnalysisPipeline>();
 
 			// Census services
 			builder.Services.AddSingleton<ICensusDatasetCatalogService, CensusDatasetCatalogService>();

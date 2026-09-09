@@ -28,6 +28,7 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
     <ProjectReference Include="..\JZ.Studio.DataManager.Infrastructure\JZ.Studio.DataManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\JZ.Studio.TechnicalAnalysis.Core\JZ.Studio.TechnicalAnalysis.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
