@@ -40,7 +40,8 @@ namespace Jz.Studio.Server {
 			// Technical Analysis services
 			builder.Services.AddSingleton<ISwingPointDetector>(
 				_ => new FractalSwingPointDetector());
-			builder.Services.AddSingleton<ITrendLineCandidateBuilder, TrendLineCandidateBuilder>();
+			builder.Services.AddSingleton<ITrendLineCandidateBuilder>(
+				_ => new TrendLineCandidateBuilder());
 			builder.Services.AddSingleton<ITrendLineCandidateEvaluator>(
 				_ => new TrendLineCandidateEvaluator());
 			builder.Services.AddSingleton<ITrendLineSelector, TrendLineSelector>();

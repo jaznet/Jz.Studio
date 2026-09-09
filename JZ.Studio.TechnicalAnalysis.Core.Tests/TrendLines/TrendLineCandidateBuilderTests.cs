@@ -6,6 +6,13 @@ namespace JZ.Studio.TechnicalAnalysis.Core.Tests.TrendLines;
 
 public sealed class TrendLineCandidateBuilderTests
 {
+    [Fact]
+    public void Constructor_RejectsAnAnchorLimitBelowTwo()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => new TrendLineCandidateBuilder(maximumAnchorsPerType: 1));
+    }
+
     private readonly TrendLineCandidateBuilder _builder = new();
 
     [Fact]
@@ -56,6 +63,22 @@ public sealed class TrendLineCandidateBuilderTests
             TrendLineType.Support);
 
         Assert.Empty(result);
+    }
+
+    [Fact]
+    public void Build_LimitsCandidatesToTheMostRecentAnchors()
+    {
+        var older = Point(1, 10, SwingPointType.Low);
+        var recent1 = Point(3, 12, SwingPointType.Low);
+        var recent2 = Point(5, 14, SwingPointType.Low);
+        var builder = new TrendLineCandidateBuilder(maximumAnchorsPerType: 2);
+
+        var result = builder.Build(
+            [older, recent1, recent2],
+            TrendLineType.Support);
+
+        var candidate = Assert.Single(result);
+        AssertAnchors(candidate, recent1, recent2);
     }
 
     private static void AssertAnchors(

@@ -11,8 +11,8 @@ namespace Jz.Studio.Server.Controllers;
 [Route("api/market/trendlines")]
 public sealed class MarketTrendLinesController : ControllerBase
 {
-    private const int DefaultMaximumBars = 750;
-    private const int AbsoluteMaximumBars = 1_000;
+    private const int DefaultMaximumBars = 1_500;
+    private const int AbsoluteMaximumBars = 2_000;
 
     private readonly JzStudioDbContext _db;
     private readonly ITrendLineAnalysisPipeline _pipeline;

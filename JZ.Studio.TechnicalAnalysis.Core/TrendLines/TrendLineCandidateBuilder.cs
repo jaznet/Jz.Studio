@@ -4,6 +4,14 @@ namespace JZ.Studio.TechnicalAnalysis.Core.TrendLines;
 
 public sealed class TrendLineCandidateBuilder : ITrendLineCandidateBuilder
 {
+    private readonly int _maximumAnchorsPerType;
+
+    public TrendLineCandidateBuilder(int maximumAnchorsPerType = 40)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThan(maximumAnchorsPerType, 2);
+        _maximumAnchorsPerType = maximumAnchorsPerType;
+    }
+
     public IReadOnlyList<TrendLineCandidate> Build(
         IReadOnlyList<SwingPoint> swingPoints,
         TrendLineType type)
@@ -17,6 +25,7 @@ public sealed class TrendLineCandidateBuilder : ITrendLineCandidateBuilder
         var anchors = swingPoints
             .Where(point => point.Type == requiredSwingType)
             .OrderBy(point => point.BarIndex)
+            .TakeLast(_maximumAnchorsPerType)
             .ToArray();
 
         var candidates = new List<TrendLineCandidate>();
