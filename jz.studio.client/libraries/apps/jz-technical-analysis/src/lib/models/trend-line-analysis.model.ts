@@ -29,3 +29,17 @@ export interface TrendLineAnalysisRequest {
   to?: string;
   maximumBars?: number;
 }
+
+export type TrendLineAnalysisStatus = 'idle' | 'loading' | 'loaded' | 'error';
+
+export interface TrendLineAnalysisState {
+  status: TrendLineAnalysisStatus;
+  analysis: TrendLineAnalysisResponse | null;
+  error: unknown | null;
+}
+
+export const EMPTY_TREND_LINE_ANALYSIS_STATE: TrendLineAnalysisState = {
+  status: 'idle',
+  analysis: null,
+  error: null
+};
