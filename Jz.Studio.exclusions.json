@@ -256,7 +256,7 @@
     "TotalSize": 0
   },
   {
-    "IsExcluded": true,
+    "IsExcluded": false,
     "Type": "Project",
     "Value": "D:\\JzStudio\\Jz.Studio\\JZ.Studio.TechnicalAnalysis.Core",
     "FileCount": 0,

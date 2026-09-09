@@ -8,7 +8,7 @@ describe('JzPopoverError', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzPopoverErrorComponent]
+      imports: [JzPopoverErrorComponent]
     })
     .compileComponents();
 

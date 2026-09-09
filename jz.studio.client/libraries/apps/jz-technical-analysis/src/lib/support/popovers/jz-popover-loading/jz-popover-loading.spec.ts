@@ -8,7 +8,7 @@ describe('JzPopoverLoading', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JzPopoverLoadingComponent]
+      imports: [JzPopoverLoadingComponent]
     })
     .compileComponents();
 
