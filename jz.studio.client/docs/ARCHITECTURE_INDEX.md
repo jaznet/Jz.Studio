@@ -1,6 +1,6 @@
 # JZ Studio Architecture Index
 
-Last Updated: 2026-02-26
+Last Updated: 2026-09-08
 
 ---
 
@@ -83,6 +83,9 @@ Future direction:
 ---
 
 ## 4. Rendering Architecture (TechanTs Example)
+
+Detailed application documentation:
+[`libraries/apps/jz-technical-analysis/README.md`](../libraries/apps/jz-technical-analysis/README.md)
 
 - Master SVG scaffold defined in host
 - Panels injected dynamically
