@@ -12,7 +12,6 @@ export * from './lib/models/trend-line-analysis.model';
 export * from './lib/interfaces/indicator-options.interface';
 export * from './lib/services/chart-data.service';
 export * from './lib/services/trend-line-analysis.service';
-export * from './lib/services/trend-line-analysis.store';
 export * from './lib/services/technical-analysis-data-preparer.service';
 export * from './lib/services/technical-analysis-data.store';
 export * from './lib/services/indicators/indicator-catalog.service';

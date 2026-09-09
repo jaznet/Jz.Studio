@@ -3,10 +3,7 @@ import { Component, ElementRef, HostBinding, HostListener, OnDestroy, OnInit, Vi
 import {
   StockPriceHistory,
   TechnicalAnalysisComponent,
-  TechnicalAnalysisDataWindow,
-  TrendLineAnalysisRequest,
-  TrendLineAnalysisService,
-  TrendLineAnalysisStore
+  TechnicalAnalysisDataWindow
 } from 'jz-technical-analysis';
 import {
   JzPopoverErrorComponent,
@@ -15,7 +12,7 @@ import {
   JzPopoverRef,
   JzPopoverService
 } from 'ui-interaction';
-import { catchError, EMPTY, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MarketPriceService } from '../../services/market-price.service';
 
@@ -60,7 +57,6 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   loading = true;
 
   private readonly destroyed$ = new Subject<void>();
-  private readonly trendLineRequests$ = new Subject<TrendLineAnalysisRequest>();
   private appliedVisibleStartInput: string;
   private appliedVisibleEndInput: string;
   private loadingPopoverRef?: JzPopoverRef;
@@ -69,8 +65,6 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   constructor(
     private readonly elementRef: ElementRef<HTMLElement>,
     private readonly marketPriceService: MarketPriceService,
-    private readonly trendLineAnalysisService: TrendLineAnalysisService,
-    private readonly trendLineAnalysisStore: TrendLineAnalysisStore,
     private readonly popoverErrorService: JzPopoverErrorService,
     private readonly popoverService: JzPopoverService
   ) {
@@ -92,24 +86,7 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.trendLineRequests$
-      .pipe(
-        tap(() => this.trendLineAnalysisStore.beginLoading()),
-        switchMap(request => this.trendLineAnalysisService
-          .get(this.ticker, request)
-          .pipe(
-            tap(analysis => this.trendLineAnalysisStore.set(analysis)),
-            catchError(error => {
-              this.trendLineAnalysisStore.fail(error);
-              return EMPTY;
-            })
-          )),
-        takeUntil(this.destroyed$)
-      )
-      .subscribe();
-
     this.loadMarketData();
-    this.loadTrendLineAnalysis();
   }
 
   toggleInteractionHelp(event: MouseEvent): void {
@@ -201,7 +178,6 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
     this.appliedVisibleEndInput = this.visibleEndInput;
     this.dataWindow = { visibleStart, visibleEnd };
     this.validationMessage = '';
-    this.loadTrendLineAnalysis();
   }
 
   onVisibleStartInput(value: string): void {
@@ -255,16 +231,6 @@ export class TechnicalAnalysisHostComponent implements OnInit, OnDestroy {
       this.ticker = symbol;
       this.loadMarketData();
     }
-
-    this.loadTrendLineAnalysis();
-  }
-
-  private loadTrendLineAnalysis(): void {
-    this.trendLineRequests$.next({
-      from: this.appliedVisibleStartInput || undefined,
-      to: this.appliedVisibleEndInput || undefined,
-      maximumBars: 1_500
-    });
   }
 
   private loadMarketData(): void {
