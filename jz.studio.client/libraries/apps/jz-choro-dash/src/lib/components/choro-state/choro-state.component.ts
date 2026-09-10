@@ -111,26 +111,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
     const selectedStateFips =
       String(this.stateId ?? '34').padStart(2, '0');
 
-    const selectedCountyFeatures = {
-      type: 'FeatureCollection',
-      features: this.shapeSet!.features.features.filter((county: any) => {
-        const countyFips = String(county.id).padStart(5, '0');
-        return countyFips.substring(0, 2) === selectedStateFips;
-      })
-    };
-
-    if (!selectedCountyFeatures.features.length) {
-      console.warn('No counties found for selected state', {
-        selectedStateFips,
-        stateId: this.stateId
-      });
-
-      return;
-    }
+    const selectedCountyFeatures = this.shapeSet!.features;
+    const stateOutline =
+      this.shapeSet!.outline ?? selectedCountyFeatures;
 
     this.createStateChoroplethContainer();
     this.createCountyLayer(selectedCountyFeatures);
-    this.createStateOutlineLayer(selectedCountyFeatures);
+    this.createStateOutlineLayer(stateOutline);
 
     const countyNode = this.counties?.node();
 

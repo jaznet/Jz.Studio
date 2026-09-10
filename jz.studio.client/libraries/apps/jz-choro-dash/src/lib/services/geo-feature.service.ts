@@ -61,6 +61,27 @@ export class GeoFeatureService {
     };
   }
 
+  createSelectedStateShapeSet(
+    countyShapeSet: GeoShapeSet,
+    stateId: string
+  ): GeoShapeSet {
+
+    const selectedStateId =
+      String(stateId).padStart(2, '0');
+
+    const selectedCounties = {
+      type: 'FeatureCollection' as const,
+      features: countyShapeSet.features.features.filter(county =>
+        this.getStateIdFromCountyId(county.id ?? '') === selectedStateId
+      )
+    };
+
+    return {
+      features: selectedCounties,
+      outline: selectedCounties
+    };
+  }
+
   private getStateIdFromCountyId(
     countyId: string | number
   ): string {

@@ -40,6 +40,7 @@ export class JzChoroDashComponent implements OnInit {
 
   usaShapeSet?: GeoShapeSet;
   stateShapeSet?: GeoShapeSet;
+  private countyShapeSet?: GeoShapeSet;
 
   public showCentroids = false;
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
@@ -59,7 +60,7 @@ export class JzChoroDashComponent implements OnInit {
       this.usaShapeSet =
         this.geoFeatureService.createUsaShapeSet(topology);
 
-      this.stateShapeSet =
+      this.countyShapeSet =
         this.geoFeatureService.createStateCountyShapeSet(topology);
     });
   }
@@ -110,5 +111,12 @@ export class JzChoroDashComponent implements OnInit {
 
     this.selectedCountyId = selection.countyId;
     this.selectedStateId = selection.stateId;
+
+    this.stateShapeSet = this.countyShapeSet
+      ? this.geoFeatureService.createSelectedStateShapeSet(
+          this.countyShapeSet,
+          selection.stateId
+        )
+      : undefined;
   }
 }
