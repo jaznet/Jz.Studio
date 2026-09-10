@@ -6,7 +6,6 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  Inject,
   Input,
   OnChanges,
   Output,
@@ -18,9 +17,6 @@ import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
 import { StateLookupService } from '../../services/state-lookup.service';
-
-import { COUNTY_PAINTING_STRATEGY } from '../../interfaces/county-painting-strategy.token';
-import { CountyPaintingStrategy } from '../../paint-factory/interfaces/county-painting-strategy';
 
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
@@ -51,8 +47,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
   counties: any;
 
   constructor(
-    @Inject(COUNTY_PAINTING_STRATEGY)
-    private paintingStrategy: CountyPaintingStrategy,
     private stateLookup: StateLookupService
   ) { }
 

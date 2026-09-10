@@ -6,7 +6,6 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
-  inject,
   Input,
   OnChanges,
   Output,
@@ -21,11 +20,8 @@ import {
 } from 'd3-geo';
 
 import { select } from 'd3-selection';
-import { COUNTY_PAINTING_STRATEGY } from '../../interfaces/county-painting-strategy.token';
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
-import { CountyPaintingStrategy } from '../../paint-factory/interfaces/county-painting-strategy';
-import { CountyDataService } from '../../services/county-data.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 @Component({
@@ -58,13 +54,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
 
   private readonly geoPath = geoPath();
 
-  private countyPaintingStrategy =
-    inject<CountyPaintingStrategy>(COUNTY_PAINTING_STRATEGY);
-
-  private countyDataService = inject(CountyDataService);
-  private stateLookup = inject(StateLookupService);
-
-  constructor() { }
+  constructor(
+    private stateLookup: StateLookupService
+  ) { }
 
   ngAfterViewInit(): void {
     const host = this.USA_Ref.nativeElement as HTMLElement;
