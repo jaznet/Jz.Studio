@@ -3,7 +3,7 @@
   z-index: 10;
   border-radius: 9px;
   border: var(--border-width) solid var(--plt-active-boundary);
-  background-color: var(--plt-clr-2);
+  background-color: var(--plt-clr-3);
 }
 
 .app-view {
