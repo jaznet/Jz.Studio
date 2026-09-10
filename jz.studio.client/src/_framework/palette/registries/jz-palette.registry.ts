@@ -120,7 +120,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     name: 'ebony',
 
     // surfaces
-    clr1: '#494937', // cool charcoal
+    clr1: '#404030', // cool charcoal
     clr2: '#1b2021', // graphite
     clr3: '#a5ae9e', // slate iron
     clr4: '#3B454F', // muted steel

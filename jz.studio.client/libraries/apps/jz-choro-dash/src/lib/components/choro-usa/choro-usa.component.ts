@@ -39,6 +39,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
   @Input() shapeSet?: GeoShapeSet;
+  @Input() showCentroids = false;
+  @Input() centroidMode: 'all' | 'hover' | 'none' = 'hover';
   @Output() choroUSAEvent = new EventEmitter<any>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
@@ -53,7 +55,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   public countyLayer: any;
   private nationLayer: any;
   private stateTextLayer: any;
-  public centroidMode: 'all' | 'hover' | 'none' = 'hover';
 
   private readonly geoPath = geoPath();
 
@@ -77,6 +78,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shapeSet']) {
       this.tryCreateChoropleth();
+    }
+
+    if (changes['showCentroids'] || changes['centroidMode']) {
+      this.applyCentroidDisplay();
     }
   }
 
@@ -118,6 +123,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
     this.createNationLayer(nationMesh);
     this.createStatesTextLayer(stateFeaturesCollection);
     this.createStateCentroidLayer(stateFeaturesCollection);
+    this.applyCentroidDisplay();
     this.adjustGroupSizeAndPosition();
 
     this.choroUSAEvent.emit(true);
@@ -315,7 +321,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
     const centroidLayer = this.usaLayer
       .append('g')
       .attr('id', 'gStateCentroids')
-      .attr('class', 'state-centroid-layer centroid-mode-all');
+      .attr('class', 'state-centroid-layer');
     // State geographic bounds
     centroidLayer
       .selectAll('rect.state-geo-bbox')
@@ -331,8 +337,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
       .attr('fill', 'none')
       .attr('stroke', 'skyblue')
       .attr('stroke-width', 1)
-      .attr('pointer-events', 'none')
-      .style('display', this.centroidMode === 'all' ? 'block' : 'none');
+      .attr('pointer-events', 'none');
 
     // Centroid dots
     centroidLayer
@@ -347,6 +352,25 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
       .attr('fill', 'skyblue')
       .attr('stroke', '#101820')
       .attr('stroke-width', 1);
+  }
+
+  private applyCentroidDisplay(): void {
+    if (!this.usaLayer) {
+      return;
+    }
+
+    const centroidLayer = this.usaLayer
+      .select('g.state-centroid-layer');
+
+    centroidLayer
+      .style('display', this.showCentroids ? 'block' : 'none')
+      .classed('centroid-mode-all', this.centroidMode === 'all')
+      .classed('centroid-mode-hover', this.centroidMode === 'hover');
+
+    centroidLayer
+      .selectAll('rect.state-geo-bbox')
+      .style('opacity', this.centroidMode === 'all' ? 0.85 : 0)
+      .style('pointer-events', 'all');
   }
 
   private adjustGroupSizeAndPosition(): void {

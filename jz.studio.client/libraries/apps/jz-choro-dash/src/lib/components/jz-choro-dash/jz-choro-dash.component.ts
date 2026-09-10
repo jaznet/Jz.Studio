@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { select } from 'd3-selection';
 import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-strategy.token';
 import { CountySelection } from  '../../models/county-selection.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
@@ -70,37 +69,6 @@ export class JzChoroDashComponent implements OnInit {
       ['admin'],
       { relativeTo: this.route }
     );
-  }
-
-  public toggleCentroidLayer(): void {
-    const display = this.showCentroids ? 'block' : 'none';
-
-    select('#gStateCentroids')
-      .style('display', display);
-  }
-
-  public applyCentroidLayerDisplay(): void {
-    const layer = select('#gStateCentroids');
-
-    layer.style('display', this.showCentroids ? 'block' : 'none');
-
-    layer
-      .classed(
-        'centroid-mode-all',
-        this.centroidDisplayMode === 'all'
-      )
-      .classed(
-        'centroid-mode-hover',
-        this.centroidDisplayMode === 'hover'
-      );
-
-    layer
-      .selectAll('rect.state-bounds')
-      .style(
-        'opacity',
-        this.centroidDisplayMode === 'all' ? 0.85 : 0
-      )
-      .style('pointer-events', 'all');
   }
 
   onCountySelected(selection: CountySelection): void {
