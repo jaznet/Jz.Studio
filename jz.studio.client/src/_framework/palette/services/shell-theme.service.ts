@@ -117,21 +117,21 @@ export class ShellThemeService {
   }
 
   private applyTechnicalAnalysisCssVariables(palette: JzPalette): void {
-    const technicalAnalysis = palette.technicalAnalysis;
+   // const technicalAnalysis = palette.technicalAnalysis;
 
-    if (!technicalAnalysis) {
-      return;
-    }
+    // if (!technicalAnalysis) {
+    //   return;
+    // }
 
     const root = document.documentElement;
 
     Object.entries(JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES)
       .forEach(([cssVariableName, selectColor]) => {
-        const value = selectColor(technicalAnalysis);
+      //  const value = selectColor(technicalAnalysis);
 
-        if (value) {
-          root.style.setProperty(cssVariableName, value);
-        }
+        // if (value) {
+        //   root.style.setProperty(cssVariableName, value);
+        // }
       });
   }
 

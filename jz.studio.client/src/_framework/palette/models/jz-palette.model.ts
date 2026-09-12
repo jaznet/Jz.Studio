@@ -25,7 +25,7 @@ export interface JzPalette {
   logo: string;
   logoTxt: string;
 
-  technicalAnalysis?: JzTechnicalAnalysisPalette;
+ // technicalAnalysis?: JzTechnicalAnalysisPalette;
 }
 
 export interface JzPaletteAccents {

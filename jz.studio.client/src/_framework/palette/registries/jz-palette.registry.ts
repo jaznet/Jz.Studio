@@ -77,50 +77,50 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     activeBoundary: '#4F5C66',
     activeBoundaryTxt: '#F2F4F5',
 
-    technicalAnalysis: {
-      structure: {
-        workspace: '#111111',
-        priceSurface: '#202020',
-        indicatorSurface: '#161616',
-        toolbar: '#262626',
-        border: '#414141',
-        seam: '#525252',
-        grid: '#363636',
-        axis: '#777777',
-        labelPrimary: '#D8D8D5',
-        labelSecondary: '#999996'
-      },
-      data: {
-        bullish: '#4BA2C8',
-        bearish: '#D77F55',
-        wick: '#AAB8C2',
-        sma20: '#54A7C7',
-        sma50: '#D6A451',
-        sma150: '#A58AC5',
-        volumeBullish: '#397A96',
-        volumeBearish: '#A76043',
-        macd: '#54A7C7',
-        signal: '#D6A451',
-        histogramPositive: '#397A96',
-        histogramNegative: '#A76043',
-        rsi: '#A58AC5',
-        reference: '#596166'
-      },
-      interaction: {
-        crosshair: '#C6CED2',
-        selection: '#87CEEB',
-        focus: '#A9DDF2',
-        warning: '#E0A84E',
-        error: '#E06C5C'
-      }
-    }
+    // technicalAnalysis: {
+    //   structure: {
+    //     workspace: '#111111',
+    //     priceSurface: '#202020',
+    //     indicatorSurface: '#161616',
+    //     toolbar: '#262626',
+    //     border: '#414141',
+    //     seam: '#525252',
+    //     grid: '#363636',
+    //     axis: '#777777',
+    //     labelPrimary: '#D8D8D5',
+    //     labelSecondary: '#999996'
+    //   },
+    //   data: {
+    //     bullish: '#4BA2C8',
+    //     bearish: '#D77F55',
+    //     wick: '#AAB8C2',
+    //     sma20: '#54A7C7',
+    //     sma50: '#D6A451',
+    //     sma150: '#A58AC5',
+    //     volumeBullish: '#397A96',
+    //     volumeBearish: '#A76043',
+    //     macd: '#54A7C7',
+    //     signal: '#D6A451',
+    //     histogramPositive: '#397A96',
+    //     histogramNegative: '#A76043',
+    //     rsi: '#A58AC5',
+    //     reference: '#596166'
+    //   },
+    //   interaction: {
+    //     crosshair: '#C6CED2',
+    //     selection: '#87CEEB',
+    //     focus: '#A9DDF2',
+    //     warning: '#E0A84E',
+    //     error: '#E06C5C'
+    //   }
+    // }
   },
 
   ebony: {
     name: 'ebony',
 
     // surfaces
-    clr1: '#494937', // cool charcoal
+    clr1: '#404030', // cool charcoal
     clr2: '#1b2021', // graphite
     clr3: '#a5ae9e', // slate iron
     clr4: '#3B454F', // muted steel
@@ -138,53 +138,17 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     popTxt: '#FFF7EA', // warm ivory
 
     // highlight
-    highlight: '#4F5C66',
-    highlightTxt: '#FFF7EA',
+    highlight: '#a5ae9e',
+    highlightTxt: 'black',
 
     logo: '#fff275',
     logoTxt: '#4c86a8',
 
     // active tab/content boundary
-    activeBoundary: '#4F5C66',
-    activeBoundaryTxt: '#F2F4F5',
+    activeBoundary: '#a5ae9e',
+    activeBoundaryTxt: 'black',
 
-    technicalAnalysis: {
-      structure: {
-        workspace: '#111111',
-        priceSurface: '#202020',
-        indicatorSurface: '#161616',
-        toolbar: '#262626',
-        border: '#414141',
-        seam: '#525252',
-        grid: '#363636',
-        axis: '#777777',
-        labelPrimary: '#D8D8D5',
-        labelSecondary: '#999996'
-      },
-      data: {
-        bullish: '#4BA2C8',
-        bearish: '#D77F55',
-        wick: '#AAB8C2',
-        sma20: '#54A7C7',
-        sma50: '#D6A451',
-        sma150: '#A58AC5',
-        volumeBullish: '#397A96',
-        volumeBearish: '#A76043',
-        macd: '#54A7C7',
-        signal: '#D6A451',
-        histogramPositive: '#397A96',
-        histogramNegative: '#A76043',
-        rsi: '#A58AC5',
-        reference: '#596166'
-      },
-      interaction: {
-        crosshair: '#C6CED2',
-        selection: '#87CEEB',
-        focus: '#A9DDF2',
-        warning: '#E0A84E',
-        error: '#E06C5C'
-      }
-    }
+
   },
 
   // =========================================================
@@ -224,43 +188,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     activeBoundary: '#006C87',
     activeBoundaryTxt: '#FFFFFF',
 
-    technicalAnalysis: {
-      structure: {
-        workspace: '#858A91',
-        priceSurface: '#AEB2B6',
-        indicatorSurface: '#989DA2',
-        toolbar: '#A3A8AD',
-        border: '#555B61',
-        seam: '#444A50',
-        grid: '#858A8F',
-        axis: '#3D4348',
-        labelPrimary: '#111416',
-        labelSecondary: '#343A3F'
-      },
-      data: {
-        bullish: '#006F93',
-        bearish: '#A84822',
-        wick: '#3D4850',
-        sma20: '#007C9F',
-        sma50: '#9A6000',
-        sma150: '#684887',
-        volumeBullish: '#27758D',
-        volumeBearish: '#985134',
-        macd: '#007C9F',
-        signal: '#9A6000',
-        histogramPositive: '#27758D',
-        histogramNegative: '#985134',
-        rsi: '#684887',
-        reference: '#687077'
-      },
-      interaction: {
-        crosshair: '#252A2E',
-        selection: '#006C87',
-        focus: '#004F66',
-        warning: '#875A00',
-        error: '#9D2F2F'
-      }
-    }
+
   },
 
   // =========================================================
@@ -300,43 +228,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
     activeBoundary: '#005D82',
     activeBoundaryTxt: '#FFFFFF',
 
-    technicalAnalysis: {
-      structure: {
-        workspace: '#7D8892',
-        priceSurface: '#AAB4BC',
-        indicatorSurface: '#929DA6',
-        toolbar: '#9EA9B2',
-        border: '#4D5861',
-        seam: '#3E4951',
-        grid: '#818C94',
-        axis: '#364149',
-        labelPrimary: '#0E1418',
-        labelSecondary: '#303A41'
-      },
-      data: {
-        bullish: '#00796B',
-        bearish: '#A95600',
-        wick: '#34444D',
-        sma20: '#176A9C',
-        sma50: '#8C6200',
-        sma150: '#664C88',
-        volumeBullish: '#287D73',
-        volumeBearish: '#9A6430',
-        macd: '#176A9C',
-        signal: '#8C6200',
-        histogramPositive: '#287D73',
-        histogramNegative: '#9A6430',
-        rsi: '#664C88',
-        reference: '#626E75'
-      },
-      interaction: {
-        crosshair: '#202A30',
-        selection: '#006E78',
-        focus: '#005D82',
-        warning: '#805800',
-        error: '#963737'
-      }
-    }
+
   },
 
   // =========================================================
