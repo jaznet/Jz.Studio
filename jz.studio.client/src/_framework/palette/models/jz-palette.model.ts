@@ -1,4 +1,4 @@
-export interface JzPalette {
+export interface JzShellPalette {
   name: string;
 
   clr1: string;

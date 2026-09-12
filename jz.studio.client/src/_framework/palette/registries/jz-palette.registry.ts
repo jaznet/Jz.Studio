@@ -1,6 +1,6 @@
-import { JzPalette } from '../models/jz-palette.model';
+import { JzShellPalette } from '../models/jz-palette.model';
 
-export const JZ_PALETTES: Readonly<Record<string, JzPalette>> = {
+export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
 
   // =========================================================
   // ONYX

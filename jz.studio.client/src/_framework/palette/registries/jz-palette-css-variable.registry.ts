@@ -1,6 +1,6 @@
-import { JzPalette } from '../models/jz-palette.model';
+import { JzShellPalette } from '../models/jz-palette.model';
 
-type JzPaletteColorProperty = Exclude<keyof JzPalette, 'technicalAnalysis'>;
+type JzPaletteColorProperty = Exclude<keyof JzShellPalette, 'technicalAnalysis'>;
 
 export const JZ_PALETTE_CSS_VARIABLES: Readonly<Record<string, JzPaletteColorProperty>> = {
   '--plt-clr-1': 'clr1',

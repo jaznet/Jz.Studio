@@ -1,6 +1,6 @@
-import { JzPalette } from './jz-palette.model';
+import { JzShellPalette } from './jz-palette.model';
 
 export interface JzThemeState {
-  activePalette: JzPalette | null;
+  activePalette: JzShellPalette | null;
   themeReady: boolean;
 }

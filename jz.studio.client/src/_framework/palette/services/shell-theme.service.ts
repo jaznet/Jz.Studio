@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { JzPalette } from '../models/jz-palette.model';
+import { JzShellPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
 import { JZ_PALETTE_CSS_VARIABLES } from '../registries/jz-palette-css-variable.registry';
 import { JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES } from '../registries/jz-technical-analysis-css-variable.registry';
@@ -16,7 +16,7 @@ export class ShellThemeService {
   private readonly storageKey = 'jz-shell-palette';
 
   private readonly activePaletteSubject =
-    new BehaviorSubject<JzPalette | null>(null);
+    new BehaviorSubject<JzShellPalette | null>(null);
 
   readonly activePalette$ =
     this.activePaletteSubject.asObservable();
@@ -27,7 +27,7 @@ export class ShellThemeService {
   readonly themeReady$ =
     this.themeReadySubject.asObservable();
 
-  get activePalette(): JzPalette | null {
+  get activePalette(): JzShellPalette | null {
     return this.activePaletteSubject.value;
   }
 
@@ -84,11 +84,11 @@ export class ShellThemeService {
     return !!this.getPalette(paletteName);
   }
 
-  getPalette(paletteName: string): JzPalette | null {
+  getPalette(paletteName: string): JzShellPalette | null {
     return JZ_PALETTES[paletteName] ?? null;
   }
 
-  private activatePalette(palette: JzPalette): void {
+  private activatePalette(palette: JzShellPalette): void {
     this.applyCssVariables(palette);
     this.applyTechnicalAnalysisCssVariables(palette);
 
@@ -103,7 +103,7 @@ export class ShellThemeService {
     this.savePaletteName(palette.name);
   }
 
-  private applyCssVariables(palette: JzPalette): void {
+  private applyCssVariables(palette: JzShellPalette): void {
     const root = document.documentElement;
 
     Object.entries(JZ_PALETTE_CSS_VARIABLES)
@@ -116,7 +116,7 @@ export class ShellThemeService {
       });
   }
 
-  private applyTechnicalAnalysisCssVariables(palette: JzPalette): void {
+  private applyTechnicalAnalysisCssVariables(palette: JzShellPalette): void {
    // const technicalAnalysis = palette.technicalAnalysis;
 
     // if (!technicalAnalysis) {
