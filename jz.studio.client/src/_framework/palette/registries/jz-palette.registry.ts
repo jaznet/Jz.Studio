@@ -49,11 +49,11 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     name: 'charcoal',
 
     // surfaces
-    clr1: '#2e2e2e', // cool charcoal
-    clr2: '#2A3138', // graphite
-    clr3: '#1c2126', // slate iron
-    clr4: '#3B454F', // muted steel
-    clr5: '#535C65', // weathered silver
+    clr1: '#403F3D', // warm neutral charcoal — palette anchor
+    clr2: '#201F1E', // near-black warm charcoal
+    clr3: '#302F2D', // dark dusty graphite
+    clr4: '#45423F', // muted warm slate
+    clr5: '#5D5955', // medium dusty stone gray
 
     // text
     txt1: '#E6E2DB', // soft ivory
@@ -77,54 +77,18 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     activeBoundary: '#4F5C66',
     activeBoundaryTxt: '#F2F4F5',
 
-    // technicalAnalysis: {
-    //   structure: {
-    //     workspace: '#111111',
-    //     priceSurface: '#202020',
-    //     indicatorSurface: '#161616',
-    //     toolbar: '#262626',
-    //     border: '#414141',
-    //     seam: '#525252',
-    //     grid: '#363636',
-    //     axis: '#777777',
-    //     labelPrimary: '#D8D8D5',
-    //     labelSecondary: '#999996'
-    //   },
-    //   data: {
-    //     bullish: '#4BA2C8',
-    //     bearish: '#D77F55',
-    //     wick: '#AAB8C2',
-    //     sma20: '#54A7C7',
-    //     sma50: '#D6A451',
-    //     sma150: '#A58AC5',
-    //     volumeBullish: '#397A96',
-    //     volumeBearish: '#A76043',
-    //     macd: '#54A7C7',
-    //     signal: '#D6A451',
-    //     histogramPositive: '#397A96',
-    //     histogramNegative: '#A76043',
-    //     rsi: '#A58AC5',
-    //     reference: '#596166'
-    //   },
-    //   interaction: {
-    //     crosshair: '#C6CED2',
-    //     selection: '#87CEEB',
-    //     focus: '#A9DDF2',
-    //     warning: '#E0A84E',
-    //     error: '#E06C5C'
-    //   }
-    // }
+
   },
 
   ebony: {
     name: 'ebony',
 
     // surfaces
-    clr1: '#404030', // cool charcoal
-    clr2: '#1b2021', // graphite
-    clr3: '#a5ae9e', // slate iron
-    clr4: '#3B454F', // muted steel
-    clr5: '#535C65', // weathered silver
+    clr1: '#2F2F23', // dark olive charcoal — palette anchor
+    clr2: '#1B2021', // near-black blue-green charcoal
+    clr3: '#536564', // muted teal gray
+    clr4: '#A5AE9E', // light muted sage gray
+    clr5: '#A76D60', // muted terracotta
 
     // text
     txt1: '#E6E2DB', // soft ivory

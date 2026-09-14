@@ -18,27 +18,27 @@
   --jz-bevel: 4px;
 
   /* base palette */
-  --jz-base-color: var(--plt-clr-2, #f7ab68);
-  --jz-text: var(--plt-txt-2);
+  --jz-button-base-color: var(--plt-clr-3, #f7ab68);
+  --jz-text: var(--plt-txt-3);
 }
 
 /* ========================================================================== */
 /*  Variants                                                                  */
 /* ========================================================================== */
 
-:host(.primary)   { --jz-base-color: var(--plt-clr-2); }
-:host(.secondary) { --jz-base-color: var(--plt-clr-4); }
-:host(.tertiary)  { --jz-base-color: var(--plt-clr-3); }
-:host(.success)   { --jz-base-color: var(--plt-ok, #2e8b57); }
-:host(.warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
-:host(.danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
+:host(.primary)   { --jz-button-base-color: var(--plt-clr-2); }
+:host(.secondary) { --jz-button-base-color: var(--plt-clr-4); }
+:host(.tertiary)  { --jz-button-base-color: var(--plt-clr-3); }
+:host(.success)   { --jz-button-base-color: var(--plt-ok, #2e8b57); }
+:host(.warning)   { --jz-button-base-color: var(--plt-warn, #b8860b); }
+:host(.danger)    { --jz-button-base-color: var(--plt-bad, #b03a2e); }
 
-:host(.v-primary)   { --jz-base-color: var(--plt-clr-2); }
-:host(.v-secondary) { --jz-base-color: var(--plt-clr-4); }
-:host(.v-tertiary)  { --jz-base-color: var(--plt-clr-3); }
-:host(.v-success)   { --jz-base-color: var(--plt-ok, #2e8b57); }
-:host(.v-warning)   { --jz-base-color: var(--plt-warn, #b8860b); }
-:host(.v-danger)    { --jz-base-color: var(--plt-bad, #b03a2e); }
+:host(.v-primary)   { --jz-button-base-color: var(--plt-clr-2); }
+:host(.v-secondary) { --jz-button-base-color: var(--plt-clr-4); }
+:host(.v-tertiary)  { --jz-button-base-color: var(--plt-clr-3); }
+:host(.v-success)   { --jz-button-base-color: var(--plt-ok, #2e8b57); }
+:host(.v-warning)   { --jz-button-base-color: var(--plt-warn, #b8860b); }
+:host(.v-danger)    { --jz-button-base-color: var(--plt-bad, #b03a2e); }
 
 /* ========================================================================== */
 /*  Button host                                                               */
@@ -80,24 +80,24 @@
   z-index: 0;
 
   /* flat plate behind everything */
-  background-color: var(--jz-base-color);
+  background-color: var(--jz-button-base-color);
 
   /* derived tones */
-  --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 22%);
-  --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 18%);
+  --jz-bg-light: color-mix(in srgb, var(--jz-button-base-color), white 22%);
+  --jz-bg-strong: color-mix(in srgb, var(--jz-button-base-color), black 18%);
 
-  --jz-edge-light: color-mix(in srgb, var(--jz-base-color), white 15%);
-  --jz-edge-dark: color-mix(in srgb, var(--jz-base-color), black 40%);
-  --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-base-color) 50%);
-  --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-base-color) 50%);
+  --jz-edge-light: color-mix(in srgb, var(--jz-button-base-color), white 15%);
+  --jz-edge-dark: color-mix(in srgb, var(--jz-button-base-color), black 40%);
+  --jz-edge-mid-light: color-mix(in srgb, var(--jz-edge-light), var(--jz-button-base-color) 50%);
+  --jz-edge-mid-dark: color-mix(in srgb, var(--jz-edge-dark), var(--jz-button-base-color) 50%);
 
   /* corner helpers */
-  --jz-corner-a-inner: color-mix(in srgb, var(--jz-base-color), black 18%);
+  --jz-corner-a-inner: color-mix(in srgb, var(--jz-button-base-color), black 18%);
   --jz-corner-a-mid1: var(--jz-edge-mid-light);
   --jz-corner-a-mid2: color-mix(in srgb, var(--jz-edge-mid-light), var(--jz-edge-light) 45%);
   --jz-corner-a-outer: var(--jz-edge-light);
 
-  --jz-corner-c-inner: color-mix(in srgb, var(--jz-base-color), white 20%);
+  --jz-corner-c-inner: color-mix(in srgb, var(--jz-button-base-color), white 20%);
   --jz-corner-c-mid1: var(--jz-edge-mid-dark);
   --jz-corner-c-mid2: color-mix(in srgb, var(--jz-edge-mid-dark), var(--jz-edge-dark) 55%);
   --jz-corner-c-outer: var(--jz-edge-dark);
@@ -150,7 +150,7 @@
 }
 
 :host .cuboid .zone.face > * {
-  background-color: var(--jz-base-color);
+  background-color: var(--jz-button-base-color);
   color: var(--plt-txt-2);
 
   border-radius: 6px;
@@ -177,7 +177,7 @@
 }
 
 /*:host(.logon-button) .cuboid {
-  --jz-base-color:var(--plt-pop);
+  --jz-button-base-color:var(--plt-pop);
   --jz-text:var(--plt-pop-txt);
   color:black;
 }
@@ -199,7 +199,7 @@ jz-button-cuboid.logon-button .zone.face {
     to bottom,
     var(--jz-edge-light) 0%,
     var(--jz-edge-mid-light) 45%,
-    var(--jz-base-color) 100%
+    var(--jz-button-base-color) 100%
   );
   background-repeat: no-repeat;
   background-size: 100% var(--jz-bevel);
@@ -211,7 +211,7 @@ jz-button-cuboid.logon-button .zone.face {
     to top,
     var(--jz-edge-dark) 0%,
     var(--jz-edge-mid-dark) 45%,
-    var(--jz-base-color) 100%
+    var(--jz-button-base-color) 100%
   );
   background-repeat: no-repeat;
   background-size: 100% var(--jz-bevel);
@@ -223,7 +223,7 @@ jz-button-cuboid.logon-button .zone.face {
     to right,
     var(--jz-edge-light) 0%,
     var(--jz-edge-mid-light) 45%,
-    var(--jz-base-color) 100%
+    var(--jz-button-base-color) 100%
   );
   background-repeat: no-repeat;
   background-size: var(--jz-bevel) 100%;
@@ -235,7 +235,7 @@ jz-button-cuboid.logon-button .zone.face {
     to left,
     var(--jz-edge-dark) 0%,
     var(--jz-edge-mid-dark) 45%,
-    var(--jz-base-color) 100%
+    var(--jz-button-base-color) 100%
   );
   background-repeat: no-repeat;
   background-size: var(--jz-bevel) 100%;
@@ -249,7 +249,7 @@ jz-button-cuboid.logon-button .zone.face {
 :host .cuboid .zone.A {
   background-image: radial-gradient(
     circle at 100% 100%,
-    var(--jz-base-color) 0%,
+    var(--jz-button-base-color) 0%,
     var(--jz-edge-light) 40%
   );
   background-repeat: no-repeat;
@@ -258,7 +258,7 @@ jz-button-cuboid.logon-button .zone.face {
 :host .cuboid .zone.C {
   background-image: radial-gradient(
     circle at 0 0,
-    var(--jz-base-color) 0%,
+    var(--jz-button-base-color) 0%,
     var(--jz-edge-dark) 50%
   );
   background-repeat: no-repeat;
@@ -284,16 +284,16 @@ jz-button-cuboid.logon-button .zone.face {
 
 /* active class is currently on the inner button, not on the host */
 :host button.jz-btn.active > .cuboid {
-  --jz-base-color: var(--plt-active-boundary);
-  --jz-bg-light: color-mix(in srgb, var(--jz-base-color), white 28%);
-  --jz-bg-strong: color-mix(in srgb, var(--jz-base-color), black 22%);
+  --jz-button-base-color: var(--plt-active-boundary);
+  --jz-bg-light: color-mix(in srgb, var(--jz-button-base-color), white 28%);
+  --jz-bg-strong: color-mix(in srgb, var(--jz-button-base-color), black 22%);
 
-  background-color: var(--jz-base-color);
+  background-color: var(--jz-button-base-color);
   color: var(--plt-active-boundary-txt);
 }
 
 :host button.jz-btn.active .cuboid .zone.face > * {
- // background-color: color-mix(in srgb, var(--jz-base-color), white 10%);
+ // background-color: color-mix(in srgb, var(--jz-button-base-color), white 10%);
   color: var(--plt-active-boundary-txt);
 }
 
