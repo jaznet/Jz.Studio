@@ -1,4 +1,4 @@
-import { JzTechnicalAnalysisPalette } from '../models/jz-palette.model';
+import { JzTechnicalAnalysisPalette } from './jz-technical-analysis-palette.model';
 
 type TechnicalAnalysisColorSelector =
   (palette: JzTechnicalAnalysisPalette) => string;

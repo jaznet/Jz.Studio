@@ -15,7 +15,13 @@
 }
 
 .analysis-controls {
-  --analysis-toolbar-surface: color-mix(in srgb, var(--plt-clr-2) 94%, var(--plt-txt-2));
+  --analysis-toolbar-surface: var(--jz-ta-toolbar, #262626);
+  --analysis-control-surface: color-mix(in srgb, var(--analysis-toolbar-surface) 96%, var(--jz-ta-label-primary, #e7ebed));
+  --analysis-popup-surface: color-mix(in srgb, var(--jz-ta-indicator-surface, #191e1f) 94%, black);
+  --analysis-text-primary: var(--jz-ta-label-primary, #e7ebed);
+  --analysis-text-secondary: var(--jz-ta-label-secondary, #a9b3b9);
+  --analysis-border: var(--jz-ta-border, #4a545a);
+  --analysis-accent: var(--jz-ta-selection, #e0b84f);
   position: relative;
   z-index: 2;
   display: flex;
@@ -23,11 +29,11 @@
   box-sizing: border-box;
   gap: 8px;
   min-height: 36px;
-  margin: 4px 8px 6px;
+  margin: 0;
   padding: 4px 8px;
   border: 0;
-  border-radius: 7px;
-  color: var(--plt-txt-2);
+  border-radius: 0;
+  color: var(--analysis-text-secondary);
   background: var(--analysis-toolbar-surface);
   box-shadow: none;
   white-space: nowrap;
@@ -50,10 +56,10 @@
 .analysis-controls input,
 .analysis-controls button {
   height: 26px;
-  border: var(--border-width) solid var(--border-soft);
+  border: var(--border-width) solid var(--analysis-border);
   border-radius: 5px;
-  color: var(--plt-txt-2);
-  background: color-mix(in srgb, var(--analysis-toolbar-surface) 96%, var(--plt-txt-1));
+  color: var(--analysis-text-secondary);
+  background: var(--analysis-control-surface);
   font-family: inherit;
   font-size: 12px;
 }
@@ -85,7 +91,7 @@
   height: 12px;
   margin: 0;
   padding: 0;
-  accent-color: var(--plt-pop);
+  accent-color: var(--analysis-accent);
   cursor: pointer;
 }
 
@@ -101,7 +107,7 @@
 
 .validation-message {
   align-self: center;
-  color: var(--plt-pop);
+  color: var(--analysis-accent);
   font-size: 12px;
 }
 
@@ -129,8 +135,8 @@
 
 .analysis-controls .layout-settings-panel button:hover:not(:disabled),
 .analysis-controls .layout-settings-panel button:focus-visible {
-  color: var(--plt-pop);
-  background: color-mix(in srgb, var(--plt-pop) 10%, transparent);
+  color: var(--analysis-accent);
+  background: color-mix(in srgb, var(--analysis-accent) 10%, transparent);
   outline: none;
 }
 
@@ -143,11 +149,11 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  border: var(--border-width) solid var(--border-soft);
+  border: var(--border-width) solid var(--analysis-border);
   border-radius: 50%;
   place-items: center;
-  color: var(--plt-txt-2);
-  background: var(--plt-clr-1);
+  color: var(--analysis-text-secondary);
+  background: var(--analysis-control-surface);
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
@@ -156,8 +162,8 @@
 .analysis-controls .interaction-help-toggle:hover,
 .analysis-controls .interaction-help-toggle:focus-visible,
 .analysis-controls .interaction-help-toggle[aria-expanded='true'] {
-  border-color: var(--plt-pop);
-  color: var(--plt-pop);
+  border-color: var(--analysis-accent);
+  color: var(--analysis-accent);
   outline: none;
 }
 
@@ -170,10 +176,10 @@
   box-sizing: border-box;
   gap: 8px;
   padding: 10px 12px;
-  border: var(--border-width) solid var(--border-soft);
+  border: var(--border-width) solid var(--analysis-border);
   border-radius: 6px;
-  color: var(--plt-txt-2);
-  background: color-mix(in srgb, var(--plt-clr-2) 94%, black);
+  color: var(--analysis-text-secondary);
+  background: var(--analysis-popup-surface);
   box-shadow: 0 8px 20px rgb(0 0 0 / 38%);
   white-space: normal;
 }
@@ -191,7 +197,7 @@
 
 .interaction-help-panel h2 {
   margin: 0;
-  color: var(--plt-pop);
+  color: var(--analysis-accent);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .06em;
@@ -206,7 +212,7 @@
   border: 0;
   border-radius: 4px;
   place-items: center;
-  color: var(--plt-txt-2);
+  color: var(--analysis-text-secondary);
   background: transparent;
   font-size: 16px;
   line-height: 1;
@@ -214,9 +220,9 @@
 
 .analysis-controls .interaction-help-close:hover,
 .analysis-controls .interaction-help-close:focus-visible {
-  color: var(--plt-pop);
-  background: color-mix(in srgb, var(--plt-pop) 10%, transparent);
-  outline: var(--border-width) solid var(--plt-pop);
+  color: var(--analysis-accent);
+  background: color-mix(in srgb, var(--analysis-accent) 10%, transparent);
+  outline: var(--border-width) solid var(--analysis-accent);
 }
 
 .interaction-help-panel dl {
@@ -239,12 +245,12 @@
 }
 
 .interaction-help-panel dt {
-  color: var(--plt-txt-1);
+  color: var(--analysis-text-primary);
   font-weight: 600;
 }
 
 .interaction-help-panel dd {
-  color: var(--plt-txt-2);
+  color: var(--analysis-text-secondary);
 }
 
 .interaction-help-panel dt,
