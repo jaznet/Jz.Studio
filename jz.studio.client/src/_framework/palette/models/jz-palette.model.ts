@@ -1,4 +1,4 @@
-export interface JzPalette {
+export interface JzShellPalette {
   name: string;
 
   clr1: string;
@@ -25,7 +25,7 @@ export interface JzPalette {
   logo: string;
   logoTxt: string;
 
-  technicalAnalysis?: JzTechnicalAnalysisPalette;
+ // technicalAnalysis?: JzTechnicalAnalysisPalette;
 }
 
 export interface JzPaletteAccents {
