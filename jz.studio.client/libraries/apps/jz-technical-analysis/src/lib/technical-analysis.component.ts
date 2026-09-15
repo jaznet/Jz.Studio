@@ -42,6 +42,7 @@ import { ChartCrosshairService } from './services/interactions/chart-crosshair.s
 import { HtmlElementOverlayContainer } from './support/overlays/html-element-overlay-container';
 import { PanelHostService } from './support/panel-workspace/panel-host.service';
 import { PanelPreferenceService } from './support/panel-workspace/panel-preference.service';
+import { TechnicalAnalysisThemeService } from './theme/technical-analysis-theme.service';
 
 // #endregion imports
 
@@ -266,17 +267,13 @@ export class TechnicalAnalysisComponent implements OnInit, AfterViewInit, OnDest
     private panelPreferenceService: PanelPreferenceService,
     private smaVisibilityService: SmaVisibilityService,
     private macdVisibilityService: MacdVisibilityService,
-    private crosshairService: ChartCrosshairService
+    private crosshairService: ChartCrosshairService,
+    private technicalAnalysisTheme: TechnicalAnalysisThemeService
   ) {
+    this.technicalAnalysisTheme.initializeTheme();
     console.log('');
     console.log('%c ---------- Technical Analysis Chart ----------', 'color: #D9B208');
     console.log('%c⛏️ XTOR Technical Analysis Component', 'color: #D9B208');
-
-    document.documentElement.style.setProperty('--plt-chart-1', '#12100e');
-    document.documentElement.style.setProperty('--plt-chart-2', '#8B8B84');
-    document.documentElement.style.setProperty('--plt-chart-3', '#85ad90');
-    document.documentElement.style.setProperty('--plt-chart-4', '#6FA288');
-    document.documentElement.style.setProperty('--plt-chart-5', '#a9927d');
   }
 
   ngOnInit(): void {

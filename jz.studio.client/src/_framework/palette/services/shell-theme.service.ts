@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import { JzShellPalette } from '../models/jz-palette.model';
 import { JZ_PALETTES } from '../registries/jz-palette.registry';
 import { JZ_PALETTE_CSS_VARIABLES } from '../registries/jz-palette-css-variable.registry';
-import { JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES } from '../registries/jz-technical-analysis-css-variable.registry';
 import { JzThemeState } from '../models/jz-theme-state.model';
 
 @Injectable({
@@ -90,7 +89,6 @@ export class ShellThemeService {
 
   private activatePalette(palette: JzShellPalette): void {
     this.applyCssVariables(palette);
-    this.applyTechnicalAnalysisCssVariables(palette);
 
     this.activePaletteSubject.next(palette);
     this.themeReadySubject.next(true);
@@ -113,25 +111,6 @@ export class ShellThemeService {
         if (value) {
           root.style.setProperty(cssVariableName, value);
         }
-      });
-  }
-
-  private applyTechnicalAnalysisCssVariables(palette: JzShellPalette): void {
-   // const technicalAnalysis = palette.technicalAnalysis;
-
-    // if (!technicalAnalysis) {
-    //   return;
-    // }
-
-    const root = document.documentElement;
-
-    Object.entries(JZ_TECHNICAL_ANALYSIS_CSS_VARIABLES)
-      .forEach(([cssVariableName, selectColor]) => {
-      //  const value = selectColor(technicalAnalysis);
-
-        // if (value) {
-        //   root.style.setProperty(cssVariableName, value);
-        // }
       });
   }
 
