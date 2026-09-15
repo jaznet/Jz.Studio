@@ -14,7 +14,7 @@ export const MAIN_NAV_ITEMS: JzNavItem[] = [
     id: 'visualization',
     label: 'Visualization',
     route: '/visualization',
-    palette: 'charcoal',
+    palette: 'ebony',
     layoutType: 'left-nav-framed'
   },
   {
