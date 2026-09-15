@@ -45,8 +45,9 @@
     <jz-choro-dash-panel class="usa-panel">
       <choro-usa #choro_usa
                  [shapeSet]="usaShapeSet"
-                 (countySelected)="onCountySelected($event)"
-                 (choroUSAEvent)="applyCentroidLayerDisplay()">
+                 [showCentroids]="showCentroids"
+                 [centroidMode]="centroidDisplayMode"
+                 (countySelected)="onCountySelected($event)">
       </choro-usa>
     </jz-choro-dash-panel>
 
@@ -69,5 +70,4 @@
   </div>
 
 </div>
-
 

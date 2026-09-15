@@ -7,7 +7,7 @@ export const MAIN_NAV_ITEMS: JzNavItem[] = [
     id: 'jzhome',
     label: 'Home',
     route: '/home',
-    palette: 'onyx',
+    palette: 'ebony',
     layoutType: 'blank'
   },
   {

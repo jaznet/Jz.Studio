@@ -16,15 +16,27 @@ export class GeoFeatureService {
       topology.objects['states']
     ) as any;
 
+    const counties = feature(
+      topology,
+      topology.objects['counties']
+    ) as any;
+
     const stateMesh = mesh(
       topology,
       topology.objects['states'],
       (a: any, b: any) => a !== b
     );
 
+    const nationOutline = mesh(
+      topology,
+      topology.objects['nation']
+    );
+
     return {
       features: states,
-      mesh: stateMesh
+      detailFeatures: counties,
+      mesh: stateMesh,
+      outline: nationOutline
     };
   }
 
@@ -46,6 +58,27 @@ export class GeoFeatureService {
     return {
       features: counties,
       mesh: countyMesh
+    };
+  }
+
+  createSelectedStateShapeSet(
+    countyShapeSet: GeoShapeSet,
+    stateId: string
+  ): GeoShapeSet {
+
+    const selectedStateId =
+      String(stateId).padStart(2, '0');
+
+    const selectedCounties = {
+      type: 'FeatureCollection' as const,
+      features: countyShapeSet.features.features.filter(county =>
+        this.getStateIdFromCountyId(county.id ?? '') === selectedStateId
+      )
+    };
+
+    return {
+      features: selectedCounties,
+      outline: selectedCounties
     };
   }
 
