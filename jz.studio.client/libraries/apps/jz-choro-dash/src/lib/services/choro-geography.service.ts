@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { ChoroGeographySelection } from '../models/choro-geography-selection.model';
 import { ChoroGeographyShapeSets } from '../models/choro-geography-shape-sets.model';
+import { CountySelection } from '../models/county-selection.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
 import { GeoFeatureService } from './geo-feature.service';
 import { TopoService } from './topo.service';
@@ -24,13 +26,17 @@ export class ChoroGeographyService {
     );
   }
 
-  createSelectedStateShapeSet(
+  createSelection(
     countyShapeSet: GeoShapeSet,
-    stateId: string
-  ): GeoShapeSet {
-    return this.geoFeatureService.createSelectedStateShapeSet(
-      countyShapeSet,
-      stateId
-    );
+    selection: CountySelection
+  ): ChoroGeographySelection {
+    return {
+      ...selection,
+      stateShapeSet:
+        this.geoFeatureService.createSelectedStateShapeSet(
+          countyShapeSet,
+          selection.stateId
+        )
+    };
   }
 }

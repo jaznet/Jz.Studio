@@ -55,9 +55,9 @@
 
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
-                     *ngIf="selectedStateId"
-                     [stateId]="selectedStateId"
-                     [shapeSet]="stateShapeSet">
+                     *ngIf="geographySelection as selection"
+                     [stateId]="selection.stateId"
+                     [shapeSet]="selection.stateShapeSet">
         </choro-state>
       </jz-choro-dash-panel>
 
@@ -70,4 +70,3 @@
   </div>
 
 </div>
-

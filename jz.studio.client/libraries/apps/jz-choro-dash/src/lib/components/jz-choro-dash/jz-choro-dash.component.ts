@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-strategy.token';
+import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { PaintStrategyFactoryService } from  '../../paint-factory/paint-strategy-factory.service';
@@ -37,14 +38,11 @@ import { JzButtonComponent } from 'jz-ui';
 export class JzChoroDashComponent implements OnInit {
 
   usaShapeSet?: GeoShapeSet;
-  stateShapeSet?: GeoShapeSet;
   private countyShapeSet?: GeoShapeSet;
+  geographySelection?: ChoroGeographySelection;
 
   public showCentroids = false;
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
-
-  selectedStateId: string | null = null;
-  selectedCountyId: string | null = null;
 
   constructor(
     private router: Router,
@@ -72,13 +70,10 @@ export class JzChoroDashComponent implements OnInit {
       selection
     );
 
-    this.selectedCountyId = selection.countyId;
-    this.selectedStateId = selection.stateId;
-
-    this.stateShapeSet = this.countyShapeSet
-      ? this.choroGeographyService.createSelectedStateShapeSet(
+    this.geographySelection = this.countyShapeSet
+      ? this.choroGeographyService.createSelection(
           this.countyShapeSet,
-          selection.stateId
+          selection
         )
       : undefined;
   }
