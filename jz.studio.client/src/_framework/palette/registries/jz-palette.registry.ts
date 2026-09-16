@@ -51,7 +51,7 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     // surfaces
     clr1: '#403F3D', // warm neutral charcoal — palette anchor
     clr2: '#201F1E', // near-black warm charcoal
-    clr3: '#302F2D', // dark dusty graphite
+    clr3: '#37322E', // dark dusty graphite
     clr4: '#45423F', // muted warm slate
     clr5: '#5D5955', // medium dusty stone gray
 
@@ -67,14 +67,14 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     popTxt: '#FFF7EA', // warm ivory
 
     // highlight
-    highlight: '#4F5C66',
+    highlight: '#625A52',  
     highlightTxt: '#FFF7EA',
 
     logo: '#ffb46d',
     logoTxt: 'white',
 
     // active tab/content boundary
-    activeBoundary: '#4F5C66',
+    activeBoundary: '#625A52',
     activeBoundaryTxt: '#F2F4F5',
   },
 

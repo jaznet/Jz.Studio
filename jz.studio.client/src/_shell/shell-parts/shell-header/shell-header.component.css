@@ -6,7 +6,7 @@
   color: var(--plt-txt-1);
   background-color: var(--plt-clr-1);
   border-radius: 8px 8px 0 0;
-  border: 1px solid black;
+  border: 1px solid transparent;
 
 }
 
