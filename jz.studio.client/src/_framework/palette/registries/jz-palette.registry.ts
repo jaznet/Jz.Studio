@@ -29,10 +29,10 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     popTxt: '#FFF7EA', // warm ivory
 
     // highlight
-    highlight: '#87CEEB',
+    highlight: '#ffb46d',
     highlightTxt: '#FFF7EA',
 
-    logo: 'seagreen',
+    logo: '#ffb46d',
     logoTxt: 'white',
 
     // active tab/content boundary
@@ -70,14 +70,12 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     highlight: '#4F5C66',
     highlightTxt: '#FFF7EA',
 
-    logo: '#fff275',
-    logoTxt: '#4c86a8',
+    logo: '#ffb46d',
+    logoTxt: 'white',
 
     // active tab/content boundary
     activeBoundary: '#4F5C66',
     activeBoundaryTxt: '#F2F4F5',
-
-
   },
 
   ebony: {
