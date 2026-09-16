@@ -91,6 +91,16 @@ try {
     Write-Host 'Fetching origin...' -ForegroundColor Cyan
     Invoke-Git -Arguments @('fetch', 'origin', '--prune')
 
+    Write-Host ''
+    Write-Host 'Publishing local feature branch commits before integration...' -ForegroundColor Cyan
+
+    foreach ($featureBranch in $featureBranches) {
+        Invoke-Git -Arguments @('switch', $featureBranch)
+        Assert-CleanWorkingTree
+        Invoke-Git -Arguments @('pull', '--ff-only', 'origin', $featureBranch)
+        Invoke-Git -Arguments @('push', 'origin', $featureBranch)
+    }
+
     Invoke-Git -Arguments @('switch', $integrationBranch)
     Invoke-Git -Arguments @('pull', '--ff-only', 'origin', $integrationBranch)
 
