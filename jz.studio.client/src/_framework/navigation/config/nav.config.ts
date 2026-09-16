@@ -7,14 +7,14 @@ export const MAIN_NAV_ITEMS: JzNavItem[] = [
     id: 'jzhome',
     label: 'Home',
     route: '/home',
-    palette: 'ebony',
+    palette: 'charcoal',
     layoutType: 'blank'
   },
   {
     id: 'visualization',
     label: 'Visualization',
     route: '/visualization',
-    palette: 'ebony',
+    palette: 'charcoal',
     layoutType: 'left-nav-framed'
   },
   {

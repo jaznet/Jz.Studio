@@ -11,7 +11,7 @@ import { JzThemeState } from '../models/jz-theme-state.model';
 })
 export class ShellThemeService {
 
-  private readonly defaultPaletteName = 'ebony';
+  private readonly defaultPaletteName = ' charcoal';
   private readonly storageKey = 'jz-shell-palette';
 
   private readonly activePaletteSubject =
