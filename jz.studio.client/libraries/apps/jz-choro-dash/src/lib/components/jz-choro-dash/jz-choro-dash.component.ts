@@ -8,8 +8,7 @@ import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-stra
 import { CountySelection } from  '../../models/county-selection.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { PaintStrategyFactoryService } from  '../../paint-factory/paint-strategy-factory.service';
-import { GeoFeatureService } from  '../../services/geo-feature.service';
-import { TopoService } from  '../../services/topo.service';
+import { ChoroGeographyService } from  '../../services/choro-geography.service';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
 import { JzChoroDashPanelComponent } from  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
@@ -50,17 +49,13 @@ export class JzChoroDashComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private topoService: TopoService,
-    private geoFeatureService: GeoFeatureService
+    private choroGeographyService: ChoroGeographyService
   ) { }
 
   ngOnInit(): void {
-    this.topoService.getTopology().subscribe(topology => {
-      this.usaShapeSet =
-        this.geoFeatureService.createUsaShapeSet(topology);
-
-      this.countyShapeSet =
-        this.geoFeatureService.createStateCountyShapeSet(topology);
+    this.choroGeographyService.loadShapeSets().subscribe(shapeSets => {
+      this.usaShapeSet = shapeSets.usa;
+      this.countyShapeSet = shapeSets.counties;
     });
   }
 
@@ -81,7 +76,7 @@ export class JzChoroDashComponent implements OnInit {
     this.selectedStateId = selection.stateId;
 
     this.stateShapeSet = this.countyShapeSet
-      ? this.geoFeatureService.createSelectedStateShapeSet(
+      ? this.choroGeographyService.createSelectedStateShapeSet(
           this.countyShapeSet,
           selection.stateId
         )
