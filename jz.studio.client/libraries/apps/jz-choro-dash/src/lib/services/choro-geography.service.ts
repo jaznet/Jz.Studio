@@ -27,11 +27,21 @@ export class ChoroGeographyService {
   }
 
   createSelection(
+    usaShapeSet: GeoShapeSet,
     countyShapeSet: GeoShapeSet,
     selection: CountySelection
   ): ChoroGeographySelection {
+    const selectedStateId = String(selection.stateId).padStart(2, '0');
+    const stateFeature = usaShapeSet.features.features.find(feature =>
+      String(feature.id ?? '').padStart(2, '0') === selectedStateId
+    );
+
     return {
       ...selection,
+      countyName:
+        String(selection.countyFeature?.properties?.['name'] ?? ''),
+      stateName:
+        String(stateFeature?.properties?.['name'] ?? ''),
       stateShapeSet:
         this.geoFeatureService.createSelectedStateShapeSet(
           countyShapeSet,

@@ -72,8 +72,9 @@ export class JzChoroDashComponent implements OnInit {
       selection
     );
 
-    this.geographySelection = this.countyShapeSet
+    this.geographySelection = this.usaShapeSet && this.countyShapeSet
       ? this.choroGeographyService.createSelection(
+          this.usaShapeSet,
           this.countyShapeSet,
           selection
         )
