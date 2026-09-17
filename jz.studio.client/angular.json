@@ -188,6 +188,26 @@
         }
       }
     },
+    "jz-workspace-layout": {
+      "projectType": "library",
+      "root": "libraries/framework/jz-workspace-layout",
+      "sourceRoot": "libraries/framework/jz-workspace-layout/src",
+      "prefix": "jz",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "libraries/framework/jz-workspace-layout/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libraries/framework/jz-workspace-layout/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    },
     "jz-ui": {
       "projectType": "library",
       "root": "libraries/framework/jz-ui",

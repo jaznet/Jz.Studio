@@ -1,0 +1,32 @@
+<div class="split-layout"
+     [class.split-layout--horizontal]="direction === 'horizontal'"
+     [class.split-layout--vertical]="direction === 'vertical'">
+
+  <section class="split-pane split-pane--primary"
+           [style.flex-basis.%]="secondaryVisible ? primarySize : 100">
+    <ng-content select="[jzSplitPrimary]"></ng-content>
+  </section>
+
+  <ng-container *ngIf="secondaryVisible">
+
+    <div class="split-separator"
+         role="separator"
+         tabindex="0"
+         [attr.aria-orientation]="separatorOrientation"
+         [attr.aria-valuemin]="minPrimarySize"
+         [attr.aria-valuemax]="100 - minSecondarySize"
+         [attr.aria-valuenow]="primarySize"
+         (pointerdown)="onPointerDown($event)"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp($event)"
+         (pointercancel)="onPointerUp($event)"
+         (keydown)="onSeparatorKeydown($event)">
+    </div>
+
+    <section class="split-pane split-pane--secondary">
+      <ng-content select="[jzSplitSecondary]"></ng-content>
+    </section>
+
+  </ng-container>
+
+</div>

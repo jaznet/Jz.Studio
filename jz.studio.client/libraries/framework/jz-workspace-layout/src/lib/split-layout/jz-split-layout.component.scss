@@ -1,0 +1,82 @@
+:host {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.split-layout {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.split-layout--horizontal {
+  flex-direction: row;
+}
+
+.split-layout--vertical {
+  flex-direction: column;
+}
+
+.split-pane {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.split-pane--primary {
+  flex: 0 0 auto;
+}
+
+.split-pane--secondary {
+  flex: 1 1 0;
+}
+
+.split-separator {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 7px;
+  background: transparent;
+  touch-action: none;
+  outline: none;
+}
+
+.split-separator::before {
+  content: '';
+  position: absolute;
+  background: var(--workspace-splitter-color, var(--border-soft));
+}
+
+.split-separator:hover::before,
+.split-separator:focus-visible::before {
+  background: var(--workspace-splitter-active-color, var(--accent-primary));
+}
+
+.split-layout--horizontal > .split-separator {
+  cursor: col-resize;
+}
+
+.split-layout--horizontal > .split-separator::before {
+  top: 0;
+  bottom: 0;
+  left: 3px;
+  width: 1px;
+}
+
+.split-layout--vertical > .split-separator {
+  cursor: row-resize;
+}
+
+.split-layout--vertical > .split-separator::before {
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 1px;
+}

@@ -14,6 +14,7 @@ import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
 import { JzChoroDashPanelComponent } from  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
 import { JzButtonComponent } from 'jz-ui';
+import { JzSplitLayoutComponent } from 'jz-workspace-layout';
 
 @Component({
   selector: 'jz-choro-dash',
@@ -25,7 +26,8 @@ import { JzButtonComponent } from 'jz-ui';
     ChoroUsaComponent,
     ChoroStateComponent,
     FormsModule,
-    JzButtonComponent
+    JzButtonComponent,
+    JzSplitLayoutComponent
   ],
   providers: [
     {

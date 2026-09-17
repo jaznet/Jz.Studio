@@ -18,10 +18,15 @@
 
   </div>
 
-  <div class="choro-panels"
-       [class.details-visible]="geographySelection">
+  <jz-split-layout class="choro-panels"
+                   direction="horizontal"
+                   [primarySize]="50"
+                   [minPrimarySize]="30"
+                   [minSecondarySize]="30"
+                   [secondaryVisible]="!!geographySelection">
 
-    <jz-choro-dash-panel class="usa-panel">
+    <jz-choro-dash-panel jzSplitPrimary
+                         class="usa-panel">
       <choro-usa #choro_usa
                  [shapeSet]="usaShapeSet"
                  [showCentroids]="showCentroids"
@@ -30,7 +35,8 @@
       </choro-usa>
     </jz-choro-dash-panel>
 
-    <div class="state-column"
+    <div jzSplitSecondary
+         class="state-column"
          *ngIf="geographySelection as selection">
 
       <jz-choro-dash-panel class="state-panel">
@@ -46,6 +52,6 @@
 
     </div>
 
-  </div>
+  </jz-split-layout>
 
 </div>

@@ -8,6 +8,7 @@ import {
   HostBinding,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild
@@ -26,7 +27,7 @@ import { GeoShapeSet } from '../../models/geo-shape-set.model';
   templateUrl: './choro-state.component.html',
   styleUrls: ['./choro-state.component.scss']
 })
-export class ChoroStateComponent implements AfterViewInit, OnChanges {
+export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
   @Input() stateId: string | null = null;
@@ -36,6 +37,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
  // private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
   private viewReady = false;
+  private resizeObserver?: ResizeObserver;
+  private renderFrame?: number;
 
   width = 0;
   height = 0;
@@ -52,15 +55,45 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    this.tryCreateStateChoropleth();
-    // Let Angular/layout finish one more pass before measuring.
-    //queueMicrotask(() => this.tryCreateStateChoropleth());
+    this.observeContainerSize();
+    this.scheduleStateChoropleth();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shapeSet'] || changes['stateId']) {
-      this.tryCreateStateChoropleth();
+      this.scheduleStateChoropleth();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+
+    if (this.renderFrame !== undefined) {
+      cancelAnimationFrame(this.renderFrame);
+    }
+  }
+
+  private observeContainerSize(): void {
+    this.resizeObserver = new ResizeObserver(() => {
+      this.scheduleStateChoropleth();
+    });
+
+    this.resizeObserver.observe(this.stateRef.nativeElement);
+  }
+
+  private scheduleStateChoropleth(): void {
+    if (!this.viewReady) {
+      return;
+    }
+
+    if (this.renderFrame !== undefined) {
+      cancelAnimationFrame(this.renderFrame);
+    }
+
+    this.renderFrame = requestAnimationFrame(() => {
+      this.renderFrame = undefined;
+      this.tryCreateStateChoropleth();
+    });
   }
 
   private tryCreateStateChoropleth(): void {

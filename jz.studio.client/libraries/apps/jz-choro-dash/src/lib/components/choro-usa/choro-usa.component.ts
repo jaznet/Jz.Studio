@@ -8,6 +8,7 @@ import {
   HostBinding,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild
@@ -31,7 +32,7 @@ import { StateLookupService } from '../../services/state-lookup.service';
   styleUrls: ['./choro-usa.component.scss']
 })
 
-export class ChoroUsaComponent implements AfterViewInit, OnChanges {
+export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
   @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
   @Input() shapeSet?: GeoShapeSet;
@@ -41,6 +42,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   @Output() countySelected = new EventEmitter<CountySelection>();
 
   private viewReady = false;
+  private needsRender = true;
+  private resizeObserver?: ResizeObserver;
+  private resizeFrame?: number;
 
   width = 0;
   height = 0;
@@ -59,22 +63,74 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
   ) { }
 
   ngAfterViewInit(): void {
-    const host = this.USA_Ref.nativeElement as HTMLElement;
-    this.width = Math.max(0, host.clientWidth - 2);
-    this.height = Math.max(0, host.clientHeight - 2);
-
     this.viewReady = true;
-    this.tryCreateChoropleth();
+    this.observeContainerSize();
+    this.scheduleLayout();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shapeSet']) {
-      this.tryCreateChoropleth();
+      this.needsRender = true;
+      this.scheduleLayout();
     }
 
     if (changes['showCentroids'] || changes['centroidMode']) {
       this.applyCentroidDisplay();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+
+    if (this.resizeFrame !== undefined) {
+      cancelAnimationFrame(this.resizeFrame);
+    }
+  }
+
+  private observeContainerSize(): void {
+    this.resizeObserver = new ResizeObserver(() => {
+      this.scheduleLayout();
+    });
+
+    this.resizeObserver.observe(this.USA_Ref.nativeElement);
+  }
+
+  private scheduleLayout(): void {
+    if (!this.viewReady) {
+      return;
+    }
+
+    if (this.resizeFrame !== undefined) {
+      cancelAnimationFrame(this.resizeFrame);
+    }
+
+    this.resizeFrame = requestAnimationFrame(() => {
+      this.resizeFrame = undefined;
+      this.layoutChoropleth();
+    });
+  }
+
+  private layoutChoropleth(): void {
+    const bounds = this.USA_Ref.nativeElement
+      .getBoundingClientRect();
+
+    const nextWidth = Math.max(0, Math.floor(bounds.width));
+    const nextHeight = Math.max(0, Math.floor(bounds.height));
+
+    if (nextWidth <= 0 || nextHeight <= 0) {
+      return;
+    }
+
+    this.width = nextWidth;
+    this.height = nextHeight;
+
+    if (!this.usaLayer || this.needsRender) {
+      this.tryCreateChoropleth();
+      return;
+    }
+
+    this.svg.attr('viewBox', `0 0 ${this.width} ${this.height}`);
+    this.adjustGroupSizeAndPosition();
   }
 
   private tryCreateChoropleth(): void {
@@ -117,6 +173,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges {
     this.createStateCentroidLayer(stateFeaturesCollection);
     this.applyCentroidDisplay();
     this.adjustGroupSizeAndPosition();
+    this.needsRender = false;
 
     this.choroUSAEvent.emit(true);
   }

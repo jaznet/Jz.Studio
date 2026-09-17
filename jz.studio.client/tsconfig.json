@@ -24,6 +24,9 @@
       "jz-ui": [
         "./dist/jz-ui"
       ],
+      "jz-workspace-layout": [
+        "./dist/jz-workspace-layout"
+      ],
       "ui-interaction": [
         "./dist/ui-interaction"
       ]
@@ -70,6 +73,9 @@
     },
     {
       "path": "./libraries/framework/jz-ui/tsconfig.spec.json"
+    },
+    {
+      "path": "./libraries/framework/jz-workspace-layout/tsconfig.lib.json"
     },
     {
       "path": "./libraries/framework/ui-interaction/tsconfig.lib.json"
