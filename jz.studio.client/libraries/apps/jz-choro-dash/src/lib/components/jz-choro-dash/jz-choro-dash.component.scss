@@ -167,13 +167,17 @@
 }
 
 .usa-panel {
-  flex: 0 0 60%;
+  flex: 1 1 100%;
   min-width: 0;
   min-height: 0;
 }
 
+.choro-panels.details-visible .usa-panel {
+  flex: 0 0 50%;
+}
+
 .state-column {
-  flex: 0 0 40%;
+  flex: 0 0 50%;
   display: flex;
   flex-direction: column;
   min-width: 0;

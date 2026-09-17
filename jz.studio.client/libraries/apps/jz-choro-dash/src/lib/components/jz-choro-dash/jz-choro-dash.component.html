@@ -18,7 +18,8 @@
 
   </div>
 
-  <div class="choro-panels">
+  <div class="choro-panels"
+       [class.details-visible]="geographySelection">
 
     <jz-choro-dash-panel class="usa-panel">
       <choro-usa #choro_usa
@@ -29,11 +30,11 @@
       </choro-usa>
     </jz-choro-dash-panel>
 
-    <div class="state-column">
+    <div class="state-column"
+         *ngIf="geographySelection as selection">
 
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
-                     *ngIf="geographySelection as selection"
                      [stateId]="selection.stateId"
                      [shapeSet]="selection.stateShapeSet">
         </choro-state>
