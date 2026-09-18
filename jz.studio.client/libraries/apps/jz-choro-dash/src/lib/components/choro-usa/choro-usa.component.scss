@@ -67,6 +67,18 @@
   cursor: pointer;
 }
 
+:host ::ng-deep .choro-usa-county-path.is-selected,
+:host ::ng-deep .choro-county-path.is-selected {
+  fill: var(--_choro-selected-fill);
+  stroke: var(--_choro-selected-border);
+
+  filter:
+    drop-shadow(
+      0 0 8px
+      var(--_choro-selected-glow)
+    );
+}
+
 /* ==========================================================================
    USA State Features
    ========================================================================== */

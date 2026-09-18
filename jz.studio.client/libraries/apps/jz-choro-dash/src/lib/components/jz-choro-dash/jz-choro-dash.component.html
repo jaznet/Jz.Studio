@@ -31,6 +31,7 @@
                  [shapeSet]="usaShapeSet"
                  [showCentroids]="showCentroids"
                  [centroidMode]="centroidDisplayMode"
+                 [selectedCountyId]="geographySelection?.countyId ?? null"
                  (countySelected)="onCountySelected($event)">
       </choro-usa>
     </jz-choro-dash-panel>
@@ -43,6 +44,7 @@
         <choro-state #choro_state
                      [stateId]="selection.stateId"
                      [shapeSet]="selection.stateShapeSet"
+                     [selectedCountyId]="selection.countyId"
                      (countySelected)="onCountySelected($event)">
         </choro-state>
       </jz-choro-dash-panel>

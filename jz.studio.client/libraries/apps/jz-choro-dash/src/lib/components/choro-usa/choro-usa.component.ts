@@ -38,6 +38,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() shapeSet?: GeoShapeSet;
   @Input() showCentroids = false;
   @Input() centroidMode: 'all' | 'hover' | 'none' = 'hover';
+  @Input() selectedCountyId: string | null = null;
   @Output() choroUSAEvent = new EventEmitter<any>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
@@ -76,6 +77,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
     if (changes['showCentroids'] || changes['centroidMode']) {
       this.applyCentroidDisplay();
+    }
+
+    if (changes['selectedCountyId']) {
+      this.applyCountySelection();
     }
   }
 
@@ -172,6 +177,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.createStatesTextLayer(stateFeaturesCollection);
     this.createStateCentroidLayer(stateFeaturesCollection);
     this.applyCentroidDisplay();
+    this.applyCountySelection();
     this.adjustGroupSizeAndPosition();
     this.needsRender = false;
 
@@ -236,6 +242,23 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       'County count',
       countyFeaturesCollection.features.length
     );
+  }
+
+  private applyCountySelection(): void {
+    if (!this.countyLayer) {
+      return;
+    }
+
+    const selectedCountyId = this.selectedCountyId
+      ? String(this.selectedCountyId).padStart(5, '0')
+      : null;
+
+    this.countyLayer
+      .selectAll('path.choro-county-path')
+      .classed('is-selected', (county: any) =>
+        selectedCountyId !== null &&
+        String(county.id ?? '').padStart(5, '0') === selectedCountyId
+      );
   }
 
   private createStatesLayer(

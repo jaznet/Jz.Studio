@@ -33,6 +33,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
   @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
+  @Input() selectedCountyId: string | null = null;
   @Output() choroStateEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
@@ -64,6 +65,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shapeSet'] || changes['stateId']) {
       this.scheduleStateChoropleth();
+    }
+
+    if (changes['selectedCountyId']) {
+      this.applyCountySelection();
     }
   }
 
@@ -146,6 +151,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
     this.createStateChoroplethContainer();
     this.createCountyLayer(selectedCountyFeatures);
+    this.applyCountySelection();
     this.createStateOutlineLayer(stateOutline);
 
     const countyNode = this.counties?.node();
@@ -251,6 +257,23 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       stateId,
       countyFeature
     });
+  }
+
+  private applyCountySelection(): void {
+    if (!this.counties) {
+      return;
+    }
+
+    const selectedCountyId = this.selectedCountyId
+      ? String(this.selectedCountyId).padStart(5, '0')
+      : null;
+
+    this.counties
+      .selectAll('path.state-county-path')
+      .classed('is-selected', (county: any) =>
+        selectedCountyId !== null &&
+        String(county.id ?? '').padStart(5, '0') === selectedCountyId
+      );
   }
 
   private createStateOutlineLayer(countyFeaturesCollection: any): void {

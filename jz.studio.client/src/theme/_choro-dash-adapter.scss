@@ -60,6 +60,10 @@ body jz-choro-dash {
   --choro-hover-border: rgba(255, 255, 255, 0.55);
   --choro-hover-glow: var(--accent-glow);
 
+  --choro-selected-fill: var(--accent-primary);
+  --choro-selected-border: rgba(255, 255, 255, 0.55);
+  --choro-selected-glow: var(--accent-glow);
+
   /* Diagnostic/debug semantics */
   --choro-debug-dot: var(--plt-pop);
   --choro-debug-bbox: var(--plt-pop);

@@ -46,6 +46,16 @@
     rgba(168, 120, 0, 0.52)
   );
 
+  --_choro-selected-fill: var(--choro-selected-fill, #a87800);
+  --_choro-selected-border: var(
+    --choro-selected-border,
+    rgba(255, 255, 255, 0.55)
+  );
+  --_choro-selected-glow: var(
+    --choro-selected-glow,
+    rgba(168, 120, 0, 0.52)
+  );
+
   /* Diagnostic/debug semantics */
   --_choro-debug-dot: var(--choro-debug-dot, #87ceeb);
   --_choro-debug-bbox: var(--choro-debug-bbox, #87ceeb);
