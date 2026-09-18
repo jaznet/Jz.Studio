@@ -42,7 +42,8 @@
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
                      [stateId]="selection.stateId"
-                     [shapeSet]="selection.stateShapeSet">
+                     [shapeSet]="selection.stateShapeSet"
+                     (countySelected)="onCountySelected($event)">
         </choro-state>
       </jz-choro-dash-panel>
 

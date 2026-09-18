@@ -19,6 +19,7 @@ import { geoPath } from 'd3-geo';
 
 import { StateLookupService } from '../../services/state-lookup.service';
 
+import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
@@ -32,7 +33,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
   @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
-  @Output() choroStateEvent = new EventEmitter<any>();
+  @Output() choroStateEvent = new EventEmitter<boolean>();
+  @Output() countySelected = new EventEmitter<CountySelection>();
 
 
  // private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
@@ -229,7 +231,26 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .attr('fips', (d: any) => d.id)
       .attr('name', (d: any) => d.properties?.name)
       .attr('class', 'state-county-path')
-      .attr('vector-effect', 'non-scaling-stroke');
+      .attr('vector-effect', 'non-scaling-stroke')
+      .on(
+        'click',
+        (_event: MouseEvent, countyFeature: any) =>
+          this.onCountySelected(countyFeature)
+      );
+  }
+
+  private onCountySelected(countyFeature: any): void {
+    const countyId = String(countyFeature.id ?? '')
+      .padStart(5, '0');
+
+    const stateId = String(this.stateId ?? countyId.substring(0, 2))
+      .padStart(2, '0');
+
+    this.countySelected.emit({
+      countyId,
+      stateId,
+      countyFeature
+    });
   }
 
   private createStateOutlineLayer(countyFeaturesCollection: any): void {
