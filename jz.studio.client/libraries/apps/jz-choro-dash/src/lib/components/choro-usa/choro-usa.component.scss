@@ -47,21 +47,21 @@
    ========================================================================== */
 
 :host ::ng-deep .choro-usa-county-path {
-  fill: var(--choro-county-fill);
-  stroke: var(--choro-county-border);
+  fill: var(--_choro-county-fill);
+  stroke: var(--_choro-county-border);
   stroke-width: 0.15px;
   opacity: 0.75;
   vector-effect: non-scaling-stroke;
 }
 
 :host ::ng-deep .choro-usa-county-path:hover {
-  fill: var(--choro-hover-fill);
-  stroke: var(--choro-hover-border);
+  fill: var(--_choro-hover-fill);
+  stroke: var(--_choro-hover-border);
 
   filter:
     drop-shadow(
       0 0 8px
-      var(--choro-hover-glow)
+      var(--_choro-hover-glow)
     );
 
   cursor: pointer;
@@ -83,7 +83,7 @@
 
 :host ::ng-deep .choro-usa-state-mesh {
   fill: none;
-  stroke: var(--choro-state-border);
+  stroke: var(--_choro-state-border);
   stroke-width: 0.45px;
   opacity: 0.9;
   vector-effect: non-scaling-stroke;
@@ -95,7 +95,7 @@
 
 :host ::ng-deep .choro-usa-nation-mesh {
   fill: none;
-  stroke: var(--choro-nation-border);
+  stroke: var(--_choro-nation-border);
   stroke-width: 0.65px;
   opacity: 0.95;
   vector-effect: non-scaling-stroke;
@@ -106,13 +106,13 @@
    ========================================================================== */
 
 :host ::ng-deep .choro-usa-state-label {
-  fill: var(--choro-state-label);
+  fill: var(--_choro-state-label);
 
   font-family: 'museo', 'Segoe UI', sans-serif;
   font-size: 13px;
   font-weight: 500;
 
-  opacity: var(--choro-label-opacity);
+  opacity: var(--_choro-label-opacity);
 
   pointer-events: none;
   user-select: none;
@@ -125,10 +125,10 @@
    ========================================================================== */
 
 :host ::ng-deep .state-centroid {
-  fill: var(--choro-debug-dot);
+  fill: var(--_choro-debug-dot);
 }
 
 :host ::ng-deep .state-geo-bbox {
   fill: none;
-  stroke: var(--choro-debug-bbox);
+  stroke: var(--_choro-debug-bbox);
 }

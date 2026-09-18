@@ -35,13 +35,13 @@
 }
 
 :host ::ng-deep .state-title {
-  fill: var(--choro-title-fill);
+  fill: var(--_choro-title-fill);
 
-  font-family: var(--choro-title-font-family);
-  font-size: var(--choro-title-font-size);
-  font-weight: var(--choro-title-font-weight);
+  font-family: var(--_choro-title-font-family);
+  font-size: var(--_choro-title-font-size);
+  font-weight: var(--_choro-title-font-weight);
 
-  opacity: var(--choro-title-opacity);
+  opacity: var(--_choro-title-opacity);
 
   pointer-events: none;
   user-select: none;
@@ -62,21 +62,21 @@
    ========================================================================== */
 
 :host ::ng-deep .state-county-path {
-  fill: var(--choro-county-fill);
-  stroke: var(--choro-county-border);
+  fill: var(--_choro-county-fill);
+  stroke: var(--_choro-county-border);
   stroke-width: 0.35px;
   opacity: 0.85;
   vector-effect: non-scaling-stroke;
 }
 
 :host ::ng-deep .state-county-path:hover {
-  fill: var(--choro-hover-fill);
-  stroke: var(--choro-hover-border);
+  fill: var(--_choro-hover-fill);
+  stroke: var(--_choro-hover-border);
 
   filter:
     drop-shadow(
       0 0 8px
-      var(--choro-hover-glow)
+      var(--_choro-hover-glow)
     );
 
   cursor: pointer;
@@ -88,7 +88,7 @@
 
 :host ::ng-deep .state-outline-path {
   fill: none;
-  stroke: var(--choro-state-border);
+  stroke: var(--_choro-state-border);
   stroke-width: 0.75px;
   opacity: 0.95;
   vector-effect: non-scaling-stroke;
@@ -99,13 +99,13 @@
    ========================================================================== */
 
 :host ::ng-deep .state-label {
-  fill: var(--choro-state-label);
+  fill: var(--_choro-state-label);
 
   font-family: 'museo', 'Segoe UI', sans-serif;
   font-size: 18px;
   font-weight: 600;
 
-  opacity: var(--choro-label-opacity);
+  opacity: var(--_choro-label-opacity);
 
   pointer-events: none;
   user-select: none;

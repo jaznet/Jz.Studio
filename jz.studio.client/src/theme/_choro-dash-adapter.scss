@@ -1,0 +1,66 @@
+/*
+ * JzShell -> ChoroDash theme adapter
+ *
+ * JzShell owns the palette on the right side of each mapping. ChoroDash owns
+ * the public semantic property on the left side. No ChoroDash rendering rules
+ * belong in this adapter.
+ */
+body jz-choro-dash {
+  /* Panel semantics */
+  --choro-panel-bg-1: var(--surface-raised);
+  --choro-panel-bg-2: var(--surface-base);
+  --choro-panel-border: var(--border-soft);
+
+  /* Map semantics */
+  --choro-county-fill:
+    color-mix(
+      in srgb,
+      var(--plt-clr-3) 45%,
+      var(--plt-clr-4)
+    );
+
+  --choro-county-border:
+    color-mix(
+      in srgb,
+      var(--plt-clr-1) 45%,
+      var(--plt-txt-2)
+    );
+
+  --choro-state-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 58%,
+      var(--plt-clr-2)
+    );
+
+  --choro-nation-border:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 72%,
+      var(--plt-clr-1)
+    );
+
+  /* Label and title semantics */
+  --choro-state-label:
+    color-mix(
+      in srgb,
+      var(--plt-txt-2) 82%,
+      var(--plt-pop)
+    );
+
+  --choro-title-fill:
+    color-mix(
+      in srgb,
+      var(--plt-txt-3) 80%,
+      var(--plt-pop)
+    );
+
+  /* Interaction semantics */
+  --choro-hover-fill: var(--accent-primary);
+  --choro-hover-border: rgba(255, 255, 255, 0.55);
+  --choro-hover-glow: var(--accent-glow);
+
+  /* Diagnostic/debug semantics */
+  --choro-debug-dot: var(--plt-pop);
+  --choro-debug-bbox: var(--plt-pop);
+}
