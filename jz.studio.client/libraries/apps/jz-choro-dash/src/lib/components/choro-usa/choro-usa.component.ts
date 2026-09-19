@@ -221,14 +221,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
         const stateId =
           countyId.substring(0, 2);
 
-        console.log(
-          '%cCounty CLICKED',
-          'color:yellow',
-          countyId,
-          stateId,
-          d
-        );
-
         this.countySelected.emit({
           countyId,
           stateId,
@@ -237,11 +229,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       })
       .append('title')
       .text((d: any) => d.properties?.name ?? '');
-
-    console.log(
-      'County count',
-      countyFeaturesCollection.features.length
-    );
   }
 
   private applyCountySelection(): void {
@@ -467,6 +454,5 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       'transform',
       `translate(${translateX}, ${translateY}) scale(${scale})`
     );
-    console.log('%cadjustGroupSizeAndPosition', 'color:#b08d57');
   }
 }

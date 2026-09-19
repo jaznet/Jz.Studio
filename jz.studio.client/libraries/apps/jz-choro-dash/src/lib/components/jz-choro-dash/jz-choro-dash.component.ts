@@ -67,11 +67,6 @@ export class JzChoroDashComponent implements OnInit {
   }
 
   onCountySelected(selection: CountySelection): void {
-    console.log(
-      'PARENT RECEIVED COUNTY SELECTION',
-      selection
-    );
-
     this.geographySelection = this.usaShapeSet && this.countyShapeSet
       ? this.choroGeographyService.createSelection(
           this.usaShapeSet,

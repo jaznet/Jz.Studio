@@ -131,19 +131,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    console.log('%ctryCreateStateChoropleth - creating', 'color:#f7f9f9', {
-      stateId: this.stateId,
-      width: this.width,
-      height: this.height
-    });
-
     this.createStateChoropleth();
   }
 
   private createStateChoropleth(): void {
-
-    const selectedStateFips =
-      String(this.stateId ?? '34').padStart(2, '0');
 
     const selectedCountyFeatures = this.shapeSet!.features;
     const stateOutline =
@@ -160,26 +151,15 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    console.log('counties bbox', countyNode.getBBox());
-
   //  this.applyRotation();
   //  this.adjustStateGroupSizeAndPosition();
     this.fitAndTransformState();
     this.placeStateTitle();
 
-
-    console.log('%ccreateStateChoropleth', 'color:#f7f9f9', {
-      selectedStateFips,
-      countyCount: selectedCountyFeatures.features.length
-    });
-
     this.choroStateEvent.emit(true);
-    console.log('%cemit', 'color:#f7f9f9');
   }
 
   private createStateChoroplethContainer(): void {
-    console.log('%ccreateStateChoroplethContainer', 'color:#f7f9f9');
-
     select(this.stateRef.nativeElement)
       .selectAll('*')
       .remove();
@@ -217,17 +197,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private createCountyLayer(countyFeaturesCollection: any ): void {
 
-    console.log('createCountyLayer');
-
     const geopath = geoPath();
 
     const stateCounties =
       countyFeaturesCollection.features;
-
-    console.log(
-      'state county count',
-      stateCounties.length
-    );
 
     this.counties
       .selectAll('path')
