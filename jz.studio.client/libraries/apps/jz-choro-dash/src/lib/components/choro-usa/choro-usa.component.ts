@@ -23,6 +23,7 @@ import {
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { CountySelectionFactoryService } from '../../services/county-selection-factory.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 @Component({
@@ -60,6 +61,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private readonly geoPath = geoPath();
 
   constructor(
+    private countySelectionFactory: CountySelectionFactoryService,
     private stateLookup: StateLookupService
   ) { }
 
@@ -213,18 +215,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .attr('class', 'choro-county-path')
       .attr('vector-effect', 'non-scaling-stroke')
       .on('click', (_event: MouseEvent, d: any) => {
-
-        const countyId =
-          String(d.id).padStart(5, '0');
-
-        const stateId =
-          countyId.substring(0, 2);
-
-        this.countySelected.emit({
-          countyId,
-          stateId,
-          countyFeature: d
-        });
+        this.countySelected.emit(
+          this.countySelectionFactory.create(d)
+        );
       })
       .append('title')
       .text((d: any) => d.properties?.name ?? '');
