@@ -170,7 +170,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
-    // this.createStatesLayer(stateFeaturesCollection,stateMesh);
     this.createStateFeatureLayer(stateFeaturesCollection);
     this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
@@ -246,34 +245,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
         selectedCountyId !== null &&
         String(county.id ?? '').padStart(5, '0') === selectedCountyId
       );
-  }
-
-  private createStatesLayer(
-    stateFeaturesCollection: any,
-    stateMesh: any
-  ): void {
-    this.stateLayer = this.usaLayer
-      .append('g')
-      .attr('id', 'state-layer');
-
-    this.stateLayer
-      .selectAll('path.state')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('path')
-      .attr('class', 'state')
-      .attr('d', this.geoPath as any)
-      .attr('fill', 'transparent')
-      .attr('stroke', 'none');
-
-    this.stateLayer
-      .append('path')
-      .datum(stateMesh)
-      .attr('class', 'state-mesh')
-      .attr('d', this.geoPath as any)
-      .attr('fill', 'none')
-      .attr('stroke', 'black')
-      .attr('stroke-width', 0.3);
   }
 
   private createStateFeatureLayer(stateFeaturesCollection: any): void {
@@ -354,22 +325,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
         return `rotate(${rotate}, ${x}, ${y})`;
       })
-
-      //.style('font-family', 'museo')
-      //.style('font-size', (d: any) => {
-      //  const scale =
-      //    this.stateLookup.statesDictionary[d.id]?.fontScale ?? 1;
-
-      //  return `${13 * scale}px`;
-      //})
-
-      //.style('fill', 'skyblue')
-      //.style('stroke', 'none')
-      //.style('font-weight', '600')
-
-      //.style('display', (d: any) =>
-      //  this.stateLookup.statesDictionary[d.id]?.hidden ? 'none' : null
-      //)
 
       .text((d: any) =>
         this.stateLookup.statesDictionary[d.id]?.stateName ?? ''

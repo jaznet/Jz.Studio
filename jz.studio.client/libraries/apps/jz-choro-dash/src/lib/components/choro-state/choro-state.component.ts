@@ -37,8 +37,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @Output() choroStateEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
-
- // private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
   private viewReady = false;
   private resizeObserver?: ResizeObserver;
   private renderFrame?: number;
@@ -151,8 +149,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-  //  this.applyRotation();
-  //  this.adjustStateGroupSizeAndPosition();
     this.fitAndTransformState();
     this.placeStateTitle();
 
@@ -408,53 +404,4 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .text(stateName);
   }
 
-  private adjustStateGroupSizeAndPosition(): void {
-    const countyNode = this.counties?.node();
-
-    if (!countyNode) {
-      return;
-    }
-
-    const bbox = countyNode.getBBox();
-
-    if (bbox.width <= 0 || bbox.height <= 0) {
-      return;
-    }
-
-    const padding = 0;
-
-    const availableWidth = this.width - padding * 2;
-    const availableHeight = this.height - padding * 2;
-
-    const scaleX = availableWidth / bbox.width;
-    const scaleY = availableHeight / bbox.height;
-
-    const scale = Math.min(scaleX, scaleY);
-
-    const tx =
-      padding +
-      (availableWidth - bbox.width * scale) / 2 -
-      bbox.x * scale;
-
-    const ty =
-      padding +
-      (availableHeight - bbox.height * scale) / 2 -
-      bbox.y * scale;
-
-    this.outerGroup.attr(
-      'transform',
-      `translate(${tx}, ${ty}) scale(${scale})`
-    );
-  }
-
-  private applyRotation(): void {
-    const selectedStateFips = String(this.stateId ?? '34').padStart(2, '0');
-    const rotationAngle =
-      this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate || 0;
-
-    this.outerGroup.attr(
-      'transform',
-      `rotate(${rotationAngle}, ${this.width / 2}, ${this.height / 2})`
-    );
-  }
 }
