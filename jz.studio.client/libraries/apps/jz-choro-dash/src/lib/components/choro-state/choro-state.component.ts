@@ -18,6 +18,7 @@ import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
 import { StateLookupService } from '../../services/state-lookup.service';
+import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
@@ -51,7 +52,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   counties: any;
 
   constructor(
-    private stateLookup: StateLookupService
+    private stateLookup: StateLookupService,
+    private svgPathBounds: SvgPathBoundsService
   ) { }
 
   ngAfterViewInit(): void {
@@ -286,7 +288,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       `rotate(${rotationAngle}, ${centerX}, ${centerY})`
     );
 
-    const rotatedBounds = this.getRenderedStateBounds(stateNode);
+    const rotatedBounds = this.svgPathBounds.measure(
+      this.svg.node() as SVGSVGElement,
+      stateNode
+    );
 
     if (!rotatedBounds || rotatedBounds.width <= 0 || rotatedBounds.height <= 0) {
       return;
@@ -316,75 +321,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       'transform',
       `translate(${tx}, ${ty}) scale(${scale})`
     );
-  }
-
-  private getRenderedStateBounds(
-    stateNode: SVGGraphicsElement
-  ): { x: number; y: number; width: number; height: number } | null {
-    const svgNode = this.svg?.node() as SVGSVGElement | null;
-
-    if (!svgNode) {
-      return null;
-    }
-
-    const svgScreenMatrix = svgNode.getScreenCTM();
-
-    if (!svgScreenMatrix) {
-      return null;
-    }
-
-    const inverseSvgScreenMatrix = svgScreenMatrix.inverse();
-    const paths = Array.from(
-      stateNode.querySelectorAll<SVGPathElement>('path')
-    );
-
-    let minX = Number.POSITIVE_INFINITY;
-    let minY = Number.POSITIVE_INFINITY;
-    let maxX = Number.NEGATIVE_INFINITY;
-    let maxY = Number.NEGATIVE_INFINITY;
-
-    paths.forEach(pathNode => {
-      const pathScreenMatrix = pathNode.getScreenCTM();
-
-      if (!pathScreenMatrix) {
-        return;
-      }
-
-      const pathLength = pathNode.getTotalLength();
-      const sampleCount = Math.max(
-        2,
-        Math.min(4096, Math.ceil(pathLength))
-      );
-
-      for (let index = 0; index <= sampleCount; index += 1) {
-        const pathPoint = pathNode.getPointAtLength(
-          pathLength * index / sampleCount
-        );
-        const screenPoint = pathPoint.matrixTransform(pathScreenMatrix);
-        const svgPoint = screenPoint.matrixTransform(inverseSvgScreenMatrix);
-
-        minX = Math.min(minX, svgPoint.x);
-        minY = Math.min(minY, svgPoint.y);
-        maxX = Math.max(maxX, svgPoint.x);
-        maxY = Math.max(maxY, svgPoint.y);
-      }
-    });
-
-    if (
-      !Number.isFinite(minX) ||
-      !Number.isFinite(minY) ||
-      !Number.isFinite(maxX) ||
-      !Number.isFinite(maxY)
-    ) {
-      return null;
-    }
-
-    return {
-      x: minX,
-      y: minY,
-      width: maxX - minX,
-      height: maxY - minY
-    };
   }
 
   private placeStateTitle(): void {
