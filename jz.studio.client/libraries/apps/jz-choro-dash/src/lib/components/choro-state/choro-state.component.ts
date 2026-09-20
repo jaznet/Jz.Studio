@@ -7,7 +7,6 @@ import {
   EventEmitter,
   HostBinding,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   Output,
@@ -18,7 +17,7 @@ import {
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
-import { CountySelectionFactoryService } from '../../services/county-selection-factory.service';
+import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
@@ -54,8 +53,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   counties: any;
 
   constructor(
-    private countySelectionFactory: CountySelectionFactoryService,
-    private ngZone: NgZone,
+    private countySelectionDispatcher: CountySelectionDispatcherService,
     private stateLookup: StateLookupService,
     private svgPathBounds: SvgPathBoundsService
   ) { }
@@ -226,11 +224,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   private onCountySelected(countyFeature: any): void {
-    this.ngZone.run(() => {
-      this.countySelected.emit(
-        this.countySelectionFactory.create(countyFeature, this.stateId)
-      );
-    });
+    this.countySelectionDispatcher.dispatch(
+      this.countySelected,
+      countyFeature,
+      this.stateId
+    );
   }
 
   private applyCountySelection(): void {
