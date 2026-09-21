@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 
-type CountySelectionGesture = 'click' | 'primary-pointer';
+import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,16 @@ export class CountyLayerRendererService {
 
   private readonly path = geoPath();
 
-  render(
-    countyLayer: any,
-    countyFeaturesCollection: any,
-    pathClass: string,
-    gesture: CountySelectionGesture,
-    onCountySelected: (countyFeature: any) => void,
-    includeTitle = false
-  ): void {
+  render(options: CountyLayerRenderOptions): void {
+    const {
+      countyLayer,
+      countyFeaturesCollection,
+      pathClass,
+      gesture,
+      onCountySelected,
+      includeTitle = false
+    } = options;
+
     const countyPaths = countyLayer
       .selectAll('path')
       .data(countyFeaturesCollection.features, (county: any) => county.id)

@@ -201,11 +201,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private createCountyLayer(countyFeaturesCollection: any ): void {
     this.countyLayerRenderer.render(
-      this.counties,
-      countyFeaturesCollection,
-      'state-county-path',
-      'primary-pointer',
-      countyFeature => this.onCountySelected(countyFeature)
+      {
+        countyLayer: this.counties,
+        countyFeaturesCollection,
+        pathClass: 'state-county-path',
+        gesture: 'primary-pointer',
+        onCountySelected: countyFeature =>
+          this.onCountySelected(countyFeature)
+      }
     );
   }
 
