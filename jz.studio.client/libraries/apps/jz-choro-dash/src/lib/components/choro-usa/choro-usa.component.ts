@@ -24,6 +24,7 @@ import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
+import { CountySelectionHighlighterService } from '../../services/county-selection-highlighter.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 @Component({
@@ -62,6 +63,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   constructor(
     private countySelectionDispatcher: CountySelectionDispatcherService,
+    private countySelectionHighlighter: CountySelectionHighlighterService,
     private stateLookup: StateLookupService
   ) { }
 
@@ -229,16 +231,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
 
-    const selectedCountyId = this.selectedCountyId
-      ? String(this.selectedCountyId).padStart(5, '0')
-      : null;
-
-    this.countyLayer
-      .selectAll('path.choro-county-path')
-      .classed('is-selected', (county: any) =>
-        selectedCountyId !== null &&
-        String(county.id ?? '').padStart(5, '0') === selectedCountyId
-      );
+    this.countySelectionHighlighter.apply(
+      this.countyLayer,
+      'path.choro-county-path',
+      this.selectedCountyId
+    );
   }
 
   private createStateFeatureLayer(stateFeaturesCollection: any): void {

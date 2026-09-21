@@ -18,6 +18,7 @@ import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
+import { CountySelectionHighlighterService } from '../../services/county-selection-highlighter.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
@@ -54,6 +55,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   constructor(
     private countySelectionDispatcher: CountySelectionDispatcherService,
+    private countySelectionHighlighter: CountySelectionHighlighterService,
     private stateLookup: StateLookupService,
     private svgPathBounds: SvgPathBoundsService
   ) { }
@@ -236,16 +238,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    const selectedCountyId = this.selectedCountyId
-      ? String(this.selectedCountyId).padStart(5, '0')
-      : null;
-
-    this.counties
-      .selectAll('path.state-county-path')
-      .classed('is-selected', (county: any) =>
-        selectedCountyId !== null &&
-        String(county.id ?? '').padStart(5, '0') === selectedCountyId
-      );
+    this.countySelectionHighlighter.apply(
+      this.counties,
+      'path.state-county-path',
+      this.selectedCountyId
+    );
   }
 
   private createStateOutlineLayer(countyFeaturesCollection: any): void {
