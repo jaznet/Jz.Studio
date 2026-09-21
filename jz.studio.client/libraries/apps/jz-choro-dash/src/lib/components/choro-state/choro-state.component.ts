@@ -19,6 +19,7 @@ import { geoPath } from 'd3-geo';
 
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
 import { CountySelectionHighlighterService } from '../../services/county-selection-highlighter.service';
+import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
@@ -54,6 +55,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   counties: any;
 
   constructor(
+    private countyLayerRenderer: CountyLayerRendererService,
     private countySelectionDispatcher: CountySelectionDispatcherService,
     private countySelectionHighlighter: CountySelectionHighlighterService,
     private stateLookup: StateLookupService,
@@ -198,31 +200,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   private createCountyLayer(countyFeaturesCollection: any ): void {
-
-    const geopath = geoPath();
-
-    const stateCounties =
-      countyFeaturesCollection.features;
-
-    this.counties
-      .selectAll('path')
-      .data(stateCounties, (d: any) => d.id)
-      .join('path')
-      .attr('d', geopath as any)
-      .attr('fips', (d: any) => d.id)
-      .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'state-county-path')
-      .attr('vector-effect', 'non-scaling-stroke')
-      .on('pointerup', (event: PointerEvent, countyFeature: any) => {
-        if (!event.isPrimary || event.button !== 0) {
-          return;
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        this.onCountySelected(countyFeature);
-      });
+    this.countyLayerRenderer.render(
+      this.counties,
+      countyFeaturesCollection,
+      'state-county-path',
+      'primary-pointer',
+      countyFeature => this.onCountySelected(countyFeature)
+    );
   }
 
   private onCountySelected(countyFeature: any): void {

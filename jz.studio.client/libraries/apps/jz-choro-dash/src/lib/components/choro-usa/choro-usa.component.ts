@@ -23,6 +23,7 @@ import {
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
 import { CountySelectionHighlighterService } from '../../services/county-selection-highlighter.service';
 import { StateLookupService } from '../../services/state-lookup.service';
@@ -62,6 +63,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private readonly geoPath = geoPath();
 
   constructor(
+    private countyLayerRenderer: CountyLayerRendererService,
     private countySelectionDispatcher: CountySelectionDispatcherService,
     private countySelectionHighlighter: CountySelectionHighlighterService,
     private stateLookup: StateLookupService
@@ -205,25 +207,17 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private createCountyLayer(countyFeaturesCollection: any): void {
-
-    this.countyLayer
-      .selectAll('path')
-      .data(countyFeaturesCollection.features)
-      .enter()
-      .append('path')
-      .attr('d', this.geoPath)
-      .attr('fips', (d: any) => d.id)
-      .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'choro-county-path')
-      .attr('vector-effect', 'non-scaling-stroke')
-      .on('click', (_event: MouseEvent, d: any) => {
-        this.countySelectionDispatcher.dispatch(
-          this.countySelected,
-          d
-        );
-      })
-      .append('title')
-      .text((d: any) => d.properties?.name ?? '');
+    this.countyLayerRenderer.render(
+      this.countyLayer,
+      countyFeaturesCollection,
+      'choro-county-path',
+      'click',
+      countyFeature => this.countySelectionDispatcher.dispatch(
+        this.countySelected,
+        countyFeature
+      ),
+      true
+    );
   }
 
   private applyCountySelection(): void {
