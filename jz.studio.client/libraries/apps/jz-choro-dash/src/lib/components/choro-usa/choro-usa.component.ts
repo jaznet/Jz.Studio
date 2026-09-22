@@ -307,34 +307,49 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     return Math.atan2(dy, dx) * 180 / Math.PI;
   }
 
+  private getStateId(stateFeature: StateFeature): string {
+    return String(stateFeature.id ?? '');
+  }
+
   private createStatesTextLayer(
     stateFeaturesCollection: StateFeatureCollection
   ): void {
 
     this.stateTextLayer
       .selectAll('text.state-label')
-      .data(stateFeaturesCollection.features, (d: any) => d.id)
+      .data(
+        stateFeaturesCollection.features,
+        (stateFeature: StateFeature) => this.getStateId(stateFeature)
+      )
       .join('text')
       .attr('class', 'choro-usa-state-label')
-      .attr('id', (d: any) => `state-label-${d.id}`)
+      .attr('id', (stateFeature: StateFeature) =>
+        `state-label-${this.getStateId(stateFeature)}`
+      )
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'central')
-      .attr('x', (d: any) => this.geoPath.centroid(d)[0])
-      .attr('y', (d: any) => this.geoPath.centroid(d)[1])
-      .attr('transform', (d: any) => {
-        const [x, y] = this.geoPath.centroid(d);
+      .attr('x', (stateFeature: StateFeature) =>
+        this.geoPath.centroid(stateFeature)[0]
+      )
+      .attr('y', (stateFeature: StateFeature) =>
+        this.geoPath.centroid(stateFeature)[1]
+      )
+      .attr('transform', (stateFeature: StateFeature) => {
+        const [x, y] = this.geoPath.centroid(stateFeature);
 
-        const placement = this.stateLookup.statesDictionary[d.id];
+        const stateId = this.getStateId(stateFeature);
+        const placement = this.stateLookup.statesDictionary[stateId];
 
         const rotate =
           (placement?.albersRotate ??
-            this.getLatitudeTangentAngle(d)) * -1;
+            this.getLatitudeTangentAngle(stateFeature)) * -1;
 
         return `rotate(${rotate}, ${x}, ${y})`;
       })
 
-      .text((d: any) =>
-        this.stateLookup.statesDictionary[d.id]?.stateName ?? ''
+      .text((stateFeature: StateFeature) =>
+        this.stateLookup.statesDictionary[this.getStateId(stateFeature)]
+          ?.stateName ?? ''
       );
   }
 
