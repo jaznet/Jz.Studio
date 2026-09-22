@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 
+import { CountyFeature } from '../models/county-feature.model';
+import { CountyLayerSelection } from '../models/county-layer-factory.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CountySelectionHighlighterService {
 
   apply(
-    countyLayer: any,
+    countyLayer: CountyLayerSelection,
     pathSelector: string,
     selectedCountyId: string | null
   ): void {
@@ -15,8 +18,8 @@ export class CountySelectionHighlighterService {
       : null;
 
     countyLayer
-      .selectAll(pathSelector)
-      .classed('is-selected', (county: any) =>
+      .selectAll<SVGPathElement, CountyFeature>(pathSelector)
+      .classed('is-selected', (county: CountyFeature) =>
         normalizedCountyId !== null &&
         String(county.id ?? '').padStart(5, '0') === normalizedCountyId
       );
