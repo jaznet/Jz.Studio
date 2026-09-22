@@ -28,6 +28,7 @@ import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
+import { StateFeatureCollection } from '../../models/state-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
@@ -178,7 +179,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private createChoropleth(
-    stateFeaturesCollection: any,
+    stateFeaturesCollection: StateFeatureCollection,
     countyFeaturesCollection: CountyFeatureCollection,
     stateMesh: any,
     nationMesh: any
@@ -246,7 +247,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
   }
 
-  private createStateFeatureLayer(stateFeaturesCollection: any): void {
+  private createStateFeatureLayer(
+    stateFeaturesCollection: StateFeatureCollection
+  ): void {
     this.stateLayer
       .selectAll('path.choro-state-feature')
       .data(stateFeaturesCollection.features)
@@ -301,7 +304,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     return Math.atan2(dy, dx) * 180 / Math.PI;
   }
 
-  private createStatesTextLayer(stateFeaturesCollection: any): void {
+  private createStatesTextLayer(
+    stateFeaturesCollection: StateFeatureCollection
+  ): void {
 
     this.stateTextLayer
       .selectAll('text.state-label')
@@ -330,7 +335,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       );
   }
 
-  private createStateCentroidLayer(stateFeaturesCollection: any): void {
+  private createStateCentroidLayer(
+    stateFeaturesCollection: StateFeatureCollection
+  ): void {
     const centroidLayer = this.usaLayer
       .append('g')
       .attr('id', 'gStateCentroids')
