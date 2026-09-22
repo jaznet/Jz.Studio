@@ -4,11 +4,13 @@ import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
+import { CountyLayerRenderStepRunner } from '../models/county-layer-render-step-runner.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountyLayerRenderStepRunnerService {
+export class CountyLayerRenderStepRunnerService
+  implements CountyLayerRenderStepRunner {
 
   run(
     renderSteps: readonly CountyLayerRenderStep[],
