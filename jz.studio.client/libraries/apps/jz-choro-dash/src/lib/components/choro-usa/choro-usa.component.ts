@@ -23,11 +23,12 @@ import {
 
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
+import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
-import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
+import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { StateLookupService } from '../../services/state-lookup.service';
@@ -67,7 +68,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private readonly geoPath = geoPath();
 
   constructor(
-    private countyLayerRenderer: CountyLayerRendererService,
+    @Inject(COUNTY_LAYER_RENDERER)
+    private countyLayerRenderer: CountyLayerRenderer,
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
