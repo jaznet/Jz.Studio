@@ -4,7 +4,8 @@ import { geoPath } from 'd3-geo';
 import { CountyFeature } from '../models/county-feature.model';
 import {
   CountyLayerFactory,
-  CountyLayerFactoryOptions
+  CountyLayerFactoryOptions,
+  CountyPathSelection
 } from '../models/county-layer-factory.model';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class CountyLayerFactoryService implements CountyLayerFactory {
 
   private readonly path = geoPath();
 
-  create(options: CountyLayerFactoryOptions): any {
+  create(options: CountyLayerFactoryOptions): CountyPathSelection {
     const {
       countyLayer,
       countyFeaturesCollection,
@@ -22,7 +23,7 @@ export class CountyLayerFactoryService implements CountyLayerFactory {
     } = options;
 
     return countyLayer
-      .selectAll('path')
+      .selectAll<SVGPathElement, CountyFeature>('path')
       .data(
         countyFeaturesCollection.features,
         (county: CountyFeature) => county.id!
@@ -30,7 +31,10 @@ export class CountyLayerFactoryService implements CountyLayerFactory {
       .join('path')
       .attr('d', this.path as any)
       .attr('fips', (county: CountyFeature) => county.id!)
-      .attr('name', (county: CountyFeature) => county.properties?.name)
+      .attr(
+        'name',
+        (county: CountyFeature) => county.properties?.name ?? null
+      )
       .attr('class', pathClass)
       .attr('vector-effect', 'non-scaling-stroke');
   }
