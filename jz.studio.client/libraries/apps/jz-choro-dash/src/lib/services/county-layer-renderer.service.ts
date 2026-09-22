@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 
+import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 
 @Injectable({
@@ -22,11 +23,11 @@ export class CountyLayerRendererService {
 
     const countyPaths = countyLayer
       .selectAll('path')
-      .data(countyFeaturesCollection.features, (county: any) => county.id)
+      .data(countyFeaturesCollection.features, (county: CountyFeature) => county.id)
       .join('path')
       .attr('d', this.path as any)
-      .attr('fips', (county: any) => county.id)
-      .attr('name', (county: any) => county.properties?.name)
+      .attr('fips', (county: CountyFeature) => county.id)
+      .attr('name', (county: CountyFeature) => county.properties?.name)
       .attr('class', pathClass)
       .attr('vector-effect', 'non-scaling-stroke')
       .on('click', null)
@@ -35,7 +36,7 @@ export class CountyLayerRendererService {
     if (gesture === 'primary-pointer') {
       countyPaths.on(
         'pointerup',
-        (event: PointerEvent, countyFeature: any) => {
+        (event: PointerEvent, countyFeature: CountyFeature) => {
           if (!event.isPrimary || event.button !== 0) {
             return;
           }
@@ -48,7 +49,7 @@ export class CountyLayerRendererService {
     } else {
       countyPaths.on(
         'click',
-        (_event: MouseEvent, countyFeature: any) =>
+        (_event: MouseEvent, countyFeature: CountyFeature) =>
           onCountySelected(countyFeature)
       );
     }
@@ -56,9 +57,9 @@ export class CountyLayerRendererService {
     if (includeTitle) {
       countyPaths
         .selectAll('title')
-        .data((county: any) => [county])
+        .data((county: CountyFeature) => [county])
         .join('title')
-        .text((county: any) => county.properties?.name ?? '');
+        .text((county: CountyFeature) => county.properties?.name ?? '');
     }
   }
 }

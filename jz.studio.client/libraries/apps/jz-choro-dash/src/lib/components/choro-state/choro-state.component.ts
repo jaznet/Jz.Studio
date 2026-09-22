@@ -24,6 +24,7 @@ import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
+import { CountyFeature } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
@@ -212,7 +213,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     );
   }
 
-  private onCountySelected(countyFeature: any): void {
+  private onCountySelected(countyFeature: CountyFeature): void {
     this.countySelectionDispatcher.dispatch(
       this.countySelected,
       countyFeature,
