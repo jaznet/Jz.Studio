@@ -7,6 +7,7 @@ import {
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
 import { CountyPathCreationStepService } from './county-path-creation-step.service';
+import { CountyLayerRenderStepRunnerService } from './county-layer-render-step-runner.service';
 import { CountySelectionRenderStepService } from './county-selection-render-step.service';
 import { CountyTitleRenderStepService } from './county-title-render-step.service';
 
@@ -21,7 +22,8 @@ export class CountyLayerRenderPipelineService
   constructor(
     countyPathCreationStep: CountyPathCreationStepService,
     countySelectionRenderStep: CountySelectionRenderStepService,
-    countyTitleRenderStep: CountyTitleRenderStepService
+    countyTitleRenderStep: CountyTitleRenderStepService,
+    private renderStepRunner: CountyLayerRenderStepRunnerService
   ) {
     this.renderSteps = [
       countyPathCreationStep,
@@ -33,9 +35,6 @@ export class CountyLayerRenderPipelineService
   render(options: CountyLayerRenderOptions): void {
     const initialContext: CountyLayerRenderStepContext = { options };
 
-    this.renderSteps.reduce(
-      (context, renderStep) => renderStep.execute(context),
-      initialContext
-    );
+    this.renderStepRunner.run(this.renderSteps, initialContext);
   }
 }
