@@ -4,7 +4,7 @@ import { CountyLayerRenderOptions } from '../models/county-layer-render-options.
 import { CountyLayerRenderPipeline } from '../models/county-layer-render-pipeline.model';
 import { CountyLayerFactoryService } from './county-layer-factory.service';
 import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
-import { CountyTitleRendererService } from './county-title-renderer.service';
+import { CountyTitleRenderStepService } from './county-title-render-step.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class CountyLayerRenderPipelineService
   constructor(
     private countyLayerFactory: CountyLayerFactoryService,
     private countySelectionGestureBinder: CountySelectionGestureBinderService,
-    private countyTitleRenderer: CountyTitleRendererService
+    private countyTitleRenderStep: CountyTitleRenderStepService
   ) {}
 
   render(options: CountyLayerRenderOptions): void {
@@ -24,8 +24,7 @@ export class CountyLayerRenderPipelineService
       countyFeaturesCollection,
       pathClass,
       gesture,
-      onCountySelected,
-      includeTitle = false
+      onCountySelected
     } = options;
 
     const countyPaths = this.countyLayerFactory.create({
@@ -40,8 +39,9 @@ export class CountyLayerRenderPipelineService
       onCountySelected
     );
 
-    if (includeTitle) {
-      this.countyTitleRenderer.render(countyPaths);
-    }
+    this.countyTitleRenderStep.execute({
+      countyPaths,
+      options
+    });
   }
 }
