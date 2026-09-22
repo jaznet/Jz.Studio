@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CountyFeature } from '../models/county-feature.model';
 import { CountySelection } from '../models/county-selection.model';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { CountySelection } from '../models/county-selection.model';
 export class CountySelectionFactoryService {
 
   create(
-    countyFeature: any,
+    countyFeature: CountyFeature,
     stateId?: string | null
   ): CountySelection {
     const countyId = String(countyFeature.id ?? '')

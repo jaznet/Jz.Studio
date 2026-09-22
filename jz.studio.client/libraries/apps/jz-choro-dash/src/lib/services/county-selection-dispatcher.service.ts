@@ -5,12 +5,15 @@ import {
 } from '@angular/core';
 
 import { CountySelection } from '../models/county-selection.model';
+import { CountySelectionDispatcher } from '../models/county-selection-dispatcher.model';
+import { CountyFeature } from '../models/county-feature.model';
 import { CountySelectionFactoryService } from './county-selection-factory.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountySelectionDispatcherService {
+export class CountySelectionDispatcherService
+  implements CountySelectionDispatcher {
 
   constructor(
     private countySelectionFactory: CountySelectionFactoryService,
@@ -19,7 +22,7 @@ export class CountySelectionDispatcherService {
 
   dispatch(
     output: EventEmitter<CountySelection>,
-    countyFeature: any,
+    countyFeature: CountyFeature,
     stateId?: string | null
   ): void {
     const selection = this.countySelectionFactory.create(countyFeature, stateId);
