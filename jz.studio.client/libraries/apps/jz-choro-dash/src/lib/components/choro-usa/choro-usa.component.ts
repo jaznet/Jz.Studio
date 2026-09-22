@@ -29,6 +29,7 @@ import { CountySelectionDispatcher } from '../../models/county-selection-dispatc
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
 import {
+  StateBoundaryGeometry,
   StateFeature,
   StateFeatureCollection
 } from '../../models/state-feature.model';
@@ -184,8 +185,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private createChoropleth(
     stateFeaturesCollection: StateFeatureCollection,
     countyFeaturesCollection: CountyFeatureCollection,
-    stateMesh: any,
-    nationMesh: any
+    stateMesh: StateBoundaryGeometry,
+    nationMesh: StateBoundaryGeometry
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
@@ -265,7 +266,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .attr('pointer-events', 'none');
   }
 
-  private createStatesMesh(stateMesh: any): void {
+  private createStatesMesh(stateMesh: StateBoundaryGeometry): void {
     this.stateLayer
       .append('path')
       .datum(stateMesh)
@@ -275,7 +276,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .attr('pointer-events', 'none');
   }
 
-  private createNationLayer(nationMesh: any): void {
+  private createNationLayer(nationMesh: StateBoundaryGeometry): void {
 
     this.nationLayer
       .append('path')

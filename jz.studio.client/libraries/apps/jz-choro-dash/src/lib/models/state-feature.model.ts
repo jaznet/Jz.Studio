@@ -7,6 +7,8 @@ import {
 
 export type StateFeature = Feature<Geometry, GeoJsonProperties>;
 
+export type StateBoundaryGeometry = Geometry;
+
 export type StateFeatureCollection = FeatureCollection<
   Geometry,
   GeoJsonProperties
