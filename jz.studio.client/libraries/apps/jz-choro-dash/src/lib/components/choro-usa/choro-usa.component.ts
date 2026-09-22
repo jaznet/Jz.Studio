@@ -48,7 +48,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() showCentroids = false;
   @Input() centroidMode: 'all' | 'hover' | 'none' = 'hover';
   @Input() selectedCountyId: string | null = null;
-  @Output() choroUSAEvent = new EventEmitter<any>();
+  @Output() choroUSAEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
   private viewReady = false;
