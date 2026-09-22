@@ -4,6 +4,7 @@ import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
+import { CountyLayerRenderContextGuardService } from './county-layer-render-context-guard.service';
 import { CountyTitleRendererService } from './county-title-renderer.service';
 
 @Injectable({
@@ -13,7 +14,8 @@ export class CountyTitleRenderStepService
   implements CountyLayerRenderStep {
 
   constructor(
-    private countyTitleRenderer: CountyTitleRendererService
+    private countyTitleRenderer: CountyTitleRendererService,
+    private contextGuard: CountyLayerRenderContextGuardService
   ) {}
 
   execute(
@@ -23,11 +25,12 @@ export class CountyTitleRenderStepService
       return context;
     }
 
-    if (!context.countyPaths) {
-      throw new Error('County paths must be created before rendering titles.');
-    }
+    const countyPaths = this.contextGuard.requireCountyPaths(
+      context,
+      'rendering titles'
+    );
 
-    this.countyTitleRenderer.render(context.countyPaths);
+    this.countyTitleRenderer.render(countyPaths);
     return context;
   }
 }

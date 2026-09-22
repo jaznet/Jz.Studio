@@ -4,6 +4,7 @@ import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
+import { CountyLayerRenderContextGuardService } from './county-layer-render-context-guard.service';
 import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
 
 @Injectable({
@@ -13,15 +14,17 @@ export class CountySelectionRenderStepService
   implements CountyLayerRenderStep {
 
   constructor(
-    private countySelectionGestureBinder: CountySelectionGestureBinderService
+    private countySelectionGestureBinder: CountySelectionGestureBinderService,
+    private contextGuard: CountyLayerRenderContextGuardService
   ) {}
 
   execute(
     context: CountyLayerRenderStepContext
   ): CountyLayerRenderStepContext {
-    if (!context.countyPaths) {
-      throw new Error('County paths must be created before binding selection.');
-    }
+    const countyPaths = this.contextGuard.requireCountyPaths(
+      context,
+      'binding selection'
+    );
 
     const {
       gesture,
@@ -29,7 +32,7 @@ export class CountySelectionRenderStepService
     } = context.options;
 
     this.countySelectionGestureBinder.bind(
-      context.countyPaths,
+      countyPaths,
       gesture,
       onCountySelected
     );
