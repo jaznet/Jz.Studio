@@ -18,13 +18,14 @@ import {
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
-import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
+import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
+import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import {
   CountyFeature,
   CountyFeatureCollection
@@ -62,7 +63,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   constructor(
     private countyLayerRenderer: CountyLayerRendererService,
-    private countySelectionDispatcher: CountySelectionDispatcherService,
+    @Inject(COUNTY_SELECTION_DISPATCHER)
+    private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLookup: StateLookupService,

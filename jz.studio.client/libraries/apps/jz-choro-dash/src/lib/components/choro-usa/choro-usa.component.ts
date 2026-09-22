@@ -23,11 +23,12 @@ import {
 
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
+import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
-import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
+import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { StateLookupService } from '../../services/state-lookup.service';
 
@@ -67,7 +68,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   constructor(
     private countyLayerRenderer: CountyLayerRendererService,
-    private countySelectionDispatcher: CountySelectionDispatcherService,
+    @Inject(COUNTY_SELECTION_DISPATCHER)
+    private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLookup: StateLookupService
