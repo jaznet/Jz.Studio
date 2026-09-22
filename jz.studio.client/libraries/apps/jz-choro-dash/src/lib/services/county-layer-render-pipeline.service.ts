@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
+import { CountyLayerRenderPipeline } from '../models/county-layer-render-pipeline.model';
 import { CountyLayerFactoryService } from './county-layer-factory.service';
 import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
 import { CountyTitleRendererService } from './county-title-renderer.service';
@@ -8,7 +9,8 @@ import { CountyTitleRendererService } from './county-title-renderer.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CountyLayerRenderPipelineService {
+export class CountyLayerRenderPipelineService
+  implements CountyLayerRenderPipeline {
 
   constructor(
     private countyLayerFactory: CountyLayerFactoryService,
