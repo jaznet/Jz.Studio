@@ -6,6 +6,7 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -22,11 +23,12 @@ import {
 
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
+import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
-import { CountySelectionHighlighterService } from '../../services/county-selection-highlighter.service';
+import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 @Component({
@@ -66,7 +68,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   constructor(
     private countyLayerRenderer: CountyLayerRendererService,
     private countySelectionDispatcher: CountySelectionDispatcherService,
-    private countySelectionHighlighter: CountySelectionHighlighterService,
+    @Inject(COUNTY_SELECTION_HIGHLIGHTER)
+    private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLookup: StateLookupService
   ) { }
 
