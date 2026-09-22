@@ -4,7 +4,10 @@ export interface CountyFeatureProperties {
 }
 
 export interface CountyFeature {
-  id: string | number;
-  properties?: CountyFeatureProperties;
-  [featureProperty: string]: unknown;
+  id?: string | number;
+  properties: CountyFeatureProperties | null;
+}
+
+export interface CountyFeatureCollection {
+  features: CountyFeature[];
 }

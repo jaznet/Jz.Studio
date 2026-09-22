@@ -23,10 +23,10 @@ export class CountyLayerRendererService {
 
     const countyPaths = countyLayer
       .selectAll('path')
-      .data(countyFeaturesCollection.features, (county: CountyFeature) => county.id)
+      .data(countyFeaturesCollection.features, (county: CountyFeature) => county.id!)
       .join('path')
       .attr('d', this.path as any)
-      .attr('fips', (county: CountyFeature) => county.id)
+      .attr('fips', (county: CountyFeature) => county.id!)
       .attr('name', (county: CountyFeature) => county.properties?.name)
       .attr('class', pathClass)
       .attr('vector-effect', 'non-scaling-stroke')

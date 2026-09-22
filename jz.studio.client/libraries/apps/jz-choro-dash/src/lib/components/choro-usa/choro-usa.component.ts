@@ -22,6 +22,7 @@ import {
 
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
+import { CountyFeatureCollection } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { CountyLayerRendererService } from '../../services/county-layer-renderer.service';
 import { CountySelectionDispatcherService } from '../../services/county-selection-dispatcher.service';
@@ -170,7 +171,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private createChoropleth(
     stateFeaturesCollection: any,
-    countyFeaturesCollection: any,
+    countyFeaturesCollection: CountyFeatureCollection,
     stateMesh: any,
     nationMesh: any
   ): void {
@@ -206,7 +207,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.stateTextLayer = this.usaLayer.append('g').attr('id', 'state-name-layer');
   }
 
-  private createCountyLayer(countyFeaturesCollection: any): void {
+  private createCountyLayer(
+    countyFeaturesCollection: CountyFeatureCollection
+  ): void {
     this.countyLayerRenderer.render(
       {
         countyLayer: this.countyLayer,

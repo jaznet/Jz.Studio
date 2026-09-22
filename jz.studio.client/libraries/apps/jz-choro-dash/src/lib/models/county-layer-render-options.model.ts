@@ -1,10 +1,13 @@
-import { CountyFeature } from './county-feature.model';
+import {
+  CountyFeature,
+  CountyFeatureCollection
+} from './county-feature.model';
 
 export type CountySelectionGesture = 'click' | 'primary-pointer';
 
 export interface CountyLayerRenderOptions {
   countyLayer: any;
-  countyFeaturesCollection: any;
+  countyFeaturesCollection: CountyFeatureCollection;
   pathClass: string;
   gesture: CountySelectionGesture;
   onCountySelected: (countyFeature: CountyFeature) => void;

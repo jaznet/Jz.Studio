@@ -24,7 +24,10 @@ import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
-import { CountyFeature } from '../../models/county-feature.model';
+import {
+  CountyFeature,
+  CountyFeatureCollection
+} from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 
 @Component({
@@ -200,7 +203,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .attr('class', 'counties-group');
   }
 
-  private createCountyLayer(countyFeaturesCollection: any ): void {
+  private createCountyLayer(
+    countyFeaturesCollection: CountyFeatureCollection
+  ): void {
     this.countyLayerRenderer.render(
       {
         countyLayer: this.counties,
