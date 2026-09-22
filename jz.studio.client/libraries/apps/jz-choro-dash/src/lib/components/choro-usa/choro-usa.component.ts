@@ -29,6 +29,10 @@ import { CountySelectionDispatcher } from '../../models/county-selection-dispatc
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
 import {
+  SvgCanvasSelection,
+  SvgGroupSelection
+} from '../../models/svg-layer-selection.model';
+import {
   StateBoundaryGeometry,
   StateFeature,
   StateFeatureCollection
@@ -64,12 +68,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   width = 0;
   height = 0;
 
-  private svg: any;
-  private usaLayer: any;
-  private stateLayer: any;
+  private svg!: SvgCanvasSelection;
+  private usaLayer!: SvgGroupSelection;
+  private stateLayer!: SvgGroupSelection;
   public countyLayer!: CountyLayerSelection;
-  private nationLayer: any;
-  private stateTextLayer: any;
+  private nationLayer!: SvgGroupSelection;
+  private stateTextLayer!: SvgGroupSelection;
 
   private readonly geoPath = geoPath();
 
@@ -317,7 +321,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   ): void {
 
     this.stateTextLayer
-      .selectAll('text.state-label')
+      .selectAll<SVGTextElement, StateFeature>('text.state-label')
       .data(
         stateFeaturesCollection.features,
         (stateFeature: StateFeature) => this.getStateId(stateFeature)
@@ -429,7 +433,13 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private adjustGroupSizeAndPosition(): void {
-    const usaBBox = this.usaLayer.node().getBBox();
+    const usaNode = this.usaLayer.node();
+
+    if (!usaNode) {
+      return;
+    }
+
+    const usaBBox = usaNode.getBBox();
 
     if (!usaBBox.width || !usaBBox.height) {
       console.warn('USA bbox is empty', usaBBox);
