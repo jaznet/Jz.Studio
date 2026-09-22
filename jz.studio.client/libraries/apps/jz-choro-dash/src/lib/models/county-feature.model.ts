@@ -1,13 +1,16 @@
+import { Feature, FeatureCollection, Geometry } from 'geojson';
+
 export interface CountyFeatureProperties {
   name?: string;
   [propertyName: string]: unknown;
 }
 
-export interface CountyFeature {
-  id?: string | number;
-  properties: CountyFeatureProperties | null;
-}
+export type CountyFeature = Feature<
+  Geometry,
+  CountyFeatureProperties | null
+>;
 
-export interface CountyFeatureCollection {
-  features: CountyFeature[];
-}
+export type CountyFeatureCollection = FeatureCollection<
+  Geometry,
+  CountyFeatureProperties | null
+>;

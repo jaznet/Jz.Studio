@@ -264,7 +264,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .enter()
       .append('path')
       .attr('class', 'choro-state-feature')
-      .attr('d', this.geoPath as any)
+      .attr('d', this.geoPath)
       .attr('fill', 'none')
       .attr('stroke', 'none')
       .attr('pointer-events', 'none');
@@ -276,7 +276,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .datum(stateMesh)
       .attr('id', 'statemesh')
       .attr('class', 'choro-state-mesh')
-      .attr('d', this.geoPath as any)
+      .attr('d', this.geoPath)
       .attr('pointer-events', 'none');
   }
 
@@ -286,7 +286,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .append('path')
       .datum(nationMesh)
       .attr('class', 'choro-nation-mesh')
-      .attr('d', this.geoPath as any)
+      .attr('d', this.geoPath)
       .attr('pointer-events', 'none');
   }
 

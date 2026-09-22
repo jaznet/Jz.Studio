@@ -251,7 +251,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .append('path')
       .datum(countyFeaturesCollection)
       .attr('class', 'choro-state-mesh')
-      .attr('d', geopath as any)
+      .attr('d', geopath)
       .attr('pointer-events', 'none');
   }
 
