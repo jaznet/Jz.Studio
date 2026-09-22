@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 import { CountyLayerRenderPipeline } from '../models/county-layer-render-pipeline.model';
-import { CountyLayerFactoryService } from './county-layer-factory.service';
+import { CountyPathCreationStepService } from './county-path-creation-step.service';
 import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
 import { CountyTitleRenderStepService } from './county-title-render-step.service';
 
@@ -13,35 +13,25 @@ export class CountyLayerRenderPipelineService
   implements CountyLayerRenderPipeline {
 
   constructor(
-    private countyLayerFactory: CountyLayerFactoryService,
+    private countyPathCreationStep: CountyPathCreationStepService,
     private countySelectionGestureBinder: CountySelectionGestureBinderService,
     private countyTitleRenderStep: CountyTitleRenderStepService
   ) {}
 
   render(options: CountyLayerRenderOptions): void {
     const {
-      countyLayer,
-      countyFeaturesCollection,
-      pathClass,
       gesture,
       onCountySelected
     } = options;
 
-    const countyPaths = this.countyLayerFactory.create({
-      countyLayer,
-      countyFeaturesCollection,
-      pathClass
-    });
+    const context = this.countyPathCreationStep.execute({ options });
 
     this.countySelectionGestureBinder.bind(
-      countyPaths,
+      context.countyPaths,
       gesture,
       onCountySelected
     );
 
-    this.countyTitleRenderStep.execute({
-      countyPaths,
-      options
-    });
+    this.countyTitleRenderStep.execute(context);
   }
 }

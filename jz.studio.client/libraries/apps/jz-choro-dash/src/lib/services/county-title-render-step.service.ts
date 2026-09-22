@@ -16,11 +16,18 @@ export class CountyTitleRenderStepService
     private countyTitleRenderer: CountyTitleRendererService
   ) {}
 
-  execute(context: CountyLayerRenderStepContext): void {
+  execute(
+    context: CountyLayerRenderStepContext
+  ): CountyLayerRenderStepContext {
     if (!context.options.includeTitle) {
-      return;
+      return context;
+    }
+
+    if (!context.countyPaths) {
+      throw new Error('County paths must be created before rendering titles.');
     }
 
     this.countyTitleRenderer.render(context.countyPaths);
+    return context;
   }
 }
