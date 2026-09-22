@@ -246,7 +246,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     );
   }
 
-  private createStateOutlineLayer(countyFeaturesCollection: any): void {
+  private createStateOutlineLayer(
+    countyFeaturesCollection: CountyFeatureCollection
+  ): void {
     const geopath = geoPath();
 
     this.state
