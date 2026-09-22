@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { geoPath } from 'd3-geo';
 
 import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
+import { CountyLayerFactoryService } from './county-layer-factory.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountyLayerRendererService {
 
-  private readonly path = geoPath();
+  constructor(
+    private countyLayerFactory: CountyLayerFactoryService
+  ) {}
 
   render(options: CountyLayerRenderOptions): void {
     const {
@@ -21,15 +23,12 @@ export class CountyLayerRendererService {
       includeTitle = false
     } = options;
 
-    const countyPaths = countyLayer
-      .selectAll('path')
-      .data(countyFeaturesCollection.features, (county: CountyFeature) => county.id!)
-      .join('path')
-      .attr('d', this.path as any)
-      .attr('fips', (county: CountyFeature) => county.id!)
-      .attr('name', (county: CountyFeature) => county.properties?.name)
-      .attr('class', pathClass)
-      .attr('vector-effect', 'non-scaling-stroke')
+    const countyPaths = this.countyLayerFactory
+      .create({
+        countyLayer,
+        countyFeaturesCollection,
+        pathClass
+      })
       .on('click', null)
       .on('pointerup', null);
 
