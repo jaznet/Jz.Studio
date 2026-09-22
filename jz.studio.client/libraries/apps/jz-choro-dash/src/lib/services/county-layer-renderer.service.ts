@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 import { CountyLayerFactoryService } from './county-layer-factory.service';
 import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
+import { CountyTitleRendererService } from './county-title-renderer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,8 @@ export class CountyLayerRendererService {
 
   constructor(
     private countyLayerFactory: CountyLayerFactoryService,
-    private countySelectionGestureBinder: CountySelectionGestureBinderService
+    private countySelectionGestureBinder: CountySelectionGestureBinderService,
+    private countyTitleRenderer: CountyTitleRendererService
   ) {}
 
   render(options: CountyLayerRenderOptions): void {
@@ -38,11 +39,7 @@ export class CountyLayerRendererService {
     );
 
     if (includeTitle) {
-      countyPaths
-        .selectAll('title')
-        .data((county: CountyFeature) => [county])
-        .join('title')
-        .text((county: CountyFeature) => county.properties?.name ?? '');
+      this.countyTitleRenderer.render(countyPaths);
     }
   }
 }
