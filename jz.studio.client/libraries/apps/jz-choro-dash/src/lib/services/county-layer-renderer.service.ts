@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 import { CountyLayerFactoryService } from './county-layer-factory.service';
+import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { CountyLayerFactoryService } from './county-layer-factory.service';
 export class CountyLayerRendererService {
 
   constructor(
-    private countyLayerFactory: CountyLayerFactoryService
+    private countyLayerFactory: CountyLayerFactoryService,
+    private countySelectionGestureBinder: CountySelectionGestureBinderService
   ) {}
 
   render(options: CountyLayerRenderOptions): void {
@@ -23,35 +25,17 @@ export class CountyLayerRendererService {
       includeTitle = false
     } = options;
 
-    const countyPaths = this.countyLayerFactory
-      .create({
-        countyLayer,
-        countyFeaturesCollection,
-        pathClass
-      })
-      .on('click', null)
-      .on('pointerup', null);
+    const countyPaths = this.countyLayerFactory.create({
+      countyLayer,
+      countyFeaturesCollection,
+      pathClass
+    });
 
-    if (gesture === 'primary-pointer') {
-      countyPaths.on(
-        'pointerup',
-        (event: PointerEvent, countyFeature: CountyFeature) => {
-          if (!event.isPrimary || event.button !== 0) {
-            return;
-          }
-
-          event.preventDefault();
-          event.stopPropagation();
-          onCountySelected(countyFeature);
-        }
-      );
-    } else {
-      countyPaths.on(
-        'click',
-        (_event: MouseEvent, countyFeature: CountyFeature) =>
-          onCountySelected(countyFeature)
-      );
-    }
+    this.countySelectionGestureBinder.bind(
+      countyPaths,
+      gesture,
+      onCountySelected
+    );
 
     if (includeTitle) {
       countyPaths
