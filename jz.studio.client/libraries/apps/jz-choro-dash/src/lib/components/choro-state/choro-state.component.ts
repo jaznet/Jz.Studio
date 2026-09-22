@@ -34,6 +34,10 @@ import {
 } from '../../models/county-feature.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import {
+  SvgCanvasSelection,
+  SvgGroupSelection
+} from '../../models/svg-layer-selection.model';
 
 @Component({
   selector: 'choro-state',
@@ -57,10 +61,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   width = 0;
   height = 0;
 
-  svg: any;
-  outerGroup: any;
-  titleLayer: any;
-  state: any;
+  svg!: SvgCanvasSelection;
+  outerGroup!: SvgGroupSelection;
+  titleLayer!: SvgGroupSelection;
+  state!: SvgGroupSelection;
   counties!: CountyLayerSelection;
 
   constructor(
@@ -181,17 +185,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .remove();
 
     this.svg = select(this.stateRef.nativeElement)
-      .selectAll('svg')
-      .data([null])
-      .join('svg')
+      .append('svg')
       .attr('viewBox', `0 0 ${this.width} ${this.height}`)
       .style('width', '100%')
       .style('height', '100%');
 
     this.outerGroup = this.svg
-      .selectAll('g.state-outer-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'state-outer-group');
 
     this.titleLayer = this.svg
@@ -199,15 +199,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       .attr('class', 'state-title-layer');
 
     this.state = this.outerGroup
-      .selectAll('g.state-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'state-group');
 
     this.counties = this.state
-      .selectAll('g.counties-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'counties-group');
   }
 
