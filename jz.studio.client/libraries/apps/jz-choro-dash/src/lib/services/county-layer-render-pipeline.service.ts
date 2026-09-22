@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { CountyLayerRenderOptions } from '../models/county-layer-render-options.model';
 import { CountyLayerRenderPipeline } from '../models/county-layer-render-pipeline.model';
+import {
+  CountyLayerRenderStep,
+  CountyLayerRenderStepContext
+} from '../models/county-layer-render-step.model';
 import { CountyPathCreationStepService } from './county-path-creation-step.service';
 import { CountySelectionRenderStepService } from './county-selection-render-step.service';
 import { CountyTitleRenderStepService } from './county-title-render-step.service';
@@ -12,16 +16,26 @@ import { CountyTitleRenderStepService } from './county-title-render-step.service
 export class CountyLayerRenderPipelineService
   implements CountyLayerRenderPipeline {
 
+  private readonly renderSteps: CountyLayerRenderStep[];
+
   constructor(
-    private countyPathCreationStep: CountyPathCreationStepService,
-    private countySelectionRenderStep: CountySelectionRenderStepService,
-    private countyTitleRenderStep: CountyTitleRenderStepService
-  ) {}
+    countyPathCreationStep: CountyPathCreationStepService,
+    countySelectionRenderStep: CountySelectionRenderStepService,
+    countyTitleRenderStep: CountyTitleRenderStepService
+  ) {
+    this.renderSteps = [
+      countyPathCreationStep,
+      countySelectionRenderStep,
+      countyTitleRenderStep
+    ];
+  }
 
   render(options: CountyLayerRenderOptions): void {
-    const context = this.countyPathCreationStep.execute({ options });
+    const initialContext: CountyLayerRenderStepContext = { options };
 
-    this.countySelectionRenderStep.execute(context);
-    this.countyTitleRenderStep.execute(context);
+    this.renderSteps.reduce(
+      (context, renderStep) => renderStep.execute(context),
+      initialContext
+    );
   }
 }
