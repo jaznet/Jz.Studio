@@ -367,11 +367,23 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .enter()
       .append('rect')
       .attr('class', 'state-geo-bbox')
-      .attr('data-state-id', (d: any) => d.id)
-      .attr('x', (d: any) => this.geoPath.bounds(d)[0][0])
-      .attr('y', (d: any) => this.geoPath.bounds(d)[0][1])
-      .attr('width', (d: any) => this.geoPath.bounds(d)[1][0] - this.geoPath.bounds(d)[0][0])
-      .attr('height', (d: any) => this.geoPath.bounds(d)[1][1] - this.geoPath.bounds(d)[0][1])
+      .attr('data-state-id', (stateFeature: StateFeature) =>
+        this.getStateId(stateFeature)
+      )
+      .attr('x', (stateFeature: StateFeature) =>
+        this.geoPath.bounds(stateFeature)[0][0]
+      )
+      .attr('y', (stateFeature: StateFeature) =>
+        this.geoPath.bounds(stateFeature)[0][1]
+      )
+      .attr('width', (stateFeature: StateFeature) =>
+        this.geoPath.bounds(stateFeature)[1][0] -
+        this.geoPath.bounds(stateFeature)[0][0]
+      )
+      .attr('height', (stateFeature: StateFeature) =>
+        this.geoPath.bounds(stateFeature)[1][1] -
+        this.geoPath.bounds(stateFeature)[0][1]
+      )
       .attr('fill', 'none')
       .attr('stroke', 'skyblue')
       .attr('stroke-width', 1)
@@ -384,8 +396,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .enter()
       .append('circle')
       .attr('class', 'state-centroid')
-      .attr('cx', (d: any) => this.geoPath.centroid(d)[0])
-      .attr('cy', (d: any) => this.geoPath.centroid(d)[1])
+      .attr('cx', (stateFeature: StateFeature) =>
+        this.geoPath.centroid(stateFeature)[0]
+      )
+      .attr('cy', (stateFeature: StateFeature) =>
+        this.geoPath.centroid(stateFeature)[1]
+      )
       .attr('r', 3)
       .attr('fill', 'skyblue')
       .attr('stroke', '#101820')
