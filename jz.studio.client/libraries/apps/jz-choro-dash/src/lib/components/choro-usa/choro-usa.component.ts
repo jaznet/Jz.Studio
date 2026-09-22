@@ -24,6 +24,7 @@ import {
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
+import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
@@ -61,7 +62,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private svg: any;
   private usaLayer: any;
   private stateLayer: any;
-  public countyLayer: any;
+  public countyLayer!: CountyLayerSelection;
   private nationLayer: any;
   private stateTextLayer: any;
 

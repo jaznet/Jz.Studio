@@ -26,6 +26,7 @@ import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
+import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import {
   CountyFeature,
@@ -60,7 +61,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   outerGroup: any;
   titleLayer: any;
   state: any;
-  counties: any;
+  counties!: CountyLayerSelection;
 
   constructor(
     @Inject(COUNTY_LAYER_RENDERER)
