@@ -28,7 +28,10 @@ import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { CountyFeatureCollection } from '../../models/county-feature.model';
-import { StateFeatureCollection } from '../../models/state-feature.model';
+import {
+  StateFeature,
+  StateFeatureCollection
+} from '../../models/state-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
@@ -284,10 +287,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private projection = geoAlbersUsa();
 
-  private getLatitudeTangentAngle(d: any): number {
+  private getLatitudeTangentAngle(stateFeature: StateFeature): number {
 
     // geographic center of the state: [longitude, latitude]
-    const [lon, lat] = geoCentroid(d);
+    const [lon, lat] = geoCentroid(stateFeature);
 
     const delta = 0.5; // degrees of longitude to sample left/right
 
