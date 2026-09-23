@@ -42,6 +42,7 @@ import { StateCentroidMode } from '../../models/state-centroid-mode.model';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
+import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 @Component({
@@ -86,6 +87,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
+    private stateCentroidRenderer: StateCentroidRendererService,
     private stateLookup: StateLookupService
   ) { }
 
@@ -200,7 +202,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
     this.createStatesTextLayer(stateFeaturesCollection);
-    this.createStateCentroidLayer(stateFeaturesCollection);
+    this.stateCentroidRenderer.render(
+      this.usaLayer,
+      stateFeaturesCollection
+    );
     this.applyCentroidDisplay();
     this.applyCountySelection();
     this.adjustGroupSizeAndPosition();
@@ -358,61 +363,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
         this.stateLookup.statesDictionary[this.getStateId(stateFeature)]
           ?.stateName ?? ''
       );
-  }
-
-  private createStateCentroidLayer(
-    stateFeaturesCollection: StateFeatureCollection
-  ): void {
-    const centroidLayer = this.usaLayer
-      .append('g')
-      .attr('id', 'gStateCentroids')
-      .attr('class', 'state-centroid-layer');
-    // State geographic bounds
-    centroidLayer
-      .selectAll('rect.state-geo-bbox')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('rect')
-      .attr('class', 'state-geo-bbox')
-      .attr('data-state-id', (stateFeature: StateFeature) =>
-        this.getStateId(stateFeature)
-      )
-      .attr('x', (stateFeature: StateFeature) =>
-        this.geoPath.bounds(stateFeature)[0][0]
-      )
-      .attr('y', (stateFeature: StateFeature) =>
-        this.geoPath.bounds(stateFeature)[0][1]
-      )
-      .attr('width', (stateFeature: StateFeature) =>
-        this.geoPath.bounds(stateFeature)[1][0] -
-        this.geoPath.bounds(stateFeature)[0][0]
-      )
-      .attr('height', (stateFeature: StateFeature) =>
-        this.geoPath.bounds(stateFeature)[1][1] -
-        this.geoPath.bounds(stateFeature)[0][1]
-      )
-      .attr('fill', 'none')
-      .attr('stroke', 'skyblue')
-      .attr('stroke-width', 1)
-      .attr('pointer-events', 'none');
-
-    // Centroid dots
-    centroidLayer
-      .selectAll('circle.state-centroid')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('circle')
-      .attr('class', 'state-centroid')
-      .attr('cx', (stateFeature: StateFeature) =>
-        this.geoPath.centroid(stateFeature)[0]
-      )
-      .attr('cy', (stateFeature: StateFeature) =>
-        this.geoPath.centroid(stateFeature)[1]
-      )
-      .attr('r', 3)
-      .attr('fill', 'skyblue')
-      .attr('stroke', '#101820')
-      .attr('stroke-width', 1);
   }
 
   private applyCentroidDisplay(): void {
