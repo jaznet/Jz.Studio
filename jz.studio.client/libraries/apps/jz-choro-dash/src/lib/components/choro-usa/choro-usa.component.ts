@@ -15,11 +15,7 @@ import {
   ViewChild
 } from '@angular/core';
 
-import {
-  geoAlbersUsa,
-  geoCentroid,
-  geoPath
-} from 'd3-geo';
+import { geoPath } from 'd3-geo';
 
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
@@ -34,7 +30,6 @@ import {
 } from '../../models/svg-layer-selection.model';
 import {
   StateBoundaryGeometry,
-  StateFeature,
   StateFeatureCollection
 } from '../../models/state-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
@@ -43,7 +38,7 @@ import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.toke
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
-import { StateLookupService } from '../../services/state-lookup.service';
+import { StateLabelRendererService } from '../../services/state-label-renderer.service';
 
 @Component({
   selector: 'choro-usa',
@@ -88,7 +83,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateCentroidRenderer: StateCentroidRendererService,
-    private stateLookup: StateLookupService
+    private stateLabelRenderer: StateLabelRendererService
   ) { }
 
   ngAfterViewInit(): void {
@@ -201,7 +196,10 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.createStateFeatureLayer(stateFeaturesCollection);
     this.createStatesMesh(stateMesh);
     this.createNationLayer(nationMesh);
-    this.createStatesTextLayer(stateFeaturesCollection);
+    this.stateLabelRenderer.render(
+      this.stateTextLayer,
+      stateFeaturesCollection
+    );
     this.stateCentroidRenderer.render(
       this.usaLayer,
       stateFeaturesCollection
@@ -295,74 +293,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .attr('class', 'choro-nation-mesh')
       .attr('d', this.geoPath)
       .attr('pointer-events', 'none');
-  }
-
-  private projection = geoAlbersUsa();
-
-  private getLatitudeTangentAngle(stateFeature: StateFeature): number {
-
-    // geographic center of the state: [longitude, latitude]
-    const [lon, lat] = geoCentroid(stateFeature);
-
-    const delta = 0.5; // degrees of longitude to sample left/right
-
-    const p1 = this.projection([lon - delta, lat]);
-    const p2 = this.projection([lon + delta, lat]);
-
-    if (!p1 || !p2) {
-      return 0;
-    }
-
-    const dx = p2[0] - p1[0];
-    const dy = p2[1] - p1[1];
-
-    return Math.atan2(dy, dx) * 180 / Math.PI;
-  }
-
-  private getStateId(stateFeature: StateFeature): string {
-    return String(stateFeature.id ?? '');
-  }
-
-  private createStatesTextLayer(
-    stateFeaturesCollection: StateFeatureCollection
-  ): void {
-
-    this.stateTextLayer
-      .selectAll<SVGTextElement, StateFeature>('text.state-label')
-      .data(
-        stateFeaturesCollection.features,
-        (stateFeature: StateFeature) => this.getStateId(stateFeature)
-      )
-      .join('text')
-      .attr('class', 'choro-usa-state-label')
-      .attr('id', (stateFeature: StateFeature) =>
-        `state-label-${this.getStateId(stateFeature)}`
-      )
-      .attr('text-anchor', 'middle')
-      .attr('dominant-baseline', 'central')
-      .attr('x', (stateFeature: StateFeature) =>
-        this.geoPath.centroid(stateFeature)[0]
-      )
-      .attr('y', (stateFeature: StateFeature) =>
-        this.geoPath.centroid(stateFeature)[1]
-      )
-      .attr('transform', (stateFeature: StateFeature) => {
-        const [x, y] = this.geoPath.centroid(stateFeature);
-
-        const stateId = this.getStateId(stateFeature);
-        const placement = this.stateLookup.statesDictionary[stateId];
-
-        const rotate =
-          (placement?.albersRotate ??
-            this.getLatitudeTangentAngle(stateFeature)) * -1;
-
-        return `rotate(${rotate}, ${x}, ${y})`;
-      })
-
-      .text((stateFeature: StateFeature) =>
-        this.stateLookup.statesDictionary[this.getStateId(stateFeature)]
-          ?.stateName ?? ''
-      );
   }
 
   private applyCentroidDisplay(): void {
