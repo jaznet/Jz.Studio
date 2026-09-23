@@ -38,6 +38,7 @@ import {
   StateFeatureCollection
 } from '../../models/state-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { StateCentroidMode } from '../../models/state-centroid-mode.model';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
@@ -56,7 +57,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   USA_Ref!: ElementRef<HTMLElement>;
   @Input() shapeSet?: GeoShapeSet;
   @Input() showCentroids = false;
-  @Input() centroidMode: 'all' | 'hover' | 'none' = 'hover';
+  @Input() centroidMode: StateCentroidMode = 'hover';
   @Input() selectedCountyId: string | null = null;
   @Output() choroUSAEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
