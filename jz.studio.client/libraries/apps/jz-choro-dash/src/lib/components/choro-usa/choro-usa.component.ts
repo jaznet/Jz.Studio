@@ -15,8 +15,6 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { geoPath } from 'd3-geo';
-
 import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
@@ -39,6 +37,7 @@ import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dis
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
 import { StateLabelRendererService } from '../../services/state-label-renderer.service';
+import { UsaBoundaryRendererService } from '../../services/usa-boundary-renderer.service';
 
 @Component({
   selector: 'choro-usa',
@@ -73,8 +72,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   private nationLayer!: SvgGroupSelection;
   private stateTextLayer!: SvgGroupSelection;
 
-  private readonly geoPath = geoPath();
-
   constructor(
     @Inject(COUNTY_LAYER_RENDERER)
     private countyLayerRenderer: CountyLayerRenderer,
@@ -83,7 +80,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateCentroidRenderer: StateCentroidRendererService,
-    private stateLabelRenderer: StateLabelRendererService
+    private stateLabelRenderer: StateLabelRendererService,
+    private usaBoundaryRenderer: UsaBoundaryRendererService
   ) { }
 
   ngAfterViewInit(): void {
@@ -193,9 +191,13 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   ): void {
     this.createChoroplethContainer();
     this.createCountyLayer(countyFeaturesCollection);
-    this.createStateFeatureLayer(stateFeaturesCollection);
-    this.createStatesMesh(stateMesh);
-    this.createNationLayer(nationMesh);
+    this.usaBoundaryRenderer.render(
+      this.stateLayer,
+      this.nationLayer,
+      stateFeaturesCollection,
+      stateMesh,
+      nationMesh
+    );
     this.stateLabelRenderer.render(
       this.stateTextLayer,
       stateFeaturesCollection
@@ -258,41 +260,6 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       'path.choro-county-path',
       this.selectedCountyId
     );
-  }
-
-  private createStateFeatureLayer(
-    stateFeaturesCollection: StateFeatureCollection
-  ): void {
-    this.stateLayer
-      .selectAll('path.choro-state-feature')
-      .data(stateFeaturesCollection.features)
-      .enter()
-      .append('path')
-      .attr('class', 'choro-state-feature')
-      .attr('d', this.geoPath)
-      .attr('fill', 'none')
-      .attr('stroke', 'none')
-      .attr('pointer-events', 'none');
-  }
-
-  private createStatesMesh(stateMesh: StateBoundaryGeometry): void {
-    this.stateLayer
-      .append('path')
-      .datum(stateMesh)
-      .attr('id', 'statemesh')
-      .attr('class', 'choro-state-mesh')
-      .attr('d', this.geoPath)
-      .attr('pointer-events', 'none');
-  }
-
-  private createNationLayer(nationMesh: StateBoundaryGeometry): void {
-
-    this.nationLayer
-      .append('path')
-      .datum(nationMesh)
-      .attr('class', 'choro-nation-mesh')
-      .attr('d', this.geoPath)
-      .attr('pointer-events', 'none');
   }
 
   private applyCentroidPresentation(): void {
