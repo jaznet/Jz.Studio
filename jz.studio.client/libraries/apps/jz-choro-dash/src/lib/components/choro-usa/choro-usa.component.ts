@@ -15,7 +15,6 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { select } from 'd3-selection';
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
 import { CountyLayerSelection } from '../../models/county-layer-factory.model';
@@ -38,6 +37,7 @@ import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-hi
 import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
 import { StateLabelRendererService } from '../../services/state-label-renderer.service';
 import { UsaBoundaryRendererService } from '../../services/usa-boundary-renderer.service';
+import { UsaLayerFactoryService } from '../../services/usa-layer-factory.service';
 import { UsaViewportFitterService } from '../../services/usa-viewport-fitter.service';
 
 @Component({
@@ -83,6 +83,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     private stateCentroidRenderer: StateCentroidRendererService,
     private stateLabelRenderer: StateLabelRendererService,
     private usaBoundaryRenderer: UsaBoundaryRendererService,
+    private usaLayerFactory: UsaLayerFactoryService,
     private usaViewportFitter: UsaViewportFitterService
   ) { }
 
@@ -217,20 +218,18 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private createChoroplethContainer(): void {
-    select(this.USA_Ref.nativeElement).selectAll('*').remove();
+    const layers = this.usaLayerFactory.create(
+      this.USA_Ref.nativeElement,
+      this.width,
+      this.height
+    );
 
-    this.svg = select(this.USA_Ref.nativeElement)
-      .append('svg')
-      .attr('viewBox', `0 0 ${this.width} ${this.height}`)
-      .style('width', '100%')
-      .style('height', '100%');
-
-    this.usaLayer = this.svg.append('g').attr('id', 'usa');
-
-    this.countyLayer = this.usaLayer.append('g').attr('id', 'county-layer');
-    this.stateLayer = this.usaLayer.append('g').attr('id', 'state-layer');
-    this.nationLayer = this.usaLayer.append('g').attr('id', 'nation-layer');
-    this.stateTextLayer = this.usaLayer.append('g').attr('id', 'state-name-layer');
+    this.svg = layers.svg;
+    this.usaLayer = layers.usaLayer;
+    this.countyLayer = layers.countyLayer;
+    this.stateLayer = layers.stateLayer;
+    this.nationLayer = layers.nationLayer;
+    this.stateTextLayer = layers.stateTextLayer;
   }
 
   private createCountyLayer(
@@ -275,7 +274,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.centroidMode
     );
   }
-
+   
   private fitUsaLayer(): void {
     if (!this.usaLayer) {
       return;
