@@ -34,6 +34,7 @@ import { StateCentroidMode } from '../../models/state-centroid-mode.model';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
+import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
 import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
 import { StateLabelRendererService } from '../../services/state-label-renderer.service';
 import { UsaBoundaryRendererService } from '../../services/usa-boundary-renderer.service';
@@ -60,8 +61,9 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private viewReady = false;
   private needsRender = true;
-  private resizeObserver?: ResizeObserver;
-  private resizeFrame?: number;
+  private readonly layoutScheduler = new ResponsiveRenderScheduler(
+    () => this.layoutChoropleth()
+  );
 
   width = 0;
   height = 0;
@@ -89,7 +91,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    this.observeContainerSize();
+    this.layoutScheduler.observe(this.USA_Ref.nativeElement);
     this.scheduleLayout();
   }
 
@@ -109,19 +111,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.resizeObserver?.disconnect();
-
-    if (this.resizeFrame !== undefined) {
-      cancelAnimationFrame(this.resizeFrame);
-    }
-  }
-
-  private observeContainerSize(): void {
-    this.resizeObserver = new ResizeObserver(() => {
-      this.scheduleLayout();
-    });
-
-    this.resizeObserver.observe(this.USA_Ref.nativeElement);
+    this.layoutScheduler.destroy();
   }
 
   private scheduleLayout(): void {
@@ -129,14 +119,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
 
-    if (this.resizeFrame !== undefined) {
-      cancelAnimationFrame(this.resizeFrame);
-    }
-
-    this.resizeFrame = requestAnimationFrame(() => {
-      this.resizeFrame = undefined;
-      this.layoutChoropleth();
-    });
+    this.layoutScheduler.schedule();
   }
 
   private layoutChoropleth(): void {
