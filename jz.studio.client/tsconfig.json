@@ -57,22 +57,22 @@
   ],
   "references": [
     {
-      "path": "./libraries/apps/jz-choro-dash/tsconfig.lib.json"
+      "path": "./jz-studio-libraries/apps/jz-choro-dash/tsconfig.lib.json"
     },
     {
-      "path": "./libraries/apps/jz-choro-dash/tsconfig.spec.json"
+      "path": "./jz-studio-libraries/apps/jz-choro-dash/tsconfig.spec.json"
     },
     {
-      "path": "./libraries/apps/jz-technical-analysis/tsconfig.lib.json"
+      "path": "./jz-studio-libraries/apps/jz-technical-analysis/tsconfig.lib.json"
     },
     {
-      "path": "./libraries/framework/jz-ui/tsconfig.lib.json"
+      "path": "./jz-studio-libraries/framework/jz-ui/tsconfig.lib.json"
     },
     {
-      "path": "./libraries/framework/jz-ui/tsconfig.spec.json"
+      "path": "./jz-studio-libraries/framework/jz-ui/tsconfig.spec.json"
     },
     {
-      "path": "./libraries/framework/ui-interaction/tsconfig.lib.json"
+      "path": "./jz-studio-libraries/framework/ui-interaction/tsconfig.lib.json"
     }
   ]
 }
