@@ -38,6 +38,7 @@ import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-hi
 import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
 import { StateLabelRendererService } from '../../services/state-label-renderer.service';
 import { UsaBoundaryRendererService } from '../../services/usa-boundary-renderer.service';
+import { UsaViewportFitterService } from '../../services/usa-viewport-fitter.service';
 
 @Component({
   selector: 'choro-usa',
@@ -81,7 +82,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateCentroidRenderer: StateCentroidRendererService,
     private stateLabelRenderer: StateLabelRendererService,
-    private usaBoundaryRenderer: UsaBoundaryRendererService
+    private usaBoundaryRenderer: UsaBoundaryRendererService,
+    private usaViewportFitter: UsaViewportFitterService
   ) { }
 
   ngAfterViewInit(): void {
@@ -156,7 +158,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     this.svg.attr('viewBox', `0 0 ${this.width} ${this.height}`);
-    this.adjustGroupSizeAndPosition();
+    this.fitUsaLayer();
   }
 
   private tryCreateChoropleth(): void {
@@ -208,7 +210,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
     this.applyCentroidPresentation();
     this.applyCountySelection();
-    this.adjustGroupSizeAndPosition();
+    this.fitUsaLayer();
     this.needsRender = false;
 
     this.choroUSAEvent.emit(true);
@@ -274,33 +276,15 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     );
   }
 
-  private adjustGroupSizeAndPosition(): void {
-    const usaNode = this.usaLayer.node();
-
-    if (!usaNode) {
+  private fitUsaLayer(): void {
+    if (!this.usaLayer) {
       return;
     }
 
-    const usaBBox = usaNode.getBBox();
-
-    if (!usaBBox.width || !usaBBox.height) {
-      console.warn('USA bbox is empty', usaBBox);
-      return;
-    }
-
-    const scaleX = this.width / usaBBox.width;
-    const scaleY = this.height / usaBBox.height;
-    const scale = Math.min(scaleX, scaleY);
-
-    const translateX =
-      (this.width - usaBBox.width * scale) / 2 - usaBBox.x * scale;
-
-    const translateY =
-      (this.height - usaBBox.height * scale) / 2 - usaBBox.y * scale;
-
-    this.usaLayer.attr(
-      'transform',
-      `translate(${translateX}, ${translateY}) scale(${scale})`
+    this.usaViewportFitter.fit(
+      this.usaLayer,
+      this.width,
+      this.height
     );
   }
 }
