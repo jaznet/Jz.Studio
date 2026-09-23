@@ -52,7 +52,8 @@ import { StateLookupService } from '../../services/state-lookup.service';
 
 export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
-  @ViewChild('USA', { static: true }) USA_Ref!: ElementRef;
+  @ViewChild('USA', { static: true })
+  USA_Ref!: ElementRef<HTMLElement>;
   @Input() shapeSet?: GeoShapeSet;
   @Input() showCentroids = false;
   @Input() centroidMode: 'all' | 'hover' | 'none' = 'hover';

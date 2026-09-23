@@ -47,7 +47,8 @@ import {
 })
 export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
-  @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
+  @ViewChild('US_state', { static: true })
+  stateRef!: ElementRef<HTMLElement>;
   @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
   @Input() selectedCountyId: string | null = null;
@@ -257,8 +258,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private fitAndTransformState(): void {
     const stateNode = this.state?.node();
+    const svgNode = this.svg?.node();
 
-    if (!stateNode) {
+    if (!stateNode || !svgNode) {
       return;
     }
 
@@ -286,7 +288,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     );
 
     const rotatedBounds = this.svgPathBounds.measure(
-      this.svg.node() as SVGSVGElement,
+      svgNode,
       stateNode
     );
 
