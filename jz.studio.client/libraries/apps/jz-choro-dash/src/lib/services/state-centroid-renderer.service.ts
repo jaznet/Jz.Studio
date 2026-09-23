@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
+import { StateCentroidMode } from '../models/state-centroid-mode.model';
 import {
   StateFeature,
   StateFeatureCollection
@@ -67,5 +68,24 @@ export class StateCentroidRendererService {
       .attr('fill', 'skyblue')
       .attr('stroke', '#101820')
       .attr('stroke-width', 1);
+  }
+
+  applyDisplay(
+    usaLayer: SvgGroupSelection,
+    showCentroids: boolean,
+    centroidMode: StateCentroidMode
+  ): void {
+    const centroidLayer = usaLayer
+      .select('g.state-centroid-layer');
+
+    centroidLayer
+      .style('display', showCentroids ? 'block' : 'none')
+      .classed('centroid-mode-all', centroidMode === 'all')
+      .classed('centroid-mode-hover', centroidMode === 'hover');
+
+    centroidLayer
+      .selectAll('rect.state-geo-bbox')
+      .style('opacity', centroidMode === 'all' ? 0.85 : 0)
+      .style('pointer-events', 'all');
   }
 }

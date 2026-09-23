@@ -99,7 +99,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     }
 
     if (changes['showCentroids'] || changes['centroidMode']) {
-      this.applyCentroidDisplay();
+      this.applyCentroidPresentation();
     }
 
     if (changes['selectedCountyId']) {
@@ -204,7 +204,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.usaLayer,
       stateFeaturesCollection
     );
-    this.applyCentroidDisplay();
+    this.applyCentroidPresentation();
     this.applyCountySelection();
     this.adjustGroupSizeAndPosition();
     this.needsRender = false;
@@ -295,23 +295,16 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       .attr('pointer-events', 'none');
   }
 
-  private applyCentroidDisplay(): void {
+  private applyCentroidPresentation(): void {
     if (!this.usaLayer) {
       return;
     }
 
-    const centroidLayer = this.usaLayer
-      .select('g.state-centroid-layer');
-
-    centroidLayer
-      .style('display', this.showCentroids ? 'block' : 'none')
-      .classed('centroid-mode-all', this.centroidMode === 'all')
-      .classed('centroid-mode-hover', this.centroidMode === 'hover');
-
-    centroidLayer
-      .selectAll('rect.state-geo-bbox')
-      .style('opacity', this.centroidMode === 'all' ? 0.85 : 0)
-      .style('pointer-events', 'all');
+    this.stateCentroidRenderer.applyDisplay(
+      this.usaLayer,
+      this.showCentroids,
+      this.centroidMode
+    );
   }
 
   private adjustGroupSizeAndPosition(): void {
