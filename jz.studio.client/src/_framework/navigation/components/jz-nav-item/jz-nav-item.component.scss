@@ -8,12 +8,6 @@
   position: relative;
 }
 
-/* Reduce the decorative bevel only for navigation buttons. */
-
-:host-context(nav.jz-nav-group) .jz-nav-item jz-button-cuboid {
-  --jz-bevel: 2px;
-}
-
 /* HORIZONTAL */
 
 :host-context(nav.jz-nav-group.horizontal) .jz-nav-item {

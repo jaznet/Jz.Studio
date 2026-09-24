@@ -2,13 +2,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
-import { ButtonCuboidComponent } from '../../../../_framework/ui/buttons/button-cuboid/button-cuboid.component';
+import { JzPebbleButtonComponent } from 'jz-ui';
 
 @Component({
   selector: 'app-logon',
   standalone: true,
   imports: [
-    ButtonCuboidComponent,
+    JzPebbleButtonComponent,
     ReactiveFormsModule
     ],
     templateUrl: './logon.component.html',

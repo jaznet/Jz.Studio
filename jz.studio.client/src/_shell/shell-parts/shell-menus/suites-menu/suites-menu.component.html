@@ -1,8 +1,7 @@
 <!-- suites-menu.component.html -->
 
 <div #suitesMenuContainer
-     class="suites-menu-container"
-     [ngStyle]="{ visibility: isSuiteMenuVisible }">
+     class="suites-menu-container">
 
   <jz-nav-group *ngIf="items$ | async as items"
                 class="main-nav"

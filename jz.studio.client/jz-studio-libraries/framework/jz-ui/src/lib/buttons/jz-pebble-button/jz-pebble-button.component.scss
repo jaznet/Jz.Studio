@@ -1,0 +1,68 @@
+:host {
+  display: inline-block;
+  inline-size: var(--jz-pebble-width);
+  block-size: var(--jz-pebble-height);
+  flex: 0 0 auto;
+  --pebble-radius: var(--jz-pebble-radius, 7px);
+  --pebble-key-radius: clamp(9px, calc(var(--jz-pebble-height) * .27), 23px);
+  --pebble-fill-radius: clamp(7px, calc(var(--jz-pebble-height) * .23), 20px);
+  --pebble-base: var(--jz-pebble-base, var(--plt-clr-2, #77736d));
+}
+
+.pebble {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--pebble-radius);
+  background-color: var(--pebble-base);
+  background-image:
+    radial-gradient(circle var(--pebble-key-radius) at 2% 3%, #ffffffa8 0%, #ffffff32 24%, transparent 78%),
+    radial-gradient(circle var(--pebble-fill-radius) at 98% 99%, #d8e0df20 0%, transparent 78%),
+    linear-gradient(96deg,
+      color-mix(in srgb, var(--pebble-base), white 12%) 0%,
+      color-mix(in srgb, var(--pebble-base), white 6%) 12%,
+      color-mix(in srgb, var(--pebble-base), white 2%) 29%,
+      var(--pebble-base) 54%,
+      color-mix(in srgb, var(--pebble-base), black 12%) 85%,
+      color-mix(in srgb, var(--pebble-base), black 21%) 100%);
+  box-shadow:
+    inset 0 1px 1px #ffffff24, inset 1px 1px 1px #ffffff4c,
+    inset -2px -2px 3px #0005, inset 0 -1px 1px #0007,
+    0 2px 2px #0007, 0 5px 9px #0009;
+  color: var(--jz-pebble-text, var(--plt-txt-1, #e6e2db));
+  font: 400 var(--jz-pebble-font-size, 13px) Arial, Helvetica, sans-serif;
+  letter-spacing: .025em;
+  cursor: pointer;
+  isolation: isolate;
+}
+
+/* The face and rolled edge remain a single surface. No inset face or clearcoat. */
+.pebble::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(95deg, #ffffff0c 0%, transparent 18%, #1b1a1813 87%, #11100f30 100%);
+}
+
+.label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  line-height: 1;
+}
+
+.pebble:focus-visible { outline: 2px solid var(--plt-highlight, #87ceeb); outline-offset: 3px; }
+.pebble:disabled { opacity: .55; cursor: not-allowed; }
+
+@media (forced-colors: active) {
+  .pebble { border: 1px solid ButtonText; background: ButtonFace; color: ButtonText; box-shadow: none; }
+  .pebble::before { display: none; }
+  .label { text-shadow: none; }
+}

@@ -63,17 +63,3 @@ forn-label {
   background-color: var(--plt-clr-5);
   border-radius: 8px;
 }
-
-:host ::ng-deep jz-button-cuboid.logon-button .cuboid {
-  --jz-base-color: var(--plt-pop);
-  --jz-text: var(--plt-pop-txt);
-  color: var(--plt-pop-txt);
-}
-
-:host ::ng-deep jz-button-cuboid.logon-button .zone.face .label {
-  color: var(--plt-pop-txt);
-}
-
- :host ::ng-deep jz-button-cuboid.logon-button .label {
-  color: red !important;
-}

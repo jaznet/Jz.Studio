@@ -4,7 +4,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "libraries",
+  "newProjectRoot": "jz-studio-libraries",
   "projects": {
     "jz.studio.client": {
       "projectType": "application",
@@ -130,18 +130,18 @@
     },
     "jz-choro-dash": {
       "projectType": "library",
-      "root": "libraries/apps/jz-choro-dash",
-      "sourceRoot": "libraries/apps/jz-choro-dash/src",
+      "root": "jz-studio-libraries/apps/jz-choro-dash",
+      "sourceRoot": "jz-studio-libraries/apps/jz-choro-dash/src",
       "prefix": "jz",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "libraries/apps/jz-choro-dash/tsconfig.lib.prod.json"
+              "tsConfig": "jz-studio-libraries/apps/jz-choro-dash/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libraries/apps/jz-choro-dash/tsconfig.lib.json"
+              "tsConfig": "jz-studio-libraries/apps/jz-choro-dash/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -149,7 +149,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "libraries/apps/jz-choro-dash/tsconfig.spec.json",
+            "tsConfig": "jz-studio-libraries/apps/jz-choro-dash/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -160,18 +160,18 @@
     },
     "jz-technical-analysis": {
       "projectType": "library",
-      "root": "libraries/apps/jz-technical-analysis",
-      "sourceRoot": "libraries/apps/jz-technical-analysis/src",
+      "root": "jz-studio-libraries/apps/jz-technical-analysis",
+      "sourceRoot": "jz-studio-libraries/apps/jz-technical-analysis/src",
       "prefix": "jz",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "libraries/apps/jz-technical-analysis/tsconfig.lib.prod.json"
+              "tsConfig": "jz-studio-libraries/apps/jz-technical-analysis/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libraries/apps/jz-technical-analysis/tsconfig.lib.json"
+              "tsConfig": "jz-studio-libraries/apps/jz-technical-analysis/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -179,7 +179,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "libraries/apps/jz-technical-analysis/tsconfig.spec.json",
+            "tsConfig": "jz-studio-libraries/apps/jz-technical-analysis/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -190,18 +190,18 @@
     },
     "jz-ui": {
       "projectType": "library",
-      "root": "libraries/framework/jz-ui",
-      "sourceRoot": "libraries/framework/jz-ui/src",
+      "root": "jz-studio-libraries/framework/jz-ui",
+      "sourceRoot": "jz-studio-libraries/framework/jz-ui/src",
       "prefix": "jz",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "libraries/framework/jz-ui/tsconfig.lib.prod.json"
+              "tsConfig": "jz-studio-libraries/framework/jz-ui/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libraries/framework/jz-ui/tsconfig.lib.json"
+              "tsConfig": "jz-studio-libraries/framework/jz-ui/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -209,7 +209,7 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "tsConfig": "libraries/framework/jz-ui/tsconfig.spec.json",
+            "tsConfig": "jz-studio-libraries/framework/jz-ui/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -220,18 +220,18 @@
     },
     "ui-interaction": {
       "projectType": "library",
-      "root": "libraries/framework/ui-interaction",
-      "sourceRoot": "libraries/framework/ui-interaction/src",
+      "root": "jz-studio-libraries/framework/ui-interaction",
+      "sourceRoot": "jz-studio-libraries/framework/ui-interaction/src",
       "prefix": "ui",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
-              "tsConfig": "libraries/framework/ui-interaction/tsconfig.lib.prod.json"
+              "tsConfig": "jz-studio-libraries/framework/ui-interaction/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "libraries/framework/ui-interaction/tsconfig.lib.json"
+              "tsConfig": "jz-studio-libraries/framework/ui-interaction/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"

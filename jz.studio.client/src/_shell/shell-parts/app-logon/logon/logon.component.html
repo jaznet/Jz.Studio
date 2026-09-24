@@ -17,8 +17,10 @@
 
     <div class="centered" style="margin-top:18px; color:black">
 
-      <jz-button-cuboid class="logon-button" (click)="onLogonButtonClick()">Enter</jz-button-cuboid>
-      <jz-button-cuboid class="logon-button" (click)="onButtonClick()">Choro</jz-button-cuboid>
+      <jz-pebble-button class="logon-button" style="--jz-pebble-width: 125px; --jz-pebble-height: 36px"
+                        (clicked)="onLogonButtonClick()">Enter</jz-pebble-button>
+      <jz-pebble-button class="logon-button" style="--jz-pebble-width: 125px; --jz-pebble-height: 36px"
+                        (clicked)="onButtonClick()">Choro</jz-pebble-button>
 
     </div>
   </form>

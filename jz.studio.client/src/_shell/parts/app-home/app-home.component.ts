@@ -18,7 +18,6 @@ export class AppHomeComponent {
      // palette.changePalette('onyx');
     }
     appService.showHeader();
-    appService.showMenu();
     console.log('show');
   }
 }
