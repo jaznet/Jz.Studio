@@ -1,6 +1,5 @@
 
 import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { AppStateService } from '../../../services/shell-state.service';
 import { CommonModule } from '@angular/common';
 import { MenuBaseComponent } from '../../../../_components/menus/jz-menu-base/jz-menu-base.component';
 import { JzNavItem } from '../../../../_framework/navigation/models/jz-nav-item.model';
@@ -20,11 +19,10 @@ export class SuitesMenuComponent extends MenuBaseComponent implements AfterViewI
 
   @Input() tabs: boolean = true;
   @Input() override menuName: string = '';
-  isSuiteMenuVisible = 'collapse';
   //  override menuType: string = 'main-menu';yelloe
   items$ = this.navService.items$;
   activeItem$ = this.navService.activeItem$;
-  constructor(private router: Router, private navService: JzNavService, private app: AppStateService) {
+  constructor(private router: Router, private navService: JzNavService) {
     super();
   }
     ngAfterViewInit(): void {
@@ -35,10 +33,6 @@ export class SuitesMenuComponent extends MenuBaseComponent implements AfterViewI
     this.menuType = 'main';
     console.log('SuitesMenuComponent initialized');
 
-    this.app.toggleMenuEvent.subscribe((menu: any) => {
-      // this.isLogoVisible = menu === 'show' ? 'visibility' : 'collapse';
-      this.isSuiteMenuVisible = menu === 'show' ? 'visible' : 'collapse';
-    })
   }
    
   //override ngAfterViewInit(): void {

@@ -1,7 +1,7 @@
 /*visualization-menu.component.css*/
 
 jz-nav-group.modules-nav jz-nav-item:first-child:not(.active),
-jz-nav-group.modules-nav jz-button-cuboid:first-child:not(.active),
+jz-nav-group.modules-nav jz-pebble-button:first-child:not(.active),
 jz-nav-group.modules-nav .jz-btn:first-child:not(.active) {
   border: none !important;
   outline: none !important;

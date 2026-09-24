@@ -10,12 +10,15 @@
                [disabled]="item.disabled ?? false"
                (selected)="onSelect(item)">
 
-    <jz-button-cuboid [active]="isActive(item)"
+    <jz-pebble-button [class.active]="isActive(item)"
+                      style="--jz-pebble-width: 125px; --jz-pebble-height: 28px; --jz-pebble-radius: 7px"
+                      [style.--jz-pebble-base]="isActive(item) ? 'var(--plt-highlight)' : 'var(--plt-clr-2)'"
+                      [style.--jz-pebble-text]="isActive(item) ? '#15181b' : 'var(--plt-txt-1)'"
                       [disabled]="item.disabled ?? false">
 
       {{ item.label }}
 
-    </jz-button-cuboid>
+    </jz-pebble-button>
 
   </jz-nav-item>
 

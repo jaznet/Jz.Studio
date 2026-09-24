@@ -67,8 +67,8 @@ export const JZ_PALETTES: Readonly<Record<string, JzShellPalette>> = {
     popTxt: '#FFF7EA', // warm ivory
 
     // highlight
-    highlight: '#625A52',  
-    highlightTxt: '#FFF7EA',
+    highlight: '#c99570',
+    highlightTxt: 'black',
 
     logo: '#ffb46d',
     logoTxt: 'white',
