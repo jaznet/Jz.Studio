@@ -10,28 +10,6 @@
 
     <div class="toolbar">
 
-      <!--<div class="toolbar-title">
-        USA Chorodash
-      </div>
-
-      <label class="toolbar-toggle">
-        <input type="checkbox"
-               [(ngModel)]="showCentroids"
-               (change)="toggleCentroidLayer()" />
-
-        Centroids
-      </label>
-      <input type="checkbox"
-             [(ngModel)]="showCentroids"
-             (change)="applyCentroidLayerDisplay()" />
-
-      <select [(ngModel)]="centroidDisplayMode"
-              (change)="applyCentroidLayerDisplay()">
-        <option value="all">All</option>
-        <option value="hover">Hover</option>
-        <option value="none">None</option>
-      </select>-->
-
       <jz-button variant="glass" icon="▣"
       (buttonClick)="openAdmin()">
        Data Mgr
@@ -40,34 +18,43 @@
 
   </div>
 
-  <div class="choro-panels">
+  <jz-split-layout class="choro-panels"
+                   direction="horizontal"
+                   [primarySize]="50"
+                   [minPrimarySize]="30"
+                   [minSecondarySize]="30"
+                   [secondaryVisible]="!!geographySelection">
 
-    <jz-choro-dash-panel class="usa-panel">
+    <jz-choro-dash-panel jzSplitPrimary
+                         class="usa-panel">
       <choro-usa #choro_usa
                  [shapeSet]="usaShapeSet"
                  [showCentroids]="showCentroids"
                  [centroidMode]="centroidDisplayMode"
+                 [selectedCountyId]="geographySelection?.countyId ?? null"
                  (countySelected)="onCountySelected($event)">
       </choro-usa>
     </jz-choro-dash-panel>
 
-    <div class="state-column">
+    <div jzSplitSecondary
+         class="state-column"
+         *ngIf="geographySelection as selection">
 
       <jz-choro-dash-panel class="state-panel">
         <choro-state #choro_state
-                     *ngIf="selectedStateId"
-                     [stateId]="selectedStateId"
-                     [shapeSet]="stateShapeSet">
+                     [stateId]="selection.stateId"
+                     [shapeSet]="selection.stateShapeSet"
+                     [selectedCountyId]="selection.countyId"
+                     (countySelected)="onCountySelected($event)">
         </choro-state>
       </jz-choro-dash-panel>
 
       <jz-choro-dash-panel class="state-table-panel">
-        table
+        {{ selection.countyName }}, {{ selection.stateName }}
       </jz-choro-dash-panel>
 
     </div>
 
-  </div>
+  </jz-split-layout>
 
 </div>
-

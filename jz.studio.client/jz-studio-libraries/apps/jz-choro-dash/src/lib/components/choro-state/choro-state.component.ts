@@ -6,8 +6,10 @@ import {
   ElementRef,
   EventEmitter,
   HostBinding,
+  Inject,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
   ViewChild
@@ -16,9 +18,26 @@ import {
 import { select } from 'd3-selection';
 import { geoPath } from 'd3-geo';
 
+import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
+import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
+import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { StateLookupService } from '../../services/state-lookup.service';
+import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
+import { CountySelection } from '../../models/county-selection.model';
+import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
+import { CountyLayerSelection } from '../../models/county-layer-factory.model';
+import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
+import {
+  CountyFeature,
+  CountyFeatureCollection
+} from '../../models/county-feature.model';
+import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import {
+  SvgCanvasSelection,
+  SvgGroupSelection
+} from '../../models/svg-layer-selection.model';
 
 @Component({
   selector: 'choro-state',
@@ -26,41 +45,85 @@ import { GeoShapeSet } from '../../models/geo-shape-set.model';
   templateUrl: './choro-state.component.html',
   styleUrls: ['./choro-state.component.scss']
 })
-export class ChoroStateComponent implements AfterViewInit, OnChanges {
+export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy {
   @HostBinding('class') classes = 'fit-to-parent grid-rows';
-  @ViewChild('US_state', { static: true }) stateRef!: ElementRef;
+  @ViewChild('US_state', { static: true })
+  stateRef!: ElementRef<HTMLElement>;
   @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
-  @Output() choroStateEvent = new EventEmitter<any>();
+  @Input() selectedCountyId: string | null = null;
+  @Output() choroStateEvent = new EventEmitter<boolean>();
+  @Output() countySelected = new EventEmitter<CountySelection>();
 
-
- // private readonly stateFips = '34'; // New Jersey default, should be set by parent component input
   private viewReady = false;
+  private resizeObserver?: ResizeObserver;
+  private renderFrame?: number;
 
   width = 0;
   height = 0;
 
-  svg: any;
-  outerGroup: any;
-  titleLayer: any;
-  state: any;
-  counties: any;
+  svg!: SvgCanvasSelection;
+  outerGroup!: SvgGroupSelection;
+  titleLayer!: SvgGroupSelection;
+  state!: SvgGroupSelection;
+  counties!: CountyLayerSelection;
 
   constructor(
-    private stateLookup: StateLookupService
+    @Inject(COUNTY_LAYER_RENDERER)
+    private countyLayerRenderer: CountyLayerRenderer,
+    @Inject(COUNTY_SELECTION_DISPATCHER)
+    private countySelectionDispatcher: CountySelectionDispatcher,
+    @Inject(COUNTY_SELECTION_HIGHLIGHTER)
+    private countySelectionHighlighter: CountySelectionHighlighter,
+    private stateLookup: StateLookupService,
+    private svgPathBounds: SvgPathBoundsService
   ) { }
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    this.tryCreateStateChoropleth();
-    // Let Angular/layout finish one more pass before measuring.
-    //queueMicrotask(() => this.tryCreateStateChoropleth());
+    this.observeContainerSize();
+    this.scheduleStateChoropleth();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['shapeSet'] || changes['stateId']) {
-      this.tryCreateStateChoropleth();
+      this.scheduleStateChoropleth();
     }
+
+    if (changes['selectedCountyId']) {
+      this.applyCountySelection();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+
+    if (this.renderFrame !== undefined) {
+      cancelAnimationFrame(this.renderFrame);
+    }
+  }
+
+  private observeContainerSize(): void {
+    this.resizeObserver = new ResizeObserver(() => {
+      this.scheduleStateChoropleth();
+    });
+
+    this.resizeObserver.observe(this.stateRef.nativeElement);
+  }
+
+  private scheduleStateChoropleth(): void {
+    if (!this.viewReady) {
+      return;
+    }
+
+    if (this.renderFrame !== undefined) {
+      cancelAnimationFrame(this.renderFrame);
+    }
+
+    this.renderFrame = requestAnimationFrame(() => {
+      this.renderFrame = undefined;
+      this.tryCreateStateChoropleth();
+    });
   }
 
   private tryCreateStateChoropleth(): void {
@@ -91,19 +154,10 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       return;
     }
 
-    console.log('%ctryCreateStateChoropleth - creating', 'color:#f7f9f9', {
-      stateId: this.stateId,
-      width: this.width,
-      height: this.height
-    });
-
     this.createStateChoropleth();
   }
 
   private createStateChoropleth(): void {
-
-    const selectedStateFips =
-      String(this.stateId ?? '34').padStart(2, '0');
 
     const selectedCountyFeatures = this.shapeSet!.features;
     const stateOutline =
@@ -111,6 +165,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
 
     this.createStateChoroplethContainer();
     this.createCountyLayer(selectedCountyFeatures);
+    this.applyCountySelection();
     this.createStateOutlineLayer(stateOutline);
 
     const countyNode = this.counties?.node();
@@ -119,42 +174,25 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       return;
     }
 
-    console.log('counties bbox', countyNode.getBBox());
-
-  //  this.applyRotation();
-  //  this.adjustStateGroupSizeAndPosition();
     this.fitAndTransformState();
     this.placeStateTitle();
 
-
-    console.log('%ccreateStateChoropleth', 'color:#f7f9f9', {
-      selectedStateFips,
-      countyCount: selectedCountyFeatures.features.length
-    });
-
     this.choroStateEvent.emit(true);
-    console.log('%cemit', 'color:#f7f9f9');
   }
 
   private createStateChoroplethContainer(): void {
-    console.log('%ccreateStateChoroplethContainer', 'color:#f7f9f9');
-
     select(this.stateRef.nativeElement)
       .selectAll('*')
       .remove();
 
     this.svg = select(this.stateRef.nativeElement)
-      .selectAll('svg')
-      .data([null])
-      .join('svg')
+      .append('svg')
       .attr('viewBox', `0 0 ${this.width} ${this.height}`)
       .style('width', '100%')
       .style('height', '100%');
 
     this.outerGroup = this.svg
-      .selectAll('g.state-outer-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'state-outer-group');
 
     this.titleLayer = this.svg
@@ -162,64 +200,67 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .attr('class', 'state-title-layer');
 
     this.state = this.outerGroup
-      .selectAll('g.state-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'state-group');
 
     this.counties = this.state
-      .selectAll('g.counties-group')
-      .data([null])
-      .join('g')
+      .append('g')
       .attr('class', 'counties-group');
   }
 
-  private createCountyLayer(countyFeaturesCollection: any ): void {
-
-    console.log('createCountyLayer');
-
-    const geopath = geoPath();
-
-    const stateCounties =
-      countyFeaturesCollection.features;
-
-    console.log(
-      'state county count',
-      stateCounties.length
+  private createCountyLayer(
+    countyFeaturesCollection: CountyFeatureCollection
+  ): void {
+    this.countyLayerRenderer.render(
+      {
+        countyLayer: this.counties,
+        countyFeaturesCollection,
+        pathClass: 'state-county-path',
+        gesture: 'primary-pointer',
+        onCountySelected: countyFeature =>
+          this.onCountySelected(countyFeature)
+      }
     );
-
-    this.counties
-      .selectAll('path')
-      .data(stateCounties, (d: any) => d.id)
-      .join('path')
-      .attr('d', geopath as any)
-      .attr('fips', (d: any) => d.id)
-      .attr('name', (d: any) => d.properties?.name)
-      .attr('class', 'state-county-path')
-      .attr('vector-effect', 'non-scaling-stroke');
   }
 
-  private createStateOutlineLayer(countyFeaturesCollection: any): void {
+  private onCountySelected(countyFeature: CountyFeature): void {
+    this.countySelectionDispatcher.dispatch(
+      this.countySelected,
+      countyFeature,
+      this.stateId
+    );
+  }
+
+  private applyCountySelection(): void {
+    if (!this.counties) {
+      return;
+    }
+
+    this.countySelectionHighlighter.apply(
+      this.counties,
+      'path.state-county-path',
+      this.selectedCountyId
+    );
+  }
+
+  private createStateOutlineLayer(
+    countyFeaturesCollection: CountyFeatureCollection
+  ): void {
     const geopath = geoPath();
 
     this.state
       .append('path')
       .datum(countyFeaturesCollection)
       .attr('class', 'choro-state-mesh')
-      .attr('d', geopath as any)
+      .attr('d', geopath)
       .attr('pointer-events', 'none');
   }
 
   private fitAndTransformState(): void {
-    const countyNode = this.counties?.node();
+    const stateNode = this.state?.node();
+    const svgNode = this.svg?.node();
 
-    if (!countyNode) {
-      return;
-    }
-
-    const bbox = countyNode.getBBox();
-
-    if (bbox.width <= 0 || bbox.height <= 0) {
+    if (!stateNode || !svgNode) {
       return;
     }
 
@@ -229,36 +270,55 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
     const rotationAngle =
       this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate ?? 0;
 
-    const padding = 6;
+    this.outerGroup.attr('transform', null);
+    this.state.attr('transform', null);
+
+    const unrotatedBounds = stateNode.getBBox();
+
+    if (unrotatedBounds.width <= 0 || unrotatedBounds.height <= 0) {
+      return;
+    }
+
+    const centerX = unrotatedBounds.x + unrotatedBounds.width / 2;
+    const centerY = unrotatedBounds.y + unrotatedBounds.height / 2;
+
+    this.state.attr(
+      'transform',
+      `rotate(${rotationAngle}, ${centerX}, ${centerY})`
+    );
+
+    const rotatedBounds = this.svgPathBounds.measure(
+      svgNode,
+      stateNode
+    );
+
+    if (!rotatedBounds || rotatedBounds.width <= 0 || rotatedBounds.height <= 0) {
+      return;
+    }
+
+    const padding = 0;
 
     const availableWidth = this.width - padding * 2;
     const availableHeight = this.height - padding * 2;
 
-    const scaleX = availableWidth / bbox.width;
-    const scaleY = availableHeight / bbox.height;
+    const scaleX = availableWidth / rotatedBounds.width;
+    const scaleY = availableHeight / rotatedBounds.height;
 
     const scale = Math.min(scaleX, scaleY);
 
     const tx =
       padding +
-      (availableWidth - bbox.width * scale) / 2 -
-      bbox.x * scale;
+      (availableWidth - rotatedBounds.width * scale) / 2 -
+      rotatedBounds.x * scale;
 
     const ty =
       padding +
-      (availableHeight - bbox.height * scale) / 2 -
-      bbox.y * scale;
-
-    const cx = bbox.x + bbox.width / 2;
-    const cy = bbox.y + bbox.height / 2;
+      (availableHeight - rotatedBounds.height * scale) / 2 -
+      rotatedBounds.y * scale;
 
     this.outerGroup.attr(
       'transform',
-      `
-      translate(${tx}, ${ty})
-      scale(${scale})
-      rotate(${rotationAngle}, ${cx}, ${cy})
-    `
+      `translate(${tx}, ${ty}) scale(${scale})`
     );
   }
 
@@ -279,53 +339,4 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges {
       .text(stateName);
   }
 
-  private adjustStateGroupSizeAndPosition(): void {
-    const countyNode = this.counties?.node();
-
-    if (!countyNode) {
-      return;
-    }
-
-    const bbox = countyNode.getBBox();
-
-    if (bbox.width <= 0 || bbox.height <= 0) {
-      return;
-    }
-
-    const padding = 0;
-
-    const availableWidth = this.width - padding * 2;
-    const availableHeight = this.height - padding * 2;
-
-    const scaleX = availableWidth / bbox.width;
-    const scaleY = availableHeight / bbox.height;
-
-    const scale = Math.min(scaleX, scaleY);
-
-    const tx =
-      padding +
-      (availableWidth - bbox.width * scale) / 2 -
-      bbox.x * scale;
-
-    const ty =
-      padding +
-      (availableHeight - bbox.height * scale) / 2 -
-      bbox.y * scale;
-
-    this.outerGroup.attr(
-      'transform',
-      `translate(${tx}, ${ty}) scale(${scale})`
-    );
-  }
-
-  private applyRotation(): void {
-    const selectedStateFips = String(this.stateId ?? '34').padStart(2, '0');
-    const rotationAngle =
-      this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate || 0;
-
-    this.outerGroup.attr(
-      'transform',
-      `rotate(${rotationAngle}, ${this.width / 2}, ${this.height / 2})`
-    );
-  }
 }

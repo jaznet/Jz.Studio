@@ -1,79 +1,64 @@
 /* jz-choro-dash.component.scss */
 
 :host {
+  /*
+   * Public ChoroDash theme contract.
+   *
+   * These defaults keep the library usable without JzShell. A host may
+   * override any --choro-* property without the library knowing the host's
+   * palette vocabulary.
+   */
+
   /* Panel semantics */
-  --choro-panel-bg-1: var(--surface-raised);
-  --choro-panel-bg-2: var(--surface-base);
-  --choro-panel-border: var(--border-soft);
-
-  /* Shared Chorodash map semantics */
---choro-county-fill:
-  color-mix(
-    in srgb,
-    var(--plt-clr-3) 45%,
-    var(--plt-clr-4)
+  --_choro-panel-bg-1: var(--choro-panel-bg-1, #35322f);
+  --_choro-panel-bg-2: var(--choro-panel-bg-2, #242220);
+  --_choro-panel-border: var(
+    --choro-panel-border,
+    rgba(207, 198, 184, 0.28)
   );
 
---choro-county-border:
-  color-mix(
-    in srgb,
-    var(--plt-clr-1) 45%,
-    var(--plt-txt-2)
+  /* Map semantics */
+  --_choro-county-fill: var(--choro-county-fill, #403d39);
+  --_choro-county-border: var(--choro-county-border, #777169);
+  --_choro-state-border: var(--choro-state-border, #a69d91);
+  --_choro-nation-border: var(--choro-nation-border, #d0c5b5);
+
+  /* Label and title semantics */
+  --_choro-state-label: var(--choro-state-label, #d4c7aa);
+  --_choro-title-fill: var(--choro-title-fill, #d8ccb2);
+  --_choro-title-opacity: var(--choro-title-opacity, 0.95);
+  --_choro-title-font-family: var(
+    --choro-title-font-family,
+    'museo', 'Segoe UI', sans-serif
+  );
+  --_choro-title-font-size: var(--choro-title-font-size, 24px);
+  --_choro-title-font-weight: var(--choro-title-font-weight, 600);
+  --_choro-label-opacity: var(--choro-label-opacity, 0.92);
+
+  /* Interaction semantics */
+  --_choro-hover-fill: var(--choro-hover-fill, #a87800);
+  --_choro-hover-border: var(
+    --choro-hover-border,
+    rgba(255, 255, 255, 0.55)
+  );
+  --_choro-hover-glow: var(
+    --choro-hover-glow,
+    rgba(168, 120, 0, 0.52)
   );
 
---choro-state-border:
-  color-mix(
-    in srgb,
-    var(--plt-txt-2) 58%,
-    var(--plt-clr-2)
+  --_choro-selected-fill: var(--choro-selected-fill, #a87800);
+  --_choro-selected-border: var(
+    --choro-selected-border,
+    rgba(255, 255, 255, 0.55)
+  );
+  --_choro-selected-glow: var(
+    --choro-selected-glow,
+    rgba(168, 120, 0, 0.52)
   );
 
---choro-nation-border:
-  color-mix(
-    in srgb,
-    var(--plt-txt-2) 72%,
-    var(--plt-clr-1)
-  );
-
-  /* Shared Chorodash label semantics */
-/* Shared Chorodash label semantics */
---choro-state-label:
-  color-mix(
-    in srgb,
-    var(--plt-txt-2) 82%,
-    var(--plt-pop)
-  );
-
-  /* Shared Chorodash title semantics */
-
---choro-title-fill:
-  color-mix(
-    in srgb,
-    var(--plt-txt-3) 80%,
-    var(--plt-pop)
-  );
-
---choro-title-opacity: 0.95;
-
---choro-title-font-family:
-  'museo',
-  'Segoe UI',
-  sans-serif;
-
---choro-title-font-size: 24px;
-
---choro-title-font-weight: 600;
-
---choro-label-opacity: 0.92;
-
-  /* Shared Chorodash interaction semantics */
-  --choro-hover-fill: var(--accent-primary);
-  --choro-hover-border: rgba(255, 255, 255, 0.55);
-  --choro-hover-glow: var(--accent-glow);
-
-  /* Shared Chorodash diagnostic/debug semantics */
-  --choro-debug-dot: var(--plt-pop);
-  --choro-debug-bbox: var(--plt-pop);
+  /* Diagnostic/debug semantics */
+  --_choro-debug-dot: var(--choro-debug-dot, #87ceeb);
+  --_choro-debug-bbox: var(--choro-debug-bbox, #87ceeb);
 
   display: flex;
   flex-direction: column;
@@ -88,20 +73,20 @@
    ========================================================================== */
 
 :host ::ng-deep .choro-county-path {
-  fill: var(--choro-county-fill);
-  stroke: var(--choro-county-border);
+  fill: var(--_choro-county-fill);
+  stroke: var(--_choro-county-border);
   stroke-width: 0.15px;
   opacity: 0.75;
   vector-effect: non-scaling-stroke;
 }
 
 :host ::ng-deep .choro-county-path:hover {
-  fill: var(--choro-hover-fill);
-  stroke: var(--choro-hover-border);
+  fill: var(--_choro-hover-fill);
+  stroke: var(--_choro-hover-border);
   filter:
     drop-shadow(
       0 0 8px
-      var(--choro-hover-glow)
+      var(--_choro-hover-glow)
     );
   cursor: pointer;
 }
@@ -114,7 +99,7 @@
 
 :host ::ng-deep .choro-state-mesh {
   fill: none;
-  stroke: var(--choro-state-border);
+  stroke: var(--_choro-state-border);
   stroke-width: 0.45px;
   opacity: 0.9;
   vector-effect: non-scaling-stroke;
@@ -122,30 +107,30 @@
 
 :host ::ng-deep .choro-nation-mesh {
   fill: none;
-  stroke: var(--choro-nation-border);
+  stroke: var(--_choro-nation-border);
   stroke-width: 0.65px;
   opacity: 0.95;
   vector-effect: non-scaling-stroke;
 }
 
 :host ::ng-deep .choro-state-label {
-  fill: var(--choro-state-label);
+  fill: var(--_choro-state-label);
   font-family: 'museo', 'Segoe UI', sans-serif;
   font-size: 13px;
   font-weight: 500;
-  opacity: var(--choro-label-opacity);
+  opacity: var(--_choro-label-opacity);
   pointer-events: none;
   user-select: none;
   text-rendering: geometricPrecision;
 }
 
 :host ::ng-deep .state-centroid {
-  fill: var(--choro-debug-dot);
+  fill: var(--_choro-debug-dot);
 }
 
 :host ::ng-deep .state-geo-bbox {
   fill: none;
-  stroke: var(--choro-debug-bbox);
+  stroke: var(--_choro-debug-bbox);
 }
 
 /* ==========================================================================
@@ -153,27 +138,20 @@
    ========================================================================== */
 
 .choro-panels {
-  display: flex;
-  flex-direction: row;
-
   flex: 1 1 auto;
-
   width: 100%;
-
   min-width: 0;
   min-height: 0;
-
-  overflow: hidden;
 }
 
 .usa-panel {
-  flex: 0 0 60%;
+  flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
 }
 
 .state-column {
-  flex: 0 0 40%;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -184,15 +162,15 @@
   flex: 0 0 50%;
   min-width: 0;
   min-height: 0;
-  border-left: 1px solid var(--choro-panel-border);
+  border-left: 1px solid var(--_choro-panel-border);
 }
 
 .state-table-panel {
   flex: 0 0 50%;
   min-width: 0;
   min-height: 0;
-  border-left: 1px solid var(--choro-panel-border);
-  border-top: 1px solid var(--choro-panel-border);
+  border-left: 1px solid var(--_choro-panel-border);
+  border-top: 1px solid var(--_choro-panel-border);
 }
 
 :host ::ng-deep .toolbar {
