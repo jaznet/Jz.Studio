@@ -31,6 +31,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D9E7BE8D-E
 		docs\99-DecisionLog.md = docs\99-DecisionLog.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{F50AB3C1-2011-4D8E-B33D-20AA895CFC97}"
+	ProjectSection(SolutionItems) = preProject
+		tools\Invoke-JzStudioConvergence.ps1 = tools\Invoke-JzStudioConvergence.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
