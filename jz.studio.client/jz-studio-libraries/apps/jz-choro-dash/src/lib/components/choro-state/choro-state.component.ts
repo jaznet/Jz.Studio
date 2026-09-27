@@ -17,7 +17,7 @@ import {
 
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { StateRendererFacadeService } from '../../services/state-renderer-facade.service';
+import { STATE_RENDERER } from '../../services/state-renderer.token';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerSelection } from '../../models/county-layer-factory.model';
@@ -26,6 +26,7 @@ import {
   CountyFeature
 } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { StateRenderer } from '../../models/state-renderer.model';
 
 @Component({
   selector: 'choro-state',
@@ -56,7 +57,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    private stateRenderer: StateRendererFacadeService
+    @Inject(STATE_RENDERER)
+    private stateRenderer: StateRenderer
   ) { }
 
   ngAfterViewInit(): void {

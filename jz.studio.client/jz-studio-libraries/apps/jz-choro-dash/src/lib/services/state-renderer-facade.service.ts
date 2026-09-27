@@ -1,28 +1,20 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerSelection } from '../models/county-layer-factory.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
-import { GeoShapeSet } from '../models/geo-shape-set.model';
+import {
+  StateRenderer,
+  StateRenderOptions
+} from '../models/state-renderer.model';
 import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.token';
 import { StateLayerRendererService } from './state-layer-renderer.service';
 import { StateTitleRendererService } from './state-title-renderer.service';
 import { StateViewportFitterService } from './state-viewport-fitter.service';
 
-export interface StateRenderOptions {
-  host: HTMLElement;
-  width: number;
-  height: number;
-  stateId: string | null;
-  shapeSet: GeoShapeSet;
-  selectedCountyId: string | null;
-  onCountySelected: (countyFeature: CountyFeature) => void;
-}
-
 @Injectable({
   providedIn: 'root'
 })
-export class StateRendererFacadeService {
+export class StateRendererFacadeService implements StateRenderer {
 
   constructor(
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
