@@ -15,23 +15,18 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { select } from 'd3-selection';
-import { geoPath } from 'd3-geo';
-
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
-import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
+import { StateLayerRendererService } from '../../services/state-layer-renderer.service';
 import { StateViewportFitterService } from '../../services/state-viewport-fitter.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 
 import { CountySelection } from '../../models/county-selection.model';
-import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
 import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import {
-  CountyFeature,
-  CountyFeatureCollection
+  CountyFeature
 } from '../../models/county-feature.model';
 import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
@@ -71,13 +66,12 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   counties!: CountyLayerSelection;
 
   constructor(
-    @Inject(COUNTY_LAYER_RENDERER)
-    private countyLayerRenderer: CountyLayerRenderer,
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLookup: StateLookupService,
+    private stateLayerRenderer: StateLayerRendererService,
     private stateViewportFitter: StateViewportFitterService
   ) { }
 
@@ -142,14 +136,22 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private createStateChoropleth(): void {
 
-    const selectedCountyFeatures = this.shapeSet!.features;
-    const stateOutline =
-      this.shapeSet!.outline ?? selectedCountyFeatures;
+    const layers = this.stateLayerRenderer.render({
+      host: this.stateRef.nativeElement,
+      width: this.width,
+      height: this.height,
+      shapeSet: this.shapeSet!,
+      onCountySelected: countyFeature =>
+        this.onCountySelected(countyFeature)
+    });
 
-    this.createStateChoroplethContainer();
-    this.createCountyLayer(selectedCountyFeatures);
+    this.svg = layers.svg;
+    this.outerGroup = layers.outerGroup;
+    this.titleLayer = layers.titleLayer;
+    this.state = layers.stateLayer;
+    this.counties = layers.countyLayer;
+
     this.applyCountySelection();
-    this.createStateOutlineLayer(stateOutline);
 
     const countyNode = this.counties?.node();
 
@@ -161,49 +163,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     this.placeStateTitle();
 
     this.choroStateEvent.emit(true);
-  }
-
-  private createStateChoroplethContainer(): void {
-    select(this.stateRef.nativeElement)
-      .selectAll('*')
-      .remove();
-
-    this.svg = select(this.stateRef.nativeElement)
-      .append('svg')
-      .attr('viewBox', `0 0 ${this.width} ${this.height}`)
-      .style('width', '100%')
-      .style('height', '100%');
-
-    this.outerGroup = this.svg
-      .append('g')
-      .attr('class', 'state-outer-group');
-
-    this.titleLayer = this.svg
-      .append('g')
-      .attr('class', 'state-title-layer');
-
-    this.state = this.outerGroup
-      .append('g')
-      .attr('class', 'state-group');
-
-    this.counties = this.state
-      .append('g')
-      .attr('class', 'counties-group');
-  }
-
-  private createCountyLayer(
-    countyFeaturesCollection: CountyFeatureCollection
-  ): void {
-    this.countyLayerRenderer.render(
-      {
-        countyLayer: this.counties,
-        countyFeaturesCollection,
-        pathClass: 'state-county-path',
-        gesture: 'primary-pointer',
-        onCountySelected: countyFeature =>
-          this.onCountySelected(countyFeature)
-      }
-    );
   }
 
   private onCountySelected(countyFeature: CountyFeature): void {
@@ -224,19 +183,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       'path.state-county-path',
       this.selectedCountyId
     );
-  }
-
-  private createStateOutlineLayer(
-    countyFeaturesCollection: CountyFeatureCollection
-  ): void {
-    const geopath = geoPath();
-
-    this.state
-      .append('path')
-      .datum(countyFeaturesCollection)
-      .attr('class', 'choro-state-mesh')
-      .attr('d', geopath)
-      .attr('pointer-events', 'none');
   }
 
   private fitAndTransformState(): void {
