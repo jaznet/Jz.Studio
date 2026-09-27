@@ -21,6 +21,7 @@ import { geoPath } from 'd3-geo';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
+import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
 import { StateLookupService } from '../../services/state-lookup.service';
 import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
@@ -56,8 +57,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @Output() countySelected = new EventEmitter<CountySelection>();
 
   private viewReady = false;
-  private resizeObserver?: ResizeObserver;
-  private renderFrame?: number;
+  private readonly renderScheduler = new ResponsiveRenderScheduler(
+    () => this.tryCreateStateChoropleth()
+  );
 
   width = 0;
   height = 0;
@@ -81,7 +83,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   ngAfterViewInit(): void {
     this.viewReady = true;
-    this.observeContainerSize();
+    this.renderScheduler.observe(this.stateRef.nativeElement);
     this.scheduleStateChoropleth();
   }
 
@@ -96,19 +98,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   ngOnDestroy(): void {
-    this.resizeObserver?.disconnect();
-
-    if (this.renderFrame !== undefined) {
-      cancelAnimationFrame(this.renderFrame);
-    }
-  }
-
-  private observeContainerSize(): void {
-    this.resizeObserver = new ResizeObserver(() => {
-      this.scheduleStateChoropleth();
-    });
-
-    this.resizeObserver.observe(this.stateRef.nativeElement);
+    this.renderScheduler.destroy();
   }
 
   private scheduleStateChoropleth(): void {
@@ -116,14 +106,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    if (this.renderFrame !== undefined) {
-      cancelAnimationFrame(this.renderFrame);
-    }
-
-    this.renderFrame = requestAnimationFrame(() => {
-      this.renderFrame = undefined;
-      this.tryCreateStateChoropleth();
-    });
+    this.renderScheduler.schedule();
   }
 
   private tryCreateStateChoropleth(): void {
