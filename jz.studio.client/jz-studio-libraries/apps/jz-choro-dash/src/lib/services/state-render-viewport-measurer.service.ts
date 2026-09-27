@@ -1,0 +1,24 @@
+import { Injectable } from '@angular/core';
+
+import { RenderViewport } from '../models/render-viewport.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StateRenderViewportMeasurerService {
+
+  measure(host: HTMLElement): RenderViewport | null {
+    const rect = host.getBoundingClientRect();
+    const viewport = {
+      width: Math.max(0, Math.floor(rect.width)),
+      height: Math.max(0, Math.floor(rect.height))
+    };
+
+    if (viewport.width <= 0 || viewport.height <= 0) {
+      console.warn('State choropleth skipped: invalid size', viewport);
+      return null;
+    }
+
+    return viewport;
+  }
+}

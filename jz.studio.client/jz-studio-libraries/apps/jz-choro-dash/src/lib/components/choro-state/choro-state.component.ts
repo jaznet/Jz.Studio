@@ -17,6 +17,7 @@ import {
 
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
+import { StateRenderViewportMeasurerService } from '../../services/state-render-viewport-measurer.service';
 import { STATE_RENDERER } from '../../services/state-renderer.token';
 
 import { CountySelection } from '../../models/county-selection.model';
@@ -49,16 +50,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     () => this.tryCreateStateChoropleth()
   );
 
-  width = 0;
-  height = 0;
-
   counties!: CountyLayerSelection;
 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(STATE_RENDERER)
-    private stateRenderer: StateRenderer
+    private stateRenderer: StateRenderer,
+    private stateRenderViewportMeasurer: StateRenderViewportMeasurerService
   ) { }
 
   ngAfterViewInit(): void {
@@ -103,29 +102,23 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    const rect = this.stateRef.nativeElement.getBoundingClientRect();
+    const viewport = this.stateRenderViewportMeasurer.measure(
+      this.stateRef.nativeElement
+    );
 
-    this.width = Math.max(0, Math.floor(rect.width));
-    this.height = Math.max(0, Math.floor(rect.height));
-
-    if (this.width <= 0 || this.height <= 0) {
-      console.warn('State choropleth skipped: invalid size', {
-        width: this.width,
-        height: this.height
-      });
-
+    if (!viewport) {
       return;
     }
 
-    this.createStateChoropleth();
+    this.createStateChoropleth(viewport.width, viewport.height);
   }
 
-  private createStateChoropleth(): void {
+  private createStateChoropleth(width: number, height: number): void {
 
     const countyLayer = this.stateRenderer.render({
       host: this.stateRef.nativeElement,
-      width: this.width,
-      height: this.height,
+      width,
+      height,
       stateId: this.stateId,
       shapeSet: this.shapeSet!,
       selectedCountyId: this.selectedCountyId,
