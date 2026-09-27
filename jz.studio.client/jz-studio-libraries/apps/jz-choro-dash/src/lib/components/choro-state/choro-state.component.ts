@@ -16,11 +16,8 @@ import {
 } from '@angular/core';
 
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
-import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { StateLayerRendererService } from '../../services/state-layer-renderer.service';
-import { StateTitleRendererService } from '../../services/state-title-renderer.service';
-import { StateViewportFitterService } from '../../services/state-viewport-fitter.service';
+import { StateRendererFacadeService } from '../../services/state-renderer-facade.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerSelection } from '../../models/county-layer-factory.model';
@@ -28,12 +25,7 @@ import { CountySelectionDispatcher } from '../../models/county-selection-dispatc
 import {
   CountyFeature
 } from '../../models/county-feature.model';
-import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
-import {
-  SvgCanvasSelection,
-  SvgGroupSelection
-} from '../../models/svg-layer-selection.model';
 
 @Component({
   selector: 'choro-state',
@@ -59,20 +51,12 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   width = 0;
   height = 0;
 
-  svg!: SvgCanvasSelection;
-  outerGroup!: SvgGroupSelection;
-  titleLayer!: SvgGroupSelection;
-  state!: SvgGroupSelection;
   counties!: CountyLayerSelection;
 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    @Inject(COUNTY_SELECTION_HIGHLIGHTER)
-    private countySelectionHighlighter: CountySelectionHighlighter,
-    private stateLayerRenderer: StateLayerRendererService,
-    private stateTitleRenderer: StateTitleRendererService,
-    private stateViewportFitter: StateViewportFitterService
+    private stateRenderer: StateRendererFacadeService
   ) { }
 
   ngAfterViewInit(): void {
@@ -136,31 +120,22 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
 
   private createStateChoropleth(): void {
 
-    const layers = this.stateLayerRenderer.render({
+    const countyLayer = this.stateRenderer.render({
       host: this.stateRef.nativeElement,
       width: this.width,
       height: this.height,
+      stateId: this.stateId,
       shapeSet: this.shapeSet!,
+      selectedCountyId: this.selectedCountyId,
       onCountySelected: countyFeature =>
         this.onCountySelected(countyFeature)
     });
 
-    this.svg = layers.svg;
-    this.outerGroup = layers.outerGroup;
-    this.titleLayer = layers.titleLayer;
-    this.state = layers.stateLayer;
-    this.counties = layers.countyLayer;
-
-    this.applyCountySelection();
-
-    const countyNode = this.counties?.node();
-
-    if (!countyNode) {
+    if (!countyLayer) {
       return;
     }
 
-    this.fitAndTransformState();
-    this.placeStateTitle();
+    this.counties = countyLayer;
 
     this.choroStateEvent.emit(true);
   }
@@ -178,29 +153,9 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    this.countySelectionHighlighter.apply(
+    this.stateRenderer.applyCountySelection(
       this.counties,
-      'path.state-county-path',
       this.selectedCountyId
-    );
-  }
-
-  private fitAndTransformState(): void {
-    this.stateViewportFitter.fit({
-      svg: this.svg,
-      outerGroup: this.outerGroup,
-      stateGroup: this.state,
-      stateId: this.stateId,
-      width: this.width,
-      height: this.height
-    });
-  }
-
-  private placeStateTitle(): void {
-    this.stateTitleRenderer.render(
-      this.titleLayer,
-      this.stateId,
-      this.width
     );
   }
 
