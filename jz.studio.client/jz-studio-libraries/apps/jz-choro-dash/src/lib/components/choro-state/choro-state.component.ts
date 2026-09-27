@@ -22,8 +22,8 @@ import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dis
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
+import { StateViewportFitterService } from '../../services/state-viewport-fitter.service';
 import { StateLookupService } from '../../services/state-lookup.service';
-import { SvgPathBoundsService } from '../../services/svg-path-bounds.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
@@ -78,7 +78,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLookup: StateLookupService,
-    private svgPathBounds: SvgPathBoundsService
+    private stateViewportFitter: StateViewportFitterService
   ) { }
 
   ngAfterViewInit(): void {
@@ -240,69 +240,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   private fitAndTransformState(): void {
-    const stateNode = this.state?.node();
-    const svgNode = this.svg?.node();
-
-    if (!stateNode || !svgNode) {
-      return;
-    }
-
-    const selectedStateFips =
-      String(this.stateId ?? '34').padStart(2, '0');
-
-    const rotationAngle =
-      this.stateLookup.statesDictionary[selectedStateFips]?.albersRotate ?? 0;
-
-    this.outerGroup.attr('transform', null);
-    this.state.attr('transform', null);
-
-    const unrotatedBounds = stateNode.getBBox();
-
-    if (unrotatedBounds.width <= 0 || unrotatedBounds.height <= 0) {
-      return;
-    }
-
-    const centerX = unrotatedBounds.x + unrotatedBounds.width / 2;
-    const centerY = unrotatedBounds.y + unrotatedBounds.height / 2;
-
-    this.state.attr(
-      'transform',
-      `rotate(${rotationAngle}, ${centerX}, ${centerY})`
-    );
-
-    const rotatedBounds = this.svgPathBounds.measure(
-      svgNode,
-      stateNode
-    );
-
-    if (!rotatedBounds || rotatedBounds.width <= 0 || rotatedBounds.height <= 0) {
-      return;
-    }
-
-    const padding = 0;
-
-    const availableWidth = this.width - padding * 2;
-    const availableHeight = this.height - padding * 2;
-
-    const scaleX = availableWidth / rotatedBounds.width;
-    const scaleY = availableHeight / rotatedBounds.height;
-
-    const scale = Math.min(scaleX, scaleY);
-
-    const tx =
-      padding +
-      (availableWidth - rotatedBounds.width * scale) / 2 -
-      rotatedBounds.x * scale;
-
-    const ty =
-      padding +
-      (availableHeight - rotatedBounds.height * scale) / 2 -
-      rotatedBounds.y * scale;
-
-    this.outerGroup.attr(
-      'transform',
-      `translate(${tx}, ${ty}) scale(${scale})`
-    );
+    this.stateViewportFitter.fit({
+      svg: this.svg,
+      outerGroup: this.outerGroup,
+      stateGroup: this.state,
+      stateId: this.stateId,
+      width: this.width,
+      height: this.height
+    });
   }
 
   private placeStateTitle(): void {
