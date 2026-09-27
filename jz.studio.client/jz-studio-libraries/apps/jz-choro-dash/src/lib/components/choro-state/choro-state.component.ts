@@ -19,8 +19,8 @@ import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dis
 import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
 import { StateLayerRendererService } from '../../services/state-layer-renderer.service';
+import { StateTitleRendererService } from '../../services/state-title-renderer.service';
 import { StateViewportFitterService } from '../../services/state-viewport-fitter.service';
-import { StateLookupService } from '../../services/state-lookup.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountyLayerSelection } from '../../models/county-layer-factory.model';
@@ -70,8 +70,8 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(COUNTY_SELECTION_HIGHLIGHTER)
     private countySelectionHighlighter: CountySelectionHighlighter,
-    private stateLookup: StateLookupService,
     private stateLayerRenderer: StateLayerRendererService,
+    private stateTitleRenderer: StateTitleRendererService,
     private stateViewportFitter: StateViewportFitterService
   ) { }
 
@@ -197,20 +197,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   private placeStateTitle(): void {
-    const selectedStateFips = String(this.stateId ?? '34').padStart(2, '0');
-
-    const stateName =
-      this.stateLookup.statesDictionary[selectedStateFips]?.stateName ?? '';
-
-    this.titleLayer
-      .selectAll('text.state-title')
-      .data([stateName])
-      .join('text')
-      .attr('class', 'state-title')
-      .attr('x', this.width - 24)
-      .attr('y', 36)
-      .attr('text-anchor', 'end')
-      .text(stateName);
+    this.stateTitleRenderer.render(
+      this.titleLayer,
+      this.stateId,
+      this.width
+    );
   }
 
 }
