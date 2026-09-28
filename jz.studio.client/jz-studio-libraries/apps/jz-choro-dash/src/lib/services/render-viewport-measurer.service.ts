@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { RenderViewport } from '../models/render-viewport.model';
+import {
+  RenderViewport,
+  RenderViewportMeasurer
+} from '../models/render-viewport.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RenderViewportMeasurerService {
+export class RenderViewportMeasurerService implements RenderViewportMeasurer {
 
   measure(host: HTMLElement): RenderViewport | null {
     const rect = host.getBoundingClientRect();

@@ -1,12 +1,13 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { RenderViewportMeasurer } from '../models/render-viewport.model';
 import {
   UsaLayoutCoordinator,
   UsaLayoutRequest,
   UsaLayoutResult
 } from '../models/usa-layout.model';
 import { UsaRenderCoordinator } from '../models/usa-render-coordinator.model';
-import { RenderViewportMeasurerService } from './render-viewport-measurer.service';
+import { RENDER_VIEWPORT_MEASURER } from './render-viewport-measurer.token';
 import { USA_RENDER_COORDINATOR } from './usa-render-coordinator.token';
 
 @Injectable({
@@ -15,7 +16,8 @@ import { USA_RENDER_COORDINATOR } from './usa-render-coordinator.token';
 export class UsaLayoutCoordinatorService implements UsaLayoutCoordinator {
 
   constructor(
-    private viewportMeasurer: RenderViewportMeasurerService,
+    @Inject(RENDER_VIEWPORT_MEASURER)
+    private viewportMeasurer: RenderViewportMeasurer,
     @Inject(USA_RENDER_COORDINATOR)
     private renderCoordinator: UsaRenderCoordinator
   ) { }
