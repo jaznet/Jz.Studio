@@ -17,7 +17,7 @@ import {
 
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { StateRenderViewportMeasurerService } from '../../services/state-render-viewport-measurer.service';
+import { StateRenderRequestFactoryService } from '../../services/state-render-request-factory.service';
 import { STATE_RENDERER } from '../../services/state-renderer.token';
 
 import { CountySelection } from '../../models/county-selection.model';
@@ -57,7 +57,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(STATE_RENDERER)
     private stateRenderer: StateRenderer,
-    private stateRenderViewportMeasurer: StateRenderViewportMeasurerService
+    private stateRenderRequestFactory: StateRenderRequestFactoryService
   ) { }
 
   ngAfterViewInit(): void {
@@ -94,37 +94,20 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    if (!this.stateId) {
-      return;
-    }
-
-    if (!this.shapeSet?.features?.features?.length) {
-      return;
-    }
-
-    const viewport = this.stateRenderViewportMeasurer.measure(
-      this.stateRef.nativeElement
-    );
-
-    if (!viewport) {
-      return;
-    }
-
-    this.createStateChoropleth(viewport.width, viewport.height);
-  }
-
-  private createStateChoropleth(width: number, height: number): void {
-
-    const countyLayer = this.stateRenderer.render({
+    const request = this.stateRenderRequestFactory.create({
       host: this.stateRef.nativeElement,
-      width,
-      height,
       stateId: this.stateId,
-      shapeSet: this.shapeSet!,
+      shapeSet: this.shapeSet,
       selectedCountyId: this.selectedCountyId,
       onCountySelected: countyFeature =>
         this.onCountySelected(countyFeature)
     });
+
+    if (!request) {
+      return;
+    }
+
+    const countyLayer = this.stateRenderer.render(request);
 
     if (!countyLayer) {
       return;
