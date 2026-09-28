@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
+import { StateLookupCatalog } from '../interfaces/state-lookup';
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
-import { StateLookupService } from './state-lookup.service';
+import { STATE_LOOKUP } from './state-lookup.token';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { StateLookupService } from './state-lookup.service';
 export class StateTitleRendererService {
 
   constructor(
-    private stateLookup: StateLookupService
+    @Inject(STATE_LOOKUP)
+    private stateLookup: StateLookupCatalog
   ) { }
 
   render(

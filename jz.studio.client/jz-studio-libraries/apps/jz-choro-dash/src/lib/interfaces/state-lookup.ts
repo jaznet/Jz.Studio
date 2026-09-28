@@ -11,3 +11,9 @@ export interface StateLookup {
   anchor?: 'start' | 'middle' | 'end';
   hidden?: boolean;
 }
+
+export interface StateLookupCatalog {
+  readonly statesDictionary: {
+    readonly [index: string]: StateLookup;
+  };
+}

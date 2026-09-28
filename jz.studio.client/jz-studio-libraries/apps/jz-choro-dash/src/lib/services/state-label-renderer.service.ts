@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   geoAlbersUsa,
   geoCentroid,
   geoPath
 } from 'd3-geo';
 
+import { StateLookupCatalog } from '../interfaces/state-lookup';
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
 import {
   StateFeature,
   StateFeatureCollection
 } from '../models/state-feature.model';
-import { StateLookupService } from './state-lookup.service';
+import { STATE_LOOKUP } from './state-lookup.token';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,10 @@ export class StateLabelRendererService {
   private readonly path = geoPath();
   private readonly projection = geoAlbersUsa();
 
-  constructor(private stateLookup: StateLookupService) { }
+  constructor(
+    @Inject(STATE_LOOKUP)
+    private stateLookup: StateLookupCatalog
+  ) { }
 
   render(
     stateTextLayer: SvgGroupSelection,

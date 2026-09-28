@@ -1,11 +1,14 @@
 
 import { Injectable } from '@angular/core';
-import { StateLookup } from '../interfaces/state-lookup';
+import {
+  StateLookup,
+  StateLookupCatalog
+} from '../interfaces/state-lookup';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateLookupService {
+export class StateLookupService implements StateLookupCatalog {
 
   constructor() {
     this.stateLookups.forEach((state: any) => {
