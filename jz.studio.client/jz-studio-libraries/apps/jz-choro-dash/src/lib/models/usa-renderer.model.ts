@@ -31,6 +31,10 @@ export interface UsaRenderOptions {
   onCountySelected: (countyFeature: CountyFeature) => void;
 }
 
+export interface UsaRenderRequestFactory {
+  create(request: UsaRenderRequest): UsaRenderOptions | null;
+}
+
 export interface UsaRenderHandle {
   resize(width: number, height: number): void;
   applyCountySelection(selectedCountyId: string | null): void;

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 
 import {
   UsaRenderOptions,
+  UsaRenderRequestFactory,
   UsaRenderRequest
 } from '../models/usa-renderer.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsaRenderRequestFactoryService {
+export class UsaRenderRequestFactoryService implements UsaRenderRequestFactory {
 
   create(request: UsaRenderRequest): UsaRenderOptions | null {
     const shapeSet = request.shapeSet;
