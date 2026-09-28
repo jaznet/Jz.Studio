@@ -20,14 +20,12 @@ import { CountySelectionDispatcher } from '../../models/county-selection-dispatc
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { StateCentroidMode } from '../../models/state-centroid-mode.model';
 import {
-  UsaRenderHandle,
-  UsaRenderer
+  UsaRenderHandle
 } from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { RenderViewportMeasurerService } from '../../services/render-viewport-measurer.service';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { UsaRenderRequestFactoryService } from '../../services/usa-render-request-factory.service';
-import { USA_RENDERER } from '../../services/usa-renderer.token';
+import { UsaRenderCoordinatorService } from '../../services/usa-render-coordinator.service';
 
 @Component({
   selector: 'choro-usa',
@@ -62,9 +60,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     private viewportMeasurer: RenderViewportMeasurerService,
-    private usaRenderRequestFactory: UsaRenderRequestFactoryService,
-    @Inject(USA_RENDERER)
-    private usaRenderer: UsaRenderer
+    private usaRenderCoordinator: UsaRenderCoordinatorService
   ) { }
 
   ngAfterViewInit(): void {
@@ -125,7 +121,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
 
-    const renderOptions = this.usaRenderRequestFactory.create({
+    const renderHandle = this.usaRenderCoordinator.render({
       host: this.USA_Ref.nativeElement,
       width: this.width,
       height: this.height,
@@ -140,11 +136,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
         )
     });
 
-    if (!renderOptions) {
+    if (!renderHandle) {
       return;
     }
 
-    this.renderHandle = this.usaRenderer.render(renderOptions);
+    this.renderHandle = renderHandle;
     this.needsRender = false;
 
     this.choroUSAEvent.emit(true);
