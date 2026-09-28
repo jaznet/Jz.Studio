@@ -17,8 +17,7 @@ import {
 
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { StateRenderRequestFactoryService } from '../../services/state-render-request-factory.service';
-import { STATE_RENDERER } from '../../services/state-renderer.token';
+import { StateRenderCoordinatorService } from '../../services/state-render-coordinator.service';
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
@@ -27,8 +26,7 @@ import {
 } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import {
-  StateRenderHandle,
-  StateRenderer
+  StateRenderHandle
 } from '../../models/state-renderer.model';
 
 @Component({
@@ -57,9 +55,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    @Inject(STATE_RENDERER)
-    private stateRenderer: StateRenderer,
-    private stateRenderRequestFactory: StateRenderRequestFactoryService
+    private stateRenderCoordinator: StateRenderCoordinatorService
   ) { }
 
   ngAfterViewInit(): void {
@@ -96,7 +92,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    const request = this.stateRenderRequestFactory.create({
+    const renderHandle = this.stateRenderCoordinator.render({
       host: this.stateRef.nativeElement,
       stateId: this.stateId,
       shapeSet: this.shapeSet,
@@ -104,12 +100,6 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       onCountySelected: countyFeature =>
         this.onCountySelected(countyFeature)
     });
-
-    if (!request) {
-      return;
-    }
-
-    const renderHandle = this.stateRenderer.render(request);
 
     if (!renderHandle) {
       return;
