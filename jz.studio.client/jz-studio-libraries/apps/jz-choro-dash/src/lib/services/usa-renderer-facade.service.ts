@@ -4,7 +4,8 @@ import { CountyLayerRenderer } from '../models/county-layer-renderer.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
 import {
   UsaRenderHandle,
-  UsaRenderOptions
+  UsaRenderOptions,
+  UsaRenderer
 } from '../models/usa-renderer.model';
 import { COUNTY_LAYER_RENDERER } from './county-layer-renderer.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.token';
@@ -17,7 +18,7 @@ import { UsaViewportFitterService } from './usa-viewport-fitter.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UsaRendererFacadeService {
+export class UsaRendererFacadeService implements UsaRenderer {
 
   constructor(
     @Inject(COUNTY_LAYER_RENDERER)

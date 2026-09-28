@@ -19,10 +19,13 @@ import { CountySelection } from '../../models/county-selection.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { StateCentroidMode } from '../../models/state-centroid-mode.model';
-import { UsaRenderHandle } from '../../models/usa-renderer.model';
+import {
+  UsaRenderHandle,
+  UsaRenderer
+} from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { UsaRendererFacadeService } from '../../services/usa-renderer-facade.service';
+import { USA_RENDERER } from '../../services/usa-renderer.token';
 
 @Component({
   selector: 'choro-usa',
@@ -56,7 +59,8 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    private usaRenderer: UsaRendererFacadeService
+    @Inject(USA_RENDERER)
+    private usaRenderer: UsaRenderer
   ) { }
 
   ngAfterViewInit(): void {

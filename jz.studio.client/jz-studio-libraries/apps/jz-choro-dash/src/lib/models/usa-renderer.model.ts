@@ -27,3 +27,7 @@ export interface UsaRenderHandle {
     centroidMode: StateCentroidMode
   ): void;
 }
+
+export interface UsaRenderer {
+  render(options: UsaRenderOptions): UsaRenderHandle;
+}
