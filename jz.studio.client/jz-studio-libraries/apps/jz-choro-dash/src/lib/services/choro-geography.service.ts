@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ChoroGeographySelection } from '../models/choro-geography-selection.model';
 import { ChoroGeographyShapeSets } from '../models/choro-geography-shape-sets.model';
 import { ChoroGeography } from '../models/choro-geography.model';
 import { CountySelection } from '../models/county-selection.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
+import { TopologySource } from '../models/topology-source.model';
 import { GeoFeatureService } from './geo-feature.service';
-import { TopoService } from './topo.service';
+import { TOPOLOGY_SOURCE } from './topology-source.token';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,13 @@ import { TopoService } from './topo.service';
 export class ChoroGeographyService implements ChoroGeography {
 
   constructor(
-    private topoService: TopoService,
+    @Inject(TOPOLOGY_SOURCE)
+    private topologySource: TopologySource,
     private geoFeatureService: GeoFeatureService
   ) { }
 
   loadShapeSets(): Observable<ChoroGeographyShapeSets> {
-    return this.topoService.getTopology().pipe(
+    return this.topologySource.getTopology().pipe(
       map(topology => ({
         usa: this.geoFeatureService.createUsaShapeSet(topology),
         counties: this.geoFeatureService.createStateCountyShapeSet(topology)
