@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { UsaRenderCoordinator } from '../models/usa-render-coordinator.model';
 import {
   UsaRenderHandle,
   UsaRenderer,
@@ -11,7 +12,7 @@ import { USA_RENDERER } from './usa-renderer.token';
 @Injectable({
   providedIn: 'root'
 })
-export class UsaRenderCoordinatorService {
+export class UsaRenderCoordinatorService implements UsaRenderCoordinator {
 
   constructor(
     @Inject(USA_RENDERER)
