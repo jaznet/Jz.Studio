@@ -1,15 +1,16 @@
 // jz-choro-dash.component.ts
 
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-strategy.token';
+import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { PaintStrategyFactoryService } from  '../../paint-factory/paint-strategy-factory.service';
-import { ChoroGeographyService } from  '../../services/choro-geography.service';
+import { CHORO_GEOGRAPHY } from  '../../services/choro-geography.token';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
 import { JzChoroDashPanelComponent } from  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
@@ -49,11 +50,12 @@ export class JzChoroDashComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private choroGeographyService: ChoroGeographyService
+    @Inject(CHORO_GEOGRAPHY)
+    private choroGeography: ChoroGeography
   ) { }
 
   ngOnInit(): void {
-    this.choroGeographyService.loadShapeSets().subscribe(shapeSets => {
+    this.choroGeography.loadShapeSets().subscribe(shapeSets => {
       this.usaShapeSet = shapeSets.usa;
       this.countyShapeSet = shapeSets.counties;
     });
@@ -68,7 +70,7 @@ export class JzChoroDashComponent implements OnInit {
 
   onCountySelected(selection: CountySelection): void {
     this.geographySelection = this.usaShapeSet && this.countyShapeSet
-      ? this.choroGeographyService.createSelection(
+      ? this.choroGeography.createSelection(
           this.usaShapeSet,
           this.countyShapeSet,
           selection

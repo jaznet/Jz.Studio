@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ChoroGeographySelection } from '../models/choro-geography-selection.model';
 import { ChoroGeographyShapeSets } from '../models/choro-geography-shape-sets.model';
+import { ChoroGeography } from '../models/choro-geography.model';
 import { CountySelection } from '../models/county-selection.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
 import { GeoFeatureService } from './geo-feature.service';
@@ -10,7 +11,7 @@ import { TopoService } from './topo.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ChoroGeographyService {
+export class ChoroGeographyService implements ChoroGeography {
 
   constructor(
     private topoService: TopoService,
