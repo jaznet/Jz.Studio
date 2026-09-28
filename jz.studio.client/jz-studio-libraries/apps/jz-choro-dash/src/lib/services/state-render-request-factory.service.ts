@@ -4,7 +4,7 @@ import {
   StateRenderOptions,
   StateRenderRequest
 } from '../models/state-renderer.model';
-import { StateRenderViewportMeasurerService } from './state-render-viewport-measurer.service';
+import { RenderViewportMeasurerService } from './render-viewport-measurer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ import { StateRenderViewportMeasurerService } from './state-render-viewport-meas
 export class StateRenderRequestFactoryService {
 
   constructor(
-    private viewportMeasurer: StateRenderViewportMeasurerService
+    private viewportMeasurer: RenderViewportMeasurerService
   ) { }
 
   create(request: StateRenderRequest): StateRenderOptions | null {

@@ -5,7 +5,7 @@ import { RenderViewport } from '../models/render-viewport.model';
 @Injectable({
   providedIn: 'root'
 })
-export class StateRenderViewportMeasurerService {
+export class RenderViewportMeasurerService {
 
   measure(host: HTMLElement): RenderViewport | null {
     const rect = host.getBoundingClientRect();
@@ -15,7 +15,7 @@ export class StateRenderViewportMeasurerService {
     };
 
     if (viewport.width <= 0 || viewport.height <= 0) {
-      console.warn('State choropleth skipped: invalid size', viewport);
+      console.warn('Choropleth skipped: invalid size', viewport);
       return null;
     }
 
