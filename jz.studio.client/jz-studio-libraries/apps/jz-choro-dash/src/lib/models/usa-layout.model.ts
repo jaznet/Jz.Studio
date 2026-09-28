@@ -18,3 +18,7 @@ export interface UsaLayoutResult {
   handle: UsaRenderHandle;
   rendered: boolean;
 }
+
+export interface UsaLayoutCoordinator {
+  layout(request: UsaLayoutRequest): UsaLayoutResult | null;
+}

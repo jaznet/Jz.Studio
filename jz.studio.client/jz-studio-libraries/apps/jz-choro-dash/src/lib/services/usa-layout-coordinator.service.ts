@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
 import {
+  UsaLayoutCoordinator,
   UsaLayoutRequest,
   UsaLayoutResult
 } from '../models/usa-layout.model';
@@ -11,7 +12,7 @@ import { USA_RENDER_COORDINATOR } from './usa-render-coordinator.token';
 @Injectable({
   providedIn: 'root'
 })
-export class UsaLayoutCoordinatorService {
+export class UsaLayoutCoordinatorService implements UsaLayoutCoordinator {
 
   constructor(
     private viewportMeasurer: RenderViewportMeasurerService,
