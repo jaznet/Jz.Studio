@@ -26,6 +26,7 @@ import {
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
 import { RenderViewportMeasurerService } from '../../services/render-viewport-measurer.service';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
+import { UsaRenderRequestFactoryService } from '../../services/usa-render-request-factory.service';
 import { USA_RENDERER } from '../../services/usa-renderer.token';
 
 @Component({
@@ -61,6 +62,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     private viewportMeasurer: RenderViewportMeasurerService,
+    private usaRenderRequestFactory: UsaRenderRequestFactoryService,
     @Inject(USA_RENDERER)
     private usaRenderer: UsaRenderer
   ) { }
@@ -123,25 +125,11 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
 
-    const shapeSet = this.shapeSet;
-
-    if (
-      !shapeSet?.features?.features?.length ||
-      !shapeSet.detailFeatures?.features?.length ||
-      !shapeSet.mesh ||
-      !shapeSet.outline
-    ) {
-      return;
-    }
-
-    this.renderHandle = this.usaRenderer.render({
+    const renderOptions = this.usaRenderRequestFactory.create({
       host: this.USA_Ref.nativeElement,
       width: this.width,
       height: this.height,
-      stateFeaturesCollection: shapeSet.features,
-      countyFeaturesCollection: shapeSet.detailFeatures,
-      stateMesh: shapeSet.mesh,
-      nationMesh: shapeSet.outline,
+      shapeSet: this.shapeSet,
       selectedCountyId: this.selectedCountyId,
       showCentroids: this.showCentroids,
       centroidMode: this.centroidMode,
@@ -151,6 +139,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
           countyFeature
         )
     });
+
+    if (!renderOptions) {
+      return;
+    }
+
+    this.renderHandle = this.usaRenderer.render(renderOptions);
     this.needsRender = false;
 
     this.choroUSAEvent.emit(true);

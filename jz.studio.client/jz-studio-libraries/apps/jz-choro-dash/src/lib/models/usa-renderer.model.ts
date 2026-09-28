@@ -1,9 +1,21 @@
 import { CountyFeature, CountyFeatureCollection } from './county-feature.model';
+import { GeoShapeSet } from './geo-shape-set.model';
 import { StateCentroidMode } from './state-centroid-mode.model';
 import {
   StateBoundaryGeometry,
   StateFeatureCollection
 } from './state-feature.model';
+
+export interface UsaRenderRequest {
+  host: HTMLElement;
+  width: number;
+  height: number;
+  shapeSet?: GeoShapeSet;
+  selectedCountyId: string | null;
+  showCentroids: boolean;
+  centroidMode: StateCentroidMode;
+  onCountySelected: (countyFeature: CountyFeature) => void;
+}
 
 export interface UsaRenderOptions {
   host: HTMLElement;
