@@ -19,6 +19,10 @@ export interface StateRenderOptions {
   onCountySelected: (countyFeature: CountyFeature) => void;
 }
 
+export interface StateRenderRequestFactory {
+  create(request: StateRenderRequest): StateRenderOptions | null;
+}
+
 export interface StateRenderHandle {
   applyCountySelection(selectedCountyId: string | null): void;
 }

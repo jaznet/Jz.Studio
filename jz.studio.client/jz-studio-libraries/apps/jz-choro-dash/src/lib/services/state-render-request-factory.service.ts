@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { RenderViewportMeasurer } from '../models/render-viewport.model';
 import {
   StateRenderOptions,
+  StateRenderRequestFactory,
   StateRenderRequest
 } from '../models/state-renderer.model';
 import { RENDER_VIEWPORT_MEASURER } from './render-viewport-measurer.token';
@@ -10,7 +11,8 @@ import { RENDER_VIEWPORT_MEASURER } from './render-viewport-measurer.token';
 @Injectable({
   providedIn: 'root'
 })
-export class StateRenderRequestFactoryService {
+export class StateRenderRequestFactoryService
+  implements StateRenderRequestFactory {
 
   constructor(
     @Inject(RENDER_VIEWPORT_MEASURER)
