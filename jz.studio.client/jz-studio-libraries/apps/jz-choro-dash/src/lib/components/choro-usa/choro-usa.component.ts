@@ -19,14 +19,12 @@ import { CountySelection } from '../../models/county-selection.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { StateCentroidMode } from '../../models/state-centroid-mode.model';
-import { UsaRenderCoordinator } from '../../models/usa-render-coordinator.model';
 import {
   UsaRenderHandle
 } from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
-import { RenderViewportMeasurerService } from '../../services/render-viewport-measurer.service';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { USA_RENDER_COORDINATOR } from '../../services/usa-render-coordinator.token';
+import { UsaLayoutCoordinatorService } from '../../services/usa-layout-coordinator.service';
 
 @Component({
   selector: 'choro-usa',
@@ -52,17 +50,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     () => this.layoutChoropleth()
   );
 
-  width = 0;
-  height = 0;
-
   private renderHandle?: UsaRenderHandle;
 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    private viewportMeasurer: RenderViewportMeasurerService,
-    @Inject(USA_RENDER_COORDINATOR)
-    private usaRenderCoordinator: UsaRenderCoordinator
+    private usaLayoutCoordinator: UsaLayoutCoordinatorService
   ) { }
 
   ngAfterViewInit(): void {
@@ -99,35 +92,15 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private layoutChoropleth(): void {
-    const viewport = this.viewportMeasurer.measure(
-      this.USA_Ref.nativeElement
-    );
-
-    if (!viewport) {
-      return;
-    }
-
-    this.width = viewport.width;
-    this.height = viewport.height;
-
-    if (!this.renderHandle || this.needsRender) {
-      this.tryCreateChoropleth();
-      return;
-    }
-
-    this.renderHandle.resize(this.width, this.height);
-  }
-
-  private tryCreateChoropleth(): void {
     if (!this.viewReady) {
       return;
     }
 
-    const renderHandle = this.usaRenderCoordinator.render({
+    const result = this.usaLayoutCoordinator.layout({
       host: this.USA_Ref.nativeElement,
-      width: this.width,
-      height: this.height,
       shapeSet: this.shapeSet,
+      currentHandle: this.renderHandle,
+      forceRender: this.needsRender,
       selectedCountyId: this.selectedCountyId,
       showCentroids: this.showCentroids,
       centroidMode: this.centroidMode,
@@ -138,14 +111,16 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
         )
     });
 
-    if (!renderHandle) {
+    if (!result) {
       return;
     }
 
-    this.renderHandle = renderHandle;
+    this.renderHandle = result.handle;
     this.needsRender = false;
 
-    this.choroUSAEvent.emit(true);
+    if (result.rendered) {
+      this.choroUSAEvent.emit(true);
+    }
   }
 
   private applyCountySelection(): void {
