@@ -16,30 +16,13 @@ import {
 } from '@angular/core';
 
 import { CountySelection } from '../../models/county-selection.model';
-import { CountyLayerRenderer } from '../../models/county-layer-renderer.model';
-import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
-import { CountySelectionHighlighter } from '../../models/county-selection-highlighter.model';
-import { CountyFeatureCollection } from '../../models/county-feature.model';
-import {
-  SvgCanvasSelection,
-  SvgGroupSelection
-} from '../../models/svg-layer-selection.model';
-import {
-  StateBoundaryGeometry,
-  StateFeatureCollection
-} from '../../models/state-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
 import { StateCentroidMode } from '../../models/state-centroid-mode.model';
-import { COUNTY_LAYER_RENDERER } from '../../services/county-layer-renderer.token';
+import { UsaRenderHandle } from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
-import { COUNTY_SELECTION_HIGHLIGHTER } from '../../services/county-selection-highlighter.token';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { StateCentroidRendererService } from '../../services/state-centroid-renderer.service';
-import { StateLabelRendererService } from '../../services/state-label-renderer.service';
-import { UsaBoundaryRendererService } from '../../services/usa-boundary-renderer.service';
-import { UsaLayerFactoryService } from '../../services/usa-layer-factory.service';
-import { UsaViewportFitterService } from '../../services/usa-viewport-fitter.service';
+import { UsaRendererFacadeService } from '../../services/usa-renderer-facade.service';
 
 @Component({
   selector: 'choro-usa',
@@ -68,25 +51,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   width = 0;
   height = 0;
 
-  private svg!: SvgCanvasSelection;
-  private usaLayer!: SvgGroupSelection;
-  private stateLayer!: SvgGroupSelection;
-  public countyLayer!: CountyLayerSelection;
-  private nationLayer!: SvgGroupSelection;
-  private stateTextLayer!: SvgGroupSelection;
+  private renderHandle?: UsaRenderHandle;
 
   constructor(
-    @Inject(COUNTY_LAYER_RENDERER)
-    private countyLayerRenderer: CountyLayerRenderer,
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
-    @Inject(COUNTY_SELECTION_HIGHLIGHTER)
-    private countySelectionHighlighter: CountySelectionHighlighter,
-    private stateCentroidRenderer: StateCentroidRendererService,
-    private stateLabelRenderer: StateLabelRendererService,
-    private usaBoundaryRenderer: UsaBoundaryRendererService,
-    private usaLayerFactory: UsaLayerFactoryService,
-    private usaViewportFitter: UsaViewportFitterService
+    private usaRenderer: UsaRendererFacadeService
   ) { }
 
   ngAfterViewInit(): void {
@@ -136,13 +106,12 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     this.width = nextWidth;
     this.height = nextHeight;
 
-    if (!this.usaLayer || this.needsRender) {
+    if (!this.renderHandle || this.needsRender) {
       this.tryCreateChoropleth();
       return;
     }
 
-    this.svg.attr('viewBox', `0 0 ${this.width} ${this.height}`);
-    this.fitUsaLayer();
+    this.renderHandle.resize(this.width, this.height);
   }
 
   private tryCreateChoropleth(): void {
@@ -161,112 +130,36 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       return;
     }
 
-    this.createChoropleth(
-      shapeSet.features,
-      shapeSet.detailFeatures,
-      shapeSet.mesh,
-      shapeSet.outline
-    );
-  }
-
-  private createChoropleth(
-    stateFeaturesCollection: StateFeatureCollection,
-    countyFeaturesCollection: CountyFeatureCollection,
-    stateMesh: StateBoundaryGeometry,
-    nationMesh: StateBoundaryGeometry
-  ): void {
-    this.createChoroplethContainer();
-    this.createCountyLayer(countyFeaturesCollection);
-    this.usaBoundaryRenderer.render(
-      this.stateLayer,
-      this.nationLayer,
-      stateFeaturesCollection,
-      stateMesh,
-      nationMesh
-    );
-    this.stateLabelRenderer.render(
-      this.stateTextLayer,
-      stateFeaturesCollection
-    );
-    this.stateCentroidRenderer.render(
-      this.usaLayer,
-      stateFeaturesCollection
-    );
-    this.applyCentroidPresentation();
-    this.applyCountySelection();
-    this.fitUsaLayer();
+    this.renderHandle = this.usaRenderer.render({
+      host: this.USA_Ref.nativeElement,
+      width: this.width,
+      height: this.height,
+      stateFeaturesCollection: shapeSet.features,
+      countyFeaturesCollection: shapeSet.detailFeatures,
+      stateMesh: shapeSet.mesh,
+      nationMesh: shapeSet.outline,
+      selectedCountyId: this.selectedCountyId,
+      showCentroids: this.showCentroids,
+      centroidMode: this.centroidMode,
+      onCountySelected: countyFeature =>
+        this.countySelectionDispatcher.dispatch(
+          this.countySelected,
+          countyFeature
+        )
+    });
     this.needsRender = false;
 
     this.choroUSAEvent.emit(true);
   }
 
-  private createChoroplethContainer(): void {
-    const layers = this.usaLayerFactory.create(
-      this.USA_Ref.nativeElement,
-      this.width,
-      this.height
-    );
-
-    this.svg = layers.svg;
-    this.usaLayer = layers.usaLayer;
-    this.countyLayer = layers.countyLayer;
-    this.stateLayer = layers.stateLayer;
-    this.nationLayer = layers.nationLayer;
-    this.stateTextLayer = layers.stateTextLayer;
-  }
-
-  private createCountyLayer(
-    countyFeaturesCollection: CountyFeatureCollection
-  ): void {
-    this.countyLayerRenderer.render(
-      {
-        countyLayer: this.countyLayer,
-        countyFeaturesCollection,
-        pathClass: 'choro-county-path',
-        gesture: 'click',
-        onCountySelected: countyFeature =>
-          this.countySelectionDispatcher.dispatch(
-            this.countySelected,
-            countyFeature
-          ),
-        includeTitle: true
-      }
-    );
-  }
-
   private applyCountySelection(): void {
-    if (!this.countyLayer) {
-      return;
-    }
-
-    this.countySelectionHighlighter.apply(
-      this.countyLayer,
-      'path.choro-county-path',
-      this.selectedCountyId
-    );
+    this.renderHandle?.applyCountySelection(this.selectedCountyId);
   }
 
   private applyCentroidPresentation(): void {
-    if (!this.usaLayer) {
-      return;
-    }
-
-    this.stateCentroidRenderer.applyDisplay(
-      this.usaLayer,
+    this.renderHandle?.applyCentroidPresentation(
       this.showCentroids,
       this.centroidMode
-    );
-  }
-
-  private fitUsaLayer(): void {
-    if (!this.usaLayer) {
-      return;
-    }
-
-    this.usaViewportFitter.fit(
-      this.usaLayer,
-      this.width,
-      this.height
     );
   }
 }
