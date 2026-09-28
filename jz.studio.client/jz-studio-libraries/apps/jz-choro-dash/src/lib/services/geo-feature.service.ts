@@ -3,13 +3,15 @@
 import { Injectable } from '@angular/core';
 import { feature, mesh } from 'topojson-client';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
+import { GeographyShapeFactory } from '../models/geography-shape-factory.model';
+import { MyTopoJSON } from '../models/my-topo-json.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GeoFeatureService {
+export class GeoFeatureService implements GeographyShapeFactory {
 
-  createUsaShapeSet(topology: any): GeoShapeSet {
+  createUsaShapeSet(topology: MyTopoJSON): GeoShapeSet {
 
     const states = feature(
       topology,
@@ -41,7 +43,7 @@ export class GeoFeatureService {
   }
 
   createStateCountyShapeSet(
-    topology: any
+    topology: MyTopoJSON
   ): GeoShapeSet {
 
     const counties = feature(

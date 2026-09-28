@@ -5,8 +5,9 @@ import { ChoroGeographyShapeSets } from '../models/choro-geography-shape-sets.mo
 import { ChoroGeography } from '../models/choro-geography.model';
 import { CountySelection } from '../models/county-selection.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
+import { GeographyShapeFactory } from '../models/geography-shape-factory.model';
 import { TopologySource } from '../models/topology-source.model';
-import { GeoFeatureService } from './geo-feature.service';
+import { GEOGRAPHY_SHAPE_FACTORY } from './geography-shape-factory.token';
 import { TOPOLOGY_SOURCE } from './topology-source.token';
 
 @Injectable({
@@ -17,14 +18,15 @@ export class ChoroGeographyService implements ChoroGeography {
   constructor(
     @Inject(TOPOLOGY_SOURCE)
     private topologySource: TopologySource,
-    private geoFeatureService: GeoFeatureService
+    @Inject(GEOGRAPHY_SHAPE_FACTORY)
+    private shapeFactory: GeographyShapeFactory
   ) { }
 
   loadShapeSets(): Observable<ChoroGeographyShapeSets> {
     return this.topologySource.getTopology().pipe(
       map(topology => ({
-        usa: this.geoFeatureService.createUsaShapeSet(topology),
-        counties: this.geoFeatureService.createStateCountyShapeSet(topology)
+        usa: this.shapeFactory.createUsaShapeSet(topology),
+        counties: this.shapeFactory.createStateCountyShapeSet(topology)
       }))
     );
   }
@@ -46,7 +48,7 @@ export class ChoroGeographyService implements ChoroGeography {
       stateName:
         String(stateFeature?.properties?.['name'] ?? ''),
       stateShapeSet:
-        this.geoFeatureService.createSelectedStateShapeSet(
+        this.shapeFactory.createSelectedStateShapeSet(
           countyShapeSet,
           selection.stateId
         )
