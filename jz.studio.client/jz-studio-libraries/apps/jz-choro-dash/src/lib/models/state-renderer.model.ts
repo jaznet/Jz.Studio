@@ -1,5 +1,4 @@
 import { CountyFeature } from './county-feature.model';
-import { CountyLayerSelection } from './county-layer-factory.model';
 import { GeoShapeSet } from './geo-shape-set.model';
 
 export interface StateRenderRequest {
@@ -20,11 +19,10 @@ export interface StateRenderOptions {
   onCountySelected: (countyFeature: CountyFeature) => void;
 }
 
-export interface StateRenderer {
-  render(options: StateRenderOptions): CountyLayerSelection | null;
+export interface StateRenderHandle {
+  applyCountySelection(selectedCountyId: string | null): void;
+}
 
-  applyCountySelection(
-    countyLayer: CountyLayerSelection,
-    selectedCountyId: string | null
-  ): void;
+export interface StateRenderer {
+  render(options: StateRenderOptions): StateRenderHandle | null;
 }

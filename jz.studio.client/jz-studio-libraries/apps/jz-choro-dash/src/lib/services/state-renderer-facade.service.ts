@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { CountyLayerSelection } from '../models/county-layer-factory.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
 import {
+  StateRenderHandle,
   StateRenderer,
   StateRenderOptions
 } from '../models/state-renderer.model';
@@ -24,7 +25,7 @@ export class StateRendererFacadeService implements StateRenderer {
     private stateViewportFitter: StateViewportFitterService
   ) { }
 
-  render(options: StateRenderOptions): CountyLayerSelection | null {
+  render(options: StateRenderOptions): StateRenderHandle | null {
     const layers = this.stateLayerRenderer.render({
       host: options.host,
       width: options.width,
@@ -57,10 +58,16 @@ export class StateRendererFacadeService implements StateRenderer {
       options.width
     );
 
-    return layers.countyLayer;
+    return {
+      applyCountySelection: selectedCountyId =>
+        this.applyCountySelection(
+          layers.countyLayer,
+          selectedCountyId
+        )
+    };
   }
 
-  applyCountySelection(
+  private applyCountySelection(
     countyLayer: CountyLayerSelection,
     selectedCountyId: string | null
   ): void {

@@ -21,13 +21,15 @@ import { StateRenderRequestFactoryService } from '../../services/state-render-re
 import { STATE_RENDERER } from '../../services/state-renderer.token';
 
 import { CountySelection } from '../../models/county-selection.model';
-import { CountyLayerSelection } from '../../models/county-layer-factory.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import {
   CountyFeature
 } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
-import { StateRenderer } from '../../models/state-renderer.model';
+import {
+  StateRenderHandle,
+  StateRenderer
+} from '../../models/state-renderer.model';
 
 @Component({
   selector: 'choro-state',
@@ -50,7 +52,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     () => this.tryCreateStateChoropleth()
   );
 
-  counties!: CountyLayerSelection;
+  private renderHandle?: StateRenderHandle;
 
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
@@ -107,13 +109,13 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       return;
     }
 
-    const countyLayer = this.stateRenderer.render(request);
+    const renderHandle = this.stateRenderer.render(request);
 
-    if (!countyLayer) {
+    if (!renderHandle) {
       return;
     }
 
-    this.counties = countyLayer;
+    this.renderHandle = renderHandle;
 
     this.choroStateEvent.emit(true);
   }
@@ -127,14 +129,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   private applyCountySelection(): void {
-    if (!this.counties) {
-      return;
-    }
-
-    this.stateRenderer.applyCountySelection(
-      this.counties,
-      this.selectedCountyId
-    );
+    this.renderHandle?.applyCountySelection(this.selectedCountyId);
   }
 
 }
