@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { StateRenderCoordinator } from '../models/state-render-coordinator.model';
 import {
   StateRenderHandle,
   StateRenderer,
@@ -11,7 +12,7 @@ import { STATE_RENDERER } from './state-renderer.token';
 @Injectable({
   providedIn: 'root'
 })
-export class StateRenderCoordinatorService {
+export class StateRenderCoordinatorService implements StateRenderCoordinator {
 
   constructor(
     @Inject(STATE_RENDERER)
