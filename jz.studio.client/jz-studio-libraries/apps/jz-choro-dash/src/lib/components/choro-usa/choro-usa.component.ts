@@ -24,6 +24,7 @@ import {
   UsaRenderer
 } from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
+import { RenderViewportMeasurerService } from '../../services/render-viewport-measurer.service';
 import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
 import { USA_RENDERER } from '../../services/usa-renderer.token';
 
@@ -59,6 +60,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   constructor(
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
+    private viewportMeasurer: RenderViewportMeasurerService,
     @Inject(USA_RENDERER)
     private usaRenderer: UsaRenderer
   ) { }
@@ -97,18 +99,16 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   private layoutChoropleth(): void {
-    const bounds = this.USA_Ref.nativeElement
-      .getBoundingClientRect();
+    const viewport = this.viewportMeasurer.measure(
+      this.USA_Ref.nativeElement
+    );
 
-    const nextWidth = Math.max(0, Math.floor(bounds.width));
-    const nextHeight = Math.max(0, Math.floor(bounds.height));
-
-    if (nextWidth <= 0 || nextHeight <= 0) {
+    if (!viewport) {
       return;
     }
 
-    this.width = nextWidth;
-    this.height = nextHeight;
+    this.width = viewport.width;
+    this.height = viewport.height;
 
     if (!this.renderHandle || this.needsRender) {
       this.tryCreateChoropleth();
