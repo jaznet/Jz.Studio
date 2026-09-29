@@ -6,6 +6,7 @@ import {
 } from 'd3-geo';
 
 import { StateLookupCatalog } from '../interfaces/state-lookup';
+import { StateLabelRenderer } from '../models/state-label-renderer.model';
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
 import {
   StateFeature,
@@ -16,7 +17,7 @@ import { STATE_LOOKUP } from './state-lookup.token';
 @Injectable({
   providedIn: 'root'
 })
-export class StateLabelRendererService {
+export class StateLabelRendererService implements StateLabelRenderer {
 
   private readonly path = geoPath();
   private readonly projection = geoAlbersUsa();
