@@ -7,7 +7,7 @@ import {
   UsaRenderer,
   UsaRenderRequest
 } from '../models/usa-renderer.model';
-import { USA_RENDER_REQUEST_FACTORY } from './usa-render-request-factory.token';
+import { USA_RENDER_REQUEST_FACTORY } from './factories/usa-render-request-factory.token';
 import { USA_RENDERER } from './usa-renderer.token';
 
 @Injectable({

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { UsaRenderRequestFactory } from '../models/factories/usa-render-request-factory.model';
+import { UsaRenderRequestFactory } from '../../models/factories/usa-render-request-factory.model';
 import {
   UsaRenderOptions,
   UsaRenderRequest
-} from '../models/usa-renderer.model';
+} from '../../models/usa-renderer.model';
 
 @Injectable({
   providedIn: 'root'

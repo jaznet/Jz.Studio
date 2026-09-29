@@ -7,7 +7,7 @@ import {
   StateRenderer,
   StateRenderRequest
 } from '../models/state-renderer.model';
-import { STATE_RENDER_REQUEST_FACTORY } from './state-render-request-factory.token';
+import { STATE_RENDER_REQUEST_FACTORY } from './factories/state-render-request-factory.token';
 import { STATE_RENDERER } from './state-renderer.token';
 
 @Injectable({
