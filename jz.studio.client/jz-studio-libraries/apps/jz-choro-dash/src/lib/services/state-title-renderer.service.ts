@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { StateLookupCatalog } from '../interfaces/state-lookup';
+import { StateTitleRenderer } from '../models/state-title-renderer.model';
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
 import { STATE_LOOKUP } from './state-lookup.token';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateTitleRendererService {
+export class StateTitleRendererService implements StateTitleRenderer {
 
   constructor(
     @Inject(STATE_LOOKUP)
