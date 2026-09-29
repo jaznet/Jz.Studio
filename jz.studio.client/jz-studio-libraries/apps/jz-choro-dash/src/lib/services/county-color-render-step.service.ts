@@ -24,19 +24,19 @@ export class CountyColorRenderStepService
   execute(
     context: CountyLayerRenderStepContext
   ): CountyLayerRenderStepContext {
-    const colorResolver = context.options.colorResolver;
-
-    if (!colorResolver) {
-      return context;
-    }
-
     const countyPaths = this.contextGuard.requireCountyPaths(
       context,
       'rendering county colors'
     );
+    const colorResolver = context.options.colorResolver;
 
-    countyPaths.attr(
-      'fill',
+    if (!colorResolver) {
+      countyPaths.style('--_choro-county-data-fill', null);
+      return context;
+    }
+
+    countyPaths.style(
+      '--_choro-county-data-fill',
       (county: CountyFeature) => colorResolver.getColor(String(county.id))
     );
 

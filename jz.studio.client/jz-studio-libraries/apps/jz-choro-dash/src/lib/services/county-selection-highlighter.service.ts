@@ -19,11 +19,23 @@ export class CountySelectionHighlighterService
       ? String(selectedCountyId).padStart(5, '0')
       : null;
 
-    countyLayer
-      .selectAll<SVGPathElement, CountyFeature>(pathSelector)
+    const countyPaths = countyLayer
+      .selectAll<SVGPathElement, CountyFeature>(pathSelector);
+
+    countyPaths
       .classed('is-selected', (county: CountyFeature) =>
         normalizedCountyId !== null &&
         String(county.id ?? '').padStart(5, '0') === normalizedCountyId
       );
+
+    if (normalizedCountyId === null) {
+      return;
+    }
+
+    countyPaths
+      .filter((county: CountyFeature) =>
+        String(county.id ?? '').padStart(5, '0') === normalizedCountyId
+      )
+      .raise();
   }
 }

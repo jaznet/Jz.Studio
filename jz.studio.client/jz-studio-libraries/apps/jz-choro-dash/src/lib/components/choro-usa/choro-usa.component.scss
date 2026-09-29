@@ -47,7 +47,7 @@
    ========================================================================== */
 
 :host ::ng-deep .choro-usa-county-path {
-  fill: var(--_choro-county-fill);
+  fill: var(--_choro-county-data-fill, var(--_choro-county-fill));
   stroke: var(--_choro-county-border);
   stroke-width: 0.15px;
   opacity: 0.75;
@@ -69,12 +69,23 @@
 
 :host ::ng-deep .choro-usa-county-path.is-selected,
 :host ::ng-deep .choro-county-path.is-selected {
-  fill: var(--_choro-selected-fill);
+  fill: var(--_choro-county-data-fill, var(--_choro-county-fill));
   stroke: var(--_choro-selected-border);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
 
   filter:
     drop-shadow(
-      0 0 8px
+      0 -1px 1.5px
+      rgba(255, 255, 255, 0.5)
+    )
+    drop-shadow(
+      0 3px 3px
+      rgba(0, 0, 0, 0.85)
+    )
+    drop-shadow(
+      0 0 5px
       var(--_choro-selected-glow)
     );
 }

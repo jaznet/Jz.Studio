@@ -49,8 +49,8 @@
   --_choro-selected-fill: var(--choro-selected-fill, #a87800);
   --_choro-selected-border: var(
     --choro-selected-border,
-    rgba(255, 255, 255, 0.55)
-  );
+    #fff
+  ); 
   --_choro-selected-glow: var(
     --choro-selected-glow,
     rgba(168, 120, 0, 0.52)
@@ -73,7 +73,7 @@
    ========================================================================== */
 
 :host ::ng-deep .choro-county-path {
-  fill: var(--_choro-county-fill);
+  fill: var(--_choro-county-data-fill, var(--_choro-county-fill));
   stroke: var(--_choro-county-border);
   stroke-width: 0.15px;
   opacity: 0.75;
