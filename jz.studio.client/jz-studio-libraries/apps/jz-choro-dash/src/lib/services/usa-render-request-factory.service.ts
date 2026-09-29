@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { UsaRenderRequestFactory } from '../models/factories/usa-render-request-factory.model';
 import {
   UsaRenderOptions,
-  UsaRenderRequestFactory,
   UsaRenderRequest
 } from '../models/usa-renderer.model';
 
