@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 
-import { CountyFeature } from '../models/county-feature.model';
+import { CountyFeature } from '../../models/county-feature.model';
 import {
   CountyLayerFactory,
   CountyLayerFactoryOptions,
   CountyPathSelection
-} from '../models/factories/county-layer-factory.model';
+} from '../../models/factories/county-layer-factory.model';
 
 @Injectable({
   providedIn: 'root'

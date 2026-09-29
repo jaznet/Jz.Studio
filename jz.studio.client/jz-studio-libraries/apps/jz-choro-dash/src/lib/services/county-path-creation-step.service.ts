@@ -8,7 +8,7 @@ import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
-import { COUNTY_LAYER_FACTORY } from './county-layer-factory.token';
+import { COUNTY_LAYER_FACTORY } from './factories/county-layer-factory.token';
 
 export type CountyLayerRenderContextWithPaths =
   CountyLayerRenderStepContext & {
