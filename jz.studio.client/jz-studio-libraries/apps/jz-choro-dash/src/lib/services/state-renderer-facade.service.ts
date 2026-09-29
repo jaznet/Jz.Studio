@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { CountyLayerSelection } from '../models/county-layer-factory.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
+import { StateViewportFitter } from '../models/state-viewport-fitter.model';
 import {
   StateRenderHandle,
   StateRenderer,
@@ -10,7 +11,7 @@ import {
 import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.token';
 import { StateLayerRendererService } from './state-layer-renderer.service';
 import { StateTitleRendererService } from './state-title-renderer.service';
-import { StateViewportFitterService } from './state-viewport-fitter.service';
+import { STATE_VIEWPORT_FITTER } from './state-viewport-fitter.token';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class StateRendererFacadeService implements StateRenderer {
     private countySelectionHighlighter: CountySelectionHighlighter,
     private stateLayerRenderer: StateLayerRendererService,
     private stateTitleRenderer: StateTitleRendererService,
-    private stateViewportFitter: StateViewportFitterService
+    @Inject(STATE_VIEWPORT_FITTER)
+    private stateViewportFitter: StateViewportFitter
   ) { }
 
   render(options: StateRenderOptions): StateRenderHandle | null {

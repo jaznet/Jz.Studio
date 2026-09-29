@@ -1,26 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
 import { StateLookupCatalog } from '../interfaces/state-lookup';
-import { SvgPathBoundsMeasurer } from '../models/svg-path-bounds.model';
 import {
-  SvgCanvasSelection,
-  SvgGroupSelection
-} from '../models/svg-layer-selection.model';
+  StateViewportFitContext,
+  StateViewportFitter
+} from '../models/state-viewport-fitter.model';
+import { SvgPathBoundsMeasurer } from '../models/svg-path-bounds.model';
 import { STATE_LOOKUP } from './state-lookup.token';
 import { SVG_PATH_BOUNDS } from './svg-path-bounds.token';
-
-export interface StateViewportFitContext {
-  svg: SvgCanvasSelection;
-  outerGroup: SvgGroupSelection;
-  stateGroup: SvgGroupSelection;
-  stateId: string | null;
-  width: number;
-  height: number;
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateViewportFitterService {
+export class StateViewportFitterService implements StateViewportFitter {
 
   constructor(
     @Inject(STATE_LOOKUP)
