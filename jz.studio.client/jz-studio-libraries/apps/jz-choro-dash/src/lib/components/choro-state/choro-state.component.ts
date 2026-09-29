@@ -15,20 +15,21 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
-import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
-import { STATE_RENDER_COORDINATOR } from '../../services/state-render-coordinator.token';
-
 import { CountySelection } from '../../models/county-selection.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
+import { ResponsiveRenderSchedulerFactory } from '../../models/factories/responsive-render-scheduler-factory.model';
 import {
   CountyFeature
 } from '../../models/county-feature.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { RenderScheduler } from '../../models/responsive-render-scheduler.model';
 import { StateRenderCoordinator } from '../../models/state-render-coordinator.model';
 import {
   StateRenderHandle
 } from '../../models/state-renderer.model';
+import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
+import { RESPONSIVE_RENDER_SCHEDULER_FACTORY } from '../../services/factories/responsive-render-scheduler-factory.token';
+import { STATE_RENDER_COORDINATOR } from '../../services/state-render-coordinator.token';
 
 @Component({
   selector: 'choro-state',
@@ -47,9 +48,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @Output() countySelected = new EventEmitter<CountySelection>();
 
   private viewReady = false;
-  private readonly renderScheduler = new ResponsiveRenderScheduler(
-    () => this.tryCreateStateChoropleth()
-  );
+  private readonly renderScheduler: RenderScheduler;
 
   private renderHandle?: StateRenderHandle;
 
@@ -57,8 +56,14 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(STATE_RENDER_COORDINATOR)
-    private stateRenderCoordinator: StateRenderCoordinator
-  ) { }
+    private stateRenderCoordinator: StateRenderCoordinator,
+    @Inject(RESPONSIVE_RENDER_SCHEDULER_FACTORY)
+    renderSchedulerFactory: ResponsiveRenderSchedulerFactory
+  ) {
+    this.renderScheduler = renderSchedulerFactory.create(
+      () => this.tryCreateStateChoropleth()
+    );
+  }
 
   ngAfterViewInit(): void {
     this.viewReady = true;

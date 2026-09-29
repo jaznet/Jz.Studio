@@ -1,4 +1,6 @@
-export class ResponsiveRenderScheduler {
+import { RenderScheduler } from '../models/responsive-render-scheduler.model';
+
+export class ResponsiveRenderScheduler implements RenderScheduler {
 
   private resizeObserver?: ResizeObserver;
   private renderFrame?: number;

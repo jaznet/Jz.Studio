@@ -17,14 +17,16 @@ import {
 
 import { CountySelection } from '../../models/county-selection.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
+import { ResponsiveRenderSchedulerFactory } from '../../models/factories/responsive-render-scheduler-factory.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
+import { RenderScheduler } from '../../models/responsive-render-scheduler.model';
 import { StateCentroidMode } from '../../models/state-centroid-mode.model';
 import { UsaLayoutCoordinator } from '../../models/usa-layout.model';
 import {
   UsaRenderHandle
 } from '../../models/usa-renderer.model';
 import { COUNTY_SELECTION_DISPATCHER } from '../../services/county-selection-dispatcher.token';
-import { ResponsiveRenderScheduler } from '../../services/responsive-render-scheduler.service';
+import { RESPONSIVE_RENDER_SCHEDULER_FACTORY } from '../../services/factories/responsive-render-scheduler-factory.token';
 import { USA_LAYOUT_COORDINATOR } from '../../services/usa-layout-coordinator.token';
 
 @Component({
@@ -47,9 +49,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
 
   private viewReady = false;
   private needsRender = true;
-  private readonly layoutScheduler = new ResponsiveRenderScheduler(
-    () => this.layoutChoropleth()
-  );
+  private readonly layoutScheduler: RenderScheduler;
 
   private renderHandle?: UsaRenderHandle;
 
@@ -57,8 +57,14 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
     @Inject(COUNTY_SELECTION_DISPATCHER)
     private countySelectionDispatcher: CountySelectionDispatcher,
     @Inject(USA_LAYOUT_COORDINATOR)
-    private usaLayoutCoordinator: UsaLayoutCoordinator
-  ) { }
+    private usaLayoutCoordinator: UsaLayoutCoordinator,
+    @Inject(RESPONSIVE_RENDER_SCHEDULER_FACTORY)
+    renderSchedulerFactory: ResponsiveRenderSchedulerFactory
+  ) {
+    this.layoutScheduler = renderSchedulerFactory.create(
+      () => this.layoutChoropleth()
+    );
+  }
 
   ngAfterViewInit(): void {
     this.viewReady = true;
