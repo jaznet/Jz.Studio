@@ -2,24 +2,19 @@ import { Inject, Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 import { select } from 'd3-selection';
 
-import { CountyFeature } from '../models/county-feature.model';
 import { CountyLayerRenderer } from '../models/county-layer-renderer.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
+import {
+  StateLayerRenderer,
+  StateLayerRenderOptions
+} from '../models/state-layer-renderer.model';
 import { StateLayerSet } from '../models/state-layer-set.model';
 import { COUNTY_LAYER_RENDERER } from './county-layer-renderer.token';
-
-export interface StateLayerRenderOptions {
-  host: HTMLElement;
-  width: number;
-  height: number;
-  shapeSet: GeoShapeSet;
-  onCountySelected: (countyFeature: CountyFeature) => void;
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateLayerRendererService {
+export class StateLayerRendererService implements StateLayerRenderer {
 
   constructor(
     @Inject(COUNTY_LAYER_RENDERER)
