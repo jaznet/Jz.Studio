@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
-import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
+import {
+  CountyLayerFactory,
+  CountyPathSelection
+} from '../models/factories/county-layer-factory.model';
 import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
-import { CountyLayerFactoryService } from './county-layer-factory.service';
+import { COUNTY_LAYER_FACTORY } from './county-layer-factory.token';
 
 export type CountyLayerRenderContextWithPaths =
   CountyLayerRenderStepContext & {
@@ -19,7 +22,8 @@ export class CountyPathCreationStepService
   implements CountyLayerRenderStep {
 
   constructor(
-    private countyLayerFactory: CountyLayerFactoryService
+    @Inject(COUNTY_LAYER_FACTORY)
+    private countyLayerFactory: CountyLayerFactory
   ) {}
 
   execute(
