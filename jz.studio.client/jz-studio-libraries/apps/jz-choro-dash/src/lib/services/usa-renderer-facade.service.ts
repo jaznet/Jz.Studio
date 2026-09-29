@@ -14,7 +14,7 @@ import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.tok
 import { STATE_CENTROID_RENDERER } from './state-centroid-renderer.token';
 import { StateLabelRendererService } from './state-label-renderer.service';
 import { UsaBoundaryRendererService } from './usa-boundary-renderer.service';
-import { USA_LAYER_FACTORY } from './usa-layer-factory.token';
+import { USA_LAYER_FACTORY } from './factories/usa-layer-factory.token';
 import { UsaViewportFitterService } from './usa-viewport-fitter.service';
 
 @Injectable({
