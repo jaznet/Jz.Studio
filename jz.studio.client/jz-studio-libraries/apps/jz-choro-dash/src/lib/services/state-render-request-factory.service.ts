@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { StateRenderRequestFactory } from '../models/factories/state-render-request-factory.model';
 import { RenderViewportMeasurer } from '../models/render-viewport.model';
 import {
   StateRenderOptions,
-  StateRenderRequestFactory,
   StateRenderRequest
 } from '../models/state-renderer.model';
 import { RENDER_VIEWPORT_MEASURER } from './render-viewport-measurer.token';

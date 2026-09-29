@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 
+import { StateRenderRequestFactory } from '../models/factories/state-render-request-factory.model';
 import { StateRenderCoordinator } from '../models/state-render-coordinator.model';
 import {
   StateRenderHandle,
   StateRenderer,
-  StateRenderRequestFactory,
   StateRenderRequest
 } from '../models/state-renderer.model';
 import { STATE_RENDER_REQUEST_FACTORY } from './state-render-request-factory.token';
