@@ -1,3 +1,4 @@
+import { CountyColorResolver } from './county-color-resolver.model';
 import {
   CountyFeature,
   CountyFeatureCollection
@@ -11,5 +12,6 @@ export interface CountyLayerRenderOptions {
   pathClass: string;
   gesture: CountySelectionGesture;
   onCountySelected: (countyFeature: CountyFeature) => void;
+  colorResolver?: CountyColorResolver;
   includeTitle?: boolean;
 }

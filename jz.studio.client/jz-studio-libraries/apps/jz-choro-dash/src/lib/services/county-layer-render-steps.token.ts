@@ -1,6 +1,7 @@
 import { inject, InjectionToken } from '@angular/core';
 
 import { CountyLayerRenderStep } from '../models/county-layer-render-step.model';
+import { CountyColorRenderStepService } from './county-color-render-step.service';
 import { CountyPathCreationStepService } from './county-path-creation-step.service';
 import { CountySelectionRenderStepService } from './county-selection-render-step.service';
 import { CountyTitleRenderStepService } from './county-title-render-step.service';
@@ -12,6 +13,7 @@ export const COUNTY_LAYER_RENDER_STEPS =
       providedIn: 'root',
       factory: () => [
         inject(CountyPathCreationStepService),
+        inject(CountyColorRenderStepService),
         inject(CountySelectionRenderStepService),
         inject(CountyTitleRenderStepService)
       ]
