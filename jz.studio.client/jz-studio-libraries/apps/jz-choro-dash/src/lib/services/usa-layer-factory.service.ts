@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { select } from 'd3-selection';
 
+import { UsaLayerFactory } from '../models/factories/usa-layer-factory.model';
 import { UsaLayerSet } from '../models/usa-layer-set.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsaLayerFactoryService {
+export class UsaLayerFactoryService implements UsaLayerFactory {
 
   create(
     host: HTMLElement,

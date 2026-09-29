@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { CountyLayerRenderer } from '../models/county-layer-renderer.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
+import { UsaLayerFactory } from '../models/factories/usa-layer-factory.model';
 import { StateCentroidRenderer } from '../models/state-centroid-renderer.model';
 import {
   UsaRenderHandle,
@@ -13,7 +14,7 @@ import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.tok
 import { STATE_CENTROID_RENDERER } from './state-centroid-renderer.token';
 import { StateLabelRendererService } from './state-label-renderer.service';
 import { UsaBoundaryRendererService } from './usa-boundary-renderer.service';
-import { UsaLayerFactoryService } from './usa-layer-factory.service';
+import { USA_LAYER_FACTORY } from './usa-layer-factory.token';
 import { UsaViewportFitterService } from './usa-viewport-fitter.service';
 
 @Injectable({
@@ -30,7 +31,8 @@ export class UsaRendererFacadeService implements UsaRenderer {
     private stateCentroidRenderer: StateCentroidRenderer,
     private stateLabelRenderer: StateLabelRendererService,
     private usaBoundaryRenderer: UsaBoundaryRendererService,
-    private usaLayerFactory: UsaLayerFactoryService,
+    @Inject(USA_LAYER_FACTORY)
+    private usaLayerFactory: UsaLayerFactory,
     private usaViewportFitter: UsaViewportFitterService
   ) { }
 
