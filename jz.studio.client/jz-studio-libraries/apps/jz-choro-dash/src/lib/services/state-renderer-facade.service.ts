@@ -37,7 +37,8 @@ export class StateRendererFacadeService implements StateRenderer {
       width: options.width,
       height: options.height,
       shapeSet: options.shapeSet,
-      onCountySelected: options.onCountySelected
+      onCountySelected: options.onCountySelected,
+      colorResolver: options.colorResolver
     });
 
     this.applyCountySelection(

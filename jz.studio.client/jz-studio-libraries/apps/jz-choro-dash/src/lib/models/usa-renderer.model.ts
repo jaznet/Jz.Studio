@@ -1,4 +1,5 @@
 import { CountyFeature, CountyFeatureCollection } from './county-feature.model';
+import { CountyColorResolver } from './county-color-resolver.model';
 import { GeoShapeSet } from './geo-shape-set.model';
 import { StateCentroidMode } from './state-centroid-mode.model';
 import {
@@ -15,6 +16,7 @@ export interface UsaRenderRequest {
   showCentroids: boolean;
   centroidMode: StateCentroidMode;
   onCountySelected: (countyFeature: CountyFeature) => void;
+  colorResolver?: CountyColorResolver;
 }
 
 export interface UsaRenderOptions {
@@ -29,6 +31,7 @@ export interface UsaRenderOptions {
   showCentroids: boolean;
   centroidMode: StateCentroidMode;
   onCountySelected: (countyFeature: CountyFeature) => void;
+  colorResolver?: CountyColorResolver;
 }
 
 export interface UsaRenderHandle {

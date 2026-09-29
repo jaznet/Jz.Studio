@@ -33,7 +33,8 @@ export class StateLayerRendererService implements StateLayerRenderer {
       countyFeaturesCollection: options.shapeSet.features,
       pathClass: 'state-county-path',
       gesture: 'primary-pointer',
-      onCountySelected: options.onCountySelected
+      onCountySelected: options.onCountySelected,
+      colorResolver: options.colorResolver
     });
 
     this.renderOutline(

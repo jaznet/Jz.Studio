@@ -34,7 +34,8 @@ export class UsaRenderRequestFactoryService implements UsaRenderRequestFactory {
       selectedCountyId: request.selectedCountyId,
       showCentroids: request.showCentroids,
       centroidMode: request.centroidMode,
-      onCountySelected: request.onCountySelected
+      onCountySelected: request.onCountySelected,
+      colorResolver: request.colorResolver
     };
   }
 }

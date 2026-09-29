@@ -55,7 +55,8 @@ export class UsaRendererFacadeService implements UsaRenderer {
       pathClass: 'choro-county-path',
       gesture: 'click',
       onCountySelected: options.onCountySelected,
-      includeTitle: true
+      includeTitle: true,
+      colorResolver: options.colorResolver
     });
 
     this.usaBoundaryRenderer.render(

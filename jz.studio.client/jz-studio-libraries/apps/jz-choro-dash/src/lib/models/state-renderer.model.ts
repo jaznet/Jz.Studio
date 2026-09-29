@@ -1,4 +1,5 @@
 import { CountyFeature } from './county-feature.model';
+import { CountyColorResolver } from './county-color-resolver.model';
 import { GeoShapeSet } from './geo-shape-set.model';
 
 export interface StateRenderRequest {
@@ -7,6 +8,7 @@ export interface StateRenderRequest {
   shapeSet?: GeoShapeSet;
   selectedCountyId: string | null;
   onCountySelected: (countyFeature: CountyFeature) => void;
+  colorResolver?: CountyColorResolver;
 }
 
 export interface StateRenderOptions {
@@ -17,6 +19,7 @@ export interface StateRenderOptions {
   shapeSet: GeoShapeSet;
   selectedCountyId: string | null;
   onCountySelected: (countyFeature: CountyFeature) => void;
+  colorResolver?: CountyColorResolver;
 }
 
 export interface StateRenderHandle {
