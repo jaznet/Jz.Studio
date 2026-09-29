@@ -1,15 +1,27 @@
 // jz-choro-dash.component.ts
 
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
 import { CountyColorResolver } from '../../models/county-color-resolver.model';
+import {
+  CountyColorResolverFactory,
+  CountyColorResolverFactoryOptions
+} from '../../models/factories/county-color-resolver-factory.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { CHORO_GEOGRAPHY } from  '../../services/choro-geography.token';
+import { COUNTY_COLOR_RESOLVER_FACTORY } from '../../services/factories/metric-county-color-resolver-factory.token';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
 import { JzChoroDashPanelComponent } from  '../jz-choro-dash-panel/jz-choro-dash-panel.component';
@@ -31,9 +43,11 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
   ],
   styleUrls: ['./jz-choro-dash.component.scss']
 })
-export class JzChoroDashComponent implements OnInit {
+export class JzChoroDashComponent implements OnChanges, OnInit {
 
-  @Input() colorResolver?: CountyColorResolver;
+  @Input() colorResolverOptions?: CountyColorResolverFactoryOptions;
+
+  colorResolver?: CountyColorResolver;
 
   usaShapeSet?: GeoShapeSet;
   private countyShapeSet?: GeoShapeSet;
@@ -46,8 +60,20 @@ export class JzChoroDashComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     @Inject(CHORO_GEOGRAPHY)
-    private choroGeography: ChoroGeography
+    private choroGeography: ChoroGeography,
+    @Inject(COUNTY_COLOR_RESOLVER_FACTORY)
+    private countyColorResolverFactory: CountyColorResolverFactory
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['colorResolverOptions']) {
+      return;
+    }
+
+    this.colorResolver = this.colorResolverOptions
+      ? this.countyColorResolverFactory.create(this.colorResolverOptions)
+      : undefined;
+  }
 
   ngOnInit(): void {
     this.choroGeography.loadShapeSets().subscribe(shapeSets => {
