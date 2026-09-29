@@ -1,12 +1,13 @@
 // jz-choro-dash.component.ts
 
 import { CommonModule } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
+import { CountyColorResolver } from '../../models/county-color-resolver.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { CHORO_GEOGRAPHY } from  '../../services/choro-geography.token';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
@@ -31,6 +32,8 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
   styleUrls: ['./jz-choro-dash.component.scss']
 })
 export class JzChoroDashComponent implements OnInit {
+
+  @Input() colorResolver?: CountyColorResolver;
 
   usaShapeSet?: GeoShapeSet;
   private countyShapeSet?: GeoShapeSet;

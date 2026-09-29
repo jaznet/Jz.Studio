@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 
 import { CountySelection } from '../../models/county-selection.model';
+import { CountyColorResolver } from '../../models/county-color-resolver.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { ResponsiveRenderSchedulerFactory } from '../../models/factories/responsive-render-scheduler-factory.model';
 import { GeoShapeSet } from '../../models/geo-shape-set.model';
@@ -44,6 +45,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   @Input() showCentroids = false;
   @Input() centroidMode: StateCentroidMode = 'hover';
   @Input() selectedCountyId: string | null = null;
+  @Input() colorResolver?: CountyColorResolver;
   @Output() choroUSAEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
@@ -73,7 +75,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['shapeSet']) {
+    if (changes['shapeSet'] || changes['colorResolver']) {
       this.needsRender = true;
       this.scheduleLayout();
     }
@@ -112,6 +114,7 @@ export class ChoroUsaComponent implements AfterViewInit, OnChanges, OnDestroy {
       selectedCountyId: this.selectedCountyId,
       showCentroids: this.showCentroids,
       centroidMode: this.centroidMode,
+      colorResolver: this.colorResolver,
       onCountySelected: countyFeature =>
         this.countySelectionDispatcher.dispatch(
           this.countySelected,

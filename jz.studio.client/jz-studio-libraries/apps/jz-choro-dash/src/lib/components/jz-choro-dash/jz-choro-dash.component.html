@@ -31,6 +31,7 @@
                  [shapeSet]="usaShapeSet"
                  [showCentroids]="showCentroids"
                  [centroidMode]="centroidDisplayMode"
+                 [colorResolver]="colorResolver"
                  [selectedCountyId]="geographySelection?.countyId ?? null"
                  (countySelected)="onCountySelected($event)">
       </choro-usa>
@@ -44,6 +45,7 @@
         <choro-state #choro_state
                      [stateId]="selection.stateId"
                      [shapeSet]="selection.stateShapeSet"
+                     [colorResolver]="colorResolver"
                      [selectedCountyId]="selection.countyId"
                      (countySelected)="onCountySelected($event)">
         </choro-state>

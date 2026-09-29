@@ -16,6 +16,7 @@ import {
 } from '@angular/core';
 
 import { CountySelection } from '../../models/county-selection.model';
+import { CountyColorResolver } from '../../models/county-color-resolver.model';
 import { CountySelectionDispatcher } from '../../models/county-selection-dispatcher.model';
 import { ResponsiveRenderSchedulerFactory } from '../../models/factories/responsive-render-scheduler-factory.model';
 import {
@@ -44,6 +45,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   @Input() stateId: string | null = null;
   @Input() shapeSet?: GeoShapeSet;
   @Input() selectedCountyId: string | null = null;
+  @Input() colorResolver?: CountyColorResolver;
   @Output() choroStateEvent = new EventEmitter<boolean>();
   @Output() countySelected = new EventEmitter<CountySelection>();
 
@@ -72,7 +74,11 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['shapeSet'] || changes['stateId']) {
+    if (
+      changes['shapeSet'] ||
+      changes['stateId'] ||
+      changes['colorResolver']
+    ) {
       this.scheduleStateChoropleth();
     }
 
@@ -104,6 +110,7 @@ export class ChoroStateComponent implements AfterViewInit, OnChanges, OnDestroy 
       stateId: this.stateId,
       shapeSet: this.shapeSet,
       selectedCountyId: this.selectedCountyId,
+      colorResolver: this.colorResolver,
       onCountySelected: countyFeature =>
         this.onCountySelected(countyFeature)
     });
