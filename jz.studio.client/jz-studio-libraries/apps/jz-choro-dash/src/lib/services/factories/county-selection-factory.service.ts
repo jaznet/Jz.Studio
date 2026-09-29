@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CountyFeature } from '../models/county-feature.model';
-import { CountySelection } from '../models/county-selection.model';
-import { CountySelectionFactory } from '../models/factories/county-selection-factory.model';
+
+import { CountyFeature } from '../../models/county-feature.model';
+import { CountySelection } from '../../models/county-selection.model';
+import { CountySelectionFactory } from '../../models/factories/county-selection-factory.model';
 
 @Injectable({
   providedIn: 'root'
