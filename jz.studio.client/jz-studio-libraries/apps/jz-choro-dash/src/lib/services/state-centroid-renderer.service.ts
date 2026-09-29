@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { geoPath } from 'd3-geo';
 
+import { StateCentroidRenderer } from '../models/state-centroid-renderer.model';
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
 import { StateCentroidMode } from '../models/state-centroid-mode.model';
 import {
@@ -11,7 +12,7 @@ import {
 @Injectable({
   providedIn: 'root'
 })
-export class StateCentroidRendererService {
+export class StateCentroidRendererService implements StateCentroidRenderer {
 
   private readonly path = geoPath();
 
