@@ -1,5 +1,6 @@
 import {
   EventEmitter,
+  Inject,
   Injectable,
   NgZone
 } from '@angular/core';
@@ -7,7 +8,8 @@ import {
 import { CountySelection } from '../models/county-selection.model';
 import { CountySelectionDispatcher } from '../models/county-selection-dispatcher.model';
 import { CountyFeature } from '../models/county-feature.model';
-import { CountySelectionFactoryService } from './county-selection-factory.service';
+import { CountySelectionFactory } from '../models/factories/county-selection-factory.model';
+import { COUNTY_SELECTION_FACTORY } from './county-selection-factory.token';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,8 @@ export class CountySelectionDispatcherService
   implements CountySelectionDispatcher {
 
   constructor(
-    private countySelectionFactory: CountySelectionFactoryService,
+    @Inject(COUNTY_SELECTION_FACTORY)
+    private countySelectionFactory: CountySelectionFactory,
     private ngZone: NgZone
   ) { }
 
