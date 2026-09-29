@@ -5,7 +5,7 @@ import { ChoroGeographyShapeSets } from '../models/choro-geography-shape-sets.mo
 import { ChoroGeography } from '../models/choro-geography.model';
 import { CountySelection } from '../models/county-selection.model';
 import { GeoShapeSet } from '../models/geo-shape-set.model';
-import { GeographyShapeFactory } from '../models/geography-shape-factory.model';
+import { GeographyShapeFactory } from '../models/factories/geography-shape-factory.model';
 import { TopologySource } from '../models/topology-source.model';
 import { GEOGRAPHY_SHAPE_FACTORY } from './geography-shape-factory.token';
 import { TOPOLOGY_SOURCE } from './topology-source.token';

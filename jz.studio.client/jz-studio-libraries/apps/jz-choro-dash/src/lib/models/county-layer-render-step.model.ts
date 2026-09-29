@@ -1,4 +1,4 @@
-import { CountyPathSelection } from './county-layer-factory.model';
+import { CountyPathSelection } from './factories/county-layer-factory.model';
 import { CountyLayerRenderOptions } from './county-layer-render-options.model';
 
 export interface CountyLayerRenderStepContext {

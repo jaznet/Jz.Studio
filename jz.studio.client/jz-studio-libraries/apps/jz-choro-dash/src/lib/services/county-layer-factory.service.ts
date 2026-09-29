@@ -6,7 +6,7 @@ import {
   CountyLayerFactory,
   CountyLayerFactoryOptions,
   CountyPathSelection
-} from '../models/county-layer-factory.model';
+} from '../models/factories/county-layer-factory.model';
 
 @Injectable({
   providedIn: 'root'

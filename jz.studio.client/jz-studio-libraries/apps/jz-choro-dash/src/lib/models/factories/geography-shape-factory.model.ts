@@ -1,5 +1,5 @@
-import { GeoShapeSet } from './geo-shape-set.model';
-import { MyTopoJSON } from './my-topo-json.model';
+import { GeoShapeSet } from '../geo-shape-set.model';
+import { MyTopoJSON } from '../my-topo-json.model';
 
 export interface GeographyShapeFactory {
   createUsaShapeSet(topology: MyTopoJSON): GeoShapeSet;

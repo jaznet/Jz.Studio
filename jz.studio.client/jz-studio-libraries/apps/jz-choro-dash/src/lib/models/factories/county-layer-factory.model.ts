@@ -3,7 +3,7 @@ import { Selection } from 'd3-selection';
 import {
   CountyFeature,
   CountyFeatureCollection
-} from './county-feature.model';
+} from '../county-feature.model';
 
 export type CountyLayerSelection = Selection<
   SVGGElement,

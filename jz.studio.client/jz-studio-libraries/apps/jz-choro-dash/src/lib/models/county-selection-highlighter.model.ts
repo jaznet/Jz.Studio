@@ -1,4 +1,4 @@
-import { CountyLayerSelection } from './county-layer-factory.model';
+import { CountyLayerSelection } from './factories/county-layer-factory.model';
 
 export interface CountySelectionHighlighter {
   apply(

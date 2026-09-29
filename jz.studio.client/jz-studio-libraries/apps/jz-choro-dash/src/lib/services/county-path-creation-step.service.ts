@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CountyPathSelection } from '../models/county-layer-factory.model';
+import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
 import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext

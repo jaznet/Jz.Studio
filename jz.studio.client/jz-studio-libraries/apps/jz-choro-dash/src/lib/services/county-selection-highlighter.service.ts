@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CountyFeature } from '../models/county-feature.model';
-import { CountyLayerSelection } from '../models/county-layer-factory.model';
+import { CountyLayerSelection } from '../models/factories/county-layer-factory.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
 
 @Injectable({

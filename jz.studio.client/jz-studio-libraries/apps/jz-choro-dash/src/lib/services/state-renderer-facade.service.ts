@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { CountyLayerSelection } from '../models/county-layer-factory.model';
+import { CountyLayerSelection } from '../models/factories/county-layer-factory.model';
 import { CountySelectionHighlighter } from '../models/county-selection-highlighter.model';
 import { StateLayerRenderer } from '../models/state-layer-renderer.model';
 import { StateTitleRenderer } from '../models/state-title-renderer.model';

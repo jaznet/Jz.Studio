@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CountyFeature } from '../models/county-feature.model';
-import { CountyPathSelection } from '../models/county-layer-factory.model';
+import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
 
 @Injectable({
   providedIn: 'root'
