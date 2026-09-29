@@ -4,12 +4,10 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { COUNTY_PAINTING_STRATEGY } from  '../../interfaces/county-painting-strategy.token';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
-import { PaintStrategyFactoryService } from  '../../paint-factory/paint-strategy-factory.service';
 import { CHORO_GEOGRAPHY } from  '../../services/choro-geography.token';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
@@ -29,12 +27,6 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
     FormsModule,
     JzButtonComponent,
     JzSplitLayoutComponent
-  ],
-  providers: [
-    {
-      provide: COUNTY_PAINTING_STRATEGY,
-      useClass: PaintStrategyFactoryService
-    }
   ],
   styleUrls: ['./jz-choro-dash.component.scss']
 })
