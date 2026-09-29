@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
+import { CountyLayerRenderContextGuard } from '../models/county-layer-render-context-guard.model';
 import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
-import { CountyLayerRenderContextGuardService } from './county-layer-render-context-guard.service';
-import { CountySelectionGestureBinderService } from './county-selection-gesture-binder.service';
+import { CountySelectionGestureBinder } from '../models/county-selection-gesture-binder.model';
+import { COUNTY_LAYER_RENDER_CONTEXT_GUARD } from './county-layer-render-context-guard.token';
+import { COUNTY_SELECTION_GESTURE_BINDER } from './county-selection-gesture-binder.token';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,10 @@ export class CountySelectionRenderStepService
   implements CountyLayerRenderStep {
 
   constructor(
-    private countySelectionGestureBinder: CountySelectionGestureBinderService,
-    private contextGuard: CountyLayerRenderContextGuardService
+    @Inject(COUNTY_SELECTION_GESTURE_BINDER)
+    private countySelectionGestureBinder: CountySelectionGestureBinder,
+    @Inject(COUNTY_LAYER_RENDER_CONTEXT_GUARD)
+    private contextGuard: CountyLayerRenderContextGuard
   ) {}
 
   execute(

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 
 import { CountyFeature } from '../models/county-feature.model';
+import { CountySelectionGestureBinder } from '../models/county-selection-gesture-binder.model';
 import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
 import { CountySelectionGesture } from '../models/county-layer-render-options.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountySelectionGestureBinderService {
+export class CountySelectionGestureBinderService
+  implements CountySelectionGestureBinder {
 
   bind(
     countyPaths: CountyPathSelection,

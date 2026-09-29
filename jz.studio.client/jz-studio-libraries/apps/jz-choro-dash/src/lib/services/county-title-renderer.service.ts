@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import { CountyFeature } from '../models/county-feature.model';
+import { CountyTitleRenderer } from '../models/county-title-renderer.model';
 import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountyTitleRendererService {
+export class CountyTitleRendererService implements CountyTitleRenderer {
 
   render(countyPaths: CountyPathSelection): void {
     countyPaths

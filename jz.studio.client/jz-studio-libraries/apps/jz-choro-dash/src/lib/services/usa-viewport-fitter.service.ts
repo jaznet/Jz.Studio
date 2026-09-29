@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
 import { SvgGroupSelection } from '../models/svg-layer-selection.model';
+import { UsaViewportFitter } from '../models/usa-viewport-fitter.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsaViewportFitterService {
+export class UsaViewportFitterService implements UsaViewportFitter {
 
   fit(
     usaLayer: SvgGroupSelection,

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
+import { CountyLayerRenderContextGuard } from '../models/county-layer-render-context-guard.model';
 import { CountyPathSelection } from '../models/factories/county-layer-factory.model';
 import { CountyLayerRenderStepContext } from '../models/county-layer-render-step.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CountyLayerRenderContextGuardService {
+export class CountyLayerRenderContextGuardService
+  implements CountyLayerRenderContextGuard {
 
   requireCountyPaths(
     context: CountyLayerRenderStepContext,

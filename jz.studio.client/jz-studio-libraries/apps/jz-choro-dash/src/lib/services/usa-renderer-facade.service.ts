@@ -11,13 +11,14 @@ import {
   UsaRenderer
 } from '../models/usa-renderer.model';
 import { UsaBoundaryRenderer } from '../models/usa-boundary-renderer.model';
+import { UsaViewportFitter } from '../models/usa-viewport-fitter.model';
 import { COUNTY_LAYER_RENDERER } from './county-layer-renderer.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.token';
 import { STATE_CENTROID_RENDERER } from './state-centroid-renderer.token';
 import { STATE_LABEL_RENDERER } from './state-label-renderer.token';
 import { USA_BOUNDARY_RENDERER } from './usa-boundary-renderer.token';
 import { USA_LAYER_FACTORY } from './factories/usa-layer-factory.token';
-import { UsaViewportFitterService } from './usa-viewport-fitter.service';
+import { USA_VIEWPORT_FITTER } from './usa-viewport-fitter.token';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,8 @@ export class UsaRendererFacadeService implements UsaRenderer {
     private usaBoundaryRenderer: UsaBoundaryRenderer,
     @Inject(USA_LAYER_FACTORY)
     private usaLayerFactory: UsaLayerFactory,
-    private usaViewportFitter: UsaViewportFitterService
+    @Inject(USA_VIEWPORT_FITTER)
+    private usaViewportFitter: UsaViewportFitter
   ) { }
 
   render(options: UsaRenderOptions): UsaRenderHandle {

@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
+import { CountyLayerRenderContextGuard } from '../models/county-layer-render-context-guard.model';
 import {
   CountyLayerRenderStep,
   CountyLayerRenderStepContext
 } from '../models/county-layer-render-step.model';
-import { CountyLayerRenderContextGuardService } from './county-layer-render-context-guard.service';
-import { CountyTitleRendererService } from './county-title-renderer.service';
+import { CountyTitleRenderer } from '../models/county-title-renderer.model';
+import { COUNTY_LAYER_RENDER_CONTEXT_GUARD } from './county-layer-render-context-guard.token';
+import { COUNTY_TITLE_RENDERER } from './county-title-renderer.token';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,10 @@ export class CountyTitleRenderStepService
   implements CountyLayerRenderStep {
 
   constructor(
-    private countyTitleRenderer: CountyTitleRendererService,
-    private contextGuard: CountyLayerRenderContextGuardService
+    @Inject(COUNTY_TITLE_RENDERER)
+    private countyTitleRenderer: CountyTitleRenderer,
+    @Inject(COUNTY_LAYER_RENDER_CONTEXT_GUARD)
+    private contextGuard: CountyLayerRenderContextGuard
   ) {}
 
   execute(
