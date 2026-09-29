@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 
-export interface SvgBounds {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
+import {
+  SvgBounds,
+  SvgPathBoundsMeasurer
+} from '../models/svg-path-bounds.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SvgPathBoundsService {
+export class SvgPathBoundsService implements SvgPathBoundsMeasurer {
 
   measure(
     svgNode: SVGSVGElement | null,
