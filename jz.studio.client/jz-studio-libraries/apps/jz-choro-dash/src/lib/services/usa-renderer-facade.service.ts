@@ -9,11 +9,12 @@ import {
   UsaRenderOptions,
   UsaRenderer
 } from '../models/usa-renderer.model';
+import { UsaBoundaryRenderer } from '../models/usa-boundary-renderer.model';
 import { COUNTY_LAYER_RENDERER } from './county-layer-renderer.token';
 import { COUNTY_SELECTION_HIGHLIGHTER } from './county-selection-highlighter.token';
 import { STATE_CENTROID_RENDERER } from './state-centroid-renderer.token';
 import { StateLabelRendererService } from './state-label-renderer.service';
-import { UsaBoundaryRendererService } from './usa-boundary-renderer.service';
+import { USA_BOUNDARY_RENDERER } from './usa-boundary-renderer.token';
 import { USA_LAYER_FACTORY } from './factories/usa-layer-factory.token';
 import { UsaViewportFitterService } from './usa-viewport-fitter.service';
 
@@ -30,7 +31,8 @@ export class UsaRendererFacadeService implements UsaRenderer {
     @Inject(STATE_CENTROID_RENDERER)
     private stateCentroidRenderer: StateCentroidRenderer,
     private stateLabelRenderer: StateLabelRendererService,
-    private usaBoundaryRenderer: UsaBoundaryRendererService,
+    @Inject(USA_BOUNDARY_RENDERER)
+    private usaBoundaryRenderer: UsaBoundaryRenderer,
     @Inject(USA_LAYER_FACTORY)
     private usaLayerFactory: UsaLayerFactory,
     private usaViewportFitter: UsaViewportFitterService

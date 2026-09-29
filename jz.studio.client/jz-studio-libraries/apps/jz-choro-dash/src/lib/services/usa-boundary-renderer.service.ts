@@ -6,11 +6,12 @@ import {
   StateBoundaryGeometry,
   StateFeatureCollection
 } from '../models/state-feature.model';
+import { UsaBoundaryRenderer } from '../models/usa-boundary-renderer.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsaBoundaryRendererService {
+export class UsaBoundaryRendererService implements UsaBoundaryRenderer {
 
   private readonly path = geoPath();
 
