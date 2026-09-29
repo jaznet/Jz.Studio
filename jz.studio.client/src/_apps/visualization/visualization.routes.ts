@@ -24,8 +24,8 @@ export const VISUALIZATION_ROUTES: Routes = [
       {
         path: 'chorodash',
         loadComponent: () =>
-          import('jz-choro-dash')
-            .then(m => m.JzChoroDashComponent)
+          import('./components/choro-dash-host/choro-dash-host.component')
+            .then(m => m.ChoroDashHostComponent)
       },
 
       {
