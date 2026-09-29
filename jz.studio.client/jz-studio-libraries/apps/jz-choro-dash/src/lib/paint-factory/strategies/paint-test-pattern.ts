@@ -19,7 +19,7 @@ export class PaintTestPatternStrategy implements CountyPaintingStrategy {
     this.getColor('');
   }
 
-  getColor(countyFips: any): any {
+  getColor(_countyId: string): string {
     const r = Math.floor(Math.random() * (144 - 112 + 1)) + 112;
     const g = Math.floor(Math.random() * (144 - 112 + 1)) + 112;
     const b = Math.floor(Math.random() * (144 - 112 + 1)) + 112;

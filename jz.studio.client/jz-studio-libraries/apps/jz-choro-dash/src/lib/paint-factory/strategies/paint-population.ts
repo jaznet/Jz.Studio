@@ -32,13 +32,13 @@ export class PaintPopulationStrategy implements CountyPaintingStrategy {
   }
 
 
-  getColor(countyFips: any): any {
+  getColor(countyId: string): string {
     if (!this.choroDataService.isPopulationDataFetched) {
       //this.choroDataService.getPopulationData()
       return 'yellow';
     } else {
 
-      let c = this.choroDataService.populationDataDictionary[String(countyFips.id)];
+      const c = this.choroDataService.populationDataDictionary[countyId];
       if (c != undefined) {
         //if (c.popestimate > 100000) {
         //  return '#890620';
