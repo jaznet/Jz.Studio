@@ -37,24 +37,11 @@
 
   /* Interaction semantics */
   --_choro-hover-fill: var(--choro-hover-fill, #a87800);
-  --_choro-hover-border: var(
-    --choro-hover-border,
-    rgba(255, 255, 255, 0.55)
-  );
-  --_choro-hover-glow: var(
-    --choro-hover-glow,
-    rgba(168, 120, 0, 0.52)
-  );
-
+  --_choro-hover-border: var(--choro-hover-border,rgba(255, 255, 255));
+  --_choro-hover-glow: var(    --choro-hover-glow,rgba(168, 120, 0));
   --_choro-selected-fill: var(--choro-selected-fill, #a87800);
-  --_choro-selected-border: var(
-    --choro-selected-border,
-    #fff
-  ); 
-  --_choro-selected-glow: var(
-    --choro-selected-glow,
-    rgba(168, 120, 0, 0.52)
-  );
+  --_choro-selected-border: var( --choro-selected-border,#fff); 
+  --_choro-selected-glow: var( --choro-selected-glow,    rgba(168, 120, 0)  );
 
   /* Diagnostic/debug semantics */
   --_choro-debug-dot: var(--choro-debug-dot, #87ceeb);
