@@ -10,9 +10,7 @@ import {
   CHORO_DASH_DEMO_COUNTY_VALUES
 } from './choro-dash-demo-county-values';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChoroDashDemoCountyValuesService
   implements ChoroDashCountyValuesProvider {
 

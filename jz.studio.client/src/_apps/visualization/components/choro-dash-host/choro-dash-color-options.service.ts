@@ -14,9 +14,7 @@ import {
   CHORO_DASH_MISSING_VALUE_COLOR
 } from './choro-dash-color-scale.config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChoroDashColorOptionsService
   implements ChoroDashColorOptionsProvider {
 
