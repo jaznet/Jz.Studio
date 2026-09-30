@@ -8,49 +8,36 @@
    * override any --choro-* property without the library knowing the host's
    * palette vocabulary.
    */
-
   /* Panel semantics */
   --_choro-panel-bg-1: var(--choro-panel-bg-1, #35322f);
   --_choro-panel-bg-2: var(--choro-panel-bg-2, #242220);
-  --_choro-panel-border: var(
-    --choro-panel-border,
-    rgba(207, 198, 184, 0.28)
-  );
-
+  --_choro-panel-border: var( --choro-panel-border, rgba(207, 198, 184, 0.28) );
   /* Map semantics */
   --_choro-county-fill: var(--choro-county-fill, #403d39);
   --_choro-county-border: var(--choro-county-border, #777169);
   --_choro-state-border: var(--choro-state-border, #a69d91);
   --_choro-nation-border: var(--choro-nation-border, #d0c5b5);
-
   /* Label and title semantics */
   --_choro-state-label: var(--choro-state-label, #d4c7aa);
   --_choro-title-fill: var(--choro-title-fill, #d8ccb2);
   --_choro-title-opacity: var(--choro-title-opacity, 0.95);
-  --_choro-title-font-family: var(
-    --choro-title-font-family,
-    'museo', 'Segoe UI', sans-serif
-  );
+  --_choro-title-font-family: var( --choro-title-font-family, 'museo', 'Segoe UI', sans-serif );
   --_choro-title-font-size: var(--choro-title-font-size, 24px);
   --_choro-title-font-weight: var(--choro-title-font-weight, 600);
   --_choro-label-opacity: var(--choro-label-opacity, 0.92);
-
   /* Interaction semantics */
   --_choro-hover-fill: var(--choro-hover-fill, #a87800);
   --_choro-hover-border: var(--choro-hover-border,rgba(255, 255, 255));
-  --_choro-hover-glow: var(    --choro-hover-glow,rgba(168, 120, 0));
+  --_choro-hover-glow: var( --choro-hover-glow,rgba(168, 120, 0));
   --_choro-selected-fill: var(--choro-selected-fill, #a87800);
-  --_choro-selected-border: var( --choro-selected-border,#fff); 
-  --_choro-selected-glow: var( --choro-selected-glow,    rgba(168, 120, 0)  );
-
+  --_choro-selected-border: f9dc5c;
+  --_choro-selected-glow: var( --choro-selected-glow, rgba(168, 120, 0) );
   /* Diagnostic/debug semantics */
   --_choro-debug-dot: var(--choro-debug-dot, #87ceeb);
   --_choro-debug-bbox: var(--choro-debug-bbox, #87ceeb);
-
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-
   min-height: 0;
   min-width: 0;
 }
