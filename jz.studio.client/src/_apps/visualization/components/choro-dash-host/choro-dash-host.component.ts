@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, Inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 
 import {
   CountyColorResolverFactoryOptions,
@@ -20,8 +20,18 @@ import {
   CHORO_DASH_COUNTY_VALUES_PROVIDER
 } from './choro-dash-county-values-provider.token';
 import {
-  ChoroDashDemoCountyValuesService
-} from './choro-dash-demo-county-values.service';
+  ChoroDashApiCountyValuesService
+} from './choro-dash-api-county-values.service';
+
+import {
+  CHORO_DASH_COUNTY_API_CONFIG,
+  CHORO_DASH_COUNTY_API_DEFAULTS
+} from './choro-dash-county-api.config';
+
+interface ChoroDashLoadState {
+  readonly options?: CountyColorResolverFactoryOptions;
+  readonly error?: string;
+}
 
 @Component({
   selector: 'choro-dash-host',
@@ -29,21 +39,33 @@ import {
   imports: [AsyncPipe, JzChoroDashComponent],
   providers: [
     ChoroDashColorOptionsService,
-    ChoroDashDemoCountyValuesService,
+    ChoroDashApiCountyValuesService,
+    {
+      provide: CHORO_DASH_COUNTY_API_CONFIG,
+      useValue: CHORO_DASH_COUNTY_API_DEFAULTS
+    },
     {
       provide: CHORO_DASH_COLOR_OPTIONS_PROVIDER,
       useExisting: ChoroDashColorOptionsService
     },
     {
       provide: CHORO_DASH_COUNTY_VALUES_PROVIDER,
-      useExisting: ChoroDashDemoCountyValuesService
+      useExisting: ChoroDashApiCountyValuesService
     }
   ],
   template: `
-    @if (colorOptions$ | async; as colorOptions) {
-      <jz-choro-dash
-        [colorResolverOptions]="colorOptions">
-      </jz-choro-dash>
+    @if (loadState$ | async; as state) {
+      @if (state.options; as colorOptions) {
+        <jz-choro-dash [colorResolverOptions]="colorOptions">
+        </jz-choro-dash>
+      } @else if (state.error) {
+        <div role="alert">
+          <p>{{ state.error }}</p>
+          <button type="button" (click)="retry()">Retry</button>
+        </div>
+      } @else {
+        <p role="status">Loading county median ages…</p>
+      }
     }
   `,
   styles: [`
@@ -60,12 +82,26 @@ import {
 export class ChoroDashHostComponent {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  readonly colorOptions$: Observable<CountyColorResolverFactoryOptions>;
+  private readonly loadRequests = new BehaviorSubject<void>(undefined);
+
+  readonly loadState$: Observable<ChoroDashLoadState>;
 
   constructor(
     @Inject(CHORO_DASH_COLOR_OPTIONS_PROVIDER)
     colorOptionsProvider: ChoroDashColorOptionsProvider
   ) {
-    this.colorOptions$ = colorOptionsProvider.load();
+    this.loadState$ = this.loadRequests.pipe(
+      switchMap(() => colorOptionsProvider.load().pipe(
+        map(options => ({ options } as ChoroDashLoadState)),
+        catchError(() => of<ChoroDashLoadState>({
+          error: 'Unable to load county median ages. Check the API connection and retry.'
+        })),
+        startWith({} as ChoroDashLoadState)
+      ))
+    );
+  }
+
+  retry(): void {
+    this.loadRequests.next();
   }
 }
