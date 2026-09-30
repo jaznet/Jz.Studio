@@ -1,18 +1,29 @@
-import { Component, HostBinding } from '@angular/core';
-import { JzChoroDashComponent } from 'jz-choro-dash';
+import { AsyncPipe } from '@angular/common';
+import { Component, HostBinding, Inject } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import {
-  CHORO_DASH_DEMO_COLOR_OPTIONS
-} from './choro-dash-demo-color-options';
+  CountyColorResolverFactoryOptions,
+  JzChoroDashComponent
+} from 'jz-choro-dash';
+
+import {
+  ChoroDashColorOptionsProvider
+} from './choro-dash-color-options-provider.model';
+import {
+  CHORO_DASH_COLOR_OPTIONS_PROVIDER
+} from './choro-dash-color-options-provider.token';
 
 @Component({
   selector: 'choro-dash-host',
   standalone: true,
-  imports: [JzChoroDashComponent],
+  imports: [AsyncPipe, JzChoroDashComponent],
   template: `
-    <jz-choro-dash
-      [colorResolverOptions]="demoColorOptions">
-    </jz-choro-dash>
+    @if (colorOptions$ | async; as colorOptions) {
+      <jz-choro-dash
+        [colorResolverOptions]="colorOptions">
+      </jz-choro-dash>
+    }
   `,
   styles: [`
     :host,
@@ -28,5 +39,12 @@ import {
 export class ChoroDashHostComponent {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  readonly demoColorOptions = CHORO_DASH_DEMO_COLOR_OPTIONS;
+  readonly colorOptions$: Observable<CountyColorResolverFactoryOptions>;
+
+  constructor(
+    @Inject(CHORO_DASH_COLOR_OPTIONS_PROVIDER)
+    colorOptionsProvider: ChoroDashColorOptionsProvider
+  ) {
+    this.colorOptions$ = colorOptionsProvider.load();
+  }
 }
