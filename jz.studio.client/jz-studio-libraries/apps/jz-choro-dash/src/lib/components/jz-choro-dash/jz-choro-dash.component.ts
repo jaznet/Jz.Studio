@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
+import { CountyMetricValue } from '../../models/county-metric-value.model';
 import { CountyColorResolver } from '../../models/county-color-resolver.model';
 import {
   CountyColorResolverFactory,
@@ -47,6 +48,8 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   @Input() colorResolverOptions?: CountyColorResolverFactoryOptions;
 
+  @Input() countyValues: readonly CountyMetricValue[] = [];
+
   @Input() metricLabel = 'Value';
 
   private readonly countyMetricValues = new Map<string, number>();
@@ -76,18 +79,18 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['colorResolverOptions']) {
-      return;
+    if (changes['countyValues']) {
+      this.countyMetricValues.clear();
+      for (const metric of this.countyValues) {
+        this.countyMetricValues.set(metric.countyId, metric.value);
+      }
     }
 
-    this.countyMetricValues.clear();
-    for (const metric of this.colorResolverOptions?.values ?? []) {
-      this.countyMetricValues.set(metric.countyId, metric.value);
+    if (changes['colorResolverOptions']) {
+      this.colorResolver = this.colorResolverOptions
+        ? this.countyColorResolverFactory.create(this.colorResolverOptions)
+        : undefined;
     }
-
-    this.colorResolver = this.colorResolverOptions
-      ? this.countyColorResolverFactory.create(this.colorResolverOptions)
-      : undefined;
   }
 
   ngOnInit(): void {
