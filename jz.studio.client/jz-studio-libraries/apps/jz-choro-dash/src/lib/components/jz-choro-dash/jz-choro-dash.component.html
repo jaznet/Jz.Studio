@@ -27,14 +27,21 @@
 
     <jz-choro-dash-panel jzSplitPrimary
                          class="usa-panel">
-      <choro-usa #choro_usa
-                 [shapeSet]="usaShapeSet"
-                 [showCentroids]="showCentroids"
-                 [centroidMode]="centroidDisplayMode"
-                 [colorResolver]="colorResolver"
-                 [selectedCountyId]="geographySelection?.countyId ?? null"
-                 (countySelected)="onCountySelected($event)">
-      </choro-usa>
+      @if (geographyLoadError; as error) {
+        <div role="alert">
+          <p>{{ error }}</p>
+          <button type="button" (click)="retryGeography()">Retry</button>
+        </div>
+      } @else {
+        <choro-usa #choro_usa
+                   [shapeSet]="usaShapeSet"
+                   [showCentroids]="showCentroids"
+                   [centroidMode]="centroidDisplayMode"
+                   [colorResolver]="colorResolver"
+                   [selectedCountyId]="geographySelection?.countyId ?? null"
+                   (countySelected)="onCountySelected($event)">
+        </choro-usa>
+      }
     </jz-choro-dash-panel>
 
     <div jzSplitSecondary

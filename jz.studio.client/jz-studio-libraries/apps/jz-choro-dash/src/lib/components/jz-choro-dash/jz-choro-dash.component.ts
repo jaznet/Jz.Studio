@@ -67,6 +67,8 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   colorResolver?: CountyColorResolver;
 
+  geographyLoadError?: string;
+
   usaShapeSet?: GeoShapeSet;
   private countyShapeSet?: GeoShapeSet;
   geographySelection?: ChoroGeographySelection;
@@ -97,11 +99,29 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
+    this.loadGeography();
+  }
+
+  retryGeography(): void {
+    this.loadGeography();
+  }
+
+  private loadGeography(): void {
+    this.geographyLoadError = undefined;
+    this.usaShapeSet = undefined;
+    this.countyShapeSet = undefined;
+    this.geographySelection = undefined;
+
     this.choroGeography.loadShapeSets().pipe(
       takeUntilDestroyed(this.destroyRef)
-    ).subscribe(shapeSets => {
-      this.usaShapeSet = shapeSets.usa;
-      this.countyShapeSet = shapeSets.counties;
+    ).subscribe({
+      next: shapeSets => {
+        this.usaShapeSet = shapeSets.usa;
+        this.countyShapeSet = shapeSets.counties;
+      },
+      error: () => {
+        this.geographyLoadError = 'Unable to load map geography. Check the connection and retry.';
+      }
     });
   }
 
