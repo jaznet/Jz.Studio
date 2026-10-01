@@ -3,12 +3,14 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  DestroyRef,
   Inject,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
@@ -73,6 +75,7 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   public centroidDisplayMode: 'all' | 'hover' = 'hover';
 
   constructor(
+    private readonly destroyRef: DestroyRef,
     private router: Router,
     private route: ActivatedRoute,
     @Inject(CHORO_GEOGRAPHY)
@@ -94,7 +97,9 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   }
 
   ngOnInit(): void {
-    this.choroGeography.loadShapeSets().subscribe(shapeSets => {
+    this.choroGeography.loadShapeSets().pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(shapeSets => {
       this.usaShapeSet = shapeSets.usa;
       this.countyShapeSet = shapeSets.counties;
     });
