@@ -11,7 +11,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
@@ -45,7 +44,6 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
     JzChoroDashPanelComponent,
     ChoroUsaComponent,
     ChoroStateComponent,
-    FormsModule,
     JzButtonComponent,
     JzSplitLayoutComponent
   ],

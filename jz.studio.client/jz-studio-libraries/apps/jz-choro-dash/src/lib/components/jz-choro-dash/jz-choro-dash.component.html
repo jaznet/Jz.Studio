@@ -1,11 +1,6 @@
 
 <div class="grid-rows">
 
-  <!--<dx-radio-group [items]="categories"
-                  layout="horizontal"
-                  (onValueChanged)="onValueChanged($event)">
-  </dx-radio-group>-->
-
   <div class="grid-row-fixed">
 
     <div class="toolbar">
@@ -33,7 +28,7 @@
           (retryRequested)="retryGeography()">
         </choro-geography-status>
       } @else {
-        <choro-usa #choro_usa
+        <choro-usa
                    [shapeSet]="usaShapeSet"
                    [showCentroids]="showCentroids"
                    [centroidMode]="centroidDisplayMode"
@@ -49,7 +44,7 @@
          *ngIf="geographySelection as selection">
 
       <jz-choro-dash-panel class="state-panel">
-        <choro-state #choro_state
+        <choro-state
                      [stateId]="selection.stateId"
                      [shapeSet]="selection.stateShapeSet"
                      [colorResolver]="colorResolver"
