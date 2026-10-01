@@ -32,6 +32,8 @@
           <p>{{ error }}</p>
           <button type="button" (click)="retryGeography()">Retry</button>
         </div>
+      } @else if (!usaShapeSet) {
+        <p role="status">Loading map geography…</p>
       } @else {
         <choro-usa #choro_usa
                    [shapeSet]="usaShapeSet"
