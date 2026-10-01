@@ -27,13 +27,11 @@
 
     <jz-choro-dash-panel jzSplitPrimary
                          class="usa-panel">
-      @if (geographyLoadError; as error) {
-        <div role="alert">
-          <p>{{ error }}</p>
-          <button type="button" (click)="retryGeography()">Retry</button>
-        </div>
-      } @else if (!usaShapeSet) {
-        <p role="status">Loading map geography…</p>
+      @if (geographyLoadError || !usaShapeSet) {
+        <choro-geography-status
+          [error]="geographyLoadError"
+          (retryRequested)="retryGeography()">
+        </choro-geography-status>
       } @else {
         <choro-usa #choro_usa
                    [shapeSet]="usaShapeSet"

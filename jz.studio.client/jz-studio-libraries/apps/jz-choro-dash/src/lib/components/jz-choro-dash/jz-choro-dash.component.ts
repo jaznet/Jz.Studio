@@ -26,6 +26,7 @@ import {
 import { GeoShapeSet } from  '../../models/geo-shape-set.model';
 import { CHORO_GEOGRAPHY } from  '../../services/choro-geography.token';
 import { COUNTY_COLOR_RESOLVER_FACTORY } from '../../services/factories/metric-county-color-resolver-factory.token';
+import { ChoroGeographyStatusComponent } from '../choro-geography-status/choro-geography-status.component';
 import { ChoroCountyDetailsComponent } from '../choro-county-details/choro-county-details.component';
 import { ChoroStateComponent } from  '../choro-state/choro-state.component';
 import { ChoroUsaComponent } from  '../choro-usa/choro-usa.component';
@@ -40,6 +41,7 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
   imports: [
     CommonModule,
     ChoroCountyDetailsComponent,
+    ChoroGeographyStatusComponent,
     JzChoroDashPanelComponent,
     ChoroUsaComponent,
     ChoroStateComponent,
