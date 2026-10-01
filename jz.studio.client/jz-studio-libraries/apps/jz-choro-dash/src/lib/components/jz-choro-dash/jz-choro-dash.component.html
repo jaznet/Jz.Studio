@@ -39,30 +39,31 @@
       }
     </jz-choro-dash-panel>
 
-    <div jzSplitSecondary
-         class="state-column"
-         *ngIf="geographySelection as selection">
+    @if (geographySelection; as selection) {
+      <div jzSplitSecondary
+           class="state-column">
 
-      <jz-choro-dash-panel class="state-panel">
-        <choro-state
-                     [stateId]="selection.stateId"
-                     [shapeSet]="selection.stateShapeSet"
-                     [colorResolver]="colorResolver"
-                     [selectedCountyId]="selection.countyId"
-                     (countySelected)="onCountySelected($event)">
-        </choro-state>
-      </jz-choro-dash-panel>
+        <jz-choro-dash-panel class="state-panel">
+          <choro-state
+                       [stateId]="selection.stateId"
+                       [shapeSet]="selection.stateShapeSet"
+                       [colorResolver]="colorResolver"
+                       [selectedCountyId]="selection.countyId"
+                       (countySelected)="onCountySelected($event)">
+          </choro-state>
+        </jz-choro-dash-panel>
 
-      <jz-choro-dash-panel class="state-table-panel">
-        <choro-county-details
-          [countyName]="selection.countyName"
-          [stateName]="selection.stateName"
-          [metricLabel]="metricLabel"
-          [metricValue]="selectedCountyMetricValue">
-        </choro-county-details>
-      </jz-choro-dash-panel>
+        <jz-choro-dash-panel class="state-table-panel">
+          <choro-county-details
+            [countyName]="selection.countyName"
+            [stateName]="selection.stateName"
+            [metricLabel]="metricLabel"
+            [metricValue]="selectedCountyMetricValue">
+          </choro-county-details>
+        </jz-choro-dash-panel>
 
-    </div>
+      </div>
+    }
 
   </jz-split-layout>
 

@@ -1,6 +1,5 @@
 // jz-choro-dash.component.ts
 
-import { CommonModule } from '@angular/common';
 import {
   Component,
   DestroyRef,
@@ -38,7 +37,6 @@ import { JzSplitLayoutComponent } from 'jz-workspace-layout';
   standalone: true,
   templateUrl: './jz-choro-dash.component.html',
   imports: [
-    CommonModule,
     ChoroCountyDetailsComponent,
     ChoroGeographyStatusComponent,
     JzChoroDashPanelComponent,
