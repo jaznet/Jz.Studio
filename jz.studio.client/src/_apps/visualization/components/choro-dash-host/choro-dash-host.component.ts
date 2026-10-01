@@ -31,6 +31,7 @@ import {
 interface ChoroDashLoadState {
   readonly options?: CountyColorResolverFactoryOptions;
   readonly error?: string;
+  readonly empty?: string;
 }
 
 @Component({
@@ -58,6 +59,11 @@ interface ChoroDashLoadState {
       @if (state.options; as colorOptions) {
         <jz-choro-dash [colorResolverOptions]="colorOptions">
         </jz-choro-dash>
+      } @else if (state.empty) {
+        <div role="status">
+          <p>{{ state.empty }}</p>
+          <button type="button" (click)="retry()">Retry</button>
+        </div>
       } @else if (state.error) {
         <div role="alert">
           <p>{{ state.error }}</p>
@@ -92,7 +98,11 @@ export class ChoroDashHostComponent {
   ) {
     this.loadState$ = this.loadRequests.pipe(
       switchMap(() => colorOptionsProvider.load().pipe(
-        map(options => ({ options } as ChoroDashLoadState)),
+        map((options): ChoroDashLoadState =>
+          options.values?.length
+            ? { options }
+            : { empty: 'No county median-age data is available for the configured year.' }
+        ),
         catchError(() => of<ChoroDashLoadState>({
           error: 'Unable to load county median ages. Check the API connection and retry.'
         })),
