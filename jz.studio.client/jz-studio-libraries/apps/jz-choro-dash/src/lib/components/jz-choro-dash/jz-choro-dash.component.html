@@ -52,15 +52,12 @@
       </jz-choro-dash-panel>
 
       <jz-choro-dash-panel class="state-table-panel">
-        <div>{{ selection.countyName }}, {{ selection.stateName }}</div>
-        <div>
-          {{ metricLabel }}:
-          @if (selectedCountyMetricValue !== undefined) {
-            {{ selectedCountyMetricValue | number:'1.0-1' }}
-          } @else {
-            Not available
-          }
-        </div>
+        <choro-county-details
+          [countyName]="selection.countyName"
+          [stateName]="selection.stateName"
+          [metricLabel]="metricLabel"
+          [metricValue]="selectedCountyMetricValue">
+        </choro-county-details>
       </jz-choro-dash-panel>
 
     </div>
