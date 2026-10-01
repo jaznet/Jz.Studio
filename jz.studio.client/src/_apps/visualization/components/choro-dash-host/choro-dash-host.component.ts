@@ -1,6 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, Inject } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, shareReplay, startWith, switchMap } from 'rxjs';
 
 import {
   CountyColorResolverFactoryOptions,
@@ -97,7 +97,9 @@ export class ChoroDashHostComponent {
           error: 'Unable to load county median ages. Check the API connection and retry.'
         })),
         startWith({} as ChoroDashLoadState)
-      ))
+      )),
+      // Share one active load and its latest state across host subscribers.
+      shareReplay({ bufferSize: 1, refCount: true })
     );
   }
 
