@@ -47,6 +47,16 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   @Input() colorResolverOptions?: CountyColorResolverFactoryOptions;
 
+  @Input() metricLabel = 'Value';
+
+  private readonly countyMetricValues = new Map<string, number>();
+
+  get selectedCountyMetricValue(): number | undefined {
+    return this.geographySelection
+      ? this.countyMetricValues.get(this.geographySelection.countyId)
+      : undefined;
+  }
+
   colorResolver?: CountyColorResolver;
 
   usaShapeSet?: GeoShapeSet;
@@ -68,6 +78,11 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['colorResolverOptions']) {
       return;
+    }
+
+    this.countyMetricValues.clear();
+    for (const metric of this.colorResolverOptions?.values ?? []) {
+      this.countyMetricValues.set(metric.countyId, metric.value);
     }
 
     this.colorResolver = this.colorResolverOptions

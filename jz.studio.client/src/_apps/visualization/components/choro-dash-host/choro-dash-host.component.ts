@@ -57,7 +57,8 @@ interface ChoroDashLoadState {
   template: `
     @if (loadState$ | async; as state) {
       @if (state.options; as colorOptions) {
-        <jz-choro-dash [colorResolverOptions]="colorOptions">
+        <jz-choro-dash [colorResolverOptions]="colorOptions"
+                       metricLabel="Median age (years)">
         </jz-choro-dash>
       } @else if (state.empty) {
         <div role="status">
