@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, timeout } from 'rxjs';
 
 import { CountyMetricValue } from 'jz-choro-dash';
 
@@ -20,6 +20,9 @@ export class ChoroDashApiCountyValuesService
     return this.http.get<unknown>(
       this.config.medianAgeUrl,
       { params: { year: this.config.year } }
-    ).pipe(map(parseCountyMetricValues));
+    ).pipe(
+      timeout({ first: this.config.requestTimeoutMs }),
+      map(parseCountyMetricValues)
+    );
   }
 }
