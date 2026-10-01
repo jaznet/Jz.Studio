@@ -13,7 +13,7 @@ import {
   HostBinding
 } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { Subject, takeUntil, filter } from 'rxjs';
 
 import { NavigationListenerService } from './services/navigation-listener.service';
@@ -34,7 +34,6 @@ import { ShellLayoutService } from './services/shell-layout.service';
     CommonModule,
     ShellHeaderComponent,
     ShellFooterComponent,
-    RouterOutlet,
     ShellContentComponent
   ],
   templateUrl: './shell.component.html',
