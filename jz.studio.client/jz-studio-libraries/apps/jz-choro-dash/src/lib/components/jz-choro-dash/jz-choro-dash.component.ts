@@ -15,6 +15,7 @@ import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
 import { CountyMetricValue } from '../../models/county-metric-value.model';
+import { CountyMetricValueLookup } from '../../models/county-metric-value-lookup.model';
 import { CountyColorResolver } from '../../models/county-color-resolver.model';
 import {
   CountyColorResolverFactory,
@@ -54,7 +55,7 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   @Input() metricLabel = 'Value';
 
-  private readonly countyMetricValues = new Map<string, number>();
+  private countyMetricValues = new CountyMetricValueLookup();
 
   get selectedCountyMetricValue(): number | undefined {
     return this.geographySelection
@@ -82,10 +83,7 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['countyValues']) {
-      this.countyMetricValues.clear();
-      for (const metric of this.countyValues) {
-        this.countyMetricValues.set(metric.countyId, metric.value);
-      }
+      this.countyMetricValues = new CountyMetricValueLookup(this.countyValues);
     }
 
     if (changes['colorResolverOptions']) {
