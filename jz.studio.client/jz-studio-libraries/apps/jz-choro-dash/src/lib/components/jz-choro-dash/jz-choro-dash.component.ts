@@ -3,10 +3,12 @@
 import {
   Component,
   DestroyRef,
+  EventEmitter,
   Inject,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -54,6 +56,8 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   @Input() countyValues: readonly CountyMetricValue[] = [];
 
   @Input() metricLabel = 'Value';
+
+  @Output() readonly geographySelected = new EventEmitter<ChoroGeographySelection>();
 
   private countyMetricValues = new CountyMetricValueLookup();
 
@@ -138,5 +142,9 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
           selection
         )
       : undefined;
+
+    if (this.geographySelection) {
+      this.geographySelected.emit(this.geographySelection);
+    }
   }
 }
