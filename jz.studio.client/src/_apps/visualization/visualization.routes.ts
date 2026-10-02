@@ -24,15 +24,16 @@ export const VISUALIZATION_ROUTES: Routes = [
       {
         path: 'chorodash',
         loadComponent: () =>
-          import('./components/choro-dash-host/choro-dash-host.component')
-            .then(m => m.ChoroDashHostComponent)
-      },
-
-      {
-        path: 'chorodash/admin',
-        loadComponent: () =>
-          import('./components/choro-dash-admin-host/choro-dash-admin-host.component')
-            .then(m => m.ChoroDashAdminHostComponent)
+          import('./components/choro-dash-session-host/choro-dash-session-host.component')
+            .then(m => m.ChoroDashSessionHostComponent),
+        children: [
+          {
+            path: 'admin',
+            loadComponent: () =>
+              import('./components/choro-dash-admin-host/choro-dash-admin-host.component')
+                .then(m => m.ChoroDashAdminHostComponent)
+          }
+        ]
       },
 
       {
