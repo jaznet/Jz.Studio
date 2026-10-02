@@ -1,5 +1,6 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, HostBinding, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, startWith, switchMap } from 'rxjs';
 
 import {
@@ -59,7 +60,8 @@ interface ChoroDashLoadState {
       @if (state.options; as colorOptions) {
         <jz-choro-dash [colorResolverOptions]="colorOptions"
                        [countyValues]="colorOptions.values"
-                       metricLabel="Median age (years)">
+                       metricLabel="Median age (years)"
+                       (adminRequested)="openAdmin()">
         </jz-choro-dash>
       } @else if (state.empty) {
         <div role="status">
@@ -95,6 +97,8 @@ export class ChoroDashHostComponent {
   readonly loadState$: Observable<ChoroDashLoadState>;
 
   constructor(
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
     @Inject(CHORO_DASH_COLOR_OPTIONS_PROVIDER)
     colorOptionsProvider: ChoroDashColorOptionsProvider
   ) {
@@ -112,6 +116,13 @@ export class ChoroDashHostComponent {
       )),
       // Share one active load and its latest state across host subscribers.
       shareReplay({ bufferSize: 1, refCount: true })
+    );
+  }
+
+  openAdmin(): void {
+    this.router.navigate(
+      ['admin'],
+      { relativeTo: this.route }
     );
   }
 

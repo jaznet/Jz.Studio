@@ -12,7 +12,6 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ChoroGeography } from  '../../models/choro-geography.model';
 import { ChoroGeographySelection } from  '../../models/choro-geography-selection.model';
 import { CountySelection } from  '../../models/county-selection.model';
@@ -57,6 +56,8 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   @Input() metricLabel = 'Value';
 
+  @Output() readonly adminRequested = new EventEmitter<void>();
+
   @Output() readonly geographySelected = new EventEmitter<ChoroGeographySelection>();
 
   private countyMetricValues = new CountyMetricValueLookup();
@@ -80,8 +81,6 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
 
   constructor(
     private readonly destroyRef: DestroyRef,
-    private router: Router,
-    private route: ActivatedRoute,
     @Inject(CHORO_GEOGRAPHY)
     private choroGeography: ChoroGeography,
     @Inject(COUNTY_COLOR_RESOLVER_FACTORY)
@@ -128,10 +127,7 @@ export class JzChoroDashComponent implements OnChanges, OnInit {
   }
 
   openAdmin(): void {
-    this.router.navigate(
-      ['admin'],
-      { relativeTo: this.route }
-    );
+    this.adminRequested.emit();
   }
 
   onCountySelected(selection: CountySelection): void {
