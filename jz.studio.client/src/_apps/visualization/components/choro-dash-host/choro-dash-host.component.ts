@@ -3,10 +3,7 @@ import { Component, HostBinding, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, shareReplay, startWith, switchMap } from 'rxjs';
 
-import {
-  CountyColorResolverFactoryOptions,
-  JzChoroDashComponent
-} from 'jz-choro-dash';
+import { JzChoroDashComponent } from 'jz-choro-dash';
 
 import {
   ChoroDashColorOptionsProvider
@@ -14,13 +11,8 @@ import {
 import {
   CHORO_DASH_COLOR_OPTIONS_PROVIDER
 } from './choro-dash-color-options-provider.token';
+import { ChoroDashLoadState } from './choro-dash-load-state.model';
 import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
-
-interface ChoroDashLoadState {
-  readonly options?: CountyColorResolverFactoryOptions;
-  readonly error?: string;
-  readonly empty?: string;
-}
 
 @Component({
   selector: 'choro-dash-host',
