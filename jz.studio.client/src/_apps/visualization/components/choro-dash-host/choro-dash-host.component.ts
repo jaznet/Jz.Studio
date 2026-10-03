@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { JzChoroDashComponent } from 'jz-choro-dash';
 
+import { ChoroDashLoadStatusComponent } from './choro-dash-load-status.component';
 import { ChoroDashLoadService } from './choro-dash-load.service';
 import { ChoroDashLoadState } from './choro-dash-load-state.model';
 import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
@@ -12,7 +13,7 @@ import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
 @Component({
   selector: 'choro-dash-host',
   standalone: true,
-  imports: [AsyncPipe, JzChoroDashComponent],
+  imports: [AsyncPipe, JzChoroDashComponent, ChoroDashLoadStatusComponent],
   providers: CHORO_DASH_HOST_PROVIDERS,
   template: `
     @if (loadState$ | async; as state) {
@@ -22,18 +23,11 @@ import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
                        metricLabel="Median age (years)"
                        (adminRequested)="openAdmin()">
         </jz-choro-dash>
-      } @else if (state.empty) {
-        <div role="status">
-          <p>{{ state.empty }}</p>
-          <button type="button" (click)="retry()">Retry</button>
-        </div>
-      } @else if (state.error) {
-        <div role="alert">
-          <p>{{ state.error }}</p>
-          <button type="button" (click)="retry()">Retry</button>
-        </div>
       } @else {
-        <p role="status">Loading county median ages…</p>
+        <choro-dash-load-status [empty]="state.empty"
+                                [error]="state.error"
+                                (retryRequested)="retry()">
+        </choro-dash-load-status>
       }
     }
   `,
