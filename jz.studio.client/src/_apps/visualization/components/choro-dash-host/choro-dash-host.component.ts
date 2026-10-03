@@ -1,16 +1,11 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, HostBinding, Inject } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, catchError, map, Observable, of, shareReplay, startWith, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { JzChoroDashComponent } from 'jz-choro-dash';
 
-import {
-  ChoroDashColorOptionsProvider
-} from './choro-dash-color-options-provider.model';
-import {
-  CHORO_DASH_COLOR_OPTIONS_PROVIDER
-} from './choro-dash-color-options-provider.token';
+import { ChoroDashLoadService } from './choro-dash-load.service';
 import { ChoroDashLoadState } from './choro-dash-load-state.model';
 import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
 
@@ -56,31 +51,14 @@ import { CHORO_DASH_HOST_PROVIDERS } from './choro-dash-host.providers';
 export class ChoroDashHostComponent {
   @HostBinding('class') classes = 'fit-to-parent';
 
-  private readonly loadRequests = new BehaviorSubject<void>(undefined);
-
   readonly loadState$: Observable<ChoroDashLoadState>;
 
   constructor(
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    @Inject(CHORO_DASH_COLOR_OPTIONS_PROVIDER)
-    colorOptionsProvider: ChoroDashColorOptionsProvider
+    private readonly loadService: ChoroDashLoadService
   ) {
-    this.loadState$ = this.loadRequests.pipe(
-      switchMap(() => colorOptionsProvider.load().pipe(
-        map((options): ChoroDashLoadState =>
-          options.values?.length
-            ? { options }
-            : { empty: 'No county median-age data is available for the configured year.' }
-        ),
-        catchError(() => of<ChoroDashLoadState>({
-          error: 'Unable to load county median ages. Check the API connection and retry.'
-        })),
-        startWith({} as ChoroDashLoadState)
-      )),
-      // Share one active load and its latest state across host subscribers.
-      shareReplay({ bufferSize: 1, refCount: true })
-    );
+    this.loadState$ = loadService.loadState$;
   }
 
   openAdmin(): void {
@@ -91,6 +69,6 @@ export class ChoroDashHostComponent {
   }
 
   retry(): void {
-    this.loadRequests.next();
+    this.loadService.retry();
   }
 }

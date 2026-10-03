@@ -1,4 +1,5 @@
 import { Provider } from '@angular/core';
+import { ChoroDashLoadService } from './choro-dash-load.service';
 import { ChoroDashApiCountyValuesService } from './choro-dash-api-county-values.service';
 import { CHORO_DASH_COLOR_OPTIONS_PROVIDER } from './choro-dash-color-options-provider.token';
 import { ChoroDashColorOptionsService } from './choro-dash-color-options.service';
@@ -9,6 +10,7 @@ import {
 import { CHORO_DASH_COUNTY_VALUES_PROVIDER } from './choro-dash-county-values-provider.token';
 
 export const CHORO_DASH_HOST_PROVIDERS: Provider[] = [
+  ChoroDashLoadService,
   ChoroDashColorOptionsService,
   ChoroDashApiCountyValuesService,
   {
